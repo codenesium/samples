@@ -1,0 +1,2 @@
+API Key for swagger
+BASIC 3dc08a62e98841a7b3f184d7a09f2ef7f7cf0de905b9619c995bb4ba533dba34
