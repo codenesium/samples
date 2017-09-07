@@ -1,0 +1,1 @@
+<%@ Application CodeBehind="Global.asax.cs" Inherits="NebulaNS.Api.Service.WebApiApplication" Language="C#" %>
