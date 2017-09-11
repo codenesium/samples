@@ -250,7 +250,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data" />
     <Folder Include="App_Data\" />
+    <Folder Include="App_Start" />
+    <Folder Include="Controllers" />
+    <Folder Include="Controllers\dbo" />
+    <Folder Include="Filters" />
+    <Folder Include="Filters\dbo" />
+    <Folder Include="Lib" />
+    <Folder Include="ModelValidators" />
+    <Folder Include="ModelValidators\dbo" />
+    <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

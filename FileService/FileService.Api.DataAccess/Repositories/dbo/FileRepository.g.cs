@@ -196,12 +196,13 @@ namespace FileServiceNS.Api.DataAccess
 				                                      "FileType"),
 			});
 
-			BucketRepository.MapEFToPOCO(efFile.Bucket, response);
-			FileTypeRepository.MapEFToPOCO(efFile.FileType, response);
+			BucketRepository.MapEFToPOCO(efFile.BucketRef, response);
+
+			FileTypeRepository.MapEFToPOCO(efFile.FileTypeRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76ca2000f268c3f075150a556d8f87e6</Hash>
+    <Hash>2d3d93d88457f178cfc51f9584d56e60</Hash>
 </Codenesium>*/

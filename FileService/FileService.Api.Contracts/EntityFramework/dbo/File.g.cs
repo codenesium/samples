@@ -26,12 +26,12 @@ namespace FileServiceNS.Api.Contracts
 		public string publicKey {get; set;}
 
 		[ForeignKey("bucketId")]
-		public virtual Bucket Bucket { get; set; }
+		public virtual Bucket BucketRef { get; set; }
 		[ForeignKey("fileTypeId")]
-		public virtual FileType FileType { get; set; }
+		public virtual FileType FileTypeRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>713cf65bb4a268d98bde5bda04969961</Hash>
+    <Hash>e4fac323e50b061bc273d7542efe4d7d</Hash>
 </Codenesium>*/
