@@ -17,12 +17,12 @@ namespace NebulaNS.Api.Contracts
 		public int previousChainId {get; set;}
 
 		[ForeignKey("nextChainId")]
-		public virtual Chain Chain { get; set; }
+		public virtual Chain ChainRef { get; set; }
 		[ForeignKey("previousChainId")]
-		public virtual Chain Chain1 { get; set; }
+		public virtual Chain ChainRef1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0487b2039245a59b6482bbad38fda542</Hash>
+    <Hash>47c031046a399c33c0ad63fb8c991dde</Hash>
 </Codenesium>*/

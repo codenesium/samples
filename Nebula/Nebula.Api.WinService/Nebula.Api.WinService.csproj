@@ -91,7 +91,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
-    <Compile Include="NebulaService.cs" />
+    <Compile Include="NebulaService.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="NebulaService.Designer.cs" />
     <Content Include="packages.config" />
     <Compile Include="Program.cs" />
@@ -102,9 +104,6 @@
       <Project>{BACDFB68-7148-47EB-BA26-BB020BBBD4D9}</Project>
       <Name>Nebula.Api.Service</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

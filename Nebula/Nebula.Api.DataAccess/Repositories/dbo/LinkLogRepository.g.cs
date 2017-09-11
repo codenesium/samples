@@ -139,11 +139,11 @@ namespace NebulaNS.Api.DataAccess
 				                                  "Link"),
 			});
 
-			LinkRepository.MapEFToPOCO(efLinkLog.Link, response);
+			LinkRepository.MapEFToPOCO(efLinkLog.LinkRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bef69a01cf551e9ae14c7aebee22a728</Hash>
+    <Hash>a3cd9657a17873035522de6aa997b6d6</Hash>
 </Codenesium>*/

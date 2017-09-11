@@ -46,7 +46,7 @@ namespace NebulaNS.Api.WinService
                 }
 
                 _logger.Info($"ThisServiceBaseAddress={thisServiceBaseAddress}");
-
+				_logger.Info($"Service Located at {thisServiceBaseAddress.Replace("*","localhost")}/swagger");
              
                  if (RunMigrations())
                  {

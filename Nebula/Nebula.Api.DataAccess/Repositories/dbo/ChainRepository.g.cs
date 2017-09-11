@@ -147,12 +147,13 @@ namespace NebulaNS.Api.DataAccess
 				                                  "Team"),
 			});
 
-			ChainStatusRepository.MapEFToPOCO(efChain.ChainStatus, response);
-			TeamRepository.MapEFToPOCO(efChain.Team, response);
+			ChainStatusRepository.MapEFToPOCO(efChain.ChainStatusRef, response);
+
+			TeamRepository.MapEFToPOCO(efChain.TeamRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46736ca7e8ad4b3610721dd2b11354ab</Hash>
+    <Hash>238a41730ca7213580bc33254bafd925</Hash>
 </Codenesium>*/

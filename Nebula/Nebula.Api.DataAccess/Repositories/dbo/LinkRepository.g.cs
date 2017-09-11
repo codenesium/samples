@@ -197,13 +197,15 @@ namespace NebulaNS.Api.DataAccess
 				                                        "LinkStatus"),
 			});
 
-			MachineRepository.MapEFToPOCO(efLink.Machine, response);
-			ChainRepository.MapEFToPOCO(efLink.Chain, response);
-			LinkStatusRepository.MapEFToPOCO(efLink.LinkStatus, response);
+			MachineRepository.MapEFToPOCO(efLink.MachineRef, response);
+
+			ChainRepository.MapEFToPOCO(efLink.ChainRef, response);
+
+			LinkStatusRepository.MapEFToPOCO(efLink.LinkStatusRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f8d6f3c8236e445f19e85d0a8037633</Hash>
+    <Hash>e78af2b9e02232d6185a065268bf02a0</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -66,56 +66,90 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+
+
+
+
+
   <ItemGroup>
-    <Content Include="packages.config" />
-    <Compile Include="EntityFramework\dbo\Chain.g.cs" />
-    <Compile Include="EntityFramework\dbo\ChainStatus.g.cs" />
-    <Compile Include="EntityFramework\dbo\Clasp.g.cs" />
-    <Compile Include="EntityFramework\dbo\Link.g.cs" />
-    <Compile Include="EntityFramework\dbo\LinkLog.g.cs" />
-    <Compile Include="EntityFramework\dbo\LinkStatus.g.cs" />
-    <Compile Include="EntityFramework\dbo\Machine.g.cs" />
-    <Compile Include="EntityFramework\dbo\MachineRefTeam.g.cs" />
-    <Compile Include="EntityFramework\dbo\Model1.g.cs" />
-    <Compile Include="EntityFramework\dbo\Organization.g.cs" />
-    <Compile Include="EntityFramework\dbo\Team.g.cs" />
-    <Compile Include="Models\dbo\ChainModel.g.cs" />
-    <Compile Include="Models\dbo\ChainStatusModel.g.cs" />
-    <Compile Include="Models\dbo\ClaspModel.g.cs" />
-    <Compile Include="Models\dbo\LinkLogModel.g.cs" />
-    <Compile Include="Models\dbo\LinkModel.g.cs" />
-    <Compile Include="Models\dbo\LinkStatusModel.g.cs" />
-    <Compile Include="Models\dbo\MachineModel.g.cs" />
-    <Compile Include="Models\dbo\MachineRefTeamModel.g.cs" />
-    <Compile Include="Models\dbo\OrganizationModel.g.cs" />
-    <Compile Include="Models\dbo\TeamModel.g.cs" />
-    <Compile Include="POCOS\Response.g.cs" />
-    <Compile Include="POCOS\dbo\Chain.g.cs" />
-    <Compile Include="POCOS\dbo\ChainStatus.g.cs" />
-    <Compile Include="POCOS\dbo\Clasp.g.cs" />
-    <Compile Include="POCOS\dbo\Link.g.cs" />
-    <Compile Include="POCOS\dbo\LinkLog.g.cs" />
-    <Compile Include="POCOS\dbo\LinkStatus.g.cs" />
-    <Compile Include="POCOS\dbo\Machine.g.cs" />
-    <Compile Include="POCOS\dbo\MachineRefTeam.g.cs" />
-    <Compile Include="POCOS\dbo\Organization.g.cs" />
-    <Compile Include="POCOS\dbo\Team.g.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+  
+			<Content Include="packages.config" /> 
+			
+			<Compile Include="EntityFramework\dbo\Chain.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\ChainStatus.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\Clasp.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\Link.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\LinkLog.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\LinkStatus.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\Machine.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\MachineRefTeam.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\Model1.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\Organization.g.cs" /> 
+			
+			<Compile Include="EntityFramework\dbo\Team.g.cs" /> 
+			
+			<Compile Include="Models\dbo\ChainModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\ChainStatusModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\ClaspModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\LinkLogModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\LinkModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\LinkStatusModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\MachineModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\MachineRefTeamModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\OrganizationModel.g.cs" /> 
+			
+			<Compile Include="Models\dbo\TeamModel.g.cs" /> 
+			
+			<Compile Include="POCOS\Response.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\Chain.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\ChainStatus.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\Clasp.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\Link.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\LinkLog.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\LinkStatus.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\Machine.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\MachineRefTeam.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\Organization.g.cs" /> 
+			
+			<Compile Include="POCOS\dbo\Team.g.cs" /> 
+			
+			<Compile Include="Properties\AssemblyInfo.cs" /> 
+			
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EntityFramework" />
-    <Folder Include="EntityFramework\dbo" />
-    <Folder Include="Models" />
-    <Folder Include="Models\dbo" />
-    <Folder Include="POCOS" />
-    <Folder Include="POCOS\dbo" />
-    <Folder Include="Properties" />
-  </ItemGroup>
+
+  
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>

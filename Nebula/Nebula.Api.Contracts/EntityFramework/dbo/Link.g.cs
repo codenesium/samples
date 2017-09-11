@@ -26,14 +26,14 @@ namespace NebulaNS.Api.Contracts
 		public string staticParameters {get; set;}
 
 		[ForeignKey("assignedMachineId")]
-		public virtual Machine Machine { get; set; }
+		public virtual Machine MachineRef { get; set; }
 		[ForeignKey("chainId")]
-		public virtual Chain Chain { get; set; }
+		public virtual Chain ChainRef { get; set; }
 		[ForeignKey("linkStatusId")]
-		public virtual LinkStatus LinkStatus { get; set; }
+		public virtual LinkStatus LinkStatusRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec67951ac0bac1c677b91ab9a11fd06a</Hash>
+    <Hash>7df370385e0a78915ad69ebde7389edf</Hash>
 </Codenesium>*/

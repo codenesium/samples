@@ -17,10 +17,10 @@ namespace NebulaNS.Api.Contracts
 		public int organizationId {get; set;}
 
 		[ForeignKey("organizationId")]
-		public virtual Organization Organization { get; set; }
+		public virtual Organization OrganizationRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>734392fcf7facbd73b04612d65502767</Hash>
+    <Hash>4d7779e75ae8cac564d91322b376f319</Hash>
 </Codenesium>*/

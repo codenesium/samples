@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -34,7 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<LangVersion>6</LangVersion>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,10 +43,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<LangVersion>6</LangVersion>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
-
-   <ItemGroup>
+  <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
@@ -250,76 +249,38 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
-
-
-
-
-
-
-
   <ItemGroup>
-  
-			<Content Include="Global.asax" /> 
-			
-			<Compile Include="Global.asax.cs" /> 
-			
-			<Content Include="packages.config" /> 
-			
-			<Content Include="Web.config" /> 
-			
-			<Compile Include="App_Start\AutofacConfig.cs" /> 
-			
-			<Compile Include="App_Start\RouteConfig.cs" /> 
-			
-			<Compile Include="App_Start\Startup.cs" /> 
-			
-			<Compile Include="App_Start\SwaggerConfig.cs" /> 
-			
-			<Compile Include="App_Start\WebApiConfig.cs" /> 
-			
-			<Compile Include="Controllers\dbo\BucketController.cs" /> 
-			
-			<Compile Include="Controllers\dbo\BucketController.g.cs" /> 
-			
-			<Compile Include="Controllers\dbo\FileController.cs" /> 
-			
-			<Compile Include="Controllers\dbo\FileController.g.cs" /> 
-			
-			<Compile Include="Controllers\dbo\FileTypeController.cs" /> 
-			
-			<Compile Include="Controllers\dbo\FileTypeController.g.cs" /> 
-			
-			<Compile Include="Filters\dbo\BucketFilter.g.cs" /> 
-			
-			<Compile Include="Filters\dbo\FileFilter.g.cs" /> 
-			
-			<Compile Include="Filters\dbo\FileTypeFilter.g.cs" /> 
-			
-			<Compile Include="ModelValidators\dbo\BucketModelValidator.cs" /> 
-			
-			<Compile Include="ModelValidators\dbo\BucketModelValidatorAbstract.g.cs" /> 
-			
-			<Compile Include="ModelValidators\dbo\FileModelValidator.cs" /> 
-			
-			<Compile Include="ModelValidators\dbo\FileModelValidatorAbstract.g.cs" /> 
-			
-			<Compile Include="ModelValidators\dbo\FileTypeModelValidator.cs" /> 
-			
-			<Compile Include="ModelValidators\dbo\FileTypeModelValidatorAbstract.g.cs" /> 
-			
-			<Compile Include="Properties\AssemblyInfo.cs" /> 
-			
+    <Content Include="Global.asax" />
+    <Compile Include="Global.asax.cs" />
+    <Content Include="packages.config" />
+    <Content Include="Web.config" />
+    <Compile Include="App_Start\AutofacConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\dbo\BucketController.cs" />
+    <Compile Include="Controllers\dbo\BucketController.g.cs" />
+    <Compile Include="Controllers\dbo\FileController.cs" />
+    <Compile Include="Controllers\dbo\FileController.g.cs" />
+    <Compile Include="Controllers\dbo\FileTypeController.cs" />
+    <Compile Include="Controllers\dbo\FileTypeController.g.cs" />
+    <Compile Include="Filters\dbo\BucketFilter.g.cs" />
+    <Compile Include="Filters\dbo\FileFilter.g.cs" />
+    <Compile Include="Filters\dbo\FileTypeFilter.g.cs" />
+    <Compile Include="Lib\Includes.cs" />
+    <Compile Include="ModelValidators\dbo\BucketModelValidator.cs" />
+    <Compile Include="ModelValidators\dbo\BucketModelValidatorAbstract.g.cs" />
+    <Compile Include="ModelValidators\dbo\FileModelValidator.cs" />
+    <Compile Include="ModelValidators\dbo\FileModelValidatorAbstract.g.cs" />
+    <Compile Include="ModelValidators\dbo\FileTypeModelValidator.cs" />
+    <Compile Include="ModelValidators\dbo\FileTypeModelValidatorAbstract.g.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-
-  
-  
-  
-  
-    <ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../FileService.Api.Contracts/FileService.Api.Contracts.csproj">
       <Project>{df655760-639c-4bcc-ae4b-0dbc05658b1d}</Project>
       <Name>FileService.Api.Contracts</Name>
@@ -329,10 +290,6 @@
       <Name>FileService.Api.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
-  
-  
- 
-  
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
@@ -377,24 +334,21 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
-
-   <!--By default the roslyn CSC folder will not be copied to the output or the _PublishedWebsite folder
+  <!--By default the roslyn CSC folder will not be copied to the output or the _PublishedWebsite folder
 		these build actions take care of that for us.
 		see http://stackoverflow.com/questions/32780315/could-not-find-a-part-of-the-path-bin-roslyn-csc-exe
 	-->
-	
-	<PropertyGroup>
-		<PostBuildEvent>
+  <PropertyGroup>
+    <PostBuildEvent>
 			if not exist "$(WebProjectOutputDir)\bin\Roslyn" md "$(WebProjectOutputDir)\bin\Roslyn"
 			start /MIN xcopy /s /y /R "$(OutDir)roslyn\*.*" "$(WebProjectOutputDir)\bin\Roslyn"
 		</PostBuildEvent>
-	</PropertyGroup>
-
-   <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
-		<ItemGroup>
-		  <RoslynFiles Include="$(CscToolPath)\*" />
-		</ItemGroup>
-		<MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
-		<Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" /> 
-   </Target>
+  </PropertyGroup>
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
 </Project>

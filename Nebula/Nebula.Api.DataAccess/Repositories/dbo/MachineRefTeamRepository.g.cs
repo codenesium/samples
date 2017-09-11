@@ -133,12 +133,13 @@ namespace NebulaNS.Api.DataAccess
 				                                  "Team"),
 			});
 
-			MachineRepository.MapEFToPOCO(efMachineRefTeam.Machine, response);
-			TeamRepository.MapEFToPOCO(efMachineRefTeam.Team, response);
+			MachineRepository.MapEFToPOCO(efMachineRefTeam.MachineRef, response);
+
+			TeamRepository.MapEFToPOCO(efMachineRefTeam.TeamRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f17a79563d5f74c402e0ff1ec8fcdce</Hash>
+    <Hash>368216f2484cd00cc718af58537d4012</Hash>
 </Codenesium>*/

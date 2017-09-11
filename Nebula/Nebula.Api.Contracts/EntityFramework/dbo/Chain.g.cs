@@ -19,12 +19,12 @@ namespace NebulaNS.Api.Contracts
 		public int teamId {get; set;}
 
 		[ForeignKey("chainStatusId")]
-		public virtual ChainStatus ChainStatus { get; set; }
+		public virtual ChainStatus ChainStatusRef { get; set; }
 		[ForeignKey("teamId")]
-		public virtual Team Team { get; set; }
+		public virtual Team TeamRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d51af2ffa8be749308ef3b9c3b923cb3</Hash>
+    <Hash>ae2db4d4e8442d747324a13686f85aad</Hash>
 </Codenesium>*/

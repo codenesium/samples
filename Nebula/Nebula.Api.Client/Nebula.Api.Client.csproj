@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -54,27 +54,39 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
+  
+
+
+ <ItemGroup>
     <ProjectReference Include="../Nebula.Api.Contracts/Nebula.Api.Contracts.csproj">
       <Project>{df655760-639c-4bcc-ae4b-0dbc05658b1d}</Project>
       <Name>Nebula.Api.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+
+
+
+
+
+
   <ItemGroup>
-    <Content Include="packages.config" />
-    <Compile Include="ApiClient\dbo\Client.g.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+  
+			<Content Include="packages.config" /> 
+			
+			<Compile Include="ApiClient\dbo\Client.g.cs" /> 
+			
+			<Compile Include="Properties\AssemblyInfo.cs" /> 
+			
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApiClient" />
-    <Folder Include="ApiClient\dbo" />
-    <Folder Include="Properties" />
-  </ItemGroup>
+
+  
+  
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>

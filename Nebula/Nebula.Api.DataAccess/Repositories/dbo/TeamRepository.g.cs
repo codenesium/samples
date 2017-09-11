@@ -132,11 +132,11 @@ namespace NebulaNS.Api.DataAccess
 				                                          "Organization"),
 			});
 
-			OrganizationRepository.MapEFToPOCO(efTeam.Organization, response);
+			OrganizationRepository.MapEFToPOCO(efTeam.OrganizationRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ea1733d50c2339dbc4f1aaf99520131</Hash>
+    <Hash>0a0056c7a1011dfbb9f82f6dcab5775b</Hash>
 </Codenesium>*/

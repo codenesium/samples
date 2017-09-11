@@ -133,12 +133,13 @@ namespace NebulaNS.Api.DataAccess
 				                                           "Chain"),
 			});
 
-			ChainRepository.MapEFToPOCO(efClasp.Chain, response);
-			ChainRepository.MapEFToPOCO(efClasp.Chain, response);
+			ChainRepository.MapEFToPOCO(efClasp.ChainRef, response);
+
+			ChainRepository.MapEFToPOCO(efClasp.ChainRef1, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>51839e845ad221d43514ea61f2c5e994</Hash>
+    <Hash>b4076978720cf00fdb2ecacc347fab06</Hash>
 </Codenesium>*/

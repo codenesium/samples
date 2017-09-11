@@ -17,12 +17,12 @@ namespace NebulaNS.Api.Contracts
 		public int teamId {get; set;}
 
 		[ForeignKey("machineId")]
-		public virtual Machine Machine { get; set; }
+		public virtual Machine MachineRef { get; set; }
 		[ForeignKey("teamId")]
-		public virtual Team Team { get; set; }
+		public virtual Team TeamRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>16ee1ebc10c603e220dae9df4b252a7b</Hash>
+    <Hash>4759edf1644231a58611cf9c1440ea2c</Hash>
 </Codenesium>*/

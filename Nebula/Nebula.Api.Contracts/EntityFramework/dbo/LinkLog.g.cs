@@ -18,10 +18,10 @@ namespace NebulaNS.Api.Contracts
 		public string log {get; set;}
 
 		[ForeignKey("linkId")]
-		public virtual Link Link { get; set; }
+		public virtual Link LinkRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5dc37e8130dd91345b6cc9480df1e2d</Hash>
+    <Hash>11b21fc60086caf44c60498f1dd3523e</Hash>
 </Codenesium>*/

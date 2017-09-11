@@ -257,6 +257,7 @@
     <Folder Include="Controllers\dbo" />
     <Folder Include="Filters" />
     <Folder Include="Filters\dbo" />
+    <Folder Include="Lib" />
     <Folder Include="ModelValidators" />
     <Folder Include="ModelValidators\dbo" />
     <Folder Include="Properties" />
@@ -301,6 +302,7 @@
     <Compile Include="Filters\dbo\MachineRefTeamFilter.g.cs" />
     <Compile Include="Filters\dbo\OrganizationFilter.g.cs" />
     <Compile Include="Filters\dbo\TeamFilter.g.cs" />
+    <Compile Include="Lib\Includes.cs" />
     <Compile Include="ModelValidators\dbo\ChainModelValidator.cs" />
     <Compile Include="ModelValidators\dbo\ChainModelValidatorAbstract.g.cs" />
     <Compile Include="ModelValidators\dbo\ChainStatusModelValidator.cs" />

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -63,7 +63,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
+	<Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -78,46 +78,75 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  
+  
+
+
+
   <ItemGroup>
     <ProjectReference Include="../Nebula.Api.Contracts/Nebula.Api.Contracts.csproj">
       <Project>{df655760-639c-4bcc-ae4b-0dbc05658b1d}</Project>
       <Name>Nebula.Api.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+
+
   <ItemGroup>
-    <Content Include="packages.config" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\dbo\ChainRepository.cs" />
-    <Compile Include="Repositories\dbo\ChainRepository.g.cs" />
-    <Compile Include="Repositories\dbo\ChainStatusRepository.cs" />
-    <Compile Include="Repositories\dbo\ChainStatusRepository.g.cs" />
-    <Compile Include="Repositories\dbo\ClaspRepository.cs" />
-    <Compile Include="Repositories\dbo\ClaspRepository.g.cs" />
-    <Compile Include="Repositories\dbo\LinkLogRepository.cs" />
-    <Compile Include="Repositories\dbo\LinkLogRepository.g.cs" />
-    <Compile Include="Repositories\dbo\LinkRepository.cs" />
-    <Compile Include="Repositories\dbo\LinkRepository.g.cs" />
-    <Compile Include="Repositories\dbo\LinkStatusRepository.cs" />
-    <Compile Include="Repositories\dbo\LinkStatusRepository.g.cs" />
-    <Compile Include="Repositories\dbo\MachineRefTeamRepository.cs" />
-    <Compile Include="Repositories\dbo\MachineRefTeamRepository.g.cs" />
-    <Compile Include="Repositories\dbo\MachineRepository.cs" />
-    <Compile Include="Repositories\dbo\MachineRepository.g.cs" />
-    <Compile Include="Repositories\dbo\OrganizationRepository.cs" />
-    <Compile Include="Repositories\dbo\OrganizationRepository.g.cs" />
-    <Compile Include="Repositories\dbo\TeamRepository.cs" />
-    <Compile Include="Repositories\dbo\TeamRepository.g.cs" />
+  
+			<Content Include="packages.config" /> 
+			
+			<Compile Include="Properties\AssemblyInfo.cs" /> 
+			
+			<Compile Include="Repositories\dbo\ChainRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\ChainRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\ChainStatusRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\ChainStatusRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\ClaspRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\ClaspRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\LinkLogRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\LinkLogRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\LinkRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\LinkRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\LinkStatusRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\LinkStatusRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\MachineRefTeamRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\MachineRefTeamRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\MachineRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\MachineRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\OrganizationRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\OrganizationRepository.g.cs" /> 
+			
+			<Compile Include="Repositories\dbo\TeamRepository.cs" /> 
+			
+			<Compile Include="Repositories\dbo\TeamRepository.g.cs" /> 
+			
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties" />
-    <Folder Include="Repositories" />
-    <Folder Include="Repositories\dbo" />
-  </ItemGroup>
+
+  
+  
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
