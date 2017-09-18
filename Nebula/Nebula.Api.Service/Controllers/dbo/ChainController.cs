@@ -26,10 +26,13 @@ namespace NebulaNS.Api.Service
 			         context,
 			         chainRepository,
 			         chainModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1799ef0506d74d962df88ca781b73cfc</Hash>
+    <Hash>e179882d578609fe78ba4e4373d2a610</Hash>
 </Codenesium>*/

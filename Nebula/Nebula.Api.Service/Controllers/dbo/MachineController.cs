@@ -26,10 +26,13 @@ namespace NebulaNS.Api.Service
 			         context,
 			         machineRepository,
 			         machineModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69e15d940e76df8229991fc9321c5026</Hash>
+    <Hash>85b4eccebbbb30d50746d2f665f128d0</Hash>
 </Codenesium>*/

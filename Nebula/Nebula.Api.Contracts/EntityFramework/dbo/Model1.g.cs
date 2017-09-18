@@ -7,7 +7,8 @@ namespace NebulaNS.Api.Contracts
 		public Model1()
 			: base("name=NebulaDBConnection")
 		{
-			Database.SetInitializer<Model1>(null);
+			Database.SetInitializer<Model1>(null); // disable migrations
+			this.Configuration.LazyLoadingEnabled = false; //disable lazy loading
 		}
 		public virtual DbSet<Chain> Chain { get; set; }
 		public virtual DbSet<ChainStatus> ChainStatus { get; set; }
@@ -34,5 +35,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6ca9af075402dc84eede588e9e6fc868</Hash>
+    <Hash>dbb887865c0bb69ba8f8321d202ff0bb</Hash>
 </Codenesium>*/

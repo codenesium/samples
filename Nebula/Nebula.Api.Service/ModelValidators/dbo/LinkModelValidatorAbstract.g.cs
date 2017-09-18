@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -106,5 +107,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9a95234922b11be9efb7ac844978e335</Hash>
+    <Hash>f74694b98f743ff9916199300d7312f7</Hash>
 </Codenesium>*/

@@ -26,10 +26,13 @@ namespace NebulaNS.Api.Service
 			         context,
 			         teamRepository,
 			         teamModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cc36b394bca4848777db8d44b59bf228</Hash>
+    <Hash>d44caff05e9976c52ef4af5cde456a43</Hash>
 </Codenesium>*/

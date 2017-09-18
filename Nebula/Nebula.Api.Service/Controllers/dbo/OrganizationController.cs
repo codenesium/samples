@@ -26,10 +26,13 @@ namespace NebulaNS.Api.Service
 			         context,
 			         organizationRepository,
 			         organizationModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c1d6a8f78b3db61f342d29339d2793e4</Hash>
+    <Hash>7a219b7b725f29a34a46342d994016e0</Hash>
 </Codenesium>*/

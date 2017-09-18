@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Codenesium.DataConversionExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Codenesium.DataConversionExtensions.2017.1.4\lib\net461\Codenesium.DataConversionExtensions.dll</HintPath>
+      <HintPath>..\packages\Codenesium.DataConversionExtensions.2017.1.5\lib\net461\Codenesium.DataConversionExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.6.2.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
@@ -91,9 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
-    <Compile Include="NebulaService.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="NebulaService.cs" />
     <Compile Include="NebulaService.Designer.cs" />
     <Content Include="packages.config" />
     <Compile Include="Program.cs" />
@@ -104,6 +102,9 @@
       <Project>{BACDFB68-7148-47EB-BA26-BB020BBBD4D9}</Project>
       <Name>Nebula.Api.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

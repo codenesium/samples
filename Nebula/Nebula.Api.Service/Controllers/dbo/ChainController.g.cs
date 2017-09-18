@@ -19,8 +19,8 @@ namespace NebulaNS.Api.Service
 	{
 		protected ChainRepository _chainRepository;
 		protected ChainModelValidator _chainModelValidator;
-		protected int SearchRecordLimit {get; set;} = 1000;
-		protected int SearchRecordDefault {get; set;} = 250;
+		protected int SearchRecordLimit {get; set;}
+		protected int SearchRecordDefault {get; set;}
 		public ChainsControllerAbstract(
 			ILogger logger,
 			DbContext context,
@@ -59,59 +59,12 @@ namespace NebulaNS.Api.Service
 		[ReadOnlyFilter]
 		public virtual IHttpActionResult Search()
 		{
-			var queryParameters = ControllerContext.Request.GetQueryNameValuePairs();
-			string whereClause = String.Empty;
+			var query = new SearchQuery();
 
-			int offset = 0;
-			int limit = this.SearchRecordDefault;
-
-			if (!queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "OFFSET").Equals(default (KeyValuePair<string, string>)))
-			{
-				offset = queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "OFFSET").Value.ToInt();
-			}
-
-			if (!queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "LIMIT").Equals(default (KeyValuePair<string, string>)))
-			{
-				limit = queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "LIMIT").Value.ToInt();
-			}
-
-			if(limit > this.SearchRecordLimit)
-			{
-				return BadRequest($"Limit of {limit} exceeds maximum request size of {this.SearchRecordLimit} records");
-			}
-
-			foreach(var parameter in queryParameters)
-			{
-				if(parameter.Key.ToUpper() == "OFFSET" || parameter.Key.ToUpper() == "LIMIT")
-				{
-					continue;
-				}
-
-				if(!String.IsNullOrEmpty(whereClause))
-				{
-					whereClause += " && ";
-				}
-
-				if (parameter.Value.ToNullableInt() != null)
-				{
-					whereClause += $"{parameter.Key}.Equals({parameter.Value})";
-				}
-				else if (parameter.Value.ToNullableGuid() != null)
-				{
-					whereClause += $"{parameter.Key}.Equals(Guid(\"{parameter.Value}\"))";
-				}
-				else
-				{
-					whereClause += $"{parameter.Key}.Equals(\"{parameter.Value}\")";
-				}
-			}
-			if(String.IsNullOrWhiteSpace(whereClause))
-			{
-				whereClause = "1=1";
-			}
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
 			Response response = new Response();
 
-			this._chainRepository.GetWhereDynamic(whereClause,response,offset,limit);
+			this._chainRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -275,5 +228,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f161038182a3b5b48c6bb13191f91c19</Hash>
+    <Hash>a70dced521b1ec7bf3caea8ccb99df2e</Hash>
 </Codenesium>*/

@@ -26,10 +26,13 @@ namespace NebulaNS.Api.Service
 			         context,
 			         linkRepository,
 			         linkModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>308e48449fc9150948b501c1c17b3596</Hash>
+    <Hash>ff0ce79ceb596cc79b3c9fe1f17e6b16</Hash>
 </Codenesium>*/

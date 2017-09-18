@@ -26,10 +26,13 @@ namespace NebulaNS.Api.Service
 			         context,
 			         claspRepository,
 			         claspModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>12761c3b0bdbf372c8e3fbe5fe83e620</Hash>
+    <Hash>f24b456265b5a3cef8b19b55290c48ff</Hash>
 </Codenesium>*/

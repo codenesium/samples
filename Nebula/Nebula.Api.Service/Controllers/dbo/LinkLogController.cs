@@ -26,10 +26,13 @@ namespace NebulaNS.Api.Service
 			         context,
 			         linkLogRepository,
 			         linkLogModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>861fcc360ece86b7f2b7a2e76863e415</Hash>
+    <Hash>785a88bd01718060c37322119e5213e2</Hash>
 </Codenesium>*/

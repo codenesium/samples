@@ -71,15 +71,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Codenesium.DataConversionExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Codenesium.DataConversionExtensions.2017.1.4\lib\net461\Codenesium.DataConversionExtensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Codenesium.Foundation.CommonMVC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Codenesium.CommonMVC.2017.1.2\lib\net461\Codenesium.Foundation.CommonMVC.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Codenesium.Foundation.CommonMVC.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Codenesium.CommonMVC.Interfaces.2017.1.1\lib\net461\Codenesium.Foundation.CommonMVC.Interfaces.dll</HintPath>
+      <HintPath>..\packages\Codenesium.DataConversionExtensions.2017.1.5\lib\net461\Codenesium.DataConversionExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -354,9 +346,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>8000</DevelopmentServerPort>
+          <DevelopmentServerPort>8001</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8000/Nebula</IISUrl>
+          <IISUrl>http://localhost:8001/Nebula</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
