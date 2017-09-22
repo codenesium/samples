@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 namespace NebulaNS.Api.Client
 {
-	public abstract class AbstractApiClient
+	public abstract partial class AbstractApiClient
 	{
 		public HttpClient _client;
 		protected string ApiUrl { get; set; }
@@ -646,5 +646,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>bce0bd7a99f6fc1c5d9f7035e3e76204</Hash>
+    <Hash>dadfe763f0cf85d0902ade4e9b715b61</Hash>
 </Codenesium>*/

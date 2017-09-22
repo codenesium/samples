@@ -26,10 +26,13 @@ namespace FileServiceNS.Api.Service
 			         context,
 			         fileRepository,
 			         fileModelValidator)
-		{}
+		{
+			this.SearchRecordLimit = 1000;
+			this.SearchRecordDefault = 250;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab8ccf601b2ac9c7c073753abb03ce18</Hash>
+    <Hash>6d48284365089b4d00ef4814f4e4704c</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class ChainStatusModel
@@ -51,5 +52,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8cb37ccff9b07bc98f0664a39d6301bd</Hash>
+    <Hash>09773d04648bccf3e2f6a1d119cba66d</Hash>
 </Codenesium>*/

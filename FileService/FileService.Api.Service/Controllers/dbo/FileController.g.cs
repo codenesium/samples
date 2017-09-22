@@ -19,8 +19,8 @@ namespace FileServiceNS.Api.Service
 	{
 		protected FileRepository _fileRepository;
 		protected FileModelValidator _fileModelValidator;
-		protected int SearchRecordLimit {get; set;} = 1000;
-		protected int SearchRecordDefault {get; set;} = 250;
+		protected int SearchRecordLimit {get; set;}
+		protected int SearchRecordDefault {get; set;}
 		public FilesControllerAbstract(
 			ILogger logger,
 			DbContext context,
@@ -59,59 +59,12 @@ namespace FileServiceNS.Api.Service
 		[ReadOnlyFilter]
 		public virtual IHttpActionResult Search()
 		{
-			var queryParameters = ControllerContext.Request.GetQueryNameValuePairs();
-			string whereClause = String.Empty;
+			var query = new SearchQuery();
 
-			int offset = 0;
-			int limit = this.SearchRecordDefault;
-
-			if (!queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "OFFSET").Equals(default (KeyValuePair<string, string>)))
-			{
-				offset = queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "OFFSET").Value.ToInt();
-			}
-
-			if (!queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "LIMIT").Equals(default (KeyValuePair<string, string>)))
-			{
-				limit = queryParameters.FirstOrDefault(x => x.Key.ToUpper() == "LIMIT").Value.ToInt();
-			}
-
-			if(limit > this.SearchRecordLimit)
-			{
-				return BadRequest($"Limit of {limit} exceeds maximum request size of {this.SearchRecordLimit} records");
-			}
-
-			foreach(var parameter in queryParameters)
-			{
-				if(parameter.Key.ToUpper() == "OFFSET" || parameter.Key.ToUpper() == "LIMIT")
-				{
-					continue;
-				}
-
-				if(!String.IsNullOrEmpty(whereClause))
-				{
-					whereClause += " && ";
-				}
-
-				if (parameter.Value.ToNullableInt() != null)
-				{
-					whereClause += $"{parameter.Key}.Equals({parameter.Value})";
-				}
-				else if (parameter.Value.ToNullableGuid() != null)
-				{
-					whereClause += $"{parameter.Key}.Equals(Guid(\"{parameter.Value}\"))";
-				}
-				else
-				{
-					whereClause += $"{parameter.Key}.Equals(\"{parameter.Value}\")";
-				}
-			}
-			if(String.IsNullOrWhiteSpace(whereClause))
-			{
-				whereClause = "1=1";
-			}
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
 			Response response = new Response();
 
-			this._fileRepository.GetWhereDynamic(whereClause,response,offset,limit);
+			this._fileRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -303,5 +256,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>10868ea8f0e128a45ca8415e0e1c4cc8</Hash>
+    <Hash>5a487ce2a833222e79c3c5167935a215</Hash>
 </Codenesium>*/

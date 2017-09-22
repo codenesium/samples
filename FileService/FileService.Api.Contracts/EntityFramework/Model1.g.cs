@@ -7,12 +7,12 @@ namespace FileServiceNS.Api.Contracts
 		public Model1()
 			: base("name=FileServiceDBConnection")
 		{
-			Database.SetInitializer<Model1>(null);
+			Database.SetInitializer<Model1>(null); // disable migrations
+			this.Configuration.LazyLoadingEnabled = false; //disable lazy loading
 		}
 		public virtual DbSet<Bucket> Bucket { get; set; }
 		public virtual DbSet<File> File { get; set; }
 		public virtual DbSet<FileType> FileType { get; set; }
-
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{}
 	}
@@ -27,5 +27,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f3b1efdb2892168e3d523bfedd79fd3c</Hash>
+    <Hash>73575e76fc9903d6f696291d9c6a31b2</Hash>
 </Codenesium>*/

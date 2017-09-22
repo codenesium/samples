@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -34,7 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>6</LangVersion>
+	<LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,9 +43,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>6</LangVersion>
+	<LangVersion>6</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
+
+   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
@@ -241,83 +242,148 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="App_Data" />
     <Folder Include="App_Data\" />
-    <Folder Include="App_Start" />
-    <Folder Include="Controllers" />
-    <Folder Include="Controllers\dbo" />
-    <Folder Include="Filters" />
-    <Folder Include="Filters\dbo" />
-    <Folder Include="Lib" />
-    <Folder Include="ModelValidators" />
-    <Folder Include="ModelValidators\dbo" />
-    <Folder Include="Properties" />
   </ItemGroup>
+
+
+
+
+
+
+
   <ItemGroup>
-    <Content Include="Global.asax" />
-    <Compile Include="Global.asax.cs" />
-    <Content Include="packages.config" />
-    <Content Include="Web.config" />
-    <Compile Include="App_Start\AutofacConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="App_Start\SwaggerConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\dbo\ChainController.cs" />
-    <Compile Include="Controllers\dbo\ChainController.g.cs" />
-    <Compile Include="Controllers\dbo\ChainStatusController.cs" />
-    <Compile Include="Controllers\dbo\ChainStatusController.g.cs" />
-    <Compile Include="Controllers\dbo\ClaspController.cs" />
-    <Compile Include="Controllers\dbo\ClaspController.g.cs" />
-    <Compile Include="Controllers\dbo\LinkController.cs" />
-    <Compile Include="Controllers\dbo\LinkController.g.cs" />
-    <Compile Include="Controllers\dbo\LinkLogController.cs" />
-    <Compile Include="Controllers\dbo\LinkLogController.g.cs" />
-    <Compile Include="Controllers\dbo\LinkStatusController.cs" />
-    <Compile Include="Controllers\dbo\LinkStatusController.g.cs" />
-    <Compile Include="Controllers\dbo\MachineController.cs" />
-    <Compile Include="Controllers\dbo\MachineController.g.cs" />
-    <Compile Include="Controllers\dbo\MachineRefTeamController.cs" />
-    <Compile Include="Controllers\dbo\MachineRefTeamController.g.cs" />
-    <Compile Include="Controllers\dbo\OrganizationController.cs" />
-    <Compile Include="Controllers\dbo\OrganizationController.g.cs" />
-    <Compile Include="Controllers\dbo\TeamController.cs" />
-    <Compile Include="Controllers\dbo\TeamController.g.cs" />
-    <Compile Include="Filters\dbo\ChainFilter.g.cs" />
-    <Compile Include="Filters\dbo\ChainStatusFilter.g.cs" />
-    <Compile Include="Filters\dbo\ClaspFilter.g.cs" />
-    <Compile Include="Filters\dbo\LinkFilter.g.cs" />
-    <Compile Include="Filters\dbo\LinkLogFilter.g.cs" />
-    <Compile Include="Filters\dbo\LinkStatusFilter.g.cs" />
-    <Compile Include="Filters\dbo\MachineFilter.g.cs" />
-    <Compile Include="Filters\dbo\MachineRefTeamFilter.g.cs" />
-    <Compile Include="Filters\dbo\OrganizationFilter.g.cs" />
-    <Compile Include="Filters\dbo\TeamFilter.g.cs" />
-    <Compile Include="Lib\Includes.cs" />
-    <Compile Include="ModelValidators\dbo\ChainModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\ChainModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\ChainStatusModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\ChainStatusModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\ClaspModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\ClaspModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\LinkLogModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\LinkLogModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\LinkModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\LinkModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\LinkStatusModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\LinkStatusModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\MachineModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\MachineModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\MachineRefTeamModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\MachineRefTeamModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\OrganizationModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\OrganizationModelValidatorAbstract.g.cs" />
-    <Compile Include="ModelValidators\dbo\TeamModelValidator.cs" />
-    <Compile Include="ModelValidators\dbo\TeamModelValidatorAbstract.g.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+  
+			<Content Include="Global.asax" /> 
+			
+			<Compile Include="Global.asax.cs" /> 
+			
+			<Content Include="packages.config" /> 
+			
+			<Content Include="Web.config" /> 
+			
+			<Compile Include="App_Start\AutofacConfig.cs" /> 
+			
+			<Compile Include="App_Start\RouteConfig.cs" /> 
+			
+			<Compile Include="App_Start\Startup.cs" /> 
+			
+			<Compile Include="App_Start\SwaggerConfig.cs" /> 
+			
+			<Compile Include="App_Start\WebApiConfig.cs" /> 
+			
+			<Compile Include="Controllers\dbo\ChainController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\ChainController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\ChainStatusController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\ChainStatusController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\ClaspController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\ClaspController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\LinkController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\LinkController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\LinkLogController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\LinkLogController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\LinkStatusController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\LinkStatusController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\MachineController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\MachineController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\MachineRefTeamController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\MachineRefTeamController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\OrganizationController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\OrganizationController.g.cs" /> 
+			
+			<Compile Include="Controllers\dbo\TeamController.cs" /> 
+			
+			<Compile Include="Controllers\dbo\TeamController.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\ChainFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\ChainStatusFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\ClaspFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\LinkFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\LinkLogFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\LinkStatusFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\MachineFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\MachineRefTeamFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\OrganizationFilter.g.cs" /> 
+			
+			<Compile Include="Filters\dbo\TeamFilter.g.cs" /> 
+			
+			<Compile Include="Lib\Includes.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\ChainModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\ChainModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\ChainStatusModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\ChainStatusModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\ClaspModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\ClaspModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\LinkLogModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\LinkLogModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\LinkModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\LinkModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\LinkStatusModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\LinkStatusModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\MachineModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\MachineModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\MachineRefTeamModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\MachineRefTeamModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\OrganizationModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\OrganizationModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\TeamModelValidator.cs" /> 
+			
+			<Compile Include="ModelValidators\dbo\TeamModelValidatorAbstract.g.cs" /> 
+			
+			<Compile Include="Properties\AssemblyInfo.cs" /> 
+			
   </ItemGroup>
-  <ItemGroup>
+
+  
+  
+  
+  
+    <ItemGroup>
     <ProjectReference Include="../Nebula.Api.Contracts/Nebula.Api.Contracts.csproj">
       <Project>{df655760-639c-4bcc-ae4b-0dbc05658b1d}</Project>
       <Name>Nebula.Api.Contracts</Name>
@@ -327,6 +393,10 @@
       <Name>Nebula.Api.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
+  
+  
+ 
+  
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
@@ -371,21 +441,24 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
-  <!--By default the roslyn CSC folder will not be copied to the output or the _PublishedWebsite folder
+
+   <!--By default the roslyn CSC folder will not be copied to the output or the _PublishedWebsite folder
 		these build actions take care of that for us.
 		see http://stackoverflow.com/questions/32780315/could-not-find-a-part-of-the-path-bin-roslyn-csc-exe
 	-->
-  <PropertyGroup>
-    <PostBuildEvent>
+	
+	<PropertyGroup>
+		<PostBuildEvent>
 			if not exist "$(WebProjectOutputDir)\bin\Roslyn" md "$(WebProjectOutputDir)\bin\Roslyn"
 			start /MIN xcopy /s /y /R "$(OutDir)roslyn\*.*" "$(WebProjectOutputDir)\bin\Roslyn"
 		</PostBuildEvent>
-  </PropertyGroup>
-  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
-    <ItemGroup>
-      <RoslynFiles Include="$(CscToolPath)\*" />
-    </ItemGroup>
-    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
-    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
-  </Target>
+	</PropertyGroup>
+
+   <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+		<ItemGroup>
+		  <RoslynFiles Include="$(CscToolPath)\*" />
+		</ItemGroup>
+		<MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+		<Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" /> 
+   </Target>
 </Project>

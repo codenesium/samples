@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity.Spatial;
 
 namespace FileServiceNS.Api.Contracts
 {
@@ -59,5 +60,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3e5c40b50fcc685a738cd2f8e444f6c0</Hash>
+    <Hash>f704e9127281103ddce4b7e11214b93d</Hash>
 </Codenesium>*/

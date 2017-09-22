@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -102,5 +103,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>935cc137f62cd46e266ffcb3a68b8c65</Hash>
+    <Hash>c20c63a2afd7e09b9c43f9296778dde7</Hash>
 </Codenesium>*/

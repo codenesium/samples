@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
 namespace FileServiceNS.Api.Client
 {
-	public abstract class AbstractApiClient
+	public abstract partial class AbstractApiClient
 	{
 		public HttpClient _client;
 		protected string ApiUrl { get; set; }
@@ -219,5 +219,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>5001bca6f6dfd32fa5879d13948d2c3c</Hash>
+    <Hash>5541cafc43e9cc3518874667b8489a43</Hash>
 </Codenesium>*/

@@ -20,7 +20,6 @@ namespace NebulaNS.Api.Contracts
 		public virtual DbSet<MachineRefTeam> MachineRefTeam { get; set; }
 		public virtual DbSet<Organization> Organization { get; set; }
 		public virtual DbSet<Team> Team { get; set; }
-
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{}
 	}
@@ -35,5 +34,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dbb887865c0bb69ba8f8321d202ff0bb</Hash>
+    <Hash>e21c7e83871ff328788efcb052d8eb4a</Hash>
 </Codenesium>*/

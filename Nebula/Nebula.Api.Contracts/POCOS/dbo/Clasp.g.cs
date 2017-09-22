@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity.Spatial;
 
 namespace NebulaNS.Api.Contracts
 {
@@ -62,5 +63,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>16b5516a4733cc7fc642d8a123e913b8</Hash>
+    <Hash>71660f0c2c79ab9772e206c12094c241</Hash>
 </Codenesium>*/

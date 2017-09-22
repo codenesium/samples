@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Data.Entity.Spatial;
 namespace FileServiceNS.Api.Contracts
 {
 	public partial class FileModel
@@ -212,5 +213,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>53af960eac77fafd2d79b7ccd2550a3f</Hash>
+    <Hash>da06c339ce5e028d3640f5f8c8668aa1</Hash>
 </Codenesium>*/

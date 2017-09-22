@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class LinkStatusModel
@@ -51,5 +52,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>315ef66640da9bcf39e75aa4a652efc5</Hash>
+    <Hash>143c0e0e3f6adb08320252ae90009fa0</Hash>
 </Codenesium>*/

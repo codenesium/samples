@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class ClaspModel
@@ -68,5 +69,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4a3ab1e66dad6616fda10dec83c3ad80</Hash>
+    <Hash>35b6265bf8f6c73d34aa06d80ce19ef0</Hash>
 </Codenesium>*/
