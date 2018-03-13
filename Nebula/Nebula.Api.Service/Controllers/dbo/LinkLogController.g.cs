@@ -8,14 +8,14 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	public class LinkLogsControllerAbstract: AbstractEntityFrameworkApiController
+	public abstract class AbstractLinkLogsController: AbstractEntityFrameworkApiController
 	{
 		protected LinkLogRepository _linkLogRepository;
 		protected LinkLogModelValidator _linkLogModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
-		public LinkLogsControllerAbstract(
-			ILogger<LinkLogsControllerAbstract> logger,
+		public AbstractLinkLogsController(
+			ILogger<AbstractLinkLogsController> logger,
 			ApplicationContext context,
 			LinkLogRepository linkLogRepository,
 			LinkLogModelValidator linkLogModelValidator
@@ -176,5 +176,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dba60332ce33bd9d9d3544fcd04141f9</Hash>
+    <Hash>b01f90a22e2ef8ba7ab005df33fe7901</Hash>
 </Codenesium>*/

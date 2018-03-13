@@ -9,7 +9,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/teams")]
-	public class TeamsController: TeamsControllerAbstract
+	public class TeamsController: AbstractTeamsController
 	{
 		public TeamsController(
 			ILogger<TeamsController> logger,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>67a20056c9b10a4f1ace082e9dd1ff32</Hash>
+    <Hash>23eb43969a184dadef66d735f31ff3d9</Hash>
 </Codenesium>*/

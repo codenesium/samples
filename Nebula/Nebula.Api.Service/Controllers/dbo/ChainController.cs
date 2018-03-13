@@ -9,7 +9,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/chains")]
-	public class ChainsController: ChainsControllerAbstract
+	public class ChainsController: AbstractChainsController
 	{
 		public ChainsController(
 			ILogger<ChainsController> logger,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>814b5df555f69dbb991d54a1a2afb207</Hash>
+    <Hash>b451f08480cea27c9b886dd8b482d1c5</Hash>
 </Codenesium>*/

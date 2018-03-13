@@ -9,7 +9,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/organizations")]
-	public class OrganizationsController: OrganizationsControllerAbstract
+	public class OrganizationsController: AbstractOrganizationsController
 	{
 		public OrganizationsController(
 			ILogger<OrganizationsController> logger,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>270db6ce1bd91b45910758122000d4e7</Hash>
+    <Hash>d2a6da0139baac0c5d2d21c4ce94ea63</Hash>
 </Codenesium>*/

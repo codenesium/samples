@@ -8,14 +8,14 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
-	public class BucketsControllerAbstract: AbstractEntityFrameworkApiController
+	public abstract class AbstractBucketsController: AbstractEntityFrameworkApiController
 	{
 		protected BucketRepository _bucketRepository;
 		protected BucketModelValidator _bucketModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
-		public BucketsControllerAbstract(
-			ILogger<BucketsControllerAbstract> logger,
+		public AbstractBucketsController(
+			ILogger<AbstractBucketsController> logger,
 			ApplicationContext context,
 			BucketRepository bucketRepository,
 			BucketModelValidator bucketModelValidator
@@ -158,5 +158,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ad69ffdba55af1d84c1af395ca42b9e6</Hash>
+    <Hash>c75b940a3b0956751848d1589b8b2d7e</Hash>
 </Codenesium>*/

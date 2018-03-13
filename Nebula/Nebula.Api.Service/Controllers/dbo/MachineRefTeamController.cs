@@ -9,7 +9,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/machineRefTeams")]
-	public class MachineRefTeamsController: MachineRefTeamsControllerAbstract
+	public class MachineRefTeamsController: AbstractMachineRefTeamsController
 	{
 		public MachineRefTeamsController(
 			ILogger<MachineRefTeamsController> logger,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>aa17ca31f400435d05dac1a2f0c5b931</Hash>
+    <Hash>3ccfc9620c2ed2ac1da19a292fc5e0f0</Hash>
 </Codenesium>*/

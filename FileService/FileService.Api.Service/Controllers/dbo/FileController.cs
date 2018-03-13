@@ -9,7 +9,7 @@ using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/files")]
-	public class FilesController: FilesControllerAbstract
+	public class FilesController: AbstractFilesController
 	{
 		public FilesController(
 			ILogger<FilesController> logger,
@@ -28,5 +28,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fe0b408ffdb4b639f8a7b52e03251212</Hash>
+    <Hash>4404629cb459b37bfeb8a0252b010832</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/fileTypes")]
-	public class FileTypesController: FileTypesControllerAbstract
+	public class FileTypesController: AbstractFileTypesController
 	{
 		public FileTypesController(
 			ILogger<FileTypesController> logger,
@@ -28,5 +28,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3d7bb85846fb0e016b1df1066df02ac3</Hash>
+    <Hash>3d5faaef44bda76de006efc84fcadde8</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/machines")]
-	public class MachinesController: MachinesControllerAbstract
+	public class MachinesController: AbstractMachinesController
 	{
 		public MachinesController(
 			ILogger<MachinesController> logger,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>164d8d9b1ed7daebb9a2850efff05123</Hash>
+    <Hash>eb834d2aa5c1f953b0b7d551197eb67c</Hash>
 </Codenesium>*/

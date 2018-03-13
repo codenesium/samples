@@ -8,14 +8,14 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
-	public class FilesControllerAbstract: AbstractEntityFrameworkApiController
+	public abstract class AbstractFilesController: AbstractEntityFrameworkApiController
 	{
 		protected FileRepository _fileRepository;
 		protected FileModelValidator _fileModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
-		public FilesControllerAbstract(
-			ILogger<FilesControllerAbstract> logger,
+		public AbstractFilesController(
+			ILogger<AbstractFilesController> logger,
 			ApplicationContext context,
 			FileRepository fileRepository,
 			FileModelValidator fileModelValidator
@@ -215,5 +215,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d8713f3844aa2f6ea545845cbd9af12c</Hash>
+    <Hash>37aadd5ef82603e94988ae7d5d797259</Hash>
 </Codenesium>*/

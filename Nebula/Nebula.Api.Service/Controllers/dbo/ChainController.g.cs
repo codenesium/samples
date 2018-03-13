@@ -8,14 +8,14 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	public class ChainsControllerAbstract: AbstractEntityFrameworkApiController
+	public abstract class AbstractChainsController: AbstractEntityFrameworkApiController
 	{
 		protected ChainRepository _chainRepository;
 		protected ChainModelValidator _chainModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
-		public ChainsControllerAbstract(
-			ILogger<ChainsControllerAbstract> logger,
+		public AbstractChainsController(
+			ILogger<AbstractChainsController> logger,
 			ApplicationContext context,
 			ChainRepository chainRepository,
 			ChainModelValidator chainModelValidator
@@ -194,5 +194,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>368d179374c341e782af76f04ba1a25a</Hash>
+    <Hash>6d0fbb9c735499af778d446203e28ac5</Hash>
 </Codenesium>*/

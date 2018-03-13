@@ -9,7 +9,7 @@ using ESPIOTNS.Api.DataAccess;
 namespace ESPIOTNS.Api.Service
 {
 	[Route("api/devices")]
-	public class DevicesController: DevicesControllerAbstract
+	public class DevicesController: AbstractDevicesController
 	{
 		public DevicesController(
 			ILogger<DevicesController> logger,
@@ -28,5 +28,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fa866ffde2e52b35804a17d1ee6209e6</Hash>
+    <Hash>361efbac4b3805b4c005a7fef39156a7</Hash>
 </Codenesium>*/

@@ -8,14 +8,14 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	public class OrganizationsControllerAbstract: AbstractEntityFrameworkApiController
+	public abstract class AbstractOrganizationsController: AbstractEntityFrameworkApiController
 	{
 		protected OrganizationRepository _organizationRepository;
 		protected OrganizationModelValidator _organizationModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
-		public OrganizationsControllerAbstract(
-			ILogger<OrganizationsControllerAbstract> logger,
+		public AbstractOrganizationsController(
+			ILogger<AbstractOrganizationsController> logger,
 			ApplicationContext context,
 			OrganizationRepository organizationRepository,
 			OrganizationModelValidator organizationModelValidator
@@ -155,5 +155,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c53967f0873cf64b6de3791fc3c955b4</Hash>
+    <Hash>88dae0bfb68a6c2059e3b140893ba93e</Hash>
 </Codenesium>*/

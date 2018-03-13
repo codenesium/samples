@@ -8,14 +8,14 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	public class MachineRefTeamsControllerAbstract: AbstractEntityFrameworkApiController
+	public abstract class AbstractMachineRefTeamsController: AbstractEntityFrameworkApiController
 	{
 		protected MachineRefTeamRepository _machineRefTeamRepository;
 		protected MachineRefTeamModelValidator _machineRefTeamModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
-		public MachineRefTeamsControllerAbstract(
-			ILogger<MachineRefTeamsControllerAbstract> logger,
+		public AbstractMachineRefTeamsController(
+			ILogger<AbstractMachineRefTeamsController> logger,
 			ApplicationContext context,
 			MachineRefTeamRepository machineRefTeamRepository,
 			MachineRefTeamModelValidator machineRefTeamModelValidator
@@ -188,5 +188,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b439b71c3dfadff40e547f974858dc51</Hash>
+    <Hash>7848b307e52de185eefb3b30741b77c2</Hash>
 </Codenesium>*/

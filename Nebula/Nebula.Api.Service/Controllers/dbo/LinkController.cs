@@ -9,7 +9,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/links")]
-	public class LinksController: LinksControllerAbstract
+	public class LinksController: AbstractLinksController
 	{
 		public LinksController(
 			ILogger<LinksController> logger,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0340def484b9e9088cec6ec49eee64f1</Hash>
+    <Hash>f7d715c7e27b6039cb437e8486611ce4</Hash>
 </Codenesium>*/

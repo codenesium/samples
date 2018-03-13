@@ -9,7 +9,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/clasps")]
-	public class ClaspsController: ClaspsControllerAbstract
+	public class ClaspsController: AbstractClaspsController
 	{
 		public ClaspsController(
 			ILogger<ClaspsController> logger,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0414850f73270c11caf8a08bfc5b9369</Hash>
+    <Hash>f1dafccafdf1e1ad88a1fae79b4cc67d</Hash>
 </Codenesium>*/

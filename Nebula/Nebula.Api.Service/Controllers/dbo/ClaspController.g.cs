@@ -8,14 +8,14 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	public class ClaspsControllerAbstract: AbstractEntityFrameworkApiController
+	public abstract class AbstractClaspsController: AbstractEntityFrameworkApiController
 	{
 		protected ClaspRepository _claspRepository;
 		protected ClaspModelValidator _claspModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
-		public ClaspsControllerAbstract(
-			ILogger<ClaspsControllerAbstract> logger,
+		public AbstractClaspsController(
+			ILogger<AbstractClaspsController> logger,
 			ApplicationContext context,
 			ClaspRepository claspRepository,
 			ClaspModelValidator claspModelValidator
@@ -188,5 +188,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>166ef3f5c392ff596d46e84b7589a353</Hash>
+    <Hash>2fc16ca35f2a03e1c643a21a1d3309aa</Hash>
 </Codenesium>*/

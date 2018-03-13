@@ -9,7 +9,7 @@ using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/buckets")]
-	public class BucketsController: BucketsControllerAbstract
+	public class BucketsController: AbstractBucketsController
 	{
 		public BucketsController(
 			ILogger<BucketsController> logger,
@@ -28,5 +28,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9f76fd9d9caf0c260d1588f8a6644c45</Hash>
+    <Hash>5a212b62816273caf8816ec77100601b</Hash>
 </Codenesium>*/
