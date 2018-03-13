@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	[RoutePrefix("api/organizations")]
+	[Route("api/organizations")]
 	public class OrganizationsController: OrganizationsControllerAbstract
 	{
 		public OrganizationsController(
-			ILogger logger,
-			DbContext context,
+			ILogger<OrganizationsController> logger,
+			ApplicationContext context,
 			OrganizationRepository organizationRepository,
 			OrganizationModelValidator organizationModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7a219b7b725f29a34a46342d994016e0</Hash>
+    <Hash>270db6ce1bd91b45910758122000d4e7</Hash>
 </Codenesium>*/

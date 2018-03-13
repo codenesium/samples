@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
-	[RoutePrefix("api/buckets")]
+	[Route("api/buckets")]
 	public class BucketsController: BucketsControllerAbstract
 	{
 		public BucketsController(
-			ILogger logger,
-			DbContext context,
+			ILogger<BucketsController> logger,
+			ApplicationContext context,
 			BucketRepository bucketRepository,
 			BucketModelValidator bucketModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e78d268f521347279fa9c1b7376fb48c</Hash>
+    <Hash>9f76fd9d9caf0c260d1588f8a6644c45</Hash>
 </Codenesium>*/

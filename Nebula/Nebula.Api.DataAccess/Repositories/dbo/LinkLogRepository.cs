@@ -1,11 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,8 +11,8 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class LinkLogRepository: AbstractLinkLogRepository
 	{
-		public LinkLogRepository(ILogger logger,
-		                         DbContext context) : base(logger,context)
+		public LinkLogRepository(ILogger<LinkLogRepository> logger,
+		                         ApplicationContext context) : base(logger,context)
 		{}
 
 		protected override List<LinkLog> SearchLinqEF(Expression<Func<LinkLog, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -44,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fed8e9684aab0bc49f5332a785b50b2f</Hash>
+    <Hash>86816a69af97cac5f419c826bdb98aae</Hash>
 </Codenesium>*/

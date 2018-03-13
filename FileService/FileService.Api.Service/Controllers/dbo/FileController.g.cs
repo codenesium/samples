@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
@@ -22,8 +15,8 @@ namespace FileServiceNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public FilesControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<FilesControllerAbstract> logger,
+			ApplicationContext context,
 			FileRepository fileRepository,
 			FileModelValidator fileModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace FileServiceNS.Api.Service
 		[Route("{id}")]
 		[FileFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[FileFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._fileRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace FileServiceNS.Api.Service
 		[ModelValidateFilter]
 		[FileFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(FileModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(FileModel model)
 		{
 			this._fileModelValidator.CreateMode();
 			var validationResult = this._fileModelValidator.Validate(model);
@@ -106,7 +103,9 @@ namespace FileServiceNS.Api.Service
 		[ModelValidateFilter]
 		[FileFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<FileModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<FileModel> models)
 		{
 			this._fileModelValidator.CreateMode();
 			foreach(var model in models)
@@ -142,7 +141,9 @@ namespace FileServiceNS.Api.Service
 		[ModelValidateFilter]
 		[FileFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,FileModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,FileModel model)
 		{
 			this._fileModelValidator.UpdateMode();
 			var validationResult = this._fileModelValidator.Validate(model);
@@ -169,57 +170,13 @@ namespace FileServiceNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[FileFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<FileModel> patch)
-		{
-			Response response = new Response();
-
-			this._fileRepository.GetById(id, response);
-			if (response.Files.Count > 0)
-			{
-				var model = new FileModel(response.Files.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._fileModelValidator.PatchMode();
-				var validationResult = this._fileModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._fileRepository.Update(model.BucketId,
-					                            model.DateCreated,
-					                            model.Description,
-					                            model.Expiration,
-					                            model.Extension,
-					                            model.ExternalId,
-					                            model.FileSizeInBytes,
-					                            model.FileTypeId,
-					                            model.Id,
-					                            model.Location,
-					                            model.PrivateKey,
-					                            model.PublicKey);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[FileFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._fileRepository.Delete(id);
 			return Ok();
@@ -230,7 +187,8 @@ namespace FileServiceNS.Api.Service
 		[FileFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Buckets/{id}/Files")]
-		public virtual IHttpActionResult ByBucketId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBucketId(int id)
 		{
 			var response = new Response();
 
@@ -244,7 +202,8 @@ namespace FileServiceNS.Api.Service
 		[FileFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/FileTypes/{id}/Files")]
-		public virtual IHttpActionResult ByFileTypeId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByFileTypeId(int id)
 		{
 			var response = new Response();
 
@@ -256,5 +215,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5a487ce2a833222e79c3c5167935a215</Hash>
+    <Hash>d8713f3844aa2f6ea545845cbd9af12c</Hash>
 </Codenesium>*/

@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public LinksControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<LinksControllerAbstract> logger,
+			ApplicationContext context,
 			LinkRepository linkRepository,
 			LinkModelValidator linkModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[LinkFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[LinkFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._linkRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(LinkModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(LinkModel model)
 		{
 			this._linkModelValidator.CreateMode();
 			var validationResult = this._linkModelValidator.Validate(model);
@@ -106,7 +103,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<LinkModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<LinkModel> models)
 		{
 			this._linkModelValidator.CreateMode();
 			foreach(var model in models)
@@ -142,7 +141,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,LinkModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,LinkModel model)
 		{
 			this._linkModelValidator.UpdateMode();
 			var validationResult = this._linkModelValidator.Validate(model);
@@ -169,57 +170,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[LinkFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<LinkModel> patch)
-		{
-			Response response = new Response();
-
-			this._linkRepository.GetById(id, response);
-			if (response.Links.Count > 0)
-			{
-				var model = new LinkModel(response.Links.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._linkModelValidator.PatchMode();
-				var validationResult = this._linkModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._linkRepository.Update(model.AssignedMachineId,
-					                            model.ChainId,
-					                            model.DateCompleted,
-					                            model.DateStarted,
-					                            model.DynamicParameters,
-					                            model.ExternalId,
-					                            model.Id,
-					                            model.LinkStatusId,
-					                            model.Name,
-					                            model.Order,
-					                            model.Response,
-					                            model.StaticParameters);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[LinkFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._linkRepository.Delete(id);
 			return Ok();
@@ -230,7 +187,8 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Machines/{id}/Links")]
-		public virtual IHttpActionResult ByAssignedMachineId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByAssignedMachineId(int id)
 		{
 			var response = new Response();
 
@@ -244,7 +202,8 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Links")]
-		public virtual IHttpActionResult ByChainId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByChainId(int id)
 		{
 			var response = new Response();
 
@@ -258,7 +217,8 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/LinkStatus/{id}/Links")]
-		public virtual IHttpActionResult ByLinkStatusId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByLinkStatusId(int id)
 		{
 			var response = new Response();
 
@@ -270,5 +230,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>40255a08312f01e771798066f457a111</Hash>
+    <Hash>0314da97ca19198c9a0e1c6971cbce8e</Hash>
 </Codenesium>*/

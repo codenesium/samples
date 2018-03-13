@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace NebulaNS.Api.Service
 {
 	public class LinkStatusFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(HttpActionContext actionContext)
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
 		{}
 
-		public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
 		{
 			base.OnActionExecuted(actionExecutedContext);
 		}
@@ -18,5 +14,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9f7ab70243277b9903e0fd78fcecff10</Hash>
+    <Hash>ee8f71c072a767c2f391a75c861495ff</Hash>
 </Codenesium>*/

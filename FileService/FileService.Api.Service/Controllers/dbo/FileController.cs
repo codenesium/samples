@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
-	[RoutePrefix("api/files")]
+	[Route("api/files")]
 	public class FilesController: FilesControllerAbstract
 	{
 		public FilesController(
-			ILogger logger,
-			DbContext context,
+			ILogger<FilesController> logger,
+			ApplicationContext context,
 			FileRepository fileRepository,
 			FileModelValidator fileModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6d48284365089b4d00ef4814f4e4704c</Hash>
+    <Hash>fe0b408ffdb4b639f8a7b52e03251212</Hash>
 </Codenesium>*/

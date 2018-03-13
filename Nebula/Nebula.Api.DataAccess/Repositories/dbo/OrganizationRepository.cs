@@ -1,11 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,8 +11,8 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class OrganizationRepository: AbstractOrganizationRepository
 	{
-		public OrganizationRepository(ILogger logger,
-		                              DbContext context) : base(logger,context)
+		public OrganizationRepository(ILogger<OrganizationRepository> logger,
+		                              ApplicationContext context) : base(logger,context)
 		{}
 
 		protected override List<Organization> SearchLinqEF(Expression<Func<Organization, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -44,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b66575e69213fe68af68568f23c62f6c</Hash>
+    <Hash>06b94df271f4d9683ca0e8984c4d0e53</Hash>
 </Codenesium>*/

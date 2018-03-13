@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace NebulaNS.Api.Service
 {
 	public class MachineFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(HttpActionContext actionContext)
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
 		{}
 
-		public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
 		{
 			base.OnActionExecuted(actionExecutedContext);
 		}
@@ -18,5 +14,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ad35d6f61472d4d55f0e833fcff9328d</Hash>
+    <Hash>28b6cc59d6657dd76da686821803edce</Hash>
 </Codenesium>*/

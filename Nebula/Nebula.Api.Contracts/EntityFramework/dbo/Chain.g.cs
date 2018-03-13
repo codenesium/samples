@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Chain", Schema="dbo")]
@@ -26,5 +24,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ae2db4d4e8442d747324a13686f85aad</Hash>
+    <Hash>d504d0dd7d950b821e119f5205f2ecf0</Hash>
 </Codenesium>*/

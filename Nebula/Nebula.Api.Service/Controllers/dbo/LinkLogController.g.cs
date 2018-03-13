@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public LinkLogsControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<LinkLogsControllerAbstract> logger,
+			ApplicationContext context,
 			LinkLogRepository linkLogRepository,
 			LinkLogModelValidator linkLogModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[LinkLogFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[LinkLogFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._linkLogRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkLogFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(LinkLogModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(LinkLogModel model)
 		{
 			this._linkLogModelValidator.CreateMode();
 			var validationResult = this._linkLogModelValidator.Validate(model);
@@ -98,7 +95,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkLogFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<LinkLogModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<LinkLogModel> models)
 		{
 			this._linkLogModelValidator.CreateMode();
 			foreach(var model in models)
@@ -126,7 +125,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkLogFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,LinkLogModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,LinkLogModel model)
 		{
 			this._linkLogModelValidator.UpdateMode();
 			var validationResult = this._linkLogModelValidator.Validate(model);
@@ -145,49 +146,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[LinkLogFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<LinkLogModel> patch)
-		{
-			Response response = new Response();
-
-			this._linkLogRepository.GetById(id, response);
-			if (response.LinkLogs.Count > 0)
-			{
-				var model = new LinkLogModel(response.LinkLogs.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._linkLogModelValidator.PatchMode();
-				var validationResult = this._linkLogModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._linkLogRepository.Update(model.DateEntered,
-					                               model.Id,
-					                               model.LinkId,
-					                               model.Log);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[LinkLogFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._linkLogRepository.Delete(id);
 			return Ok();
@@ -198,7 +163,8 @@ namespace NebulaNS.Api.Service
 		[LinkLogFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Links/{id}/LinkLogs")]
-		public virtual IHttpActionResult ByLinkId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByLinkId(int id)
 		{
 			var response = new Response();
 
@@ -210,5 +176,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0ed42f578fa8744990b274633f50b020</Hash>
+    <Hash>dba60332ce33bd9d9d3544fcd04141f9</Hash>
 </Codenesium>*/

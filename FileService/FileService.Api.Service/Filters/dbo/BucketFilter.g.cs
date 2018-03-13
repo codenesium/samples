@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace FileServiceNS.Api.Service
 {
 	public class BucketFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(HttpActionContext actionContext)
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
 		{}
 
-		public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
 		{
 			base.OnActionExecuted(actionExecutedContext);
 		}
@@ -18,5 +14,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>72eb19bf3ce7fd9b4e41763cc2993216</Hash>
+    <Hash>c7c4ba17324a826ebfe5735cfc86be23</Hash>
 </Codenesium>*/

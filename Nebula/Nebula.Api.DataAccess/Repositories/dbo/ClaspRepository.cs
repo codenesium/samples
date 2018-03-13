@@ -1,11 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,8 +11,8 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class ClaspRepository: AbstractClaspRepository
 	{
-		public ClaspRepository(ILogger logger,
-		                       DbContext context) : base(logger,context)
+		public ClaspRepository(ILogger<ClaspRepository> logger,
+		                       ApplicationContext context) : base(logger,context)
 		{}
 
 		protected override List<Clasp> SearchLinqEF(Expression<Func<Clasp, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -44,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1c0338fff637bf70f871391b1328e808</Hash>
+    <Hash>ed5e8a50734a25cfa368cb45216b2042</Hash>
 </Codenesium>*/

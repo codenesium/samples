@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	[RoutePrefix("api/linkLogs")]
+	[Route("api/linkLogs")]
 	public class LinkLogsController: LinkLogsControllerAbstract
 	{
 		public LinkLogsController(
-			ILogger logger,
-			DbContext context,
+			ILogger<LinkLogsController> logger,
+			ApplicationContext context,
 			LinkLogRepository linkLogRepository,
 			LinkLogModelValidator linkLogModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>785a88bd01718060c37322119e5213e2</Hash>
+    <Hash>d25564173c9d1ac602a9ffa42e1b8f5b</Hash>
 </Codenesium>*/

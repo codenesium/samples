@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace NebulaNS.Api.Service
 {
 	public class LinkLogFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(HttpActionContext actionContext)
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
 		{}
 
-		public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
 		{
 			base.OnActionExecuted(actionExecutedContext);
 		}
@@ -18,5 +14,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7b205350d02e097c3d62b734f449951d</Hash>
+    <Hash>627395fd7e741f08a0f83167376d95ab</Hash>
 </Codenesium>*/

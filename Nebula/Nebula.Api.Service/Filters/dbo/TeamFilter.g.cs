@@ -1,16 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace NebulaNS.Api.Service
 {
 	public class TeamFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(HttpActionContext actionContext)
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
 		{}
 
-		public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
 		{
 			base.OnActionExecuted(actionExecutedContext);
 		}
@@ -18,5 +14,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5b34c28bbca21c76b5ef1655079a225c</Hash>
+    <Hash>a264919b5d3b12f95327ae3475ec22d2</Hash>
 </Codenesium>*/

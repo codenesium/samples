@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public MachineRefTeamsControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<MachineRefTeamsControllerAbstract> logger,
+			ApplicationContext context,
 			MachineRefTeamRepository machineRefTeamRepository,
 			MachineRefTeamModelValidator machineRefTeamModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[MachineRefTeamFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[MachineRefTeamFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._machineRefTeamRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[MachineRefTeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(MachineRefTeamModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(MachineRefTeamModel model)
 		{
 			this._machineRefTeamModelValidator.CreateMode();
 			var validationResult = this._machineRefTeamModelValidator.Validate(model);
@@ -97,7 +94,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[MachineRefTeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<MachineRefTeamModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<MachineRefTeamModel> models)
 		{
 			this._machineRefTeamModelValidator.CreateMode();
 			foreach(var model in models)
@@ -124,7 +123,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[MachineRefTeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,MachineRefTeamModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,MachineRefTeamModel model)
 		{
 			this._machineRefTeamModelValidator.UpdateMode();
 			var validationResult = this._machineRefTeamModelValidator.Validate(model);
@@ -142,48 +143,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[MachineRefTeamFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<MachineRefTeamModel> patch)
-		{
-			Response response = new Response();
-
-			this._machineRefTeamRepository.GetById(id, response);
-			if (response.MachineRefTeams.Count > 0)
-			{
-				var model = new MachineRefTeamModel(response.MachineRefTeams.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._machineRefTeamModelValidator.PatchMode();
-				var validationResult = this._machineRefTeamModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._machineRefTeamRepository.Update(model.Id,
-					                                      model.MachineId,
-					                                      model.TeamId);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[MachineRefTeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._machineRefTeamRepository.Delete(id);
 			return Ok();
@@ -194,7 +160,8 @@ namespace NebulaNS.Api.Service
 		[MachineRefTeamFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Machines/{id}/MachineRefTeams")]
-		public virtual IHttpActionResult ByMachineId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByMachineId(int id)
 		{
 			var response = new Response();
 
@@ -208,7 +175,8 @@ namespace NebulaNS.Api.Service
 		[MachineRefTeamFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Teams/{id}/MachineRefTeams")]
-		public virtual IHttpActionResult ByTeamId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByTeamId(int id)
 		{
 			var response = new Response();
 
@@ -220,5 +188,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>55fe7917d31f101a25c61e2769e51abc</Hash>
+    <Hash>b439b71c3dfadff40e547f974858dc51</Hash>
 </Codenesium>*/

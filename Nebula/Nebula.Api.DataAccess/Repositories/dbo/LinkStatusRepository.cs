@@ -1,11 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,8 +11,8 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class LinkStatusRepository: AbstractLinkStatusRepository
 	{
-		public LinkStatusRepository(ILogger logger,
-		                            DbContext context) : base(logger,context)
+		public LinkStatusRepository(ILogger<LinkStatusRepository> logger,
+		                            ApplicationContext context) : base(logger,context)
 		{}
 
 		protected override List<LinkStatus> SearchLinqEF(Expression<Func<LinkStatus, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -44,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2a43ff4325a317b67faac2c5855f9bd5</Hash>
+    <Hash>330a28c86e0b986da73222edf2114daa</Hash>
 </Codenesium>*/

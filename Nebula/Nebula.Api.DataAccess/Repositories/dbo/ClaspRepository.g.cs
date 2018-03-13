@@ -1,11 +1,10 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,11 +12,11 @@ namespace NebulaNS.Api.DataAccess
 {
 	public abstract class AbstractClaspRepository
 	{
-		protected DbContext _context;
+		protected ApplicationContext _context;
 		protected ILogger _logger;
 
 		public AbstractClaspRepository(ILogger logger,
-		                               DbContext context)
+		                               ApplicationContext context)
 		{
 			this._logger = logger;
 			this._context = context;
@@ -45,7 +44,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this._logger.Error("Unable to find id:{0}",id);
+				this._logger.LogError("Unable to find id:{0}",id);
 			}
 			else
 			{
@@ -128,9 +127,9 @@ namespace NebulaNS.Api.DataAccess
 				Id = efClasp.id.ToInt(),
 
 				NextChainId = new ReferenceEntity<int>(efClasp.nextChainId,
-				                                       "Chain"),
+				                                       "Chains"),
 				PreviousChainId = new ReferenceEntity<int>(efClasp.previousChainId,
-				                                           "Chain"),
+				                                           "Chains"),
 			});
 
 			ChainRepository.MapEFToPOCO(efClasp.ChainRef, response);
@@ -141,5 +140,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b4076978720cf00fdb2ecacc347fab06</Hash>
+    <Hash>c9379f85042c4d40e04f3a9cdb7d50ec</Hash>
 </Codenesium>*/

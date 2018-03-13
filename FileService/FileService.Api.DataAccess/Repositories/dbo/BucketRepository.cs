@@ -1,11 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using FileServiceNS.Api.Contracts;
 
@@ -13,8 +11,8 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public class BucketRepository: AbstractBucketRepository
 	{
-		public BucketRepository(ILogger logger,
-		                        DbContext context) : base(logger,context)
+		public BucketRepository(ILogger<BucketRepository> logger,
+		                        ApplicationContext context) : base(logger,context)
 		{}
 
 		protected override List<Bucket> SearchLinqEF(Expression<Func<Bucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -44,5 +42,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0b18a4af4dcec2fd1e8c19482fb566ae</Hash>
+    <Hash>d8e430e88b55aaabc58bb56ad6c0386e</Hash>
 </Codenesium>*/

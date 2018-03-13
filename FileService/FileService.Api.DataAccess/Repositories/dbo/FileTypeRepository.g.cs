@@ -1,11 +1,10 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using FileServiceNS.Api.Contracts;
 
@@ -13,11 +12,11 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public abstract class AbstractFileTypeRepository
 	{
-		protected DbContext _context;
+		protected ApplicationContext _context;
 		protected ILogger _logger;
 
 		public AbstractFileTypeRepository(ILogger logger,
-		                                  DbContext context)
+		                                  ApplicationContext context)
 		{
 			this._logger = logger;
 			this._context = context;
@@ -42,7 +41,7 @@ namespace FileServiceNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this._logger.Error("Unable to find id:{0}",id);
+				this._logger.LogError("Unable to find id:{0}",id);
 			}
 			else
 			{
@@ -127,5 +126,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e27c780db85edea84ed2678debb5482</Hash>
+    <Hash>415782383dca3e195510befe5d35bfc3</Hash>
 </Codenesium>*/

@@ -1,8 +1,7 @@
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Data.Entity.Spatial;
 namespace FileServiceNS.Api.Contracts
 {
 	public partial class BucketModel
@@ -68,5 +67,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8d974db0f6f972e0be8eed6144e74b92</Hash>
+    <Hash>42b98aae1d821d33780c735514d9b3d0</Hash>
 </Codenesium>*/

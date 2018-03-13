@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	[RoutePrefix("api/linkStatus")]
+	[Route("api/linkStatus")]
 	public class LinkStatusController: LinkStatusControllerAbstract
 	{
 		public LinkStatusController(
-			ILogger logger,
-			DbContext context,
+			ILogger<LinkStatusController> logger,
+			ApplicationContext context,
 			LinkStatusRepository linkStatusRepository,
 			LinkStatusModelValidator linkStatusModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ac66b8bcb9328b602abfd4524d0efeb2</Hash>
+    <Hash>63ad310a2f5d5cf264f21f393f5659c3</Hash>
 </Codenesium>*/

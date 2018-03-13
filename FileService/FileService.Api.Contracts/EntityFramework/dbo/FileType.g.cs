@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 namespace FileServiceNS.Api.Contracts
 {
 	[Table("FileType", Schema="dbo")]
@@ -18,5 +16,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>36e6382adfcf4569f442233160667a7c</Hash>
+    <Hash>7482997ea798bbd462582257e4cc624d</Hash>
 </Codenesium>*/

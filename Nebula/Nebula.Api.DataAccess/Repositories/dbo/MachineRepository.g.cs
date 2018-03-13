@@ -1,11 +1,10 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,11 +12,11 @@ namespace NebulaNS.Api.DataAccess
 {
 	public abstract class AbstractMachineRepository
 	{
-		protected DbContext _context;
+		protected ApplicationContext _context;
 		protected ILogger _logger;
 
 		public AbstractMachineRepository(ILogger logger,
-		                                 DbContext context)
+		                                 ApplicationContext context)
 		{
 			this._logger = logger;
 			this._context = context;
@@ -54,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this._logger.Error("Unable to find id:{0}",id);
+				this._logger.LogError("Unable to find id:{0}",id);
 			}
 			else
 			{
@@ -155,5 +154,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>724c425c5409af0f862fc3dea33433dc</Hash>
+    <Hash>ddfca57f44f5bbf30905254b5952da69</Hash>
 </Codenesium>*/

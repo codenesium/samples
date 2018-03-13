@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	[RoutePrefix("api/teams")]
+	[Route("api/teams")]
 	public class TeamsController: TeamsControllerAbstract
 	{
 		public TeamsController(
-			ILogger logger,
-			DbContext context,
+			ILogger<TeamsController> logger,
+			ApplicationContext context,
 			TeamRepository teamRepository,
 			TeamModelValidator teamModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d44caff05e9976c52ef4af5cde456a43</Hash>
+    <Hash>67a20056c9b10a4f1ace082e9dd1ff32</Hash>
 </Codenesium>*/

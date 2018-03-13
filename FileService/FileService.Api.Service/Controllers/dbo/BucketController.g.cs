@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
@@ -22,8 +15,8 @@ namespace FileServiceNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public BucketsControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<BucketsControllerAbstract> logger,
+			ApplicationContext context,
 			BucketRepository bucketRepository,
 			BucketModelValidator bucketModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace FileServiceNS.Api.Service
 		[Route("{id}")]
 		[BucketFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[BucketFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._bucketRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace FileServiceNS.Api.Service
 		[ModelValidateFilter]
 		[BucketFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(BucketModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(BucketModel model)
 		{
 			this._bucketModelValidator.CreateMode();
 			var validationResult = this._bucketModelValidator.Validate(model);
@@ -97,7 +94,9 @@ namespace FileServiceNS.Api.Service
 		[ModelValidateFilter]
 		[BucketFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<BucketModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<BucketModel> models)
 		{
 			this._bucketModelValidator.CreateMode();
 			foreach(var model in models)
@@ -124,7 +123,9 @@ namespace FileServiceNS.Api.Service
 		[ModelValidateFilter]
 		[BucketFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,BucketModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,BucketModel model)
 		{
 			this._bucketModelValidator.UpdateMode();
 			var validationResult = this._bucketModelValidator.Validate(model);
@@ -142,48 +143,13 @@ namespace FileServiceNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[BucketFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<BucketModel> patch)
-		{
-			Response response = new Response();
-
-			this._bucketRepository.GetById(id, response);
-			if (response.Buckets.Count > 0)
-			{
-				var model = new BucketModel(response.Buckets.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._bucketModelValidator.PatchMode();
-				var validationResult = this._bucketModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._bucketRepository.Update(model.ExternalId,
-					                              model.Id,
-					                              model.Name);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[BucketFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._bucketRepository.Delete(id);
 			return Ok();
@@ -192,5 +158,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b5e91eb0f29fee437b6731060111e9b6</Hash>
+    <Hash>ad69ffdba55af1d84c1af395ca42b9e6</Hash>
 </Codenesium>*/

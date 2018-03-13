@@ -1,11 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,8 +11,8 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class TeamRepository: AbstractTeamRepository
 	{
-		public TeamRepository(ILogger logger,
-		                      DbContext context) : base(logger,context)
+		public TeamRepository(ILogger<TeamRepository> logger,
+		                      ApplicationContext context) : base(logger,context)
 		{}
 
 		protected override List<Team> SearchLinqEF(Expression<Func<Team, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -44,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>27069f6d5c7b2fcbc9dce09b36e633af</Hash>
+    <Hash>7d05a0ae5439dce50abf3ae6655e2e61</Hash>
 </Codenesium>*/

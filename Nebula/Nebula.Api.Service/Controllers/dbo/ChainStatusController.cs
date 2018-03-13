@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	[RoutePrefix("api/chainStatus")]
+	[Route("api/chainStatus")]
 	public class ChainStatusController: ChainStatusControllerAbstract
 	{
 		public ChainStatusController(
-			ILogger logger,
-			DbContext context,
+			ILogger<ChainStatusController> logger,
+			ApplicationContext context,
 			ChainStatusRepository chainStatusRepository,
 			ChainStatusModelValidator chainStatusModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>15d9b1ea9f0ceb8ff7842b982e472920</Hash>
+    <Hash>54a0068cd6c07e4a0f9df1726c738743</Hash>
 </Codenesium>*/

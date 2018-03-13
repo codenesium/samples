@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("MachineRefTeam", Schema="dbo")]
@@ -24,5 +22,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4759edf1644231a58611cf9c1440ea2c</Hash>
+    <Hash>466ce537aa67546de75d48af1cd87378</Hash>
 </Codenesium>*/

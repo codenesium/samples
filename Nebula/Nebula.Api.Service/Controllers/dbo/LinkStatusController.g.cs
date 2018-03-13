@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public LinkStatusControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<LinkStatusControllerAbstract> logger,
+			ApplicationContext context,
 			LinkStatusRepository linkStatusRepository,
 			LinkStatusModelValidator linkStatusModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[LinkStatusFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[LinkStatusFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._linkStatusRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(LinkStatusModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(LinkStatusModel model)
 		{
 			this._linkStatusModelValidator.CreateMode();
 			var validationResult = this._linkStatusModelValidator.Validate(model);
@@ -96,7 +93,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<LinkStatusModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<LinkStatusModel> models)
 		{
 			this._linkStatusModelValidator.CreateMode();
 			foreach(var model in models)
@@ -122,7 +121,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,LinkStatusModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,LinkStatusModel model)
 		{
 			this._linkStatusModelValidator.UpdateMode();
 			var validationResult = this._linkStatusModelValidator.Validate(model);
@@ -139,47 +140,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[LinkStatusFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<LinkStatusModel> patch)
-		{
-			Response response = new Response();
-
-			this._linkStatusRepository.GetById(id, response);
-			if (response.LinkStatus.Count > 0)
-			{
-				var model = new LinkStatusModel(response.LinkStatus.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._linkStatusModelValidator.PatchMode();
-				var validationResult = this._linkStatusModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._linkStatusRepository.Update(model.Id,
-					                                  model.Name);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._linkStatusRepository.Delete(id);
 			return Ok();
@@ -188,5 +155,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>53cf4e4e877a038a3b6b5ec38f22e0f8</Hash>
+    <Hash>578f08600fcbde12449a1735fdc59908</Hash>
 </Codenesium>*/

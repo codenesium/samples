@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	[RoutePrefix("api/machines")]
+	[Route("api/machines")]
 	public class MachinesController: MachinesControllerAbstract
 	{
 		public MachinesController(
-			ILogger logger,
-			DbContext context,
+			ILogger<MachinesController> logger,
+			ApplicationContext context,
 			MachineRepository machineRepository,
 			MachineModelValidator machineModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>85b4eccebbbb30d50746d2f665f128d0</Hash>
+    <Hash>164d8d9b1ed7daebb9a2850efff05123</Hash>
 </Codenesium>*/

@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public MachinesControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<MachinesControllerAbstract> logger,
+			ApplicationContext context,
 			MachineRepository machineRepository,
 			MachineModelValidator machineModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[MachineFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[MachineFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._machineRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[MachineFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(MachineModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(MachineModel model)
 		{
 			this._machineModelValidator.CreateMode();
 			var validationResult = this._machineModelValidator.Validate(model);
@@ -100,7 +97,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[MachineFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<MachineModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<MachineModel> models)
 		{
 			this._machineModelValidator.CreateMode();
 			foreach(var model in models)
@@ -130,7 +129,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[MachineFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,MachineModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,MachineModel model)
 		{
 			this._machineModelValidator.UpdateMode();
 			var validationResult = this._machineModelValidator.Validate(model);
@@ -151,51 +152,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[MachineFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<MachineModel> patch)
-		{
-			Response response = new Response();
-
-			this._machineRepository.GetById(id, response);
-			if (response.Machines.Count > 0)
-			{
-				var model = new MachineModel(response.Machines.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._machineModelValidator.PatchMode();
-				var validationResult = this._machineModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._machineRepository.Update(model.Description,
-					                               model.Id,
-					                               model.JwtKey,
-					                               model.LastIpAddress,
-					                               model.MachineGuid,
-					                               model.Name);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[MachineFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._machineRepository.Delete(id);
 			return Ok();
@@ -204,5 +167,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6815a0fb3bb6892a455573b3e115d86a</Hash>
+    <Hash>23bcf61d7dd025ac52371db6a28ef3cf</Hash>
 </Codenesium>*/

@@ -1,11 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,8 +11,8 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class ChainStatusRepository: AbstractChainStatusRepository
 	{
-		public ChainStatusRepository(ILogger logger,
-		                             DbContext context) : base(logger,context)
+		public ChainStatusRepository(ILogger<ChainStatusRepository> logger,
+		                             ApplicationContext context) : base(logger,context)
 		{}
 
 		protected override List<ChainStatus> SearchLinqEF(Expression<Func<ChainStatus, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -44,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bb8817852f3b703eea6dd8c6e29122a0</Hash>
+    <Hash>5ee18320ab3d6ef4f489736a27f1e531</Hash>
 </Codenesium>*/

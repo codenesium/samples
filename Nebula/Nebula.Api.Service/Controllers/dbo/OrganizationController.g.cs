@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public OrganizationsControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<OrganizationsControllerAbstract> logger,
+			ApplicationContext context,
 			OrganizationRepository organizationRepository,
 			OrganizationModelValidator organizationModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[OrganizationFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[OrganizationFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._organizationRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(OrganizationModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(OrganizationModel model)
 		{
 			this._organizationModelValidator.CreateMode();
 			var validationResult = this._organizationModelValidator.Validate(model);
@@ -96,7 +93,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<OrganizationModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<OrganizationModel> models)
 		{
 			this._organizationModelValidator.CreateMode();
 			foreach(var model in models)
@@ -122,7 +121,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,OrganizationModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,OrganizationModel model)
 		{
 			this._organizationModelValidator.UpdateMode();
 			var validationResult = this._organizationModelValidator.Validate(model);
@@ -139,47 +140,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[OrganizationFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<OrganizationModel> patch)
-		{
-			Response response = new Response();
-
-			this._organizationRepository.GetById(id, response);
-			if (response.Organizations.Count > 0)
-			{
-				var model = new OrganizationModel(response.Organizations.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._organizationModelValidator.PatchMode();
-				var validationResult = this._organizationModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._organizationRepository.Update(model.Id,
-					                                    model.Name);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._organizationRepository.Delete(id);
 			return Ok();
@@ -188,5 +155,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>20b2b13efab90c8d27e6ab3c11b5c704</Hash>
+    <Hash>c53967f0873cf64b6de3791fc3c955b4</Hash>
 </Codenesium>*/

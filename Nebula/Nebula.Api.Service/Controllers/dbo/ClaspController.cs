@@ -1,25 +1,19 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
-	[RoutePrefix("api/clasps")]
+	[Route("api/clasps")]
 	public class ClaspsController: ClaspsControllerAbstract
 	{
 		public ClaspsController(
-			ILogger logger,
-			DbContext context,
+			ILogger<ClaspsController> logger,
+			ApplicationContext context,
 			ClaspRepository claspRepository,
 			ClaspModelValidator claspModelValidator
 			) : base(logger,
@@ -34,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f24b456265b5a3cef8b19b55290c48ff</Hash>
+    <Hash>0414850f73270c11caf8a08bfc5b9369</Hash>
 </Codenesium>*/

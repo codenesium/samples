@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public ClaspsControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<ClaspsControllerAbstract> logger,
+			ApplicationContext context,
 			ClaspRepository claspRepository,
 			ClaspModelValidator claspModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[ClaspFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ClaspFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._claspRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[ClaspFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(ClaspModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(ClaspModel model)
 		{
 			this._claspModelValidator.CreateMode();
 			var validationResult = this._claspModelValidator.Validate(model);
@@ -97,7 +94,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[ClaspFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<ClaspModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<ClaspModel> models)
 		{
 			this._claspModelValidator.CreateMode();
 			foreach(var model in models)
@@ -124,7 +123,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[ClaspFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,ClaspModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,ClaspModel model)
 		{
 			this._claspModelValidator.UpdateMode();
 			var validationResult = this._claspModelValidator.Validate(model);
@@ -142,48 +143,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[ClaspFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<ClaspModel> patch)
-		{
-			Response response = new Response();
-
-			this._claspRepository.GetById(id, response);
-			if (response.Clasps.Count > 0)
-			{
-				var model = new ClaspModel(response.Clasps.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._claspModelValidator.PatchMode();
-				var validationResult = this._claspModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._claspRepository.Update(model.Id,
-					                             model.NextChainId,
-					                             model.PreviousChainId);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[ClaspFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._claspRepository.Delete(id);
 			return Ok();
@@ -194,7 +160,8 @@ namespace NebulaNS.Api.Service
 		[ClaspFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Clasps")]
-		public virtual IHttpActionResult ByNextChainId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByNextChainId(int id)
 		{
 			var response = new Response();
 
@@ -208,7 +175,8 @@ namespace NebulaNS.Api.Service
 		[ClaspFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Clasps")]
-		public virtual IHttpActionResult ByPreviousChainId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByPreviousChainId(int id)
 		{
 			var response = new Response();
 
@@ -220,5 +188,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>96d842abec9a16cd53fb23ea4fb43474</Hash>
+    <Hash>166ef3f5c392ff596d46e84b7589a353</Hash>
 </Codenesium>*/

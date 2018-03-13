@@ -1,8 +1,7 @@
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class OrganizationModel
@@ -52,5 +51,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cef825343978d79bc332b6d02aa2d0bb</Hash>
+    <Hash>264a601e0cbb76c83ca1e0ffb9835818</Hash>
 </Codenesium>*/

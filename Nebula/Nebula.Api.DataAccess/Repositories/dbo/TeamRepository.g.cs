@@ -1,11 +1,10 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,11 +12,11 @@ namespace NebulaNS.Api.DataAccess
 {
 	public abstract class AbstractTeamRepository
 	{
-		protected DbContext _context;
+		protected ApplicationContext _context;
 		protected ILogger _logger;
 
 		public AbstractTeamRepository(ILogger logger,
-		                              DbContext context)
+		                              ApplicationContext context)
 		{
 			this._logger = logger;
 			this._context = context;
@@ -45,7 +44,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this._logger.Error("Unable to find id:{0}",id);
+				this._logger.LogError("Unable to find id:{0}",id);
 			}
 			else
 			{
@@ -129,7 +128,7 @@ namespace NebulaNS.Api.DataAccess
 				Name = efTeam.name,
 
 				OrganizationId = new ReferenceEntity<int>(efTeam.organizationId,
-				                                          "Organization"),
+				                                          "Organizations"),
 			});
 
 			OrganizationRepository.MapEFToPOCO(efTeam.OrganizationRef, response);
@@ -138,5 +137,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0a0056c7a1011dfbb9f82f6dcab5775b</Hash>
+    <Hash>6454c5b10911d10a10cc92d2040dd8e9</Hash>
 </Codenesium>*/

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 namespace FileServiceNS.Api.Contracts
 {
 	[Table("Bucket", Schema="dbo")]
@@ -19,5 +17,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>543d4e663fa40aa80514af9d04206cf5</Hash>
+    <Hash>9077eeb32be6ca38d10dc4a90ee0e173</Hash>
 </Codenesium>*/

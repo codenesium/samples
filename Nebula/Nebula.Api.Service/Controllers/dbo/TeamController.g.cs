@@ -1,16 +1,9 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -22,8 +15,8 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public TeamsControllerAbstract(
-			ILogger logger,
-			DbContext context,
+			ILogger<TeamsControllerAbstract> logger,
+			ApplicationContext context,
 			TeamRepository teamRepository,
 			TeamModelValidator teamModelValidator
 			) : base(logger,context)
@@ -44,7 +37,8 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[TeamFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Get(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Get(int id)
 		{
 			Response response = new Response();
 
@@ -57,11 +51,12 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[TeamFilter]
 		[ReadOnlyFilter]
-		public virtual IHttpActionResult Search()
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.Request.GetQueryNameValuePairs());
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			Response response = new Response();
 
 			this._teamRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
@@ -74,7 +69,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[TeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Create(TeamModel model)
+		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Create(TeamModel model)
 		{
 			this._teamModelValidator.CreateMode();
 			var validationResult = this._teamModelValidator.Validate(model);
@@ -97,7 +94,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[TeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult CreateMany(List<TeamModel> models)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult CreateMany(List<TeamModel> models)
 		{
 			this._teamModelValidator.CreateMode();
 			foreach(var model in models)
@@ -124,7 +123,9 @@ namespace NebulaNS.Api.Service
 		[ModelValidateFilter]
 		[TeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Update(int id,TeamModel model)
+		[ProducesResponseType(typeof(void), 200)]
+		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		public virtual IActionResult Update(int id,TeamModel model)
 		{
 			this._teamModelValidator.UpdateMode();
 			var validationResult = this._teamModelValidator.Validate(model);
@@ -142,48 +143,13 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpPatch]
-		[Route("{id}")]
-		[ModelValidateFilter]
-		[TeamFilter]
-		[UnitOfWorkActionFilter]
-		public IHttpActionResult Patch(int id, JsonPatchDocument<TeamModel> patch)
-		{
-			Response response = new Response();
-
-			this._teamRepository.GetById(id, response);
-			if (response.Teams.Count > 0)
-			{
-				var model = new TeamModel(response.Teams.First());
-
-				patch.ApplyUpdatesTo(model);
-				this._teamModelValidator.PatchMode();
-				var validationResult = this._teamModelValidator.Validate(model);
-				if (validationResult.IsValid)
-				{
-					this._teamRepository.Update(model.Id,
-					                            model.Name,
-					                            model.OrganizationId);
-					return Ok();
-				}
-				else
-				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
-				}
-			}
-			else
-			{
-				return BadRequest("Entity not found");
-			}
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
 		[TeamFilter]
 		[UnitOfWorkActionFilter]
-		public virtual IHttpActionResult Delete(int id)
+		[ProducesResponseType(typeof(void), 200)]
+		public virtual IActionResult Delete(int id)
 		{
 			this._teamRepository.Delete(id);
 			return Ok();
@@ -194,7 +160,8 @@ namespace NebulaNS.Api.Service
 		[TeamFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Organizations/{id}/Teams")]
-		public virtual IHttpActionResult ByOrganizationId(int id)
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByOrganizationId(int id)
 		{
 			var response = new Response();
 
@@ -206,5 +173,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c4a8f8c1ece8348b335114a8e4aa6894</Hash>
+    <Hash>56f1baa40d968d0f6d86779b0c9b8b13</Hash>
 </Codenesium>*/

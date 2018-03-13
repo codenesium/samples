@@ -1,8 +1,7 @@
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class LinkModel
@@ -213,5 +212,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1fcf14ad17dfc16ddaa7e97e97c7cc8a</Hash>
+    <Hash>106440e13abec34f8bf038d26cfe7acb</Hash>
 </Codenesium>*/

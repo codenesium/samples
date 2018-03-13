@@ -1,11 +1,10 @@
-using Autofac.Extras.NLog;
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Spatial;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using NebulaNS.Api.Contracts;
 
@@ -13,11 +12,11 @@ namespace NebulaNS.Api.DataAccess
 {
 	public abstract class AbstractMachineRefTeamRepository
 	{
-		protected DbContext _context;
+		protected ApplicationContext _context;
 		protected ILogger _logger;
 
 		public AbstractMachineRefTeamRepository(ILogger logger,
-		                                        DbContext context)
+		                                        ApplicationContext context)
 		{
 			this._logger = logger;
 			this._context = context;
@@ -45,7 +44,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this._logger.Error("Unable to find id:{0}",id);
+				this._logger.LogError("Unable to find id:{0}",id);
 			}
 			else
 			{
@@ -128,9 +127,9 @@ namespace NebulaNS.Api.DataAccess
 				Id = efMachineRefTeam.id.ToInt(),
 
 				MachineId = new ReferenceEntity<int>(efMachineRefTeam.machineId,
-				                                     "Machine"),
+				                                     "Machines"),
 				TeamId = new ReferenceEntity<int>(efMachineRefTeam.teamId,
-				                                  "Team"),
+				                                  "Teams"),
 			});
 
 			MachineRepository.MapEFToPOCO(efMachineRefTeam.MachineRef, response);
@@ -141,5 +140,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>368216f2484cd00cc718af58537d4012</Hash>
+    <Hash>57099336f5f7921186bbe66e8a307f2b</Hash>
 </Codenesium>*/

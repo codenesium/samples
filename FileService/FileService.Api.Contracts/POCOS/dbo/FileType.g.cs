@@ -1,10 +1,6 @@
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity.Spatial;
 
 namespace FileServiceNS.Api.Contracts
 {
@@ -48,5 +44,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>db71a66baf36e8400bb6a75af2ec1b17</Hash>
+    <Hash>dc2e2512aaf4dcdeec4bd88dbdd43a99</Hash>
 </Codenesium>*/

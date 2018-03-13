@@ -1,8 +1,7 @@
-using Codenesium.DataConversionExtensions;
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Data.Entity.Spatial;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class MachineModel
@@ -116,5 +115,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>85685c92ed6518966ee2dfba1906c7d6</Hash>
+    <Hash>e22190e4f4078d587011167f55446d7b</Hash>
 </Codenesium>*/
