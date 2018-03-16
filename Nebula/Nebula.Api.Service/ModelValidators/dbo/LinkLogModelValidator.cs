@@ -11,7 +11,6 @@ namespace NebulaNS.Api.Service
 		public void CreateMode()
 		{
 			this.DateEnteredRules();
-			this.IdRules();
 			this.LinkIdRules();
 			this.LogRules();
 		}
@@ -19,7 +18,6 @@ namespace NebulaNS.Api.Service
 		public void UpdateMode()
 		{
 			this.DateEnteredRules();
-			this.IdRules();
 			this.LinkIdRules();
 			this.LogRules();
 		}
@@ -27,7 +25,6 @@ namespace NebulaNS.Api.Service
 		public void PatchMode()
 		{
 			this.DateEnteredRules();
-			this.IdRules();
 			this.LinkIdRules();
 			this.LogRules();
 		}
@@ -35,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b1c1b672ae7e884e129cd389a1c16794</Hash>
+    <Hash>15d3ea300965555d3ebe9ff71557266f</Hash>
 </Codenesium>*/

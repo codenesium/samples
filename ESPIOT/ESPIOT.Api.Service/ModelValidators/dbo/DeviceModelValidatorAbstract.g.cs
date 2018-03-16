@@ -9,11 +9,6 @@ namespace ESPIOTNS.Api.Service
 {
 	public class DeviceModelValidatorAbstract: AbstractValidator<DeviceModel>
 	{
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -28,5 +23,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ed7d2ccb9caac5f9bca42b55dd4c6b75</Hash>
+    <Hash>b2e8e411f2ecce83e24e7a3111c96dbf</Hash>
 </Codenesium>*/

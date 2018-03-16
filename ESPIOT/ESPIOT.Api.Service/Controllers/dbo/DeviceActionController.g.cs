@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 namespace ESPIOTNS.Api.Service
@@ -70,7 +71,7 @@ namespace ESPIOTNS.Api.Service
 		[DeviceActionFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(DeviceActionModel model)
 		{
 			this._deviceActionModelValidator.CreateMode();
@@ -78,7 +79,6 @@ namespace ESPIOTNS.Api.Service
 			if (validationResult.IsValid)
 			{
 				var id = this._deviceActionRepository.Create(model.DeviceId,
-				                                             model.Id,
 				                                             model.Name,
 				                                             model.@Value);
 				return Ok(id);
@@ -96,7 +96,7 @@ namespace ESPIOTNS.Api.Service
 		[DeviceActionFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<DeviceActionModel> models)
 		{
 			this._deviceActionModelValidator.CreateMode();
@@ -113,7 +113,6 @@ namespace ESPIOTNS.Api.Service
 			foreach(var model in models)
 			{
 				this._deviceActionRepository.Create(model.DeviceId,
-				                                    model.Id,
 				                                    model.Name,
 				                                    model.@Value);
 			}
@@ -126,15 +125,14 @@ namespace ESPIOTNS.Api.Service
 		[DeviceActionFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,DeviceActionModel model)
 		{
 			this._deviceActionModelValidator.UpdateMode();
 			var validationResult = this._deviceActionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._deviceActionRepository.Update(model.DeviceId,
-				                                    model.Id,
+				this._deviceActionRepository.Update(id,  model.DeviceId,
 				                                    model.Name,
 				                                    model.@Value);
 				return Ok();
@@ -176,5 +174,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>55af591a678193790ce1704d03baccec</Hash>
+    <Hash>327808d45aebd9697f29b137de05720d</Hash>
 </Codenesium>*/

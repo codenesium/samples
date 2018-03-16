@@ -9,7 +9,7 @@ using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class MachineRefTeamRepository: AbstractMachineRefTeamRepository
+	public class MachineRefTeamRepository: AbstractMachineRefTeamRepository, IMachineRefTeamRepository
 	{
 		public MachineRefTeamRepository(ILogger<MachineRefTeamRepository> logger,
 		                                ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cef99902650a3fe086a602cd587cc1a2</Hash>
+    <Hash>a3c65a2ffec9b4dceaba1cbe6175b253</Hash>
 </Codenesium>*/

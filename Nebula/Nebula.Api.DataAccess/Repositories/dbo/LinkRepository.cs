@@ -9,7 +9,7 @@ using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class LinkRepository: AbstractLinkRepository
+	public class LinkRepository: AbstractLinkRepository, ILinkRepository
 	{
 		public LinkRepository(ILogger<LinkRepository> logger,
 		                      ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e51fd59b7689a929531ab0003543bfe</Hash>
+    <Hash>9dc39f4429e6eef953af3ed8f70e3560</Hash>
 </Codenesium>*/

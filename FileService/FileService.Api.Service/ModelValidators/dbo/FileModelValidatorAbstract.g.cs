@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.Service
 
 		public virtual void BucketIdRules()
 		{
-			RuleFor(x => x.BucketId).Must(BeValidBucket).When(x => x != null && x.BucketId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.BucketId).Must(BeValidBucket).When(x => x ?.BucketId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DateCreatedRules()
@@ -52,12 +52,7 @@ namespace FileServiceNS.Api.Service
 		public virtual void FileTypeIdRules()
 		{
 			RuleFor(x => x.FileTypeId).NotNull();
-			RuleFor(x => x.FileTypeId).Must(BeValidFileType).When(x => x != null && x.FileTypeId != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
+			RuleFor(x => x.FileTypeId).Must(BeValidFileType).When(x => x ?.FileTypeId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LocationRules()
@@ -97,5 +92,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fb7d37a2b85e3f12e57a1eabca0fb70e</Hash>
+    <Hash>a7c201ab6ae3b3dc0a8d79eb19119083</Hash>
 </Codenesium>*/

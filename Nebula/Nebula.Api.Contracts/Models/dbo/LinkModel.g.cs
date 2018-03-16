@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class LinkModel
@@ -15,7 +16,6 @@ namespace NebulaNS.Api.Contracts
 		                 Nullable<DateTime> dateStarted,
 		                 string dynamicParameters,
 		                 Guid externalId,
-		                 int id,
 		                 int linkStatusId,
 		                 string name,
 		                 int order,
@@ -28,7 +28,6 @@ namespace NebulaNS.Api.Contracts
 			this.DateStarted = dateStarted.ToNullableDateTime();
 			this.DynamicParameters = dynamicParameters;
 			this.ExternalId = externalId;
-			this.Id = id.ToInt();
 			this.LinkStatusId = linkStatusId.ToInt();
 			this.Name = name;
 			this.Order = order.ToInt();
@@ -42,15 +41,14 @@ namespace NebulaNS.Api.Contracts
 			this.DateStarted = poco.DateStarted.ToNullableDateTime();
 			this.DynamicParameters = poco.DynamicParameters;
 			this.ExternalId = poco.ExternalId;
-			this.Id = poco.Id.ToInt();
 			this.Name = poco.Name;
 			this.Order = poco.Order.ToInt();
 			this.Response = poco.Response;
 			this.StaticParameters = poco.StaticParameters;
 
-			AssignedMachineId = poco.AssignedMachineId.Value.ToInt();
-			ChainId = poco.ChainId.Value.ToInt();
-			LinkStatusId = poco.LinkStatusId.Value.ToInt();
+			this.AssignedMachineId = poco.AssignedMachineId.Value.ToInt();
+			this.ChainId = poco.ChainId.Value.ToInt();
+			this.LinkStatusId = poco.LinkStatusId.Value.ToInt();
 		}
 
 		private Nullable<int> _assignedMachineId;
@@ -67,6 +65,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private int _chainId;
+		[Required]
 		public int ChainId
 		{
 			get
@@ -119,6 +118,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private Guid _externalId;
+		[Required]
 		public Guid ExternalId
 		{
 			get
@@ -131,20 +131,8 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private int _linkStatusId;
+		[Required]
 		public int LinkStatusId
 		{
 			get
@@ -158,6 +146,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private string _name;
+		[Required]
 		public string Name
 		{
 			get
@@ -171,6 +160,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private int _order;
+		[Required]
 		public int Order
 		{
 			get
@@ -212,5 +202,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>106440e13abec34f8bf038d26cfe7acb</Hash>
+    <Hash>ebb48f36c711c8499475df40b22e5388</Hash>
 </Codenesium>*/

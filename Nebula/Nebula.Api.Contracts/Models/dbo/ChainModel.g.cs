@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class ChainModel
@@ -11,13 +12,11 @@ namespace NebulaNS.Api.Contracts
 
 		public ChainModel(int chainStatusId,
 		                  Guid externalId,
-		                  int id,
 		                  string name,
 		                  int teamId)
 		{
 			this.ChainStatusId = chainStatusId.ToInt();
 			this.ExternalId = externalId;
-			this.Id = id.ToInt();
 			this.Name = name;
 			this.TeamId = teamId.ToInt();
 		}
@@ -25,14 +24,14 @@ namespace NebulaNS.Api.Contracts
 		public ChainModel(POCOChain poco)
 		{
 			this.ExternalId = poco.ExternalId;
-			this.Id = poco.Id.ToInt();
 			this.Name = poco.Name;
 
-			ChainStatusId = poco.ChainStatusId.Value.ToInt();
-			TeamId = poco.TeamId.Value.ToInt();
+			this.ChainStatusId = poco.ChainStatusId.Value.ToInt();
+			this.TeamId = poco.TeamId.Value.ToInt();
 		}
 
 		private int _chainStatusId;
+		[Required]
 		public int ChainStatusId
 		{
 			get
@@ -46,6 +45,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private Guid _externalId;
+		[Required]
 		public Guid ExternalId
 		{
 			get
@@ -58,20 +58,8 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private string _name;
+		[Required]
 		public string Name
 		{
 			get
@@ -85,6 +73,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private int _teamId;
+		[Required]
 		public int TeamId
 		{
 			get
@@ -100,5 +89,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ad625c1e1d85f42e8a14d6c005054beb</Hash>
+    <Hash>d174e8e56ff15835f55e1634a019258e</Hash>
 </Codenesium>*/

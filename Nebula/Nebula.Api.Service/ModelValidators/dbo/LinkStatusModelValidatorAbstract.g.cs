@@ -9,11 +9,6 @@ namespace NebulaNS.Api.Service
 {
 	public class LinkStatusModelValidatorAbstract: AbstractValidator<LinkStatusModel>
 	{
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -23,5 +18,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2c7613f1bfa5be2cc71a7105e95ac4c4</Hash>
+    <Hash>1368b8992d4cd99655012ff04dde61ea</Hash>
 </Codenesium>*/

@@ -9,11 +9,6 @@ namespace FileServiceNS.Api.Service
 {
 	public class FileTypeModelValidatorAbstract: AbstractValidator<FileTypeModel>
 	{
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -23,5 +18,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6332bf7ac19654f1a660b2803474e9a4</Hash>
+    <Hash>ad7ad79a547a806e1537cc644e125b02</Hash>
 </Codenesium>*/

@@ -11,11 +11,6 @@ namespace NebulaNS.Api.Service
 	{
 		public OrganizationRepository OrganizationRepository {get; set;}
 
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -25,7 +20,7 @@ namespace NebulaNS.Api.Service
 		public virtual void OrganizationIdRules()
 		{
 			RuleFor(x => x.OrganizationId).NotNull();
-			RuleFor(x => x.OrganizationId).Must(BeValidOrganization).When(x => x != null && x.OrganizationId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.OrganizationId).Must(BeValidOrganization).When(x => x ?.OrganizationId != null).WithMessage("Invalid reference");
 		}
 
 		public bool BeValidOrganization(int id)
@@ -39,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6f8a98833ad0dcb571bf13faee38f82b</Hash>
+    <Hash>9a555a20b7623cf8e4906b9213bd9cf7</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class TeamRepository: AbstractTeamRepository
+	public class TeamRepository: AbstractTeamRepository, ITeamRepository
 	{
 		public TeamRepository(ILogger<TeamRepository> logger,
 		                      ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7d05a0ae5439dce50abf3ae6655e2e61</Hash>
+    <Hash>eddfec426a7d4a13801d27fd12a2fae4</Hash>
 </Codenesium>*/

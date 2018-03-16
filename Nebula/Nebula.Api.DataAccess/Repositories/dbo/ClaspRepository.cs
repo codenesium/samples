@@ -9,7 +9,7 @@ using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class ClaspRepository: AbstractClaspRepository
+	public class ClaspRepository: AbstractClaspRepository, IClaspRepository
 	{
 		public ClaspRepository(ILogger<ClaspRepository> logger,
 		                       ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed5e8a50734a25cfa368cb45216b2042</Hash>
+    <Hash>71554af8475ee09924e2e32ce737882e</Hash>
 </Codenesium>*/

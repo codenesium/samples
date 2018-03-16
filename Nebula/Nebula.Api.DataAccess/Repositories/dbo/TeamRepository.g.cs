@@ -22,14 +22,12 @@ namespace NebulaNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(int id,
-		                          string name,
+		public virtual int Create(string name,
 		                          int organizationId)
 		{
 			var record = new Team ();
 
-			MapPOCOToEF(id,
-			            name,
+			MapPOCOToEF(0, name,
 			            organizationId, record);
 
 			this._context.Set<Team>().Add(record);
@@ -37,8 +35,7 @@ namespace NebulaNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(int id,
-		                           string name,
+		public virtual void Update(int id, string name,
 		                           int organizationId)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
@@ -48,8 +45,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,
-				            name,
+				MapPOCOToEF(id,  name,
 				            organizationId, record);
 				this._context.SaveChanges();
 			}
@@ -107,8 +103,7 @@ namespace NebulaNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id,
-		                               string name,
+		public static void MapPOCOToEF(int id, string name,
 		                               int organizationId, Team   efTeam)
 		{
 			efTeam.id = id;
@@ -137,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6454c5b10911d10a10cc92d2040dd8e9</Hash>
+    <Hash>30611750911ebd6b861f627d9498e165</Hash>
 </Codenesium>*/

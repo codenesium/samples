@@ -9,7 +9,7 @@ using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class ChainStatusRepository: AbstractChainStatusRepository
+	public class ChainStatusRepository: AbstractChainStatusRepository, IChainStatusRepository
 	{
 		public ChainStatusRepository(ILogger<ChainStatusRepository> logger,
 		                             ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ee18320ab3d6ef4f489736a27f1e531</Hash>
+    <Hash>846e50264f5434bda225ee4713e8371c</Hash>
 </Codenesium>*/

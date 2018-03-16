@@ -11,21 +11,16 @@ namespace NebulaNS.Api.Service
 	{
 		public ChainRepository ChainRepository {get; set;}
 
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NextChainIdRules()
 		{
 			RuleFor(x => x.NextChainId).NotNull();
-			RuleFor(x => x.NextChainId).Must(BeValidChain).When(x => x != null && x.NextChainId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.NextChainId).Must(BeValidChain).When(x => x ?.NextChainId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void PreviousChainIdRules()
 		{
 			RuleFor(x => x.PreviousChainId).NotNull();
-			RuleFor(x => x.PreviousChainId).Must(BeValidChain).When(x => x != null && x.PreviousChainId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.PreviousChainId).Must(BeValidChain).When(x => x ?.PreviousChainId != null).WithMessage("Invalid reference");
 		}
 
 		public bool BeValidChain(int id)
@@ -39,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1eb75eac00b12a3abf6d440cdff85578</Hash>
+    <Hash>da20148b8db8066d1bd8296921d6c322</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class ClaspModel
@@ -9,37 +10,21 @@ namespace NebulaNS.Api.Contracts
 		public ClaspModel()
 		{}
 
-		public ClaspModel(int id,
-		                  int nextChainId,
+		public ClaspModel(int nextChainId,
 		                  int previousChainId)
 		{
-			this.Id = id.ToInt();
 			this.NextChainId = nextChainId.ToInt();
 			this.PreviousChainId = previousChainId.ToInt();
 		}
 
 		public ClaspModel(POCOClasp poco)
 		{
-			this.Id = poco.Id.ToInt();
-
-			NextChainId = poco.NextChainId.Value.ToInt();
-			PreviousChainId = poco.PreviousChainId.Value.ToInt();
-		}
-
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
+			this.NextChainId = poco.NextChainId.Value.ToInt();
+			this.PreviousChainId = poco.PreviousChainId.Value.ToInt();
 		}
 
 		private int _nextChainId;
+		[Required]
 		public int NextChainId
 		{
 			get
@@ -53,6 +38,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private int _previousChainId;
+		[Required]
 		public int PreviousChainId
 		{
 			get
@@ -68,5 +54,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0a9d1b8f8688f9698178ceb7a584fd38</Hash>
+    <Hash>e1f533df5f3df3fa3392505e055e1df6</Hash>
 </Codenesium>*/

@@ -16,15 +16,10 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.DateEntered).NotNull();
 		}
 
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void LinkIdRules()
 		{
 			RuleFor(x => x.LinkId).NotNull();
-			RuleFor(x => x.LinkId).Must(BeValidLink).When(x => x != null && x.LinkId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.LinkId).Must(BeValidLink).When(x => x ?.LinkId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LogRules()
@@ -44,5 +39,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6a6b529566449d1f28dc105b65e61080</Hash>
+    <Hash>b5b1a7d63daca6501dfdd5901d9f48cd</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class MachineRepository: AbstractMachineRepository
+	public class MachineRepository: AbstractMachineRepository, IMachineRepository
 	{
 		public MachineRepository(ILogger<MachineRepository> logger,
 		                         ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3bb93d9c4d6b8327f4e852f0e0a15692</Hash>
+    <Hash>b6f40787c94a91a2b507dc780b13e372</Hash>
 </Codenesium>*/

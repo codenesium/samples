@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,7 +71,7 @@ namespace NebulaNS.Api.Service
 		[LinkLogFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(LinkLogModel model)
 		{
 			this._linkLogModelValidator.CreateMode();
@@ -78,7 +79,6 @@ namespace NebulaNS.Api.Service
 			if (validationResult.IsValid)
 			{
 				var id = this._linkLogRepository.Create(model.DateEntered,
-				                                        model.Id,
 				                                        model.LinkId,
 				                                        model.Log);
 				return Ok(id);
@@ -96,7 +96,7 @@ namespace NebulaNS.Api.Service
 		[LinkLogFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<LinkLogModel> models)
 		{
 			this._linkLogModelValidator.CreateMode();
@@ -113,7 +113,6 @@ namespace NebulaNS.Api.Service
 			foreach(var model in models)
 			{
 				this._linkLogRepository.Create(model.DateEntered,
-				                               model.Id,
 				                               model.LinkId,
 				                               model.Log);
 			}
@@ -126,15 +125,14 @@ namespace NebulaNS.Api.Service
 		[LinkLogFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,LinkLogModel model)
 		{
 			this._linkLogModelValidator.UpdateMode();
 			var validationResult = this._linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkLogRepository.Update(model.DateEntered,
-				                               model.Id,
+				this._linkLogRepository.Update(id,  model.DateEntered,
 				                               model.LinkId,
 				                               model.Log);
 				return Ok();
@@ -176,5 +174,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b01f90a22e2ef8ba7ab005df33fe7901</Hash>
+    <Hash>d241211beb743a203fe2dd2e839ff3fb</Hash>
 </Codenesium>*/

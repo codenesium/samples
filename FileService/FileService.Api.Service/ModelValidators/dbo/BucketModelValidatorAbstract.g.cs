@@ -14,11 +14,6 @@ namespace FileServiceNS.Api.Service
 			RuleFor(x => x.ExternalId).NotNull();
 		}
 
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -28,5 +23,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>77211094c9d2f83e5e593811df20f6b4</Hash>
+    <Hash>ed2d0e81b28a5c3738a3a08757d2e420</Hash>
 </Codenesium>*/

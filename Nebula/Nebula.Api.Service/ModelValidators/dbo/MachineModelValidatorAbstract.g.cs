@@ -15,11 +15,6 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.Description).Length(0,2147483647);
 		}
 
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void JwtKeyRules()
 		{
 			RuleFor(x => x.JwtKey).NotNull();
@@ -46,5 +41,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f54f9b0140fdaf508f5e09e3ae895fb2</Hash>
+    <Hash>dd7e4761ed559c195fc8c69b49ae8b6a</Hash>
 </Codenesium>*/

@@ -11,26 +11,23 @@ namespace FileServiceNS.Api.Service
 		public void CreateMode()
 		{
 			this.ExternalIdRules();
-			this.IdRules();
 			this.NameRules();
 		}
 
 		public void UpdateMode()
 		{
 			this.ExternalIdRules();
-			this.IdRules();
 			this.NameRules();
 		}
 
 		public void PatchMode()
 		{
 			this.ExternalIdRules();
-			this.IdRules();
 			this.NameRules();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>66f63eda84a9a92d69fac9ca436e22bc</Hash>
+    <Hash>5d77138954f3bed747db6f5dcdacce07</Hash>
 </Codenesium>*/

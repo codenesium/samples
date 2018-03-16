@@ -23,7 +23,6 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual int Create(string description,
-		                          int id,
 		                          string jwtKey,
 		                          string lastIpAddress,
 		                          Guid machineGuid,
@@ -31,8 +30,7 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var record = new Machine ();
 
-			MapPOCOToEF(description,
-			            id,
+			MapPOCOToEF(0, description,
 			            jwtKey,
 			            lastIpAddress,
 			            machineGuid,
@@ -43,8 +41,7 @@ namespace NebulaNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(string description,
-		                           int id,
+		public virtual void Update(int id, string description,
 		                           string jwtKey,
 		                           string lastIpAddress,
 		                           Guid machineGuid,
@@ -57,8 +54,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(description,
-				            id,
+				MapPOCOToEF(id,  description,
 				            jwtKey,
 				            lastIpAddress,
 				            machineGuid,
@@ -119,8 +115,7 @@ namespace NebulaNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(string description,
-		                               int id,
+		public static void MapPOCOToEF(int id, string description,
 		                               string jwtKey,
 		                               string lastIpAddress,
 		                               Guid machineGuid,
@@ -154,5 +149,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ddfca57f44f5bbf30905254b5952da69</Hash>
+    <Hash>da8310d1e83e59540c22069bdf9e9d1e</Hash>
 </Codenesium>*/

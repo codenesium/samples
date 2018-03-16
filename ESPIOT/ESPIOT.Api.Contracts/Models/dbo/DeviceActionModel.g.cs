@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace ESPIOTNS.Api.Contracts
 {
 	public partial class DeviceActionModel
@@ -10,26 +11,24 @@ namespace ESPIOTNS.Api.Contracts
 		{}
 
 		public DeviceActionModel(int deviceId,
-		                         int id,
 		                         string name,
 		                         string @value)
 		{
 			this.DeviceId = deviceId.ToInt();
-			this.Id = id.ToInt();
 			this.Name = name;
 			this.@Value = @value;
 		}
 
 		public DeviceActionModel(POCODeviceAction poco)
 		{
-			this.Id = poco.Id.ToInt();
 			this.Name = poco.Name;
 			this.@Value = poco.@Value;
 
-			DeviceId = poco.DeviceId.Value.ToInt();
+			this.DeviceId = poco.DeviceId.Value.ToInt();
 		}
 
 		private int _deviceId;
+		[Required]
 		public int DeviceId
 		{
 			get
@@ -42,20 +41,8 @@ namespace ESPIOTNS.Api.Contracts
 			}
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private string _name;
+		[Required]
 		public string Name
 		{
 			get
@@ -69,6 +56,7 @@ namespace ESPIOTNS.Api.Contracts
 		}
 
 		private string @value;
+		[Required]
 		public string @Value
 		{
 			get
@@ -84,5 +72,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ad55a209c92959f99dae053c389de345</Hash>
+    <Hash>8a844cad43a71b824b0ad08614139528</Hash>
 </Codenesium>*/

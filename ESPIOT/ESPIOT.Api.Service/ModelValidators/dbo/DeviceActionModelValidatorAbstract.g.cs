@@ -14,12 +14,7 @@ namespace ESPIOTNS.Api.Service
 		public virtual void DeviceIdRules()
 		{
 			RuleFor(x => x.DeviceId).NotNull();
-			RuleFor(x => x.DeviceId).Must(BeValidDevice).When(x => x != null && x.DeviceId != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
+			RuleFor(x => x.DeviceId).Must(BeValidDevice).When(x => x ?.DeviceId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
@@ -45,5 +40,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d48906ed67f2045958d6dd4f971be2a8</Hash>
+    <Hash>ea6ab61c816186c19a9b0340b91433a0</Hash>
 </Codenesium>*/

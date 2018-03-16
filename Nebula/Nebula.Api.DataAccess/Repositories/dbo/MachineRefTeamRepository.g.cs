@@ -22,14 +22,12 @@ namespace NebulaNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(int id,
-		                          int machineId,
+		public virtual int Create(int machineId,
 		                          int teamId)
 		{
 			var record = new MachineRefTeam ();
 
-			MapPOCOToEF(id,
-			            machineId,
+			MapPOCOToEF(0, machineId,
 			            teamId, record);
 
 			this._context.Set<MachineRefTeam>().Add(record);
@@ -37,8 +35,7 @@ namespace NebulaNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(int id,
-		                           int machineId,
+		public virtual void Update(int id, int machineId,
 		                           int teamId)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
@@ -48,8 +45,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,
-				            machineId,
+				MapPOCOToEF(id,  machineId,
 				            teamId, record);
 				this._context.SaveChanges();
 			}
@@ -107,8 +103,7 @@ namespace NebulaNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id,
-		                               int machineId,
+		public static void MapPOCOToEF(int id, int machineId,
 		                               int teamId, MachineRefTeam   efMachineRefTeam)
 		{
 			efMachineRefTeam.id = id;
@@ -140,5 +135,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>57099336f5f7921186bbe66e8a307f2b</Hash>
+    <Hash>ac1a6fb8c646fb1e02641172144b73ae</Hash>
 </Codenesium>*/

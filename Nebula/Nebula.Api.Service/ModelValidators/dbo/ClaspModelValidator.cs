@@ -10,21 +10,18 @@ namespace NebulaNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.IdRules();
 			this.NextChainIdRules();
 			this.PreviousChainIdRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.IdRules();
 			this.NextChainIdRules();
 			this.PreviousChainIdRules();
 		}
 
 		public void PatchMode()
 		{
-			this.IdRules();
 			this.NextChainIdRules();
 			this.PreviousChainIdRules();
 		}
@@ -32,5 +29,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>22bae02ddd9bc2d8cde2313f62681fa6</Hash>
+    <Hash>20da6125bae92081a892d931dd4df629</Hash>
 </Codenesium>*/

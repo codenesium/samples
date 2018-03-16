@@ -13,21 +13,16 @@ namespace NebulaNS.Api.Service
 
 		public TeamRepository TeamRepository {get; set;}
 
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void MachineIdRules()
 		{
 			RuleFor(x => x.MachineId).NotNull();
-			RuleFor(x => x.MachineId).Must(BeValidMachine).When(x => x != null && x.MachineId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.MachineId).Must(BeValidMachine).When(x => x ?.MachineId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TeamIdRules()
 		{
 			RuleFor(x => x.TeamId).NotNull();
-			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x != null && x.TeamId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
 		}
 
 		public bool BeValidMachine(int id)
@@ -49,5 +44,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>618c29735d57a10dacf1bd89faa1b566</Hash>
+    <Hash>5c304b53f7883e7df36735d1a76c5efb</Hash>
 </Codenesium>*/

@@ -10,21 +10,18 @@ namespace ESPIOTNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.IdRules();
 			this.NameRules();
 			this.PublicIdRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.IdRules();
 			this.NameRules();
 			this.PublicIdRules();
 		}
 
 		public void PatchMode()
 		{
-			this.IdRules();
 			this.NameRules();
 			this.PublicIdRules();
 		}
@@ -32,5 +29,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ed1c496901c10c192ff310c86454a444</Hash>
+    <Hash>a1c03a1d2728fbae7a4318a27e203421</Hash>
 </Codenesium>*/

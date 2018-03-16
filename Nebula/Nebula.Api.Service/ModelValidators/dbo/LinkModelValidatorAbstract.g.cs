@@ -17,13 +17,13 @@ namespace NebulaNS.Api.Service
 
 		public virtual void AssignedMachineIdRules()
 		{
-			RuleFor(x => x.AssignedMachineId).Must(BeValidMachine).When(x => x != null && x.AssignedMachineId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.AssignedMachineId).Must(BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ChainIdRules()
 		{
 			RuleFor(x => x.ChainId).NotNull();
-			RuleFor(x => x.ChainId).Must(BeValidChain).When(x => x != null && x.ChainId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.ChainId).Must(BeValidChain).When(x => x ?.ChainId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DateCompletedRules()
@@ -42,15 +42,10 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.ExternalId).NotNull();
 		}
 
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void LinkStatusIdRules()
 		{
 			RuleFor(x => x.LinkStatusId).NotNull();
-			RuleFor(x => x.LinkStatusId).Must(BeValidLinkStatus).When(x => x != null && x.LinkStatusId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.LinkStatusId).Must(BeValidLinkStatus).When(x => x ?.LinkStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
@@ -101,5 +96,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>21727019865228f2ba99ed02993c45c1</Hash>
+    <Hash>ff05faf70e8f9956ede3a6f5e076f432</Hash>
 </Codenesium>*/

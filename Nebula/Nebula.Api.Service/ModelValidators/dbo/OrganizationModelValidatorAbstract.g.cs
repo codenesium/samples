@@ -9,11 +9,6 @@ namespace NebulaNS.Api.Service
 {
 	public class OrganizationModelValidatorAbstract: AbstractValidator<OrganizationModel>
 	{
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -23,5 +18,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2cd7ca836d8b0b448cd48bc3b6bad35e</Hash>
+    <Hash>cb53b9d5dfde2b80d601c840d548e5fb</Hash>
 </Codenesium>*/

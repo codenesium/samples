@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,7 +71,7 @@ namespace NebulaNS.Api.Service
 		[MachineFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(MachineModel model)
 		{
 			this._machineModelValidator.CreateMode();
@@ -78,7 +79,6 @@ namespace NebulaNS.Api.Service
 			if (validationResult.IsValid)
 			{
 				var id = this._machineRepository.Create(model.Description,
-				                                        model.Id,
 				                                        model.JwtKey,
 				                                        model.LastIpAddress,
 				                                        model.MachineGuid,
@@ -98,7 +98,7 @@ namespace NebulaNS.Api.Service
 		[MachineFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<MachineModel> models)
 		{
 			this._machineModelValidator.CreateMode();
@@ -115,7 +115,6 @@ namespace NebulaNS.Api.Service
 			foreach(var model in models)
 			{
 				this._machineRepository.Create(model.Description,
-				                               model.Id,
 				                               model.JwtKey,
 				                               model.LastIpAddress,
 				                               model.MachineGuid,
@@ -130,15 +129,14 @@ namespace NebulaNS.Api.Service
 		[MachineFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,MachineModel model)
 		{
 			this._machineModelValidator.UpdateMode();
 			var validationResult = this._machineModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._machineRepository.Update(model.Description,
-				                               model.Id,
+				this._machineRepository.Update(id,  model.Description,
 				                               model.JwtKey,
 				                               model.LastIpAddress,
 				                               model.MachineGuid,
@@ -167,5 +165,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ca146147f3358f4139f549dc87269884</Hash>
+    <Hash>2f3442316db665de50085160aff519f5</Hash>
 </Codenesium>*/

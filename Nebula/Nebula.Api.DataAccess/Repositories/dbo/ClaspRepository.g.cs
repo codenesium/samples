@@ -22,14 +22,12 @@ namespace NebulaNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(int id,
-		                          int nextChainId,
+		public virtual int Create(int nextChainId,
 		                          int previousChainId)
 		{
 			var record = new Clasp ();
 
-			MapPOCOToEF(id,
-			            nextChainId,
+			MapPOCOToEF(0, nextChainId,
 			            previousChainId, record);
 
 			this._context.Set<Clasp>().Add(record);
@@ -37,8 +35,7 @@ namespace NebulaNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(int id,
-		                           int nextChainId,
+		public virtual void Update(int id, int nextChainId,
 		                           int previousChainId)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
@@ -48,8 +45,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,
-				            nextChainId,
+				MapPOCOToEF(id,  nextChainId,
 				            previousChainId, record);
 				this._context.SaveChanges();
 			}
@@ -107,8 +103,7 @@ namespace NebulaNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id,
-		                               int nextChainId,
+		public static void MapPOCOToEF(int id, int nextChainId,
 		                               int previousChainId, Clasp   efClasp)
 		{
 			efClasp.id = id;
@@ -140,5 +135,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c9379f85042c4d40e04f3a9cdb7d50ec</Hash>
+    <Hash>f82e392a90a18daef9814db1347ab62e</Hash>
 </Codenesium>*/

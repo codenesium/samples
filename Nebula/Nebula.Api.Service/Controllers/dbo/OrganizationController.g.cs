@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,15 +71,14 @@ namespace NebulaNS.Api.Service
 		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(OrganizationModel model)
 		{
 			this._organizationModelValidator.CreateMode();
 			var validationResult = this._organizationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._organizationRepository.Create(model.Id,
-				                                             model.Name);
+				var id = this._organizationRepository.Create(model.Name);
 				return Ok(id);
 			}
 			else
@@ -94,7 +94,7 @@ namespace NebulaNS.Api.Service
 		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<OrganizationModel> models)
 		{
 			this._organizationModelValidator.CreateMode();
@@ -110,8 +110,7 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._organizationRepository.Create(model.Id,
-				                                    model.Name);
+				this._organizationRepository.Create(model.Name);
 			}
 			return Ok();
 		}
@@ -122,15 +121,14 @@ namespace NebulaNS.Api.Service
 		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,OrganizationModel model)
 		{
 			this._organizationModelValidator.UpdateMode();
 			var validationResult = this._organizationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._organizationRepository.Update(model.Id,
-				                                    model.Name);
+				this._organizationRepository.Update(id,  model.Name);
 				return Ok();
 			}
 			else
@@ -155,5 +153,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>88dae0bfb68a6c2059e3b140893ba93e</Hash>
+    <Hash>6b218382be93094ccfdae5d818fe1a72</Hash>
 </Codenesium>*/

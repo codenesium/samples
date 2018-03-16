@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class MachineModel
@@ -10,14 +11,12 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		public MachineModel(string description,
-		                    int id,
 		                    string jwtKey,
 		                    string lastIpAddress,
 		                    Guid machineGuid,
 		                    string name)
 		{
 			this.Description = description;
-			this.Id = id.ToInt();
 			this.JwtKey = jwtKey;
 			this.LastIpAddress = lastIpAddress;
 			this.MachineGuid = machineGuid;
@@ -27,7 +26,6 @@ namespace NebulaNS.Api.Contracts
 		public MachineModel(POCOMachine poco)
 		{
 			this.Description = poco.Description;
-			this.Id = poco.Id.ToInt();
 			this.JwtKey = poco.JwtKey;
 			this.LastIpAddress = poco.LastIpAddress;
 			this.MachineGuid = poco.MachineGuid;
@@ -35,6 +33,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private string _description;
+		[Required]
 		public string Description
 		{
 			get
@@ -47,20 +46,8 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private string _jwtKey;
+		[Required]
 		public string JwtKey
 		{
 			get
@@ -74,6 +61,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private string _lastIpAddress;
+		[Required]
 		public string LastIpAddress
 		{
 			get
@@ -87,6 +75,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private Guid _machineGuid;
+		[Required]
 		public Guid MachineGuid
 		{
 			get
@@ -100,6 +89,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private string _name;
+		[Required]
 		public string Name
 		{
 			get
@@ -115,5 +105,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e22190e4f4078d587011167f55446d7b</Hash>
+    <Hash>6e5949af17a80d3355280a2f4313661e</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class MachineRefTeamModel
@@ -9,37 +10,21 @@ namespace NebulaNS.Api.Contracts
 		public MachineRefTeamModel()
 		{}
 
-		public MachineRefTeamModel(int id,
-		                           int machineId,
+		public MachineRefTeamModel(int machineId,
 		                           int teamId)
 		{
-			this.Id = id.ToInt();
 			this.MachineId = machineId.ToInt();
 			this.TeamId = teamId.ToInt();
 		}
 
 		public MachineRefTeamModel(POCOMachineRefTeam poco)
 		{
-			this.Id = poco.Id.ToInt();
-
-			MachineId = poco.MachineId.Value.ToInt();
-			TeamId = poco.TeamId.Value.ToInt();
-		}
-
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
+			this.MachineId = poco.MachineId.Value.ToInt();
+			this.TeamId = poco.TeamId.Value.ToInt();
 		}
 
 		private int _machineId;
+		[Required]
 		public int MachineId
 		{
 			get
@@ -53,6 +38,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private int _teamId;
+		[Required]
 		public int TeamId
 		{
 			get
@@ -68,5 +54,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c0fac6ead70ecc0aa8a2145d1c6113b8</Hash>
+    <Hash>8d0aa4d040f60f675dbe340eb683c805</Hash>
 </Codenesium>*/

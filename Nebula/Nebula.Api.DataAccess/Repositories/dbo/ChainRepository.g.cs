@@ -24,15 +24,13 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual int Create(int chainStatusId,
 		                          Guid externalId,
-		                          int id,
 		                          string name,
 		                          int teamId)
 		{
 			var record = new Chain ();
 
-			MapPOCOToEF(chainStatusId,
+			MapPOCOToEF(0, chainStatusId,
 			            externalId,
-			            id,
 			            name,
 			            teamId, record);
 
@@ -41,9 +39,8 @@ namespace NebulaNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(int chainStatusId,
+		public virtual void Update(int id, int chainStatusId,
 		                           Guid externalId,
-		                           int id,
 		                           string name,
 		                           int teamId)
 		{
@@ -54,9 +51,8 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(chainStatusId,
+				MapPOCOToEF(id,  chainStatusId,
 				            externalId,
-				            id,
 				            name,
 				            teamId, record);
 				this._context.SaveChanges();
@@ -115,9 +111,8 @@ namespace NebulaNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int chainStatusId,
+		public static void MapPOCOToEF(int id, int chainStatusId,
 		                               Guid externalId,
-		                               int id,
 		                               string name,
 		                               int teamId, Chain   efChain)
 		{
@@ -154,5 +149,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>026166284bc133396884c63973d5c846</Hash>
+    <Hash>5dbfe913632ab915c99f7027ad7bcb50</Hash>
 </Codenesium>*/

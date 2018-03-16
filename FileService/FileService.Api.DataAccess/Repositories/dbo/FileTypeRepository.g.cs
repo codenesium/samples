@@ -22,21 +22,18 @@ namespace FileServiceNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(int id,
-		                          string name)
+		public virtual int Create(string name)
 		{
 			var record = new FileType ();
 
-			MapPOCOToEF(id,
-			            name, record);
+			MapPOCOToEF(0, name, record);
 
 			this._context.Set<FileType>().Add(record);
 			this._context.SaveChanges();
 			return record.id;
 		}
 
-		public virtual void Update(int id,
-		                           string name)
+		public virtual void Update(int id, string name)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
@@ -45,8 +42,7 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,
-				            name, record);
+				MapPOCOToEF(id,  name, record);
 				this._context.SaveChanges();
 			}
 		}
@@ -103,8 +99,7 @@ namespace FileServiceNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id,
-		                               string name, FileType   efFileType)
+		public static void MapPOCOToEF(int id, string name, FileType   efFileType)
 		{
 			efFileType.id = id;
 			efFileType.name = name;
@@ -126,5 +121,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>415782383dca3e195510befe5d35bfc3</Hash>
+    <Hash>9ec42248ba42e70dc01d645e0ef3b8b1</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,15 +71,14 @@ namespace NebulaNS.Api.Service
 		[MachineRefTeamFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(MachineRefTeamModel model)
 		{
 			this._machineRefTeamModelValidator.CreateMode();
 			var validationResult = this._machineRefTeamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._machineRefTeamRepository.Create(model.Id,
-				                                               model.MachineId,
+				var id = this._machineRefTeamRepository.Create(model.MachineId,
 				                                               model.TeamId);
 				return Ok(id);
 			}
@@ -95,7 +95,7 @@ namespace NebulaNS.Api.Service
 		[MachineRefTeamFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<MachineRefTeamModel> models)
 		{
 			this._machineRefTeamModelValidator.CreateMode();
@@ -111,8 +111,7 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._machineRefTeamRepository.Create(model.Id,
-				                                      model.MachineId,
+				this._machineRefTeamRepository.Create(model.MachineId,
 				                                      model.TeamId);
 			}
 			return Ok();
@@ -124,15 +123,14 @@ namespace NebulaNS.Api.Service
 		[MachineRefTeamFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,MachineRefTeamModel model)
 		{
 			this._machineRefTeamModelValidator.UpdateMode();
 			var validationResult = this._machineRefTeamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._machineRefTeamRepository.Update(model.Id,
-				                                      model.MachineId,
+				this._machineRefTeamRepository.Update(id,  model.MachineId,
 				                                      model.TeamId);
 				return Ok();
 			}
@@ -188,5 +186,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7848b307e52de185eefb3b30741b77c2</Hash>
+    <Hash>d9ea4fc70033b9adbd7cff06013294fe</Hash>
 </Codenesium>*/

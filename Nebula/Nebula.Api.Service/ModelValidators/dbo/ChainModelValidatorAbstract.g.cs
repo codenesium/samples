@@ -16,17 +16,12 @@ namespace NebulaNS.Api.Service
 		public virtual void ChainStatusIdRules()
 		{
 			RuleFor(x => x.ChainStatusId).NotNull();
-			RuleFor(x => x.ChainStatusId).Must(BeValidChainStatus).When(x => x != null && x.ChainStatusId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.ChainStatusId).Must(BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ExternalIdRules()
 		{
 			RuleFor(x => x.ExternalId).NotNull();
-		}
-
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
 		}
 
 		public virtual void NameRules()
@@ -38,7 +33,7 @@ namespace NebulaNS.Api.Service
 		public virtual void TeamIdRules()
 		{
 			RuleFor(x => x.TeamId).NotNull();
-			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x != null && x.TeamId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
 		}
 
 		public bool BeValidChainStatus(int id)
@@ -60,5 +55,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>19538f4a2f099010257d81d5c2f63c31</Hash>
+    <Hash>3515071c32c1bc4dbc030d42455aa4e8</Hash>
 </Codenesium>*/

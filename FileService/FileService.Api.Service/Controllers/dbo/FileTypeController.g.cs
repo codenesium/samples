@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
@@ -70,15 +71,14 @@ namespace FileServiceNS.Api.Service
 		[FileTypeFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(FileTypeModel model)
 		{
 			this._fileTypeModelValidator.CreateMode();
 			var validationResult = this._fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._fileTypeRepository.Create(model.Id,
-				                                         model.Name);
+				var id = this._fileTypeRepository.Create(model.Name);
 				return Ok(id);
 			}
 			else
@@ -94,7 +94,7 @@ namespace FileServiceNS.Api.Service
 		[FileTypeFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<FileTypeModel> models)
 		{
 			this._fileTypeModelValidator.CreateMode();
@@ -110,8 +110,7 @@ namespace FileServiceNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._fileTypeRepository.Create(model.Id,
-				                                model.Name);
+				this._fileTypeRepository.Create(model.Name);
 			}
 			return Ok();
 		}
@@ -122,15 +121,14 @@ namespace FileServiceNS.Api.Service
 		[FileTypeFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,FileTypeModel model)
 		{
 			this._fileTypeModelValidator.UpdateMode();
 			var validationResult = this._fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._fileTypeRepository.Update(model.Id,
-				                                model.Name);
+				this._fileTypeRepository.Update(id,  model.Name);
 				return Ok();
 			}
 			else
@@ -155,5 +153,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f802a4d0193123fb229db06704d5e556</Hash>
+    <Hash>61f4a3181479341b11accc8d6f247a2d</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ using FileServiceNS.Api.Contracts;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public class BucketRepository: AbstractBucketRepository
+	public class BucketRepository: AbstractBucketRepository, IBucketRepository
 	{
 		public BucketRepository(ILogger<BucketRepository> logger,
 		                        ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d8e430e88b55aaabc58bb56ad6c0386e</Hash>
+    <Hash>fbaa38036e448ca2c9f2979773585436</Hash>
 </Codenesium>*/

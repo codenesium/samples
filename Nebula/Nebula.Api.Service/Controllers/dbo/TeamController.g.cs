@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,15 +71,14 @@ namespace NebulaNS.Api.Service
 		[TeamFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(TeamModel model)
 		{
 			this._teamModelValidator.CreateMode();
 			var validationResult = this._teamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._teamRepository.Create(model.Id,
-				                                     model.Name,
+				var id = this._teamRepository.Create(model.Name,
 				                                     model.OrganizationId);
 				return Ok(id);
 			}
@@ -95,7 +95,7 @@ namespace NebulaNS.Api.Service
 		[TeamFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<TeamModel> models)
 		{
 			this._teamModelValidator.CreateMode();
@@ -111,8 +111,7 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._teamRepository.Create(model.Id,
-				                            model.Name,
+				this._teamRepository.Create(model.Name,
 				                            model.OrganizationId);
 			}
 			return Ok();
@@ -124,15 +123,14 @@ namespace NebulaNS.Api.Service
 		[TeamFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,TeamModel model)
 		{
 			this._teamModelValidator.UpdateMode();
 			var validationResult = this._teamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._teamRepository.Update(model.Id,
-				                            model.Name,
+				this._teamRepository.Update(id,  model.Name,
 				                            model.OrganizationId);
 				return Ok();
 			}
@@ -173,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5e070459b9a9b7e3cfcd2ac7ac497bb4</Hash>
+    <Hash>02a375995715e00d0dc493fe6b16eb19</Hash>
 </Codenesium>*/

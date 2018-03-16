@@ -9,11 +9,6 @@ namespace NebulaNS.Api.Service
 {
 	public class ChainStatusModelValidatorAbstract: AbstractValidator<ChainStatusModel>
 	{
-		public virtual void IdRules()
-		{
-			RuleFor(x => x.Id).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -23,5 +18,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>40a1d5ad4ea4938284c50c297811db84</Hash>
+    <Hash>80e8613330c6af4809ce42a09e5fc65d</Hash>
 </Codenesium>*/

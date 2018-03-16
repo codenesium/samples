@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class OrganizationModel
@@ -9,33 +10,18 @@ namespace NebulaNS.Api.Contracts
 		public OrganizationModel()
 		{}
 
-		public OrganizationModel(int id,
-		                         string name)
+		public OrganizationModel(string name)
 		{
-			this.Id = id.ToInt();
 			this.Name = name;
 		}
 
 		public OrganizationModel(POCOOrganization poco)
 		{
-			this.Id = poco.Id.ToInt();
 			this.Name = poco.Name;
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private string _name;
+		[Required]
 		public string Name
 		{
 			get
@@ -51,5 +37,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>264a601e0cbb76c83ca1e0ffb9835818</Hash>
+    <Hash>45179217ef778ecc42161facdbcf7fb4</Hash>
 </Codenesium>*/

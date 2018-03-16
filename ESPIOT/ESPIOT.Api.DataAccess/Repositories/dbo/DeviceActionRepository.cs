@@ -9,7 +9,7 @@ using ESPIOTNS.Api.Contracts;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-	public class DeviceActionRepository: AbstractDeviceActionRepository
+	public class DeviceActionRepository: AbstractDeviceActionRepository, IDeviceActionRepository
 	{
 		public DeviceActionRepository(ILogger<DeviceActionRepository> logger,
 		                              ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>77c0d59627d03a0d926c372ad17c0592</Hash>
+    <Hash>8245d3b521e3d6e2e85e02cf83e57f7d</Hash>
 </Codenesium>*/

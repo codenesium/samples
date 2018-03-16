@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,15 +71,14 @@ namespace NebulaNS.Api.Service
 		[ClaspFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(ClaspModel model)
 		{
 			this._claspModelValidator.CreateMode();
 			var validationResult = this._claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._claspRepository.Create(model.Id,
-				                                      model.NextChainId,
+				var id = this._claspRepository.Create(model.NextChainId,
 				                                      model.PreviousChainId);
 				return Ok(id);
 			}
@@ -95,7 +95,7 @@ namespace NebulaNS.Api.Service
 		[ClaspFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<ClaspModel> models)
 		{
 			this._claspModelValidator.CreateMode();
@@ -111,8 +111,7 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._claspRepository.Create(model.Id,
-				                             model.NextChainId,
+				this._claspRepository.Create(model.NextChainId,
 				                             model.PreviousChainId);
 			}
 			return Ok();
@@ -124,15 +123,14 @@ namespace NebulaNS.Api.Service
 		[ClaspFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,ClaspModel model)
 		{
 			this._claspModelValidator.UpdateMode();
 			var validationResult = this._claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._claspRepository.Update(model.Id,
-				                             model.NextChainId,
+				this._claspRepository.Update(id,  model.NextChainId,
 				                             model.PreviousChainId);
 				return Ok();
 			}
@@ -188,5 +186,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2fc16ca35f2a03e1c643a21a1d3309aa</Hash>
+    <Hash>8a560f3bf52349a31ea352d9ca742876</Hash>
 </Codenesium>*/

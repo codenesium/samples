@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,7 +71,7 @@ namespace NebulaNS.Api.Service
 		[ChainFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(ChainModel model)
 		{
 			this._chainModelValidator.CreateMode();
@@ -79,7 +80,6 @@ namespace NebulaNS.Api.Service
 			{
 				var id = this._chainRepository.Create(model.ChainStatusId,
 				                                      model.ExternalId,
-				                                      model.Id,
 				                                      model.Name,
 				                                      model.TeamId);
 				return Ok(id);
@@ -97,7 +97,7 @@ namespace NebulaNS.Api.Service
 		[ChainFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<ChainModel> models)
 		{
 			this._chainModelValidator.CreateMode();
@@ -115,7 +115,6 @@ namespace NebulaNS.Api.Service
 			{
 				this._chainRepository.Create(model.ChainStatusId,
 				                             model.ExternalId,
-				                             model.Id,
 				                             model.Name,
 				                             model.TeamId);
 			}
@@ -128,16 +127,15 @@ namespace NebulaNS.Api.Service
 		[ChainFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,ChainModel model)
 		{
 			this._chainModelValidator.UpdateMode();
 			var validationResult = this._chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._chainRepository.Update(model.ChainStatusId,
+				this._chainRepository.Update(id,  model.ChainStatusId,
 				                             model.ExternalId,
-				                             model.Id,
 				                             model.Name,
 				                             model.TeamId);
 				return Ok();
@@ -194,5 +192,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6d0fbb9c735499af778d446203e28ac5</Hash>
+    <Hash>1ed49b2fa4c3d3f29012d4f3d7ca6d08</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,7 +71,7 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(LinkModel model)
 		{
 			this._linkModelValidator.CreateMode();
@@ -83,7 +84,6 @@ namespace NebulaNS.Api.Service
 				                                     model.DateStarted,
 				                                     model.DynamicParameters,
 				                                     model.ExternalId,
-				                                     model.Id,
 				                                     model.LinkStatusId,
 				                                     model.Name,
 				                                     model.Order,
@@ -104,7 +104,7 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<LinkModel> models)
 		{
 			this._linkModelValidator.CreateMode();
@@ -126,7 +126,6 @@ namespace NebulaNS.Api.Service
 				                            model.DateStarted,
 				                            model.DynamicParameters,
 				                            model.ExternalId,
-				                            model.Id,
 				                            model.LinkStatusId,
 				                            model.Name,
 				                            model.Order,
@@ -142,20 +141,19 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,LinkModel model)
 		{
 			this._linkModelValidator.UpdateMode();
 			var validationResult = this._linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkRepository.Update(model.AssignedMachineId,
+				this._linkRepository.Update(id,  model.AssignedMachineId,
 				                            model.ChainId,
 				                            model.DateCompleted,
 				                            model.DateStarted,
 				                            model.DynamicParameters,
 				                            model.ExternalId,
-				                            model.Id,
 				                            model.LinkStatusId,
 				                            model.Name,
 				                            model.Order,
@@ -230,5 +228,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0f6b83d5fc8d2a12ba962f5930e9f05b</Hash>
+    <Hash>6f42c1c09380d8aad035494726fde9d5</Hash>
 </Codenesium>*/

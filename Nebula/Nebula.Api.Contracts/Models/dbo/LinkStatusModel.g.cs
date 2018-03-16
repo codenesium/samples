@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class LinkStatusModel
@@ -9,33 +10,18 @@ namespace NebulaNS.Api.Contracts
 		public LinkStatusModel()
 		{}
 
-		public LinkStatusModel(int id,
-		                       string name)
+		public LinkStatusModel(string name)
 		{
-			this.Id = id.ToInt();
 			this.Name = name;
 		}
 
 		public LinkStatusModel(POCOLinkStatus poco)
 		{
-			this.Id = poco.Id.ToInt();
 			this.Name = poco.Name;
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private string _name;
+		[Required]
 		public string Name
 		{
 			get
@@ -51,5 +37,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f213303fcb9a64c4ae3783c2389164cf</Hash>
+    <Hash>b9d8aaeac9c25240bd4811fc2259c496</Hash>
 </Codenesium>*/

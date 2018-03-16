@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
@@ -70,15 +71,14 @@ namespace NebulaNS.Api.Service
 		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(LinkStatusModel model)
 		{
 			this._linkStatusModelValidator.CreateMode();
 			var validationResult = this._linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._linkStatusRepository.Create(model.Id,
-				                                           model.Name);
+				var id = this._linkStatusRepository.Create(model.Name);
 				return Ok(id);
 			}
 			else
@@ -94,7 +94,7 @@ namespace NebulaNS.Api.Service
 		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<LinkStatusModel> models)
 		{
 			this._linkStatusModelValidator.CreateMode();
@@ -110,8 +110,7 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._linkStatusRepository.Create(model.Id,
-				                                  model.Name);
+				this._linkStatusRepository.Create(model.Name);
 			}
 			return Ok();
 		}
@@ -122,15 +121,14 @@ namespace NebulaNS.Api.Service
 		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,LinkStatusModel model)
 		{
 			this._linkStatusModelValidator.UpdateMode();
 			var validationResult = this._linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkStatusRepository.Update(model.Id,
-				                                  model.Name);
+				this._linkStatusRepository.Update(id,  model.Name);
 				return Ok();
 			}
 			else
@@ -155,5 +153,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>45e25e4384ca6523c190d15f0b58937e</Hash>
+    <Hash>e3831685765bc011a73dfecad043671e</Hash>
 </Codenesium>*/

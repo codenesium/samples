@@ -23,13 +23,11 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual int Create(Guid externalId,
-		                          int id,
 		                          string name)
 		{
 			var record = new Bucket ();
 
-			MapPOCOToEF(externalId,
-			            id,
+			MapPOCOToEF(0, externalId,
 			            name, record);
 
 			this._context.Set<Bucket>().Add(record);
@@ -37,8 +35,7 @@ namespace FileServiceNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(Guid externalId,
-		                           int id,
+		public virtual void Update(int id, Guid externalId,
 		                           string name)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
@@ -48,8 +45,7 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(externalId,
-				            id,
+				MapPOCOToEF(id,  externalId,
 				            name, record);
 				this._context.SaveChanges();
 			}
@@ -107,8 +103,7 @@ namespace FileServiceNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(Guid externalId,
-		                               int id,
+		public static void MapPOCOToEF(int id, Guid externalId,
 		                               string name, Bucket   efBucket)
 		{
 			efBucket.externalId = externalId;
@@ -133,5 +128,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e3f197fde39f3236689ed64b0a759d28</Hash>
+    <Hash>b4dc50eb8ad0096efbeb8c54561fa800</Hash>
 </Codenesium>*/

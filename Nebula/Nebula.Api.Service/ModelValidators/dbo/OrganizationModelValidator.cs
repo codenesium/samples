@@ -10,24 +10,21 @@ namespace NebulaNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.IdRules();
 			this.NameRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.IdRules();
 			this.NameRules();
 		}
 
 		public void PatchMode()
 		{
-			this.IdRules();
 			this.NameRules();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1affd075fac4bb5355917db2d729818</Hash>
+    <Hash>32d4f9661f3e3e9883717465443ccb32</Hash>
 </Codenesium>*/

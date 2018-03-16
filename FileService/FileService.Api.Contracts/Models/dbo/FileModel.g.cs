@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace FileServiceNS.Api.Contracts
 {
 	public partial class FileModel
@@ -17,7 +18,6 @@ namespace FileServiceNS.Api.Contracts
 		                 Guid externalId,
 		                 decimal fileSizeInBytes,
 		                 int fileTypeId,
-		                 int id,
 		                 string location,
 		                 string privateKey,
 		                 string publicKey)
@@ -30,7 +30,6 @@ namespace FileServiceNS.Api.Contracts
 			this.ExternalId = externalId;
 			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
 			this.FileTypeId = fileTypeId.ToInt();
-			this.Id = id.ToInt();
 			this.Location = location;
 			this.PrivateKey = privateKey;
 			this.PublicKey = publicKey;
@@ -44,13 +43,12 @@ namespace FileServiceNS.Api.Contracts
 			this.Extension = poco.Extension;
 			this.ExternalId = poco.ExternalId;
 			this.FileSizeInBytes = poco.FileSizeInBytes.ToDecimal();
-			this.Id = poco.Id.ToInt();
 			this.Location = poco.Location;
 			this.PrivateKey = poco.PrivateKey;
 			this.PublicKey = poco.PublicKey;
 
-			BucketId = poco.BucketId.Value.ToInt();
-			FileTypeId = poco.FileTypeId.Value.ToInt();
+			this.BucketId = poco.BucketId.Value.ToInt();
+			this.FileTypeId = poco.FileTypeId.Value.ToInt();
 		}
 
 		private Nullable<int> _bucketId;
@@ -67,6 +65,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private DateTime _dateCreated;
+		[Required]
 		public DateTime DateCreated
 		{
 			get
@@ -93,6 +92,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private DateTime _expiration;
+		[Required]
 		public DateTime Expiration
 		{
 			get
@@ -106,6 +106,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private string _extension;
+		[Required]
 		public string Extension
 		{
 			get
@@ -119,6 +120,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private Guid _externalId;
+		[Required]
 		public Guid ExternalId
 		{
 			get
@@ -132,6 +134,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private decimal _fileSizeInBytes;
+		[Required]
 		public decimal FileSizeInBytes
 		{
 			get
@@ -145,6 +148,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private int _fileTypeId;
+		[Required]
 		public int FileTypeId
 		{
 			get
@@ -157,20 +161,8 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private string _location;
+		[Required]
 		public string Location
 		{
 			get
@@ -184,6 +176,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private string _privateKey;
+		[Required]
 		public string PrivateKey
 		{
 			get
@@ -197,6 +190,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		private string _publicKey;
+		[Required]
 		public string PublicKey
 		{
 			get
@@ -212,5 +206,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c6994887eefc82b3da62a2c784b5868e</Hash>
+    <Hash>442686f8bd10de780a99231009f4e7f7</Hash>
 </Codenesium>*/

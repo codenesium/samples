@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
@@ -70,7 +71,7 @@ namespace FileServiceNS.Api.Service
 		[FileFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(FileModel model)
 		{
 			this._fileModelValidator.CreateMode();
@@ -85,7 +86,6 @@ namespace FileServiceNS.Api.Service
 				                                     model.ExternalId,
 				                                     model.FileSizeInBytes,
 				                                     model.FileTypeId,
-				                                     model.Id,
 				                                     model.Location,
 				                                     model.PrivateKey,
 				                                     model.PublicKey);
@@ -104,7 +104,7 @@ namespace FileServiceNS.Api.Service
 		[FileFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<FileModel> models)
 		{
 			this._fileModelValidator.CreateMode();
@@ -128,7 +128,6 @@ namespace FileServiceNS.Api.Service
 				                            model.ExternalId,
 				                            model.FileSizeInBytes,
 				                            model.FileTypeId,
-				                            model.Id,
 				                            model.Location,
 				                            model.PrivateKey,
 				                            model.PublicKey);
@@ -142,14 +141,14 @@ namespace FileServiceNS.Api.Service
 		[FileFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,FileModel model)
 		{
 			this._fileModelValidator.UpdateMode();
 			var validationResult = this._fileModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._fileRepository.Update(model.BucketId,
+				this._fileRepository.Update(id,  model.BucketId,
 				                            model.DateCreated,
 				                            model.Description,
 				                            model.Expiration,
@@ -157,7 +156,6 @@ namespace FileServiceNS.Api.Service
 				                            model.ExternalId,
 				                            model.FileSizeInBytes,
 				                            model.FileTypeId,
-				                            model.Id,
 				                            model.Location,
 				                            model.PrivateKey,
 				                            model.PublicKey);
@@ -215,5 +213,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>37aadd5ef82603e94988ae7d5d797259</Hash>
+    <Hash>cee12d3f7670c0dac7c4ba584a2d1949</Hash>
 </Codenesium>*/

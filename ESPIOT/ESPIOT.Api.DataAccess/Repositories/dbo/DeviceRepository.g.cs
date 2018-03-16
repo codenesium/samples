@@ -22,14 +22,12 @@ namespace ESPIOTNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(int id,
-		                          string name,
+		public virtual int Create(string name,
 		                          Guid publicId)
 		{
 			var record = new Device ();
 
-			MapPOCOToEF(id,
-			            name,
+			MapPOCOToEF(0, name,
 			            publicId, record);
 
 			this._context.Set<Device>().Add(record);
@@ -37,8 +35,7 @@ namespace ESPIOTNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(int id,
-		                           string name,
+		public virtual void Update(int id, string name,
 		                           Guid publicId)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
@@ -48,8 +45,7 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,
-				            name,
+				MapPOCOToEF(id,  name,
 				            publicId, record);
 				this._context.SaveChanges();
 			}
@@ -107,8 +103,7 @@ namespace ESPIOTNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id,
-		                               string name,
+		public static void MapPOCOToEF(int id, string name,
 		                               Guid publicId, Device   efDevice)
 		{
 			efDevice.id = id;
@@ -133,5 +128,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d09bde5b9f1d92521428fa9241c3fe2</Hash>
+    <Hash>e362c9a661ddc45623979c512f9a81cf</Hash>
 </Codenesium>*/

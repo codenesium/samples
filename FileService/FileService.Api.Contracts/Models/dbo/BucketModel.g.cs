@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace FileServiceNS.Api.Contracts
 {
 	public partial class BucketModel
@@ -10,22 +11,20 @@ namespace FileServiceNS.Api.Contracts
 		{}
 
 		public BucketModel(Guid externalId,
-		                   int id,
 		                   string name)
 		{
 			this.ExternalId = externalId;
-			this.Id = id.ToInt();
 			this.Name = name;
 		}
 
 		public BucketModel(POCOBucket poco)
 		{
 			this.ExternalId = poco.ExternalId;
-			this.Id = poco.Id.ToInt();
 			this.Name = poco.Name;
 		}
 
 		private Guid _externalId;
+		[Required]
 		public Guid ExternalId
 		{
 			get
@@ -38,20 +37,8 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private string _name;
+		[Required]
 		public string Name
 		{
 			get
@@ -67,5 +54,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>42b98aae1d821d33780c735514d9b3d0</Hash>
+    <Hash>44b487d533d1393ff0f58d147ab63315</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class OrganizationRepository: AbstractOrganizationRepository
+	public class OrganizationRepository: AbstractOrganizationRepository, IOrganizationRepository
 	{
 		public OrganizationRepository(ILogger<OrganizationRepository> logger,
 		                              ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>06b94df271f4d9683ca0e8984c4d0e53</Hash>
+    <Hash>6d1a8f31a2d8f6601a4a1a082ee16e84</Hash>
 </Codenesium>*/

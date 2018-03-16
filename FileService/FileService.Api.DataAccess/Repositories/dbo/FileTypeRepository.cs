@@ -9,7 +9,7 @@ using FileServiceNS.Api.Contracts;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public class FileTypeRepository: AbstractFileTypeRepository
+	public class FileTypeRepository: AbstractFileTypeRepository, IFileTypeRepository
 	{
 		public FileTypeRepository(ILogger<FileTypeRepository> logger,
 		                          ApplicationContext context) : base(logger,context)
@@ -42,5 +42,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>924c6355ddcd0e310234b49e8c276b5e</Hash>
+    <Hash>7b12603d8da531c113119efb7875e753</Hash>
 </Codenesium>*/

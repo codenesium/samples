@@ -28,7 +28,6 @@ namespace NebulaNS.Api.DataAccess
 		                          Nullable<DateTime> dateStarted,
 		                          string dynamicParameters,
 		                          Guid externalId,
-		                          int id,
 		                          int linkStatusId,
 		                          string name,
 		                          int order,
@@ -37,13 +36,12 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var record = new Link ();
 
-			MapPOCOToEF(assignedMachineId,
+			MapPOCOToEF(0, assignedMachineId,
 			            chainId,
 			            dateCompleted,
 			            dateStarted,
 			            dynamicParameters,
 			            externalId,
-			            id,
 			            linkStatusId,
 			            name,
 			            order,
@@ -55,13 +53,12 @@ namespace NebulaNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(Nullable<int> assignedMachineId,
+		public virtual void Update(int id, Nullable<int> assignedMachineId,
 		                           int chainId,
 		                           Nullable<DateTime> dateCompleted,
 		                           Nullable<DateTime> dateStarted,
 		                           string dynamicParameters,
 		                           Guid externalId,
-		                           int id,
 		                           int linkStatusId,
 		                           string name,
 		                           int order,
@@ -75,13 +72,12 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(assignedMachineId,
+				MapPOCOToEF(id,  assignedMachineId,
 				            chainId,
 				            dateCompleted,
 				            dateStarted,
 				            dynamicParameters,
 				            externalId,
-				            id,
 				            linkStatusId,
 				            name,
 				            order,
@@ -143,13 +139,12 @@ namespace NebulaNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(Nullable<int> assignedMachineId,
+		public static void MapPOCOToEF(int id, Nullable<int> assignedMachineId,
 		                               int chainId,
 		                               Nullable<DateTime> dateCompleted,
 		                               Nullable<DateTime> dateStarted,
 		                               string dynamicParameters,
 		                               Guid externalId,
-		                               int id,
 		                               int linkStatusId,
 		                               string name,
 		                               int order,
@@ -206,5 +201,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb312d52b8a526eb07f8fe08074f695b</Hash>
+    <Hash>e26a9d4dd53ee9cdf4145bd6d7f01141</Hash>
 </Codenesium>*/

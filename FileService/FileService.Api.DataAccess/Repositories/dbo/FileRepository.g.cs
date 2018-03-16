@@ -30,14 +30,13 @@ namespace FileServiceNS.Api.DataAccess
 		                          Guid externalId,
 		                          decimal fileSizeInBytes,
 		                          int fileTypeId,
-		                          int id,
 		                          string location,
 		                          string privateKey,
 		                          string publicKey)
 		{
 			var record = new File ();
 
-			MapPOCOToEF(bucketId,
+			MapPOCOToEF(0, bucketId,
 			            dateCreated,
 			            description,
 			            expiration,
@@ -45,7 +44,6 @@ namespace FileServiceNS.Api.DataAccess
 			            externalId,
 			            fileSizeInBytes,
 			            fileTypeId,
-			            id,
 			            location,
 			            privateKey,
 			            publicKey, record);
@@ -55,7 +53,7 @@ namespace FileServiceNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(Nullable<int> bucketId,
+		public virtual void Update(int id, Nullable<int> bucketId,
 		                           DateTime dateCreated,
 		                           string description,
 		                           DateTime expiration,
@@ -63,7 +61,6 @@ namespace FileServiceNS.Api.DataAccess
 		                           Guid externalId,
 		                           decimal fileSizeInBytes,
 		                           int fileTypeId,
-		                           int id,
 		                           string location,
 		                           string privateKey,
 		                           string publicKey)
@@ -75,7 +72,7 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(bucketId,
+				MapPOCOToEF(id,  bucketId,
 				            dateCreated,
 				            description,
 				            expiration,
@@ -83,7 +80,6 @@ namespace FileServiceNS.Api.DataAccess
 				            externalId,
 				            fileSizeInBytes,
 				            fileTypeId,
-				            id,
 				            location,
 				            privateKey,
 				            publicKey, record);
@@ -143,7 +139,7 @@ namespace FileServiceNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(Nullable<int> bucketId,
+		public static void MapPOCOToEF(int id, Nullable<int> bucketId,
 		                               DateTime dateCreated,
 		                               string description,
 		                               DateTime expiration,
@@ -151,7 +147,6 @@ namespace FileServiceNS.Api.DataAccess
 		                               Guid externalId,
 		                               decimal fileSizeInBytes,
 		                               int fileTypeId,
-		                               int id,
 		                               string location,
 		                               string privateKey,
 		                               string publicKey, File   efFile)
@@ -203,5 +198,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>69018785d344e54e1edb1b4e868a126a</Hash>
+    <Hash>f0fe7cd1451713b5814055acb62abddd</Hash>
 </Codenesium>*/

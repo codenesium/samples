@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
@@ -70,7 +71,7 @@ namespace FileServiceNS.Api.Service
 		[BucketFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create(BucketModel model)
 		{
 			this._bucketModelValidator.CreateMode();
@@ -78,7 +79,6 @@ namespace FileServiceNS.Api.Service
 			if (validationResult.IsValid)
 			{
 				var id = this._bucketRepository.Create(model.ExternalId,
-				                                       model.Id,
 				                                       model.Name);
 				return Ok(id);
 			}
@@ -95,7 +95,7 @@ namespace FileServiceNS.Api.Service
 		[BucketFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult CreateMany(List<BucketModel> models)
 		{
 			this._bucketModelValidator.CreateMode();
@@ -112,7 +112,6 @@ namespace FileServiceNS.Api.Service
 			foreach(var model in models)
 			{
 				this._bucketRepository.Create(model.ExternalId,
-				                              model.Id,
 				                              model.Name);
 			}
 			return Ok();
@@ -124,15 +123,14 @@ namespace FileServiceNS.Api.Service
 		[BucketFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id,BucketModel model)
 		{
 			this._bucketModelValidator.UpdateMode();
 			var validationResult = this._bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._bucketRepository.Update(model.ExternalId,
-				                              model.Id,
+				this._bucketRepository.Update(id,  model.ExternalId,
 				                              model.Name);
 				return Ok();
 			}
@@ -158,5 +156,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c75b940a3b0956751848d1589b8b2d7e</Hash>
+    <Hash>afde00a45da5ce88a49e89d2b5377416</Hash>
 </Codenesium>*/

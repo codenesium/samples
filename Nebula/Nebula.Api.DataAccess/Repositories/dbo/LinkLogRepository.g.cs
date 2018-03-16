@@ -23,14 +23,12 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual int Create(DateTime dateEntered,
-		                          int id,
 		                          int linkId,
 		                          string log)
 		{
 			var record = new LinkLog ();
 
-			MapPOCOToEF(dateEntered,
-			            id,
+			MapPOCOToEF(0, dateEntered,
 			            linkId,
 			            log, record);
 
@@ -39,8 +37,7 @@ namespace NebulaNS.Api.DataAccess
 			return record.id;
 		}
 
-		public virtual void Update(DateTime dateEntered,
-		                           int id,
+		public virtual void Update(int id, DateTime dateEntered,
 		                           int linkId,
 		                           string log)
 		{
@@ -51,8 +48,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(dateEntered,
-				            id,
+				MapPOCOToEF(id,  dateEntered,
 				            linkId,
 				            log, record);
 				this._context.SaveChanges();
@@ -111,8 +107,7 @@ namespace NebulaNS.Api.DataAccess
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(DateTime dateEntered,
-		                               int id,
+		public static void MapPOCOToEF(int id, DateTime dateEntered,
 		                               int linkId,
 		                               string log, LinkLog   efLinkLog)
 		{
@@ -144,5 +139,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f8a5f88bffb4112e9076197c7f461680</Hash>
+    <Hash>e5145952838bde8fd19dde165302d81e</Hash>
 </Codenesium>*/

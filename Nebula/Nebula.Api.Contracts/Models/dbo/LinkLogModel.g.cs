@@ -2,6 +2,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
 	public partial class LinkLogModel
@@ -10,12 +11,10 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		public LinkLogModel(DateTime dateEntered,
-		                    int id,
 		                    int linkId,
 		                    string log)
 		{
 			this.DateEntered = dateEntered.ToDateTime();
-			this.Id = id.ToInt();
 			this.LinkId = linkId.ToInt();
 			this.Log = log;
 		}
@@ -23,13 +22,13 @@ namespace NebulaNS.Api.Contracts
 		public LinkLogModel(POCOLinkLog poco)
 		{
 			this.DateEntered = poco.DateEntered.ToDateTime();
-			this.Id = poco.Id.ToInt();
 			this.Log = poco.Log;
 
-			LinkId = poco.LinkId.Value.ToInt();
+			this.LinkId = poco.LinkId.Value.ToInt();
 		}
 
 		private DateTime _dateEntered;
+		[Required]
 		public DateTime DateEntered
 		{
 			get
@@ -42,20 +41,8 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private int _id;
-		public int Id
-		{
-			get
-			{
-				return _id;
-			}
-			set
-			{
-				this._id = value;
-			}
-		}
-
 		private int _linkId;
+		[Required]
 		public int LinkId
 		{
 			get
@@ -69,6 +56,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		private string _log;
+		[Required]
 		public string Log
 		{
 			get
@@ -84,5 +72,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b6034142a3c710afc03f734cfbb97f0b</Hash>
+    <Hash>174b2932b0b99c7d0c6cd49ad9db1200</Hash>
 </Codenesium>*/
