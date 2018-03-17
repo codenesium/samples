@@ -2,4 +2,4 @@ language: csharp
 mono: none
 dotnet: 2.0.0
 script:
-   -  dotnet build Espiot/espiot.api.service/espiot.api.service.csproj
+   -  dotnet build ESPIOT/ESPIOT.Api.Service/ESPIOT.Api.Service.csproj
