@@ -14,8 +14,8 @@ namespace FileServiceNS.Api.Service
 		public BucketsController(
 			ILogger<BucketsController> logger,
 			ApplicationContext context,
-			BucketRepository bucketRepository,
-			BucketModelValidator bucketModelValidator
+			IBucketRepository bucketRepository,
+			IBucketModelValidator bucketModelValidator
 			) : base(logger,
 			         context,
 			         bucketRepository,
@@ -28,5 +28,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5a212b62816273caf8816ec77100601b</Hash>
+    <Hash>57341c1b707790ed99ff2be0c28f90b0</Hash>
 </Codenesium>*/

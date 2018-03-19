@@ -14,8 +14,8 @@ namespace FileServiceNS.Api.Service
 		public FileTypesController(
 			ILogger<FileTypesController> logger,
 			ApplicationContext context,
-			FileTypeRepository fileTypeRepository,
-			FileTypeModelValidator fileTypeModelValidator
+			IFileTypeRepository fileTypeRepository,
+			IFileTypeModelValidator fileTypeModelValidator
 			) : base(logger,
 			         context,
 			         fileTypeRepository,
@@ -28,5 +28,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3d5faaef44bda76de006efc84fcadde8</Hash>
+    <Hash>91af0f0c41d8dd15e20fee0dfaea1a1b</Hash>
 </Codenesium>*/

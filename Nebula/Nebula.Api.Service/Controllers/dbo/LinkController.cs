@@ -14,8 +14,8 @@ namespace NebulaNS.Api.Service
 		public LinksController(
 			ILogger<LinksController> logger,
 			ApplicationContext context,
-			LinkRepository linkRepository,
-			LinkModelValidator linkModelValidator
+			ILinkRepository linkRepository,
+			ILinkModelValidator linkModelValidator
 			) : base(logger,
 			         context,
 			         linkRepository,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f7d715c7e27b6039cb437e8486611ce4</Hash>
+    <Hash>6607a88e07ea2d9dc5b21ddeb885c30b</Hash>
 </Codenesium>*/

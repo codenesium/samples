@@ -11,15 +11,15 @@ namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractLinksController: AbstractEntityFrameworkApiController
 	{
-		protected LinkRepository _linkRepository;
-		protected LinkModelValidator _linkModelValidator;
+		protected ILinkRepository _linkRepository;
+		protected ILinkModelValidator _linkModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractLinksController(
 			ILogger<AbstractLinksController> logger,
 			ApplicationContext context,
-			LinkRepository linkRepository,
-			LinkModelValidator linkModelValidator
+			ILinkRepository linkRepository,
+			ILinkModelValidator linkModelValidator
 			) : base(logger,context)
 		{
 			this._linkRepository = linkRepository;
@@ -228,5 +228,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6f42c1c09380d8aad035494726fde9d5</Hash>
+    <Hash>47774ed8d470160ab861741536ad14ea</Hash>
 </Codenesium>*/

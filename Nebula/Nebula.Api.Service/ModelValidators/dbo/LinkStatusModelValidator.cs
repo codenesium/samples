@@ -3,7 +3,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Service
 {
-	public class LinkStatusModelValidator: LinkStatusModelValidatorAbstract
+	public class LinkStatusModelValidator: AbstractLinkStatusModelValidator,ILinkStatusModelValidator
 	{
 		public LinkStatusModelValidator()
 		{   }
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f6f3c8e08ef951cd72ef593872b199ed</Hash>
+    <Hash>3685967e62614c58b08ac3f22bf86d9c</Hash>
 </Codenesium>*/

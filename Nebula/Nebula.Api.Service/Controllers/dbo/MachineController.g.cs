@@ -11,15 +11,15 @@ namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractMachinesController: AbstractEntityFrameworkApiController
 	{
-		protected MachineRepository _machineRepository;
-		protected MachineModelValidator _machineModelValidator;
+		protected IMachineRepository _machineRepository;
+		protected IMachineModelValidator _machineModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractMachinesController(
 			ILogger<AbstractMachinesController> logger,
 			ApplicationContext context,
-			MachineRepository machineRepository,
-			MachineModelValidator machineModelValidator
+			IMachineRepository machineRepository,
+			IMachineModelValidator machineModelValidator
 			) : base(logger,context)
 		{
 			this._machineRepository = machineRepository;
@@ -165,5 +165,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2f3442316db665de50085160aff519f5</Hash>
+    <Hash>2407f3154efab12b6aca56db8b28a8b3</Hash>
 </Codenesium>*/

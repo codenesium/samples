@@ -11,15 +11,15 @@ namespace FileServiceNS.Api.Service
 {
 	public abstract class AbstractBucketsController: AbstractEntityFrameworkApiController
 	{
-		protected BucketRepository _bucketRepository;
-		protected BucketModelValidator _bucketModelValidator;
+		protected IBucketRepository _bucketRepository;
+		protected IBucketModelValidator _bucketModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractBucketsController(
 			ILogger<AbstractBucketsController> logger,
 			ApplicationContext context,
-			BucketRepository bucketRepository,
-			BucketModelValidator bucketModelValidator
+			IBucketRepository bucketRepository,
+			IBucketModelValidator bucketModelValidator
 			) : base(logger,context)
 		{
 			this._bucketRepository = bucketRepository;
@@ -156,5 +156,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>afde00a45da5ce88a49e89d2b5377416</Hash>
+    <Hash>c633fac85339e245725542a9489e0732</Hash>
 </Codenesium>*/

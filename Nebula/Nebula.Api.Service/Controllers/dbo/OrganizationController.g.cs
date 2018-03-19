@@ -11,15 +11,15 @@ namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractOrganizationsController: AbstractEntityFrameworkApiController
 	{
-		protected OrganizationRepository _organizationRepository;
-		protected OrganizationModelValidator _organizationModelValidator;
+		protected IOrganizationRepository _organizationRepository;
+		protected IOrganizationModelValidator _organizationModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractOrganizationsController(
 			ILogger<AbstractOrganizationsController> logger,
 			ApplicationContext context,
-			OrganizationRepository organizationRepository,
-			OrganizationModelValidator organizationModelValidator
+			IOrganizationRepository organizationRepository,
+			IOrganizationModelValidator organizationModelValidator
 			) : base(logger,context)
 		{
 			this._organizationRepository = organizationRepository;
@@ -153,5 +153,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6b218382be93094ccfdae5d818fe1a72</Hash>
+    <Hash>1963d03fe36f4568ab8cddf832996fc4</Hash>
 </Codenesium>*/

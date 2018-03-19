@@ -14,8 +14,8 @@ namespace ESPIOTNS.Api.Service
 		public DeviceActionsController(
 			ILogger<DeviceActionsController> logger,
 			ApplicationContext context,
-			DeviceActionRepository deviceActionRepository,
-			DeviceActionModelValidator deviceActionModelValidator
+			IDeviceActionRepository deviceActionRepository,
+			IDeviceActionModelValidator deviceActionModelValidator
 			) : base(logger,
 			         context,
 			         deviceActionRepository,
@@ -28,5 +28,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ad261d28873e3dce828e4b83a4f01c82</Hash>
+    <Hash>7f1c41aec1247a9f5cf861e27019eea8</Hash>
 </Codenesium>*/

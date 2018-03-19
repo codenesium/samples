@@ -14,8 +14,8 @@ namespace NebulaNS.Api.Service
 		public OrganizationsController(
 			ILogger<OrganizationsController> logger,
 			ApplicationContext context,
-			OrganizationRepository organizationRepository,
-			OrganizationModelValidator organizationModelValidator
+			IOrganizationRepository organizationRepository,
+			IOrganizationModelValidator organizationModelValidator
 			) : base(logger,
 			         context,
 			         organizationRepository,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d2a6da0139baac0c5d2d21c4ce94ea63</Hash>
+    <Hash>a257a7caacb26def8bf5315ad72635f1</Hash>
 </Codenesium>*/

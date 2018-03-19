@@ -3,7 +3,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Service
 {
-	public class LinkLogModelValidator: LinkLogModelValidatorAbstract
+	public class LinkLogModelValidator: AbstractLinkLogModelValidator,ILinkLogModelValidator
 	{
 		public LinkLogModelValidator()
 		{   }
@@ -32,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>15d3ea300965555d3ebe9ff71557266f</Hash>
+    <Hash>55a94428dbff57de42cbb5ea99b1035d</Hash>
 </Codenesium>*/

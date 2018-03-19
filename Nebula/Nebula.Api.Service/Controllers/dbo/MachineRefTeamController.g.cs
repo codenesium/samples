@@ -11,15 +11,15 @@ namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractMachineRefTeamsController: AbstractEntityFrameworkApiController
 	{
-		protected MachineRefTeamRepository _machineRefTeamRepository;
-		protected MachineRefTeamModelValidator _machineRefTeamModelValidator;
+		protected IMachineRefTeamRepository _machineRefTeamRepository;
+		protected IMachineRefTeamModelValidator _machineRefTeamModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractMachineRefTeamsController(
 			ILogger<AbstractMachineRefTeamsController> logger,
 			ApplicationContext context,
-			MachineRefTeamRepository machineRefTeamRepository,
-			MachineRefTeamModelValidator machineRefTeamModelValidator
+			IMachineRefTeamRepository machineRefTeamRepository,
+			IMachineRefTeamModelValidator machineRefTeamModelValidator
 			) : base(logger,context)
 		{
 			this._machineRefTeamRepository = machineRefTeamRepository;
@@ -186,5 +186,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d9ea4fc70033b9adbd7cff06013294fe</Hash>
+    <Hash>1fbba73f22763cfdc82d6fa0b49dd026</Hash>
 </Codenesium>*/

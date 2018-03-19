@@ -14,8 +14,8 @@ namespace NebulaNS.Api.Service
 		public MachineRefTeamsController(
 			ILogger<MachineRefTeamsController> logger,
 			ApplicationContext context,
-			MachineRefTeamRepository machineRefTeamRepository,
-			MachineRefTeamModelValidator machineRefTeamModelValidator
+			IMachineRefTeamRepository machineRefTeamRepository,
+			IMachineRefTeamModelValidator machineRefTeamModelValidator
 			) : base(logger,
 			         context,
 			         machineRefTeamRepository,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3ccfc9620c2ed2ac1da19a292fc5e0f0</Hash>
+    <Hash>e6cd02ffd703223d908969b064e1c885</Hash>
 </Codenesium>*/

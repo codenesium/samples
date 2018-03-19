@@ -3,7 +3,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Service
 {
-	public class ChainStatusModelValidator: ChainStatusModelValidatorAbstract
+	public class ChainStatusModelValidator: AbstractChainStatusModelValidator,IChainStatusModelValidator
 	{
 		public ChainStatusModelValidator()
 		{   }
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e27b9cac2cd479001844cfde29343589</Hash>
+    <Hash>8557e48f8645128fd16a41eb62fb2c62</Hash>
 </Codenesium>*/

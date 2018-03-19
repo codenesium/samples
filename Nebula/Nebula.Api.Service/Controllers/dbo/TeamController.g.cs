@@ -11,15 +11,15 @@ namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractTeamsController: AbstractEntityFrameworkApiController
 	{
-		protected TeamRepository _teamRepository;
-		protected TeamModelValidator _teamModelValidator;
+		protected ITeamRepository _teamRepository;
+		protected ITeamModelValidator _teamModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractTeamsController(
 			ILogger<AbstractTeamsController> logger,
 			ApplicationContext context,
-			TeamRepository teamRepository,
-			TeamModelValidator teamModelValidator
+			ITeamRepository teamRepository,
+			ITeamModelValidator teamModelValidator
 			) : base(logger,context)
 		{
 			this._teamRepository = teamRepository;
@@ -171,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>02a375995715e00d0dc493fe6b16eb19</Hash>
+    <Hash>905c7e4a65caa9c63905b211e840fd8d</Hash>
 </Codenesium>*/

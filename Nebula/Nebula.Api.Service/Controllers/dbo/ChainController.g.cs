@@ -11,15 +11,15 @@ namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractChainsController: AbstractEntityFrameworkApiController
 	{
-		protected ChainRepository _chainRepository;
-		protected ChainModelValidator _chainModelValidator;
+		protected IChainRepository _chainRepository;
+		protected IChainModelValidator _chainModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractChainsController(
 			ILogger<AbstractChainsController> logger,
 			ApplicationContext context,
-			ChainRepository chainRepository,
-			ChainModelValidator chainModelValidator
+			IChainRepository chainRepository,
+			IChainModelValidator chainModelValidator
 			) : base(logger,context)
 		{
 			this._chainRepository = chainRepository;
@@ -192,5 +192,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1ed49b2fa4c3d3f29012d4f3d7ca6d08</Hash>
+    <Hash>8de7319f8e34d6c803bbcd630ad93b84</Hash>
 </Codenesium>*/

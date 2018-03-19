@@ -1,5 +1,7 @@
 using FluentValidation;
+using FluentValidation.Results;
 using System;
+using System.Threading.Tasks;
 
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
@@ -7,9 +9,19 @@ using ESPIOTNS.Api.DataAccess;
 namespace ESPIOTNS.Api.Service
 
 {
-	public class DeviceActionModelValidatorAbstract: AbstractValidator<DeviceActionModel>
+	public abstract class AbstractDeviceActionModelValidator: AbstractValidator<DeviceActionModel>
 	{
-		public DeviceRepository DeviceRepository {get; set;}
+		public new ValidationResult Validate(DeviceActionModel model)
+		{
+			return base.Validate(model);
+		}
+
+		public async Task<ValidationResult> ValidateAsync(DeviceActionModel model)
+		{
+			return await base.ValidateAsync(model);
+		}
+
+		public IDeviceRepository DeviceRepository {get; set;}
 
 		public virtual void DeviceIdRules()
 		{
@@ -40,5 +52,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ea6ab61c816186c19a9b0340b91433a0</Hash>
+    <Hash>0bd485001a8bb9eca021b7e6b88dfc2f</Hash>
 </Codenesium>*/

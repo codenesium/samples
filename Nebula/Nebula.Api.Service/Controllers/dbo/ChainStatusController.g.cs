@@ -11,15 +11,15 @@ namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractChainStatusController: AbstractEntityFrameworkApiController
 	{
-		protected ChainStatusRepository _chainStatusRepository;
-		protected ChainStatusModelValidator _chainStatusModelValidator;
+		protected IChainStatusRepository _chainStatusRepository;
+		protected IChainStatusModelValidator _chainStatusModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractChainStatusController(
 			ILogger<AbstractChainStatusController> logger,
 			ApplicationContext context,
-			ChainStatusRepository chainStatusRepository,
-			ChainStatusModelValidator chainStatusModelValidator
+			IChainStatusRepository chainStatusRepository,
+			IChainStatusModelValidator chainStatusModelValidator
 			) : base(logger,context)
 		{
 			this._chainStatusRepository = chainStatusRepository;
@@ -153,5 +153,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c6efdb2afdf2e6550f05100363400067</Hash>
+    <Hash>decf9fdf341f0f00857718db788eadb7</Hash>
 </Codenesium>*/

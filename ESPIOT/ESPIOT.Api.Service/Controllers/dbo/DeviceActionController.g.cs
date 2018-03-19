@@ -11,15 +11,15 @@ namespace ESPIOTNS.Api.Service
 {
 	public abstract class AbstractDeviceActionsController: AbstractEntityFrameworkApiController
 	{
-		protected DeviceActionRepository _deviceActionRepository;
-		protected DeviceActionModelValidator _deviceActionModelValidator;
+		protected IDeviceActionRepository _deviceActionRepository;
+		protected IDeviceActionModelValidator _deviceActionModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractDeviceActionsController(
 			ILogger<AbstractDeviceActionsController> logger,
 			ApplicationContext context,
-			DeviceActionRepository deviceActionRepository,
-			DeviceActionModelValidator deviceActionModelValidator
+			IDeviceActionRepository deviceActionRepository,
+			IDeviceActionModelValidator deviceActionModelValidator
 			) : base(logger,context)
 		{
 			this._deviceActionRepository = deviceActionRepository;
@@ -174,5 +174,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>327808d45aebd9697f29b137de05720d</Hash>
+    <Hash>ba35562dc7a4ce79a08e8284f77982e9</Hash>
 </Codenesium>*/

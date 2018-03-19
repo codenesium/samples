@@ -14,8 +14,8 @@ namespace NebulaNS.Api.Service
 		public ChainStatusController(
 			ILogger<ChainStatusController> logger,
 			ApplicationContext context,
-			ChainStatusRepository chainStatusRepository,
-			ChainStatusModelValidator chainStatusModelValidator
+			IChainStatusRepository chainStatusRepository,
+			IChainStatusModelValidator chainStatusModelValidator
 			) : base(logger,
 			         context,
 			         chainStatusRepository,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5a47bb08ff2b48bca151ddd3beba0a56</Hash>
+    <Hash>a764043d450dcf64ae7d00a29a9d1c9d</Hash>
 </Codenesium>*/

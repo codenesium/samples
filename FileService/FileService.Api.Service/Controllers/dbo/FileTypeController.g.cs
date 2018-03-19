@@ -11,15 +11,15 @@ namespace FileServiceNS.Api.Service
 {
 	public abstract class AbstractFileTypesController: AbstractEntityFrameworkApiController
 	{
-		protected FileTypeRepository _fileTypeRepository;
-		protected FileTypeModelValidator _fileTypeModelValidator;
+		protected IFileTypeRepository _fileTypeRepository;
+		protected IFileTypeModelValidator _fileTypeModelValidator;
 		protected int SearchRecordLimit {get; set;}
 		protected int SearchRecordDefault {get; set;}
 		public AbstractFileTypesController(
 			ILogger<AbstractFileTypesController> logger,
 			ApplicationContext context,
-			FileTypeRepository fileTypeRepository,
-			FileTypeModelValidator fileTypeModelValidator
+			IFileTypeRepository fileTypeRepository,
+			IFileTypeModelValidator fileTypeModelValidator
 			) : base(logger,context)
 		{
 			this._fileTypeRepository = fileTypeRepository;
@@ -153,5 +153,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>61f4a3181479341b11accc8d6f247a2d</Hash>
+    <Hash>83e9ef28cb19229b015a3f5661326f97</Hash>
 </Codenesium>*/

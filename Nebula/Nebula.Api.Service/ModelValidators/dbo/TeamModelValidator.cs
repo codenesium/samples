@@ -3,7 +3,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Service
 {
-	public class TeamModelValidator: TeamModelValidatorAbstract
+	public class TeamModelValidator: AbstractTeamModelValidator,ITeamModelValidator
 	{
 		public TeamModelValidator()
 		{   }
@@ -29,5 +29,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3d4bf98003f6673c458d476ffc12434a</Hash>
+    <Hash>a8d2f41545903bb35db3795ca3f55766</Hash>
 </Codenesium>*/

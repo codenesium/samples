@@ -14,8 +14,8 @@ namespace NebulaNS.Api.Service
 		public MachinesController(
 			ILogger<MachinesController> logger,
 			ApplicationContext context,
-			MachineRepository machineRepository,
-			MachineModelValidator machineModelValidator
+			IMachineRepository machineRepository,
+			IMachineModelValidator machineModelValidator
 			) : base(logger,
 			         context,
 			         machineRepository,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>eb834d2aa5c1f953b0b7d551197eb67c</Hash>
+    <Hash>79b761a51905a59190bea68b25dff215</Hash>
 </Codenesium>*/

@@ -14,8 +14,8 @@ namespace NebulaNS.Api.Service
 		public TeamsController(
 			ILogger<TeamsController> logger,
 			ApplicationContext context,
-			TeamRepository teamRepository,
-			TeamModelValidator teamModelValidator
+			ITeamRepository teamRepository,
+			ITeamModelValidator teamModelValidator
 			) : base(logger,
 			         context,
 			         teamRepository,
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>23eb43969a184dadef66d735f31ff3d9</Hash>
+    <Hash>bd6ffd709de4399b0126a7f4d236c888</Hash>
 </Codenesium>*/
