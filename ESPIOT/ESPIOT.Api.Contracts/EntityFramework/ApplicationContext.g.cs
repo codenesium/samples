@@ -5,11 +5,11 @@ namespace ESPIOTNS.Api.Contracts
 	{
 		public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
 		{}
-		public virtual DbSet<Device> Device { get; set; }
-		public virtual DbSet<DeviceAction> DeviceAction { get; set; }
+		public virtual DbSet<EFDevice> Device { get; set; }
+		public virtual DbSet<EFDeviceAction> DeviceAction { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a217946155ade145374613b58569319</Hash>
+    <Hash>2173baeda1223cf94403348780f6127d</Hash>
 </Codenesium>*/

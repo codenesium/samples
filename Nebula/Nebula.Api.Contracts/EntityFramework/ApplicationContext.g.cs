@@ -5,19 +5,19 @@ namespace NebulaNS.Api.Contracts
 	{
 		public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
 		{}
-		public virtual DbSet<Chain> Chain { get; set; }
-		public virtual DbSet<ChainStatus> ChainStatus { get; set; }
-		public virtual DbSet<Clasp> Clasp { get; set; }
-		public virtual DbSet<Link> Link { get; set; }
-		public virtual DbSet<LinkLog> LinkLog { get; set; }
-		public virtual DbSet<LinkStatus> LinkStatus { get; set; }
-		public virtual DbSet<Machine> Machine { get; set; }
-		public virtual DbSet<MachineRefTeam> MachineRefTeam { get; set; }
-		public virtual DbSet<Organization> Organization { get; set; }
-		public virtual DbSet<Team> Team { get; set; }
+		public virtual DbSet<EFChain> Chain { get; set; }
+		public virtual DbSet<EFChainStatus> ChainStatus { get; set; }
+		public virtual DbSet<EFClasp> Clasp { get; set; }
+		public virtual DbSet<EFLink> Link { get; set; }
+		public virtual DbSet<EFLinkLog> LinkLog { get; set; }
+		public virtual DbSet<EFLinkStatus> LinkStatus { get; set; }
+		public virtual DbSet<EFMachine> Machine { get; set; }
+		public virtual DbSet<EFMachineRefTeam> MachineRefTeam { get; set; }
+		public virtual DbSet<EFOrganization> Organization { get; set; }
+		public virtual DbSet<EFTeam> Team { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>28b0f4a0a527330ba44abcd18e7469c6</Hash>
+    <Hash>c95b79a9592e157ab342b71c7a8ca5a5</Hash>
 </Codenesium>*/

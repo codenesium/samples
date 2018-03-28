@@ -18,12 +18,12 @@ namespace ESPIOTNS.Api.DataAccess
 
 		void GetById(int id, Response response);
 
-		void GetWhere(Expression<Func<DeviceAction, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		void GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 
 		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e702c30902e6f896211841437e039635</Hash>
+    <Hash>961668d23ed3986b33ae6438d98c7534</Hash>
 </Codenesium>*/

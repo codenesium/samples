@@ -1,6 +1,5 @@
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 {
 	public class LinkLogModelValidator: AbstractLinkLogModelValidator,ILinkLogModelValidator
@@ -10,27 +9,27 @@ namespace NebulaNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.DateEnteredRules();
 			this.LinkIdRules();
 			this.LogRules();
+			this.DateEnteredRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.DateEnteredRules();
 			this.LinkIdRules();
 			this.LogRules();
+			this.DateEnteredRules();
 		}
 
 		public void PatchMode()
 		{
-			this.DateEnteredRules();
 			this.LinkIdRules();
 			this.LogRules();
+			this.DateEnteredRules();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>55a94428dbff57de42cbb5ea99b1035d</Hash>
+    <Hash>b26a6c3a19309e1da8082d530d6d82c8</Hash>
 </Codenesium>*/

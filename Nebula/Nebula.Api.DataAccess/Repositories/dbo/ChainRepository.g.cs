@@ -22,27 +22,27 @@ namespace NebulaNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(int chainStatusId,
-		                          Guid externalId,
-		                          string name,
-		                          int teamId)
+		public virtual int Create(string name,
+		                          int teamId,
+		                          int chainStatusId,
+		                          Guid externalId)
 		{
-			var record = new Chain ();
+			var record = new EFChain ();
 
-			MapPOCOToEF(0, chainStatusId,
-			            externalId,
-			            name,
-			            teamId, record);
+			MapPOCOToEF(0, name,
+			            teamId,
+			            chainStatusId,
+			            externalId, record);
 
-			this._context.Set<Chain>().Add(record);
+			this._context.Set<EFChain>().Add(record);
 			this._context.SaveChanges();
 			return record.id;
 		}
 
-		public virtual void Update(int id, int chainStatusId,
-		                           Guid externalId,
-		                           string name,
-		                           int teamId)
+		public virtual void Update(int id, string name,
+		                           int teamId,
+		                           int chainStatusId,
+		                           Guid externalId)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
@@ -51,10 +51,10 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,  chainStatusId,
-				            externalId,
-				            name,
-				            teamId, record);
+				MapPOCOToEF(id,  name,
+				            teamId,
+				            chainStatusId,
+				            externalId, record);
 				this._context.SaveChanges();
 			}
 		}
@@ -69,7 +69,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this._context.Set<Chain>().Remove(record);
+				this._context.Set<EFChain>().Remove(record);
 				this._context.SaveChanges();
 			}
 		}
@@ -79,17 +79,17 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCO(x => x.id == id,response);
 		}
 
-		protected virtual List<Chain> SearchLinqEF(Expression<Func<Chain, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFChain> SearchLinqEF(Expression<Func<EFChain, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<Chain> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFChain> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public virtual void GetWhere(Expression<Func<Chain, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual void GetWhere(Expression<Func<EFChain, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 		}
@@ -99,31 +99,31 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		private void SearchLinqPOCO(Expression<Func<Chain, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFChain, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Chain> records = this.SearchLinqEF(predicate,skip,take,orderClause);
+			List<EFChain> records = this.SearchLinqEF(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
 		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Chain> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
+			List<EFChain> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id, int chainStatusId,
-		                               Guid externalId,
-		                               string name,
-		                               int teamId, Chain   efChain)
+		public static void MapPOCOToEF(int id, string name,
+		                               int teamId,
+		                               int chainStatusId,
+		                               Guid externalId, EFChain   efChain)
 		{
-			efChain.chainStatusId = chainStatusId;
-			efChain.externalId = externalId;
 			efChain.id = id;
 			efChain.name = name;
 			efChain.teamId = teamId;
+			efChain.chainStatusId = chainStatusId;
+			efChain.externalId = externalId;
 		}
 
-		public static void MapEFToPOCO(Chain efChain,Response response)
+		public static void MapEFToPOCO(EFChain efChain,Response response)
 		{
 			if(efChain == null)
 			{
@@ -131,23 +131,23 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddChain(new POCOChain()
 			{
-				ExternalId = efChain.externalId,
 				Id = efChain.id.ToInt(),
 				Name = efChain.name,
+				ExternalId = efChain.externalId,
 
-				ChainStatusId = new ReferenceEntity<int>(efChain.chainStatusId,
-				                                         "ChainStatus"),
 				TeamId = new ReferenceEntity<int>(efChain.teamId,
 				                                  "Teams"),
+				ChainStatusId = new ReferenceEntity<int>(efChain.chainStatusId,
+				                                         "ChainStatus"),
 			});
 
-			ChainStatusRepository.MapEFToPOCO(efChain.ChainStatusRef, response);
-
 			TeamRepository.MapEFToPOCO(efChain.TeamRef, response);
+
+			ChainStatusRepository.MapEFToPOCO(efChain.ChainStatusRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5dbfe913632ab915c99f7027ad7bcb50</Hash>
+    <Hash>b0cbdd3f076d866b49a9d05449f2bb32</Hash>
 </Codenesium>*/

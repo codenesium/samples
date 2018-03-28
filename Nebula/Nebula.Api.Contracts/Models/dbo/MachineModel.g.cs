@@ -10,39 +10,53 @@ namespace NebulaNS.Api.Contracts
 		public MachineModel()
 		{}
 
-		public MachineModel(string description,
+		public MachineModel(string name,
+		                    Guid machineGuid,
 		                    string jwtKey,
 		                    string lastIpAddress,
-		                    Guid machineGuid,
-		                    string name)
+		                    string description)
 		{
-			this.Description = description;
+			this.Name = name;
+			this.MachineGuid = machineGuid;
 			this.JwtKey = jwtKey;
 			this.LastIpAddress = lastIpAddress;
-			this.MachineGuid = machineGuid;
-			this.Name = name;
+			this.Description = description;
 		}
 
 		public MachineModel(POCOMachine poco)
 		{
-			this.Description = poco.Description;
+			this.Name = poco.Name;
+			this.MachineGuid = poco.MachineGuid;
 			this.JwtKey = poco.JwtKey;
 			this.LastIpAddress = poco.LastIpAddress;
-			this.MachineGuid = poco.MachineGuid;
-			this.Name = poco.Name;
+			this.Description = poco.Description;
 		}
 
-		private string _description;
+		private string _name;
 		[Required]
-		public string Description
+		public string Name
 		{
 			get
 			{
-				return _description;
+				return _name;
 			}
 			set
 			{
-				this._description = value;
+				this._name = value;
+			}
+		}
+
+		private Guid _machineGuid;
+		[Required]
+		public Guid MachineGuid
+		{
+			get
+			{
+				return _machineGuid;
+			}
+			set
+			{
+				this._machineGuid = value;
 			}
 		}
 
@@ -74,36 +88,22 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private Guid _machineGuid;
+		private string _description;
 		[Required]
-		public Guid MachineGuid
+		public string Description
 		{
 			get
 			{
-				return _machineGuid;
+				return _description;
 			}
 			set
 			{
-				this._machineGuid = value;
-			}
-		}
-
-		private string _name;
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return _name;
-			}
-			set
-			{
-				this._name = value;
+				this._description = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e5949af17a80d3355280a2f4313661e</Hash>
+    <Hash>5d1d6db0f1aa9701c4416fc032511710</Hash>
 </Codenesium>*/

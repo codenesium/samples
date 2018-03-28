@@ -15,32 +15,32 @@ namespace NebulaNS.Api.DataAccess
 		                       ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<Chain> SearchLinqEF(Expression<Func<Chain, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFChain> SearchLinqEF(Expression<Func<EFChain, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Chain>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Chain>();
+				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFChain>();
 			}
 			else
 			{
-				return this._context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Chain>();
+				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
 			}
 		}
 
-		protected override List<Chain> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFChain> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Chain>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Chain>();
+				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFChain>();
 			}
 			else
 			{
-				return this._context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Chain>();
+				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ce4d42d742df65d323690cba04c85cc</Hash>
+    <Hash>69bb1cfb90acb479a6e87d5ae387e4fa</Hash>
 </Codenesium>*/

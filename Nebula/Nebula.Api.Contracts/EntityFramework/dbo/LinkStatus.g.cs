@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("LinkStatus", Schema="dbo")]
-	public partial class LinkStatus
+	public partial class EFLinkStatus
 	{
-		public LinkStatus()
+		public EFLinkStatus()
 		{}
 
 		[Key]
@@ -16,5 +16,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>da9d517d478a9321167864fb152fb5cf</Hash>
+    <Hash>67ec0e086c8521df1e61b7389775ea69</Hash>
 </Codenesium>*/

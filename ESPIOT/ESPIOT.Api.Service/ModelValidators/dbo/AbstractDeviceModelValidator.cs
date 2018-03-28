@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-
 namespace ESPIOTNS.Api.Service
 
 {
@@ -21,19 +19,19 @@ namespace ESPIOTNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public virtual void PublicIdRules()
+		{
+			RuleFor(x => x.PublicId).NotNull();
+		}
+
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
 			RuleFor(x => x.Name).Length(0,90);
 		}
-
-		public virtual void PublicIdRules()
-		{
-			RuleFor(x => x.PublicId).NotNull();
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b2b1e315a372d5c4dfc9bc93ab21049</Hash>
+    <Hash>6625546c6a92da924d954e1ef8fa269e</Hash>
 </Codenesium>*/

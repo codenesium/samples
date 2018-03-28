@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 
 {
@@ -22,7 +20,6 @@ namespace NebulaNS.Api.Service
 		}
 
 		public IOrganizationRepository OrganizationRepository {get; set;}
-
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -46,5 +43,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8ba27d525d98810639467d3441318cd6</Hash>
+    <Hash>effb05ca6d86710e891002445a9a79a7</Hash>
 </Codenesium>*/

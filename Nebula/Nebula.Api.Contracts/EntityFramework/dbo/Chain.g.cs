@@ -4,25 +4,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Chain", Schema="dbo")]
-	public partial class Chain
+	public partial class EFChain
 	{
-		public Chain()
+		public EFChain()
 		{}
 
-		public int chainStatusId {get; set;}
-		public Guid externalId {get; set;}
 		[Key]
 		public int id {get; set;}
 		public string name {get; set;}
 		public int teamId {get; set;}
+		public int chainStatusId {get; set;}
+		public Guid externalId {get; set;}
 
-		[ForeignKey("chainStatusId")]
-		public virtual ChainStatus ChainStatusRef { get; set; }
 		[ForeignKey("teamId")]
-		public virtual Team TeamRef { get; set; }
+		public virtual EFTeam TeamRef { get; set; }
+		[ForeignKey("chainStatusId")]
+		public virtual EFChainStatus ChainStatusRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d504d0dd7d950b821e119f5205f2ecf0</Hash>
+    <Hash>fef8d914aaa7b61652a5a6daa385ccf8</Hash>
 </Codenesium>*/

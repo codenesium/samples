@@ -78,17 +78,17 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._linkRepository.Create(model.AssignedMachineId,
-				                                     model.ChainId,
-				                                     model.DateCompleted,
-				                                     model.DateStarted,
+				var id = this._linkRepository.Create(model.Name,
 				                                     model.DynamicParameters,
-				                                     model.ExternalId,
+				                                     model.StaticParameters,
+				                                     model.ChainId,
+				                                     model.AssignedMachineId,
 				                                     model.LinkStatusId,
-				                                     model.Name,
 				                                     model.Order,
+				                                     model.DateStarted,
+				                                     model.DateCompleted,
 				                                     model.Response,
-				                                     model.StaticParameters);
+				                                     model.ExternalId);
 				return Ok(id);
 			}
 			else
@@ -120,17 +120,17 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._linkRepository.Create(model.AssignedMachineId,
-				                            model.ChainId,
-				                            model.DateCompleted,
-				                            model.DateStarted,
+				this._linkRepository.Create(model.Name,
 				                            model.DynamicParameters,
-				                            model.ExternalId,
+				                            model.StaticParameters,
+				                            model.ChainId,
+				                            model.AssignedMachineId,
 				                            model.LinkStatusId,
-				                            model.Name,
 				                            model.Order,
+				                            model.DateStarted,
+				                            model.DateCompleted,
 				                            model.Response,
-				                            model.StaticParameters);
+				                            model.ExternalId);
 			}
 			return Ok();
 		}
@@ -148,17 +148,17 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkRepository.Update(id,  model.AssignedMachineId,
-				                            model.ChainId,
-				                            model.DateCompleted,
-				                            model.DateStarted,
+				this._linkRepository.Update(id,  model.Name,
 				                            model.DynamicParameters,
-				                            model.ExternalId,
+				                            model.StaticParameters,
+				                            model.ChainId,
+				                            model.AssignedMachineId,
 				                            model.LinkStatusId,
-				                            model.Name,
 				                            model.Order,
+				                            model.DateStarted,
+				                            model.DateCompleted,
 				                            model.Response,
-				                            model.StaticParameters);
+				                            model.ExternalId);
 				return Ok();
 			}
 			else
@@ -181,21 +181,6 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByAssignedMachineId/{id}")]
-		[LinkFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Machines/{id}/Links")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByAssignedMachineId(int id)
-		{
-			var response = new Response();
-
-			this._linkRepository.GetWhere(x => x.assignedMachineId == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
 		[Route("ByChainId/{id}")]
 		[LinkFilter]
 		[ReadOnlyFilter]
@@ -206,6 +191,21 @@ namespace NebulaNS.Api.Service
 			var response = new Response();
 
 			this._linkRepository.GetWhere(x => x.chainId == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByAssignedMachineId/{id}")]
+		[LinkFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Machines/{id}/Links")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByAssignedMachineId(int id)
+		{
+			var response = new Response();
+
+			this._linkRepository.GetWhere(x => x.assignedMachineId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -228,5 +228,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>47774ed8d470160ab861741536ad14ea</Hash>
+    <Hash>4209e081c9b96e0c64894097d9e26755</Hash>
 </Codenesium>*/

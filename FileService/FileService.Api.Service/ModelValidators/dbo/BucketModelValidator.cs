@@ -1,6 +1,5 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
-
 namespace FileServiceNS.Api.Service
 {
 	public class BucketModelValidator: AbstractBucketModelValidator,IBucketModelValidator
@@ -10,24 +9,24 @@ namespace FileServiceNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.ExternalIdRules();
 			this.NameRules();
+			this.ExternalIdRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.ExternalIdRules();
 			this.NameRules();
+			this.ExternalIdRules();
 		}
 
 		public void PatchMode()
 		{
-			this.ExternalIdRules();
 			this.NameRules();
+			this.ExternalIdRules();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>933d98e0a8dc8fa100d3ab21191feb3f</Hash>
+    <Hash>35f60bf844267cbe7ac630f3b2b92642</Hash>
 </Codenesium>*/

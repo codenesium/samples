@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 
 {
@@ -21,21 +19,8 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IChainStatusRepository ChainStatusRepository {get; set;}
-
 		public ITeamRepository TeamRepository {get; set;}
-
-		public virtual void ChainStatusIdRules()
-		{
-			RuleFor(x => x.ChainStatusId).NotNull();
-			RuleFor(x => x.ChainStatusId).Must(BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void ExternalIdRules()
-		{
-			RuleFor(x => x.ExternalId).NotNull();
-		}
-
+		public IChainStatusRepository ChainStatusRepository {get; set;}
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -48,12 +33,15 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
 		}
 
-		public bool BeValidChainStatus(int id)
+		public virtual void ChainStatusIdRules()
 		{
-			Response response = new Response();
+			RuleFor(x => x.ChainStatusId).NotNull();
+			RuleFor(x => x.ChainStatusId).Must(BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
+		}
 
-			this.ChainStatusRepository.GetById(id,response);
-			return response.ChainStatus.Count > 0;
+		public virtual void ExternalIdRules()
+		{
+			RuleFor(x => x.ExternalId).NotNull();
 		}
 
 		public bool BeValidTeam(int id)
@@ -63,9 +51,17 @@ namespace NebulaNS.Api.Service
 			this.TeamRepository.GetById(id,response);
 			return response.Teams.Count > 0;
 		}
+
+		public bool BeValidChainStatus(int id)
+		{
+			Response response = new Response();
+
+			this.ChainStatusRepository.GetById(id,response);
+			return response.ChainStatus.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e67777325ada4182a40801f7dd85678</Hash>
+    <Hash>1849fbae984cfa8c8309cc751fce5de6</Hash>
 </Codenesium>*/

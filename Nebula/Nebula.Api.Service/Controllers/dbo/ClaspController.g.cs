@@ -78,8 +78,8 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._claspRepository.Create(model.NextChainId,
-				                                      model.PreviousChainId);
+				var id = this._claspRepository.Create(model.PreviousChainId,
+				                                      model.NextChainId);
 				return Ok(id);
 			}
 			else
@@ -111,8 +111,8 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._claspRepository.Create(model.NextChainId,
-				                             model.PreviousChainId);
+				this._claspRepository.Create(model.PreviousChainId,
+				                             model.NextChainId);
 			}
 			return Ok();
 		}
@@ -130,8 +130,8 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._claspRepository.Update(id,  model.NextChainId,
-				                             model.PreviousChainId);
+				this._claspRepository.Update(id,  model.PreviousChainId,
+				                             model.NextChainId);
 				return Ok();
 			}
 			else
@@ -154,21 +154,6 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByNextChainId/{id}")]
-		[ClaspFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Chains/{id}/Clasps")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByNextChainId(int id)
-		{
-			var response = new Response();
-
-			this._claspRepository.GetWhere(x => x.nextChainId == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
 		[Route("ByPreviousChainId/{id}")]
 		[ClaspFilter]
 		[ReadOnlyFilter]
@@ -182,9 +167,24 @@ namespace NebulaNS.Api.Service
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
+
+		[HttpGet]
+		[Route("ByNextChainId/{id}")]
+		[ClaspFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Chains/{id}/Clasps")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByNextChainId(int id)
+		{
+			var response = new Response();
+
+			this._claspRepository.GetWhere(x => x.nextChainId == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>93ab55a70c381e788d340e07d24e9d27</Hash>
+    <Hash>d31aa6f26669c93efa377f0947c7a121</Hash>
 </Codenesium>*/

@@ -6,22 +6,22 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IBucketRepository
 	{
-		int Create(Guid externalId,
-		           string name);
+		int Create(string name,
+		           Guid externalId);
 
-		void Update(int id, Guid externalId,
-		            string name);
+		void Update(int id, string name,
+		            Guid externalId);
 
 		void Delete(int id);
 
 		void GetById(int id, Response response);
 
-		void GetWhere(Expression<Func<Bucket, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		void GetWhere(Expression<Func<EFBucket, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 
 		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>69a0bbb67801f33d652dbb0e7c44b028</Hash>
+    <Hash>54428918c63e629264d5772db4383378</Hash>
 </Codenesium>*/

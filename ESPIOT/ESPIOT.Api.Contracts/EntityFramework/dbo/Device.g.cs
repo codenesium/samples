@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ESPIOTNS.Api.Contracts
 {
 	[Table("Device", Schema="dbo")]
-	public partial class Device
+	public partial class EFDevice
 	{
-		public Device()
+		public EFDevice()
 		{}
 
 		[Key]
 		public int id {get; set;}
-		public string name {get; set;}
 		public Guid publicId {get; set;}
+		public string name {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>01991f5f1fb733214182c8a0fc928e3b</Hash>
+    <Hash>3e71786a06b7186f5e019db62f1f6364</Hash>
 </Codenesium>*/

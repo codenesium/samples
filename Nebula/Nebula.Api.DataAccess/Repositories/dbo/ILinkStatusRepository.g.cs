@@ -14,12 +14,12 @@ namespace NebulaNS.Api.DataAccess
 
 		void GetById(int id, Response response);
 
-		void GetWhere(Expression<Func<LinkStatus, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		void GetWhere(Expression<Func<EFLinkStatus, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 
 		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>45f64ed1a5f70153f86a71963909f539</Hash>
+    <Hash>5a4b32d54320ce6a2ff8df003eb89f16</Hash>
 </Codenesium>*/

@@ -6,40 +6,40 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkRepository
 	{
-		int Create(Nullable<int> assignedMachineId,
-		           int chainId,
-		           Nullable<DateTime> dateCompleted,
-		           Nullable<DateTime> dateStarted,
+		int Create(string name,
 		           string dynamicParameters,
-		           Guid externalId,
+		           string staticParameters,
+		           int chainId,
+		           Nullable<int> assignedMachineId,
 		           int linkStatusId,
-		           string name,
 		           int order,
+		           Nullable<DateTime> dateStarted,
+		           Nullable<DateTime> dateCompleted,
 		           string response,
-		           string staticParameters);
+		           Guid externalId);
 
-		void Update(int id, Nullable<int> assignedMachineId,
-		            int chainId,
-		            Nullable<DateTime> dateCompleted,
-		            Nullable<DateTime> dateStarted,
+		void Update(int id, string name,
 		            string dynamicParameters,
-		            Guid externalId,
+		            string staticParameters,
+		            int chainId,
+		            Nullable<int> assignedMachineId,
 		            int linkStatusId,
-		            string name,
 		            int order,
+		            Nullable<DateTime> dateStarted,
+		            Nullable<DateTime> dateCompleted,
 		            string response,
-		            string staticParameters);
+		            Guid externalId);
 
 		void Delete(int id);
 
 		void GetById(int id, Response response);
 
-		void GetWhere(Expression<Func<Link, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		void GetWhere(Expression<Func<EFLink, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 
 		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>771cff05690d71d130d0a79a4d8ebc6c</Hash>
+    <Hash>d9e3f42cd4218641c3fd8630d8a25b2d</Hash>
 </Codenesium>*/

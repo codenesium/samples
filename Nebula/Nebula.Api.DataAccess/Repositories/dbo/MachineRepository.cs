@@ -15,32 +15,32 @@ namespace NebulaNS.Api.DataAccess
 		                         ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<Machine> SearchLinqEF(Expression<Func<Machine, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Machine>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Machine>();
+				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFMachine>();
 			}
 			else
 			{
-				return this._context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Machine>();
+				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
 			}
 		}
 
-		protected override List<Machine> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFMachine> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Machine>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Machine>();
+				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFMachine>();
 			}
 			else
 			{
-				return this._context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Machine>();
+				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6f40787c94a91a2b507dc780b13e372</Hash>
+    <Hash>e341dd392fd9d0bfc1b3036c91e42d62</Hash>
 </Codenesium>*/

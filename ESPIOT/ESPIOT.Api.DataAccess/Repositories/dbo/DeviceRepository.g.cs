@@ -22,21 +22,21 @@ namespace ESPIOTNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(string name,
-		                          Guid publicId)
+		public virtual int Create(Guid publicId,
+		                          string name)
 		{
-			var record = new Device ();
+			var record = new EFDevice ();
 
-			MapPOCOToEF(0, name,
-			            publicId, record);
+			MapPOCOToEF(0, publicId,
+			            name, record);
 
-			this._context.Set<Device>().Add(record);
+			this._context.Set<EFDevice>().Add(record);
 			this._context.SaveChanges();
 			return record.id;
 		}
 
-		public virtual void Update(int id, string name,
-		                           Guid publicId)
+		public virtual void Update(int id, Guid publicId,
+		                           string name)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
@@ -45,8 +45,8 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,  name,
-				            publicId, record);
+				MapPOCOToEF(id,  publicId,
+				            name, record);
 				this._context.SaveChanges();
 			}
 		}
@@ -61,7 +61,7 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			else
 			{
-				this._context.Set<Device>().Remove(record);
+				this._context.Set<EFDevice>().Remove(record);
 				this._context.SaveChanges();
 			}
 		}
@@ -71,17 +71,17 @@ namespace ESPIOTNS.Api.DataAccess
 			this.SearchLinqPOCO(x => x.id == id,response);
 		}
 
-		protected virtual List<Device> SearchLinqEF(Expression<Func<Device, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFDevice> SearchLinqEF(Expression<Func<EFDevice, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<Device> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFDevice> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public virtual void GetWhere(Expression<Func<Device, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual void GetWhere(Expression<Func<EFDevice, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 		}
@@ -91,27 +91,27 @@ namespace ESPIOTNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		private void SearchLinqPOCO(Expression<Func<Device, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFDevice, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Device> records = this.SearchLinqEF(predicate,skip,take,orderClause);
+			List<EFDevice> records = this.SearchLinqEF(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
 		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Device> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
+			List<EFDevice> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id, string name,
-		                               Guid publicId, Device   efDevice)
+		public static void MapPOCOToEF(int id, Guid publicId,
+		                               string name, EFDevice   efDevice)
 		{
 			efDevice.id = id;
-			efDevice.name = name;
 			efDevice.publicId = publicId;
+			efDevice.name = name;
 		}
 
-		public static void MapEFToPOCO(Device efDevice,Response response)
+		public static void MapEFToPOCO(EFDevice efDevice,Response response)
 		{
 			if(efDevice == null)
 			{
@@ -120,13 +120,13 @@ namespace ESPIOTNS.Api.DataAccess
 			response.AddDevice(new POCODevice()
 			{
 				Id = efDevice.id.ToInt(),
-				Name = efDevice.name,
 				PublicId = efDevice.publicId,
+				Name = efDevice.name,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e362c9a661ddc45623979c512f9a81cf</Hash>
+    <Hash>2224fc373c2119ac5847edf8dd2def0c</Hash>
 </Codenesium>*/

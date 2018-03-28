@@ -15,32 +15,32 @@ namespace NebulaNS.Api.DataAccess
 		                              ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<Organization> SearchLinqEF(Expression<Func<Organization, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFOrganization> SearchLinqEF(Expression<Func<EFOrganization, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Organization>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Organization>();
+				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 			else
 			{
-				return this._context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Organization>();
+				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 		}
 
-		protected override List<Organization> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFOrganization> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Organization>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Organization>();
+				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 			else
 			{
-				return this._context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Organization>();
+				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d1a8f31a2d8f6601a4a1a082ee16e84</Hash>
+    <Hash>592a418f5ca029c16f2b2964e96332a3</Hash>
 </Codenesium>*/

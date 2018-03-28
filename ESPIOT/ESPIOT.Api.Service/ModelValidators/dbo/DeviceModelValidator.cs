@@ -1,6 +1,5 @@
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-
 namespace ESPIOTNS.Api.Service
 {
 	public class DeviceModelValidator: AbstractDeviceModelValidator,IDeviceModelValidator
@@ -10,24 +9,24 @@ namespace ESPIOTNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.NameRules();
 			this.PublicIdRules();
+			this.NameRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.NameRules();
 			this.PublicIdRules();
+			this.NameRules();
 		}
 
 		public void PatchMode()
 		{
-			this.NameRules();
 			this.PublicIdRules();
+			this.NameRules();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ccf3792606f77e708039a428e3ae0df8</Hash>
+    <Hash>f9e366533f43e174d3883f6dd42d1b95</Hash>
 </Codenesium>*/

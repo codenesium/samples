@@ -22,21 +22,21 @@ namespace FileServiceNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(Guid externalId,
-		                          string name)
+		public virtual int Create(string name,
+		                          Guid externalId)
 		{
-			var record = new Bucket ();
+			var record = new EFBucket ();
 
-			MapPOCOToEF(0, externalId,
-			            name, record);
+			MapPOCOToEF(0, name,
+			            externalId, record);
 
-			this._context.Set<Bucket>().Add(record);
+			this._context.Set<EFBucket>().Add(record);
 			this._context.SaveChanges();
 			return record.id;
 		}
 
-		public virtual void Update(int id, Guid externalId,
-		                           string name)
+		public virtual void Update(int id, string name,
+		                           Guid externalId)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
@@ -45,8 +45,8 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,  externalId,
-				            name, record);
+				MapPOCOToEF(id,  name,
+				            externalId, record);
 				this._context.SaveChanges();
 			}
 		}
@@ -61,7 +61,7 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				this._context.Set<Bucket>().Remove(record);
+				this._context.Set<EFBucket>().Remove(record);
 				this._context.SaveChanges();
 			}
 		}
@@ -71,17 +71,17 @@ namespace FileServiceNS.Api.DataAccess
 			this.SearchLinqPOCO(x => x.id == id,response);
 		}
 
-		protected virtual List<Bucket> SearchLinqEF(Expression<Func<Bucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<Bucket> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFBucket> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public virtual void GetWhere(Expression<Func<Bucket, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual void GetWhere(Expression<Func<EFBucket, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 		}
@@ -91,27 +91,27 @@ namespace FileServiceNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		private void SearchLinqPOCO(Expression<Func<Bucket, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFBucket, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Bucket> records = this.SearchLinqEF(predicate,skip,take,orderClause);
+			List<EFBucket> records = this.SearchLinqEF(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
 		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Bucket> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
+			List<EFBucket> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id, Guid externalId,
-		                               string name, Bucket   efBucket)
+		public static void MapPOCOToEF(int id, string name,
+		                               Guid externalId, EFBucket   efBucket)
 		{
-			efBucket.externalId = externalId;
 			efBucket.id = id;
 			efBucket.name = name;
+			efBucket.externalId = externalId;
 		}
 
-		public static void MapEFToPOCO(Bucket efBucket,Response response)
+		public static void MapEFToPOCO(EFBucket efBucket,Response response)
 		{
 			if(efBucket == null)
 			{
@@ -119,14 +119,14 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			response.AddBucket(new POCOBucket()
 			{
-				ExternalId = efBucket.externalId,
 				Id = efBucket.id.ToInt(),
 				Name = efBucket.name,
+				ExternalId = efBucket.externalId,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b4dc50eb8ad0096efbeb8c54561fa800</Hash>
+    <Hash>0db4023912ffa66b319c0c8a1bed1c67</Hash>
 </Codenesium>*/

@@ -10,84 +10,100 @@ namespace FileServiceNS.Api.Contracts
 		public FileModel()
 		{}
 
-		public FileModel(Nullable<int> bucketId,
-		                 DateTime dateCreated,
-		                 string description,
+		public FileModel(Guid externalId,
+		                 string privateKey,
+		                 string publicKey,
+		                 string location,
 		                 DateTime expiration,
 		                 string extension,
-		                 Guid externalId,
+		                 DateTime dateCreated,
 		                 decimal fileSizeInBytes,
 		                 int fileTypeId,
-		                 string location,
-		                 string privateKey,
-		                 string publicKey)
+		                 Nullable<int> bucketId,
+		                 string description)
 		{
-			this.BucketId = bucketId.ToNullableInt();
-			this.DateCreated = dateCreated.ToDateTime();
-			this.Description = description;
-			this.Expiration = expiration.ToDateTime();
-			this.Extension = extension;
 			this.ExternalId = externalId;
-			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
-			this.FileTypeId = fileTypeId.ToInt();
-			this.Location = location;
 			this.PrivateKey = privateKey;
 			this.PublicKey = publicKey;
+			this.Location = location;
+			this.Expiration = expiration.ToDateTime();
+			this.Extension = extension;
+			this.DateCreated = dateCreated.ToDateTime();
+			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
+			this.FileTypeId = fileTypeId.ToInt();
+			this.BucketId = bucketId.ToNullableInt();
+			this.Description = description;
 		}
 
 		public FileModel(POCOFile poco)
 		{
-			this.DateCreated = poco.DateCreated.ToDateTime();
-			this.Description = poco.Description;
-			this.Expiration = poco.Expiration.ToDateTime();
-			this.Extension = poco.Extension;
 			this.ExternalId = poco.ExternalId;
-			this.FileSizeInBytes = poco.FileSizeInBytes.ToDecimal();
-			this.Location = poco.Location;
 			this.PrivateKey = poco.PrivateKey;
 			this.PublicKey = poco.PublicKey;
+			this.Location = poco.Location;
+			this.Expiration = poco.Expiration.ToDateTime();
+			this.Extension = poco.Extension;
+			this.DateCreated = poco.DateCreated.ToDateTime();
+			this.FileSizeInBytes = poco.FileSizeInBytes.ToDecimal();
+			this.Description = poco.Description;
 
-			this.BucketId = poco.BucketId.Value.ToInt();
 			this.FileTypeId = poco.FileTypeId.Value.ToInt();
+			this.BucketId = poco.BucketId.Value.ToInt();
 		}
 
-		private Nullable<int> _bucketId;
-		public Nullable<int> BucketId
-		{
-			get
-			{
-				return _bucketId.IsEmptyOrZeroOrNull() ? null : _bucketId;
-			}
-			set
-			{
-				this._bucketId = value;
-			}
-		}
-
-		private DateTime _dateCreated;
+		private Guid _externalId;
 		[Required]
-		public DateTime DateCreated
+		public Guid ExternalId
 		{
 			get
 			{
-				return _dateCreated;
+				return _externalId;
 			}
 			set
 			{
-				this._dateCreated = value;
+				this._externalId = value;
 			}
 		}
 
-		private string _description;
-		public string Description
+		private string _privateKey;
+		[Required]
+		public string PrivateKey
 		{
 			get
 			{
-				return _description.IsEmptyOrZeroOrNull() ? null : _description;
+				return _privateKey;
 			}
 			set
 			{
-				this._description = value;
+				this._privateKey = value;
+			}
+		}
+
+		private string _publicKey;
+		[Required]
+		public string PublicKey
+		{
+			get
+			{
+				return _publicKey;
+			}
+			set
+			{
+				this._publicKey = value;
+			}
+		}
+
+		private string _location;
+		[Required]
+		public string Location
+		{
+			get
+			{
+				return _location;
+			}
+			set
+			{
+				this._location = value;
 			}
 		}
 
@@ -119,17 +135,17 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
-		private Guid _externalId;
+		private DateTime _dateCreated;
 		[Required]
-		public Guid ExternalId
+		public DateTime DateCreated
 		{
 			get
 			{
-				return _externalId;
+				return _dateCreated;
 			}
 			set
 			{
-				this._externalId = value;
+				this._dateCreated = value;
 			}
 		}
 
@@ -161,50 +177,34 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
-		private string _location;
-		[Required]
-		public string Location
+		private Nullable<int> _bucketId;
+		public Nullable<int> BucketId
 		{
 			get
 			{
-				return _location;
+				return _bucketId.IsEmptyOrZeroOrNull() ? null : _bucketId;
 			}
 			set
 			{
-				this._location = value;
+				this._bucketId = value;
 			}
 		}
 
-		private string _privateKey;
-		[Required]
-		public string PrivateKey
+		private string _description;
+		public string Description
 		{
 			get
 			{
-				return _privateKey;
+				return _description.IsEmptyOrZeroOrNull() ? null : _description;
 			}
 			set
 			{
-				this._privateKey = value;
-			}
-		}
-
-		private string _publicKey;
-		[Required]
-		public string PublicKey
-		{
-			get
-			{
-				return _publicKey;
-			}
-			set
-			{
-				this._publicKey = value;
+				this._description = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>442686f8bd10de780a99231009f4e7f7</Hash>
+    <Hash>b67cd492e46492a417821a103ef01640</Hash>
 </Codenesium>*/

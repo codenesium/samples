@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation.Results;
-
 using FileServiceNS.Api.Contracts;
-
 namespace FileServiceNS.Api.Service
 {
 	public interface IFileModelValidator
@@ -19,5 +17,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5b225233abadc636f932c0431d06bcdb</Hash>
+    <Hash>6323b9440aeba7cbe9a28e3e680f5334</Hash>
 </Codenesium>*/

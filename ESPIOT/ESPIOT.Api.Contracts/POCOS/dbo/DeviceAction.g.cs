@@ -9,8 +9,8 @@ namespace ESPIOTNS.Api.Contracts
 		public POCODeviceAction()
 		{}
 
-		public POCODeviceAction(int deviceId,
-		                        int id,
+		public POCODeviceAction(int id,
+		                        int deviceId,
 		                        string name,
 		                        string @value)
 		{
@@ -22,18 +22,10 @@ namespace ESPIOTNS.Api.Contracts
 			                                    "Device");
 		}
 
-		public ReferenceEntity<int>DeviceId {get; set;}
 		public int Id {get; set;}
+		public ReferenceEntity<int>DeviceId {get; set;}
 		public string Name {get; set;}
 		public string @Value {get; set;}
-
-		[JsonIgnore]
-		public bool ShouldSerializeDeviceIdValue {get; set;} = true;
-
-		public bool ShouldSerializeDeviceId()
-		{
-			return ShouldSerializeDeviceIdValue;
-		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue {get; set;} = true;
@@ -41,6 +33,14 @@ namespace ESPIOTNS.Api.Contracts
 		public bool ShouldSerializeId()
 		{
 			return ShouldSerializeIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeDeviceIdValue {get; set;} = true;
+
+		public bool ShouldSerializeDeviceId()
+		{
+			return ShouldSerializeDeviceIdValue;
 		}
 
 		[JsonIgnore]
@@ -61,8 +61,8 @@ namespace ESPIOTNS.Api.Contracts
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeDeviceIdValue = false;
 			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeDeviceIdValue = false;
 			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeValueValue = false;
 		}
@@ -70,5 +70,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>aabb19b0a70cf9a8c5a09423a6bff263</Hash>
+    <Hash>2bd3059bf46526632747ecb55831ef27</Hash>
 </Codenesium>*/

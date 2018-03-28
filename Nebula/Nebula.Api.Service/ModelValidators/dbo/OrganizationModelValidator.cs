@@ -1,6 +1,5 @@
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 {
 	public class OrganizationModelValidator: AbstractOrganizationModelValidator,IOrganizationModelValidator
@@ -26,5 +25,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bf3ce57becf6b6a9ddcd9fa387924cfa</Hash>
+    <Hash>e52c87988f6520fda6dafaeb40c7353a</Hash>
 </Codenesium>*/

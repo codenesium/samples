@@ -78,17 +78,17 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this._fileModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._fileRepository.Create(model.BucketId,
-				                                     model.DateCreated,
-				                                     model.Description,
+				var id = this._fileRepository.Create(model.ExternalId,
+				                                     model.PrivateKey,
+				                                     model.PublicKey,
+				                                     model.Location,
 				                                     model.Expiration,
 				                                     model.Extension,
-				                                     model.ExternalId,
+				                                     model.DateCreated,
 				                                     model.FileSizeInBytes,
 				                                     model.FileTypeId,
-				                                     model.Location,
-				                                     model.PrivateKey,
-				                                     model.PublicKey);
+				                                     model.BucketId,
+				                                     model.Description);
 				return Ok(id);
 			}
 			else
@@ -120,17 +120,17 @@ namespace FileServiceNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._fileRepository.Create(model.BucketId,
-				                            model.DateCreated,
-				                            model.Description,
+				this._fileRepository.Create(model.ExternalId,
+				                            model.PrivateKey,
+				                            model.PublicKey,
+				                            model.Location,
 				                            model.Expiration,
 				                            model.Extension,
-				                            model.ExternalId,
+				                            model.DateCreated,
 				                            model.FileSizeInBytes,
 				                            model.FileTypeId,
-				                            model.Location,
-				                            model.PrivateKey,
-				                            model.PublicKey);
+				                            model.BucketId,
+				                            model.Description);
 			}
 			return Ok();
 		}
@@ -148,17 +148,17 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this._fileModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._fileRepository.Update(id,  model.BucketId,
-				                            model.DateCreated,
-				                            model.Description,
+				this._fileRepository.Update(id,  model.ExternalId,
+				                            model.PrivateKey,
+				                            model.PublicKey,
+				                            model.Location,
 				                            model.Expiration,
 				                            model.Extension,
-				                            model.ExternalId,
+				                            model.DateCreated,
 				                            model.FileSizeInBytes,
 				                            model.FileTypeId,
-				                            model.Location,
-				                            model.PrivateKey,
-				                            model.PublicKey);
+				                            model.BucketId,
+				                            model.Description);
 				return Ok();
 			}
 			else
@@ -181,21 +181,6 @@ namespace FileServiceNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByBucketId/{id}")]
-		[FileFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Buckets/{id}/Files")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByBucketId(int id)
-		{
-			var response = new Response();
-
-			this._fileRepository.GetWhere(x => x.bucketId == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
 		[Route("ByFileTypeId/{id}")]
 		[FileFilter]
 		[ReadOnlyFilter]
@@ -209,9 +194,24 @@ namespace FileServiceNS.Api.Service
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
+
+		[HttpGet]
+		[Route("ByBucketId/{id}")]
+		[FileFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Buckets/{id}/Files")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBucketId(int id)
+		{
+			var response = new Response();
+
+			this._fileRepository.GetWhere(x => x.bucketId == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c1b06e238833ddbe5e8736bf922c8c18</Hash>
+    <Hash>5a78563689a8b9e0510c61571d28495a</Hash>
 </Codenesium>*/

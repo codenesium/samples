@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 
 {
@@ -22,12 +20,6 @@ namespace NebulaNS.Api.Service
 		}
 
 		public ILinkRepository LinkRepository {get; set;}
-
-		public virtual void DateEnteredRules()
-		{
-			RuleFor(x => x.DateEntered).NotNull();
-		}
-
 		public virtual void LinkIdRules()
 		{
 			RuleFor(x => x.LinkId).NotNull();
@@ -38,6 +30,11 @@ namespace NebulaNS.Api.Service
 		{
 			RuleFor(x => x.Log).NotNull();
 			RuleFor(x => x.Log).Length(0,2147483647);
+		}
+
+		public virtual void DateEnteredRules()
+		{
+			RuleFor(x => x.DateEntered).NotNull();
 		}
 
 		public bool BeValidLink(int id)
@@ -51,5 +48,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fb5a008f1f72d17f1ab060545177ee15</Hash>
+    <Hash>6d6a915d0e957cdc31dec5c23a764d0f</Hash>
 </Codenesium>*/

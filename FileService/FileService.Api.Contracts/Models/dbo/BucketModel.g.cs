@@ -10,31 +10,17 @@ namespace FileServiceNS.Api.Contracts
 		public BucketModel()
 		{}
 
-		public BucketModel(Guid externalId,
-		                   string name)
+		public BucketModel(string name,
+		                   Guid externalId)
 		{
-			this.ExternalId = externalId;
 			this.Name = name;
+			this.ExternalId = externalId;
 		}
 
 		public BucketModel(POCOBucket poco)
 		{
-			this.ExternalId = poco.ExternalId;
 			this.Name = poco.Name;
-		}
-
-		private Guid _externalId;
-		[Required]
-		public Guid ExternalId
-		{
-			get
-			{
-				return _externalId;
-			}
-			set
-			{
-				this._externalId = value;
-			}
+			this.ExternalId = poco.ExternalId;
 		}
 
 		private string _name;
@@ -50,9 +36,23 @@ namespace FileServiceNS.Api.Contracts
 				this._name = value;
 			}
 		}
+
+		private Guid _externalId;
+		[Required]
+		public Guid ExternalId
+		{
+			get
+			{
+				return _externalId;
+			}
+			set
+			{
+				this._externalId = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>44b487d533d1393ff0f58d147ab63315</Hash>
+    <Hash>e1ab54fc1097bb7ffa7b15c2224dd0b4</Hash>
 </Codenesium>*/

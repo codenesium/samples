@@ -22,24 +22,24 @@ namespace NebulaNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(DateTime dateEntered,
-		                          int linkId,
-		                          string log)
+		public virtual int Create(int linkId,
+		                          string log,
+		                          DateTime dateEntered)
 		{
-			var record = new LinkLog ();
+			var record = new EFLinkLog ();
 
-			MapPOCOToEF(0, dateEntered,
-			            linkId,
-			            log, record);
+			MapPOCOToEF(0, linkId,
+			            log,
+			            dateEntered, record);
 
-			this._context.Set<LinkLog>().Add(record);
+			this._context.Set<EFLinkLog>().Add(record);
 			this._context.SaveChanges();
 			return record.id;
 		}
 
-		public virtual void Update(int id, DateTime dateEntered,
-		                           int linkId,
-		                           string log)
+		public virtual void Update(int id, int linkId,
+		                           string log,
+		                           DateTime dateEntered)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
@@ -48,9 +48,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,  dateEntered,
-				            linkId,
-				            log, record);
+				MapPOCOToEF(id,  linkId,
+				            log,
+				            dateEntered, record);
 				this._context.SaveChanges();
 			}
 		}
@@ -65,7 +65,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this._context.Set<LinkLog>().Remove(record);
+				this._context.Set<EFLinkLog>().Remove(record);
 				this._context.SaveChanges();
 			}
 		}
@@ -75,17 +75,17 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCO(x => x.id == id,response);
 		}
 
-		protected virtual List<LinkLog> SearchLinqEF(Expression<Func<LinkLog, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFLinkLog> SearchLinqEF(Expression<Func<EFLinkLog, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<LinkLog> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFLinkLog> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public virtual void GetWhere(Expression<Func<LinkLog, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual void GetWhere(Expression<Func<EFLinkLog, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 		}
@@ -95,29 +95,29 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		private void SearchLinqPOCO(Expression<Func<LinkLog, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFLinkLog, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<LinkLog> records = this.SearchLinqEF(predicate,skip,take,orderClause);
+			List<EFLinkLog> records = this.SearchLinqEF(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
 		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<LinkLog> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
+			List<EFLinkLog> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id, DateTime dateEntered,
-		                               int linkId,
-		                               string log, LinkLog   efLinkLog)
+		public static void MapPOCOToEF(int id, int linkId,
+		                               string log,
+		                               DateTime dateEntered, EFLinkLog   efLinkLog)
 		{
-			efLinkLog.dateEntered = dateEntered;
 			efLinkLog.id = id;
 			efLinkLog.linkId = linkId;
 			efLinkLog.log = log;
+			efLinkLog.dateEntered = dateEntered;
 		}
 
-		public static void MapEFToPOCO(LinkLog efLinkLog,Response response)
+		public static void MapEFToPOCO(EFLinkLog efLinkLog,Response response)
 		{
 			if(efLinkLog == null)
 			{
@@ -125,9 +125,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddLinkLog(new POCOLinkLog()
 			{
-				DateEntered = efLinkLog.dateEntered.ToDateTime(),
 				Id = efLinkLog.id.ToInt(),
 				Log = efLinkLog.log,
+				DateEntered = efLinkLog.dateEntered.ToDateTime(),
 
 				LinkId = new ReferenceEntity<int>(efLinkLog.linkId,
 				                                  "Links"),
@@ -139,5 +139,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e5145952838bde8fd19dde165302d81e</Hash>
+    <Hash>d7e7c5e41be596b2e95c9d33d7a2959f</Hash>
 </Codenesium>*/

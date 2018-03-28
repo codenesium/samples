@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-
 namespace ESPIOTNS.Api.Service
 
 {
@@ -22,7 +20,6 @@ namespace ESPIOTNS.Api.Service
 		}
 
 		public IDeviceRepository DeviceRepository {get; set;}
-
 		public virtual void DeviceIdRules()
 		{
 			RuleFor(x => x.DeviceId).NotNull();
@@ -52,5 +49,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0bd485001a8bb9eca021b7e6b88dfc2f</Hash>
+    <Hash>fe5be093570d8d60a0c3cad43c9db89e</Hash>
 </Codenesium>*/

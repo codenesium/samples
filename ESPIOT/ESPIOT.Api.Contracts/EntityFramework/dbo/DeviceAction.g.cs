@@ -4,22 +4,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ESPIOTNS.Api.Contracts
 {
 	[Table("DeviceAction", Schema="dbo")]
-	public partial class DeviceAction
+	public partial class EFDeviceAction
 	{
-		public DeviceAction()
+		public EFDeviceAction()
 		{}
 
-		public int deviceId {get; set;}
 		[Key]
 		public int id {get; set;}
+		public int deviceId {get; set;}
 		public string name {get; set;}
 		public string @value {get; set;}
 
 		[ForeignKey("deviceId")]
-		public virtual Device DeviceRef { get; set; }
+		public virtual EFDevice DeviceRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b028adf49dc69d645745271f22dc94d7</Hash>
+    <Hash>a2918fe65356954c15aa3437e8c12ec4</Hash>
 </Codenesium>*/

@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation.Results;
-
 using NebulaNS.Api.Contracts;
-
 namespace NebulaNS.Api.Service
 {
 	public interface IMachineRefTeamModelValidator
@@ -19,5 +17,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>39351277a23646e6bd9dc3616c573e71</Hash>
+    <Hash>e797afb35e6e52fec1f0f805293282ed</Hash>
 </Codenesium>*/

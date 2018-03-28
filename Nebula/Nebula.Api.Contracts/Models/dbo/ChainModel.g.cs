@@ -10,52 +10,24 @@ namespace NebulaNS.Api.Contracts
 		public ChainModel()
 		{}
 
-		public ChainModel(int chainStatusId,
-		                  Guid externalId,
-		                  string name,
-		                  int teamId)
+		public ChainModel(string name,
+		                  int teamId,
+		                  int chainStatusId,
+		                  Guid externalId)
 		{
-			this.ChainStatusId = chainStatusId.ToInt();
-			this.ExternalId = externalId;
 			this.Name = name;
 			this.TeamId = teamId.ToInt();
+			this.ChainStatusId = chainStatusId.ToInt();
+			this.ExternalId = externalId;
 		}
 
 		public ChainModel(POCOChain poco)
 		{
-			this.ExternalId = poco.ExternalId;
 			this.Name = poco.Name;
+			this.ExternalId = poco.ExternalId;
 
-			this.ChainStatusId = poco.ChainStatusId.Value.ToInt();
 			this.TeamId = poco.TeamId.Value.ToInt();
-		}
-
-		private int _chainStatusId;
-		[Required]
-		public int ChainStatusId
-		{
-			get
-			{
-				return _chainStatusId;
-			}
-			set
-			{
-				this._chainStatusId = value;
-			}
-		}
-
-		private Guid _externalId;
-		[Required]
-		public Guid ExternalId
-		{
-			get
-			{
-				return _externalId;
-			}
-			set
-			{
-				this._externalId = value;
-			}
+			this.ChainStatusId = poco.ChainStatusId.Value.ToInt();
 		}
 
 		private string _name;
@@ -85,9 +57,37 @@ namespace NebulaNS.Api.Contracts
 				this._teamId = value;
 			}
 		}
+
+		private int _chainStatusId;
+		[Required]
+		public int ChainStatusId
+		{
+			get
+			{
+				return _chainStatusId;
+			}
+			set
+			{
+				this._chainStatusId = value;
+			}
+		}
+
+		private Guid _externalId;
+		[Required]
+		public Guid ExternalId
+		{
+			get
+			{
+				return _externalId;
+			}
+			set
+			{
+				this._externalId = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d174e8e56ff15835f55e1634a019258e</Hash>
+    <Hash>6ba4e218d6d3fb78ef87c19281c7eed8</Hash>
 </Codenesium>*/

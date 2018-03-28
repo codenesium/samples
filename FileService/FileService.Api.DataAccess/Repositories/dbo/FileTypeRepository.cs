@@ -15,32 +15,32 @@ namespace FileServiceNS.Api.DataAccess
 		                          ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<FileType> SearchLinqEF(Expression<Func<FileType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFFileType> SearchLinqEF(Expression<Func<EFFileType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<FileType>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<FileType>();
+				return this._context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFFileType>();
 			}
 			else
 			{
-				return this._context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<FileType>();
+				return this._context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFileType>();
 			}
 		}
 
-		protected override List<FileType> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFFileType> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<FileType>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<FileType>();
+				return this._context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFFileType>();
 			}
 			else
 			{
-				return this._context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<FileType>();
+				return this._context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFileType>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b12603d8da531c113119efb7875e753</Hash>
+    <Hash>eb1353d6d376fd7d09a583eeff24a4c2</Hash>
 </Codenesium>*/

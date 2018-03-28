@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 
 {
@@ -21,10 +19,15 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void DescriptionRules()
+		public virtual void NameRules()
 		{
-			RuleFor(x => x.Description).NotNull();
-			RuleFor(x => x.Description).Length(0,2147483647);
+			RuleFor(x => x.Name).NotNull();
+			RuleFor(x => x.Name).Length(0,128);
+		}
+
+		public virtual void MachineGuidRules()
+		{
+			RuleFor(x => x.MachineGuid).NotNull();
 		}
 
 		public virtual void JwtKeyRules()
@@ -39,19 +42,14 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.LastIpAddress).Length(0,128);
 		}
 
-		public virtual void MachineGuidRules()
+		public virtual void DescriptionRules()
 		{
-			RuleFor(x => x.MachineGuid).NotNull();
-		}
-
-		public virtual void NameRules()
-		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,128);
+			RuleFor(x => x.Description).NotNull();
+			RuleFor(x => x.Description).Length(0,2147483647);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20810ee6a329607875f5f707e1e58823</Hash>
+    <Hash>f880ec036a4739b7b4e94d68ae3a8242</Hash>
 </Codenesium>*/

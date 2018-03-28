@@ -4,22 +4,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("LinkLog", Schema="dbo")]
-	public partial class LinkLog
+	public partial class EFLinkLog
 	{
-		public LinkLog()
+		public EFLinkLog()
 		{}
 
-		public DateTime dateEntered {get; set;}
 		[Key]
 		public int id {get; set;}
 		public int linkId {get; set;}
 		public string log {get; set;}
+		public DateTime dateEntered {get; set;}
 
 		[ForeignKey("linkId")]
-		public virtual Link LinkRef { get; set; }
+		public virtual EFLink LinkRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e20fab185746304ac14db81276f424ff</Hash>
+    <Hash>2bd4212d36870948a80ecadaa57bdd10</Hash>
 </Codenesium>*/

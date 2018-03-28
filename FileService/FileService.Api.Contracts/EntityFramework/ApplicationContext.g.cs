@@ -5,12 +5,12 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
 		{}
-		public virtual DbSet<Bucket> Bucket { get; set; }
-		public virtual DbSet<File> File { get; set; }
-		public virtual DbSet<FileType> FileType { get; set; }
+		public virtual DbSet<EFBucket> Bucket { get; set; }
+		public virtual DbSet<EFFile> File { get; set; }
+		public virtual DbSet<EFFileType> FileType { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9917195acc1c2c9d2e0e02bb2a5ed71</Hash>
+    <Hash>5040cbaa876204855a9f50700035fb1e</Hash>
 </Codenesium>*/

@@ -22,48 +22,48 @@ namespace NebulaNS.Api.DataAccess
 			this._context = context;
 		}
 
-		public virtual int Create(Nullable<int> assignedMachineId,
-		                          int chainId,
-		                          Nullable<DateTime> dateCompleted,
-		                          Nullable<DateTime> dateStarted,
+		public virtual int Create(string name,
 		                          string dynamicParameters,
-		                          Guid externalId,
+		                          string staticParameters,
+		                          int chainId,
+		                          Nullable<int> assignedMachineId,
 		                          int linkStatusId,
-		                          string name,
 		                          int order,
+		                          Nullable<DateTime> dateStarted,
+		                          Nullable<DateTime> dateCompleted,
 		                          string response,
-		                          string staticParameters)
+		                          Guid externalId)
 		{
-			var record = new Link ();
+			var record = new EFLink ();
 
-			MapPOCOToEF(0, assignedMachineId,
-			            chainId,
-			            dateCompleted,
-			            dateStarted,
+			MapPOCOToEF(0, name,
 			            dynamicParameters,
-			            externalId,
+			            staticParameters,
+			            chainId,
+			            assignedMachineId,
 			            linkStatusId,
-			            name,
 			            order,
+			            dateStarted,
+			            dateCompleted,
 			            response,
-			            staticParameters, record);
+			            externalId, record);
 
-			this._context.Set<Link>().Add(record);
+			this._context.Set<EFLink>().Add(record);
 			this._context.SaveChanges();
 			return record.id;
 		}
 
-		public virtual void Update(int id, Nullable<int> assignedMachineId,
-		                           int chainId,
-		                           Nullable<DateTime> dateCompleted,
-		                           Nullable<DateTime> dateStarted,
+		public virtual void Update(int id, string name,
 		                           string dynamicParameters,
-		                           Guid externalId,
+		                           string staticParameters,
+		                           int chainId,
+		                           Nullable<int> assignedMachineId,
 		                           int linkStatusId,
-		                           string name,
 		                           int order,
+		                           Nullable<DateTime> dateStarted,
+		                           Nullable<DateTime> dateCompleted,
 		                           string response,
-		                           string staticParameters)
+		                           Guid externalId)
 		{
 			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
 			if (record == null)
@@ -72,17 +72,17 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(id,  assignedMachineId,
-				            chainId,
-				            dateCompleted,
-				            dateStarted,
+				MapPOCOToEF(id,  name,
 				            dynamicParameters,
-				            externalId,
+				            staticParameters,
+				            chainId,
+				            assignedMachineId,
 				            linkStatusId,
-				            name,
 				            order,
+				            dateStarted,
+				            dateCompleted,
 				            response,
-				            staticParameters, record);
+				            externalId, record);
 				this._context.SaveChanges();
 			}
 		}
@@ -97,7 +97,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this._context.Set<Link>().Remove(record);
+				this._context.Set<EFLink>().Remove(record);
 				this._context.SaveChanges();
 			}
 		}
@@ -107,17 +107,17 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCO(x => x.id == id,response);
 		}
 
-		protected virtual List<Link> SearchLinqEF(Expression<Func<Link, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFLink> SearchLinqEF(Expression<Func<EFLink, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<Link> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFLink> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public virtual void GetWhere(Expression<Func<Link, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual void GetWhere(Expression<Func<EFLink, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 		}
@@ -127,45 +127,45 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		private void SearchLinqPOCO(Expression<Func<Link, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFLink, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Link> records = this.SearchLinqEF(predicate,skip,take,orderClause);
+			List<EFLink> records = this.SearchLinqEF(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
 		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Link> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
+			List<EFLink> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
-		public static void MapPOCOToEF(int id, Nullable<int> assignedMachineId,
-		                               int chainId,
-		                               Nullable<DateTime> dateCompleted,
-		                               Nullable<DateTime> dateStarted,
+		public static void MapPOCOToEF(int id, string name,
 		                               string dynamicParameters,
-		                               Guid externalId,
+		                               string staticParameters,
+		                               int chainId,
+		                               Nullable<int> assignedMachineId,
 		                               int linkStatusId,
-		                               string name,
 		                               int order,
+		                               Nullable<DateTime> dateStarted,
+		                               Nullable<DateTime> dateCompleted,
 		                               string response,
-		                               string staticParameters, Link   efLink)
+		                               Guid externalId, EFLink   efLink)
 		{
-			efLink.assignedMachineId = assignedMachineId;
-			efLink.chainId = chainId;
-			efLink.dateCompleted = dateCompleted;
-			efLink.dateStarted = dateStarted;
-			efLink.dynamicParameters = dynamicParameters;
-			efLink.externalId = externalId;
 			efLink.id = id;
-			efLink.linkStatusId = linkStatusId;
 			efLink.name = name;
-			efLink.order = order;
-			efLink.response = response;
+			efLink.dynamicParameters = dynamicParameters;
 			efLink.staticParameters = staticParameters;
+			efLink.chainId = chainId;
+			efLink.assignedMachineId = assignedMachineId;
+			efLink.linkStatusId = linkStatusId;
+			efLink.order = order;
+			efLink.dateStarted = dateStarted;
+			efLink.dateCompleted = dateCompleted;
+			efLink.response = response;
+			efLink.externalId = externalId;
 		}
 
-		public static void MapEFToPOCO(Link efLink,Response response)
+		public static void MapEFToPOCO(EFLink efLink,Response response)
 		{
 			if(efLink == null)
 			{
@@ -173,27 +173,27 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddLink(new POCOLink()
 			{
-				DateCompleted = efLink.dateCompleted.ToNullableDateTime(),
-				DateStarted = efLink.dateStarted.ToNullableDateTime(),
-				DynamicParameters = efLink.dynamicParameters,
-				ExternalId = efLink.externalId,
 				Id = efLink.id.ToInt(),
 				Name = efLink.name,
-				Order = efLink.order.ToInt(),
-				Response = efLink.response,
+				DynamicParameters = efLink.dynamicParameters,
 				StaticParameters = efLink.staticParameters,
+				Order = efLink.order.ToInt(),
+				DateStarted = efLink.dateStarted.ToNullableDateTime(),
+				DateCompleted = efLink.dateCompleted.ToNullableDateTime(),
+				Response = efLink.response,
+				ExternalId = efLink.externalId,
 
-				AssignedMachineId = new ReferenceEntity<Nullable<int>>(efLink.assignedMachineId,
-				                                                       "Machines"),
 				ChainId = new ReferenceEntity<int>(efLink.chainId,
 				                                   "Chains"),
+				AssignedMachineId = new ReferenceEntity<Nullable<int>>(efLink.assignedMachineId,
+				                                                       "Machines"),
 				LinkStatusId = new ReferenceEntity<int>(efLink.linkStatusId,
 				                                        "LinkStatus"),
 			});
 
-			MachineRepository.MapEFToPOCO(efLink.MachineRef, response);
-
 			ChainRepository.MapEFToPOCO(efLink.ChainRef, response);
+
+			MachineRepository.MapEFToPOCO(efLink.MachineRef, response);
 
 			LinkStatusRepository.MapEFToPOCO(efLink.LinkStatusRef, response);
 		}
@@ -201,5 +201,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e26a9d4dd53ee9cdf4145bd6d7f01141</Hash>
+    <Hash>62cba74fc18da749341958d28f3d8198</Hash>
 </Codenesium>*/

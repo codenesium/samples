@@ -1,6 +1,5 @@
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 {
 	public class ChainModelValidator: AbstractChainModelValidator,IChainModelValidator
@@ -10,30 +9,30 @@ namespace NebulaNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.ChainStatusIdRules();
-			this.ExternalIdRules();
 			this.NameRules();
 			this.TeamIdRules();
+			this.ChainStatusIdRules();
+			this.ExternalIdRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.ChainStatusIdRules();
-			this.ExternalIdRules();
 			this.NameRules();
 			this.TeamIdRules();
+			this.ChainStatusIdRules();
+			this.ExternalIdRules();
 		}
 
 		public void PatchMode()
 		{
-			this.ChainStatusIdRules();
-			this.ExternalIdRules();
 			this.NameRules();
 			this.TeamIdRules();
+			this.ChainStatusIdRules();
+			this.ExternalIdRules();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>32658bb1bfc7aad408c3210b1a86f663</Hash>
+    <Hash>4e4f540e3cad55054ca3fbb5ee1a9313</Hash>
 </Codenesium>*/

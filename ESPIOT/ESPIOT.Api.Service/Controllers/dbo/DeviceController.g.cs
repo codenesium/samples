@@ -78,8 +78,8 @@ namespace ESPIOTNS.Api.Service
 			var validationResult = this._deviceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._deviceRepository.Create(model.Name,
-				                                       model.PublicId);
+				var id = this._deviceRepository.Create(model.PublicId,
+				                                       model.Name);
 				return Ok(id);
 			}
 			else
@@ -111,8 +111,8 @@ namespace ESPIOTNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._deviceRepository.Create(model.Name,
-				                              model.PublicId);
+				this._deviceRepository.Create(model.PublicId,
+				                              model.Name);
 			}
 			return Ok();
 		}
@@ -130,8 +130,8 @@ namespace ESPIOTNS.Api.Service
 			var validationResult = this._deviceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._deviceRepository.Update(id,  model.Name,
-				                              model.PublicId);
+				this._deviceRepository.Update(id,  model.PublicId,
+				                              model.Name);
 				return Ok();
 			}
 			else
@@ -156,5 +156,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5c278e4466c6173866421f8c8f897ff5</Hash>
+    <Hash>2f9b8a3e9dae39711f69095d5529d187</Hash>
 </Codenesium>*/

@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("MachineRefTeam", Schema="dbo")]
-	public partial class MachineRefTeam
+	public partial class EFMachineRefTeam
 	{
-		public MachineRefTeam()
+		public EFMachineRefTeam()
 		{}
 
 		[Key]
@@ -15,12 +15,12 @@ namespace NebulaNS.Api.Contracts
 		public int teamId {get; set;}
 
 		[ForeignKey("machineId")]
-		public virtual Machine MachineRef { get; set; }
+		public virtual EFMachine MachineRef { get; set; }
 		[ForeignKey("teamId")]
-		public virtual Team TeamRef { get; set; }
+		public virtual EFTeam TeamRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>466ce537aa67546de75d48af1cd87378</Hash>
+    <Hash>ec6bf85463663afd8a508b556eabba1d</Hash>
 </Codenesium>*/

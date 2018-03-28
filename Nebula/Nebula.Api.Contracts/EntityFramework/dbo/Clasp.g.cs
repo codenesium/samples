@@ -4,23 +4,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Clasp", Schema="dbo")]
-	public partial class Clasp
+	public partial class EFClasp
 	{
-		public Clasp()
+		public EFClasp()
 		{}
 
 		[Key]
 		public int id {get; set;}
-		public int nextChainId {get; set;}
 		public int previousChainId {get; set;}
+		public int nextChainId {get; set;}
 
-		[ForeignKey("nextChainId")]
-		public virtual Chain ChainRef { get; set; }
 		[ForeignKey("previousChainId")]
-		public virtual Chain ChainRef1 { get; set; }
+		public virtual EFChain ChainRef { get; set; }
+		[ForeignKey("nextChainId")]
+		public virtual EFChain ChainRef1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>870b15bf3431c1c3c754624dc87350b6</Hash>
+    <Hash>f4ca24bbae3bb3c00f0d83db3e266eef</Hash>
 </Codenesium>*/

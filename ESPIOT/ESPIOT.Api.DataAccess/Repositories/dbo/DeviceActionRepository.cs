@@ -15,32 +15,32 @@ namespace ESPIOTNS.Api.DataAccess
 		                              ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<DeviceAction> SearchLinqEF(Expression<Func<DeviceAction, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<DeviceAction>();
+				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 			else
 			{
-				return this._context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<DeviceAction>();
+				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 		}
 
-		protected override List<DeviceAction> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFDeviceAction> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<DeviceAction>();
+				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 			else
 			{
-				return this._context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<DeviceAction>();
+				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8245d3b521e3d6e2e85e02cf83e57f7d</Hash>
+    <Hash>9671548099c18487b1643ad88adaed16</Hash>
 </Codenesium>*/

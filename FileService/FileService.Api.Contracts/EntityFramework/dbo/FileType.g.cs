@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FileServiceNS.Api.Contracts
 {
 	[Table("FileType", Schema="dbo")]
-	public partial class FileType
+	public partial class EFFileType
 	{
-		public FileType()
+		public EFFileType()
 		{}
 
 		[Key]
@@ -16,5 +16,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7482997ea798bbd462582257e4cc624d</Hash>
+    <Hash>2a494e2c0687d71e922995f05668fc70</Hash>
 </Codenesium>*/

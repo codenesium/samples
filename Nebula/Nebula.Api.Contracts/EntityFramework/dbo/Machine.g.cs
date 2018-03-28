@@ -4,21 +4,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Machine", Schema="dbo")]
-	public partial class Machine
+	public partial class EFMachine
 	{
-		public Machine()
+		public EFMachine()
 		{}
 
-		public string description {get; set;}
 		[Key]
 		public int id {get; set;}
+		public string name {get; set;}
+		public Guid machineGuid {get; set;}
 		public string jwtKey {get; set;}
 		public string lastIpAddress {get; set;}
-		public Guid machineGuid {get; set;}
-		public string name {get; set;}
+		public string description {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8425443c241f65514d147b18536fc96f</Hash>
+    <Hash>2ca06c729754c1fc9ab7cab0f3473361</Hash>
 </Codenesium>*/

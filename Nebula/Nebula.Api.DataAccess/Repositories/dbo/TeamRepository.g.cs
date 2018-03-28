@@ -25,12 +25,12 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int Create(string name,
 		                          int organizationId)
 		{
-			var record = new Team ();
+			var record = new EFTeam ();
 
 			MapPOCOToEF(0, name,
 			            organizationId, record);
 
-			this._context.Set<Team>().Add(record);
+			this._context.Set<EFTeam>().Add(record);
 			this._context.SaveChanges();
 			return record.id;
 		}
@@ -61,7 +61,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this._context.Set<Team>().Remove(record);
+				this._context.Set<EFTeam>().Remove(record);
 				this._context.SaveChanges();
 			}
 		}
@@ -71,17 +71,17 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCO(x => x.id == id,response);
 		}
 
-		protected virtual List<Team> SearchLinqEF(Expression<Func<Team, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFTeam> SearchLinqEF(Expression<Func<EFTeam, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<Team> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFTeam> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public virtual void GetWhere(Expression<Func<Team, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual void GetWhere(Expression<Func<EFTeam, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 		}
@@ -91,27 +91,27 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		private void SearchLinqPOCO(Expression<Func<Team, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFTeam, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Team> records = this.SearchLinqEF(predicate,skip,take,orderClause);
+			List<EFTeam> records = this.SearchLinqEF(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
 		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
-			List<Team> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
+			List<EFTeam> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
 		}
 
 		public static void MapPOCOToEF(int id, string name,
-		                               int organizationId, Team   efTeam)
+		                               int organizationId, EFTeam   efTeam)
 		{
 			efTeam.id = id;
 			efTeam.name = name;
 			efTeam.organizationId = organizationId;
 		}
 
-		public static void MapEFToPOCO(Team efTeam,Response response)
+		public static void MapEFToPOCO(EFTeam efTeam,Response response)
 		{
 			if(efTeam == null)
 			{
@@ -132,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>30611750911ebd6b861f627d9498e165</Hash>
+    <Hash>efa63048f50b637a5f3fef6094c1b3e3</Hash>
 </Codenesium>*/

@@ -78,9 +78,9 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._linkLogRepository.Create(model.DateEntered,
-				                                        model.LinkId,
-				                                        model.Log);
+				var id = this._linkLogRepository.Create(model.LinkId,
+				                                        model.Log,
+				                                        model.DateEntered);
 				return Ok(id);
 			}
 			else
@@ -112,9 +112,9 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._linkLogRepository.Create(model.DateEntered,
-				                               model.LinkId,
-				                               model.Log);
+				this._linkLogRepository.Create(model.LinkId,
+				                               model.Log,
+				                               model.DateEntered);
 			}
 			return Ok();
 		}
@@ -132,9 +132,9 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkLogRepository.Update(id,  model.DateEntered,
-				                               model.LinkId,
-				                               model.Log);
+				this._linkLogRepository.Update(id,  model.LinkId,
+				                               model.Log,
+				                               model.DateEntered);
 				return Ok();
 			}
 			else
@@ -174,5 +174,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>586a5baa202a929f0e5e6aa288973c33</Hash>
+    <Hash>5bc51fe77e256bfbe3ee0b5b2abf7e3a</Hash>
 </Codenesium>*/

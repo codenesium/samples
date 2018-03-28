@@ -1,6 +1,5 @@
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
-
 namespace ESPIOTNS.Api.Service
 {
 	public class DeviceActionModelValidator: AbstractDeviceActionModelValidator,IDeviceActionModelValidator
@@ -32,5 +31,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8aecf7377b3cdce0387d69f148a2fd12</Hash>
+    <Hash>57cacb2c3ec0d566d9d11f8f1b8593a9</Hash>
 </Codenesium>*/

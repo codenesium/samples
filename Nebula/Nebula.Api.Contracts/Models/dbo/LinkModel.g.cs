@@ -10,57 +10,84 @@ namespace NebulaNS.Api.Contracts
 		public LinkModel()
 		{}
 
-		public LinkModel(Nullable<int> assignedMachineId,
-		                 int chainId,
-		                 Nullable<DateTime> dateCompleted,
-		                 Nullable<DateTime> dateStarted,
+		public LinkModel(string name,
 		                 string dynamicParameters,
-		                 Guid externalId,
+		                 string staticParameters,
+		                 int chainId,
+		                 Nullable<int> assignedMachineId,
 		                 int linkStatusId,
-		                 string name,
 		                 int order,
+		                 Nullable<DateTime> dateStarted,
+		                 Nullable<DateTime> dateCompleted,
 		                 string response,
-		                 string staticParameters)
+		                 Guid externalId)
 		{
-			this.AssignedMachineId = assignedMachineId.ToNullableInt();
-			this.ChainId = chainId.ToInt();
-			this.DateCompleted = dateCompleted.ToNullableDateTime();
-			this.DateStarted = dateStarted.ToNullableDateTime();
-			this.DynamicParameters = dynamicParameters;
-			this.ExternalId = externalId;
-			this.LinkStatusId = linkStatusId.ToInt();
 			this.Name = name;
-			this.Order = order.ToInt();
-			this.Response = response;
+			this.DynamicParameters = dynamicParameters;
 			this.StaticParameters = staticParameters;
+			this.ChainId = chainId.ToInt();
+			this.AssignedMachineId = assignedMachineId.ToNullableInt();
+			this.LinkStatusId = linkStatusId.ToInt();
+			this.Order = order.ToInt();
+			this.DateStarted = dateStarted.ToNullableDateTime();
+			this.DateCompleted = dateCompleted.ToNullableDateTime();
+			this.Response = response;
+			this.ExternalId = externalId;
 		}
 
 		public LinkModel(POCOLink poco)
 		{
-			this.DateCompleted = poco.DateCompleted.ToNullableDateTime();
-			this.DateStarted = poco.DateStarted.ToNullableDateTime();
-			this.DynamicParameters = poco.DynamicParameters;
-			this.ExternalId = poco.ExternalId;
 			this.Name = poco.Name;
-			this.Order = poco.Order.ToInt();
-			this.Response = poco.Response;
+			this.DynamicParameters = poco.DynamicParameters;
 			this.StaticParameters = poco.StaticParameters;
+			this.Order = poco.Order.ToInt();
+			this.DateStarted = poco.DateStarted.ToNullableDateTime();
+			this.DateCompleted = poco.DateCompleted.ToNullableDateTime();
+			this.Response = poco.Response;
+			this.ExternalId = poco.ExternalId;
 
-			this.AssignedMachineId = poco.AssignedMachineId.Value.ToInt();
 			this.ChainId = poco.ChainId.Value.ToInt();
+			this.AssignedMachineId = poco.AssignedMachineId.Value.ToInt();
 			this.LinkStatusId = poco.LinkStatusId.Value.ToInt();
 		}
 
-		private Nullable<int> _assignedMachineId;
-		public Nullable<int> AssignedMachineId
+		private string _name;
+		[Required]
+		public string Name
 		{
 			get
 			{
-				return _assignedMachineId.IsEmptyOrZeroOrNull() ? null : _assignedMachineId;
+				return _name;
 			}
 			set
 			{
-				this._assignedMachineId = value;
+				this._name = value;
+			}
+		}
+
+		private string _dynamicParameters;
+		public string DynamicParameters
+		{
+			get
+			{
+				return _dynamicParameters.IsEmptyOrZeroOrNull() ? null : _dynamicParameters;
+			}
+			set
+			{
+				this._dynamicParameters = value;
+			}
+		}
+
+		private string _staticParameters;
+		public string StaticParameters
+		{
+			get
+			{
+				return _staticParameters.IsEmptyOrZeroOrNull() ? null : _staticParameters;
+			}
+			set
+			{
+				this._staticParameters = value;
 			}
 		}
 
@@ -78,56 +105,16 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private Nullable<DateTime> _dateCompleted;
-		public Nullable<DateTime> DateCompleted
+		private Nullable<int> _assignedMachineId;
+		public Nullable<int> AssignedMachineId
 		{
 			get
 			{
-				return _dateCompleted.IsEmptyOrZeroOrNull() ? null : _dateCompleted;
+				return _assignedMachineId.IsEmptyOrZeroOrNull() ? null : _assignedMachineId;
 			}
 			set
 			{
-				this._dateCompleted = value;
-			}
-		}
-
-		private Nullable<DateTime> _dateStarted;
-		public Nullable<DateTime> DateStarted
-		{
-			get
-			{
-				return _dateStarted.IsEmptyOrZeroOrNull() ? null : _dateStarted;
-			}
-			set
-			{
-				this._dateStarted = value;
-			}
-		}
-
-		private string _dynamicParameters;
-		public string DynamicParameters
-		{
-			get
-			{
-				return _dynamicParameters.IsEmptyOrZeroOrNull() ? null : _dynamicParameters;
-			}
-			set
-			{
-				this._dynamicParameters = value;
-			}
-		}
-
-		private Guid _externalId;
-		[Required]
-		public Guid ExternalId
-		{
-			get
-			{
-				return _externalId;
-			}
-			set
-			{
-				this._externalId = value;
+				this._assignedMachineId = value;
 			}
 		}
 
@@ -145,20 +132,6 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private string _name;
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return _name;
-			}
-			set
-			{
-				this._name = value;
-			}
-		}
-
 		private int _order;
 		[Required]
 		public int Order
@@ -170,6 +143,32 @@ namespace NebulaNS.Api.Contracts
 			set
 			{
 				this._order = value;
+			}
+		}
+
+		private Nullable<DateTime> _dateStarted;
+		public Nullable<DateTime> DateStarted
+		{
+			get
+			{
+				return _dateStarted.IsEmptyOrZeroOrNull() ? null : _dateStarted;
+			}
+			set
+			{
+				this._dateStarted = value;
+			}
+		}
+
+		private Nullable<DateTime> _dateCompleted;
+		public Nullable<DateTime> DateCompleted
+		{
+			get
+			{
+				return _dateCompleted.IsEmptyOrZeroOrNull() ? null : _dateCompleted;
+			}
+			set
+			{
+				this._dateCompleted = value;
 			}
 		}
 
@@ -186,21 +185,22 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private string _staticParameters;
-		public string StaticParameters
+		private Guid _externalId;
+		[Required]
+		public Guid ExternalId
 		{
 			get
 			{
-				return _staticParameters.IsEmptyOrZeroOrNull() ? null : _staticParameters;
+				return _externalId;
 			}
 			set
 			{
-				this._staticParameters = value;
+				this._externalId = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ebb48f36c711c8499475df40b22e5388</Hash>
+    <Hash>b08e8144ce49032d34a20665b7435e4a</Hash>
 </Codenesium>*/

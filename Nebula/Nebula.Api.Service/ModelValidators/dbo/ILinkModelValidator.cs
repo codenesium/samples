@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation.Results;
-
 using NebulaNS.Api.Contracts;
-
 namespace NebulaNS.Api.Service
 {
 	public interface ILinkModelValidator
@@ -19,5 +17,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>359c132ba5e38a8ac4375d2bf378b484</Hash>
+    <Hash>5b23f9f74f7cb669f846d4c6f254fbca</Hash>
 </Codenesium>*/

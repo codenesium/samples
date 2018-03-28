@@ -15,9 +15,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
     public class Startup
@@ -106,11 +109,22 @@ namespace FileServiceNS.Api.Service
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
 
+            var dataAccessAssembly = typeof(AutofacHack).Assembly;
+            builder.RegisterAssemblyTypes(dataAccessAssembly)
+				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
+				.AsImplementedInterfaces();
+
+           builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
+                    .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ModelValidator"))
+                    .AsImplementedInterfaces()
+                    .AsSelf()
+                    .PropertiesAutowired();
+
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource(
                 t =>
                     !t.FullName.StartsWith("System") &&
                     !t.FullName.StartsWith("Microsoft") &&
-					!t.FullName.EndsWith("Abstract") &&
+					!t.IsAbstract &&
                     !(t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Meta<>)))
             );
 

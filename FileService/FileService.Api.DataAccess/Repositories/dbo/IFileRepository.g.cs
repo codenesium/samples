@@ -6,40 +6,40 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IFileRepository
 	{
-		int Create(Nullable<int> bucketId,
-		           DateTime dateCreated,
-		           string description,
+		int Create(Guid externalId,
+		           string privateKey,
+		           string publicKey,
+		           string location,
 		           DateTime expiration,
 		           string extension,
-		           Guid externalId,
+		           DateTime dateCreated,
 		           decimal fileSizeInBytes,
 		           int fileTypeId,
-		           string location,
-		           string privateKey,
-		           string publicKey);
+		           Nullable<int> bucketId,
+		           string description);
 
-		void Update(int id, Nullable<int> bucketId,
-		            DateTime dateCreated,
-		            string description,
+		void Update(int id, Guid externalId,
+		            string privateKey,
+		            string publicKey,
+		            string location,
 		            DateTime expiration,
 		            string extension,
-		            Guid externalId,
+		            DateTime dateCreated,
 		            decimal fileSizeInBytes,
 		            int fileTypeId,
-		            string location,
-		            string privateKey,
-		            string publicKey);
+		            Nullable<int> bucketId,
+		            string description);
 
 		void Delete(int id);
 
 		void GetById(int id, Response response);
 
-		void GetWhere(Expression<Func<File, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		void GetWhere(Expression<Func<EFFile, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 
 		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f950d52364cab3db1bdb99e68814fe3c</Hash>
+    <Hash>83be8e6ce6eb9f4db1559135fc5203c5</Hash>
 </Codenesium>*/

@@ -1,6 +1,5 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
-
 namespace FileServiceNS.Api.Service
 {
 	public class FileModelValidator: AbstractFileModelValidator,IFileModelValidator
@@ -10,51 +9,51 @@ namespace FileServiceNS.Api.Service
 
 		public void CreateMode()
 		{
-			this.BucketIdRules();
-			this.DateCreatedRules();
-			this.DescriptionRules();
-			this.ExpirationRules();
-			this.ExtensionRules();
 			this.ExternalIdRules();
-			this.FileSizeInBytesRules();
-			this.FileTypeIdRules();
-			this.LocationRules();
 			this.PrivateKeyRules();
 			this.PublicKeyRules();
+			this.LocationRules();
+			this.ExpirationRules();
+			this.ExtensionRules();
+			this.DateCreatedRules();
+			this.FileSizeInBytesRules();
+			this.FileTypeIdRules();
+			this.BucketIdRules();
+			this.DescriptionRules();
 		}
 
 		public void UpdateMode()
 		{
-			this.BucketIdRules();
-			this.DateCreatedRules();
-			this.DescriptionRules();
-			this.ExpirationRules();
-			this.ExtensionRules();
 			this.ExternalIdRules();
-			this.FileSizeInBytesRules();
-			this.FileTypeIdRules();
-			this.LocationRules();
 			this.PrivateKeyRules();
 			this.PublicKeyRules();
+			this.LocationRules();
+			this.ExpirationRules();
+			this.ExtensionRules();
+			this.DateCreatedRules();
+			this.FileSizeInBytesRules();
+			this.FileTypeIdRules();
+			this.BucketIdRules();
+			this.DescriptionRules();
 		}
 
 		public void PatchMode()
 		{
-			this.BucketIdRules();
-			this.DateCreatedRules();
-			this.DescriptionRules();
-			this.ExpirationRules();
-			this.ExtensionRules();
 			this.ExternalIdRules();
-			this.FileSizeInBytesRules();
-			this.FileTypeIdRules();
-			this.LocationRules();
 			this.PrivateKeyRules();
 			this.PublicKeyRules();
+			this.LocationRules();
+			this.ExpirationRules();
+			this.ExtensionRules();
+			this.DateCreatedRules();
+			this.FileSizeInBytesRules();
+			this.FileTypeIdRules();
+			this.BucketIdRules();
+			this.DescriptionRules();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>511a44e808df8cc7b27798f02394f962</Hash>
+    <Hash>da9aa4e9f1f2a26c0bbdde5576c5bf6d</Hash>
 </Codenesium>*/

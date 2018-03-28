@@ -78,11 +78,11 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._machineModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._machineRepository.Create(model.Description,
+				var id = this._machineRepository.Create(model.Name,
+				                                        model.MachineGuid,
 				                                        model.JwtKey,
 				                                        model.LastIpAddress,
-				                                        model.MachineGuid,
-				                                        model.Name);
+				                                        model.Description);
 				return Ok(id);
 			}
 			else
@@ -114,11 +114,11 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._machineRepository.Create(model.Description,
+				this._machineRepository.Create(model.Name,
+				                               model.MachineGuid,
 				                               model.JwtKey,
 				                               model.LastIpAddress,
-				                               model.MachineGuid,
-				                               model.Name);
+				                               model.Description);
 			}
 			return Ok();
 		}
@@ -136,11 +136,11 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._machineModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._machineRepository.Update(id,  model.Description,
+				this._machineRepository.Update(id,  model.Name,
+				                               model.MachineGuid,
 				                               model.JwtKey,
 				                               model.LastIpAddress,
-				                               model.MachineGuid,
-				                               model.Name);
+				                               model.Description);
 				return Ok();
 			}
 			else
@@ -165,5 +165,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2407f3154efab12b6aca56db8b28a8b3</Hash>
+    <Hash>03d5222b6f67ea265ab366cecb18a701</Hash>
 </Codenesium>*/

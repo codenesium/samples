@@ -10,31 +10,17 @@ namespace ESPIOTNS.Api.Contracts
 		public DeviceModel()
 		{}
 
-		public DeviceModel(string name,
-		                   Guid publicId)
+		public DeviceModel(Guid publicId,
+		                   string name)
 		{
-			this.Name = name;
 			this.PublicId = publicId;
+			this.Name = name;
 		}
 
 		public DeviceModel(POCODevice poco)
 		{
-			this.Name = poco.Name;
 			this.PublicId = poco.PublicId;
-		}
-
-		private string _name;
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return _name;
-			}
-			set
-			{
-				this._name = value;
-			}
+			this.Name = poco.Name;
 		}
 
 		private Guid _publicId;
@@ -50,9 +36,23 @@ namespace ESPIOTNS.Api.Contracts
 				this._publicId = value;
 			}
 		}
+
+		private string _name;
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return _name;
+			}
+			set
+			{
+				this._name = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>afb56485d355f4699ee97f281090c1c2</Hash>
+    <Hash>d76728c38b5954b87a966f2defcd5263</Hash>
 </Codenesium>*/

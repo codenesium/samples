@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation.Results;
-
 using NebulaNS.Api.Contracts;
-
 namespace NebulaNS.Api.Service
 {
 	public interface IChainStatusModelValidator
@@ -19,5 +17,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>940dbf1b33ae200dea539ddd91d0429b</Hash>
+    <Hash>d43d2c43138c7a359fa5acc58b6ce07b</Hash>
 </Codenesium>*/

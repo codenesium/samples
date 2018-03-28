@@ -15,32 +15,32 @@ namespace FileServiceNS.Api.DataAccess
 		                      ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<File> SearchLinqEF(Expression<Func<File, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<File>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<File>();
+				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
 			else
 			{
-				return this._context.Set<File>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<File>();
+				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
 			}
 		}
 
-		protected override List<File> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFFile> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<File>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<File>();
+				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
 			else
 			{
-				return this._context.Set<File>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<File>();
+				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e30934368b7866a5b6f31f32630bd7f8</Hash>
+    <Hash>a10b7cde4d506627f049c00b9e61a99a</Hash>
 </Codenesium>*/

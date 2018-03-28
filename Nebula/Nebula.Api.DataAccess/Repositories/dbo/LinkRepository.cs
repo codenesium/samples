@@ -15,32 +15,32 @@ namespace NebulaNS.Api.DataAccess
 		                      ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<Link> SearchLinqEF(Expression<Func<Link, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFLink> SearchLinqEF(Expression<Func<EFLink, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Link>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Link>();
+				return this._context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFLink>();
 			}
 			else
 			{
-				return this._context.Set<Link>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Link>();
+				return this._context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLink>();
 			}
 		}
 
-		protected override List<Link> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFLink> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Link>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Link>();
+				return this._context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFLink>();
 			}
 			else
 			{
-				return this._context.Set<Link>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Link>();
+				return this._context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLink>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9dc39f4429e6eef953af3ed8f70e3560</Hash>
+    <Hash>1ef3731b77ea26c46ae607817b796f22</Hash>
 </Codenesium>*/

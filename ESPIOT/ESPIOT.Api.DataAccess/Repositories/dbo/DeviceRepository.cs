@@ -15,32 +15,32 @@ namespace ESPIOTNS.Api.DataAccess
 		                        ApplicationContext context) : base(logger,context)
 		{}
 
-		protected override List<Device> SearchLinqEF(Expression<Func<Device, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFDevice> SearchLinqEF(Expression<Func<EFDevice, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Device>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Device>();
+				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFDevice>();
 			}
 			else
 			{
-				return this._context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Device>();
+				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
 			}
 		}
 
-		protected override List<Device> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFDevice> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<Device>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<Device>();
+				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFDevice>();
 			}
 			else
 			{
-				return this._context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Device>();
+				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>058898c2439b72a2fe9ee75b3b88e5ef</Hash>
+    <Hash>aece176976ba32f0e081d3b2a6322b12</Hash>
 </Codenesium>*/

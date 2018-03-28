@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 
 {
@@ -22,9 +20,7 @@ namespace NebulaNS.Api.Service
 		}
 
 		public IMachineRepository MachineRepository {get; set;}
-
 		public ITeamRepository TeamRepository {get; set;}
-
 		public virtual void MachineIdRules()
 		{
 			RuleFor(x => x.MachineId).NotNull();
@@ -56,5 +52,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>620e252463d1c7c62cdf1ee8f0f4ec29</Hash>
+    <Hash>6e394b8149dac9c29e40d1be1918ba99</Hash>
 </Codenesium>*/

@@ -2,10 +2,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
-
 namespace NebulaNS.Api.Service
 
 {
@@ -21,15 +19,23 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IMachineRepository MachineRepository {get; set;}
-
 		public IChainRepository ChainRepository {get; set;}
-
+		public IMachineRepository MachineRepository {get; set;}
 		public ILinkStatusRepository LinkStatusRepository {get; set;}
-
-		public virtual void AssignedMachineIdRules()
+		public virtual void NameRules()
 		{
-			RuleFor(x => x.AssignedMachineId).Must(BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
+			RuleFor(x => x.Name).NotNull();
+			RuleFor(x => x.Name).Length(0,128);
+		}
+
+		public virtual void DynamicParametersRules()
+		{
+			RuleFor(x => x.DynamicParameters).Length(0,2147483647);
+		}
+
+		public virtual void StaticParametersRules()
+		{
+			RuleFor(x => x.StaticParameters).Length(0,2147483647);
 		}
 
 		public virtual void ChainIdRules()
@@ -38,20 +44,9 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.ChainId).Must(BeValidChain).When(x => x ?.ChainId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void DateCompletedRules()
-		{}
-
-		public virtual void DateStartedRules()
-		{}
-
-		public virtual void DynamicParametersRules()
+		public virtual void AssignedMachineIdRules()
 		{
-			RuleFor(x => x.DynamicParameters).Length(0,2147483647);
-		}
-
-		public virtual void ExternalIdRules()
-		{
-			RuleFor(x => x.ExternalId).NotNull();
+			RuleFor(x => x.AssignedMachineId).Must(BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LinkStatusIdRules()
@@ -60,33 +55,25 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.LinkStatusId).Must(BeValidLinkStatus).When(x => x ?.LinkStatusId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void NameRules()
-		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,128);
-		}
-
 		public virtual void OrderRules()
 		{
 			RuleFor(x => x.Order).NotNull();
 		}
+
+		public virtual void DateStartedRules()
+		{                       }
+
+		public virtual void DateCompletedRules()
+		{                       }
 
 		public virtual void ResponseRules()
 		{
 			RuleFor(x => x.Response).Length(0,2147483647);
 		}
 
-		public virtual void StaticParametersRules()
+		public virtual void ExternalIdRules()
 		{
-			RuleFor(x => x.StaticParameters).Length(0,2147483647);
-		}
-
-		public bool BeValidMachine(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.MachineRepository.GetById(id.GetValueOrDefault(),response);
-			return response.Machines.Count > 0;
+			RuleFor(x => x.ExternalId).NotNull();
 		}
 
 		public bool BeValidChain(int id)
@@ -95,6 +82,14 @@ namespace NebulaNS.Api.Service
 
 			this.ChainRepository.GetById(id,response);
 			return response.Chains.Count > 0;
+		}
+
+		public bool BeValidMachine(Nullable<int> id)
+		{
+			Response response = new Response();
+
+			this.MachineRepository.GetById(id.GetValueOrDefault(),response);
+			return response.Machines.Count > 0;
 		}
 
 		public bool BeValidLinkStatus(int id)
@@ -108,5 +103,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>84d924a5cec919e2ee7ca727aec0fbc0</Hash>
+    <Hash>8058e1fabfecc674e41129bf2a13e1fa</Hash>
 </Codenesium>*/

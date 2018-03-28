@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation.Results;
-
 using ESPIOTNS.Api.Contracts;
-
 namespace ESPIOTNS.Api.Service
 {
 	public interface IDeviceModelValidator
@@ -19,5 +17,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c30cdbba4181089d9d615aba8b00ef76</Hash>
+    <Hash>0ed6a5457f019d7890be2700b9f7f5a8</Hash>
 </Codenesium>*/

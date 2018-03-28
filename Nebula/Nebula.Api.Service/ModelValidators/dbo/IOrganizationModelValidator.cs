@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation.Results;
-
 using NebulaNS.Api.Contracts;
-
 namespace NebulaNS.Api.Service
 {
 	public interface IOrganizationModelValidator
@@ -19,5 +17,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d507b483ed98af42dc06b6436fa5890c</Hash>
+    <Hash>3e0e9f19ad21816a727e16f0711560f8</Hash>
 </Codenesium>*/

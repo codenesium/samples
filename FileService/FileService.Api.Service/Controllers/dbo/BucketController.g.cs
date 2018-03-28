@@ -78,8 +78,8 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this._bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._bucketRepository.Create(model.ExternalId,
-				                                       model.Name);
+				var id = this._bucketRepository.Create(model.Name,
+				                                       model.ExternalId);
 				return Ok(id);
 			}
 			else
@@ -111,8 +111,8 @@ namespace FileServiceNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._bucketRepository.Create(model.ExternalId,
-				                              model.Name);
+				this._bucketRepository.Create(model.Name,
+				                              model.ExternalId);
 			}
 			return Ok();
 		}
@@ -130,8 +130,8 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this._bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._bucketRepository.Update(id,  model.ExternalId,
-				                              model.Name);
+				this._bucketRepository.Update(id,  model.Name,
+				                              model.ExternalId);
 				return Ok();
 			}
 			else
@@ -156,5 +156,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c633fac85339e245725542a9489e0732</Hash>
+    <Hash>48b099a751a50a3565c978b1c7d7d3c9</Hash>
 </Codenesium>*/

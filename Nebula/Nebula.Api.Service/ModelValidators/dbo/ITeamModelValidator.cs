@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using FluentValidation.Results;
-
 using NebulaNS.Api.Contracts;
-
 namespace NebulaNS.Api.Service
 {
 	public interface ITeamModelValidator
@@ -19,5 +17,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c3ea09860521f3095317b0c2b24d4314</Hash>
+    <Hash>9573c25d1551f6499bf24a540bbd9466</Hash>
 </Codenesium>*/

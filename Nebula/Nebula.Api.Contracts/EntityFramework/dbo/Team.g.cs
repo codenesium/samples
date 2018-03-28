@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Team", Schema="dbo")]
-	public partial class Team
+	public partial class EFTeam
 	{
-		public Team()
+		public EFTeam()
 		{}
 
 		[Key]
@@ -15,10 +15,10 @@ namespace NebulaNS.Api.Contracts
 		public int organizationId {get; set;}
 
 		[ForeignKey("organizationId")]
-		public virtual Organization OrganizationRef { get; set; }
+		public virtual EFOrganization OrganizationRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d316727ef956a25fef2d2b94f681e5b</Hash>
+    <Hash>f9da38ae82d5d560418431c784968392</Hash>
 </Codenesium>*/

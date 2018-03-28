@@ -9,31 +9,23 @@ namespace NebulaNS.Api.Contracts
 		public POCOLinkLog()
 		{}
 
-		public POCOLinkLog(DateTime dateEntered,
-		                   int id,
+		public POCOLinkLog(int id,
 		                   int linkId,
-		                   string log)
+		                   string log,
+		                   DateTime dateEntered)
 		{
-			this.DateEntered = dateEntered.ToDateTime();
 			this.Id = id.ToInt();
 			this.Log = log;
+			this.DateEntered = dateEntered.ToDateTime();
 
 			LinkId = new ReferenceEntity<int>(linkId,
 			                                  "Link");
 		}
 
-		public DateTime DateEntered {get; set;}
 		public int Id {get; set;}
 		public ReferenceEntity<int>LinkId {get; set;}
 		public string Log {get; set;}
-
-		[JsonIgnore]
-		public bool ShouldSerializeDateEnteredValue {get; set;} = true;
-
-		public bool ShouldSerializeDateEntered()
-		{
-			return ShouldSerializeDateEnteredValue;
-		}
+		public DateTime DateEntered {get; set;}
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue {get; set;} = true;
@@ -59,16 +51,24 @@ namespace NebulaNS.Api.Contracts
 			return ShouldSerializeLogValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeDateEnteredValue {get; set;} = true;
+
+		public bool ShouldSerializeDateEntered()
+		{
+			return ShouldSerializeDateEnteredValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeDateEnteredValue = false;
 			this.ShouldSerializeIdValue = false;
 			this.ShouldSerializeLinkIdValue = false;
 			this.ShouldSerializeLogValue = false;
+			this.ShouldSerializeDateEnteredValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4bb1546991769a7403eadf7795286900</Hash>
+    <Hash>58a278b1ff2609c90a39f5966897cf59</Hash>
 </Codenesium>*/

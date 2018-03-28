@@ -78,10 +78,10 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this._chainRepository.Create(model.ChainStatusId,
-				                                      model.ExternalId,
-				                                      model.Name,
-				                                      model.TeamId);
+				var id = this._chainRepository.Create(model.Name,
+				                                      model.TeamId,
+				                                      model.ChainStatusId,
+				                                      model.ExternalId);
 				return Ok(id);
 			}
 			else
@@ -113,10 +113,10 @@ namespace NebulaNS.Api.Service
 
 			foreach(var model in models)
 			{
-				this._chainRepository.Create(model.ChainStatusId,
-				                             model.ExternalId,
-				                             model.Name,
-				                             model.TeamId);
+				this._chainRepository.Create(model.Name,
+				                             model.TeamId,
+				                             model.ChainStatusId,
+				                             model.ExternalId);
 			}
 			return Ok();
 		}
@@ -134,10 +134,10 @@ namespace NebulaNS.Api.Service
 			var validationResult = this._chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._chainRepository.Update(id,  model.ChainStatusId,
-				                             model.ExternalId,
-				                             model.Name,
-				                             model.TeamId);
+				this._chainRepository.Update(id,  model.Name,
+				                             model.TeamId,
+				                             model.ChainStatusId,
+				                             model.ExternalId);
 				return Ok();
 			}
 			else
@@ -160,21 +160,6 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByChainStatusId/{id}")]
-		[ChainFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ChainStatus/{id}/Chains")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByChainStatusId(int id)
-		{
-			var response = new Response();
-
-			this._chainRepository.GetWhere(x => x.chainStatusId == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
 		[Route("ByTeamId/{id}")]
 		[ChainFilter]
 		[ReadOnlyFilter]
@@ -188,9 +173,24 @@ namespace NebulaNS.Api.Service
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
+
+		[HttpGet]
+		[Route("ByChainStatusId/{id}")]
+		[ChainFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/ChainStatus/{id}/Chains")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByChainStatusId(int id)
+		{
+			var response = new Response();
+
+			this._chainRepository.GetWhere(x => x.chainStatusId == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8de7319f8e34d6c803bbcd630ad93b84</Hash>
+    <Hash>14bd16405256a529623043432518011c</Hash>
 </Codenesium>*/
