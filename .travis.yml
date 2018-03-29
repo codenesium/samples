@@ -5,3 +5,4 @@ script:
    -  dotnet build ESPIOT/ESPIOT.Api.Service/ESPIOT.Api.Service.csproj
    -  dotnet build FileService/FileService.Api.Service/FileService.Api.Service.csproj
    -  dotnet build Nebula/Nebula.Api.Service/Nebula.Api.Service.csproj
+   -  dotnet build AdventureWorks/AdventureWorks.Api.Service/AdventureWorks.Api.Service.csproj

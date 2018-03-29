@@ -1,3 +1,4 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
@@ -43,5 +44,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5eabef2d4fb4441a4a13b9610f8b55e5</Hash>
+    <Hash>ceab6d2af143751ff5005c0c2808cab7</Hash>
 </Codenesium>*/

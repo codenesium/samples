@@ -1,3 +1,4 @@
+using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using System.Collections.Generic;
@@ -28,5 +29,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>79b761a51905a59190bea68b25dff215</Hash>
+    <Hash>09ba51d307dad73f60dda10fdf5eafa2</Hash>
 </Codenesium>*/
