@@ -9,7 +9,6 @@ namespace ESPIOTNS.Api.Contracts
 	{
 		public DeviceActionModel()
 		{}
-
 		public DeviceActionModel(int deviceId,
 		                         string name,
 		                         string @value)
@@ -17,14 +16,6 @@ namespace ESPIOTNS.Api.Contracts
 			this.DeviceId = deviceId.ToInt();
 			this.Name = name;
 			this.@Value = @value;
-		}
-
-		public DeviceActionModel(POCODeviceAction poco)
-		{
-			this.Name = poco.Name;
-			this.@Value = poco.@Value;
-
-			this.DeviceId = poco.DeviceId.Value.ToInt();
 		}
 
 		private int _deviceId;
@@ -72,5 +63,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8a844cad43a71b824b0ad08614139528</Hash>
+    <Hash>f297f659496d6503b109998c9bb46fe1</Hash>
 </Codenesium>*/

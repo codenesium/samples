@@ -9,18 +9,11 @@ namespace ESPIOTNS.Api.Contracts
 	{
 		public DeviceModel()
 		{}
-
 		public DeviceModel(Guid publicId,
 		                   string name)
 		{
 			this.PublicId = publicId;
 			this.Name = name;
-		}
-
-		public DeviceModel(POCODevice poco)
-		{
-			this.PublicId = poco.PublicId;
-			this.Name = poco.Name;
 		}
 
 		private Guid _publicId;
@@ -54,5 +47,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d76728c38b5954b87a966f2defcd5263</Hash>
+    <Hash>32929f6885bddb64ab213b5639896684</Hash>
 </Codenesium>*/

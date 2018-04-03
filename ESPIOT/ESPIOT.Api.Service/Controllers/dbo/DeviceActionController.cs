@@ -1,3 +1,4 @@
+using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using System.Collections.Generic;
@@ -28,5 +29,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7f1c41aec1247a9f5cf861e27019eea8</Hash>
+    <Hash>1ba4755528b6bf57d5870268f79d825b</Hash>
 </Codenesium>*/
