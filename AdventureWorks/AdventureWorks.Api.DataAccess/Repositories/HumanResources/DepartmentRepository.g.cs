@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFDepartment>().Add(record);
 			this._context.SaveChanges();
-			return record.DepartmentID;
+			return record.departmentID;
 		}
 
 		public virtual void Update(short departmentID, string name,
 		                           string groupName,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.departmentID == departmentID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",departmentID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(short departmentID)
 		{
-			var record = this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.departmentID == departmentID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(short departmentID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.DepartmentID == departmentID,response);
+			this.SearchLinqPOCO(x => x.departmentID == departmentID,response);
 		}
 
 		protected virtual List<EFDepartment> SearchLinqEF(Expression<Func<EFDepartment, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string groupName,
 		                               DateTime modifiedDate, EFDepartment   efDepartment)
 		{
-			efDepartment.DepartmentID = departmentID;
-			efDepartment.Name = name;
-			efDepartment.GroupName = groupName;
-			efDepartment.ModifiedDate = modifiedDate;
+			efDepartment.departmentID = departmentID;
+			efDepartment.name = name;
+			efDepartment.groupName = groupName;
+			efDepartment.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFDepartment efDepartment,Response response)
@@ -125,15 +125,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddDepartment(new POCODepartment()
 			{
-				DepartmentID = efDepartment.DepartmentID,
-				Name = efDepartment.Name,
-				GroupName = efDepartment.GroupName,
-				ModifiedDate = efDepartment.ModifiedDate.ToDateTime(),
+				DepartmentID = efDepartment.departmentID,
+				Name = efDepartment.name,
+				GroupName = efDepartment.groupName,
+				ModifiedDate = efDepartment.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c22dc4cca290ca0fe3af2c94528d23d4</Hash>
+    <Hash>1baac6fd28498feff2875098e9b7d36c</Hash>
 </Codenesium>*/

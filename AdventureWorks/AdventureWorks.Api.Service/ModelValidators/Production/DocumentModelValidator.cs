@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Service
 			this.ChangeNumberRules();
 			this.StatusRules();
 			this.DocumentSummaryRules();
-			this.Document1Rules();
+			this.DocumentRules();
 			this.RowguidRules();
 			this.ModifiedDateRules();
 		}
@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.Service
 			this.ChangeNumberRules();
 			this.StatusRules();
 			this.DocumentSummaryRules();
-			this.Document1Rules();
+			this.DocumentRules();
 			this.RowguidRules();
 			this.ModifiedDateRules();
 		}
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Service
 			this.ChangeNumberRules();
 			this.StatusRules();
 			this.DocumentSummaryRules();
-			this.Document1Rules();
+			this.DocumentRules();
 			this.RowguidRules();
 			this.ModifiedDateRules();
 		}
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5d7b66d631fb5383dab7b5c359afe107</Hash>
+    <Hash>f1ee6d6e713865d065a74f8b0d68ba02</Hash>
 </Codenesium>*/

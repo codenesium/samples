@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
 		public virtual void RateChangeDateRules()
 		{
 			RuleFor(x => x.RateChangeDate).NotNull();
@@ -40,17 +39,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidEmployee(int id)
-		{
-			Response response = new Response();
-
-			this.EmployeeRepository.GetById(id,response);
-			return response.Employees.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ada33ac8fb7e3fbfdba1ce2e670ec27</Hash>
+    <Hash>519f8fb2fe26d000e3c96311ba150bda</Hash>
 </Codenesium>*/

@@ -10,26 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int WorkOrderID {get; set;}
-		public int ProductID {get; set;}
-		public short OperationSequence {get; set;}
-		public short LocationID {get; set;}
-		public DateTime ScheduledStartDate {get; set;}
-		public DateTime ScheduledEndDate {get; set;}
-		public Nullable<DateTime> ActualStartDate {get; set;}
-		public Nullable<DateTime> ActualEndDate {get; set;}
-		public Nullable<decimal> ActualResourceHrs {get; set;}
-		public decimal PlannedCost {get; set;}
-		public Nullable<decimal> ActualCost {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("WorkOrderID")]
-		public virtual EFWorkOrder WorkOrderRef { get; set; }
-		[ForeignKey("LocationID")]
-		public virtual EFLocation LocationRef { get; set; }
+		public int workOrderID {get; set;}
+		public int productID {get; set;}
+		public short operationSequence {get; set;}
+		public short locationID {get; set;}
+		public DateTime scheduledStartDate {get; set;}
+		public DateTime scheduledEndDate {get; set;}
+		public Nullable<DateTime> actualStartDate {get; set;}
+		public Nullable<DateTime> actualEndDate {get; set;}
+		public Nullable<decimal> actualResourceHrs {get; set;}
+		public decimal plannedCost {get; set;}
+		public Nullable<decimal> actualCost {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d33973c775dbf1bcacffbddeddd24327</Hash>
+    <Hash>488ec4d72e9faee943c8ec7e49e3da5e</Hash>
 </Codenesium>*/

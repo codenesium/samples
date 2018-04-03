@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,PersonCreditCardModel model)
+		public virtual IActionResult Update(int businessEntityID,PersonCreditCardModel model)
 		{
 			this._personCreditCardModelValidator.UpdateMode();
 			var validationResult = this._personCreditCardModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._personCreditCardRepository.Update(BusinessEntityID,  model.CreditCardID,
+				this._personCreditCardRepository.Update(businessEntityID,  model.CreditCardID,
 				                                        model.ModifiedDate);
 				return Ok();
 			}
@@ -153,39 +153,9 @@ namespace AdventureWorksNS.Api.Service
 			this._personCreditCardRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[PersonCreditCardFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/People/{id}/PersonCreditCards")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			var response = new Response();
-
-			this._personCreditCardRepository.GetWhere(x => x.BusinessEntityID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByCreditCardID/{id}")]
-		[PersonCreditCardFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/CreditCards/{id}/PersonCreditCards")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByCreditCardID(int id)
-		{
-			var response = new Response();
-
-			this._personCreditCardRepository.GetWhere(x => x.CreditCardID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2dd93fa6b42a4ae83d8f2113f066c812</Hash>
+    <Hash>404c526a27281703f3b0129d8a0d7039</Hash>
 </Codenesium>*/

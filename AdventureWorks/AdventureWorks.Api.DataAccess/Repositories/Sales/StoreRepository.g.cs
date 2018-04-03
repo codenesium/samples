@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFStore>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, string name,
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -80,7 +80,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFStore> SearchLinqEF(Expression<Func<EFStore, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -121,12 +121,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFStore   efStore)
 		{
-			efStore.BusinessEntityID = businessEntityID;
-			efStore.Name = name;
-			efStore.SalesPersonID = salesPersonID;
-			efStore.Demographics = demographics;
+			efStore.businessEntityID = businessEntityID;
+			efStore.name = name;
+			efStore.salesPersonID = salesPersonID;
+			efStore.demographics = demographics;
 			efStore.rowguid = rowguid;
-			efStore.ModifiedDate = modifiedDate;
+			efStore.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFStore efStore,Response response)
@@ -137,24 +137,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddStore(new POCOStore()
 			{
-				Name = efStore.Name,
-				Demographics = efStore.Demographics,
+				BusinessEntityID = efStore.businessEntityID.ToInt(),
+				Name = efStore.name,
+				SalesPersonID = efStore.salesPersonID.ToNullableInt(),
+				Demographics = efStore.demographics,
 				Rowguid = efStore.rowguid,
-				ModifiedDate = efStore.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efStore.BusinessEntityID,
-				                                            "BusinessEntities"),
-				SalesPersonID = new ReferenceEntity<Nullable<int>>(efStore.SalesPersonID,
-				                                                   "SalesPersons"),
+				ModifiedDate = efStore.modifiedDate.ToDateTime(),
 			});
-
-			BusinessEntityRepository.MapEFToPOCO(efStore.BusinessEntityRef, response);
-
-			SalesPersonRepository.MapEFToPOCO(efStore.SalesPersonRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fcaeb17eff9ca6c1389409dedc7c1d6c</Hash>
+    <Hash>4cb355ff85760bbdf68629b487ea1356</Hash>
 </Codenesium>*/

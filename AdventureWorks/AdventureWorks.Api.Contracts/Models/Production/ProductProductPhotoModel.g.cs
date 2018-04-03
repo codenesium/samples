@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductProductPhotoModel()
 		{}
-
 		public ProductProductPhotoModel(int productPhotoID,
 		                                bool primary,
 		                                DateTime modifiedDate)
@@ -17,14 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ProductPhotoID = productPhotoID.ToInt();
 			this.Primary = primary;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductProductPhotoModel(POCOProductProductPhoto poco)
-		{
-			this.Primary = poco.Primary;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductPhotoID = poco.ProductPhotoID.Value.ToInt();
 		}
 
 		private int _productPhotoID;
@@ -72,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>64c80c051e53851c40de4cd5db6c41cb</Hash>
+    <Hash>c5af49c233459107e2118234a98237a2</Hash>
 </Codenesium>*/

@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductReview>().Add(record);
 			this._context.SaveChanges();
-			return record.ProductReviewID;
+			return record.productReviewID;
 		}
 
 		public virtual void Update(int productReviewID, int productID,
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           string comments,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.productReviewID == productReviewID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productReviewID);
@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productReviewID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.productReviewID == productReviewID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productReviewID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.ProductReviewID == productReviewID,response);
+			this.SearchLinqPOCO(x => x.productReviewID == productReviewID,response);
 		}
 
 		protected virtual List<EFProductReview> SearchLinqEF(Expression<Func<EFProductReview, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -131,14 +131,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string comments,
 		                               DateTime modifiedDate, EFProductReview   efProductReview)
 		{
-			efProductReview.ProductReviewID = productReviewID;
-			efProductReview.ProductID = productID;
-			efProductReview.ReviewerName = reviewerName;
-			efProductReview.ReviewDate = reviewDate;
-			efProductReview.EmailAddress = emailAddress;
-			efProductReview.Rating = rating;
-			efProductReview.Comments = comments;
-			efProductReview.ModifiedDate = modifiedDate;
+			efProductReview.productReviewID = productReviewID;
+			efProductReview.productID = productID;
+			efProductReview.reviewerName = reviewerName;
+			efProductReview.reviewDate = reviewDate;
+			efProductReview.emailAddress = emailAddress;
+			efProductReview.rating = rating;
+			efProductReview.comments = comments;
+			efProductReview.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductReview efProductReview,Response response)
@@ -149,23 +149,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductReview(new POCOProductReview()
 			{
-				ProductReviewID = efProductReview.ProductReviewID.ToInt(),
-				ReviewerName = efProductReview.ReviewerName,
-				ReviewDate = efProductReview.ReviewDate.ToDateTime(),
-				EmailAddress = efProductReview.EmailAddress,
-				Rating = efProductReview.Rating.ToInt(),
-				Comments = efProductReview.Comments,
-				ModifiedDate = efProductReview.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductReview.ProductID,
-				                                     "Products"),
+				ProductReviewID = efProductReview.productReviewID.ToInt(),
+				ProductID = efProductReview.productID.ToInt(),
+				ReviewerName = efProductReview.reviewerName,
+				ReviewDate = efProductReview.reviewDate.ToDateTime(),
+				EmailAddress = efProductReview.emailAddress,
+				Rating = efProductReview.rating.ToInt(),
+				Comments = efProductReview.comments,
+				ModifiedDate = efProductReview.modifiedDate.ToDateTime(),
 			});
-
-			ProductRepository.MapEFToPOCO(efProductReview.ProductRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9123655de70a0233c2505bfd796e412</Hash>
+    <Hash>06885b6bc78f17a0eced1c9ef5cc6cb5</Hash>
 </Codenesium>*/

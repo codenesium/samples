@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductCostHistory>().Add(record);
 			this._context.SaveChanges();
-			return record.ProductID;
+			return record.productID;
 		}
 
 		public virtual void Update(int productID, DateTime startDate,
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           decimal standardCost,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productID);
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.productID == productID,response);
 		}
 
 		protected virtual List<EFProductCostHistory> SearchLinqEF(Expression<Func<EFProductCostHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,11 +116,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal standardCost,
 		                               DateTime modifiedDate, EFProductCostHistory   efProductCostHistory)
 		{
-			efProductCostHistory.ProductID = productID;
-			efProductCostHistory.StartDate = startDate;
-			efProductCostHistory.EndDate = endDate;
-			efProductCostHistory.StandardCost = standardCost;
-			efProductCostHistory.ModifiedDate = modifiedDate;
+			efProductCostHistory.productID = productID;
+			efProductCostHistory.startDate = startDate;
+			efProductCostHistory.endDate = endDate;
+			efProductCostHistory.standardCost = standardCost;
+			efProductCostHistory.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductCostHistory efProductCostHistory,Response response)
@@ -131,20 +131,16 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductCostHistory(new POCOProductCostHistory()
 			{
-				StartDate = efProductCostHistory.StartDate.ToDateTime(),
-				EndDate = efProductCostHistory.EndDate.ToNullableDateTime(),
-				StandardCost = efProductCostHistory.StandardCost,
-				ModifiedDate = efProductCostHistory.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductCostHistory.ProductID,
-				                                     "Products"),
+				ProductID = efProductCostHistory.productID.ToInt(),
+				StartDate = efProductCostHistory.startDate.ToDateTime(),
+				EndDate = efProductCostHistory.endDate.ToNullableDateTime(),
+				StandardCost = efProductCostHistory.standardCost,
+				ModifiedDate = efProductCostHistory.modifiedDate.ToDateTime(),
 			});
-
-			ProductRepository.MapEFToPOCO(efProductCostHistory.ProductRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>30819375a54fa009faa1266c2913134e</Hash>
+    <Hash>7fe963ef41cb5bfc9edead52c5cb6daf</Hash>
 </Codenesium>*/

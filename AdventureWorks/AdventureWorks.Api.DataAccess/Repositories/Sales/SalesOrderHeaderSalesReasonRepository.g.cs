@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesOrderHeaderSalesReason>().Add(record);
 			this._context.SaveChanges();
-			return record.SalesOrderID;
+			return record.salesOrderID;
 		}
 
 		public virtual void Update(int salesOrderID, int salesReasonID,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.salesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",salesOrderID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int salesOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.salesOrderID == salesOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int salesOrderID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID,response);
+			this.SearchLinqPOCO(x => x.salesOrderID == salesOrderID,response);
 		}
 
 		protected virtual List<EFSalesOrderHeaderSalesReason> SearchLinqEF(Expression<Func<EFSalesOrderHeaderSalesReason, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int salesOrderID, int salesReasonID,
 		                               DateTime modifiedDate, EFSalesOrderHeaderSalesReason   efSalesOrderHeaderSalesReason)
 		{
-			efSalesOrderHeaderSalesReason.SalesOrderID = salesOrderID;
-			efSalesOrderHeaderSalesReason.SalesReasonID = salesReasonID;
-			efSalesOrderHeaderSalesReason.ModifiedDate = modifiedDate;
+			efSalesOrderHeaderSalesReason.salesOrderID = salesOrderID;
+			efSalesOrderHeaderSalesReason.salesReasonID = salesReasonID;
+			efSalesOrderHeaderSalesReason.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason,Response response)
@@ -119,21 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesOrderHeaderSalesReason(new POCOSalesOrderHeaderSalesReason()
 			{
-				ModifiedDate = efSalesOrderHeaderSalesReason.ModifiedDate.ToDateTime(),
-
-				SalesOrderID = new ReferenceEntity<int>(efSalesOrderHeaderSalesReason.SalesOrderID,
-				                                        "SalesOrderHeaders"),
-				SalesReasonID = new ReferenceEntity<int>(efSalesOrderHeaderSalesReason.SalesReasonID,
-				                                         "SalesReasons"),
+				SalesOrderID = efSalesOrderHeaderSalesReason.salesOrderID.ToInt(),
+				SalesReasonID = efSalesOrderHeaderSalesReason.salesReasonID.ToInt(),
+				ModifiedDate = efSalesOrderHeaderSalesReason.modifiedDate.ToDateTime(),
 			});
-
-			SalesOrderHeaderRepository.MapEFToPOCO(efSalesOrderHeaderSalesReason.SalesOrderHeaderRef, response);
-
-			SalesReasonRepository.MapEFToPOCO(efSalesOrderHeaderSalesReason.SalesReasonRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>49d92e12bc3d2108428a07078b00d182</Hash>
+    <Hash>360b1c65ac26e6047a8ada905e655fe4</Hash>
 </Codenesium>*/

@@ -9,19 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductDocumentModel()
 		{}
-
 		public ProductDocumentModel(Guid documentNode,
 		                            DateTime modifiedDate)
 		{
 			this.DocumentNode = documentNode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductDocumentModel(POCOProductDocument poco)
-		{
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.DocumentNode = poco.DocumentNode.Value.ToGuid();
 		}
 
 		private Guid _documentNode;
@@ -55,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c0fccae415ad643edf9fa272beb6a5db</Hash>
+    <Hash>a885d55b2a5cb156c1a48e50648c3ed3</Hash>
 </Codenesium>*/

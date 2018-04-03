@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesPersonQuotaHistoryModel()
 		{}
-
 		public SalesPersonQuotaHistoryModel(DateTime quotaDate,
 		                                    decimal salesQuota,
 		                                    Guid rowguid,
@@ -19,14 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.SalesQuota = salesQuota;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesPersonQuotaHistoryModel(POCOSalesPersonQuotaHistory poco)
-		{
-			this.QuotaDate = poco.QuotaDate.ToDateTime();
-			this.SalesQuota = poco.SalesQuota;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private DateTime _quotaDate;
@@ -88,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fbb5f4cde4887b7c4bc6c1c2a2b1f606</Hash>
+    <Hash>34f91da4c8d7f5e3b80c4339efa50ab8</Hash>
 </Codenesium>*/

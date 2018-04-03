@@ -10,15 +10,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int CreditCardID {get; set;}
-		public string CardType {get; set;}
-		public string CardNumber {get; set;}
-		public int ExpMonth {get; set;}
-		public short ExpYear {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int creditCardID {get; set;}
+		public string cardType {get; set;}
+		public string cardNumber {get; set;}
+		public int expMonth {get; set;}
+		public short expYear {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4348e9167eb06875a4d96bf1b44cef08</Hash>
+    <Hash>0b6acb139cf7613558d68bfcacf6fbef</Hash>
 </Codenesium>*/

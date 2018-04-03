@@ -10,17 +10,14 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public DateTime QuotaDate {get; set;}
-		public decimal SalesQuota {get; set;}
+		public int businessEntityID {get; set;}
+		public DateTime quotaDate {get; set;}
+		public decimal salesQuota {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFSalesPerson SalesPersonRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e34403697a6c823d3955ca33f6a5c291</Hash>
+    <Hash>0f9560554892f45fd0c64068fde16c7f</Hash>
 </Codenesium>*/

@@ -10,13 +10,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int SystemInformationID {get; set;}
-		public string Database_Version {get; set;}
-		public DateTime VersionDate {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int systemInformationID {get; set;}
+		public string database_Version {get; set;}
+		public DateTime versionDate {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e96574258c870e61a8655cffa5fd305d</Hash>
+    <Hash>7877688c0432608325e27cf8b7be6053</Hash>
 </Codenesium>*/

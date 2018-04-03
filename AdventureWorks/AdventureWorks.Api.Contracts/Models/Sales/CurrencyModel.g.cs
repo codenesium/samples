@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CurrencyModel()
 		{}
-
 		public CurrencyModel(string name,
 		                     DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public CurrencyModel(POCOCurrency poco)
-		{
-			this.Name = poco.Name;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -54,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d1d1561ab35e4da1329e5f7089288c21</Hash>
+    <Hash>3e55cc770fc984fe77e5996662c8c730</Hash>
 </Codenesium>*/

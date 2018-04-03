@@ -10,18 +10,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int SpecialOfferID {get; set;}
-		public int ProductID {get; set;}
+		public int specialOfferID {get; set;}
+		public int productID {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("SpecialOfferID")]
-		public virtual EFSpecialOffer SpecialOfferRef { get; set; }
-		[ForeignKey("ProductID")]
-		public virtual EFProduct ProductRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>29a81fb2b9bbd95a56c1c1e8b4a28fcd</Hash>
+    <Hash>6c2fd9c744d4f907bd627c82d955c863</Hash>
 </Codenesium>*/

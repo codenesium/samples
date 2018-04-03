@@ -20,23 +20,14 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository {get; set;}
-		public IStoreRepository StoreRepository {get; set;}
-		public ISalesTerritoryRepository SalesTerritoryRepository {get; set;}
 		public virtual void PersonIDRules()
-		{
-			RuleFor(x => x.PersonID).Must(BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void StoreIDRules()
-		{
-			RuleFor(x => x.StoreID).Must(BeValidStore).When(x => x ?.StoreID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void TerritoryIDRules()
-		{
-			RuleFor(x => x.TerritoryID).Must(BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void AccountNumberRules()
 		{
@@ -53,33 +44,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidPerson(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.PersonRepository.GetById(id.GetValueOrDefault(),response);
-			return response.People.Count > 0;
-		}
-
-		public bool BeValidStore(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.StoreRepository.GetById(id.GetValueOrDefault(),response);
-			return response.Stores.Count > 0;
-		}
-
-		public bool BeValidSalesTerritory(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.SalesTerritoryRepository.GetById(id.GetValueOrDefault(),response);
-			return response.SalesTerritories.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>263ad5888025f2bb3ba3a1fea65a4fb2</Hash>
+    <Hash>e108fedd3e8abad4adeb4cbdc8b9a014</Hash>
 </Codenesium>*/

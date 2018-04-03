@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductInventoryModel()
 		{}
-
 		public ProductInventoryModel(short locationID,
 		                             string shelf,
 		                             int bin,
@@ -23,17 +22,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Quantity = quantity;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductInventoryModel(POCOProductInventory poco)
-		{
-			this.Shelf = poco.Shelf;
-			this.Bin = poco.Bin;
-			this.Quantity = poco.Quantity;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.LocationID = poco.LocationID.Value.ToSmallInt();
 		}
 
 		private short _locationID;
@@ -123,5 +111,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>33ad54c08a52f7c6baa1c2ad84a4cae8</Hash>
+    <Hash>a0289b63269665ffcb4ee32ee4ccef39</Hash>
 </Codenesium>*/

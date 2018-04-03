@@ -46,25 +46,20 @@ namespace AdventureWorksNS.Api.Contracts
 			this.StandardCost = standardCost;
 			this.ListPrice = listPrice;
 			this.Size = size;
+			this.SizeUnitMeasureCode = sizeUnitMeasureCode;
+			this.WeightUnitMeasureCode = weightUnitMeasureCode;
 			this.Weight = weight.ToNullableDecimal();
 			this.DaysToManufacture = daysToManufacture.ToInt();
 			this.ProductLine = productLine;
 			this.@Class = @class;
 			this.Style = style;
+			this.ProductSubcategoryID = productSubcategoryID.ToNullableInt();
+			this.ProductModelID = productModelID.ToNullableInt();
 			this.SellStartDate = sellStartDate.ToDateTime();
 			this.SellEndDate = sellEndDate.ToNullableDateTime();
 			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			SizeUnitMeasureCode = new ReferenceEntity<string>(sizeUnitMeasureCode,
-			                                                  "UnitMeasure");
-			WeightUnitMeasureCode = new ReferenceEntity<string>(weightUnitMeasureCode,
-			                                                    "UnitMeasure");
-			ProductSubcategoryID = new ReferenceEntity<Nullable<int>>(productSubcategoryID,
-			                                                          "ProductSubcategory");
-			ProductModelID = new ReferenceEntity<Nullable<int>>(productModelID,
-			                                                    "ProductModel");
 		}
 
 		public int ProductID {get; set;}
@@ -78,15 +73,15 @@ namespace AdventureWorksNS.Api.Contracts
 		public decimal StandardCost {get; set;}
 		public decimal ListPrice {get; set;}
 		public string Size {get; set;}
-		public ReferenceEntity<string>SizeUnitMeasureCode {get; set;}
-		public ReferenceEntity<string>WeightUnitMeasureCode {get; set;}
+		public string SizeUnitMeasureCode {get; set;}
+		public string WeightUnitMeasureCode {get; set;}
 		public Nullable<decimal> Weight {get; set;}
 		public int DaysToManufacture {get; set;}
 		public string ProductLine {get; set;}
 		public string @Class {get; set;}
 		public string Style {get; set;}
-		public ReferenceEntity<Nullable<int>>ProductSubcategoryID {get; set;}
-		public ReferenceEntity<Nullable<int>>ProductModelID {get; set;}
+		public Nullable<int> ProductSubcategoryID {get; set;}
+		public Nullable<int> ProductModelID {get; set;}
 		public DateTime SellStartDate {get; set;}
 		public Nullable<DateTime> SellEndDate {get; set;}
 		public Nullable<DateTime> DiscontinuedDate {get; set;}
@@ -325,5 +320,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>490c40e41e7ebcfe90fadc4cdf598225</Hash>
+    <Hash>9160be5d347d6a995fd7ac5638fde4ab</Hash>
 </Codenesium>*/

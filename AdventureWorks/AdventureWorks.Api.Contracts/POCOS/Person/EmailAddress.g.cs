@@ -11,22 +11,20 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOEmailAddress(int businessEntityID,
 		                        int emailAddressID,
-		                        string emailAddress1,
+		                        string emailAddress,
 		                        Guid rowguid,
 		                        DateTime modifiedDate)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.EmailAddressID = emailAddressID.ToInt();
-			this.EmailAddress1 = emailAddress1;
+			this.EmailAddress = emailAddress;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "Person");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
+		public int BusinessEntityID {get; set;}
 		public int EmailAddressID {get; set;}
-		public string EmailAddress1 {get; set;}
+		public string EmailAddress {get; set;}
 		public Guid Rowguid {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
@@ -47,11 +45,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmailAddress1Value {get; set;} = true;
+		public bool ShouldSerializeEmailAddressValue {get; set;} = true;
 
-		public bool ShouldSerializeEmailAddress1()
+		public bool ShouldSerializeEmailAddress()
 		{
-			return ShouldSerializeEmailAddress1Value;
+			return ShouldSerializeEmailAddressValue;
 		}
 
 		[JsonIgnore]
@@ -74,7 +72,7 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
 			this.ShouldSerializeEmailAddressIDValue = false;
-			this.ShouldSerializeEmailAddress1Value = false;
+			this.ShouldSerializeEmailAddressValue = false;
 			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
 		}
@@ -82,5 +80,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7449245527dccae955639657b020ba8d</Hash>
+    <Hash>8a48f073a86f30dcf2e03bfadfdae0fe</Hash>
 </Codenesium>*/

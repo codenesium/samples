@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFJobCandidate>().Add(record);
 			this._context.SaveChanges();
-			return record.JobCandidateID;
+			return record.jobCandidateID;
 		}
 
 		public virtual void Update(int jobCandidateID, Nullable<int> businessEntityID,
 		                           string resume,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.jobCandidateID == jobCandidateID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",jobCandidateID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int jobCandidateID)
 		{
-			var record = this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.jobCandidateID == jobCandidateID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int jobCandidateID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID,response);
+			this.SearchLinqPOCO(x => x.jobCandidateID == jobCandidateID,response);
 		}
 
 		protected virtual List<EFJobCandidate> SearchLinqEF(Expression<Func<EFJobCandidate, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string resume,
 		                               DateTime modifiedDate, EFJobCandidate   efJobCandidate)
 		{
-			efJobCandidate.JobCandidateID = jobCandidateID;
-			efJobCandidate.BusinessEntityID = businessEntityID;
-			efJobCandidate.Resume = resume;
-			efJobCandidate.ModifiedDate = modifiedDate;
+			efJobCandidate.jobCandidateID = jobCandidateID;
+			efJobCandidate.businessEntityID = businessEntityID;
+			efJobCandidate.resume = resume;
+			efJobCandidate.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFJobCandidate efJobCandidate,Response response)
@@ -125,19 +125,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddJobCandidate(new POCOJobCandidate()
 			{
-				JobCandidateID = efJobCandidate.JobCandidateID.ToInt(),
-				Resume = efJobCandidate.Resume,
-				ModifiedDate = efJobCandidate.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<Nullable<int>>(efJobCandidate.BusinessEntityID,
-				                                                      "Employees"),
+				JobCandidateID = efJobCandidate.jobCandidateID.ToInt(),
+				BusinessEntityID = efJobCandidate.businessEntityID.ToNullableInt(),
+				Resume = efJobCandidate.resume,
+				ModifiedDate = efJobCandidate.modifiedDate.ToDateTime(),
 			});
-
-			EmployeeRepository.MapEFToPOCO(efJobCandidate.EmployeeRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c59746289d936fbb8c06510d184bc61</Hash>
+    <Hash>1338f2df616d2f1e1d969dc453259fec</Hash>
 </Codenesium>*/

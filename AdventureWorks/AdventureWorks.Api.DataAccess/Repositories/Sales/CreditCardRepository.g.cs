@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFCreditCard>().Add(record);
 			this._context.SaveChanges();
-			return record.CreditCardID;
+			return record.creditCardID;
 		}
 
 		public virtual void Update(int creditCardID, string cardType,
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           short expYear,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.CreditCardID == creditCardID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.creditCardID == creditCardID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",creditCardID);
@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int creditCardID)
 		{
-			var record = this.SearchLinqEF(x => x.CreditCardID == creditCardID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.creditCardID == creditCardID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -80,7 +80,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int creditCardID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.CreditCardID == creditCardID,response);
+			this.SearchLinqPOCO(x => x.creditCardID == creditCardID,response);
 		}
 
 		protected virtual List<EFCreditCard> SearchLinqEF(Expression<Func<EFCreditCard, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -121,12 +121,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               short expYear,
 		                               DateTime modifiedDate, EFCreditCard   efCreditCard)
 		{
-			efCreditCard.CreditCardID = creditCardID;
-			efCreditCard.CardType = cardType;
-			efCreditCard.CardNumber = cardNumber;
-			efCreditCard.ExpMonth = expMonth;
-			efCreditCard.ExpYear = expYear;
-			efCreditCard.ModifiedDate = modifiedDate;
+			efCreditCard.creditCardID = creditCardID;
+			efCreditCard.cardType = cardType;
+			efCreditCard.cardNumber = cardNumber;
+			efCreditCard.expMonth = expMonth;
+			efCreditCard.expYear = expYear;
+			efCreditCard.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFCreditCard efCreditCard,Response response)
@@ -137,17 +137,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddCreditCard(new POCOCreditCard()
 			{
-				CreditCardID = efCreditCard.CreditCardID.ToInt(),
-				CardType = efCreditCard.CardType,
-				CardNumber = efCreditCard.CardNumber,
-				ExpMonth = efCreditCard.ExpMonth,
-				ExpYear = efCreditCard.ExpYear,
-				ModifiedDate = efCreditCard.ModifiedDate.ToDateTime(),
+				CreditCardID = efCreditCard.creditCardID.ToInt(),
+				CardType = efCreditCard.cardType,
+				CardNumber = efCreditCard.cardNumber,
+				ExpMonth = efCreditCard.expMonth,
+				ExpYear = efCreditCard.expYear,
+				ModifiedDate = efCreditCard.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b1f21c88d94ce018fc934074e57ed9d</Hash>
+    <Hash>ed29c51640caf59752bd06d92341525e</Hash>
 </Codenesium>*/

@@ -15,16 +15,14 @@ namespace AdventureWorksNS.Api.Contracts
 		                              decimal standardCost,
 		                              DateTime modifiedDate)
 		{
+			this.ProductID = productID.ToInt();
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.StandardCost = standardCost;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
 		}
 
-		public ReferenceEntity<int>ProductID {get; set;}
+		public int ProductID {get; set;}
 		public DateTime StartDate {get; set;}
 		public Nullable<DateTime> EndDate {get; set;}
 		public decimal StandardCost {get; set;}
@@ -82,5 +80,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>de209c6dc2c0cbf1f2b95b8b0c7e37ab</Hash>
+    <Hash>00e2e293145ca0b4e9d589512eb91ec0</Hash>
 </Codenesium>*/

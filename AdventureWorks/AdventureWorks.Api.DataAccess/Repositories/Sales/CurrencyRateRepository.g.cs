@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFCurrencyRate>().Add(record);
 			this._context.SaveChanges();
-			return record.CurrencyRateID;
+			return record.currencyRateID;
 		}
 
 		public virtual void Update(int currencyRateID, DateTime currencyRateDate,
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           decimal endOfDayRate,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.currencyRateID == currencyRateID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",currencyRateID);
@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int currencyRateID)
 		{
-			var record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.currencyRateID == currencyRateID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -84,7 +84,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int currencyRateID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID,response);
+			this.SearchLinqPOCO(x => x.currencyRateID == currencyRateID,response);
 		}
 
 		protected virtual List<EFCurrencyRate> SearchLinqEF(Expression<Func<EFCurrencyRate, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -126,13 +126,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal endOfDayRate,
 		                               DateTime modifiedDate, EFCurrencyRate   efCurrencyRate)
 		{
-			efCurrencyRate.CurrencyRateID = currencyRateID;
-			efCurrencyRate.CurrencyRateDate = currencyRateDate;
-			efCurrencyRate.FromCurrencyCode = fromCurrencyCode;
-			efCurrencyRate.ToCurrencyCode = toCurrencyCode;
-			efCurrencyRate.AverageRate = averageRate;
-			efCurrencyRate.EndOfDayRate = endOfDayRate;
-			efCurrencyRate.ModifiedDate = modifiedDate;
+			efCurrencyRate.currencyRateID = currencyRateID;
+			efCurrencyRate.currencyRateDate = currencyRateDate;
+			efCurrencyRate.fromCurrencyCode = fromCurrencyCode;
+			efCurrencyRate.toCurrencyCode = toCurrencyCode;
+			efCurrencyRate.averageRate = averageRate;
+			efCurrencyRate.endOfDayRate = endOfDayRate;
+			efCurrencyRate.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFCurrencyRate efCurrencyRate,Response response)
@@ -143,25 +143,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddCurrencyRate(new POCOCurrencyRate()
 			{
-				CurrencyRateID = efCurrencyRate.CurrencyRateID.ToInt(),
-				CurrencyRateDate = efCurrencyRate.CurrencyRateDate.ToDateTime(),
-				AverageRate = efCurrencyRate.AverageRate,
-				EndOfDayRate = efCurrencyRate.EndOfDayRate,
-				ModifiedDate = efCurrencyRate.ModifiedDate.ToDateTime(),
-
-				FromCurrencyCode = new ReferenceEntity<string>(efCurrencyRate.FromCurrencyCode,
-				                                               "Currencies"),
-				ToCurrencyCode = new ReferenceEntity<string>(efCurrencyRate.ToCurrencyCode,
-				                                             "Currencies"),
+				CurrencyRateID = efCurrencyRate.currencyRateID.ToInt(),
+				CurrencyRateDate = efCurrencyRate.currencyRateDate.ToDateTime(),
+				FromCurrencyCode = efCurrencyRate.fromCurrencyCode,
+				ToCurrencyCode = efCurrencyRate.toCurrencyCode,
+				AverageRate = efCurrencyRate.averageRate,
+				EndOfDayRate = efCurrencyRate.endOfDayRate,
+				ModifiedDate = efCurrencyRate.modifiedDate.ToDateTime(),
 			});
-
-			CurrencyRepository.MapEFToPOCO(efCurrencyRate.CurrencyRef, response);
-
-			CurrencyRepository.MapEFToPOCO(efCurrencyRate.CurrencyRef1, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a7ef21319bfdf7a4e9220bc2c017e0b</Hash>
+    <Hash>3d8a1854c1cfa46eb06c48bdfa34e200</Hash>
 </Codenesium>*/

@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductModelModel()
 		{}
-
 		public ProductModelModel(string name,
 		                         string catalogDescription,
 		                         string instructions,
@@ -21,15 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Instructions = instructions;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductModelModel(POCOProductModel poco)
-		{
-			this.Name = poco.Name;
-			this.CatalogDescription = poco.CatalogDescription;
-			this.Instructions = poco.Instructions;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -103,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d5c1c23dfe43f0e21fac313b1cb8405c</Hash>
+    <Hash>2e1ce508be06f61e16b98920451885d0</Hash>
 </Codenesium>*/

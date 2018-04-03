@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public UnitMeasureModel()
 		{}
-
 		public UnitMeasureModel(string name,
 		                        DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public UnitMeasureModel(POCOUnitMeasure poco)
-		{
-			this.Name = poco.Name;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -54,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6465019a48b36d7c1d0ffba53d5b7665</Hash>
+    <Hash>4dac3006f3e7a169f27fa26c94b525f4</Hash>
 </Codenesium>*/

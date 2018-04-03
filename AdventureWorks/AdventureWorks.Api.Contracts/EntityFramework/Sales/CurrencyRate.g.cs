@@ -10,21 +10,16 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int CurrencyRateID {get; set;}
-		public DateTime CurrencyRateDate {get; set;}
-		public string FromCurrencyCode {get; set;}
-		public string ToCurrencyCode {get; set;}
-		public decimal AverageRate {get; set;}
-		public decimal EndOfDayRate {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("FromCurrencyCode")]
-		public virtual EFCurrency CurrencyRef { get; set; }
-		[ForeignKey("ToCurrencyCode")]
-		public virtual EFCurrency CurrencyRef1 { get; set; }
+		public int currencyRateID {get; set;}
+		public DateTime currencyRateDate {get; set;}
+		public string fromCurrencyCode {get; set;}
+		public string toCurrencyCode {get; set;}
+		public decimal averageRate {get; set;}
+		public decimal endOfDayRate {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e7242e9340c5466a0360e0134206dec</Hash>
+    <Hash>473e87ff99bd747ad6a6631c0e00ca88</Hash>
 </Codenesium>*/

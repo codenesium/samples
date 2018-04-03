@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductInventory>().Add(record);
 			this._context.SaveChanges();
-			return record.ProductID;
+			return record.productID;
 		}
 
 		public virtual void Update(int productID, short locationID,
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productID);
@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -84,7 +84,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.productID == productID,response);
 		}
 
 		protected virtual List<EFProductInventory> SearchLinqEF(Expression<Func<EFProductInventory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -126,13 +126,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProductInventory   efProductInventory)
 		{
-			efProductInventory.ProductID = productID;
-			efProductInventory.LocationID = locationID;
-			efProductInventory.Shelf = shelf;
-			efProductInventory.Bin = bin;
-			efProductInventory.Quantity = quantity;
+			efProductInventory.productID = productID;
+			efProductInventory.locationID = locationID;
+			efProductInventory.shelf = shelf;
+			efProductInventory.bin = bin;
+			efProductInventory.quantity = quantity;
 			efProductInventory.rowguid = rowguid;
-			efProductInventory.ModifiedDate = modifiedDate;
+			efProductInventory.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductInventory efProductInventory,Response response)
@@ -143,25 +143,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductInventory(new POCOProductInventory()
 			{
-				Shelf = efProductInventory.Shelf,
-				Bin = efProductInventory.Bin,
-				Quantity = efProductInventory.Quantity,
+				ProductID = efProductInventory.productID.ToInt(),
+				LocationID = efProductInventory.locationID,
+				Shelf = efProductInventory.shelf,
+				Bin = efProductInventory.bin,
+				Quantity = efProductInventory.quantity,
 				Rowguid = efProductInventory.rowguid,
-				ModifiedDate = efProductInventory.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductInventory.ProductID,
-				                                     "Products"),
-				LocationID = new ReferenceEntity<short>(efProductInventory.LocationID,
-				                                        "Locations"),
+				ModifiedDate = efProductInventory.modifiedDate.ToDateTime(),
 			});
-
-			ProductRepository.MapEFToPOCO(efProductInventory.ProductRef, response);
-
-			LocationRepository.MapEFToPOCO(efProductInventory.LocationRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c4ee90f8cde517cd3441081def3519e9</Hash>
+    <Hash>41aaa62ab3dad20347582c5a903434db</Hash>
 </Codenesium>*/

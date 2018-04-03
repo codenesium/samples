@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ErrorLogModel()
 		{}
-
 		public ErrorLogModel(DateTime errorTime,
 		                     string userName,
 		                     int errorNumber,
@@ -27,18 +26,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ErrorProcedure = errorProcedure;
 			this.ErrorLine = errorLine.ToNullableInt();
 			this.ErrorMessage = errorMessage;
-		}
-
-		public ErrorLogModel(POCOErrorLog poco)
-		{
-			this.ErrorTime = poco.ErrorTime.ToDateTime();
-			this.UserName = poco.UserName;
-			this.ErrorNumber = poco.ErrorNumber.ToInt();
-			this.ErrorSeverity = poco.ErrorSeverity.ToNullableInt();
-			this.ErrorState = poco.ErrorState.ToNullableInt();
-			this.ErrorProcedure = poco.ErrorProcedure;
-			this.ErrorLine = poco.ErrorLine.ToNullableInt();
-			this.ErrorMessage = poco.ErrorMessage;
 		}
 
 		private DateTime _errorTime;
@@ -152,5 +139,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e540d55ac287f1ab7f67a62f2a64cdbe</Hash>
+    <Hash>100490c9456ecd6713948480744f8932</Hash>
 </Codenesium>*/

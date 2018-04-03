@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string CountryRegionCode,CountryRegionCurrencyModel model)
+		public virtual IActionResult Update(string countryRegionCode,CountryRegionCurrencyModel model)
 		{
 			this._countryRegionCurrencyModelValidator.UpdateMode();
 			var validationResult = this._countryRegionCurrencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._countryRegionCurrencyRepository.Update(CountryRegionCode,  model.CurrencyCode,
+				this._countryRegionCurrencyRepository.Update(countryRegionCode,  model.CurrencyCode,
 				                                             model.ModifiedDate);
 				return Ok();
 			}
@@ -153,39 +153,9 @@ namespace AdventureWorksNS.Api.Service
 			this._countryRegionCurrencyRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByCountryRegionCode/{id}")]
-		[CountryRegionCurrencyFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/CountryRegions/{id}/CountryRegionCurrencies")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByCountryRegionCode(string id)
-		{
-			var response = new Response();
-
-			this._countryRegionCurrencyRepository.GetWhere(x => x.CountryRegionCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByCurrencyCode/{id}")]
-		[CountryRegionCurrencyFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Currencies/{id}/CountryRegionCurrencies")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByCurrencyCode(string id)
-		{
-			var response = new Response();
-
-			this._countryRegionCurrencyRepository.GetWhere(x => x.CurrencyCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>07412c091516b646d79a8158f07c39b7</Hash>
+    <Hash>e277eada074f9f2b17e0f151d30eb4cc</Hash>
 </Codenesium>*/

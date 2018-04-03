@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int SalesReasonID,SalesReasonModel model)
+		public virtual IActionResult Update(int salesReasonID,SalesReasonModel model)
 		{
 			this._salesReasonModelValidator.UpdateMode();
 			var validationResult = this._salesReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._salesReasonRepository.Update(SalesReasonID,  model.Name,
+				this._salesReasonRepository.Update(salesReasonID,  model.Name,
 				                                   model.ReasonType,
 				                                   model.ModifiedDate);
 				return Ok();
@@ -160,5 +160,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ea5de567b0caa8bcedef0e1ea241919e</Hash>
+    <Hash>4e3e499f29eee1dd18d781b0c05aeef0</Hash>
 </Codenesium>*/

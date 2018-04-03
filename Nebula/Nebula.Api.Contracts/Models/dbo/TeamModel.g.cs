@@ -9,19 +9,11 @@ namespace NebulaNS.Api.Contracts
 	{
 		public TeamModel()
 		{}
-
 		public TeamModel(string name,
 		                 int organizationId)
 		{
 			this.Name = name;
 			this.OrganizationId = organizationId.ToInt();
-		}
-
-		public TeamModel(POCOTeam poco)
-		{
-			this.Name = poco.Name;
-
-			this.OrganizationId = poco.OrganizationId.Value.ToInt();
 		}
 
 		private string _name;
@@ -55,5 +47,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>778b0e9154d22153406747e9486a3e57</Hash>
+    <Hash>dd04af7def8fac8d6ff293e5c1a17faa</Hash>
 </Codenesium>*/

@@ -131,13 +131,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,StoreModel model)
+		public virtual IActionResult Update(int businessEntityID,StoreModel model)
 		{
 			this._storeModelValidator.UpdateMode();
 			var validationResult = this._storeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._storeRepository.Update(BusinessEntityID,  model.Name,
+				this._storeRepository.Update(businessEntityID,  model.Name,
 				                             model.SalesPersonID,
 				                             model.Demographics,
 				                             model.Rowguid,
@@ -162,39 +162,9 @@ namespace AdventureWorksNS.Api.Service
 			this._storeRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[StoreFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/BusinessEntities/{id}/Stores")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			var response = new Response();
-
-			this._storeRepository.GetWhere(x => x.BusinessEntityID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("BySalesPersonID/{id}")]
-		[StoreFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/SalesPersons/{id}/Stores")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult BySalesPersonID(int id)
-		{
-			var response = new Response();
-
-			this._storeRepository.GetWhere(x => x.SalesPersonID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97283a2a0e218ba4e89c00c2efac8b2c</Hash>
+    <Hash>5247e0de399c59b853f4c48b22dd8723</Hash>
 </Codenesium>*/

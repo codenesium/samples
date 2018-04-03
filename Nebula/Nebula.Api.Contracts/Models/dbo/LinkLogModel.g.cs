@@ -9,7 +9,6 @@ namespace NebulaNS.Api.Contracts
 	{
 		public LinkLogModel()
 		{}
-
 		public LinkLogModel(int linkId,
 		                    string log,
 		                    DateTime dateEntered)
@@ -17,14 +16,6 @@ namespace NebulaNS.Api.Contracts
 			this.LinkId = linkId.ToInt();
 			this.Log = log;
 			this.DateEntered = dateEntered.ToDateTime();
-		}
-
-		public LinkLogModel(POCOLinkLog poco)
-		{
-			this.Log = poco.Log;
-			this.DateEntered = poco.DateEntered.ToDateTime();
-
-			this.LinkId = poco.LinkId.Value.ToInt();
 		}
 
 		private int _linkId;
@@ -72,5 +63,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0a2d1ce49cf24d322bede0f04b49e34c</Hash>
+    <Hash>58f24bfa6e99f52ac1e430fe21738cd5</Hash>
 </Codenesium>*/

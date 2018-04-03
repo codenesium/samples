@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,BusinessEntityModel model)
+		public virtual IActionResult Update(int businessEntityID,BusinessEntityModel model)
 		{
 			this._businessEntityModelValidator.UpdateMode();
 			var validationResult = this._businessEntityModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._businessEntityRepository.Update(BusinessEntityID,  model.Rowguid,
+				this._businessEntityRepository.Update(businessEntityID,  model.Rowguid,
 				                                      model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b93d79feb5e1add2989c45c5e44f8af8</Hash>
+    <Hash>b5f164083ab8f62119d579699dc34c55</Hash>
 </Codenesium>*/

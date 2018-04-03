@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFAddress>().Add(record);
 			this._context.SaveChanges();
-			return record.AddressID;
+			return record.addressID;
 		}
 
 		public virtual void Update(int addressID, string addressLine1,
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.addressID == addressID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",addressID);
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int addressID)
 		{
-			var record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.addressID == addressID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -92,7 +92,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int addressID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.AddressID == addressID,response);
+			this.SearchLinqPOCO(x => x.addressID == addressID,response);
 		}
 
 		protected virtual List<EFAddress> SearchLinqEF(Expression<Func<EFAddress, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -136,15 +136,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFAddress   efAddress)
 		{
-			efAddress.AddressID = addressID;
-			efAddress.AddressLine1 = addressLine1;
-			efAddress.AddressLine2 = addressLine2;
-			efAddress.City = city;
-			efAddress.StateProvinceID = stateProvinceID;
-			efAddress.PostalCode = postalCode;
-			efAddress.SpatialLocation = spatialLocation;
+			efAddress.addressID = addressID;
+			efAddress.addressLine1 = addressLine1;
+			efAddress.addressLine2 = addressLine2;
+			efAddress.city = city;
+			efAddress.stateProvinceID = stateProvinceID;
+			efAddress.postalCode = postalCode;
+			efAddress.spatialLocation = spatialLocation;
 			efAddress.rowguid = rowguid;
-			efAddress.ModifiedDate = modifiedDate;
+			efAddress.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFAddress efAddress,Response response)
@@ -155,24 +155,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddAddress(new POCOAddress()
 			{
-				AddressID = efAddress.AddressID.ToInt(),
-				AddressLine1 = efAddress.AddressLine1,
-				AddressLine2 = efAddress.AddressLine2,
-				City = efAddress.City,
-				PostalCode = efAddress.PostalCode,
-				SpatialLocation = efAddress.SpatialLocation,
+				AddressID = efAddress.addressID.ToInt(),
+				AddressLine1 = efAddress.addressLine1,
+				AddressLine2 = efAddress.addressLine2,
+				City = efAddress.city,
+				StateProvinceID = efAddress.stateProvinceID.ToInt(),
+				PostalCode = efAddress.postalCode,
+				SpatialLocation = efAddress.spatialLocation,
 				Rowguid = efAddress.rowguid,
-				ModifiedDate = efAddress.ModifiedDate.ToDateTime(),
-
-				StateProvinceID = new ReferenceEntity<int>(efAddress.StateProvinceID,
-				                                           "StateProvinces"),
+				ModifiedDate = efAddress.modifiedDate.ToDateTime(),
 			});
-
-			StateProvinceRepository.MapEFToPOCO(efAddress.StateProvinceRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>440100081c91f89052a444151ecb908d</Hash>
+    <Hash>08e6cbb4a7c8667b1416c9bebcb56789</Hash>
 </Codenesium>*/

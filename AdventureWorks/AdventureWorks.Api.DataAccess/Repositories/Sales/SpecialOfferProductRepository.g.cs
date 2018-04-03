@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSpecialOfferProduct>().Add(record);
 			this._context.SaveChanges();
-			return record.SpecialOfferID;
+			return record.specialOfferID;
 		}
 
 		public virtual void Update(int specialOfferID, int productID,
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.specialOfferID == specialOfferID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",specialOfferID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int specialOfferID)
 		{
-			var record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.specialOfferID == specialOfferID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int specialOfferID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.SpecialOfferID == specialOfferID,response);
+			this.SearchLinqPOCO(x => x.specialOfferID == specialOfferID,response);
 		}
 
 		protected virtual List<EFSpecialOfferProduct> SearchLinqEF(Expression<Func<EFSpecialOfferProduct, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSpecialOfferProduct   efSpecialOfferProduct)
 		{
-			efSpecialOfferProduct.SpecialOfferID = specialOfferID;
-			efSpecialOfferProduct.ProductID = productID;
+			efSpecialOfferProduct.specialOfferID = specialOfferID;
+			efSpecialOfferProduct.productID = productID;
 			efSpecialOfferProduct.rowguid = rowguid;
-			efSpecialOfferProduct.ModifiedDate = modifiedDate;
+			efSpecialOfferProduct.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSpecialOfferProduct efSpecialOfferProduct,Response response)
@@ -125,22 +125,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSpecialOfferProduct(new POCOSpecialOfferProduct()
 			{
+				SpecialOfferID = efSpecialOfferProduct.specialOfferID.ToInt(),
+				ProductID = efSpecialOfferProduct.productID.ToInt(),
 				Rowguid = efSpecialOfferProduct.rowguid,
-				ModifiedDate = efSpecialOfferProduct.ModifiedDate.ToDateTime(),
-
-				SpecialOfferID = new ReferenceEntity<int>(efSpecialOfferProduct.SpecialOfferID,
-				                                          "SpecialOffers"),
-				ProductID = new ReferenceEntity<int>(efSpecialOfferProduct.ProductID,
-				                                     "Products"),
+				ModifiedDate = efSpecialOfferProduct.modifiedDate.ToDateTime(),
 			});
-
-			SpecialOfferRepository.MapEFToPOCO(efSpecialOfferProduct.SpecialOfferRef, response);
-
-			ProductRepository.MapEFToPOCO(efSpecialOfferProduct.ProductRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cdd60f5cba7c2e07a8a2cc02f963df94</Hash>
+    <Hash>c61d0e88b7b26a9749cab14f23cb0dbd</Hash>
 </Codenesium>*/

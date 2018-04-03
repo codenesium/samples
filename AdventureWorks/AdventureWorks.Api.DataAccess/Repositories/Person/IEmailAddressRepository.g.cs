@@ -7,12 +7,12 @@ namespace AdventureWorksNS.Api.DataAccess
 	public interface IEmailAddressRepository
 	{
 		int Create(int emailAddressID,
-		           string emailAddress1,
+		           string emailAddress,
 		           Guid rowguid,
 		           DateTime modifiedDate);
 
 		void Update(int businessEntityID, int emailAddressID,
-		            string emailAddress1,
+		            string emailAddress,
 		            Guid rowguid,
 		            DateTime modifiedDate);
 
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e99513dac6d1939ea1b171acd02af4cc</Hash>
+    <Hash>384c436a7627832bbab40e06ef82e4f9</Hash>
 </Codenesium>*/

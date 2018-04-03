@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductModel()
 		{}
-
 		public ProductModel(string name,
 		                    string productNumber,
 		                    bool makeFlag,
@@ -59,35 +58,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductModel(POCOProduct poco)
-		{
-			this.Name = poco.Name;
-			this.ProductNumber = poco.ProductNumber;
-			this.MakeFlag = poco.MakeFlag;
-			this.FinishedGoodsFlag = poco.FinishedGoodsFlag;
-			this.Color = poco.Color;
-			this.SafetyStockLevel = poco.SafetyStockLevel;
-			this.ReorderPoint = poco.ReorderPoint;
-			this.StandardCost = poco.StandardCost;
-			this.ListPrice = poco.ListPrice;
-			this.Size = poco.Size;
-			this.Weight = poco.Weight.ToNullableDecimal();
-			this.DaysToManufacture = poco.DaysToManufacture.ToInt();
-			this.ProductLine = poco.ProductLine;
-			this.@Class = poco.@Class;
-			this.Style = poco.Style;
-			this.SellStartDate = poco.SellStartDate.ToDateTime();
-			this.SellEndDate = poco.SellEndDate.ToNullableDateTime();
-			this.DiscontinuedDate = poco.DiscontinuedDate.ToNullableDateTime();
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.SizeUnitMeasureCode = poco.SizeUnitMeasureCode.Value.ToString();
-			this.WeightUnitMeasureCode = poco.WeightUnitMeasureCode.Value.ToString();
-			this.ProductSubcategoryID = poco.ProductSubcategoryID.Value.ToInt();
-			this.ProductModelID = poco.ProductModelID.Value.ToInt();
 		}
 
 		private string _name;
@@ -417,5 +387,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>285486c89c227ebdc6e8787b902ff870</Hash>
+    <Hash>baa7075ea8e2b643eb80418bf6e67ada</Hash>
 </Codenesium>*/

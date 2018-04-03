@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFWorkOrder>().Add(record);
 			this._context.SaveChanges();
-			return record.WorkOrderID;
+			return record.workOrderID;
 		}
 
 		public virtual void Update(int workOrderID, int productID,
@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Nullable<short> scrapReasonID,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.workOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",workOrderID);
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int workOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.workOrderID == workOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -96,7 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int workOrderID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID,response);
+			this.SearchLinqPOCO(x => x.workOrderID == workOrderID,response);
 		}
 
 		protected virtual List<EFWorkOrder> SearchLinqEF(Expression<Func<EFWorkOrder, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -141,16 +141,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Nullable<short> scrapReasonID,
 		                               DateTime modifiedDate, EFWorkOrder   efWorkOrder)
 		{
-			efWorkOrder.WorkOrderID = workOrderID;
-			efWorkOrder.ProductID = productID;
-			efWorkOrder.OrderQty = orderQty;
-			efWorkOrder.StockedQty = stockedQty;
-			efWorkOrder.ScrappedQty = scrappedQty;
-			efWorkOrder.StartDate = startDate;
-			efWorkOrder.EndDate = endDate;
-			efWorkOrder.DueDate = dueDate;
-			efWorkOrder.ScrapReasonID = scrapReasonID;
-			efWorkOrder.ModifiedDate = modifiedDate;
+			efWorkOrder.workOrderID = workOrderID;
+			efWorkOrder.productID = productID;
+			efWorkOrder.orderQty = orderQty;
+			efWorkOrder.stockedQty = stockedQty;
+			efWorkOrder.scrappedQty = scrappedQty;
+			efWorkOrder.startDate = startDate;
+			efWorkOrder.endDate = endDate;
+			efWorkOrder.dueDate = dueDate;
+			efWorkOrder.scrapReasonID = scrapReasonID;
+			efWorkOrder.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFWorkOrder efWorkOrder,Response response)
@@ -161,28 +161,21 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddWorkOrder(new POCOWorkOrder()
 			{
-				WorkOrderID = efWorkOrder.WorkOrderID.ToInt(),
-				OrderQty = efWorkOrder.OrderQty.ToInt(),
-				StockedQty = efWorkOrder.StockedQty.ToInt(),
-				ScrappedQty = efWorkOrder.ScrappedQty,
-				StartDate = efWorkOrder.StartDate.ToDateTime(),
-				EndDate = efWorkOrder.EndDate.ToNullableDateTime(),
-				DueDate = efWorkOrder.DueDate.ToDateTime(),
-				ModifiedDate = efWorkOrder.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efWorkOrder.ProductID,
-				                                     "Products"),
-				ScrapReasonID = new ReferenceEntity<Nullable<short>>(efWorkOrder.ScrapReasonID,
-				                                                     "ScrapReasons"),
+				WorkOrderID = efWorkOrder.workOrderID.ToInt(),
+				ProductID = efWorkOrder.productID.ToInt(),
+				OrderQty = efWorkOrder.orderQty.ToInt(),
+				StockedQty = efWorkOrder.stockedQty.ToInt(),
+				ScrappedQty = efWorkOrder.scrappedQty,
+				StartDate = efWorkOrder.startDate.ToDateTime(),
+				EndDate = efWorkOrder.endDate.ToNullableDateTime(),
+				DueDate = efWorkOrder.dueDate.ToDateTime(),
+				ScrapReasonID = efWorkOrder.scrapReasonID,
+				ModifiedDate = efWorkOrder.modifiedDate.ToDateTime(),
 			});
-
-			ProductRepository.MapEFToPOCO(efWorkOrder.ProductRef, response);
-
-			ScrapReasonRepository.MapEFToPOCO(efWorkOrder.ScrapReasonRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd8b3d27be8cc9c2aec24c394ebd7854</Hash>
+    <Hash>94ac4d172bf122a11f7d05b5f1486598</Hash>
 </Codenesium>*/

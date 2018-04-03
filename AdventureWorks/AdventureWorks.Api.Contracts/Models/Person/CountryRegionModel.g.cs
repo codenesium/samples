@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CountryRegionModel()
 		{}
-
 		public CountryRegionModel(string name,
 		                          DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public CountryRegionModel(POCOCountryRegion poco)
-		{
-			this.Name = poco.Name;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -54,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e0de9fa2ba6e17f15f2ba09e83f03513</Hash>
+    <Hash>28a554d29e76aeb15509fb6db5a2d79a</Hash>
 </Codenesium>*/

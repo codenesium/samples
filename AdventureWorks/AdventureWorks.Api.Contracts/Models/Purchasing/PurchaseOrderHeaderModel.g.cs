@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PurchaseOrderHeaderModel()
 		{}
-
 		public PurchaseOrderHeaderModel(int revisionNumber,
 		                                int status,
 		                                int employeeID,
@@ -35,23 +34,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Freight = freight;
 			this.TotalDue = totalDue;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public PurchaseOrderHeaderModel(POCOPurchaseOrderHeader poco)
-		{
-			this.RevisionNumber = poco.RevisionNumber;
-			this.Status = poco.Status;
-			this.OrderDate = poco.OrderDate.ToDateTime();
-			this.ShipDate = poco.ShipDate.ToNullableDateTime();
-			this.SubTotal = poco.SubTotal;
-			this.TaxAmt = poco.TaxAmt;
-			this.Freight = poco.Freight;
-			this.TotalDue = poco.TotalDue;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.EmployeeID = poco.EmployeeID.Value.ToInt();
-			this.VendorID = poco.VendorID.Value.ToInt();
-			this.ShipMethodID = poco.ShipMethodID.Value.ToInt();
 		}
 
 		private int _revisionNumber;
@@ -224,5 +206,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5fdd5f55fda80474e54f2ca7c86642d9</Hash>
+    <Hash>ccc3cbff23006863d079d9ff6b4941fb</Hash>
 </Codenesium>*/

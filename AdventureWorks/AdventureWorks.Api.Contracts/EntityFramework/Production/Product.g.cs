@@ -10,43 +10,34 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ProductID {get; set;}
-		public string Name {get; set;}
-		public string ProductNumber {get; set;}
-		public bool MakeFlag {get; set;}
-		public bool FinishedGoodsFlag {get; set;}
-		public string Color {get; set;}
-		public short SafetyStockLevel {get; set;}
-		public short ReorderPoint {get; set;}
-		public decimal StandardCost {get; set;}
-		public decimal ListPrice {get; set;}
-		public string Size {get; set;}
-		public string SizeUnitMeasureCode {get; set;}
-		public string WeightUnitMeasureCode {get; set;}
-		public Nullable<decimal> Weight {get; set;}
-		public int DaysToManufacture {get; set;}
-		public string ProductLine {get; set;}
-		public string @Class {get; set;}
-		public string Style {get; set;}
-		public Nullable<int> ProductSubcategoryID {get; set;}
-		public Nullable<int> ProductModelID {get; set;}
-		public DateTime SellStartDate {get; set;}
-		public Nullable<DateTime> SellEndDate {get; set;}
-		public Nullable<DateTime> DiscontinuedDate {get; set;}
+		public int productID {get; set;}
+		public string name {get; set;}
+		public string productNumber {get; set;}
+		public bool makeFlag {get; set;}
+		public bool finishedGoodsFlag {get; set;}
+		public string color {get; set;}
+		public short safetyStockLevel {get; set;}
+		public short reorderPoint {get; set;}
+		public decimal standardCost {get; set;}
+		public decimal listPrice {get; set;}
+		public string size {get; set;}
+		public string sizeUnitMeasureCode {get; set;}
+		public string weightUnitMeasureCode {get; set;}
+		public Nullable<decimal> weight {get; set;}
+		public int daysToManufacture {get; set;}
+		public string productLine {get; set;}
+		public string @class {get; set;}
+		public string style {get; set;}
+		public Nullable<int> productSubcategoryID {get; set;}
+		public Nullable<int> productModelID {get; set;}
+		public DateTime sellStartDate {get; set;}
+		public Nullable<DateTime> sellEndDate {get; set;}
+		public Nullable<DateTime> discontinuedDate {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("SizeUnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasureRef { get; set; }
-		[ForeignKey("WeightUnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasureRef1 { get; set; }
-		[ForeignKey("ProductSubcategoryID")]
-		public virtual EFProductSubcategory ProductSubcategoryRef { get; set; }
-		[ForeignKey("ProductModelID")]
-		public virtual EFProductModel ProductModelRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f50a55a5c9ea363647052c6a66d16f9c</Hash>
+    <Hash>fa8f22aa49d16bb27aa27ef83a3068cc</Hash>
 </Codenesium>*/

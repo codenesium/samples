@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public DatabaseLogModel()
 		{}
-
 		public DatabaseLogModel(DateTime postTime,
 		                        string databaseUser,
 		                        string @event,
@@ -25,17 +24,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.@Object = @object;
 			this.TSQL = tSQL;
 			this.XmlEvent = xmlEvent;
-		}
-
-		public DatabaseLogModel(POCODatabaseLog poco)
-		{
-			this.PostTime = poco.PostTime.ToDateTime();
-			this.DatabaseUser = poco.DatabaseUser;
-			this.@Event = poco.@Event;
-			this.Schema = poco.Schema;
-			this.@Object = poco.@Object;
-			this.TSQL = poco.TSQL;
-			this.XmlEvent = poco.XmlEvent;
 		}
 
 		private DateTime _postTime;
@@ -137,5 +125,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>13db14a6e2d0c8caefa4b1549b40e91b</Hash>
+    <Hash>f6bc30319ec100820ff3ba06983dfb72</Hash>
 </Codenesium>*/

@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductListPriceHistoryModel()
 		{}
-
 		public ProductListPriceHistoryModel(DateTime startDate,
 		                                    Nullable<DateTime> endDate,
 		                                    decimal listPrice,
@@ -19,14 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ListPrice = listPrice;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductListPriceHistoryModel(POCOProductListPriceHistory poco)
-		{
-			this.StartDate = poco.StartDate.ToDateTime();
-			this.EndDate = poco.EndDate.ToNullableDateTime();
-			this.ListPrice = poco.ListPrice;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private DateTime _startDate;
@@ -87,5 +78,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>46497d00e390a16f3a95f6fa63133044</Hash>
+    <Hash>5e88d4fadf01ba9ab3395de78bd76b25</Hash>
 </Codenesium>*/

@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesOrderDetail>().Add(record);
 			this._context.SaveChanges();
-			return record.SalesOrderID;
+			return record.salesOrderID;
 		}
 
 		public virtual void Update(int salesOrderID, int salesOrderDetailID,
@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.salesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",salesOrderID);
@@ -85,7 +85,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int salesOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.salesOrderID == salesOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -100,7 +100,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int salesOrderID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID,response);
+			this.SearchLinqPOCO(x => x.salesOrderID == salesOrderID,response);
 		}
 
 		protected virtual List<EFSalesOrderDetail> SearchLinqEF(Expression<Func<EFSalesOrderDetail, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -146,17 +146,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesOrderDetail   efSalesOrderDetail)
 		{
-			efSalesOrderDetail.SalesOrderID = salesOrderID;
-			efSalesOrderDetail.SalesOrderDetailID = salesOrderDetailID;
-			efSalesOrderDetail.CarrierTrackingNumber = carrierTrackingNumber;
-			efSalesOrderDetail.OrderQty = orderQty;
-			efSalesOrderDetail.ProductID = productID;
-			efSalesOrderDetail.SpecialOfferID = specialOfferID;
-			efSalesOrderDetail.UnitPrice = unitPrice;
-			efSalesOrderDetail.UnitPriceDiscount = unitPriceDiscount;
-			efSalesOrderDetail.LineTotal = lineTotal;
+			efSalesOrderDetail.salesOrderID = salesOrderID;
+			efSalesOrderDetail.salesOrderDetailID = salesOrderDetailID;
+			efSalesOrderDetail.carrierTrackingNumber = carrierTrackingNumber;
+			efSalesOrderDetail.orderQty = orderQty;
+			efSalesOrderDetail.productID = productID;
+			efSalesOrderDetail.specialOfferID = specialOfferID;
+			efSalesOrderDetail.unitPrice = unitPrice;
+			efSalesOrderDetail.unitPriceDiscount = unitPriceDiscount;
+			efSalesOrderDetail.lineTotal = lineTotal;
 			efSalesOrderDetail.rowguid = rowguid;
-			efSalesOrderDetail.ModifiedDate = modifiedDate;
+			efSalesOrderDetail.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesOrderDetail efSalesOrderDetail,Response response)
@@ -167,29 +167,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesOrderDetail(new POCOSalesOrderDetail()
 			{
-				SalesOrderDetailID = efSalesOrderDetail.SalesOrderDetailID.ToInt(),
-				CarrierTrackingNumber = efSalesOrderDetail.CarrierTrackingNumber,
-				OrderQty = efSalesOrderDetail.OrderQty,
-				ProductID = efSalesOrderDetail.ProductID.ToInt(),
-				UnitPrice = efSalesOrderDetail.UnitPrice,
-				UnitPriceDiscount = efSalesOrderDetail.UnitPriceDiscount,
-				LineTotal = efSalesOrderDetail.LineTotal.ToDecimal(),
+				SalesOrderID = efSalesOrderDetail.salesOrderID.ToInt(),
+				SalesOrderDetailID = efSalesOrderDetail.salesOrderDetailID.ToInt(),
+				CarrierTrackingNumber = efSalesOrderDetail.carrierTrackingNumber,
+				OrderQty = efSalesOrderDetail.orderQty,
+				ProductID = efSalesOrderDetail.productID.ToInt(),
+				SpecialOfferID = efSalesOrderDetail.specialOfferID.ToInt(),
+				UnitPrice = efSalesOrderDetail.unitPrice,
+				UnitPriceDiscount = efSalesOrderDetail.unitPriceDiscount,
+				LineTotal = efSalesOrderDetail.lineTotal.ToDecimal(),
 				Rowguid = efSalesOrderDetail.rowguid,
-				ModifiedDate = efSalesOrderDetail.ModifiedDate.ToDateTime(),
-
-				SalesOrderID = new ReferenceEntity<int>(efSalesOrderDetail.SalesOrderID,
-				                                        "SalesOrderHeaders"),
-				SpecialOfferID = new ReferenceEntity<int>(efSalesOrderDetail.SpecialOfferID,
-				                                          "SpecialOfferProducts"),
+				ModifiedDate = efSalesOrderDetail.modifiedDate.ToDateTime(),
 			});
-
-			SalesOrderHeaderRepository.MapEFToPOCO(efSalesOrderDetail.SalesOrderHeaderRef, response);
-
-			SpecialOfferProductRepository.MapEFToPOCO(efSalesOrderDetail.SpecialOfferProductRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eab30f84e56850f8295ab368497336e6</Hash>
+    <Hash>4f9fa5768844c6d480c2335c520ead2b</Hash>
 </Codenesium>*/

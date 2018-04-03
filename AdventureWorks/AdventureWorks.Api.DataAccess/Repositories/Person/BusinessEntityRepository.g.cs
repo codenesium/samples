@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFBusinessEntity>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFBusinessEntity> SearchLinqEF(Expression<Func<EFBusinessEntity, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int businessEntityID, Guid rowguid,
 		                               DateTime modifiedDate, EFBusinessEntity   efBusinessEntity)
 		{
-			efBusinessEntity.BusinessEntityID = businessEntityID;
+			efBusinessEntity.businessEntityID = businessEntityID;
 			efBusinessEntity.rowguid = rowguid;
-			efBusinessEntity.ModifiedDate = modifiedDate;
+			efBusinessEntity.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFBusinessEntity efBusinessEntity,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddBusinessEntity(new POCOBusinessEntity()
 			{
-				BusinessEntityID = efBusinessEntity.BusinessEntityID.ToInt(),
+				BusinessEntityID = efBusinessEntity.businessEntityID.ToInt(),
 				Rowguid = efBusinessEntity.rowguid,
-				ModifiedDate = efBusinessEntity.ModifiedDate.ToDateTime(),
+				ModifiedDate = efBusinessEntity.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f7177bc87580f35caf3487d6fa16d29a</Hash>
+    <Hash>459d3e1147b148b7a80d62187e7ca526</Hash>
 </Codenesium>*/

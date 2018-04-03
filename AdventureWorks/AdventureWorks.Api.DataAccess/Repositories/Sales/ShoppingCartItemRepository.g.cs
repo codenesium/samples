@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFShoppingCartItem>().Add(record);
 			this._context.SaveChanges();
-			return record.ShoppingCartItemID;
+			return record.shoppingCartItemID;
 		}
 
 		public virtual void Update(int shoppingCartItemID, string shoppingCartID,
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           DateTime dateCreated,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.shoppingCartItemID == shoppingCartItemID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",shoppingCartItemID);
@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int shoppingCartItemID)
 		{
-			var record = this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.shoppingCartItemID == shoppingCartItemID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -80,7 +80,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int shoppingCartItemID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID,response);
+			this.SearchLinqPOCO(x => x.shoppingCartItemID == shoppingCartItemID,response);
 		}
 
 		protected virtual List<EFShoppingCartItem> SearchLinqEF(Expression<Func<EFShoppingCartItem, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -121,12 +121,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               DateTime dateCreated,
 		                               DateTime modifiedDate, EFShoppingCartItem   efShoppingCartItem)
 		{
-			efShoppingCartItem.ShoppingCartItemID = shoppingCartItemID;
-			efShoppingCartItem.ShoppingCartID = shoppingCartID;
-			efShoppingCartItem.Quantity = quantity;
-			efShoppingCartItem.ProductID = productID;
-			efShoppingCartItem.DateCreated = dateCreated;
-			efShoppingCartItem.ModifiedDate = modifiedDate;
+			efShoppingCartItem.shoppingCartItemID = shoppingCartItemID;
+			efShoppingCartItem.shoppingCartID = shoppingCartID;
+			efShoppingCartItem.quantity = quantity;
+			efShoppingCartItem.productID = productID;
+			efShoppingCartItem.dateCreated = dateCreated;
+			efShoppingCartItem.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFShoppingCartItem efShoppingCartItem,Response response)
@@ -137,21 +137,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddShoppingCartItem(new POCOShoppingCartItem()
 			{
-				ShoppingCartItemID = efShoppingCartItem.ShoppingCartItemID.ToInt(),
-				ShoppingCartID = efShoppingCartItem.ShoppingCartID,
-				Quantity = efShoppingCartItem.Quantity.ToInt(),
-				DateCreated = efShoppingCartItem.DateCreated.ToDateTime(),
-				ModifiedDate = efShoppingCartItem.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efShoppingCartItem.ProductID,
-				                                     "Products"),
+				ShoppingCartItemID = efShoppingCartItem.shoppingCartItemID.ToInt(),
+				ShoppingCartID = efShoppingCartItem.shoppingCartID,
+				Quantity = efShoppingCartItem.quantity.ToInt(),
+				ProductID = efShoppingCartItem.productID.ToInt(),
+				DateCreated = efShoppingCartItem.dateCreated.ToDateTime(),
+				ModifiedDate = efShoppingCartItem.modifiedDate.ToDateTime(),
 			});
-
-			ProductRepository.MapEFToPOCO(efShoppingCartItem.ProductRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>629b81b6f396163157244b2d4db8b6e3</Hash>
+    <Hash>679da0ecce76b0cae2221cecf625e66d</Hash>
 </Codenesium>*/

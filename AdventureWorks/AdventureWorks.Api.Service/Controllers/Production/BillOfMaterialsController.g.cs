@@ -137,13 +137,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BillOfMaterialsID,BillOfMaterialsModel model)
+		public virtual IActionResult Update(int billOfMaterialsID,BillOfMaterialsModel model)
 		{
 			this._billOfMaterialsModelValidator.UpdateMode();
 			var validationResult = this._billOfMaterialsModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._billOfMaterialsRepository.Update(BillOfMaterialsID,  model.ProductAssemblyID,
+				this._billOfMaterialsRepository.Update(billOfMaterialsID,  model.ProductAssemblyID,
 				                                       model.ComponentID,
 				                                       model.StartDate,
 				                                       model.EndDate,
@@ -171,54 +171,9 @@ namespace AdventureWorksNS.Api.Service
 			this._billOfMaterialsRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByProductAssemblyID/{id}")]
-		[BillOfMaterialsFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Products/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductAssemblyID(int id)
-		{
-			var response = new Response();
-
-			this._billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByComponentID/{id}")]
-		[BillOfMaterialsFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Products/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByComponentID(int id)
-		{
-			var response = new Response();
-
-			this._billOfMaterialsRepository.GetWhere(x => x.ComponentID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByUnitMeasureCode/{id}")]
-		[BillOfMaterialsFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/UnitMeasures/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByUnitMeasureCode(string id)
-		{
-			var response = new Response();
-
-			this._billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bdfe743c29953362d48a2395643089c7</Hash>
+    <Hash>e95c06e961646a1fe9eddd646159c594</Hash>
 </Codenesium>*/

@@ -10,12 +10,12 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ContactTypeID {get; set;}
-		public string Name {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int contactTypeID {get; set;}
+		public string name {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>abc2024cbf688e8b449a60aecddee2d4</Hash>
+    <Hash>3f7a35b94cdcb57b209bb05bcbd015e7</Hash>
 </Codenesium>*/

@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesReasonModel()
 		{}
-
 		public SalesReasonModel(string name,
 		                        string reasonType,
 		                        DateTime modifiedDate)
@@ -17,13 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Name = name;
 			this.ReasonType = reasonType;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesReasonModel(POCOSalesReason poco)
-		{
-			this.Name = poco.Name;
-			this.ReasonType = poco.ReasonType;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -71,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>892e7e1a96888874937d2546f3634ed8</Hash>
+    <Hash>e912f2095aed3d10483d1cc8269f6d59</Hash>
 </Codenesium>*/

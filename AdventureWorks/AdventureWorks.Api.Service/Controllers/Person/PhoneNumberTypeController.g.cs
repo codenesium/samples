@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int PhoneNumberTypeID,PhoneNumberTypeModel model)
+		public virtual IActionResult Update(int phoneNumberTypeID,PhoneNumberTypeModel model)
 		{
 			this._phoneNumberTypeModelValidator.UpdateMode();
 			var validationResult = this._phoneNumberTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._phoneNumberTypeRepository.Update(PhoneNumberTypeID,  model.Name,
+				this._phoneNumberTypeRepository.Update(phoneNumberTypeID,  model.Name,
 				                                       model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>842d6163702350616e062ed2440e8246</Hash>
+    <Hash>0f7a9c9ee86eea26afa361c054df420c</Hash>
 </Codenesium>*/

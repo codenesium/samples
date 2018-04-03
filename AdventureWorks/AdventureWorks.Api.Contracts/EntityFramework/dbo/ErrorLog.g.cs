@@ -10,18 +10,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ErrorLogID {get; set;}
-		public DateTime ErrorTime {get; set;}
-		public string UserName {get; set;}
-		public int ErrorNumber {get; set;}
-		public Nullable<int> ErrorSeverity {get; set;}
-		public Nullable<int> ErrorState {get; set;}
-		public string ErrorProcedure {get; set;}
-		public Nullable<int> ErrorLine {get; set;}
-		public string ErrorMessage {get; set;}
+		public int errorLogID {get; set;}
+		public DateTime errorTime {get; set;}
+		public string userName {get; set;}
+		public int errorNumber {get; set;}
+		public Nullable<int> errorSeverity {get; set;}
+		public Nullable<int> errorState {get; set;}
+		public string errorProcedure {get; set;}
+		public Nullable<int> errorLine {get; set;}
+		public string errorMessage {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>00f668c001c35237acdef076dee0b3fc</Hash>
+    <Hash>6759810d91bd4a9f942fc91490a9d716</Hash>
 </Codenesium>*/

@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PersonPhoneModel()
 		{}
-
 		public PersonPhoneModel(string phoneNumber,
 		                        int phoneNumberTypeID,
 		                        DateTime modifiedDate)
@@ -17,14 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PhoneNumber = phoneNumber;
 			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public PersonPhoneModel(POCOPersonPhone poco)
-		{
-			this.PhoneNumber = poco.PhoneNumber;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.PhoneNumberTypeID = poco.PhoneNumberTypeID.Value.ToInt();
 		}
 
 		private string _phoneNumber;
@@ -72,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>62130e6842b546cc811ca12e5405ac9c</Hash>
+    <Hash>9e1913cd3914830f41243425dbd01b18</Hash>
 </Codenesium>*/

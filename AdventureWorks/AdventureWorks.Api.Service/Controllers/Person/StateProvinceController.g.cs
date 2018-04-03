@@ -135,13 +135,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int StateProvinceID,StateProvinceModel model)
+		public virtual IActionResult Update(int stateProvinceID,StateProvinceModel model)
 		{
 			this._stateProvinceModelValidator.UpdateMode();
 			var validationResult = this._stateProvinceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._stateProvinceRepository.Update(StateProvinceID,  model.StateProvinceCode,
+				this._stateProvinceRepository.Update(stateProvinceID,  model.StateProvinceCode,
 				                                     model.CountryRegionCode,
 				                                     model.IsOnlyStateProvinceFlag,
 				                                     model.Name,
@@ -168,39 +168,9 @@ namespace AdventureWorksNS.Api.Service
 			this._stateProvinceRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByCountryRegionCode/{id}")]
-		[StateProvinceFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/CountryRegions/{id}/StateProvinces")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByCountryRegionCode(string id)
-		{
-			var response = new Response();
-
-			this._stateProvinceRepository.GetWhere(x => x.CountryRegionCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByTerritoryID/{id}")]
-		[StateProvinceFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/SalesTerritories/{id}/StateProvinces")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByTerritoryID(int id)
-		{
-			var response = new Response();
-
-			this._stateProvinceRepository.GetWhere(x => x.TerritoryID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6e05f425c971e2bbca62bb1dd172b39</Hash>
+    <Hash>9ace73afbddca4bd8bf8f2f7bdf952ca</Hash>
 </Codenesium>*/

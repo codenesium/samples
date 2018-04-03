@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFUnitMeasure>().Add(record);
 			this._context.SaveChanges();
-			return record.UnitMeasureCode;
+			return record.unitMeasureCode;
 		}
 
 		public virtual void Update(string unitMeasureCode, string name,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.unitMeasureCode == unitMeasureCode).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",unitMeasureCode);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(string unitMeasureCode)
 		{
-			var record = this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.unitMeasureCode == unitMeasureCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(string unitMeasureCode, Response response)
 		{
-			this.SearchLinqPOCO(x => x.UnitMeasureCode == unitMeasureCode,response);
+			this.SearchLinqPOCO(x => x.unitMeasureCode == unitMeasureCode,response);
 		}
 
 		protected virtual List<EFUnitMeasure> SearchLinqEF(Expression<Func<EFUnitMeasure, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string unitMeasureCode, string name,
 		                               DateTime modifiedDate, EFUnitMeasure   efUnitMeasure)
 		{
-			efUnitMeasure.UnitMeasureCode = unitMeasureCode;
-			efUnitMeasure.Name = name;
-			efUnitMeasure.ModifiedDate = modifiedDate;
+			efUnitMeasure.unitMeasureCode = unitMeasureCode;
+			efUnitMeasure.name = name;
+			efUnitMeasure.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFUnitMeasure efUnitMeasure,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddUnitMeasure(new POCOUnitMeasure()
 			{
-				UnitMeasureCode = efUnitMeasure.UnitMeasureCode,
-				Name = efUnitMeasure.Name,
-				ModifiedDate = efUnitMeasure.ModifiedDate.ToDateTime(),
+				UnitMeasureCode = efUnitMeasure.unitMeasureCode,
+				Name = efUnitMeasure.name,
+				ModifiedDate = efUnitMeasure.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>84642d9ec6ec611bf091cb6cb62c0f23</Hash>
+    <Hash>c4fb8b423129e2246a01fa3bd9f392df</Hash>
 </Codenesium>*/

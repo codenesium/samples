@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository {get; set;}
 		public virtual void NationalIDNumberRules()
 		{
 			RuleFor(x => x.NationalIDNumber).NotNull();
@@ -96,17 +95,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidPerson(int id)
-		{
-			Response response = new Response();
-
-			this.PersonRepository.GetById(id,response);
-			return response.People.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>af6d524177b4aa5cdc1a9be02986029c</Hash>
+    <Hash>8df6aa1cbc79ab3e1d7c82284a942418</Hash>
 </Codenesium>*/

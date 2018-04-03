@@ -10,21 +10,14 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public int AddressID {get; set;}
-		public int AddressTypeID {get; set;}
+		public int businessEntityID {get; set;}
+		public int addressID {get; set;}
+		public int addressTypeID {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntityRef { get; set; }
-		[ForeignKey("AddressID")]
-		public virtual EFAddress AddressRef { get; set; }
-		[ForeignKey("AddressTypeID")]
-		public virtual EFAddressType AddressTypeRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0cc8572d390fe0a3fb1e9e96b3905f2</Hash>
+    <Hash>8f550a5c8483c8ea082a7c01383c19d3</Hash>
 </Codenesium>*/

@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public IllustrationModel()
 		{}
-
 		public IllustrationModel(string diagram,
 		                         DateTime modifiedDate)
 		{
 			this.Diagram = diagram;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public IllustrationModel(POCOIllustration poco)
-		{
-			this.Diagram = poco.Diagram;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _diagram;
@@ -53,5 +46,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>99554818cd8e9e1c0bcf4bb9db1eae58</Hash>
+    <Hash>9c35c7c744626551c96a0977eb94f5af</Hash>
 </Codenesium>*/

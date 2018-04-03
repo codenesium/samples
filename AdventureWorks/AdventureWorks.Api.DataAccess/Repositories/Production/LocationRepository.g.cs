@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFLocation>().Add(record);
 			this._context.SaveChanges();
-			return record.LocationID;
+			return record.locationID;
 		}
 
 		public virtual void Update(short locationID, string name,
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           decimal availability,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.locationID == locationID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",locationID);
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(short locationID)
 		{
-			var record = this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.locationID == locationID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(short locationID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.LocationID == locationID,response);
+			this.SearchLinqPOCO(x => x.locationID == locationID,response);
 		}
 
 		protected virtual List<EFLocation> SearchLinqEF(Expression<Func<EFLocation, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,11 +116,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal availability,
 		                               DateTime modifiedDate, EFLocation   efLocation)
 		{
-			efLocation.LocationID = locationID;
-			efLocation.Name = name;
-			efLocation.CostRate = costRate;
-			efLocation.Availability = availability;
-			efLocation.ModifiedDate = modifiedDate;
+			efLocation.locationID = locationID;
+			efLocation.name = name;
+			efLocation.costRate = costRate;
+			efLocation.availability = availability;
+			efLocation.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFLocation efLocation,Response response)
@@ -131,16 +131,16 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddLocation(new POCOLocation()
 			{
-				LocationID = efLocation.LocationID,
-				Name = efLocation.Name,
-				CostRate = efLocation.CostRate,
-				Availability = efLocation.Availability.ToDecimal(),
-				ModifiedDate = efLocation.ModifiedDate.ToDateTime(),
+				LocationID = efLocation.locationID,
+				Name = efLocation.name,
+				CostRate = efLocation.costRate,
+				Availability = efLocation.availability.ToDecimal(),
+				ModifiedDate = efLocation.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f2fec8ace72422e5c84807ce2363515</Hash>
+    <Hash>28eaa5dfaed8fd1bff1a87bcf5dca490</Hash>
 </Codenesium>*/

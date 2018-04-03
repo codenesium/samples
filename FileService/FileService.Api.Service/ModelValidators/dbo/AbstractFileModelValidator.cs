@@ -1,3 +1,4 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
@@ -100,5 +101,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0f73ea5f0a5046fbe706f89ddeff5f34</Hash>
+    <Hash>cc77e5782f7615fbadefa7f46d78bfbb</Hash>
 </Codenesium>*/

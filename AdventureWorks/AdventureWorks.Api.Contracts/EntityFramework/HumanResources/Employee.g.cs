@@ -10,28 +10,25 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public string NationalIDNumber {get; set;}
-		public string LoginID {get; set;}
-		public Nullable<Guid> OrganizationNode {get; set;}
-		public Nullable<short> OrganizationLevel {get; set;}
-		public string JobTitle {get; set;}
-		public DateTime BirthDate {get; set;}
-		public string MaritalStatus {get; set;}
-		public string Gender {get; set;}
-		public DateTime HireDate {get; set;}
-		public bool SalariedFlag {get; set;}
-		public short VacationHours {get; set;}
-		public short SickLeaveHours {get; set;}
-		public bool CurrentFlag {get; set;}
+		public int businessEntityID {get; set;}
+		public string nationalIDNumber {get; set;}
+		public string loginID {get; set;}
+		public Nullable<Guid> organizationNode {get; set;}
+		public Nullable<short> organizationLevel {get; set;}
+		public string jobTitle {get; set;}
+		public DateTime birthDate {get; set;}
+		public string maritalStatus {get; set;}
+		public string gender {get; set;}
+		public DateTime hireDate {get; set;}
+		public bool salariedFlag {get; set;}
+		public short vacationHours {get; set;}
+		public short sickLeaveHours {get; set;}
+		public bool currentFlag {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFPerson PersonRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c2b69a3b55671a63dd133ce16ff5a6a</Hash>
+    <Hash>7d5f1b944555f230615a3e8092abd23d</Hash>
 </Codenesium>*/

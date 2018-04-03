@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,BusinessEntityAddressModel model)
+		public virtual IActionResult Update(int businessEntityID,BusinessEntityAddressModel model)
 		{
 			this._businessEntityAddressModelValidator.UpdateMode();
 			var validationResult = this._businessEntityAddressModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._businessEntityAddressRepository.Update(BusinessEntityID,  model.AddressID,
+				this._businessEntityAddressRepository.Update(businessEntityID,  model.AddressID,
 				                                             model.AddressTypeID,
 				                                             model.Rowguid,
 				                                             model.ModifiedDate);
@@ -159,54 +159,9 @@ namespace AdventureWorksNS.Api.Service
 			this._businessEntityAddressRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[BusinessEntityAddressFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/BusinessEntities/{id}/BusinessEntityAddresses")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			var response = new Response();
-
-			this._businessEntityAddressRepository.GetWhere(x => x.BusinessEntityID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByAddressID/{id}")]
-		[BusinessEntityAddressFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Addresses/{id}/BusinessEntityAddresses")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByAddressID(int id)
-		{
-			var response = new Response();
-
-			this._businessEntityAddressRepository.GetWhere(x => x.AddressID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByAddressTypeID/{id}")]
-		[BusinessEntityAddressFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/AddressTypes/{id}/BusinessEntityAddresses")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByAddressTypeID(int id)
-		{
-			var response = new Response();
-
-			this._businessEntityAddressRepository.GetWhere(x => x.AddressTypeID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14e0f531f4f3a64784570de37a183266</Hash>
+    <Hash>499dc6bd1ad5df2d2c64535fa20dbf72</Hash>
 </Codenesium>*/

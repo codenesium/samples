@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public StateProvinceModel()
 		{}
-
 		public StateProvinceModel(string stateProvinceCode,
 		                          string countryRegionCode,
 		                          bool isOnlyStateProvinceFlag,
@@ -25,18 +24,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.TerritoryID = territoryID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public StateProvinceModel(POCOStateProvince poco)
-		{
-			this.StateProvinceCode = poco.StateProvinceCode;
-			this.IsOnlyStateProvinceFlag = poco.IsOnlyStateProvinceFlag;
-			this.Name = poco.Name;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.CountryRegionCode = poco.CountryRegionCode.Value.ToString();
-			this.TerritoryID = poco.TerritoryID.Value.ToInt();
 		}
 
 		private string _stateProvinceCode;
@@ -140,5 +127,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>18fdf7e3ad09e82f8862741d12a3f668</Hash>
+    <Hash>85cffc197cbda6bc0633133d507b011f</Hash>
 </Codenesium>*/

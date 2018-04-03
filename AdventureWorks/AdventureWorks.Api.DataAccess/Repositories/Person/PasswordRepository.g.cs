@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFPassword>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, string passwordHash,
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFPassword> SearchLinqEF(Expression<Func<EFPassword, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,11 +116,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFPassword   efPassword)
 		{
-			efPassword.BusinessEntityID = businessEntityID;
-			efPassword.PasswordHash = passwordHash;
-			efPassword.PasswordSalt = passwordSalt;
+			efPassword.businessEntityID = businessEntityID;
+			efPassword.passwordHash = passwordHash;
+			efPassword.passwordSalt = passwordSalt;
 			efPassword.rowguid = rowguid;
-			efPassword.ModifiedDate = modifiedDate;
+			efPassword.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFPassword efPassword,Response response)
@@ -131,20 +131,16 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddPassword(new POCOPassword()
 			{
-				PasswordHash = efPassword.PasswordHash,
-				PasswordSalt = efPassword.PasswordSalt,
+				BusinessEntityID = efPassword.businessEntityID.ToInt(),
+				PasswordHash = efPassword.passwordHash,
+				PasswordSalt = efPassword.passwordSalt,
 				Rowguid = efPassword.rowguid,
-				ModifiedDate = efPassword.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efPassword.BusinessEntityID,
-				                                            "People"),
+				ModifiedDate = efPassword.modifiedDate.ToDateTime(),
 			});
-
-			PersonRepository.MapEFToPOCO(efPassword.PersonRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a49e2a32f7c7e4656273842e1eff56e9</Hash>
+    <Hash>4ab73c75090c5d15f6619439f027036e</Hash>
 </Codenesium>*/

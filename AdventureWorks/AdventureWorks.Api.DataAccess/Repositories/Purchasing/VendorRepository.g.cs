@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFVendor>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, string accountNumber,
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           string purchasingWebServiceURL,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFVendor> SearchLinqEF(Expression<Func<EFVendor, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -131,14 +131,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string purchasingWebServiceURL,
 		                               DateTime modifiedDate, EFVendor   efVendor)
 		{
-			efVendor.BusinessEntityID = businessEntityID;
-			efVendor.AccountNumber = accountNumber;
-			efVendor.Name = name;
-			efVendor.CreditRating = creditRating;
-			efVendor.PreferredVendorStatus = preferredVendorStatus;
-			efVendor.ActiveFlag = activeFlag;
-			efVendor.PurchasingWebServiceURL = purchasingWebServiceURL;
-			efVendor.ModifiedDate = modifiedDate;
+			efVendor.businessEntityID = businessEntityID;
+			efVendor.accountNumber = accountNumber;
+			efVendor.name = name;
+			efVendor.creditRating = creditRating;
+			efVendor.preferredVendorStatus = preferredVendorStatus;
+			efVendor.activeFlag = activeFlag;
+			efVendor.purchasingWebServiceURL = purchasingWebServiceURL;
+			efVendor.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFVendor efVendor,Response response)
@@ -149,23 +149,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddVendor(new POCOVendor()
 			{
-				AccountNumber = efVendor.AccountNumber,
-				Name = efVendor.Name,
-				CreditRating = efVendor.CreditRating,
-				PreferredVendorStatus = efVendor.PreferredVendorStatus,
-				ActiveFlag = efVendor.ActiveFlag,
-				PurchasingWebServiceURL = efVendor.PurchasingWebServiceURL,
-				ModifiedDate = efVendor.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efVendor.BusinessEntityID,
-				                                            "BusinessEntities"),
+				BusinessEntityID = efVendor.businessEntityID.ToInt(),
+				AccountNumber = efVendor.accountNumber,
+				Name = efVendor.name,
+				CreditRating = efVendor.creditRating,
+				PreferredVendorStatus = efVendor.preferredVendorStatus,
+				ActiveFlag = efVendor.activeFlag,
+				PurchasingWebServiceURL = efVendor.purchasingWebServiceURL,
+				ModifiedDate = efVendor.modifiedDate.ToDateTime(),
 			});
-
-			BusinessEntityRepository.MapEFToPOCO(efVendor.BusinessEntityRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>93ca6d906c1a08fd9b494a7643133e55</Hash>
+    <Hash>dbc7e432417e65b22e23e2aaeaa9fa3b</Hash>
 </Codenesium>*/

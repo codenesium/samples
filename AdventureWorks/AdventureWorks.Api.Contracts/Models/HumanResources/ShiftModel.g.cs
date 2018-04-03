@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ShiftModel()
 		{}
-
 		public ShiftModel(string name,
 		                  TimeSpan startTime,
 		                  TimeSpan endTime,
@@ -19,14 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.StartTime = startTime;
 			this.EndTime = endTime;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ShiftModel(POCOShift poco)
-		{
-			this.Name = poco.Name;
-			this.StartTime = poco.StartTime;
-			this.EndTime = poco.EndTime;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -88,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>19828f8e34be9da3d457543720c2fcff</Hash>
+    <Hash>020dc102ff643bca7ead772b35a13d8d</Hash>
 </Codenesium>*/

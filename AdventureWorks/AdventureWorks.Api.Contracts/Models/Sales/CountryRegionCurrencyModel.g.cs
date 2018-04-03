@@ -9,19 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CountryRegionCurrencyModel()
 		{}
-
 		public CountryRegionCurrencyModel(string currencyCode,
 		                                  DateTime modifiedDate)
 		{
 			this.CurrencyCode = currencyCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public CountryRegionCurrencyModel(POCOCountryRegionCurrency poco)
-		{
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.CurrencyCode = poco.CurrencyCode.Value.ToString();
 		}
 
 		private string _currencyCode;
@@ -55,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>13ac9ad20ec49ba9876182e2a46619d0</Hash>
+    <Hash>450513f463d1015041a97cc6db277f02</Hash>
 </Codenesium>*/

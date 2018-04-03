@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EmployeePayHistoryModel()
 		{}
-
 		public EmployeePayHistoryModel(DateTime rateChangeDate,
 		                               decimal rate,
 		                               int payFrequency,
@@ -19,14 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rate = rate;
 			this.PayFrequency = payFrequency;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public EmployeePayHistoryModel(POCOEmployeePayHistory poco)
-		{
-			this.RateChangeDate = poco.RateChangeDate.ToDateTime();
-			this.Rate = poco.Rate;
-			this.PayFrequency = poco.PayFrequency;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private DateTime _rateChangeDate;
@@ -88,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f4d6e5ab3203b3f876bb4c97873d7209</Hash>
+    <Hash>fc9c2f701de23768e75aee5fcf71dedc</Hash>
 </Codenesium>*/

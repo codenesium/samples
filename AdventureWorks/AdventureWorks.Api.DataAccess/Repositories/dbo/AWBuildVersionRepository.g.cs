@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFAWBuildVersion>().Add(record);
 			this._context.SaveChanges();
-			return record.SystemInformationID;
+			return record.systemInformationID;
 		}
 
 		public virtual void Update(int systemInformationID, string database_Version,
 		                           DateTime versionDate,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.systemInformationID == systemInformationID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",systemInformationID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int systemInformationID)
 		{
-			var record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.systemInformationID == systemInformationID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int systemInformationID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.SystemInformationID == systemInformationID,response);
+			this.SearchLinqPOCO(x => x.systemInformationID == systemInformationID,response);
 		}
 
 		protected virtual List<EFAWBuildVersion> SearchLinqEF(Expression<Func<EFAWBuildVersion, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               DateTime versionDate,
 		                               DateTime modifiedDate, EFAWBuildVersion   efAWBuildVersion)
 		{
-			efAWBuildVersion.SystemInformationID = systemInformationID;
-			efAWBuildVersion.Database_Version = database_Version;
-			efAWBuildVersion.VersionDate = versionDate;
-			efAWBuildVersion.ModifiedDate = modifiedDate;
+			efAWBuildVersion.systemInformationID = systemInformationID;
+			efAWBuildVersion.database_Version = database_Version;
+			efAWBuildVersion.versionDate = versionDate;
+			efAWBuildVersion.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFAWBuildVersion efAWBuildVersion,Response response)
@@ -125,15 +125,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddAWBuildVersion(new POCOAWBuildVersion()
 			{
-				SystemInformationID = efAWBuildVersion.SystemInformationID,
-				Database_Version = efAWBuildVersion.Database_Version,
-				VersionDate = efAWBuildVersion.VersionDate.ToDateTime(),
-				ModifiedDate = efAWBuildVersion.ModifiedDate.ToDateTime(),
+				SystemInformationID = efAWBuildVersion.systemInformationID,
+				Database_Version = efAWBuildVersion.database_Version,
+				VersionDate = efAWBuildVersion.versionDate.ToDateTime(),
+				ModifiedDate = efAWBuildVersion.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a6ec0e4f69c5d6447b4286b826192fad</Hash>
+    <Hash>bf91e7b8c682e7ad4fecdd4d7fcba790</Hash>
 </Codenesium>*/

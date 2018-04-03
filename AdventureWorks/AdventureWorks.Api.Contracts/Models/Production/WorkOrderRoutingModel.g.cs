@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public WorkOrderRoutingModel()
 		{}
-
 		public WorkOrderRoutingModel(int productID,
 		                             short operationSequence,
 		                             short locationID,
@@ -33,22 +32,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PlannedCost = plannedCost;
 			this.ActualCost = actualCost;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public WorkOrderRoutingModel(POCOWorkOrderRouting poco)
-		{
-			this.ProductID = poco.ProductID.ToInt();
-			this.OperationSequence = poco.OperationSequence;
-			this.ScheduledStartDate = poco.ScheduledStartDate.ToDateTime();
-			this.ScheduledEndDate = poco.ScheduledEndDate.ToDateTime();
-			this.ActualStartDate = poco.ActualStartDate.ToNullableDateTime();
-			this.ActualEndDate = poco.ActualEndDate.ToNullableDateTime();
-			this.ActualResourceHrs = poco.ActualResourceHrs.ToNullableDecimal();
-			this.PlannedCost = poco.PlannedCost;
-			this.ActualCost = poco.ActualCost;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.LocationID = poco.LocationID.Value.ToSmallInt();
 		}
 
 		private int _productID;
@@ -204,5 +187,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c8647e0f39460d972996d72b25b830d3</Hash>
+    <Hash>db0cc47339262a11c0ee733bdaea8112</Hash>
 </Codenesium>*/

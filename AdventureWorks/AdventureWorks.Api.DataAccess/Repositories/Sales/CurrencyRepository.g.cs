@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFCurrency>().Add(record);
 			this._context.SaveChanges();
-			return record.CurrencyCode;
+			return record.currencyCode;
 		}
 
 		public virtual void Update(string currencyCode, string name,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.CurrencyCode == currencyCode).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.currencyCode == currencyCode).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",currencyCode);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(string currencyCode)
 		{
-			var record = this.SearchLinqEF(x => x.CurrencyCode == currencyCode).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.currencyCode == currencyCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(string currencyCode, Response response)
 		{
-			this.SearchLinqPOCO(x => x.CurrencyCode == currencyCode,response);
+			this.SearchLinqPOCO(x => x.currencyCode == currencyCode,response);
 		}
 
 		protected virtual List<EFCurrency> SearchLinqEF(Expression<Func<EFCurrency, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string currencyCode, string name,
 		                               DateTime modifiedDate, EFCurrency   efCurrency)
 		{
-			efCurrency.CurrencyCode = currencyCode;
-			efCurrency.Name = name;
-			efCurrency.ModifiedDate = modifiedDate;
+			efCurrency.currencyCode = currencyCode;
+			efCurrency.name = name;
+			efCurrency.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFCurrency efCurrency,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddCurrency(new POCOCurrency()
 			{
-				CurrencyCode = efCurrency.CurrencyCode,
-				Name = efCurrency.Name,
-				ModifiedDate = efCurrency.ModifiedDate.ToDateTime(),
+				CurrencyCode = efCurrency.currencyCode,
+				Name = efCurrency.name,
+				ModifiedDate = efCurrency.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>913a7db03d9b7918f5ff2a63ea1ffdc1</Hash>
+    <Hash>6ca9cdda1eafe115dad0b17d05189775</Hash>
 </Codenesium>*/

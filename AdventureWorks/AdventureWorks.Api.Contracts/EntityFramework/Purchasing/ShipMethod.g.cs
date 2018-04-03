@@ -10,15 +10,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ShipMethodID {get; set;}
-		public string Name {get; set;}
-		public decimal ShipBase {get; set;}
-		public decimal ShipRate {get; set;}
+		public int shipMethodID {get; set;}
+		public string name {get; set;}
+		public decimal shipBase {get; set;}
+		public decimal shipRate {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3459db330cb0dcd40f145b92342155b7</Hash>
+    <Hash>e5ff1027869d50b92b48e7270b3ec9fc</Hash>
 </Codenesium>*/

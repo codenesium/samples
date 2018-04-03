@@ -135,13 +135,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int DatabaseLogID,DatabaseLogModel model)
+		public virtual IActionResult Update(int databaseLogID,DatabaseLogModel model)
 		{
 			this._databaseLogModelValidator.UpdateMode();
 			var validationResult = this._databaseLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._databaseLogRepository.Update(DatabaseLogID,  model.PostTime,
+				this._databaseLogRepository.Update(databaseLogID,  model.PostTime,
 				                                   model.DatabaseUser,
 				                                   model.@Event,
 				                                   model.Schema,
@@ -172,5 +172,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>37846d7cca1f7033a850439ad99d0691</Hash>
+    <Hash>1f669989483319956dd51eeac01ac992</Hash>
 </Codenesium>*/

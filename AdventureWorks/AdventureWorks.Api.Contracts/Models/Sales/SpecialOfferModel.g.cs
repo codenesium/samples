@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SpecialOfferModel()
 		{}
-
 		public SpecialOfferModel(string description,
 		                         decimal discountPct,
 		                         string type,
@@ -31,20 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.MaxQty = maxQty.ToNullableInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SpecialOfferModel(POCOSpecialOffer poco)
-		{
-			this.Description = poco.Description;
-			this.DiscountPct = poco.DiscountPct;
-			this.Type = poco.Type;
-			this.Category = poco.Category;
-			this.StartDate = poco.StartDate.ToDateTime();
-			this.EndDate = poco.EndDate.ToDateTime();
-			this.MinQty = poco.MinQty.ToInt();
-			this.MaxQty = poco.MaxQty.ToNullableInt();
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _description;
@@ -189,5 +174,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>17341c10dcb5065a2cbfed6d4a904b2e</Hash>
+    <Hash>6210bf7a1cc2f12640dc321264e2cb7d</Hash>
 </Codenesium>*/

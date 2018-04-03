@@ -58,7 +58,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFEmployee>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, string nationalIDNumber,
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -120,7 +120,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFEmployee> SearchLinqEF(Expression<Func<EFEmployee, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -171,22 +171,22 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFEmployee   efEmployee)
 		{
-			efEmployee.BusinessEntityID = businessEntityID;
-			efEmployee.NationalIDNumber = nationalIDNumber;
-			efEmployee.LoginID = loginID;
-			efEmployee.OrganizationNode = organizationNode;
-			efEmployee.OrganizationLevel = organizationLevel;
-			efEmployee.JobTitle = jobTitle;
-			efEmployee.BirthDate = birthDate;
-			efEmployee.MaritalStatus = maritalStatus;
-			efEmployee.Gender = gender;
-			efEmployee.HireDate = hireDate;
-			efEmployee.SalariedFlag = salariedFlag;
-			efEmployee.VacationHours = vacationHours;
-			efEmployee.SickLeaveHours = sickLeaveHours;
-			efEmployee.CurrentFlag = currentFlag;
+			efEmployee.businessEntityID = businessEntityID;
+			efEmployee.nationalIDNumber = nationalIDNumber;
+			efEmployee.loginID = loginID;
+			efEmployee.organizationNode = organizationNode;
+			efEmployee.organizationLevel = organizationLevel;
+			efEmployee.jobTitle = jobTitle;
+			efEmployee.birthDate = birthDate;
+			efEmployee.maritalStatus = maritalStatus;
+			efEmployee.gender = gender;
+			efEmployee.hireDate = hireDate;
+			efEmployee.salariedFlag = salariedFlag;
+			efEmployee.vacationHours = vacationHours;
+			efEmployee.sickLeaveHours = sickLeaveHours;
+			efEmployee.currentFlag = currentFlag;
 			efEmployee.rowguid = rowguid;
-			efEmployee.ModifiedDate = modifiedDate;
+			efEmployee.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFEmployee efEmployee,Response response)
@@ -197,31 +197,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddEmployee(new POCOEmployee()
 			{
-				NationalIDNumber = efEmployee.NationalIDNumber,
-				LoginID = efEmployee.LoginID,
-				OrganizationNode = efEmployee.OrganizationNode,
-				OrganizationLevel = efEmployee.OrganizationLevel,
-				JobTitle = efEmployee.JobTitle,
-				BirthDate = efEmployee.BirthDate,
-				MaritalStatus = efEmployee.MaritalStatus,
-				Gender = efEmployee.Gender,
-				HireDate = efEmployee.HireDate,
-				SalariedFlag = efEmployee.SalariedFlag,
-				VacationHours = efEmployee.VacationHours,
-				SickLeaveHours = efEmployee.SickLeaveHours,
-				CurrentFlag = efEmployee.CurrentFlag,
+				BusinessEntityID = efEmployee.businessEntityID.ToInt(),
+				NationalIDNumber = efEmployee.nationalIDNumber,
+				LoginID = efEmployee.loginID,
+				OrganizationNode = efEmployee.organizationNode,
+				OrganizationLevel = efEmployee.organizationLevel,
+				JobTitle = efEmployee.jobTitle,
+				BirthDate = efEmployee.birthDate,
+				MaritalStatus = efEmployee.maritalStatus,
+				Gender = efEmployee.gender,
+				HireDate = efEmployee.hireDate,
+				SalariedFlag = efEmployee.salariedFlag,
+				VacationHours = efEmployee.vacationHours,
+				SickLeaveHours = efEmployee.sickLeaveHours,
+				CurrentFlag = efEmployee.currentFlag,
 				Rowguid = efEmployee.rowguid,
-				ModifiedDate = efEmployee.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efEmployee.BusinessEntityID,
-				                                            "People"),
+				ModifiedDate = efEmployee.modifiedDate.ToDateTime(),
 			});
-
-			PersonRepository.MapEFToPOCO(efEmployee.PersonRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>96b6f7f13c931a39428669a1a60d8377</Hash>
+    <Hash>1ff3f5d64d597724678c00666461999a</Hash>
 </Codenesium>*/

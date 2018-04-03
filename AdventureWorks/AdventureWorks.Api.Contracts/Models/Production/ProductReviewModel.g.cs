@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductReviewModel()
 		{}
-
 		public ProductReviewModel(int productID,
 		                          string reviewerName,
 		                          DateTime reviewDate,
@@ -25,18 +24,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rating = rating.ToInt();
 			this.Comments = comments;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductReviewModel(POCOProductReview poco)
-		{
-			this.ReviewerName = poco.ReviewerName;
-			this.ReviewDate = poco.ReviewDate.ToDateTime();
-			this.EmailAddress = poco.EmailAddress;
-			this.Rating = poco.Rating.ToInt();
-			this.Comments = poco.Comments;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductID = poco.ProductID.Value.ToInt();
 		}
 
 		private int _productID;
@@ -139,5 +126,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e65b623a0d7712420e444e3f85f54dd5</Hash>
+    <Hash>d0f24ae4347b2b68ae915025199b7df8</Hash>
 </Codenesium>*/

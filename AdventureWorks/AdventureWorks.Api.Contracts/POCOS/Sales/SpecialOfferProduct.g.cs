@@ -14,17 +14,14 @@ namespace AdventureWorksNS.Api.Contracts
 		                               Guid rowguid,
 		                               DateTime modifiedDate)
 		{
+			this.SpecialOfferID = specialOfferID.ToInt();
+			this.ProductID = productID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			SpecialOfferID = new ReferenceEntity<int>(specialOfferID,
-			                                          "SpecialOffer");
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
 		}
 
-		public ReferenceEntity<int>SpecialOfferID {get; set;}
-		public ReferenceEntity<int>ProductID {get; set;}
+		public int SpecialOfferID {get; set;}
+		public int ProductID {get; set;}
 		public Guid Rowguid {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
@@ -71,5 +68,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e4331c253309bf41de6f7c0d04d9c4ae</Hash>
+    <Hash>9b67e204b82d59ee09e7120ff1a5a765</Hash>
 </Codenesium>*/

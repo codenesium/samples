@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           int changeNumber,
 		                           int status,
 		                           string documentSummary,
-		                           byte[] document1,
+		                           byte[] document,
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
@@ -48,13 +48,13 @@ namespace AdventureWorksNS.Api.DataAccess
 			            changeNumber,
 			            status,
 			            documentSummary,
-			            document1,
+			            document,
 			            rowguid,
 			            modifiedDate, record);
 
 			this._context.Set<EFDocument>().Add(record);
 			this._context.SaveChanges();
-			return record.DocumentNode;
+			return record.documentNode;
 		}
 
 		public virtual void Update(Guid documentNode, Nullable<short> documentLevel,
@@ -67,11 +67,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           int changeNumber,
 		                           int status,
 		                           string documentSummary,
-		                           byte[] document1,
+		                           byte[] document,
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.documentNode == documentNode).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",documentNode);
@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				            changeNumber,
 				            status,
 				            documentSummary,
-				            document1,
+				            document,
 				            rowguid,
 				            modifiedDate, record);
 				this._context.SaveChanges();
@@ -97,7 +97,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(Guid documentNode)
 		{
-			var record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.documentNode == documentNode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(Guid documentNode, Response response)
 		{
-			this.SearchLinqPOCO(x => x.DocumentNode == documentNode,response);
+			this.SearchLinqPOCO(x => x.documentNode == documentNode,response);
 		}
 
 		protected virtual List<EFDocument> SearchLinqEF(Expression<Func<EFDocument, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -157,24 +157,24 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               int changeNumber,
 		                               int status,
 		                               string documentSummary,
-		                               byte[] document1,
+		                               byte[] document,
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFDocument   efDocument)
 		{
-			efDocument.DocumentNode = documentNode;
-			efDocument.DocumentLevel = documentLevel;
-			efDocument.Title = title;
-			efDocument.Owner = owner;
-			efDocument.FolderFlag = folderFlag;
-			efDocument.FileName = fileName;
-			efDocument.FileExtension = fileExtension;
-			efDocument.Revision = revision;
-			efDocument.ChangeNumber = changeNumber;
-			efDocument.Status = status;
-			efDocument.DocumentSummary = documentSummary;
-			efDocument.Document1 = document1;
+			efDocument.documentNode = documentNode;
+			efDocument.documentLevel = documentLevel;
+			efDocument.title = title;
+			efDocument.owner = owner;
+			efDocument.folderFlag = folderFlag;
+			efDocument.fileName = fileName;
+			efDocument.fileExtension = fileExtension;
+			efDocument.revision = revision;
+			efDocument.changeNumber = changeNumber;
+			efDocument.status = status;
+			efDocument.documentSummary = documentSummary;
+			efDocument.document = document;
 			efDocument.rowguid = rowguid;
-			efDocument.ModifiedDate = modifiedDate;
+			efDocument.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFDocument efDocument,Response response)
@@ -185,29 +185,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddDocument(new POCODocument()
 			{
-				DocumentNode = efDocument.DocumentNode,
-				DocumentLevel = efDocument.DocumentLevel,
-				Title = efDocument.Title,
-				FolderFlag = efDocument.FolderFlag,
-				FileName = efDocument.FileName,
-				FileExtension = efDocument.FileExtension,
-				Revision = efDocument.Revision,
-				ChangeNumber = efDocument.ChangeNumber.ToInt(),
-				Status = efDocument.Status,
-				DocumentSummary = efDocument.DocumentSummary,
-				Document1 = efDocument.Document1,
+				DocumentNode = efDocument.documentNode,
+				DocumentLevel = efDocument.documentLevel,
+				Title = efDocument.title,
+				Owner = efDocument.owner.ToInt(),
+				FolderFlag = efDocument.folderFlag,
+				FileName = efDocument.fileName,
+				FileExtension = efDocument.fileExtension,
+				Revision = efDocument.revision,
+				ChangeNumber = efDocument.changeNumber.ToInt(),
+				Status = efDocument.status,
+				DocumentSummary = efDocument.documentSummary,
+				Document = efDocument.document,
 				Rowguid = efDocument.rowguid,
-				ModifiedDate = efDocument.ModifiedDate.ToDateTime(),
-
-				Owner = new ReferenceEntity<int>(efDocument.Owner,
-				                                 "Employees"),
+				ModifiedDate = efDocument.modifiedDate.ToDateTime(),
 			});
-
-			EmployeeRepository.MapEFToPOCO(efDocument.EmployeeRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e31e26b44840a582e4881570cc0892f</Hash>
+    <Hash>fa4fad4a5e52ee0d77c6dcd96af7f879</Hash>
 </Codenesium>*/

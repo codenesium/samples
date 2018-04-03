@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CustomerModel()
 		{}
-
 		public CustomerModel(Nullable<int> personID,
 		                     Nullable<int> storeID,
 		                     Nullable<int> territoryID,
@@ -23,17 +22,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.AccountNumber = accountNumber;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public CustomerModel(POCOCustomer poco)
-		{
-			this.AccountNumber = poco.AccountNumber;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.PersonID = poco.PersonID.Value.ToInt();
-			this.StoreID = poco.StoreID.Value.ToInt();
-			this.TerritoryID = poco.TerritoryID.Value.ToInt();
 		}
 
 		private Nullable<int> _personID;
@@ -120,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>295028447cdc06730021270ca0b8cc4e</Hash>
+    <Hash>7afcb028bfd1a54fe5667b2775fbe8a6</Hash>
 </Codenesium>*/

@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesOrderHeader>().Add(record);
 			this._context.SaveChanges();
-			return record.SalesOrderID;
+			return record.salesOrderID;
 		}
 
 		public virtual void Update(int salesOrderID, int revisionNumber,
@@ -107,7 +107,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.salesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",salesOrderID);
@@ -145,7 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int salesOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.salesOrderID == salesOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -160,7 +160,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int salesOrderID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID,response);
+			this.SearchLinqPOCO(x => x.salesOrderID == salesOrderID,response);
 		}
 
 		protected virtual List<EFSalesOrderHeader> SearchLinqEF(Expression<Func<EFSalesOrderHeader, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -221,32 +221,32 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesOrderHeader   efSalesOrderHeader)
 		{
-			efSalesOrderHeader.SalesOrderID = salesOrderID;
-			efSalesOrderHeader.RevisionNumber = revisionNumber;
-			efSalesOrderHeader.OrderDate = orderDate;
-			efSalesOrderHeader.DueDate = dueDate;
-			efSalesOrderHeader.ShipDate = shipDate;
-			efSalesOrderHeader.Status = status;
-			efSalesOrderHeader.OnlineOrderFlag = onlineOrderFlag;
-			efSalesOrderHeader.SalesOrderNumber = salesOrderNumber;
-			efSalesOrderHeader.PurchaseOrderNumber = purchaseOrderNumber;
-			efSalesOrderHeader.AccountNumber = accountNumber;
-			efSalesOrderHeader.CustomerID = customerID;
-			efSalesOrderHeader.SalesPersonID = salesPersonID;
-			efSalesOrderHeader.TerritoryID = territoryID;
-			efSalesOrderHeader.BillToAddressID = billToAddressID;
-			efSalesOrderHeader.ShipToAddressID = shipToAddressID;
-			efSalesOrderHeader.ShipMethodID = shipMethodID;
-			efSalesOrderHeader.CreditCardID = creditCardID;
-			efSalesOrderHeader.CreditCardApprovalCode = creditCardApprovalCode;
-			efSalesOrderHeader.CurrencyRateID = currencyRateID;
-			efSalesOrderHeader.SubTotal = subTotal;
-			efSalesOrderHeader.TaxAmt = taxAmt;
-			efSalesOrderHeader.Freight = freight;
-			efSalesOrderHeader.TotalDue = totalDue;
-			efSalesOrderHeader.Comment = comment;
+			efSalesOrderHeader.salesOrderID = salesOrderID;
+			efSalesOrderHeader.revisionNumber = revisionNumber;
+			efSalesOrderHeader.orderDate = orderDate;
+			efSalesOrderHeader.dueDate = dueDate;
+			efSalesOrderHeader.shipDate = shipDate;
+			efSalesOrderHeader.status = status;
+			efSalesOrderHeader.onlineOrderFlag = onlineOrderFlag;
+			efSalesOrderHeader.salesOrderNumber = salesOrderNumber;
+			efSalesOrderHeader.purchaseOrderNumber = purchaseOrderNumber;
+			efSalesOrderHeader.accountNumber = accountNumber;
+			efSalesOrderHeader.customerID = customerID;
+			efSalesOrderHeader.salesPersonID = salesPersonID;
+			efSalesOrderHeader.territoryID = territoryID;
+			efSalesOrderHeader.billToAddressID = billToAddressID;
+			efSalesOrderHeader.shipToAddressID = shipToAddressID;
+			efSalesOrderHeader.shipMethodID = shipMethodID;
+			efSalesOrderHeader.creditCardID = creditCardID;
+			efSalesOrderHeader.creditCardApprovalCode = creditCardApprovalCode;
+			efSalesOrderHeader.currencyRateID = currencyRateID;
+			efSalesOrderHeader.subTotal = subTotal;
+			efSalesOrderHeader.taxAmt = taxAmt;
+			efSalesOrderHeader.freight = freight;
+			efSalesOrderHeader.totalDue = totalDue;
+			efSalesOrderHeader.comment = comment;
 			efSalesOrderHeader.rowguid = rowguid;
-			efSalesOrderHeader.ModifiedDate = modifiedDate;
+			efSalesOrderHeader.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesOrderHeader efSalesOrderHeader,Response response)
@@ -257,62 +257,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesOrderHeader(new POCOSalesOrderHeader()
 			{
-				SalesOrderID = efSalesOrderHeader.SalesOrderID.ToInt(),
-				RevisionNumber = efSalesOrderHeader.RevisionNumber,
-				OrderDate = efSalesOrderHeader.OrderDate.ToDateTime(),
-				DueDate = efSalesOrderHeader.DueDate.ToDateTime(),
-				ShipDate = efSalesOrderHeader.ShipDate.ToNullableDateTime(),
-				Status = efSalesOrderHeader.Status,
-				OnlineOrderFlag = efSalesOrderHeader.OnlineOrderFlag,
-				SalesOrderNumber = efSalesOrderHeader.SalesOrderNumber,
-				PurchaseOrderNumber = efSalesOrderHeader.PurchaseOrderNumber,
-				AccountNumber = efSalesOrderHeader.AccountNumber,
-				CreditCardApprovalCode = efSalesOrderHeader.CreditCardApprovalCode,
-				SubTotal = efSalesOrderHeader.SubTotal,
-				TaxAmt = efSalesOrderHeader.TaxAmt,
-				Freight = efSalesOrderHeader.Freight,
-				TotalDue = efSalesOrderHeader.TotalDue,
-				Comment = efSalesOrderHeader.Comment,
+				SalesOrderID = efSalesOrderHeader.salesOrderID.ToInt(),
+				RevisionNumber = efSalesOrderHeader.revisionNumber,
+				OrderDate = efSalesOrderHeader.orderDate.ToDateTime(),
+				DueDate = efSalesOrderHeader.dueDate.ToDateTime(),
+				ShipDate = efSalesOrderHeader.shipDate.ToNullableDateTime(),
+				Status = efSalesOrderHeader.status,
+				OnlineOrderFlag = efSalesOrderHeader.onlineOrderFlag,
+				SalesOrderNumber = efSalesOrderHeader.salesOrderNumber,
+				PurchaseOrderNumber = efSalesOrderHeader.purchaseOrderNumber,
+				AccountNumber = efSalesOrderHeader.accountNumber,
+				CustomerID = efSalesOrderHeader.customerID.ToInt(),
+				SalesPersonID = efSalesOrderHeader.salesPersonID.ToNullableInt(),
+				TerritoryID = efSalesOrderHeader.territoryID.ToNullableInt(),
+				BillToAddressID = efSalesOrderHeader.billToAddressID.ToInt(),
+				ShipToAddressID = efSalesOrderHeader.shipToAddressID.ToInt(),
+				ShipMethodID = efSalesOrderHeader.shipMethodID.ToInt(),
+				CreditCardID = efSalesOrderHeader.creditCardID.ToNullableInt(),
+				CreditCardApprovalCode = efSalesOrderHeader.creditCardApprovalCode,
+				CurrencyRateID = efSalesOrderHeader.currencyRateID.ToNullableInt(),
+				SubTotal = efSalesOrderHeader.subTotal,
+				TaxAmt = efSalesOrderHeader.taxAmt,
+				Freight = efSalesOrderHeader.freight,
+				TotalDue = efSalesOrderHeader.totalDue,
+				Comment = efSalesOrderHeader.comment,
 				Rowguid = efSalesOrderHeader.rowguid,
-				ModifiedDate = efSalesOrderHeader.ModifiedDate.ToDateTime(),
-
-				CustomerID = new ReferenceEntity<int>(efSalesOrderHeader.CustomerID,
-				                                      "Customers"),
-				SalesPersonID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.SalesPersonID,
-				                                                   "SalesPersons"),
-				TerritoryID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.TerritoryID,
-				                                                 "SalesTerritories"),
-				BillToAddressID = new ReferenceEntity<int>(efSalesOrderHeader.BillToAddressID,
-				                                           "Addresses"),
-				ShipToAddressID = new ReferenceEntity<int>(efSalesOrderHeader.ShipToAddressID,
-				                                           "Addresses"),
-				ShipMethodID = new ReferenceEntity<int>(efSalesOrderHeader.ShipMethodID,
-				                                        "ShipMethods"),
-				CreditCardID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.CreditCardID,
-				                                                  "CreditCards"),
-				CurrencyRateID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.CurrencyRateID,
-				                                                    "CurrencyRates"),
+				ModifiedDate = efSalesOrderHeader.modifiedDate.ToDateTime(),
 			});
-
-			CustomerRepository.MapEFToPOCO(efSalesOrderHeader.CustomerRef, response);
-
-			SalesPersonRepository.MapEFToPOCO(efSalesOrderHeader.SalesPersonRef, response);
-
-			SalesTerritoryRepository.MapEFToPOCO(efSalesOrderHeader.SalesTerritoryRef, response);
-
-			AddressRepository.MapEFToPOCO(efSalesOrderHeader.AddressRef, response);
-
-			AddressRepository.MapEFToPOCO(efSalesOrderHeader.AddressRef1, response);
-
-			ShipMethodRepository.MapEFToPOCO(efSalesOrderHeader.ShipMethodRef, response);
-
-			CreditCardRepository.MapEFToPOCO(efSalesOrderHeader.CreditCardRef, response);
-
-			CurrencyRateRepository.MapEFToPOCO(efSalesOrderHeader.CurrencyRateRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0b1e723a0f9fe8667a4861edbd5fc7d</Hash>
+    <Hash>6941855ce231b6e2420f9fdf40250cc8</Hash>
 </Codenesium>*/

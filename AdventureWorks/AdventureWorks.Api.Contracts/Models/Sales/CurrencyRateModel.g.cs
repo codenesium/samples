@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CurrencyRateModel()
 		{}
-
 		public CurrencyRateModel(DateTime currencyRateDate,
 		                         string fromCurrencyCode,
 		                         string toCurrencyCode,
@@ -23,17 +22,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.AverageRate = averageRate;
 			this.EndOfDayRate = endOfDayRate;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public CurrencyRateModel(POCOCurrencyRate poco)
-		{
-			this.CurrencyRateDate = poco.CurrencyRateDate.ToDateTime();
-			this.AverageRate = poco.AverageRate;
-			this.EndOfDayRate = poco.EndOfDayRate;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.FromCurrencyCode = poco.FromCurrencyCode.Value.ToString();
-			this.ToCurrencyCode = poco.ToCurrencyCode.Value.ToString();
 		}
 
 		private DateTime _currencyRateDate;
@@ -123,5 +111,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5894e691d59e15e17932abae01ce7bb0</Hash>
+    <Hash>9049666adff842c2305c0a1cbc7b14af</Hash>
 </Codenesium>*/

@@ -10,20 +10,20 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int SpecialOfferID {get; set;}
-		public string Description {get; set;}
-		public decimal DiscountPct {get; set;}
-		public string Type {get; set;}
-		public string Category {get; set;}
-		public DateTime StartDate {get; set;}
-		public DateTime EndDate {get; set;}
-		public int MinQty {get; set;}
-		public Nullable<int> MaxQty {get; set;}
+		public int specialOfferID {get; set;}
+		public string description {get; set;}
+		public decimal discountPct {get; set;}
+		public string type {get; set;}
+		public string category {get; set;}
+		public DateTime startDate {get; set;}
+		public DateTime endDate {get; set;}
+		public int minQty {get; set;}
+		public Nullable<int> maxQty {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9272cbf3df325f36e70e50c5ce285b1</Hash>
+    <Hash>1bc753bf776a1bb60bbb230f9dc94ebc</Hash>
 </Codenesium>*/

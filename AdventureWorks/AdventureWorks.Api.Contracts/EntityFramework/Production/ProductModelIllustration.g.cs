@@ -10,17 +10,12 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ProductModelID {get; set;}
-		public int IllustrationID {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("ProductModelID")]
-		public virtual EFProductModel ProductModelRef { get; set; }
-		[ForeignKey("IllustrationID")]
-		public virtual EFIllustration IllustrationRef { get; set; }
+		public int productModelID {get; set;}
+		public int illustrationID {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>86702f1026bf3ea89c74030bb68aadfb</Hash>
+    <Hash>39402c4687926b5ab160cefe307d85a0</Hash>
 </Codenesium>*/

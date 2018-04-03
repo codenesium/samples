@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductDocument>().Add(record);
 			this._context.SaveChanges();
-			return record.ProductID;
+			return record.productID;
 		}
 
 		public virtual void Update(int productID, Guid documentNode,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.productID == productID,response);
 		}
 
 		protected virtual List<EFProductDocument> SearchLinqEF(Expression<Func<EFProductDocument, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int productID, Guid documentNode,
 		                               DateTime modifiedDate, EFProductDocument   efProductDocument)
 		{
-			efProductDocument.ProductID = productID;
-			efProductDocument.DocumentNode = documentNode;
-			efProductDocument.ModifiedDate = modifiedDate;
+			efProductDocument.productID = productID;
+			efProductDocument.documentNode = documentNode;
+			efProductDocument.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductDocument efProductDocument,Response response)
@@ -119,21 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductDocument(new POCOProductDocument()
 			{
-				ModifiedDate = efProductDocument.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductDocument.ProductID,
-				                                     "Products"),
-				DocumentNode = new ReferenceEntity<Guid>(efProductDocument.DocumentNode,
-				                                         "Documents"),
+				ProductID = efProductDocument.productID.ToInt(),
+				DocumentNode = efProductDocument.documentNode,
+				ModifiedDate = efProductDocument.modifiedDate.ToDateTime(),
 			});
-
-			ProductRepository.MapEFToPOCO(efProductDocument.ProductRef, response);
-
-			DocumentRepository.MapEFToPOCO(efProductDocument.DocumentRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f9443e648cb7195579819f7b3b8485f</Hash>
+    <Hash>b607f700fff5b77d7ec0d6b829841854</Hash>
 </Codenesium>*/

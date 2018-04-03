@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ISalesPersonRepository SalesPersonRepository {get; set;}
 		public virtual void QuotaDateRules()
 		{
 			RuleFor(x => x.QuotaDate).NotNull();
@@ -40,17 +39,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidSalesPerson(int id)
-		{
-			Response response = new Response();
-
-			this.SalesPersonRepository.GetById(id,response);
-			return response.SalesPersons.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4893a92ff043a450cd69d5955655add</Hash>
+    <Hash>108edb8e6167e7cbb9d8880d5783e3e3</Hash>
 </Codenesium>*/

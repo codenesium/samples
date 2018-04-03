@@ -10,13 +10,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int AddressTypeID {get; set;}
-		public string Name {get; set;}
+		public int addressTypeID {get; set;}
+		public string name {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>da85f5549d46e7e9655866425c1b6678</Hash>
+    <Hash>f80c9f39e3173758b16f607fb6b40f5e</Hash>
 </Codenesium>*/

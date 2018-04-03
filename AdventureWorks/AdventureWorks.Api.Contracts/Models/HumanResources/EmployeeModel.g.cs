@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EmployeeModel()
 		{}
-
 		public EmployeeModel(string nationalIDNumber,
 		                     string loginID,
 		                     Nullable<Guid> organizationNode,
@@ -41,25 +40,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.CurrentFlag = currentFlag;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public EmployeeModel(POCOEmployee poco)
-		{
-			this.NationalIDNumber = poco.NationalIDNumber;
-			this.LoginID = poco.LoginID;
-			this.OrganizationNode = poco.OrganizationNode;
-			this.OrganizationLevel = poco.OrganizationLevel;
-			this.JobTitle = poco.JobTitle;
-			this.BirthDate = poco.BirthDate;
-			this.MaritalStatus = poco.MaritalStatus;
-			this.Gender = poco.Gender;
-			this.HireDate = poco.HireDate;
-			this.SalariedFlag = poco.SalariedFlag;
-			this.VacationHours = poco.VacationHours;
-			this.SickLeaveHours = poco.SickLeaveHours;
-			this.CurrentFlag = poco.CurrentFlag;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _nationalIDNumber;
@@ -273,5 +253,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>266e1d5932b52fa6fc9180da45c55ad3</Hash>
+    <Hash>54d0abd1aae2cf8bb67603f248a7edb3</Hash>
 </Codenesium>*/

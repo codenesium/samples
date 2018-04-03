@@ -9,19 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PersonCreditCardModel()
 		{}
-
 		public PersonCreditCardModel(int creditCardID,
 		                             DateTime modifiedDate)
 		{
 			this.CreditCardID = creditCardID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public PersonCreditCardModel(POCOPersonCreditCard poco)
-		{
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.CreditCardID = poco.CreditCardID.Value.ToInt();
 		}
 
 		private int _creditCardID;
@@ -55,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7601d70ff8aa833644a6f189261f122d</Hash>
+    <Hash>7f6ade8e53ce308ec25dcb7b29d3d386</Hash>
 </Codenesium>*/

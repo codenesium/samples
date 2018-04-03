@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductSubcategoryID,ProductSubcategoryModel model)
+		public virtual IActionResult Update(int productSubcategoryID,ProductSubcategoryModel model)
 		{
 			this._productSubcategoryModelValidator.UpdateMode();
 			var validationResult = this._productSubcategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productSubcategoryRepository.Update(ProductSubcategoryID,  model.ProductCategoryID,
+				this._productSubcategoryRepository.Update(productSubcategoryID,  model.ProductCategoryID,
 				                                          model.Name,
 				                                          model.Rowguid,
 				                                          model.ModifiedDate);
@@ -159,24 +159,9 @@ namespace AdventureWorksNS.Api.Service
 			this._productSubcategoryRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByProductCategoryID/{id}")]
-		[ProductSubcategoryFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ProductCategories/{id}/ProductSubcategories")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductCategoryID(int id)
-		{
-			var response = new Response();
-
-			this._productSubcategoryRepository.GetWhere(x => x.ProductCategoryID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>87f1a672c5f0096c0dc5ab849b569655</Hash>
+    <Hash>1a2c3a5cef9ccbc82c786101774b1224</Hash>
 </Codenesium>*/

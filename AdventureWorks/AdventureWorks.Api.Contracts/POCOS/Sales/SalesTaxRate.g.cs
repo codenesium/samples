@@ -18,18 +18,16 @@ namespace AdventureWorksNS.Api.Contracts
 		                        DateTime modifiedDate)
 		{
 			this.SalesTaxRateID = salesTaxRateID.ToInt();
+			this.StateProvinceID = stateProvinceID.ToInt();
 			this.TaxType = taxType;
 			this.TaxRate = taxRate;
 			this.Name = name;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
-			                                           "StateProvince");
 		}
 
 		public int SalesTaxRateID {get; set;}
-		public ReferenceEntity<int>StateProvinceID {get; set;}
+		public int StateProvinceID {get; set;}
 		public int TaxType {get; set;}
 		public decimal TaxRate {get; set;}
 		public string Name {get; set;}
@@ -106,5 +104,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>48453aaa520c0dbbb766a776ff4c7ffb</Hash>
+    <Hash>f701f7f71bc1d5af2270efe504b5e543</Hash>
 </Codenesium>*/

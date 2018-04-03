@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public AddressTypeModel()
 		{}
-
 		public AddressTypeModel(string name,
 		                        Guid rowguid,
 		                        DateTime modifiedDate)
@@ -17,13 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Name = name;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public AddressTypeModel(POCOAddressType poco)
-		{
-			this.Name = poco.Name;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -71,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ca486421674b38df3e4e90410fc4ee37</Hash>
+    <Hash>77bd002f64cc82f5c2bb698248676fb3</Hash>
 </Codenesium>*/

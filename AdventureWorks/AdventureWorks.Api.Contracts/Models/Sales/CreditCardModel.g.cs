@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CreditCardModel()
 		{}
-
 		public CreditCardModel(string cardType,
 		                       string cardNumber,
 		                       int expMonth,
@@ -21,15 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ExpMonth = expMonth;
 			this.ExpYear = expYear;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public CreditCardModel(POCOCreditCard poco)
-		{
-			this.CardType = poco.CardType;
-			this.CardNumber = poco.CardNumber;
-			this.ExpMonth = poco.ExpMonth;
-			this.ExpYear = poco.ExpYear;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _cardType;
@@ -105,5 +95,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>570832a454f51c19f71a03b1f72f7098</Hash>
+    <Hash>a675bf707f8557195cf35272515f5409</Hash>
 </Codenesium>*/

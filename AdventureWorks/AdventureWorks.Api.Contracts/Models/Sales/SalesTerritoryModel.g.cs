@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesTerritoryModel()
 		{}
-
 		public SalesTerritoryModel(string name,
 		                           string countryRegionCode,
 		                           string @group,
@@ -29,20 +28,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.CostLastYear = costLastYear;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesTerritoryModel(POCOSalesTerritory poco)
-		{
-			this.Name = poco.Name;
-			this.@Group = poco.@Group;
-			this.SalesYTD = poco.SalesYTD;
-			this.SalesLastYear = poco.SalesLastYear;
-			this.CostYTD = poco.CostYTD;
-			this.CostLastYear = poco.CostLastYear;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.CountryRegionCode = poco.CountryRegionCode.Value.ToString();
 		}
 
 		private string _name;
@@ -174,5 +159,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>75e420f255461b8ebd58fa41a1c68a66</Hash>
+    <Hash>e8dcaf62d95885e04a7ff56bba01f9ec</Hash>
 </Codenesium>*/

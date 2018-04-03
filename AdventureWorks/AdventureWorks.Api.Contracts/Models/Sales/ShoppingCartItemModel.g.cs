@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ShoppingCartItemModel()
 		{}
-
 		public ShoppingCartItemModel(string shoppingCartID,
 		                             int quantity,
 		                             int productID,
@@ -21,16 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ProductID = productID.ToInt();
 			this.DateCreated = dateCreated.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ShoppingCartItemModel(POCOShoppingCartItem poco)
-		{
-			this.ShoppingCartID = poco.ShoppingCartID;
-			this.Quantity = poco.Quantity.ToInt();
-			this.DateCreated = poco.DateCreated.ToDateTime();
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductID = poco.ProductID.Value.ToInt();
 		}
 
 		private string _shoppingCartID;
@@ -106,5 +95,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e7ce1533f1e5ba1b7cf284cae1dc94ee</Hash>
+    <Hash>7c082941b7a93a05d6db4e27225016d5</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ namespace AdventureWorksNS.Api.Service
 		public void CreateMode()
 		{
 			this.EmailAddressIDRules();
-			this.EmailAddress1Rules();
+			this.EmailAddressRules();
 			this.RowguidRules();
 			this.ModifiedDateRules();
 		}
@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Service
 		public void UpdateMode()
 		{
 			this.EmailAddressIDRules();
-			this.EmailAddress1Rules();
+			this.EmailAddressRules();
 			this.RowguidRules();
 			this.ModifiedDateRules();
 		}
@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.Service
 		public void PatchMode()
 		{
 			this.EmailAddressIDRules();
-			this.EmailAddress1Rules();
+			this.EmailAddressRules();
 			this.RowguidRules();
 			this.ModifiedDateRules();
 		}
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c7fc514ba33fed9ae46652c4e405edcb</Hash>
+    <Hash>b105ffca3ad44f6984b2618cefe0819c</Hash>
 </Codenesium>*/

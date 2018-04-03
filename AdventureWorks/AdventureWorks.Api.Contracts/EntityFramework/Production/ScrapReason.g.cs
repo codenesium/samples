@@ -10,12 +10,12 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public short ScrapReasonID {get; set;}
-		public string Name {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public short scrapReasonID {get; set;}
+		public string name {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>43428414edd6cc3a6a23c8d5f8261fdb</Hash>
+    <Hash>d78cb4d98f2de7fcf21456ad03afb206</Hash>
 </Codenesium>*/

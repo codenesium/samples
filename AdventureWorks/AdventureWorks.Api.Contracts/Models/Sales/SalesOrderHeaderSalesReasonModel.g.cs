@@ -9,19 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesOrderHeaderSalesReasonModel()
 		{}
-
 		public SalesOrderHeaderSalesReasonModel(int salesReasonID,
 		                                        DateTime modifiedDate)
 		{
 			this.SalesReasonID = salesReasonID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesOrderHeaderSalesReasonModel(POCOSalesOrderHeaderSalesReason poco)
-		{
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.SalesReasonID = poco.SalesReasonID.Value.ToInt();
 		}
 
 		private int _salesReasonID;
@@ -55,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ec97ed72aa84e31f433e71015a49d62b</Hash>
+    <Hash>b241fa8f9c6e5a9bb42505b4863215cc</Hash>
 </Codenesium>*/

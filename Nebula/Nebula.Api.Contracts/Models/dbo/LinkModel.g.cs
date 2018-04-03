@@ -9,7 +9,6 @@ namespace NebulaNS.Api.Contracts
 	{
 		public LinkModel()
 		{}
-
 		public LinkModel(string name,
 		                 string dynamicParameters,
 		                 string staticParameters,
@@ -33,22 +32,6 @@ namespace NebulaNS.Api.Contracts
 			this.DateCompleted = dateCompleted.ToNullableDateTime();
 			this.Response = response;
 			this.ExternalId = externalId;
-		}
-
-		public LinkModel(POCOLink poco)
-		{
-			this.Name = poco.Name;
-			this.DynamicParameters = poco.DynamicParameters;
-			this.StaticParameters = poco.StaticParameters;
-			this.Order = poco.Order.ToInt();
-			this.DateStarted = poco.DateStarted.ToNullableDateTime();
-			this.DateCompleted = poco.DateCompleted.ToNullableDateTime();
-			this.Response = poco.Response;
-			this.ExternalId = poco.ExternalId;
-
-			this.ChainId = poco.ChainId.Value.ToInt();
-			this.AssignedMachineId = poco.AssignedMachineId.Value.ToInt();
-			this.LinkStatusId = poco.LinkStatusId.Value.ToInt();
 		}
 
 		private string _name;
@@ -202,5 +185,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b08e8144ce49032d34a20665b7435e4a</Hash>
+    <Hash>ea512edb7d25e9051e347a967cabf2fe</Hash>
 </Codenesium>*/

@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int IllustrationID,IllustrationModel model)
+		public virtual IActionResult Update(int illustrationID,IllustrationModel model)
 		{
 			this._illustrationModelValidator.UpdateMode();
 			var validationResult = this._illustrationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._illustrationRepository.Update(IllustrationID,  model.Diagram,
+				this._illustrationRepository.Update(illustrationID,  model.Diagram,
 				                                    model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2c60c46654399dab2aec9117bb2886f1</Hash>
+    <Hash>30df4641ca86ccc84b44d95db36c1ced</Hash>
 </Codenesium>*/

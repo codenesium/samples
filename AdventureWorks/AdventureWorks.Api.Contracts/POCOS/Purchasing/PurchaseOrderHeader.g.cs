@@ -26,6 +26,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.RevisionNumber = revisionNumber;
 			this.Status = status;
+			this.EmployeeID = employeeID.ToInt();
+			this.VendorID = vendorID.ToInt();
+			this.ShipMethodID = shipMethodID.ToInt();
 			this.OrderDate = orderDate.ToDateTime();
 			this.ShipDate = shipDate.ToNullableDateTime();
 			this.SubTotal = subTotal;
@@ -33,21 +36,14 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Freight = freight;
 			this.TotalDue = totalDue;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			EmployeeID = new ReferenceEntity<int>(employeeID,
-			                                      "Employee");
-			VendorID = new ReferenceEntity<int>(vendorID,
-			                                    "Vendor");
-			ShipMethodID = new ReferenceEntity<int>(shipMethodID,
-			                                        "ShipMethod");
 		}
 
 		public int PurchaseOrderID {get; set;}
 		public int RevisionNumber {get; set;}
 		public int Status {get; set;}
-		public ReferenceEntity<int>EmployeeID {get; set;}
-		public ReferenceEntity<int>VendorID {get; set;}
-		public ReferenceEntity<int>ShipMethodID {get; set;}
+		public int EmployeeID {get; set;}
+		public int VendorID {get; set;}
+		public int ShipMethodID {get; set;}
 		public DateTime OrderDate {get; set;}
 		public Nullable<DateTime> ShipDate {get; set;}
 		public decimal SubTotal {get; set;}
@@ -180,5 +176,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dfee2a816887c2d138c499468926d38b</Hash>
+    <Hash>c44f9abc41a75382520b436a3160eaa9</Hash>
 </Codenesium>*/

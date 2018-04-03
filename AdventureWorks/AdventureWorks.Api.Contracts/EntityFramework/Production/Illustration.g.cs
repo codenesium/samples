@@ -10,12 +10,12 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int IllustrationID {get; set;}
-		public string Diagram {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int illustrationID {get; set;}
+		public string diagram {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e22b1fcdfb2d8e41012c0df1aba062c</Hash>
+    <Hash>e57adc84e8f847a1ff245f3b482b2cde</Hash>
 </Codenesium>*/

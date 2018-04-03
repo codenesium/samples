@@ -9,18 +9,11 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public BucketModel()
 		{}
-
 		public BucketModel(string name,
 		                   Guid externalId)
 		{
 			this.Name = name;
 			this.ExternalId = externalId;
-		}
-
-		public BucketModel(POCOBucket poco)
-		{
-			this.Name = poco.Name;
-			this.ExternalId = poco.ExternalId;
 		}
 
 		private string _name;
@@ -54,5 +47,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e1ab54fc1097bb7ffa7b15c2224dd0b4</Hash>
+    <Hash>5feaaac8f63d3c08b9a8d801820c5f5c</Hash>
 </Codenesium>*/

@@ -38,7 +38,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFEmployeeDepartmentHistory>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, short departmentID,
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Nullable<DateTime> endDate,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -80,7 +80,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFEmployeeDepartmentHistory> SearchLinqEF(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -121,12 +121,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Nullable<DateTime> endDate,
 		                               DateTime modifiedDate, EFEmployeeDepartmentHistory   efEmployeeDepartmentHistory)
 		{
-			efEmployeeDepartmentHistory.BusinessEntityID = businessEntityID;
-			efEmployeeDepartmentHistory.DepartmentID = departmentID;
-			efEmployeeDepartmentHistory.ShiftID = shiftID;
-			efEmployeeDepartmentHistory.StartDate = startDate;
-			efEmployeeDepartmentHistory.EndDate = endDate;
-			efEmployeeDepartmentHistory.ModifiedDate = modifiedDate;
+			efEmployeeDepartmentHistory.businessEntityID = businessEntityID;
+			efEmployeeDepartmentHistory.departmentID = departmentID;
+			efEmployeeDepartmentHistory.shiftID = shiftID;
+			efEmployeeDepartmentHistory.startDate = startDate;
+			efEmployeeDepartmentHistory.endDate = endDate;
+			efEmployeeDepartmentHistory.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFEmployeeDepartmentHistory efEmployeeDepartmentHistory,Response response)
@@ -137,27 +137,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddEmployeeDepartmentHistory(new POCOEmployeeDepartmentHistory()
 			{
-				StartDate = efEmployeeDepartmentHistory.StartDate,
-				EndDate = efEmployeeDepartmentHistory.EndDate,
-				ModifiedDate = efEmployeeDepartmentHistory.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efEmployeeDepartmentHistory.BusinessEntityID,
-				                                            "Employees"),
-				DepartmentID = new ReferenceEntity<short>(efEmployeeDepartmentHistory.DepartmentID,
-				                                          "Departments"),
-				ShiftID = new ReferenceEntity<int>(efEmployeeDepartmentHistory.ShiftID,
-				                                   "Shifts"),
+				BusinessEntityID = efEmployeeDepartmentHistory.businessEntityID.ToInt(),
+				DepartmentID = efEmployeeDepartmentHistory.departmentID,
+				ShiftID = efEmployeeDepartmentHistory.shiftID,
+				StartDate = efEmployeeDepartmentHistory.startDate,
+				EndDate = efEmployeeDepartmentHistory.endDate,
+				ModifiedDate = efEmployeeDepartmentHistory.modifiedDate.ToDateTime(),
 			});
-
-			EmployeeRepository.MapEFToPOCO(efEmployeeDepartmentHistory.EmployeeRef, response);
-
-			DepartmentRepository.MapEFToPOCO(efEmployeeDepartmentHistory.DepartmentRef, response);
-
-			ShiftRepository.MapEFToPOCO(efEmployeeDepartmentHistory.ShiftRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4ee1355f250029f3d72898f868dc074</Hash>
+    <Hash>c592605b6bcfb721f937bc0c48a16353</Hash>
 </Codenesium>*/

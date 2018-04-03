@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SpecialOfferProductModel()
 		{}
-
 		public SpecialOfferProductModel(int productID,
 		                                Guid rowguid,
 		                                DateTime modifiedDate)
@@ -17,14 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ProductID = productID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SpecialOfferProductModel(POCOSpecialOfferProduct poco)
-		{
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductID = poco.ProductID.Value.ToInt();
 		}
 
 		private int _productID;
@@ -72,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b43bd53fc8c349dc6f7ce58856fb2f96</Hash>
+    <Hash>3fcac1e1286aff604c3c56b5555c6eca</Hash>
 </Codenesium>*/

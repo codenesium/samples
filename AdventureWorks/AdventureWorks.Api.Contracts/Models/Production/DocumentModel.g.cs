@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public DocumentModel()
 		{}
-
 		public DocumentModel(Nullable<short> documentLevel,
 		                     string title,
 		                     int owner,
@@ -20,7 +19,7 @@ namespace AdventureWorksNS.Api.Contracts
 		                     int changeNumber,
 		                     int status,
 		                     string documentSummary,
-		                     byte[] document1,
+		                     byte[] document,
 		                     Guid rowguid,
 		                     DateTime modifiedDate)
 		{
@@ -34,27 +33,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ChangeNumber = changeNumber.ToInt();
 			this.Status = status;
 			this.DocumentSummary = documentSummary;
-			this.Document1 = document1;
+			this.Document = document;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public DocumentModel(POCODocument poco)
-		{
-			this.DocumentLevel = poco.DocumentLevel;
-			this.Title = poco.Title;
-			this.FolderFlag = poco.FolderFlag;
-			this.FileName = poco.FileName;
-			this.FileExtension = poco.FileExtension;
-			this.Revision = poco.Revision;
-			this.ChangeNumber = poco.ChangeNumber.ToInt();
-			this.Status = poco.Status;
-			this.DocumentSummary = poco.DocumentSummary;
-			this.Document1 = poco.Document1;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.Owner = poco.Owner.Value.ToInt();
 		}
 
 		private Nullable<short> _documentLevel;
@@ -195,16 +176,16 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private byte[] _document1;
-		public byte[] Document1
+		private byte[] _document;
+		public byte[] Document
 		{
 			get
 			{
-				return _document1.IsEmptyOrZeroOrNull() ? null : _document1;
+				return _document.IsEmptyOrZeroOrNull() ? null : _document;
 			}
 			set
 			{
-				this._document1 = value;
+				this._document = value;
 			}
 		}
 
@@ -239,5 +220,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>eb85e1823f928db0b5717e7eda267b5e</Hash>
+    <Hash>28a3038fcff9207ffa12863e99e87852</Hash>
 </Codenesium>*/

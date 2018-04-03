@@ -9,24 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EmailAddressModel()
 		{}
-
 		public EmailAddressModel(int emailAddressID,
-		                         string emailAddress1,
+		                         string emailAddress,
 		                         Guid rowguid,
 		                         DateTime modifiedDate)
 		{
 			this.EmailAddressID = emailAddressID.ToInt();
-			this.EmailAddress1 = emailAddress1;
+			this.EmailAddress = emailAddress;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public EmailAddressModel(POCOEmailAddress poco)
-		{
-			this.EmailAddressID = poco.EmailAddressID.ToInt();
-			this.EmailAddress1 = poco.EmailAddress1;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private int _emailAddressID;
@@ -43,16 +34,16 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string _emailAddress1;
-		public string EmailAddress1
+		private string _emailAddress;
+		public string EmailAddress
 		{
 			get
 			{
-				return _emailAddress1.IsEmptyOrZeroOrNull() ? null : _emailAddress1;
+				return _emailAddress.IsEmptyOrZeroOrNull() ? null : _emailAddress;
 			}
 			set
 			{
-				this._emailAddress1 = value;
+				this._emailAddress = value;
 			}
 		}
 
@@ -87,5 +78,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8b646e60942703ba7ced5dfff05de58c</Hash>
+    <Hash>2865040d9647c939848447c05708fe91</Hash>
 </Codenesium>*/

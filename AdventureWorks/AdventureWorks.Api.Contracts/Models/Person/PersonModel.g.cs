@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PersonModel()
 		{}
-
 		public PersonModel(string personType,
 		                   bool nameStyle,
 		                   string title,
@@ -35,22 +34,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Demographics = demographics;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public PersonModel(POCOPerson poco)
-		{
-			this.PersonType = poco.PersonType;
-			this.NameStyle = poco.NameStyle;
-			this.Title = poco.Title;
-			this.FirstName = poco.FirstName;
-			this.MiddleName = poco.MiddleName;
-			this.LastName = poco.LastName;
-			this.Suffix = poco.Suffix;
-			this.EmailPromotion = poco.EmailPromotion.ToInt();
-			this.AdditionalContactInfo = poco.AdditionalContactInfo;
-			this.Demographics = poco.Demographics;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _personType;
@@ -219,5 +202,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>529622cf0c4bd48acd6c74395c2c961f</Hash>
+    <Hash>617e50762681454d5523ae72741cebc3</Hash>
 </Codenesium>*/

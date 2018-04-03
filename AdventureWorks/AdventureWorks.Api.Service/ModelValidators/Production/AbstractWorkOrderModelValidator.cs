@@ -20,12 +20,9 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository {get; set;}
-		public IScrapReasonRepository ScrapReasonRepository {get; set;}
 		public virtual void ProductIDRules()
 		{
 			RuleFor(x => x.ProductID).NotNull();
-			RuleFor(x => x.ProductID).Must(BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void OrderQtyRules()
@@ -57,33 +54,15 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		public virtual void ScrapReasonIDRules()
-		{
-			RuleFor(x => x.ScrapReasonID).Must(BeValidScrapReason).When(x => x ?.ScrapReasonID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void ModifiedDateRules()
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidProduct(int id)
-		{
-			Response response = new Response();
-
-			this.ProductRepository.GetById(id,response);
-			return response.Products.Count > 0;
-		}
-
-		public bool BeValidScrapReason(Nullable<short> id)
-		{
-			Response response = new Response();
-
-			this.ScrapReasonRepository.GetById(id.GetValueOrDefault(),response);
-			return response.ScrapReasons.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ed38b1b1814fccf63ad6d320b221f264</Hash>
+    <Hash>93da7d309683ee2346b8fc56c53b99bf</Hash>
 </Codenesium>*/

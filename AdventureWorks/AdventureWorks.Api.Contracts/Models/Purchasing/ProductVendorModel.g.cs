@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductVendorModel()
 		{}
-
 		public ProductVendorModel(int businessEntityID,
 		                          int averageLeadTime,
 		                          decimal standardPrice,
@@ -31,21 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.OnOrderQty = onOrderQty.ToNullableInt();
 			this.UnitMeasureCode = unitMeasureCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductVendorModel(POCOProductVendor poco)
-		{
-			this.AverageLeadTime = poco.AverageLeadTime.ToInt();
-			this.StandardPrice = poco.StandardPrice;
-			this.LastReceiptCost = poco.LastReceiptCost;
-			this.LastReceiptDate = poco.LastReceiptDate.ToNullableDateTime();
-			this.MinOrderQty = poco.MinOrderQty.ToInt();
-			this.MaxOrderQty = poco.MaxOrderQty.ToInt();
-			this.OnOrderQty = poco.OnOrderQty.ToNullableInt();
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.BusinessEntityID = poco.BusinessEntityID.Value.ToInt();
-			this.UnitMeasureCode = poco.UnitMeasureCode.Value.ToString();
 		}
 
 		private int _businessEntityID;
@@ -188,5 +172,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>333b92a7d21fd6b8a6f4c55371604bd4</Hash>
+    <Hash>d1feadd4012965a4b929c6cc835023bb</Hash>
 </Codenesium>*/

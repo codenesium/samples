@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ShipMethodModel()
 		{}
-
 		public ShipMethodModel(string name,
 		                       decimal shipBase,
 		                       decimal shipRate,
@@ -21,15 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ShipRate = shipRate;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ShipMethodModel(POCOShipMethod poco)
-		{
-			this.Name = poco.Name;
-			this.ShipBase = poco.ShipBase;
-			this.ShipRate = poco.ShipRate;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -105,5 +95,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>177bbee9ec19588db8c4b09690e9fb37</Hash>
+    <Hash>0ae858ee223c8e7ad9067a9fe791509b</Hash>
 </Codenesium>*/

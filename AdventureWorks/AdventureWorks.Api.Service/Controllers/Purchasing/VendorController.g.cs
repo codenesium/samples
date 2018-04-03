@@ -135,13 +135,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,VendorModel model)
+		public virtual IActionResult Update(int businessEntityID,VendorModel model)
 		{
 			this._vendorModelValidator.UpdateMode();
 			var validationResult = this._vendorModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._vendorRepository.Update(BusinessEntityID,  model.AccountNumber,
+				this._vendorRepository.Update(businessEntityID,  model.AccountNumber,
 				                              model.Name,
 				                              model.CreditRating,
 				                              model.PreferredVendorStatus,
@@ -168,24 +168,9 @@ namespace AdventureWorksNS.Api.Service
 			this._vendorRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[VendorFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/BusinessEntities/{id}/Vendors")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			var response = new Response();
-
-			this._vendorRepository.GetWhere(x => x.BusinessEntityID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f7d01f22b4bc687d0aea4214348a758</Hash>
+    <Hash>27c3a05164f69a15796d440c12ecd0fa</Hash>
 </Codenesium>*/

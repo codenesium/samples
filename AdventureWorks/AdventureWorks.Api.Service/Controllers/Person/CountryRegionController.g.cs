@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string CountryRegionCode,CountryRegionModel model)
+		public virtual IActionResult Update(string countryRegionCode,CountryRegionModel model)
 		{
 			this._countryRegionModelValidator.UpdateMode();
 			var validationResult = this._countryRegionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._countryRegionRepository.Update(CountryRegionCode,  model.Name,
+				this._countryRegionRepository.Update(countryRegionCode,  model.Name,
 				                                     model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0bb4469fa9640323fe848ae9771d308e</Hash>
+    <Hash>b96268277ad56a8dabbb7bf8bb3ffecf</Hash>
 </Codenesium>*/

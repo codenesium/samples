@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesTaxRateModel()
 		{}
-
 		public SalesTaxRateModel(int stateProvinceID,
 		                         int taxType,
 		                         decimal taxRate,
@@ -23,17 +22,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Name = name;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesTaxRateModel(POCOSalesTaxRate poco)
-		{
-			this.TaxType = poco.TaxType;
-			this.TaxRate = poco.TaxRate;
-			this.Name = poco.Name;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.StateProvinceID = poco.StateProvinceID.Value.ToInt();
 		}
 
 		private int _stateProvinceID;
@@ -123,5 +111,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>23391c66a663dd0b6b8ac904c424eb37</Hash>
+    <Hash>e371ad97c665ca20f33649ffa1abac97</Hash>
 </Codenesium>*/

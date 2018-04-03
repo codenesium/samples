@@ -10,21 +10,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int AddressID {get; set;}
-		public string AddressLine1 {get; set;}
-		public string AddressLine2 {get; set;}
-		public string City {get; set;}
-		public int StateProvinceID {get; set;}
-		public string PostalCode {get; set;}
-		public object SpatialLocation {get; set;}
+		public int addressID {get; set;}
+		public string addressLine1 {get; set;}
+		public string addressLine2 {get; set;}
+		public string city {get; set;}
+		public int stateProvinceID {get; set;}
+		public string postalCode {get; set;}
+		public object spatialLocation {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("StateProvinceID")]
-		public virtual EFStateProvince StateProvinceRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>637c8232b6c7c13f556390c16690004a</Hash>
+    <Hash>606b1c966ad16892ebf1377e7a6754c8</Hash>
 </Codenesium>*/

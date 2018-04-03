@@ -20,13 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ICustomerRepository CustomerRepository {get; set;}
-		public ISalesPersonRepository SalesPersonRepository {get; set;}
-		public ISalesTerritoryRepository SalesTerritoryRepository {get; set;}
-		public IAddressRepository AddressRepository {get; set;}
-		public IShipMethodRepository ShipMethodRepository {get; set;}
-		public ICreditCardRepository CreditCardRepository {get; set;}
-		public ICurrencyRateRepository CurrencyRateRepository {get; set;}
 		public virtual void RevisionNumberRules()
 		{
 			RuleFor(x => x.RevisionNumber).NotNull();
@@ -74,41 +67,31 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void CustomerIDRules()
 		{
 			RuleFor(x => x.CustomerID).NotNull();
-			RuleFor(x => x.CustomerID).Must(BeValidCustomer).When(x => x ?.CustomerID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void SalesPersonIDRules()
-		{
-			RuleFor(x => x.SalesPersonID).Must(BeValidSalesPerson).When(x => x ?.SalesPersonID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void TerritoryIDRules()
-		{
-			RuleFor(x => x.TerritoryID).Must(BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void BillToAddressIDRules()
 		{
 			RuleFor(x => x.BillToAddressID).NotNull();
-			RuleFor(x => x.BillToAddressID).Must(BeValidAddress).When(x => x ?.BillToAddressID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShipToAddressIDRules()
 		{
 			RuleFor(x => x.ShipToAddressID).NotNull();
-			RuleFor(x => x.ShipToAddressID).Must(BeValidAddress).When(x => x ?.ShipToAddressID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShipMethodIDRules()
 		{
 			RuleFor(x => x.ShipMethodID).NotNull();
-			RuleFor(x => x.ShipMethodID).Must(BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void CreditCardIDRules()
-		{
-			RuleFor(x => x.CreditCardID).Must(BeValidCreditCard).When(x => x ?.CreditCardID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void CreditCardApprovalCodeRules()
 		{
@@ -116,9 +99,7 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		public virtual void CurrencyRateIDRules()
-		{
-			RuleFor(x => x.CurrencyRateID).Must(BeValidCurrencyRate).When(x => x ?.CurrencyRateID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void SubTotalRules()
 		{
@@ -154,65 +135,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidCustomer(int id)
-		{
-			Response response = new Response();
-
-			this.CustomerRepository.GetById(id,response);
-			return response.Customers.Count > 0;
-		}
-
-		public bool BeValidSalesPerson(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.SalesPersonRepository.GetById(id.GetValueOrDefault(),response);
-			return response.SalesPersons.Count > 0;
-		}
-
-		public bool BeValidSalesTerritory(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.SalesTerritoryRepository.GetById(id.GetValueOrDefault(),response);
-			return response.SalesTerritories.Count > 0;
-		}
-
-		public bool BeValidAddress(int id)
-		{
-			Response response = new Response();
-
-			this.AddressRepository.GetById(id,response);
-			return response.Addresses.Count > 0;
-		}
-
-		public bool BeValidShipMethod(int id)
-		{
-			Response response = new Response();
-
-			this.ShipMethodRepository.GetById(id,response);
-			return response.ShipMethods.Count > 0;
-		}
-
-		public bool BeValidCreditCard(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.CreditCardRepository.GetById(id.GetValueOrDefault(),response);
-			return response.CreditCards.Count > 0;
-		}
-
-		public bool BeValidCurrencyRate(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.CurrencyRateRepository.GetById(id.GetValueOrDefault(),response);
-			return response.CurrencyRates.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c102714eb40a7b94217db89281dd2d10</Hash>
+    <Hash>05a54001b5a17d98d16c11652f12e219</Hash>
 </Codenesium>*/

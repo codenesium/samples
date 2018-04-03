@@ -10,17 +10,12 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int SalesOrderID {get; set;}
-		public int SalesReasonID {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("SalesOrderID")]
-		public virtual EFSalesOrderHeader SalesOrderHeaderRef { get; set; }
-		[ForeignKey("SalesReasonID")]
-		public virtual EFSalesReason SalesReasonRef { get; set; }
+		public int salesOrderID {get; set;}
+		public int salesReasonID {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b3f350ec237102c74400d3ecf17d61a</Hash>
+    <Hash>02a3fc2f5c896d49c5ae2f430cf0ce06</Hash>
 </Codenesium>*/

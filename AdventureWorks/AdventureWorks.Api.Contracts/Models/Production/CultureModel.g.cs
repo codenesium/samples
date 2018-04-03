@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CultureModel()
 		{}
-
 		public CultureModel(string name,
 		                    DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public CultureModel(POCOCulture poco)
-		{
-			this.Name = poco.Name;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -54,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3476e34390a1a17a6f608ce1b8ce7a8f</Hash>
+    <Hash>1407625d41ebdca138798cf2691d1678</Hash>
 </Codenesium>*/

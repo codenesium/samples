@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public AddressModel()
 		{}
-
 		public AddressModel(string addressLine1,
 		                    string addressLine2,
 		                    string city,
@@ -27,19 +26,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.SpatialLocation = spatialLocation;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public AddressModel(POCOAddress poco)
-		{
-			this.AddressLine1 = poco.AddressLine1;
-			this.AddressLine2 = poco.AddressLine2;
-			this.City = poco.City;
-			this.PostalCode = poco.PostalCode;
-			this.SpatialLocation = poco.SpatialLocation;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.StateProvinceID = poco.StateProvinceID.Value.ToInt();
 		}
 
 		private string _addressLine1;
@@ -155,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7dbf62cf2d56a75e087bb840de9d672b</Hash>
+    <Hash>e2bb625ca2c20d8b8a1fa11469b78bf2</Hash>
 </Codenesium>*/

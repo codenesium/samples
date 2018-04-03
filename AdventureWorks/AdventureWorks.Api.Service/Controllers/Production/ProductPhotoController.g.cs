@@ -131,13 +131,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductPhotoID,ProductPhotoModel model)
+		public virtual IActionResult Update(int productPhotoID,ProductPhotoModel model)
 		{
 			this._productPhotoModelValidator.UpdateMode();
 			var validationResult = this._productPhotoModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productPhotoRepository.Update(ProductPhotoID,  model.ThumbNailPhoto,
+				this._productPhotoRepository.Update(productPhotoID,  model.ThumbNailPhoto,
 				                                    model.ThumbnailPhotoFileName,
 				                                    model.LargePhoto,
 				                                    model.LargePhotoFileName,
@@ -166,5 +166,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>46188a93e0b62e66e275b14e84cb933c</Hash>
+    <Hash>930fbb969ac7e5ca287683de231a353a</Hash>
 </Codenesium>*/

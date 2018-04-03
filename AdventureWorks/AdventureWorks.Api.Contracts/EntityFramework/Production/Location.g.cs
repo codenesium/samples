@@ -10,14 +10,14 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public short LocationID {get; set;}
-		public string Name {get; set;}
-		public decimal CostRate {get; set;}
-		public decimal Availability {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public short locationID {get; set;}
+		public string name {get; set;}
+		public decimal costRate {get; set;}
+		public decimal availability {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f041d1796f8e0e111bfeb8f3d6d087f</Hash>
+    <Hash>0ace5d29666d49997677ff9f616dd98a</Hash>
 </Codenesium>*/

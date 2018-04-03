@@ -10,18 +10,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int TransactionID {get; set;}
-		public int ProductID {get; set;}
-		public int ReferenceOrderID {get; set;}
-		public int ReferenceOrderLineID {get; set;}
-		public DateTime TransactionDate {get; set;}
-		public string TransactionType {get; set;}
-		public int Quantity {get; set;}
-		public decimal ActualCost {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int transactionID {get; set;}
+		public int productID {get; set;}
+		public int referenceOrderID {get; set;}
+		public int referenceOrderLineID {get; set;}
+		public DateTime transactionDate {get; set;}
+		public string transactionType {get; set;}
+		public int quantity {get; set;}
+		public decimal actualCost {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a6cc79e5fa44aa98786cd49d04761cf5</Hash>
+    <Hash>bd2af2bf1ed936a5450143f6f613949b</Hash>
 </Codenesium>*/

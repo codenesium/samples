@@ -10,23 +10,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public Nullable<int> TerritoryID {get; set;}
-		public Nullable<decimal> SalesQuota {get; set;}
-		public decimal Bonus {get; set;}
-		public decimal CommissionPct {get; set;}
-		public decimal SalesYTD {get; set;}
-		public decimal SalesLastYear {get; set;}
+		public int businessEntityID {get; set;}
+		public Nullable<int> territoryID {get; set;}
+		public Nullable<decimal> salesQuota {get; set;}
+		public decimal bonus {get; set;}
+		public decimal commissionPct {get; set;}
+		public decimal salesYTD {get; set;}
+		public decimal salesLastYear {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFEmployee EmployeeRef { get; set; }
-		[ForeignKey("TerritoryID")]
-		public virtual EFSalesTerritory SalesTerritoryRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>347d44fbc810417fdace4dcb82e46835</Hash>
+    <Hash>af29a8b91648299fa071e38ecb72b3f2</Hash>
 </Codenesium>*/

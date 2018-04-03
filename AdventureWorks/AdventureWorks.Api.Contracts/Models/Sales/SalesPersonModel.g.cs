@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesPersonModel()
 		{}
-
 		public SalesPersonModel(Nullable<int> territoryID,
 		                        Nullable<decimal> salesQuota,
 		                        decimal bonus,
@@ -27,19 +26,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.SalesLastYear = salesLastYear;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesPersonModel(POCOSalesPerson poco)
-		{
-			this.SalesQuota = poco.SalesQuota;
-			this.Bonus = poco.Bonus;
-			this.CommissionPct = poco.CommissionPct;
-			this.SalesYTD = poco.SalesYTD;
-			this.SalesLastYear = poco.SalesLastYear;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.TerritoryID = poco.TerritoryID.Value.ToInt();
 		}
 
 		private Nullable<int> _territoryID;
@@ -155,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>906021f4eda4e7ed5de27a190955c5a5</Hash>
+    <Hash>e64fde13cbf3e38a0fda547738b5ddc3</Hash>
 </Codenesium>*/

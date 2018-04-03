@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFErrorLog>().Add(record);
 			this._context.SaveChanges();
-			return record.ErrorLogID;
+			return record.errorLogID;
 		}
 
 		public virtual void Update(int errorLogID, DateTime errorTime,
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Nullable<int> errorLine,
 		                           string errorMessage)
 		{
-			var record =  this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.errorLogID == errorLogID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",errorLogID);
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int errorLogID)
 		{
-			var record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.errorLogID == errorLogID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -92,7 +92,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int errorLogID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID,response);
+			this.SearchLinqPOCO(x => x.errorLogID == errorLogID,response);
 		}
 
 		protected virtual List<EFErrorLog> SearchLinqEF(Expression<Func<EFErrorLog, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -136,15 +136,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Nullable<int> errorLine,
 		                               string errorMessage, EFErrorLog   efErrorLog)
 		{
-			efErrorLog.ErrorLogID = errorLogID;
-			efErrorLog.ErrorTime = errorTime;
-			efErrorLog.UserName = userName;
-			efErrorLog.ErrorNumber = errorNumber;
-			efErrorLog.ErrorSeverity = errorSeverity;
-			efErrorLog.ErrorState = errorState;
-			efErrorLog.ErrorProcedure = errorProcedure;
-			efErrorLog.ErrorLine = errorLine;
-			efErrorLog.ErrorMessage = errorMessage;
+			efErrorLog.errorLogID = errorLogID;
+			efErrorLog.errorTime = errorTime;
+			efErrorLog.userName = userName;
+			efErrorLog.errorNumber = errorNumber;
+			efErrorLog.errorSeverity = errorSeverity;
+			efErrorLog.errorState = errorState;
+			efErrorLog.errorProcedure = errorProcedure;
+			efErrorLog.errorLine = errorLine;
+			efErrorLog.errorMessage = errorMessage;
 		}
 
 		public static void MapEFToPOCO(EFErrorLog efErrorLog,Response response)
@@ -155,20 +155,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddErrorLog(new POCOErrorLog()
 			{
-				ErrorLogID = efErrorLog.ErrorLogID.ToInt(),
-				ErrorTime = efErrorLog.ErrorTime.ToDateTime(),
-				UserName = efErrorLog.UserName,
-				ErrorNumber = efErrorLog.ErrorNumber.ToInt(),
-				ErrorSeverity = efErrorLog.ErrorSeverity.ToNullableInt(),
-				ErrorState = efErrorLog.ErrorState.ToNullableInt(),
-				ErrorProcedure = efErrorLog.ErrorProcedure,
-				ErrorLine = efErrorLog.ErrorLine.ToNullableInt(),
-				ErrorMessage = efErrorLog.ErrorMessage,
+				ErrorLogID = efErrorLog.errorLogID.ToInt(),
+				ErrorTime = efErrorLog.errorTime.ToDateTime(),
+				UserName = efErrorLog.userName,
+				ErrorNumber = efErrorLog.errorNumber.ToInt(),
+				ErrorSeverity = efErrorLog.errorSeverity.ToNullableInt(),
+				ErrorState = efErrorLog.errorState.ToNullableInt(),
+				ErrorProcedure = efErrorLog.errorProcedure,
+				ErrorLine = efErrorLog.errorLine.ToNullableInt(),
+				ErrorMessage = efErrorLog.errorMessage,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97d24cf2905a8a649cfbb97f545ddfc2</Hash>
+    <Hash>89af3bd9b88228bbeeb708a1fc8824df</Hash>
 </Codenesium>*/

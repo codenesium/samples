@@ -9,7 +9,6 @@ namespace NebulaNS.Api.Contracts
 	{
 		public ChainModel()
 		{}
-
 		public ChainModel(string name,
 		                  int teamId,
 		                  int chainStatusId,
@@ -19,15 +18,6 @@ namespace NebulaNS.Api.Contracts
 			this.TeamId = teamId.ToInt();
 			this.ChainStatusId = chainStatusId.ToInt();
 			this.ExternalId = externalId;
-		}
-
-		public ChainModel(POCOChain poco)
-		{
-			this.Name = poco.Name;
-			this.ExternalId = poco.ExternalId;
-
-			this.TeamId = poco.TeamId.Value.ToInt();
-			this.ChainStatusId = poco.ChainStatusId.Value.ToInt();
 		}
 
 		private string _name;
@@ -89,5 +79,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6ba4e218d6d3fb78ef87c19281c7eed8</Hash>
+    <Hash>bb2753bffe819dfa788f8d4e34fd33de</Hash>
 </Codenesium>*/

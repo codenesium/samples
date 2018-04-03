@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductCategoryModel()
 		{}
-
 		public ProductCategoryModel(string name,
 		                            Guid rowguid,
 		                            DateTime modifiedDate)
@@ -17,13 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Name = name;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductCategoryModel(POCOProductCategory poco)
-		{
-			this.Name = poco.Name;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -71,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1a8c42c35dc17fc11658784acc381016</Hash>
+    <Hash>fc58a8f6c05aa831e5fcc6ae561221c6</Hash>
 </Codenesium>*/

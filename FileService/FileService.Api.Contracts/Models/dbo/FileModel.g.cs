@@ -9,7 +9,6 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public FileModel()
 		{}
-
 		public FileModel(Guid externalId,
 		                 string privateKey,
 		                 string publicKey,
@@ -33,22 +32,6 @@ namespace FileServiceNS.Api.Contracts
 			this.FileTypeId = fileTypeId.ToInt();
 			this.BucketId = bucketId.ToNullableInt();
 			this.Description = description;
-		}
-
-		public FileModel(POCOFile poco)
-		{
-			this.ExternalId = poco.ExternalId;
-			this.PrivateKey = poco.PrivateKey;
-			this.PublicKey = poco.PublicKey;
-			this.Location = poco.Location;
-			this.Expiration = poco.Expiration.ToDateTime();
-			this.Extension = poco.Extension;
-			this.DateCreated = poco.DateCreated.ToDateTime();
-			this.FileSizeInBytes = poco.FileSizeInBytes.ToDecimal();
-			this.Description = poco.Description;
-
-			this.FileTypeId = poco.FileTypeId.Value.ToInt();
-			this.BucketId = poco.BucketId.Value.ToInt();
 		}
 
 		private Guid _externalId;
@@ -206,5 +189,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b67cd492e46492a417821a103ef01640</Hash>
+    <Hash>efe4524ecd6ae298df87f79dad2174f1</Hash>
 </Codenesium>*/

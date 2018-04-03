@@ -21,28 +21,25 @@ namespace AdventureWorksNS.Api.Contracts
 		                            Guid rowguid,
 		                            DateTime modifiedDate)
 		{
+			this.SalesOrderID = salesOrderID.ToInt();
 			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
 			this.CarrierTrackingNumber = carrierTrackingNumber;
 			this.OrderQty = orderQty;
 			this.ProductID = productID.ToInt();
+			this.SpecialOfferID = specialOfferID.ToInt();
 			this.UnitPrice = unitPrice;
 			this.UnitPriceDiscount = unitPriceDiscount;
 			this.LineTotal = lineTotal.ToDecimal();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			SalesOrderID = new ReferenceEntity<int>(salesOrderID,
-			                                        "SalesOrderHeader");
-			SpecialOfferID = new ReferenceEntity<int>(specialOfferID,
-			                                          "SpecialOfferProduct");
 		}
 
-		public ReferenceEntity<int>SalesOrderID {get; set;}
+		public int SalesOrderID {get; set;}
 		public int SalesOrderDetailID {get; set;}
 		public string CarrierTrackingNumber {get; set;}
 		public short OrderQty {get; set;}
 		public int ProductID {get; set;}
-		public ReferenceEntity<int>SpecialOfferID {get; set;}
+		public int SpecialOfferID {get; set;}
 		public decimal UnitPrice {get; set;}
 		public decimal UnitPriceDiscount {get; set;}
 		public decimal LineTotal {get; set;}
@@ -155,5 +152,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>84527c0f9cc497569d10ae44fcc7928d</Hash>
+    <Hash>7f17f504a672358668bfa6f22591b097</Hash>
 </Codenesium>*/

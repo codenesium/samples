@@ -10,52 +10,35 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int SalesOrderID {get; set;}
-		public int RevisionNumber {get; set;}
-		public DateTime OrderDate {get; set;}
-		public DateTime DueDate {get; set;}
-		public Nullable<DateTime> ShipDate {get; set;}
-		public int Status {get; set;}
-		public bool OnlineOrderFlag {get; set;}
-		public string SalesOrderNumber {get; set;}
-		public string PurchaseOrderNumber {get; set;}
-		public string AccountNumber {get; set;}
-		public int CustomerID {get; set;}
-		public Nullable<int> SalesPersonID {get; set;}
-		public Nullable<int> TerritoryID {get; set;}
-		public int BillToAddressID {get; set;}
-		public int ShipToAddressID {get; set;}
-		public int ShipMethodID {get; set;}
-		public Nullable<int> CreditCardID {get; set;}
-		public string CreditCardApprovalCode {get; set;}
-		public Nullable<int> CurrencyRateID {get; set;}
-		public decimal SubTotal {get; set;}
-		public decimal TaxAmt {get; set;}
-		public decimal Freight {get; set;}
-		public decimal TotalDue {get; set;}
-		public string Comment {get; set;}
+		public int salesOrderID {get; set;}
+		public int revisionNumber {get; set;}
+		public DateTime orderDate {get; set;}
+		public DateTime dueDate {get; set;}
+		public Nullable<DateTime> shipDate {get; set;}
+		public int status {get; set;}
+		public bool onlineOrderFlag {get; set;}
+		public string salesOrderNumber {get; set;}
+		public string purchaseOrderNumber {get; set;}
+		public string accountNumber {get; set;}
+		public int customerID {get; set;}
+		public Nullable<int> salesPersonID {get; set;}
+		public Nullable<int> territoryID {get; set;}
+		public int billToAddressID {get; set;}
+		public int shipToAddressID {get; set;}
+		public int shipMethodID {get; set;}
+		public Nullable<int> creditCardID {get; set;}
+		public string creditCardApprovalCode {get; set;}
+		public Nullable<int> currencyRateID {get; set;}
+		public decimal subTotal {get; set;}
+		public decimal taxAmt {get; set;}
+		public decimal freight {get; set;}
+		public decimal totalDue {get; set;}
+		public string comment {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("CustomerID")]
-		public virtual EFCustomer CustomerRef { get; set; }
-		[ForeignKey("SalesPersonID")]
-		public virtual EFSalesPerson SalesPersonRef { get; set; }
-		[ForeignKey("TerritoryID")]
-		public virtual EFSalesTerritory SalesTerritoryRef { get; set; }
-		[ForeignKey("BillToAddressID")]
-		public virtual EFAddress AddressRef { get; set; }
-		[ForeignKey("ShipToAddressID")]
-		public virtual EFAddress AddressRef1 { get; set; }
-		[ForeignKey("ShipMethodID")]
-		public virtual EFShipMethod ShipMethodRef { get; set; }
-		[ForeignKey("CreditCardID")]
-		public virtual EFCreditCard CreditCardRef { get; set; }
-		[ForeignKey("CurrencyRateID")]
-		public virtual EFCurrencyRate CurrencyRateRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d177dcdb7772b50898337fc68b8597c</Hash>
+    <Hash>3f496769af14198b7f2cc4263512c9bc</Hash>
 </Codenesium>*/

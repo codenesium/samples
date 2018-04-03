@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFTransactionHistoryArchive>().Add(record);
 			this._context.SaveChanges();
-			return record.TransactionID;
+			return record.transactionID;
 		}
 
 		public virtual void Update(int transactionID, int productID,
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           decimal actualCost,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.transactionID == transactionID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",transactionID);
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int transactionID)
 		{
-			var record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.transactionID == transactionID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -92,7 +92,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int transactionID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.TransactionID == transactionID,response);
+			this.SearchLinqPOCO(x => x.transactionID == transactionID,response);
 		}
 
 		protected virtual List<EFTransactionHistoryArchive> SearchLinqEF(Expression<Func<EFTransactionHistoryArchive, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -136,15 +136,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal actualCost,
 		                               DateTime modifiedDate, EFTransactionHistoryArchive   efTransactionHistoryArchive)
 		{
-			efTransactionHistoryArchive.TransactionID = transactionID;
-			efTransactionHistoryArchive.ProductID = productID;
-			efTransactionHistoryArchive.ReferenceOrderID = referenceOrderID;
-			efTransactionHistoryArchive.ReferenceOrderLineID = referenceOrderLineID;
-			efTransactionHistoryArchive.TransactionDate = transactionDate;
-			efTransactionHistoryArchive.TransactionType = transactionType;
-			efTransactionHistoryArchive.Quantity = quantity;
-			efTransactionHistoryArchive.ActualCost = actualCost;
-			efTransactionHistoryArchive.ModifiedDate = modifiedDate;
+			efTransactionHistoryArchive.transactionID = transactionID;
+			efTransactionHistoryArchive.productID = productID;
+			efTransactionHistoryArchive.referenceOrderID = referenceOrderID;
+			efTransactionHistoryArchive.referenceOrderLineID = referenceOrderLineID;
+			efTransactionHistoryArchive.transactionDate = transactionDate;
+			efTransactionHistoryArchive.transactionType = transactionType;
+			efTransactionHistoryArchive.quantity = quantity;
+			efTransactionHistoryArchive.actualCost = actualCost;
+			efTransactionHistoryArchive.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFTransactionHistoryArchive efTransactionHistoryArchive,Response response)
@@ -155,20 +155,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddTransactionHistoryArchive(new POCOTransactionHistoryArchive()
 			{
-				TransactionID = efTransactionHistoryArchive.TransactionID.ToInt(),
-				ProductID = efTransactionHistoryArchive.ProductID.ToInt(),
-				ReferenceOrderID = efTransactionHistoryArchive.ReferenceOrderID.ToInt(),
-				ReferenceOrderLineID = efTransactionHistoryArchive.ReferenceOrderLineID.ToInt(),
-				TransactionDate = efTransactionHistoryArchive.TransactionDate.ToDateTime(),
-				TransactionType = efTransactionHistoryArchive.TransactionType,
-				Quantity = efTransactionHistoryArchive.Quantity.ToInt(),
-				ActualCost = efTransactionHistoryArchive.ActualCost,
-				ModifiedDate = efTransactionHistoryArchive.ModifiedDate.ToDateTime(),
+				TransactionID = efTransactionHistoryArchive.transactionID.ToInt(),
+				ProductID = efTransactionHistoryArchive.productID.ToInt(),
+				ReferenceOrderID = efTransactionHistoryArchive.referenceOrderID.ToInt(),
+				ReferenceOrderLineID = efTransactionHistoryArchive.referenceOrderLineID.ToInt(),
+				TransactionDate = efTransactionHistoryArchive.transactionDate.ToDateTime(),
+				TransactionType = efTransactionHistoryArchive.transactionType,
+				Quantity = efTransactionHistoryArchive.quantity.ToInt(),
+				ActualCost = efTransactionHistoryArchive.actualCost,
+				ModifiedDate = efTransactionHistoryArchive.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>18b8d7ed3d6f29e58b2576d3555070f3</Hash>
+    <Hash>ad668dd7cf4882a95ec722617f9761de</Hash>
 </Codenesium>*/

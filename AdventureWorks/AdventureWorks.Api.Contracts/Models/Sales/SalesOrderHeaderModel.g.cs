@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesOrderHeaderModel()
 		{}
-
 		public SalesOrderHeaderModel(int revisionNumber,
 		                             DateTime orderDate,
 		                             DateTime dueDate,
@@ -61,36 +60,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Comment = comment;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesOrderHeaderModel(POCOSalesOrderHeader poco)
-		{
-			this.RevisionNumber = poco.RevisionNumber;
-			this.OrderDate = poco.OrderDate.ToDateTime();
-			this.DueDate = poco.DueDate.ToDateTime();
-			this.ShipDate = poco.ShipDate.ToNullableDateTime();
-			this.Status = poco.Status;
-			this.OnlineOrderFlag = poco.OnlineOrderFlag;
-			this.SalesOrderNumber = poco.SalesOrderNumber;
-			this.PurchaseOrderNumber = poco.PurchaseOrderNumber;
-			this.AccountNumber = poco.AccountNumber;
-			this.CreditCardApprovalCode = poco.CreditCardApprovalCode;
-			this.SubTotal = poco.SubTotal;
-			this.TaxAmt = poco.TaxAmt;
-			this.Freight = poco.Freight;
-			this.TotalDue = poco.TotalDue;
-			this.Comment = poco.Comment;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.CustomerID = poco.CustomerID.Value.ToInt();
-			this.SalesPersonID = poco.SalesPersonID.Value.ToInt();
-			this.TerritoryID = poco.TerritoryID.Value.ToInt();
-			this.BillToAddressID = poco.BillToAddressID.Value.ToInt();
-			this.ShipToAddressID = poco.ShipToAddressID.Value.ToInt();
-			this.ShipMethodID = poco.ShipMethodID.Value.ToInt();
-			this.CreditCardID = poco.CreditCardID.Value.ToInt();
-			this.CurrencyRateID = poco.CurrencyRateID.Value.ToInt();
 		}
 
 		private int _revisionNumber;
@@ -437,5 +406,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>efa19a534ac5474681642e0fb75b6844</Hash>
+    <Hash>a3e681d5b64fa708fd865bf49bf5e182</Hash>
 </Codenesium>*/

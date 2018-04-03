@@ -137,13 +137,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int AddressID,AddressModel model)
+		public virtual IActionResult Update(int addressID,AddressModel model)
 		{
 			this._addressModelValidator.UpdateMode();
 			var validationResult = this._addressModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._addressRepository.Update(AddressID,  model.AddressLine1,
+				this._addressRepository.Update(addressID,  model.AddressLine1,
 				                               model.AddressLine2,
 				                               model.City,
 				                               model.StateProvinceID,
@@ -171,24 +171,9 @@ namespace AdventureWorksNS.Api.Service
 			this._addressRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByStateProvinceID/{id}")]
-		[AddressFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/StateProvinces/{id}/Addresses")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByStateProvinceID(int id)
-		{
-			var response = new Response();
-
-			this._addressRepository.GetWhere(x => x.StateProvinceID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b29bc65864cc742293c9cad941d79239</Hash>
+    <Hash>f5be39a3d08803877827989f4996c75e</Hash>
 </Codenesium>*/

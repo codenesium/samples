@@ -10,20 +10,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public string AccountNumber {get; set;}
-		public string Name {get; set;}
-		public int CreditRating {get; set;}
-		public bool PreferredVendorStatus {get; set;}
-		public bool ActiveFlag {get; set;}
-		public string PurchasingWebServiceURL {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntityRef { get; set; }
+		public int businessEntityID {get; set;}
+		public string accountNumber {get; set;}
+		public string name {get; set;}
+		public int creditRating {get; set;}
+		public bool preferredVendorStatus {get; set;}
+		public bool activeFlag {get; set;}
+		public string purchasingWebServiceURL {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d7736a7439ce53f200db1deec518af66</Hash>
+    <Hash>5583cc6230c3a0b4e4d682ed0a57f5d5</Hash>
 </Codenesium>*/

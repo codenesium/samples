@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,BusinessEntityContactModel model)
+		public virtual IActionResult Update(int businessEntityID,BusinessEntityContactModel model)
 		{
 			this._businessEntityContactModelValidator.UpdateMode();
 			var validationResult = this._businessEntityContactModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._businessEntityContactRepository.Update(BusinessEntityID,  model.PersonID,
+				this._businessEntityContactRepository.Update(businessEntityID,  model.PersonID,
 				                                             model.ContactTypeID,
 				                                             model.Rowguid,
 				                                             model.ModifiedDate);
@@ -159,54 +159,9 @@ namespace AdventureWorksNS.Api.Service
 			this._businessEntityContactRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[BusinessEntityContactFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/BusinessEntities/{id}/BusinessEntityContacts")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			var response = new Response();
-
-			this._businessEntityContactRepository.GetWhere(x => x.BusinessEntityID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByPersonID/{id}")]
-		[BusinessEntityContactFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/People/{id}/BusinessEntityContacts")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByPersonID(int id)
-		{
-			var response = new Response();
-
-			this._businessEntityContactRepository.GetWhere(x => x.PersonID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByContactTypeID/{id}")]
-		[BusinessEntityContactFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ContactTypes/{id}/BusinessEntityContacts")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByContactTypeID(int id)
-		{
-			var response = new Response();
-
-			this._businessEntityContactRepository.GetWhere(x => x.ContactTypeID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4d95dc4a7ba503bf390d62a59f4fe40</Hash>
+    <Hash>a20b29cd92d2996e0b05f452ffa332c7</Hash>
 </Codenesium>*/

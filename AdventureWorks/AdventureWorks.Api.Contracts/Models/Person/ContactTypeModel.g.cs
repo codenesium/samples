@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ContactTypeModel()
 		{}
-
 		public ContactTypeModel(string name,
 		                        DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ContactTypeModel(POCOContactType poco)
-		{
-			this.Name = poco.Name;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -54,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b77bb16c6725ab969fd0c480dc46b814</Hash>
+    <Hash>84debf21c91a64cea755756b76eaf048</Hash>
 </Codenesium>*/

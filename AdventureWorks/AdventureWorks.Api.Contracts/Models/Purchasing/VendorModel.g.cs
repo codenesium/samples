@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public VendorModel()
 		{}
-
 		public VendorModel(string accountNumber,
 		                   string name,
 		                   int creditRating,
@@ -25,17 +24,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ActiveFlag = activeFlag;
 			this.PurchasingWebServiceURL = purchasingWebServiceURL;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public VendorModel(POCOVendor poco)
-		{
-			this.AccountNumber = poco.AccountNumber;
-			this.Name = poco.Name;
-			this.CreditRating = poco.CreditRating;
-			this.PreferredVendorStatus = poco.PreferredVendorStatus;
-			this.ActiveFlag = poco.ActiveFlag;
-			this.PurchasingWebServiceURL = poco.PurchasingWebServiceURL;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _accountNumber;
@@ -138,5 +126,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d08793fd601cfe264f9bdea87b5a3704</Hash>
+    <Hash>07e3d236a5b04d61407792fa1eb4fa4b</Hash>
 </Codenesium>*/

@@ -145,13 +145,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int PurchaseOrderID,PurchaseOrderHeaderModel model)
+		public virtual IActionResult Update(int purchaseOrderID,PurchaseOrderHeaderModel model)
 		{
 			this._purchaseOrderHeaderModelValidator.UpdateMode();
 			var validationResult = this._purchaseOrderHeaderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._purchaseOrderHeaderRepository.Update(PurchaseOrderID,  model.RevisionNumber,
+				this._purchaseOrderHeaderRepository.Update(purchaseOrderID,  model.RevisionNumber,
 				                                           model.Status,
 				                                           model.EmployeeID,
 				                                           model.VendorID,
@@ -183,54 +183,9 @@ namespace AdventureWorksNS.Api.Service
 			this._purchaseOrderHeaderRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByEmployeeID/{id}")]
-		[PurchaseOrderHeaderFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Employees/{id}/PurchaseOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByEmployeeID(int id)
-		{
-			var response = new Response();
-
-			this._purchaseOrderHeaderRepository.GetWhere(x => x.EmployeeID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByVendorID/{id}")]
-		[PurchaseOrderHeaderFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Vendors/{id}/PurchaseOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByVendorID(int id)
-		{
-			var response = new Response();
-
-			this._purchaseOrderHeaderRepository.GetWhere(x => x.VendorID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByShipMethodID/{id}")]
-		[PurchaseOrderHeaderFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ShipMethods/{id}/PurchaseOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByShipMethodID(int id)
-		{
-			var response = new Response();
-
-			this._purchaseOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>638b20e9cdc9478158b5fd4810c5ed99</Hash>
+    <Hash>c4420b0341d99a7555fa94996d3d62e9</Hash>
 </Codenesium>*/

@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IBusinessEntityRepository BusinessEntityRepository {get; set;}
 		public virtual void PersonTypeRules()
 		{
 			RuleFor(x => x.PersonType).NotNull();
@@ -79,17 +78,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidBusinessEntity(int id)
-		{
-			Response response = new Response();
-
-			this.BusinessEntityRepository.GetById(id,response);
-			return response.BusinessEntities.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1e2736bcd6628d759a777e8c7373c74</Hash>
+    <Hash>49abd287ac24726466e4503bae6f9639</Hash>
 </Codenesium>*/

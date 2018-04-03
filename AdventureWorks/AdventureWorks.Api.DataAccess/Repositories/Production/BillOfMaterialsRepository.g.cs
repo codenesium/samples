@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFBillOfMaterials>().Add(record);
 			this._context.SaveChanges();
-			return record.BillOfMaterialsID;
+			return record.billOfMaterialsID;
 		}
 
 		public virtual void Update(int billOfMaterialsID, Nullable<int> productAssemblyID,
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           decimal perAssemblyQty,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.billOfMaterialsID == billOfMaterialsID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",billOfMaterialsID);
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int billOfMaterialsID)
 		{
-			var record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.billOfMaterialsID == billOfMaterialsID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -92,7 +92,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int billOfMaterialsID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BillOfMaterialsID == billOfMaterialsID,response);
+			this.SearchLinqPOCO(x => x.billOfMaterialsID == billOfMaterialsID,response);
 		}
 
 		protected virtual List<EFBillOfMaterials> SearchLinqEF(Expression<Func<EFBillOfMaterials, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -136,15 +136,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal perAssemblyQty,
 		                               DateTime modifiedDate, EFBillOfMaterials   efBillOfMaterials)
 		{
-			efBillOfMaterials.BillOfMaterialsID = billOfMaterialsID;
-			efBillOfMaterials.ProductAssemblyID = productAssemblyID;
-			efBillOfMaterials.ComponentID = componentID;
-			efBillOfMaterials.StartDate = startDate;
-			efBillOfMaterials.EndDate = endDate;
-			efBillOfMaterials.UnitMeasureCode = unitMeasureCode;
-			efBillOfMaterials.BOMLevel = bOMLevel;
-			efBillOfMaterials.PerAssemblyQty = perAssemblyQty;
-			efBillOfMaterials.ModifiedDate = modifiedDate;
+			efBillOfMaterials.billOfMaterialsID = billOfMaterialsID;
+			efBillOfMaterials.productAssemblyID = productAssemblyID;
+			efBillOfMaterials.componentID = componentID;
+			efBillOfMaterials.startDate = startDate;
+			efBillOfMaterials.endDate = endDate;
+			efBillOfMaterials.unitMeasureCode = unitMeasureCode;
+			efBillOfMaterials.bOMLevel = bOMLevel;
+			efBillOfMaterials.perAssemblyQty = perAssemblyQty;
+			efBillOfMaterials.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFBillOfMaterials efBillOfMaterials,Response response)
@@ -155,30 +155,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddBillOfMaterials(new POCOBillOfMaterials()
 			{
-				BillOfMaterialsID = efBillOfMaterials.BillOfMaterialsID.ToInt(),
-				StartDate = efBillOfMaterials.StartDate.ToDateTime(),
-				EndDate = efBillOfMaterials.EndDate.ToNullableDateTime(),
-				BOMLevel = efBillOfMaterials.BOMLevel,
-				PerAssemblyQty = efBillOfMaterials.PerAssemblyQty.ToDecimal(),
-				ModifiedDate = efBillOfMaterials.ModifiedDate.ToDateTime(),
-
-				ProductAssemblyID = new ReferenceEntity<Nullable<int>>(efBillOfMaterials.ProductAssemblyID,
-				                                                       "Products"),
-				ComponentID = new ReferenceEntity<int>(efBillOfMaterials.ComponentID,
-				                                       "Products"),
-				UnitMeasureCode = new ReferenceEntity<string>(efBillOfMaterials.UnitMeasureCode,
-				                                              "UnitMeasures"),
+				BillOfMaterialsID = efBillOfMaterials.billOfMaterialsID.ToInt(),
+				ProductAssemblyID = efBillOfMaterials.productAssemblyID.ToNullableInt(),
+				ComponentID = efBillOfMaterials.componentID.ToInt(),
+				StartDate = efBillOfMaterials.startDate.ToDateTime(),
+				EndDate = efBillOfMaterials.endDate.ToNullableDateTime(),
+				UnitMeasureCode = efBillOfMaterials.unitMeasureCode,
+				BOMLevel = efBillOfMaterials.bOMLevel,
+				PerAssemblyQty = efBillOfMaterials.perAssemblyQty.ToDecimal(),
+				ModifiedDate = efBillOfMaterials.modifiedDate.ToDateTime(),
 			});
-
-			ProductRepository.MapEFToPOCO(efBillOfMaterials.ProductRef, response);
-
-			ProductRepository.MapEFToPOCO(efBillOfMaterials.ProductRef1, response);
-
-			UnitMeasureRepository.MapEFToPOCO(efBillOfMaterials.UnitMeasureRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d63fdb6da7c569d75ed77edd3217c7a7</Hash>
+    <Hash>d06749921cbd45fbb33ade2a31432f97</Hash>
 </Codenesium>*/

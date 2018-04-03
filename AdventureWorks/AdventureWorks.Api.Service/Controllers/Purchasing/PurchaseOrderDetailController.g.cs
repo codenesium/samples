@@ -141,13 +141,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int PurchaseOrderID,PurchaseOrderDetailModel model)
+		public virtual IActionResult Update(int purchaseOrderID,PurchaseOrderDetailModel model)
 		{
 			this._purchaseOrderDetailModelValidator.UpdateMode();
 			var validationResult = this._purchaseOrderDetailModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._purchaseOrderDetailRepository.Update(PurchaseOrderID,  model.PurchaseOrderDetailID,
+				this._purchaseOrderDetailRepository.Update(purchaseOrderID,  model.PurchaseOrderDetailID,
 				                                           model.DueDate,
 				                                           model.OrderQty,
 				                                           model.ProductID,
@@ -177,39 +177,9 @@ namespace AdventureWorksNS.Api.Service
 			this._purchaseOrderDetailRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByPurchaseOrderID/{id}")]
-		[PurchaseOrderDetailFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/PurchaseOrderHeaders/{id}/PurchaseOrderDetails")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByPurchaseOrderID(int id)
-		{
-			var response = new Response();
-
-			this._purchaseOrderDetailRepository.GetWhere(x => x.PurchaseOrderID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[PurchaseOrderDetailFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Products/{id}/PurchaseOrderDetails")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			var response = new Response();
-
-			this._purchaseOrderDetailRepository.GetWhere(x => x.ProductID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d264e7c5d27d1672886ba2798a3e517</Hash>
+    <Hash>b8ce9dfd12b843fbd31bfbd1e036bf50</Hash>
 </Codenesium>*/

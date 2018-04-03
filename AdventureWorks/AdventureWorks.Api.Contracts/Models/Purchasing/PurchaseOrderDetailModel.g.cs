@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PurchaseOrderDetailModel()
 		{}
-
 		public PurchaseOrderDetailModel(int purchaseOrderDetailID,
 		                                DateTime dueDate,
 		                                short orderQty,
@@ -31,21 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.RejectedQty = rejectedQty.ToDecimal();
 			this.StockedQty = stockedQty.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public PurchaseOrderDetailModel(POCOPurchaseOrderDetail poco)
-		{
-			this.PurchaseOrderDetailID = poco.PurchaseOrderDetailID.ToInt();
-			this.DueDate = poco.DueDate.ToDateTime();
-			this.OrderQty = poco.OrderQty;
-			this.UnitPrice = poco.UnitPrice;
-			this.LineTotal = poco.LineTotal;
-			this.ReceivedQty = poco.ReceivedQty.ToDecimal();
-			this.RejectedQty = poco.RejectedQty.ToDecimal();
-			this.StockedQty = poco.StockedQty.ToDecimal();
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductID = poco.ProductID.Value.ToInt();
 		}
 
 		private int _purchaseOrderDetailID;
@@ -191,5 +175,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e1c135084980f4e79ff700e58a830697</Hash>
+    <Hash>74c9f34640b97b7a2b1a1f1eaa9c1593</Hash>
 </Codenesium>*/

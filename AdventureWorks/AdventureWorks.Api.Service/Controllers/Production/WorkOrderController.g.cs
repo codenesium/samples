@@ -139,13 +139,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int WorkOrderID,WorkOrderModel model)
+		public virtual IActionResult Update(int workOrderID,WorkOrderModel model)
 		{
 			this._workOrderModelValidator.UpdateMode();
 			var validationResult = this._workOrderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._workOrderRepository.Update(WorkOrderID,  model.ProductID,
+				this._workOrderRepository.Update(workOrderID,  model.ProductID,
 				                                 model.OrderQty,
 				                                 model.StockedQty,
 				                                 model.ScrappedQty,
@@ -174,39 +174,9 @@ namespace AdventureWorksNS.Api.Service
 			this._workOrderRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[WorkOrderFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Products/{id}/WorkOrders")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			var response = new Response();
-
-			this._workOrderRepository.GetWhere(x => x.ProductID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByScrapReasonID/{id}")]
-		[WorkOrderFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ScrapReasons/{id}/WorkOrders")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByScrapReasonID(short id)
-		{
-			var response = new Response();
-
-			this._workOrderRepository.GetWhere(x => x.ScrapReasonID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>75e2413c6d2447f4ea5fd5132d0ccb43</Hash>
+    <Hash>f8aa0f295c8e9e063dca65ce317003f3</Hash>
 </Codenesium>*/

@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFPersonCreditCard>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, int creditCardID,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFPersonCreditCard> SearchLinqEF(Expression<Func<EFPersonCreditCard, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int businessEntityID, int creditCardID,
 		                               DateTime modifiedDate, EFPersonCreditCard   efPersonCreditCard)
 		{
-			efPersonCreditCard.BusinessEntityID = businessEntityID;
-			efPersonCreditCard.CreditCardID = creditCardID;
-			efPersonCreditCard.ModifiedDate = modifiedDate;
+			efPersonCreditCard.businessEntityID = businessEntityID;
+			efPersonCreditCard.creditCardID = creditCardID;
+			efPersonCreditCard.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFPersonCreditCard efPersonCreditCard,Response response)
@@ -119,21 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddPersonCreditCard(new POCOPersonCreditCard()
 			{
-				ModifiedDate = efPersonCreditCard.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efPersonCreditCard.BusinessEntityID,
-				                                            "People"),
-				CreditCardID = new ReferenceEntity<int>(efPersonCreditCard.CreditCardID,
-				                                        "CreditCards"),
+				BusinessEntityID = efPersonCreditCard.businessEntityID.ToInt(),
+				CreditCardID = efPersonCreditCard.creditCardID.ToInt(),
+				ModifiedDate = efPersonCreditCard.modifiedDate.ToDateTime(),
 			});
-
-			PersonRepository.MapEFToPOCO(efPersonCreditCard.PersonRef, response);
-
-			CreditCardRepository.MapEFToPOCO(efPersonCreditCard.CreditCardRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd181010d08d6532d7cc04c7a2fc6324</Hash>
+    <Hash>9da09a14e7e911957a22a4932680af3b</Hash>
 </Codenesium>*/

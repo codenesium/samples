@@ -10,16 +10,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int JobCandidateID {get; set;}
-		public Nullable<int> BusinessEntityID {get; set;}
-		public string Resume {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFEmployee EmployeeRef { get; set; }
+		public int jobCandidateID {get; set;}
+		public Nullable<int> businessEntityID {get; set;}
+		public string resume {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9df11e7eb864af511a8467588e09294</Hash>
+    <Hash>e611178951f03a0d2a05cb64c3edd8de</Hash>
 </Codenesium>*/

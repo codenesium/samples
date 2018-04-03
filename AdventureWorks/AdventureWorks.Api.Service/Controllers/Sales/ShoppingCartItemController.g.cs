@@ -131,13 +131,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ShoppingCartItemID,ShoppingCartItemModel model)
+		public virtual IActionResult Update(int shoppingCartItemID,ShoppingCartItemModel model)
 		{
 			this._shoppingCartItemModelValidator.UpdateMode();
 			var validationResult = this._shoppingCartItemModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._shoppingCartItemRepository.Update(ShoppingCartItemID,  model.ShoppingCartID,
+				this._shoppingCartItemRepository.Update(shoppingCartItemID,  model.ShoppingCartID,
 				                                        model.Quantity,
 				                                        model.ProductID,
 				                                        model.DateCreated,
@@ -162,24 +162,9 @@ namespace AdventureWorksNS.Api.Service
 			this._shoppingCartItemRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ShoppingCartItemFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Products/{id}/ShoppingCartItems")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			var response = new Response();
-
-			this._shoppingCartItemRepository.GetWhere(x => x.ProductID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e8e1e2210d3848a703e194051dd12fb</Hash>
+    <Hash>ad28ee189e6fc5df141e23786c3627f1</Hash>
 </Codenesium>*/

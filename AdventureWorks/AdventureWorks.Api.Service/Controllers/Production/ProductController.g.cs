@@ -169,13 +169,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductID,ProductModel model)
+		public virtual IActionResult Update(int productID,ProductModel model)
 		{
 			this._productModelValidator.UpdateMode();
 			var validationResult = this._productModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productRepository.Update(ProductID,  model.Name,
+				this._productRepository.Update(productID,  model.Name,
 				                               model.ProductNumber,
 				                               model.MakeFlag,
 				                               model.FinishedGoodsFlag,
@@ -219,69 +219,9 @@ namespace AdventureWorksNS.Api.Service
 			this._productRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("BySizeUnitMeasureCode/{id}")]
-		[ProductFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/UnitMeasures/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult BySizeUnitMeasureCode(string id)
-		{
-			var response = new Response();
-
-			this._productRepository.GetWhere(x => x.SizeUnitMeasureCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByWeightUnitMeasureCode/{id}")]
-		[ProductFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/UnitMeasures/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByWeightUnitMeasureCode(string id)
-		{
-			var response = new Response();
-
-			this._productRepository.GetWhere(x => x.WeightUnitMeasureCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByProductSubcategoryID/{id}")]
-		[ProductFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ProductSubcategories/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductSubcategoryID(int id)
-		{
-			var response = new Response();
-
-			this._productRepository.GetWhere(x => x.ProductSubcategoryID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByProductModelID/{id}")]
-		[ProductFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ProductModels/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductModelID(int id)
-		{
-			var response = new Response();
-
-			this._productRepository.GetWhere(x => x.ProductModelID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>73295ea0e42d50aac0a9754e61526ad0</Hash>
+    <Hash>d6104476a588b06f9e527723fe3ad15d</Hash>
 </Codenesium>*/

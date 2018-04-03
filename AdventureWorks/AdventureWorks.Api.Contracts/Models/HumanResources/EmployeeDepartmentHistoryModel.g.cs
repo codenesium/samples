@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EmployeeDepartmentHistoryModel()
 		{}
-
 		public EmployeeDepartmentHistoryModel(short departmentID,
 		                                      int shiftID,
 		                                      DateTime startDate,
@@ -21,16 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.StartDate = startDate;
 			this.EndDate = endDate;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public EmployeeDepartmentHistoryModel(POCOEmployeeDepartmentHistory poco)
-		{
-			this.StartDate = poco.StartDate;
-			this.EndDate = poco.EndDate;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.DepartmentID = poco.DepartmentID.Value.ToSmallInt();
-			this.ShiftID = poco.ShiftID.Value.ToInt();
 		}
 
 		private short _departmentID;
@@ -105,5 +94,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a014adfc9c22b2e90f3515efc31cff09</Hash>
+    <Hash>e28f728e6428d19c6c7204409fe81d98</Hash>
 </Codenesium>*/

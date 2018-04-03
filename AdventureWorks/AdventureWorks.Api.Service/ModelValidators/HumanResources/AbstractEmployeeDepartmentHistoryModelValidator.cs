@@ -20,19 +20,14 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
-		public IDepartmentRepository DepartmentRepository {get; set;}
-		public IShiftRepository ShiftRepository {get; set;}
 		public virtual void DepartmentIDRules()
 		{
 			RuleFor(x => x.DepartmentID).NotNull();
-			RuleFor(x => x.DepartmentID).Must(BeValidDepartment).When(x => x ?.DepartmentID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShiftIDRules()
 		{
 			RuleFor(x => x.ShiftID).NotNull();
-			RuleFor(x => x.ShiftID).Must(BeValidShift).When(x => x ?.ShiftID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void StartDateRules()
@@ -47,33 +42,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidEmployee(int id)
-		{
-			Response response = new Response();
-
-			this.EmployeeRepository.GetById(id,response);
-			return response.Employees.Count > 0;
-		}
-
-		public bool BeValidDepartment(short id)
-		{
-			Response response = new Response();
-
-			this.DepartmentRepository.GetById(id,response);
-			return response.Departments.Count > 0;
-		}
-
-		public bool BeValidShift(int id)
-		{
-			Response response = new Response();
-
-			this.ShiftRepository.GetById(id,response);
-			return response.Shifts.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a068be6590f0bb526b2d832f4f05afd</Hash>
+    <Hash>5a449df4af617dbd2959b1812c2604f7</Hash>
 </Codenesium>*/

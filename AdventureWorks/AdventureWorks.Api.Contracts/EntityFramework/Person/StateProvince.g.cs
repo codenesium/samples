@@ -10,22 +10,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int StateProvinceID {get; set;}
-		public string StateProvinceCode {get; set;}
-		public string CountryRegionCode {get; set;}
-		public bool IsOnlyStateProvinceFlag {get; set;}
-		public string Name {get; set;}
-		public int TerritoryID {get; set;}
+		public int stateProvinceID {get; set;}
+		public string stateProvinceCode {get; set;}
+		public string countryRegionCode {get; set;}
+		public bool isOnlyStateProvinceFlag {get; set;}
+		public string name {get; set;}
+		public int territoryID {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("CountryRegionCode")]
-		public virtual EFCountryRegion CountryRegionRef { get; set; }
-		[ForeignKey("TerritoryID")]
-		public virtual EFSalesTerritory SalesTerritoryRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ecd877d4062f322322e98bceed4ab37e</Hash>
+    <Hash>75d47eb934b4b3fe1e3fcc6ae4051bc4</Hash>
 </Codenesium>*/

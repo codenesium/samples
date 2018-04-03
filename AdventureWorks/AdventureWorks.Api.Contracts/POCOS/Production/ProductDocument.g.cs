@@ -13,16 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
 		                           Guid documentNode,
 		                           DateTime modifiedDate)
 		{
+			this.ProductID = productID.ToInt();
+			this.DocumentNode = documentNode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
-			DocumentNode = new ReferenceEntity<Guid>(documentNode,
-			                                         "Document");
 		}
 
-		public ReferenceEntity<int>ProductID {get; set;}
-		public ReferenceEntity<Guid>DocumentNode {get; set;}
+		public int ProductID {get; set;}
+		public Guid DocumentNode {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -59,5 +56,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>403b61aca7030bac27d54d9f418ad646</Hash>
+    <Hash>b94beb9e567cff7a22b5ace34322cdbd</Hash>
 </Codenesium>*/

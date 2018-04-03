@@ -15,15 +15,13 @@ namespace AdventureWorksNS.Api.Contracts
 		                        DateTime modifiedDate)
 		{
 			this.JobCandidateID = jobCandidateID.ToInt();
+			this.BusinessEntityID = businessEntityID.ToNullableInt();
 			this.Resume = resume;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			BusinessEntityID = new ReferenceEntity<Nullable<int>>(businessEntityID,
-			                                                      "Employee");
 		}
 
 		public int JobCandidateID {get; set;}
-		public ReferenceEntity<Nullable<int>>BusinessEntityID {get; set;}
+		public Nullable<int> BusinessEntityID {get; set;}
 		public string Resume {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
@@ -70,5 +68,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>564c5c304c55735b9be1b6dce3fdb7f9</Hash>
+    <Hash>9cba97b66ce151b7fe1c3867d17ddc3c</Hash>
 </Codenesium>*/

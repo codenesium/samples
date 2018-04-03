@@ -20,12 +20,8 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
-		public ISalesTerritoryRepository SalesTerritoryRepository {get; set;}
 		public virtual void TerritoryIDRules()
-		{
-			RuleFor(x => x.TerritoryID).Must(BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void SalesQuotaRules()
 		{                       }
@@ -59,25 +55,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidEmployee(int id)
-		{
-			Response response = new Response();
-
-			this.EmployeeRepository.GetById(id,response);
-			return response.Employees.Count > 0;
-		}
-
-		public bool BeValidSalesTerritory(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.SalesTerritoryRepository.GetById(id.GetValueOrDefault(),response);
-			return response.SalesTerritories.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4079bda67f703d0e141bca86087324f5</Hash>
+    <Hash>0f5ea2e970334346fc5b3c0f42b83452</Hash>
 </Codenesium>*/

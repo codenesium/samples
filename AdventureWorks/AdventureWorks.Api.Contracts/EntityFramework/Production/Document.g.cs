@@ -10,26 +10,23 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public Guid DocumentNode {get; set;}
-		public Nullable<short> DocumentLevel {get; set;}
-		public string Title {get; set;}
-		public int Owner {get; set;}
-		public bool FolderFlag {get; set;}
-		public string FileName {get; set;}
-		public string FileExtension {get; set;}
-		public string Revision {get; set;}
-		public int ChangeNumber {get; set;}
-		public int Status {get; set;}
-		public string DocumentSummary {get; set;}
-		public byte[] Document1 {get; set;}
+		public Guid documentNode {get; set;}
+		public Nullable<short> documentLevel {get; set;}
+		public string title {get; set;}
+		public int owner {get; set;}
+		public bool folderFlag {get; set;}
+		public string fileName {get; set;}
+		public string fileExtension {get; set;}
+		public string revision {get; set;}
+		public int changeNumber {get; set;}
+		public int status {get; set;}
+		public string documentSummary {get; set;}
+		public byte[] document {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("Owner")]
-		public virtual EFEmployee EmployeeRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a8074da474bb5366e51178fecb58541</Hash>
+    <Hash>aeb9b32e4ca9a0236125aeb2b8df685a</Hash>
 </Codenesium>*/

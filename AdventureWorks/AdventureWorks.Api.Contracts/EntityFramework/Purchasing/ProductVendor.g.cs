@@ -10,27 +10,20 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ProductID {get; set;}
-		public int BusinessEntityID {get; set;}
-		public int AverageLeadTime {get; set;}
-		public decimal StandardPrice {get; set;}
-		public Nullable<decimal> LastReceiptCost {get; set;}
-		public Nullable<DateTime> LastReceiptDate {get; set;}
-		public int MinOrderQty {get; set;}
-		public int MaxOrderQty {get; set;}
-		public Nullable<int> OnOrderQty {get; set;}
-		public string UnitMeasureCode {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct ProductRef { get; set; }
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFVendor VendorRef { get; set; }
-		[ForeignKey("UnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasureRef { get; set; }
+		public int productID {get; set;}
+		public int businessEntityID {get; set;}
+		public int averageLeadTime {get; set;}
+		public decimal standardPrice {get; set;}
+		public Nullable<decimal> lastReceiptCost {get; set;}
+		public Nullable<DateTime> lastReceiptDate {get; set;}
+		public int minOrderQty {get; set;}
+		public int maxOrderQty {get; set;}
+		public Nullable<int> onOrderQty {get; set;}
+		public string unitMeasureCode {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3d5aa34e9bcd17c3103cb8ccc1b78a75</Hash>
+    <Hash>d49973ef215b73d6571c40b12733e905</Hash>
 </Codenesium>*/

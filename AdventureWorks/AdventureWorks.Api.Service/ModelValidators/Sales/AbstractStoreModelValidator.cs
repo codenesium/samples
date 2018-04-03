@@ -20,8 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IBusinessEntityRepository BusinessEntityRepository {get; set;}
-		public ISalesPersonRepository SalesPersonRepository {get; set;}
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -29,9 +27,7 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		public virtual void SalesPersonIDRules()
-		{
-			RuleFor(x => x.SalesPersonID).Must(BeValidSalesPerson).When(x => x ?.SalesPersonID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void DemographicsRules()
 		{                       }
@@ -45,25 +41,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidBusinessEntity(int id)
-		{
-			Response response = new Response();
-
-			this.BusinessEntityRepository.GetById(id,response);
-			return response.BusinessEntities.Count > 0;
-		}
-
-		public bool BeValidSalesPerson(Nullable<int> id)
-		{
-			Response response = new Response();
-
-			this.SalesPersonRepository.GetById(id.GetValueOrDefault(),response);
-			return response.SalesPersons.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d756506eaf5645152b2e1b284e9c82c</Hash>
+    <Hash>377ab4c95da208282e1027cbb607c018</Hash>
 </Codenesium>*/

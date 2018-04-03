@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public AWBuildVersionModel()
 		{}
-
 		public AWBuildVersionModel(string database_Version,
 		                           DateTime versionDate,
 		                           DateTime modifiedDate)
@@ -17,13 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Database_Version = database_Version;
 			this.VersionDate = versionDate.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public AWBuildVersionModel(POCOAWBuildVersion poco)
-		{
-			this.Database_Version = poco.Database_Version;
-			this.VersionDate = poco.VersionDate.ToDateTime();
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _database_Version;
@@ -71,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ee9e8635111b82312b115c3c917e0315</Hash>
+    <Hash>87ac2c3a7f5293eef9e502c44b2d477d</Hash>
 </Codenesium>*/

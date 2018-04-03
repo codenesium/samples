@@ -20,13 +20,9 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository {get; set;}
-		public IVendorRepository VendorRepository {get; set;}
-		public IUnitMeasureRepository UnitMeasureRepository {get; set;}
 		public virtual void BusinessEntityIDRules()
 		{
 			RuleFor(x => x.BusinessEntityID).NotNull();
-			RuleFor(x => x.BusinessEntityID).Must(BeValidVendor).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void AverageLeadTimeRules()
@@ -61,7 +57,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void UnitMeasureCodeRules()
 		{
 			RuleFor(x => x.UnitMeasureCode).NotNull();
-			RuleFor(x => x.UnitMeasureCode).Must(BeValidUnitMeasure).When(x => x ?.UnitMeasureCode != null).WithMessage("Invalid reference");
 			RuleFor(x => x.UnitMeasureCode).Length(0,3);
 		}
 
@@ -69,33 +64,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidProduct(int id)
-		{
-			Response response = new Response();
-
-			this.ProductRepository.GetById(id,response);
-			return response.Products.Count > 0;
-		}
-
-		public bool BeValidVendor(int id)
-		{
-			Response response = new Response();
-
-			this.VendorRepository.GetById(id,response);
-			return response.Vendors.Count > 0;
-		}
-
-		public bool BeValidUnitMeasure(string id)
-		{
-			Response response = new Response();
-
-			this.UnitMeasureRepository.GetById(id,response);
-			return response.UnitMeasures.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d21b7ecd72d82bc4dd47adb2ebadadd</Hash>
+    <Hash>36427f4820d80add340411197d3cb9a5</Hash>
 </Codenesium>*/

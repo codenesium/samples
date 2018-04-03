@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public LocationModel()
 		{}
-
 		public LocationModel(string name,
 		                     decimal costRate,
 		                     decimal availability,
@@ -19,14 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.CostRate = costRate;
 			this.Availability = availability.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public LocationModel(POCOLocation poco)
-		{
-			this.Name = poco.Name;
-			this.CostRate = poco.CostRate;
-			this.Availability = poco.Availability.ToDecimal();
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -88,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>158841d074a972bd6e022b6e8588d95a</Hash>
+    <Hash>b7a6229f0850bca2f4088fd842ad2d6c</Hash>
 </Codenesium>*/

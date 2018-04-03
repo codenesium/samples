@@ -133,13 +133,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int SalesTaxRateID,SalesTaxRateModel model)
+		public virtual IActionResult Update(int salesTaxRateID,SalesTaxRateModel model)
 		{
 			this._salesTaxRateModelValidator.UpdateMode();
 			var validationResult = this._salesTaxRateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._salesTaxRateRepository.Update(SalesTaxRateID,  model.StateProvinceID,
+				this._salesTaxRateRepository.Update(salesTaxRateID,  model.StateProvinceID,
 				                                    model.TaxType,
 				                                    model.TaxRate,
 				                                    model.Name,
@@ -165,24 +165,9 @@ namespace AdventureWorksNS.Api.Service
 			this._salesTaxRateRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByStateProvinceID/{id}")]
-		[SalesTaxRateFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/StateProvinces/{id}/SalesTaxRates")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByStateProvinceID(int id)
-		{
-			var response = new Response();
-
-			this._salesTaxRateRepository.GetWhere(x => x.StateProvinceID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8a5532622a1b48ef42dd02932cb560f0</Hash>
+    <Hash>95a2756e6e08e0751940849e9caa199d</Hash>
 </Codenesium>*/

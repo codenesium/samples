@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BillOfMaterialsModel()
 		{}
-
 		public BillOfMaterialsModel(Nullable<int> productAssemblyID,
 		                            int componentID,
 		                            DateTime startDate,
@@ -27,19 +26,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.BOMLevel = bOMLevel;
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public BillOfMaterialsModel(POCOBillOfMaterials poco)
-		{
-			this.StartDate = poco.StartDate.ToDateTime();
-			this.EndDate = poco.EndDate.ToNullableDateTime();
-			this.BOMLevel = poco.BOMLevel;
-			this.PerAssemblyQty = poco.PerAssemblyQty.ToDecimal();
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductAssemblyID = poco.ProductAssemblyID.Value.ToInt();
-			this.ComponentID = poco.ComponentID.Value.ToInt();
-			this.UnitMeasureCode = poco.UnitMeasureCode.Value.ToString();
 		}
 
 		private Nullable<int> _productAssemblyID;
@@ -155,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b16bc86c34f9094bfd8f4cc59ae4db39</Hash>
+    <Hash>c12066cd0477991e9bc784ea625e49de</Hash>
 </Codenesium>*/

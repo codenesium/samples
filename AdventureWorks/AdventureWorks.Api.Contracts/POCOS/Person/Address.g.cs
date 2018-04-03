@@ -23,20 +23,18 @@ namespace AdventureWorksNS.Api.Contracts
 			this.AddressLine1 = addressLine1;
 			this.AddressLine2 = addressLine2;
 			this.City = city;
+			this.StateProvinceID = stateProvinceID.ToInt();
 			this.PostalCode = postalCode;
 			this.SpatialLocation = spatialLocation;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
-			                                           "StateProvince");
 		}
 
 		public int AddressID {get; set;}
 		public string AddressLine1 {get; set;}
 		public string AddressLine2 {get; set;}
 		public string City {get; set;}
-		public ReferenceEntity<int>StateProvinceID {get; set;}
+		public int StateProvinceID {get; set;}
 		public string PostalCode {get; set;}
 		public object SpatialLocation {get; set;}
 		public Guid Rowguid {get; set;}
@@ -130,5 +128,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2d8c8c3f23d1928ac8587ace15d79d3a</Hash>
+    <Hash>603f1a62e604b70ec71cbfe563a0ec65</Hash>
 </Codenesium>*/

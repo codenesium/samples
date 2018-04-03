@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesPerson>().Add(record);
 			this._context.SaveChanges();
-			return record.BusinessEntityID;
+			return record.businessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, Nullable<int> territoryID,
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -92,7 +92,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFSalesPerson> SearchLinqEF(Expression<Func<EFSalesPerson, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -136,15 +136,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesPerson   efSalesPerson)
 		{
-			efSalesPerson.BusinessEntityID = businessEntityID;
-			efSalesPerson.TerritoryID = territoryID;
-			efSalesPerson.SalesQuota = salesQuota;
-			efSalesPerson.Bonus = bonus;
-			efSalesPerson.CommissionPct = commissionPct;
-			efSalesPerson.SalesYTD = salesYTD;
-			efSalesPerson.SalesLastYear = salesLastYear;
+			efSalesPerson.businessEntityID = businessEntityID;
+			efSalesPerson.territoryID = territoryID;
+			efSalesPerson.salesQuota = salesQuota;
+			efSalesPerson.bonus = bonus;
+			efSalesPerson.commissionPct = commissionPct;
+			efSalesPerson.salesYTD = salesYTD;
+			efSalesPerson.salesLastYear = salesLastYear;
 			efSalesPerson.rowguid = rowguid;
-			efSalesPerson.ModifiedDate = modifiedDate;
+			efSalesPerson.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesPerson efSalesPerson,Response response)
@@ -155,27 +155,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesPerson(new POCOSalesPerson()
 			{
-				SalesQuota = efSalesPerson.SalesQuota,
-				Bonus = efSalesPerson.Bonus,
-				CommissionPct = efSalesPerson.CommissionPct,
-				SalesYTD = efSalesPerson.SalesYTD,
-				SalesLastYear = efSalesPerson.SalesLastYear,
+				BusinessEntityID = efSalesPerson.businessEntityID.ToInt(),
+				TerritoryID = efSalesPerson.territoryID.ToNullableInt(),
+				SalesQuota = efSalesPerson.salesQuota,
+				Bonus = efSalesPerson.bonus,
+				CommissionPct = efSalesPerson.commissionPct,
+				SalesYTD = efSalesPerson.salesYTD,
+				SalesLastYear = efSalesPerson.salesLastYear,
 				Rowguid = efSalesPerson.rowguid,
-				ModifiedDate = efSalesPerson.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efSalesPerson.BusinessEntityID,
-				                                            "Employees"),
-				TerritoryID = new ReferenceEntity<Nullable<int>>(efSalesPerson.TerritoryID,
-				                                                 "SalesTerritories"),
+				ModifiedDate = efSalesPerson.modifiedDate.ToDateTime(),
 			});
-
-			EmployeeRepository.MapEFToPOCO(efSalesPerson.EmployeeRef, response);
-
-			SalesTerritoryRepository.MapEFToPOCO(efSalesPerson.SalesTerritoryRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ce988e0f7e6ac900ca07272b2dfc186</Hash>
+    <Hash>655468f4f589eafcba601fb216f65492</Hash>
 </Codenesium>*/

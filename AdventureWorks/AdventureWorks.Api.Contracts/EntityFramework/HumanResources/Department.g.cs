@@ -10,13 +10,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public short DepartmentID {get; set;}
-		public string Name {get; set;}
-		public string GroupName {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public short departmentID {get; set;}
+		public string name {get; set;}
+		public string groupName {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca96e3a854bf7c0a7cde343eec56469c</Hash>
+    <Hash>1b001c1dab0c90c85cafcfdee6bc377e</Hash>
 </Codenesium>*/

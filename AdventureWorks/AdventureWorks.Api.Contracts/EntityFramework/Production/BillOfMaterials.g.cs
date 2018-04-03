@@ -10,25 +10,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BillOfMaterialsID {get; set;}
-		public Nullable<int> ProductAssemblyID {get; set;}
-		public int ComponentID {get; set;}
-		public DateTime StartDate {get; set;}
-		public Nullable<DateTime> EndDate {get; set;}
-		public string UnitMeasureCode {get; set;}
-		public short BOMLevel {get; set;}
-		public decimal PerAssemblyQty {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("ProductAssemblyID")]
-		public virtual EFProduct ProductRef { get; set; }
-		[ForeignKey("ComponentID")]
-		public virtual EFProduct ProductRef1 { get; set; }
-		[ForeignKey("UnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasureRef { get; set; }
+		public int billOfMaterialsID {get; set;}
+		public Nullable<int> productAssemblyID {get; set;}
+		public int componentID {get; set;}
+		public DateTime startDate {get; set;}
+		public Nullable<DateTime> endDate {get; set;}
+		public string unitMeasureCode {get; set;}
+		public short bOMLevel {get; set;}
+		public decimal perAssemblyQty {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>02aa4c7b54a341a110038b5b0a3c607d</Hash>
+    <Hash>5ed72cbf56cb105c18d6d8cf0293ef80</Hash>
 </Codenesium>*/

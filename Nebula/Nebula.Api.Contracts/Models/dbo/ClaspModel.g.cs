@@ -9,18 +9,11 @@ namespace NebulaNS.Api.Contracts
 	{
 		public ClaspModel()
 		{}
-
 		public ClaspModel(int previousChainId,
 		                  int nextChainId)
 		{
 			this.PreviousChainId = previousChainId.ToInt();
 			this.NextChainId = nextChainId.ToInt();
-		}
-
-		public ClaspModel(POCOClasp poco)
-		{
-			this.PreviousChainId = poco.PreviousChainId.Value.ToInt();
-			this.NextChainId = poco.NextChainId.Value.ToInt();
 		}
 
 		private int _previousChainId;
@@ -54,5 +47,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2aabe65b38a18e62709301675d8bc74a</Hash>
+    <Hash>c753e4c1e1ffd2589cdb15226edd7899</Hash>
 </Codenesium>*/

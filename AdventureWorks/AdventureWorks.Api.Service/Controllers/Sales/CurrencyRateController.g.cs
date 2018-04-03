@@ -133,13 +133,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int CurrencyRateID,CurrencyRateModel model)
+		public virtual IActionResult Update(int currencyRateID,CurrencyRateModel model)
 		{
 			this._currencyRateModelValidator.UpdateMode();
 			var validationResult = this._currencyRateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._currencyRateRepository.Update(CurrencyRateID,  model.CurrencyRateDate,
+				this._currencyRateRepository.Update(currencyRateID,  model.CurrencyRateDate,
 				                                    model.FromCurrencyCode,
 				                                    model.ToCurrencyCode,
 				                                    model.AverageRate,
@@ -165,39 +165,9 @@ namespace AdventureWorksNS.Api.Service
 			this._currencyRateRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByFromCurrencyCode/{id}")]
-		[CurrencyRateFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Currencies/{id}/CurrencyRates")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByFromCurrencyCode(string id)
-		{
-			var response = new Response();
-
-			this._currencyRateRepository.GetWhere(x => x.FromCurrencyCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByToCurrencyCode/{id}")]
-		[CurrencyRateFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Currencies/{id}/CurrencyRates")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByToCurrencyCode(string id)
-		{
-			var response = new Response();
-
-			this._currencyRateRepository.GetWhere(x => x.ToCurrencyCode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>55e7ebadcc3145ddbf9e543e92803117</Hash>
+    <Hash>6174a177e86c07aaba763967cc65de41</Hash>
 </Codenesium>*/

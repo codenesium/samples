@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesReason>().Add(record);
 			this._context.SaveChanges();
-			return record.SalesReasonID;
+			return record.salesReasonID;
 		}
 
 		public virtual void Update(int salesReasonID, string name,
 		                           string reasonType,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SalesReasonID == salesReasonID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.salesReasonID == salesReasonID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",salesReasonID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int salesReasonID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesReasonID == salesReasonID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.salesReasonID == salesReasonID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int salesReasonID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.SalesReasonID == salesReasonID,response);
+			this.SearchLinqPOCO(x => x.salesReasonID == salesReasonID,response);
 		}
 
 		protected virtual List<EFSalesReason> SearchLinqEF(Expression<Func<EFSalesReason, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string reasonType,
 		                               DateTime modifiedDate, EFSalesReason   efSalesReason)
 		{
-			efSalesReason.SalesReasonID = salesReasonID;
-			efSalesReason.Name = name;
-			efSalesReason.ReasonType = reasonType;
-			efSalesReason.ModifiedDate = modifiedDate;
+			efSalesReason.salesReasonID = salesReasonID;
+			efSalesReason.name = name;
+			efSalesReason.reasonType = reasonType;
+			efSalesReason.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesReason efSalesReason,Response response)
@@ -125,15 +125,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesReason(new POCOSalesReason()
 			{
-				SalesReasonID = efSalesReason.SalesReasonID.ToInt(),
-				Name = efSalesReason.Name,
-				ReasonType = efSalesReason.ReasonType,
-				ModifiedDate = efSalesReason.ModifiedDate.ToDateTime(),
+				SalesReasonID = efSalesReason.salesReasonID.ToInt(),
+				Name = efSalesReason.name,
+				ReasonType = efSalesReason.reasonType,
+				ModifiedDate = efSalesReason.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ccce2f723e4c18bfad4a846d1407dfe</Hash>
+    <Hash>252756a836d998db7d446ebe5be9d299</Hash>
 </Codenesium>*/

@@ -20,11 +20,9 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IStateProvinceRepository StateProvinceRepository {get; set;}
 		public virtual void StateProvinceIDRules()
 		{
 			RuleFor(x => x.StateProvinceID).NotNull();
-			RuleFor(x => x.StateProvinceID).Must(BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TaxTypeRules()
@@ -52,17 +50,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidStateProvince(int id)
-		{
-			Response response = new Response();
-
-			this.StateProvinceRepository.GetById(id,response);
-			return response.StateProvinces.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>77a139d6cdde87a96a4146c4a9b07e92</Hash>
+    <Hash>102d1d8c14464f2300d7a48caa7cf6b4</Hash>
 </Codenesium>*/

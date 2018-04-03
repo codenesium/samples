@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string CurrencyCode,CurrencyModel model)
+		public virtual IActionResult Update(string currencyCode,CurrencyModel model)
 		{
 			this._currencyModelValidator.UpdateMode();
 			var validationResult = this._currencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._currencyRepository.Update(CurrencyCode,  model.Name,
+				this._currencyRepository.Update(currencyCode,  model.Name,
 				                                model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c36900ad7866ef1e3d1f9d2e96c7839a</Hash>
+    <Hash>4b77113bd7aecf21132d4879a72bd9ec</Hash>
 </Codenesium>*/

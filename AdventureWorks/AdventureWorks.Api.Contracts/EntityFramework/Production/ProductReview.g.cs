@@ -10,20 +10,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ProductReviewID {get; set;}
-		public int ProductID {get; set;}
-		public string ReviewerName {get; set;}
-		public DateTime ReviewDate {get; set;}
-		public string EmailAddress {get; set;}
-		public int Rating {get; set;}
-		public string Comments {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct ProductRef { get; set; }
+		public int productReviewID {get; set;}
+		public int productID {get; set;}
+		public string reviewerName {get; set;}
+		public DateTime reviewDate {get; set;}
+		public string emailAddress {get; set;}
+		public int rating {get; set;}
+		public string comments {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7de26995737b40aefc52229b4458aa00</Hash>
+    <Hash>33e96b14a7d469a880135e7eae30faac</Hash>
 </Codenesium>*/

@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesOrderDetailModel()
 		{}
-
 		public SalesOrderDetailModel(int salesOrderDetailID,
 		                             string carrierTrackingNumber,
 		                             short orderQty,
@@ -31,21 +30,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.LineTotal = lineTotal.ToDecimal();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesOrderDetailModel(POCOSalesOrderDetail poco)
-		{
-			this.SalesOrderDetailID = poco.SalesOrderDetailID.ToInt();
-			this.CarrierTrackingNumber = poco.CarrierTrackingNumber;
-			this.OrderQty = poco.OrderQty;
-			this.ProductID = poco.ProductID.ToInt();
-			this.UnitPrice = poco.UnitPrice;
-			this.UnitPriceDiscount = poco.UnitPriceDiscount;
-			this.LineTotal = poco.LineTotal.ToDecimal();
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.SpecialOfferID = poco.SpecialOfferID.Value.ToInt();
 		}
 
 		private int _salesOrderDetailID;
@@ -190,5 +174,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>817826453789135bdbdf35c9b97487ac</Hash>
+    <Hash>3e9e7407c4ad0b9fb67e1da87cd8a790</Hash>
 </Codenesium>*/

@@ -20,15 +20,14 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository {get; set;}
 		public virtual void EmailAddressIDRules()
 		{
 			RuleFor(x => x.EmailAddressID).NotNull();
 		}
 
-		public virtual void EmailAddress1Rules()
+		public virtual void EmailAddressRules()
 		{
-			RuleFor(x => x.EmailAddress1).Length(0,50);
+			RuleFor(x => x.EmailAddress).Length(0,50);
 		}
 
 		public virtual void RowguidRules()
@@ -40,17 +39,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidPerson(int id)
-		{
-			Response response = new Response();
-
-			this.PersonRepository.GetById(id,response);
-			return response.People.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e37dff9e9edd695f6eea771eed8fda5c</Hash>
+    <Hash>2ef2131b32088b826b74bef4cf5d21e9</Hash>
 </Codenesium>*/

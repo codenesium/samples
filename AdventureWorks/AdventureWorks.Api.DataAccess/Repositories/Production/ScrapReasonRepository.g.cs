@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFScrapReason>().Add(record);
 			this._context.SaveChanges();
-			return record.ScrapReasonID;
+			return record.scrapReasonID;
 		}
 
 		public virtual void Update(short scrapReasonID, string name,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.scrapReasonID == scrapReasonID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",scrapReasonID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(short scrapReasonID)
 		{
-			var record = this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.scrapReasonID == scrapReasonID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(short scrapReasonID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID,response);
+			this.SearchLinqPOCO(x => x.scrapReasonID == scrapReasonID,response);
 		}
 
 		protected virtual List<EFScrapReason> SearchLinqEF(Expression<Func<EFScrapReason, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(short scrapReasonID, string name,
 		                               DateTime modifiedDate, EFScrapReason   efScrapReason)
 		{
-			efScrapReason.ScrapReasonID = scrapReasonID;
-			efScrapReason.Name = name;
-			efScrapReason.ModifiedDate = modifiedDate;
+			efScrapReason.scrapReasonID = scrapReasonID;
+			efScrapReason.name = name;
+			efScrapReason.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFScrapReason efScrapReason,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddScrapReason(new POCOScrapReason()
 			{
-				ScrapReasonID = efScrapReason.ScrapReasonID,
-				Name = efScrapReason.Name,
-				ModifiedDate = efScrapReason.ModifiedDate.ToDateTime(),
+				ScrapReasonID = efScrapReason.scrapReasonID,
+				Name = efScrapReason.name,
+				ModifiedDate = efScrapReason.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>18c70b07a235a74f5cdb84953780e7fc</Hash>
+    <Hash>8603f7e9a6a65e22175a24c0ae88d102</Hash>
 </Codenesium>*/

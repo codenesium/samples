@@ -46,7 +46,15 @@ namespace AdventureWorksNS.Api.Contracts
 			this.SalesOrderNumber = salesOrderNumber;
 			this.PurchaseOrderNumber = purchaseOrderNumber;
 			this.AccountNumber = accountNumber;
+			this.CustomerID = customerID.ToInt();
+			this.SalesPersonID = salesPersonID.ToNullableInt();
+			this.TerritoryID = territoryID.ToNullableInt();
+			this.BillToAddressID = billToAddressID.ToInt();
+			this.ShipToAddressID = shipToAddressID.ToInt();
+			this.ShipMethodID = shipMethodID.ToInt();
+			this.CreditCardID = creditCardID.ToNullableInt();
 			this.CreditCardApprovalCode = creditCardApprovalCode;
+			this.CurrencyRateID = currencyRateID.ToNullableInt();
 			this.SubTotal = subTotal;
 			this.TaxAmt = taxAmt;
 			this.Freight = freight;
@@ -54,23 +62,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Comment = comment;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			CustomerID = new ReferenceEntity<int>(customerID,
-			                                      "Customer");
-			SalesPersonID = new ReferenceEntity<Nullable<int>>(salesPersonID,
-			                                                   "SalesPerson");
-			TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
-			                                                 "SalesTerritory");
-			BillToAddressID = new ReferenceEntity<int>(billToAddressID,
-			                                           "Address");
-			ShipToAddressID = new ReferenceEntity<int>(shipToAddressID,
-			                                           "Address");
-			ShipMethodID = new ReferenceEntity<int>(shipMethodID,
-			                                        "ShipMethod");
-			CreditCardID = new ReferenceEntity<Nullable<int>>(creditCardID,
-			                                                  "CreditCard");
-			CurrencyRateID = new ReferenceEntity<Nullable<int>>(currencyRateID,
-			                                                    "CurrencyRate");
 		}
 
 		public int SalesOrderID {get; set;}
@@ -83,15 +74,15 @@ namespace AdventureWorksNS.Api.Contracts
 		public string SalesOrderNumber {get; set;}
 		public string PurchaseOrderNumber {get; set;}
 		public string AccountNumber {get; set;}
-		public ReferenceEntity<int>CustomerID {get; set;}
-		public ReferenceEntity<Nullable<int>>SalesPersonID {get; set;}
-		public ReferenceEntity<Nullable<int>>TerritoryID {get; set;}
-		public ReferenceEntity<int>BillToAddressID {get; set;}
-		public ReferenceEntity<int>ShipToAddressID {get; set;}
-		public ReferenceEntity<int>ShipMethodID {get; set;}
-		public ReferenceEntity<Nullable<int>>CreditCardID {get; set;}
+		public int CustomerID {get; set;}
+		public Nullable<int> SalesPersonID {get; set;}
+		public Nullable<int> TerritoryID {get; set;}
+		public int BillToAddressID {get; set;}
+		public int ShipToAddressID {get; set;}
+		public int ShipMethodID {get; set;}
+		public Nullable<int> CreditCardID {get; set;}
 		public string CreditCardApprovalCode {get; set;}
-		public ReferenceEntity<Nullable<int>>CurrencyRateID {get; set;}
+		public Nullable<int> CurrencyRateID {get; set;}
 		public decimal SubTotal {get; set;}
 		public decimal TaxAmt {get; set;}
 		public decimal Freight {get; set;}
@@ -341,5 +332,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>68ac9b2042dc02727e9a8fd7f462a922</Hash>
+    <Hash>b7bdafa48a00768c05cfa52db9e5cd2d</Hash>
 </Codenesium>*/

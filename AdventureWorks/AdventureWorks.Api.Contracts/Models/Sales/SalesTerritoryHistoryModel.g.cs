@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesTerritoryHistoryModel()
 		{}
-
 		public SalesTerritoryHistoryModel(int territoryID,
 		                                  DateTime startDate,
 		                                  Nullable<DateTime> endDate,
@@ -21,16 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.EndDate = endDate.ToNullableDateTime();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public SalesTerritoryHistoryModel(POCOSalesTerritoryHistory poco)
-		{
-			this.StartDate = poco.StartDate.ToDateTime();
-			this.EndDate = poco.EndDate.ToNullableDateTime();
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.TerritoryID = poco.TerritoryID.Value.ToInt();
 		}
 
 		private int _territoryID;
@@ -105,5 +94,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7bbc82174fdba26f782835a543a6c69b</Hash>
+    <Hash>165f4d950458bf34c5b68a728f075c92</Hash>
 </Codenesium>*/

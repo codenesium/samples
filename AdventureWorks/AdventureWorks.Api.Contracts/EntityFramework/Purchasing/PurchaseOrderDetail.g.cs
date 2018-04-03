@@ -10,25 +10,20 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int PurchaseOrderID {get; set;}
-		public int PurchaseOrderDetailID {get; set;}
-		public DateTime DueDate {get; set;}
-		public short OrderQty {get; set;}
-		public int ProductID {get; set;}
-		public decimal UnitPrice {get; set;}
-		public decimal LineTotal {get; set;}
-		public decimal ReceivedQty {get; set;}
-		public decimal RejectedQty {get; set;}
-		public decimal StockedQty {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("PurchaseOrderID")]
-		public virtual EFPurchaseOrderHeader PurchaseOrderHeaderRef { get; set; }
-		[ForeignKey("ProductID")]
-		public virtual EFProduct ProductRef { get; set; }
+		public int purchaseOrderID {get; set;}
+		public int purchaseOrderDetailID {get; set;}
+		public DateTime dueDate {get; set;}
+		public short orderQty {get; set;}
+		public int productID {get; set;}
+		public decimal unitPrice {get; set;}
+		public decimal lineTotal {get; set;}
+		public decimal receivedQty {get; set;}
+		public decimal rejectedQty {get; set;}
+		public decimal stockedQty {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbcb4c991ff610270b4da28daeb74820</Hash>
+    <Hash>bee8055c95402623242c03cb25912fff</Hash>
 </Codenesium>*/

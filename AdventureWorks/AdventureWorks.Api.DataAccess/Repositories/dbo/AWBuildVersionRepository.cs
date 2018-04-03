@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFAWBuildVersion>().Where(predicate).AsQueryable().OrderBy("SystemInformationID ASC").Skip(skip).Take(take).ToList<EFAWBuildVersion>();
+				return this._context.Set<EFAWBuildVersion>().Where(predicate).AsQueryable().OrderBy("systemInformationID ASC").Skip(skip).Take(take).ToList<EFAWBuildVersion>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFAWBuildVersion>().Where(predicate).AsQueryable().OrderBy("SystemInformationID ASC").Skip(skip).Take(take).ToList<EFAWBuildVersion>();
+				return this._context.Set<EFAWBuildVersion>().Where(predicate).AsQueryable().OrderBy("systemInformationID ASC").Skip(skip).Take(take).ToList<EFAWBuildVersion>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c905a7b3a05a0956e8ea68456675d1c7</Hash>
+    <Hash>4a762556c9d910b3d5b24c4effc9d58c</Hash>
 </Codenesium>*/

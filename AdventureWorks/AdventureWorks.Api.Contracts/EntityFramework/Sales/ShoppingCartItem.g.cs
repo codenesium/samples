@@ -10,18 +10,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ShoppingCartItemID {get; set;}
-		public string ShoppingCartID {get; set;}
-		public int Quantity {get; set;}
-		public int ProductID {get; set;}
-		public DateTime DateCreated {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct ProductRef { get; set; }
+		public int shoppingCartItemID {get; set;}
+		public string shoppingCartID {get; set;}
+		public int quantity {get; set;}
+		public int productID {get; set;}
+		public DateTime dateCreated {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>00f24c31f66ad32c4e67b27ad423db40</Hash>
+    <Hash>1f5f8b0b877aa9a4f559905fb9a32556</Hash>
 </Codenesium>*/

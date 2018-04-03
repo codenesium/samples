@@ -10,24 +10,19 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int WorkOrderID {get; set;}
-		public int ProductID {get; set;}
-		public int OrderQty {get; set;}
-		public int StockedQty {get; set;}
-		public short ScrappedQty {get; set;}
-		public DateTime StartDate {get; set;}
-		public Nullable<DateTime> EndDate {get; set;}
-		public DateTime DueDate {get; set;}
-		public Nullable<short> ScrapReasonID {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct ProductRef { get; set; }
-		[ForeignKey("ScrapReasonID")]
-		public virtual EFScrapReason ScrapReasonRef { get; set; }
+		public int workOrderID {get; set;}
+		public int productID {get; set;}
+		public int orderQty {get; set;}
+		public int stockedQty {get; set;}
+		public short scrappedQty {get; set;}
+		public DateTime startDate {get; set;}
+		public Nullable<DateTime> endDate {get; set;}
+		public DateTime dueDate {get; set;}
+		public Nullable<short> scrapReasonID {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ebf2e61b333aca3a65be52215ec7652</Hash>
+    <Hash>1d1b87ae88e6e66bac87c468fa204ab5</Hash>
 </Codenesium>*/

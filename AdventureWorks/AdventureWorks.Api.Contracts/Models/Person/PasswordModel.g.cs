@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PasswordModel()
 		{}
-
 		public PasswordModel(string passwordHash,
 		                     string passwordSalt,
 		                     Guid rowguid,
@@ -19,14 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PasswordSalt = passwordSalt;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public PasswordModel(POCOPassword poco)
-		{
-			this.PasswordHash = poco.PasswordHash;
-			this.PasswordSalt = poco.PasswordSalt;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _passwordHash;
@@ -88,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>40aeccad05f76cb0991cba166cdbe2cd</Hash>
+    <Hash>c37a90a4a4e1662505babbd35d985583</Hash>
 </Codenesium>*/

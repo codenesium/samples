@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public StoreModel()
 		{}
-
 		public StoreModel(string name,
 		                  Nullable<int> salesPersonID,
 		                  string demographics,
@@ -21,16 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Demographics = demographics;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public StoreModel(POCOStore poco)
-		{
-			this.Name = poco.Name;
-			this.Demographics = poco.Demographics;
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.SalesPersonID = poco.SalesPersonID.Value.ToInt();
 		}
 
 		private string _name;
@@ -104,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4b2078669f4c4cb91205ea0261fe79d2</Hash>
+    <Hash>1c9a720a76d1e352ff0003604eaa4ad9</Hash>
 </Codenesium>*/

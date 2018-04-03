@@ -15,16 +15,14 @@ namespace AdventureWorksNS.Api.Contracts
 		                                   Guid rowguid,
 		                                   DateTime modifiedDate)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.QuotaDate = quotaDate.ToDateTime();
 			this.SalesQuota = salesQuota;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "SalesPerson");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
+		public int BusinessEntityID {get; set;}
 		public DateTime QuotaDate {get; set;}
 		public decimal SalesQuota {get; set;}
 		public Guid Rowguid {get; set;}
@@ -82,5 +80,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>58886c0ed6cf17ad8d1e9c2e0b91bb30</Hash>
+    <Hash>5449895bf45276222f640df988d75cd0</Hash>
 </Codenesium>*/

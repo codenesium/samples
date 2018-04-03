@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ScrapReasonModel()
 		{}
-
 		public ScrapReasonModel(string name,
 		                        DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ScrapReasonModel(POCOScrapReason poco)
-		{
-			this.Name = poco.Name;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -54,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5b72b39602ae6210caa829d633c02d2f</Hash>
+    <Hash>91a0ac1e04e4166e0ead5d183b02bb93</Hash>
 </Codenesium>*/

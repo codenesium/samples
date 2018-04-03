@@ -9,15 +9,9 @@ namespace NebulaNS.Api.Contracts
 	{
 		public OrganizationModel()
 		{}
-
 		public OrganizationModel(string name)
 		{
 			this.Name = name;
-		}
-
-		public OrganizationModel(POCOOrganization poco)
-		{
-			this.Name = poco.Name;
 		}
 
 		private string _name;
@@ -37,5 +31,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>45179217ef778ecc42161facdbcf7fb4</Hash>
+    <Hash>7fd226ae097a2051d3c6af32c1df5b92</Hash>
 </Codenesium>*/

@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public TransactionHistoryModel()
 		{}
-
 		public TransactionHistoryModel(int productID,
 		                               int referenceOrderID,
 		                               int referenceOrderLineID,
@@ -27,19 +26,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Quantity = quantity.ToInt();
 			this.ActualCost = actualCost;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public TransactionHistoryModel(POCOTransactionHistory poco)
-		{
-			this.ReferenceOrderID = poco.ReferenceOrderID.ToInt();
-			this.ReferenceOrderLineID = poco.ReferenceOrderLineID.ToInt();
-			this.TransactionDate = poco.TransactionDate.ToDateTime();
-			this.TransactionType = poco.TransactionType;
-			this.Quantity = poco.Quantity.ToInt();
-			this.ActualCost = poco.ActualCost;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductID = poco.ProductID.Value.ToInt();
 		}
 
 		private int _productID;
@@ -157,5 +143,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bd15381bb246520a7b209df854d463d4</Hash>
+    <Hash>197ec1c7eafa12a2f0ac38ae4ac9ca6e</Hash>
 </Codenesium>*/

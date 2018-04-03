@@ -10,18 +10,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public string PhoneNumber {get; set;}
-		public int PhoneNumberTypeID {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFPerson PersonRef { get; set; }
-		[ForeignKey("PhoneNumberTypeID")]
-		public virtual EFPhoneNumberType PhoneNumberTypeRef { get; set; }
+		public int businessEntityID {get; set;}
+		public string phoneNumber {get; set;}
+		public int phoneNumberTypeID {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a7aee4c614a7ebf1d2c3733e844654d</Hash>
+    <Hash>20c970fd0c759b490c2dac7198e5895e</Hash>
 </Codenesium>*/

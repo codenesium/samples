@@ -10,12 +10,12 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public string CurrencyCode {get; set;}
-		public string Name {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public string currencyCode {get; set;}
+		public string name {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8302e6d4325c10f7b3e49695ea010811</Hash>
+    <Hash>7d4a4cafcc0971d82f765915b16eac5d</Hash>
 </Codenesium>*/

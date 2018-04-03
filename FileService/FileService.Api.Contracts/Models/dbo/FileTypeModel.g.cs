@@ -9,15 +9,9 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public FileTypeModel()
 		{}
-
 		public FileTypeModel(string name)
 		{
 			this.Name = name;
-		}
-
-		public FileTypeModel(POCOFileType poco)
-		{
-			this.Name = poco.Name;
 		}
 
 		private string _name;
@@ -37,5 +31,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c8b7893c810ed9f19d88b32ff2aefb64</Hash>
+    <Hash>a7805644ce499458e3ded54ccad30d89</Hash>
 </Codenesium>*/

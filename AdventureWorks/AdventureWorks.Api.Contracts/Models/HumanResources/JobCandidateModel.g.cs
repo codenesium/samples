@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public JobCandidateModel()
 		{}
-
 		public JobCandidateModel(Nullable<int> businessEntityID,
 		                         string resume,
 		                         DateTime modifiedDate)
@@ -17,14 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.BusinessEntityID = businessEntityID.ToNullableInt();
 			this.Resume = resume;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public JobCandidateModel(POCOJobCandidate poco)
-		{
-			this.Resume = poco.Resume;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.BusinessEntityID = poco.BusinessEntityID.Value.ToInt();
 		}
 
 		private Nullable<int> _businessEntityID;
@@ -70,5 +61,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>824b65565b18cd324a7bf3b19d2a2729</Hash>
+    <Hash>d18a48c0e6d59eaf33b169188dc6ea2a</Hash>
 </Codenesium>*/

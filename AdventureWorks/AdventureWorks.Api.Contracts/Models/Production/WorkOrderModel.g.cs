@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public WorkOrderModel()
 		{}
-
 		public WorkOrderModel(int productID,
 		                      int orderQty,
 		                      int stockedQty,
@@ -29,20 +28,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.DueDate = dueDate.ToDateTime();
 			this.ScrapReasonID = scrapReasonID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public WorkOrderModel(POCOWorkOrder poco)
-		{
-			this.OrderQty = poco.OrderQty.ToInt();
-			this.StockedQty = poco.StockedQty.ToInt();
-			this.ScrappedQty = poco.ScrappedQty;
-			this.StartDate = poco.StartDate.ToDateTime();
-			this.EndDate = poco.EndDate.ToNullableDateTime();
-			this.DueDate = poco.DueDate.ToDateTime();
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.ProductID = poco.ProductID.Value.ToInt();
-			this.ScrapReasonID = poco.ScrapReasonID.Value.ToSmallInt();
 		}
 
 		private int _productID;
@@ -172,5 +157,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4d5ef23137728ca731cb18341237e50e</Hash>
+    <Hash>6eb38fec4f6554c23af03334fabf3a7c</Hash>
 </Codenesium>*/

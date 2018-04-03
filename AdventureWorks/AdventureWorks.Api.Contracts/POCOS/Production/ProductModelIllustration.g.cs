@@ -13,16 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
 		                                    int illustrationID,
 		                                    DateTime modifiedDate)
 		{
+			this.ProductModelID = productModelID.ToInt();
+			this.IllustrationID = illustrationID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			ProductModelID = new ReferenceEntity<int>(productModelID,
-			                                          "ProductModel");
-			IllustrationID = new ReferenceEntity<int>(illustrationID,
-			                                          "Illustration");
 		}
 
-		public ReferenceEntity<int>ProductModelID {get; set;}
-		public ReferenceEntity<int>IllustrationID {get; set;}
+		public int ProductModelID {get; set;}
+		public int IllustrationID {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -59,5 +56,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>676b6cd1c237a61194dbafdbebee91c0</Hash>
+    <Hash>bf33a13e5ee91c6d4329388b29319e2d</Hash>
 </Codenesium>*/

@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFPurchaseOrderHeader>().Add(record);
 			this._context.SaveChanges();
-			return record.PurchaseOrderID;
+			return record.purchaseOrderID;
 		}
 
 		public virtual void Update(int purchaseOrderID, int revisionNumber,
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           decimal totalDue,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.purchaseOrderID == purchaseOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",purchaseOrderID);
@@ -93,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int purchaseOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.purchaseOrderID == purchaseOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -108,7 +108,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int purchaseOrderID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID,response);
+			this.SearchLinqPOCO(x => x.purchaseOrderID == purchaseOrderID,response);
 		}
 
 		protected virtual List<EFPurchaseOrderHeader> SearchLinqEF(Expression<Func<EFPurchaseOrderHeader, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -156,19 +156,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal totalDue,
 		                               DateTime modifiedDate, EFPurchaseOrderHeader   efPurchaseOrderHeader)
 		{
-			efPurchaseOrderHeader.PurchaseOrderID = purchaseOrderID;
-			efPurchaseOrderHeader.RevisionNumber = revisionNumber;
-			efPurchaseOrderHeader.Status = status;
-			efPurchaseOrderHeader.EmployeeID = employeeID;
-			efPurchaseOrderHeader.VendorID = vendorID;
-			efPurchaseOrderHeader.ShipMethodID = shipMethodID;
-			efPurchaseOrderHeader.OrderDate = orderDate;
-			efPurchaseOrderHeader.ShipDate = shipDate;
-			efPurchaseOrderHeader.SubTotal = subTotal;
-			efPurchaseOrderHeader.TaxAmt = taxAmt;
-			efPurchaseOrderHeader.Freight = freight;
-			efPurchaseOrderHeader.TotalDue = totalDue;
-			efPurchaseOrderHeader.ModifiedDate = modifiedDate;
+			efPurchaseOrderHeader.purchaseOrderID = purchaseOrderID;
+			efPurchaseOrderHeader.revisionNumber = revisionNumber;
+			efPurchaseOrderHeader.status = status;
+			efPurchaseOrderHeader.employeeID = employeeID;
+			efPurchaseOrderHeader.vendorID = vendorID;
+			efPurchaseOrderHeader.shipMethodID = shipMethodID;
+			efPurchaseOrderHeader.orderDate = orderDate;
+			efPurchaseOrderHeader.shipDate = shipDate;
+			efPurchaseOrderHeader.subTotal = subTotal;
+			efPurchaseOrderHeader.taxAmt = taxAmt;
+			efPurchaseOrderHeader.freight = freight;
+			efPurchaseOrderHeader.totalDue = totalDue;
+			efPurchaseOrderHeader.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFPurchaseOrderHeader efPurchaseOrderHeader,Response response)
@@ -179,34 +179,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddPurchaseOrderHeader(new POCOPurchaseOrderHeader()
 			{
-				PurchaseOrderID = efPurchaseOrderHeader.PurchaseOrderID.ToInt(),
-				RevisionNumber = efPurchaseOrderHeader.RevisionNumber,
-				Status = efPurchaseOrderHeader.Status,
-				OrderDate = efPurchaseOrderHeader.OrderDate.ToDateTime(),
-				ShipDate = efPurchaseOrderHeader.ShipDate.ToNullableDateTime(),
-				SubTotal = efPurchaseOrderHeader.SubTotal,
-				TaxAmt = efPurchaseOrderHeader.TaxAmt,
-				Freight = efPurchaseOrderHeader.Freight,
-				TotalDue = efPurchaseOrderHeader.TotalDue,
-				ModifiedDate = efPurchaseOrderHeader.ModifiedDate.ToDateTime(),
-
-				EmployeeID = new ReferenceEntity<int>(efPurchaseOrderHeader.EmployeeID,
-				                                      "Employees"),
-				VendorID = new ReferenceEntity<int>(efPurchaseOrderHeader.VendorID,
-				                                    "Vendors"),
-				ShipMethodID = new ReferenceEntity<int>(efPurchaseOrderHeader.ShipMethodID,
-				                                        "ShipMethods"),
+				PurchaseOrderID = efPurchaseOrderHeader.purchaseOrderID.ToInt(),
+				RevisionNumber = efPurchaseOrderHeader.revisionNumber,
+				Status = efPurchaseOrderHeader.status,
+				EmployeeID = efPurchaseOrderHeader.employeeID.ToInt(),
+				VendorID = efPurchaseOrderHeader.vendorID.ToInt(),
+				ShipMethodID = efPurchaseOrderHeader.shipMethodID.ToInt(),
+				OrderDate = efPurchaseOrderHeader.orderDate.ToDateTime(),
+				ShipDate = efPurchaseOrderHeader.shipDate.ToNullableDateTime(),
+				SubTotal = efPurchaseOrderHeader.subTotal,
+				TaxAmt = efPurchaseOrderHeader.taxAmt,
+				Freight = efPurchaseOrderHeader.freight,
+				TotalDue = efPurchaseOrderHeader.totalDue,
+				ModifiedDate = efPurchaseOrderHeader.modifiedDate.ToDateTime(),
 			});
-
-			EmployeeRepository.MapEFToPOCO(efPurchaseOrderHeader.EmployeeRef, response);
-
-			VendorRepository.MapEFToPOCO(efPurchaseOrderHeader.VendorRef, response);
-
-			ShipMethodRepository.MapEFToPOCO(efPurchaseOrderHeader.ShipMethodRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f37ad6996acd60fa0453cc70a9c431b7</Hash>
+    <Hash>19ffd4af51bf85e93139a3093dc3a31c</Hash>
 </Codenesium>*/

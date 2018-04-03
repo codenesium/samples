@@ -9,7 +9,6 @@ namespace NebulaNS.Api.Contracts
 	{
 		public MachineModel()
 		{}
-
 		public MachineModel(string name,
 		                    Guid machineGuid,
 		                    string jwtKey,
@@ -21,15 +20,6 @@ namespace NebulaNS.Api.Contracts
 			this.JwtKey = jwtKey;
 			this.LastIpAddress = lastIpAddress;
 			this.Description = description;
-		}
-
-		public MachineModel(POCOMachine poco)
-		{
-			this.Name = poco.Name;
-			this.MachineGuid = poco.MachineGuid;
-			this.JwtKey = poco.JwtKey;
-			this.LastIpAddress = poco.LastIpAddress;
-			this.Description = poco.Description;
 		}
 
 		private string _name;
@@ -105,5 +95,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5d1d6db0f1aa9701c4416fc032511710</Hash>
+    <Hash>73e4ecd398df38fdb25d5549499799de</Hash>
 </Codenesium>*/

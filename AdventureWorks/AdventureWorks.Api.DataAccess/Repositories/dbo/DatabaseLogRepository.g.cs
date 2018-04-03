@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFDatabaseLog>().Add(record);
 			this._context.SaveChanges();
-			return record.DatabaseLogID;
+			return record.databaseLogID;
 		}
 
 		public virtual void Update(int databaseLogID, DateTime postTime,
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           string tSQL,
 		                           string xmlEvent)
 		{
-			var record =  this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.databaseLogID == databaseLogID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",databaseLogID);
@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int databaseLogID)
 		{
-			var record = this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.databaseLogID == databaseLogID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int databaseLogID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID,response);
+			this.SearchLinqPOCO(x => x.databaseLogID == databaseLogID,response);
 		}
 
 		protected virtual List<EFDatabaseLog> SearchLinqEF(Expression<Func<EFDatabaseLog, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -131,14 +131,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string tSQL,
 		                               string xmlEvent, EFDatabaseLog   efDatabaseLog)
 		{
-			efDatabaseLog.DatabaseLogID = databaseLogID;
-			efDatabaseLog.PostTime = postTime;
-			efDatabaseLog.DatabaseUser = databaseUser;
-			efDatabaseLog.@Event = @event;
-			efDatabaseLog.Schema = schema;
-			efDatabaseLog.@Object = @object;
-			efDatabaseLog.TSQL = tSQL;
-			efDatabaseLog.XmlEvent = xmlEvent;
+			efDatabaseLog.databaseLogID = databaseLogID;
+			efDatabaseLog.postTime = postTime;
+			efDatabaseLog.databaseUser = databaseUser;
+			efDatabaseLog.@event = @event;
+			efDatabaseLog.schema = schema;
+			efDatabaseLog.@object = @object;
+			efDatabaseLog.tSQL = tSQL;
+			efDatabaseLog.xmlEvent = xmlEvent;
 		}
 
 		public static void MapEFToPOCO(EFDatabaseLog efDatabaseLog,Response response)
@@ -149,19 +149,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddDatabaseLog(new POCODatabaseLog()
 			{
-				DatabaseLogID = efDatabaseLog.DatabaseLogID.ToInt(),
-				PostTime = efDatabaseLog.PostTime.ToDateTime(),
-				DatabaseUser = efDatabaseLog.DatabaseUser,
-				@Event = efDatabaseLog.@Event,
-				Schema = efDatabaseLog.Schema,
-				@Object = efDatabaseLog.@Object,
-				TSQL = efDatabaseLog.TSQL,
-				XmlEvent = efDatabaseLog.XmlEvent,
+				DatabaseLogID = efDatabaseLog.databaseLogID.ToInt(),
+				PostTime = efDatabaseLog.postTime.ToDateTime(),
+				DatabaseUser = efDatabaseLog.databaseUser,
+				@Event = efDatabaseLog.@event,
+				Schema = efDatabaseLog.schema,
+				@Object = efDatabaseLog.@object,
+				TSQL = efDatabaseLog.tSQL,
+				XmlEvent = efDatabaseLog.xmlEvent,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a901be5ad0e8c15a10f10877d3c593d9</Hash>
+    <Hash>862d90d97977b60c834e85276f0142ef</Hash>
 </Codenesium>*/

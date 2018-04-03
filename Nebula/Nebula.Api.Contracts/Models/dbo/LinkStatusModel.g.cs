@@ -9,15 +9,9 @@ namespace NebulaNS.Api.Contracts
 	{
 		public LinkStatusModel()
 		{}
-
 		public LinkStatusModel(string name)
 		{
 			this.Name = name;
-		}
-
-		public LinkStatusModel(POCOLinkStatus poco)
-		{
-			this.Name = poco.Name;
 		}
 
 		private string _name;
@@ -37,5 +31,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b9d8aaeac9c25240bd4811fc2259c496</Hash>
+    <Hash>fa868a10babf16bb0eabbffdd12ce61a</Hash>
 </Codenesium>*/

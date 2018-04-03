@@ -10,15 +10,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ProductModelID {get; set;}
-		public string Name {get; set;}
-		public string CatalogDescription {get; set;}
-		public string Instructions {get; set;}
+		public int productModelID {get; set;}
+		public string name {get; set;}
+		public string catalogDescription {get; set;}
+		public string instructions {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>52d3fd967cbb19981f3edc1deca232d5</Hash>
+    <Hash>c627b77765a88b109bb6565e0e62edef</Hash>
 </Codenesium>*/

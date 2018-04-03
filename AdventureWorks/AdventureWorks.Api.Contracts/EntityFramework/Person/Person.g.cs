@@ -10,25 +10,22 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public string PersonType {get; set;}
-		public bool NameStyle {get; set;}
-		public string Title {get; set;}
-		public string FirstName {get; set;}
-		public string MiddleName {get; set;}
-		public string LastName {get; set;}
-		public string Suffix {get; set;}
-		public int EmailPromotion {get; set;}
-		public string AdditionalContactInfo {get; set;}
-		public string Demographics {get; set;}
+		public int businessEntityID {get; set;}
+		public string personType {get; set;}
+		public bool nameStyle {get; set;}
+		public string title {get; set;}
+		public string firstName {get; set;}
+		public string middleName {get; set;}
+		public string lastName {get; set;}
+		public string suffix {get; set;}
+		public int emailPromotion {get; set;}
+		public string additionalContactInfo {get; set;}
+		public string demographics {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntityRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c01332138fc62e69b4ce0eb18c174282</Hash>
+    <Hash>52cc006cb5c3d57da69cd97fda2e3fb9</Hash>
 </Codenesium>*/

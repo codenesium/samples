@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFCountryRegion>().Add(record);
 			this._context.SaveChanges();
-			return record.CountryRegionCode;
+			return record.countryRegionCode;
 		}
 
 		public virtual void Update(string countryRegionCode, string name,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.countryRegionCode == countryRegionCode).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",countryRegionCode);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(string countryRegionCode)
 		{
-			var record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.countryRegionCode == countryRegionCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(string countryRegionCode, Response response)
 		{
-			this.SearchLinqPOCO(x => x.CountryRegionCode == countryRegionCode,response);
+			this.SearchLinqPOCO(x => x.countryRegionCode == countryRegionCode,response);
 		}
 
 		protected virtual List<EFCountryRegion> SearchLinqEF(Expression<Func<EFCountryRegion, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string countryRegionCode, string name,
 		                               DateTime modifiedDate, EFCountryRegion   efCountryRegion)
 		{
-			efCountryRegion.CountryRegionCode = countryRegionCode;
-			efCountryRegion.Name = name;
-			efCountryRegion.ModifiedDate = modifiedDate;
+			efCountryRegion.countryRegionCode = countryRegionCode;
+			efCountryRegion.name = name;
+			efCountryRegion.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFCountryRegion efCountryRegion,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddCountryRegion(new POCOCountryRegion()
 			{
-				CountryRegionCode = efCountryRegion.CountryRegionCode,
-				Name = efCountryRegion.Name,
-				ModifiedDate = efCountryRegion.ModifiedDate.ToDateTime(),
+				CountryRegionCode = efCountryRegion.countryRegionCode,
+				Name = efCountryRegion.name,
+				ModifiedDate = efCountryRegion.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5fea29031db389e0971dfa752dea63cb</Hash>
+    <Hash>532d70b4325e7422d3de5d748e90bb41</Hash>
 </Codenesium>*/

@@ -9,19 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductModelIllustrationModel()
 		{}
-
 		public ProductModelIllustrationModel(int illustrationID,
 		                                     DateTime modifiedDate)
 		{
 			this.IllustrationID = illustrationID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductModelIllustrationModel(POCOProductModelIllustration poco)
-		{
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.IllustrationID = poco.IllustrationID.Value.ToInt();
 		}
 
 		private int _illustrationID;
@@ -55,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0d4f8c2bd2458f6ef47da9fbf1d1cdbe</Hash>
+    <Hash>23a1b8b0b17ef8ea9a21de2be1359183</Hash>
 </Codenesium>*/

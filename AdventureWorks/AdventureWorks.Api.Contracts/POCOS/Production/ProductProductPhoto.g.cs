@@ -14,17 +14,14 @@ namespace AdventureWorksNS.Api.Contracts
 		                               bool primary,
 		                               DateTime modifiedDate)
 		{
+			this.ProductID = productID.ToInt();
+			this.ProductPhotoID = productPhotoID.ToInt();
 			this.Primary = primary;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
-			ProductPhotoID = new ReferenceEntity<int>(productPhotoID,
-			                                          "ProductPhoto");
 		}
 
-		public ReferenceEntity<int>ProductID {get; set;}
-		public ReferenceEntity<int>ProductPhotoID {get; set;}
+		public int ProductID {get; set;}
+		public int ProductPhotoID {get; set;}
 		public bool Primary {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
@@ -71,5 +68,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>76547b717c3cc9203a2af03802c2f2bf</Hash>
+    <Hash>bb5f92a3b8a37bbd54af1419fb8becd1</Hash>
 </Codenesium>*/

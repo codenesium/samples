@@ -20,8 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository {get; set;}
-		public IProductRepository ProductRepository {get; set;}
 		public virtual void PurchaseOrderDetailIDRules()
 		{
 			RuleFor(x => x.PurchaseOrderDetailID).NotNull();
@@ -40,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void ProductIDRules()
 		{
 			RuleFor(x => x.ProductID).NotNull();
-			RuleFor(x => x.ProductID).Must(BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void UnitPriceRules()
@@ -72,25 +69,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidPurchaseOrderHeader(int id)
-		{
-			Response response = new Response();
-
-			this.PurchaseOrderHeaderRepository.GetById(id,response);
-			return response.PurchaseOrderHeaders.Count > 0;
-		}
-
-		public bool BeValidProduct(int id)
-		{
-			Response response = new Response();
-
-			this.ProductRepository.GetById(id,response);
-			return response.Products.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>971e77612ac5fa3a9e2a5db115520044</Hash>
+    <Hash>0eb1f4bd90a2783b306c7a1bf6cf296b</Hash>
 </Codenesium>*/

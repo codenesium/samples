@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductID,ProductDocumentModel model)
+		public virtual IActionResult Update(int productID,ProductDocumentModel model)
 		{
 			this._productDocumentModelValidator.UpdateMode();
 			var validationResult = this._productDocumentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productDocumentRepository.Update(ProductID,  model.DocumentNode,
+				this._productDocumentRepository.Update(productID,  model.DocumentNode,
 				                                       model.ModifiedDate);
 				return Ok();
 			}
@@ -153,39 +153,9 @@ namespace AdventureWorksNS.Api.Service
 			this._productDocumentRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ProductDocumentFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Products/{id}/ProductDocuments")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			var response = new Response();
-
-			this._productDocumentRepository.GetWhere(x => x.ProductID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByDocumentNode/{id}")]
-		[ProductDocumentFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Documents/{id}/ProductDocuments")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByDocumentNode(Guid id)
-		{
-			var response = new Response();
-
-			this._productDocumentRepository.GetWhere(x => x.DocumentNode == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69f0b5aea0a0a908a69ba967b5fe96ec</Hash>
+    <Hash>16fc6c74235d61d6ff399b430b105931</Hash>
 </Codenesium>*/

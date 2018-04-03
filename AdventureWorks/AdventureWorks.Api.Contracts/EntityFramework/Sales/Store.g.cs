@@ -10,20 +10,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int BusinessEntityID {get; set;}
-		public string Name {get; set;}
-		public Nullable<int> SalesPersonID {get; set;}
-		public string Demographics {get; set;}
+		public int businessEntityID {get; set;}
+		public string name {get; set;}
+		public Nullable<int> salesPersonID {get; set;}
+		public string demographics {get; set;}
 		public Guid rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntityRef { get; set; }
-		[ForeignKey("SalesPersonID")]
-		public virtual EFSalesPerson SalesPersonRef { get; set; }
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2b8a9192d1730570098fe1200277ae3</Hash>
+    <Hash>ec9af8a3ae81f96676c2f6eb7af3c716</Hash>
 </Codenesium>*/

@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short LocationID,LocationModel model)
+		public virtual IActionResult Update(short locationID,LocationModel model)
 		{
 			this._locationModelValidator.UpdateMode();
 			var validationResult = this._locationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._locationRepository.Update(LocationID,  model.Name,
+				this._locationRepository.Update(locationID,  model.Name,
 				                                model.CostRate,
 				                                model.Availability,
 				                                model.ModifiedDate);
@@ -163,5 +163,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8654966b0ea06575c0d721cfd40b1ec4</Hash>
+    <Hash>6166ba2edf27b51e1d2494e242872276</Hash>
 </Codenesium>*/

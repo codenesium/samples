@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductPhotoModel()
 		{}
-
 		public ProductPhotoModel(byte[] thumbNailPhoto,
 		                         string thumbnailPhotoFileName,
 		                         byte[] largePhoto,
@@ -21,15 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.LargePhoto = largePhoto;
 			this.LargePhotoFileName = largePhotoFileName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public ProductPhotoModel(POCOProductPhoto poco)
-		{
-			this.ThumbNailPhoto = poco.ThumbNailPhoto;
-			this.ThumbnailPhotoFileName = poco.ThumbnailPhotoFileName;
-			this.LargePhoto = poco.LargePhoto;
-			this.LargePhotoFileName = poco.LargePhotoFileName;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private byte[] _thumbNailPhoto;
@@ -101,5 +91,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6e5707042cd63694962cc2fbfff5fbc2</Hash>
+    <Hash>90fc86dc9049cc09c03ba2f19f975ab3</Hash>
 </Codenesium>*/

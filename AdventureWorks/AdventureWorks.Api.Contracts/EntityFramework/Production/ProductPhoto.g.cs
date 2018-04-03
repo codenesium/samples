@@ -10,15 +10,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int ProductPhotoID {get; set;}
-		public byte[] ThumbNailPhoto {get; set;}
-		public string ThumbnailPhotoFileName {get; set;}
-		public byte[] LargePhoto {get; set;}
-		public string LargePhotoFileName {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int productPhotoID {get; set;}
+		public byte[] thumbNailPhoto {get; set;}
+		public string thumbnailPhotoFileName {get; set;}
+		public byte[] largePhoto {get; set;}
+		public string largePhotoFileName {get; set;}
+		public DateTime modifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b55ad029ea5dd6957ed6894f7223703</Hash>
+    <Hash>b65f60de70e4879b6d967f8fb14fbaf5</Hash>
 </Codenesium>*/

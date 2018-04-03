@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductModelID,ProductModelProductDescriptionCultureModel model)
+		public virtual IActionResult Update(int productModelID,ProductModelProductDescriptionCultureModel model)
 		{
 			this._productModelProductDescriptionCultureModelValidator.UpdateMode();
 			var validationResult = this._productModelProductDescriptionCultureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productModelProductDescriptionCultureRepository.Update(ProductModelID,  model.ProductDescriptionID,
+				this._productModelProductDescriptionCultureRepository.Update(productModelID,  model.ProductDescriptionID,
 				                                                             model.CultureID,
 				                                                             model.ModifiedDate);
 				return Ok();
@@ -156,54 +156,9 @@ namespace AdventureWorksNS.Api.Service
 			this._productModelProductDescriptionCultureRepository.Delete(id);
 			return Ok();
 		}
-
-		[HttpGet]
-		[Route("ByProductModelID/{id}")]
-		[ProductModelProductDescriptionCultureFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ProductModels/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductModelID(int id)
-		{
-			var response = new Response();
-
-			this._productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductModelID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByProductDescriptionID/{id}")]
-		[ProductModelProductDescriptionCultureFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/ProductDescriptions/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByProductDescriptionID(int id)
-		{
-			var response = new Response();
-
-			this._productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductDescriptionID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
-
-		[HttpGet]
-		[Route("ByCultureID/{id}")]
-		[ProductModelProductDescriptionCultureFilter]
-		[ReadOnlyFilter]
-		[Route("~/api/Cultures/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(Response), 200)]
-		public virtual IActionResult ByCultureID(string id)
-		{
-			var response = new Response();
-
-			this._productModelProductDescriptionCultureRepository.GetWhere(x => x.CultureID == id, response);
-			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>470cf3376300efd036b8a51ebafae4d6</Hash>
+    <Hash>a9fdec6f3ec39501605557fa79bd6f1b</Hash>
 </Codenesium>*/

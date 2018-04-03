@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFPhoneNumberType>().Add(record);
 			this._context.SaveChanges();
-			return record.PhoneNumberTypeID;
+			return record.phoneNumberTypeID;
 		}
 
 		public virtual void Update(int phoneNumberTypeID, string name,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.phoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",phoneNumberTypeID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int phoneNumberTypeID)
 		{
-			var record = this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.phoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int phoneNumberTypeID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.PhoneNumberTypeID == phoneNumberTypeID,response);
+			this.SearchLinqPOCO(x => x.phoneNumberTypeID == phoneNumberTypeID,response);
 		}
 
 		protected virtual List<EFPhoneNumberType> SearchLinqEF(Expression<Func<EFPhoneNumberType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int phoneNumberTypeID, string name,
 		                               DateTime modifiedDate, EFPhoneNumberType   efPhoneNumberType)
 		{
-			efPhoneNumberType.PhoneNumberTypeID = phoneNumberTypeID;
-			efPhoneNumberType.Name = name;
-			efPhoneNumberType.ModifiedDate = modifiedDate;
+			efPhoneNumberType.phoneNumberTypeID = phoneNumberTypeID;
+			efPhoneNumberType.name = name;
+			efPhoneNumberType.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFPhoneNumberType efPhoneNumberType,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddPhoneNumberType(new POCOPhoneNumberType()
 			{
-				PhoneNumberTypeID = efPhoneNumberType.PhoneNumberTypeID.ToInt(),
-				Name = efPhoneNumberType.Name,
-				ModifiedDate = efPhoneNumberType.ModifiedDate.ToDateTime(),
+				PhoneNumberTypeID = efPhoneNumberType.phoneNumberTypeID.ToInt(),
+				Name = efPhoneNumberType.name,
+				ModifiedDate = efPhoneNumberType.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>53eee94f5b9f0a408f2e3a1529992b2c</Hash>
+    <Hash>c3cee6811e7ed533a699f7942229fc08</Hash>
 </Codenesium>*/

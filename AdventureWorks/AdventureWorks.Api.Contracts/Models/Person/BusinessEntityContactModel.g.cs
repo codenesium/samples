@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BusinessEntityContactModel()
 		{}
-
 		public BusinessEntityContactModel(int personID,
 		                                  int contactTypeID,
 		                                  Guid rowguid,
@@ -19,15 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ContactTypeID = contactTypeID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public BusinessEntityContactModel(POCOBusinessEntityContact poco)
-		{
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.PersonID = poco.PersonID.Value.ToInt();
-			this.ContactTypeID = poco.ContactTypeID.Value.ToInt();
 		}
 
 		private int _personID;
@@ -89,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>55825a6891a89900d17d76f179583f28</Hash>
+    <Hash>6000f494c57027fdd3d8a0bc4ab52e8b</Hash>
 </Codenesium>*/

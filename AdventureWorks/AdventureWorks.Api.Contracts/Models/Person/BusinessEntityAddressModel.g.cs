@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BusinessEntityAddressModel()
 		{}
-
 		public BusinessEntityAddressModel(int addressID,
 		                                  int addressTypeID,
 		                                  Guid rowguid,
@@ -19,15 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.AddressTypeID = addressTypeID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public BusinessEntityAddressModel(POCOBusinessEntityAddress poco)
-		{
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
-
-			this.AddressID = poco.AddressID.Value.ToInt();
-			this.AddressTypeID = poco.AddressTypeID.Value.ToInt();
 		}
 
 		private int _addressID;
@@ -89,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ee244dd7b4bf9151562f3bd646523ed3</Hash>
+    <Hash>ee5143027a659d1181ee6fee25d4aac9</Hash>
 </Codenesium>*/

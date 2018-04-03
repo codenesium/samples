@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string UnitMeasureCode,UnitMeasureModel model)
+		public virtual IActionResult Update(string unitMeasureCode,UnitMeasureModel model)
 		{
 			this._unitMeasureModelValidator.UpdateMode();
 			var validationResult = this._unitMeasureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._unitMeasureRepository.Update(UnitMeasureCode,  model.Name,
+				this._unitMeasureRepository.Update(unitMeasureCode,  model.Name,
 				                                   model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2053d2cf6e8bcb494321ee83e6acc59a</Hash>
+    <Hash>c1eb8b4ec5305400d85b262e985f93be</Hash>
 </Codenesium>*/

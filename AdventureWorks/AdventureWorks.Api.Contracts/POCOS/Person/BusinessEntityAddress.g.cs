@@ -15,20 +15,16 @@ namespace AdventureWorksNS.Api.Contracts
 		                                 Guid rowguid,
 		                                 DateTime modifiedDate)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
+			this.AddressID = addressID.ToInt();
+			this.AddressTypeID = addressTypeID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "BusinessEntity");
-			AddressID = new ReferenceEntity<int>(addressID,
-			                                     "Address");
-			AddressTypeID = new ReferenceEntity<int>(addressTypeID,
-			                                         "AddressType");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public ReferenceEntity<int>AddressID {get; set;}
-		public ReferenceEntity<int>AddressTypeID {get; set;}
+		public int BusinessEntityID {get; set;}
+		public int AddressID {get; set;}
+		public int AddressTypeID {get; set;}
 		public Guid Rowguid {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
@@ -84,5 +80,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f31301bbca1cee50637e71e5cfcfb1fb</Hash>
+    <Hash>b85a9b56bbf61b7b9dbc13c52602bee5</Hash>
 </Codenesium>*/

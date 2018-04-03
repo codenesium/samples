@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFAddressType>().Add(record);
 			this._context.SaveChanges();
-			return record.AddressTypeID;
+			return record.addressTypeID;
 		}
 
 		public virtual void Update(int addressTypeID, string name,
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.AddressTypeID == addressTypeID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.addressTypeID == addressTypeID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",addressTypeID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int addressTypeID)
 		{
-			var record = this.SearchLinqEF(x => x.AddressTypeID == addressTypeID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.addressTypeID == addressTypeID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int addressTypeID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.AddressTypeID == addressTypeID,response);
+			this.SearchLinqPOCO(x => x.addressTypeID == addressTypeID,response);
 		}
 
 		protected virtual List<EFAddressType> SearchLinqEF(Expression<Func<EFAddressType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFAddressType   efAddressType)
 		{
-			efAddressType.AddressTypeID = addressTypeID;
-			efAddressType.Name = name;
+			efAddressType.addressTypeID = addressTypeID;
+			efAddressType.name = name;
 			efAddressType.rowguid = rowguid;
-			efAddressType.ModifiedDate = modifiedDate;
+			efAddressType.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFAddressType efAddressType,Response response)
@@ -125,15 +125,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddAddressType(new POCOAddressType()
 			{
-				AddressTypeID = efAddressType.AddressTypeID.ToInt(),
-				Name = efAddressType.Name,
+				AddressTypeID = efAddressType.addressTypeID.ToInt(),
+				Name = efAddressType.name,
 				Rowguid = efAddressType.rowguid,
-				ModifiedDate = efAddressType.ModifiedDate.ToDateTime(),
+				ModifiedDate = efAddressType.modifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4395aefbf6ca30de7f0c84cf7068edf6</Hash>
+    <Hash>9e8cd02b92af72e3bf29ee14afa85a0d</Hash>
 </Codenesium>*/

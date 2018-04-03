@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
 		public virtual void DocumentLevelRules()
 		{                       }
 
@@ -33,7 +32,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void OwnerRules()
 		{
 			RuleFor(x => x.Owner).NotNull();
-			RuleFor(x => x.Owner).Must(BeValidEmployee).When(x => x ?.Owner != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void FolderFlagRules()
@@ -72,7 +70,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void DocumentSummaryRules()
 		{                       }
 
-		public virtual void Document1Rules()
+		public virtual void DocumentRules()
 		{                       }
 
 		public virtual void RowguidRules()
@@ -84,17 +82,9 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
-
-		public bool BeValidEmployee(int id)
-		{
-			Response response = new Response();
-
-			this.EmployeeRepository.GetById(id,response);
-			return response.Employees.Count > 0;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a2f154eca86bd7f45d8eaa4401649ab</Hash>
+    <Hash>c4c77982eeef57b73015083ad8ec6c55</Hash>
 </Codenesium>*/

@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesTaxRate>().Add(record);
 			this._context.SaveChanges();
-			return record.SalesTaxRateID;
+			return record.salesTaxRateID;
 		}
 
 		public virtual void Update(int salesTaxRateID, int stateProvinceID,
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.salesTaxRateID == salesTaxRateID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",salesTaxRateID);
@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int salesTaxRateID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.salesTaxRateID == salesTaxRateID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -84,7 +84,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int salesTaxRateID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID,response);
+			this.SearchLinqPOCO(x => x.salesTaxRateID == salesTaxRateID,response);
 		}
 
 		protected virtual List<EFSalesTaxRate> SearchLinqEF(Expression<Func<EFSalesTaxRate, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -126,13 +126,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesTaxRate   efSalesTaxRate)
 		{
-			efSalesTaxRate.SalesTaxRateID = salesTaxRateID;
-			efSalesTaxRate.StateProvinceID = stateProvinceID;
-			efSalesTaxRate.TaxType = taxType;
-			efSalesTaxRate.TaxRate = taxRate;
-			efSalesTaxRate.Name = name;
+			efSalesTaxRate.salesTaxRateID = salesTaxRateID;
+			efSalesTaxRate.stateProvinceID = stateProvinceID;
+			efSalesTaxRate.taxType = taxType;
+			efSalesTaxRate.taxRate = taxRate;
+			efSalesTaxRate.name = name;
 			efSalesTaxRate.rowguid = rowguid;
-			efSalesTaxRate.ModifiedDate = modifiedDate;
+			efSalesTaxRate.modifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesTaxRate efSalesTaxRate,Response response)
@@ -143,22 +143,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesTaxRate(new POCOSalesTaxRate()
 			{
-				SalesTaxRateID = efSalesTaxRate.SalesTaxRateID.ToInt(),
-				TaxType = efSalesTaxRate.TaxType,
-				TaxRate = efSalesTaxRate.TaxRate,
-				Name = efSalesTaxRate.Name,
+				SalesTaxRateID = efSalesTaxRate.salesTaxRateID.ToInt(),
+				StateProvinceID = efSalesTaxRate.stateProvinceID.ToInt(),
+				TaxType = efSalesTaxRate.taxType,
+				TaxRate = efSalesTaxRate.taxRate,
+				Name = efSalesTaxRate.name,
 				Rowguid = efSalesTaxRate.rowguid,
-				ModifiedDate = efSalesTaxRate.ModifiedDate.ToDateTime(),
-
-				StateProvinceID = new ReferenceEntity<int>(efSalesTaxRate.StateProvinceID,
-				                                           "StateProvinces"),
+				ModifiedDate = efSalesTaxRate.modifiedDate.ToDateTime(),
 			});
-
-			StateProvinceRepository.MapEFToPOCO(efSalesTaxRate.StateProvinceRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2706fe78a7b940c1927e5dba2f0826e6</Hash>
+    <Hash>7b7ed52f46a14432063f2948f8f6cd6b</Hash>
 </Codenesium>*/

@@ -9,18 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BusinessEntityModel()
 		{}
-
 		public BusinessEntityModel(Guid rowguid,
 		                           DateTime modifiedDate)
 		{
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public BusinessEntityModel(POCOBusinessEntity poco)
-		{
-			this.Rowguid = poco.Rowguid;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private Guid _rowguid;
@@ -54,5 +47,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>000408ddd3878a416f551052b695814d</Hash>
+    <Hash>248965f1d345f0e2811db5c189ffcf3e</Hash>
 </Codenesium>*/

@@ -9,7 +9,6 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public DepartmentModel()
 		{}
-
 		public DepartmentModel(string name,
 		                       string groupName,
 		                       DateTime modifiedDate)
@@ -17,13 +16,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Name = name;
 			this.GroupName = groupName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		public DepartmentModel(POCODepartment poco)
-		{
-			this.Name = poco.Name;
-			this.GroupName = poco.GroupName;
-			this.ModifiedDate = poco.ModifiedDate.ToDateTime();
 		}
 
 		private string _name;
@@ -71,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>eaf7a82e6f7a641a1fb10fa0eaa634e3</Hash>
+    <Hash>7341b31c0a58e77cb5a7b4fb0824479f</Hash>
 </Codenesium>*/
