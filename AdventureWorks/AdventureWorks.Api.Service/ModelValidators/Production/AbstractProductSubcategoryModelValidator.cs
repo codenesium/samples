@@ -20,9 +20,11 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public IProductCategoryRepository ProductCategoryRepository {get; set;}
 		public virtual void ProductCategoryIDRules()
 		{
 			RuleFor(x => x.ProductCategoryID).NotNull();
+			RuleFor(x => x.ProductCategoryID).Must(BeValidProductCategory).When(x => x ?.ProductCategoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
@@ -40,9 +42,17 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidProductCategory(int id)
+		{
+			Response response = new Response();
+
+			this.ProductCategoryRepository.GetById(id,response);
+			return response.ProductCategories.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e19884f20dca45a9e2881131aa0d4d0</Hash>
+    <Hash>6018dcbbcb055b276c08aa5566c9c849</Hash>
 </Codenesium>*/

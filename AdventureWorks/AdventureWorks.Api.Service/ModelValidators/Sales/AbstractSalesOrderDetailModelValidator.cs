@@ -20,6 +20,8 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public ISalesOrderHeaderRepository SalesOrderHeaderRepository {get; set;}
+		public ISpecialOfferProductRepository SpecialOfferProductRepository {get; set;}
 		public virtual void SalesOrderDetailIDRules()
 		{
 			RuleFor(x => x.SalesOrderDetailID).NotNull();
@@ -43,6 +45,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void SpecialOfferIDRules()
 		{
 			RuleFor(x => x.SpecialOfferID).NotNull();
+			RuleFor(x => x.SpecialOfferID).Must(BeValidSpecialOfferProduct).When(x => x ?.SpecialOfferID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void UnitPriceRules()
@@ -69,9 +72,25 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidSalesOrderHeader(int id)
+		{
+			Response response = new Response();
+
+			this.SalesOrderHeaderRepository.GetById(id,response);
+			return response.SalesOrderHeaders.Count > 0;
+		}
+
+		public bool BeValidSpecialOfferProduct(int id)
+		{
+			Response response = new Response();
+
+			this.SpecialOfferProductRepository.GetById(id,response);
+			return response.SpecialOfferProducts.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fac3b43cc52dec3663a359767a639e29</Hash>
+    <Hash>553ba27c46329816882c3ce98a99768a</Hash>
 </Codenesium>*/

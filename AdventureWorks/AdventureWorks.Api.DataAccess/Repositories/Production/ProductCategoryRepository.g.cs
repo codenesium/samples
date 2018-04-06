@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductCategory>().Add(record);
 			this._context.SaveChanges();
-			return record.productCategoryID;
+			return record.ProductCategoryID;
 		}
 
 		public virtual void Update(int productCategoryID, string name,
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.productCategoryID == productCategoryID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productCategoryID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productCategoryID)
 		{
-			var record = this.SearchLinqEF(x => x.productCategoryID == productCategoryID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productCategoryID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.productCategoryID == productCategoryID,response);
+			this.SearchLinqPOCO(x => x.ProductCategoryID == productCategoryID,response);
 		}
 
 		protected virtual List<EFProductCategory> SearchLinqEF(Expression<Func<EFProductCategory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProductCategory   efProductCategory)
 		{
-			efProductCategory.productCategoryID = productCategoryID;
-			efProductCategory.name = name;
-			efProductCategory.rowguid = rowguid;
-			efProductCategory.modifiedDate = modifiedDate;
+			efProductCategory.ProductCategoryID = productCategoryID;
+			efProductCategory.Name = name;
+			efProductCategory.Rowguid = rowguid;
+			efProductCategory.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductCategory efProductCategory,Response response)
@@ -125,15 +125,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductCategory(new POCOProductCategory()
 			{
-				ProductCategoryID = efProductCategory.productCategoryID.ToInt(),
-				Name = efProductCategory.name,
-				Rowguid = efProductCategory.rowguid,
-				ModifiedDate = efProductCategory.modifiedDate.ToDateTime(),
+				ProductCategoryID = efProductCategory.ProductCategoryID.ToInt(),
+				Name = efProductCategory.Name,
+				Rowguid = efProductCategory.Rowguid,
+				ModifiedDate = efProductCategory.ModifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b7b41e6ea160e496f0ab247a0de5aabe</Hash>
+    <Hash>aa02d75fcc6bde983fd4b2fa77739e84</Hash>
 </Codenesium>*/

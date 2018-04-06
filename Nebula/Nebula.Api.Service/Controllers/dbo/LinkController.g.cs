@@ -143,13 +143,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,LinkModel model)
+		public virtual IActionResult Update(int Id,LinkModel model)
 		{
 			this._linkModelValidator.UpdateMode();
 			var validationResult = this._linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkRepository.Update(id,  model.Name,
+				this._linkRepository.Update(Id,  model.Name,
 				                            model.DynamicParameters,
 				                            model.StaticParameters,
 				                            model.ChainId,
@@ -191,7 +191,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._linkRepository.GetWhere(x => x.chainId == id, response);
+			this._linkRepository.GetWhere(x => x.ChainId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -206,7 +206,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._linkRepository.GetWhere(x => x.assignedMachineId == id, response);
+			this._linkRepository.GetWhere(x => x.AssignedMachineId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -221,7 +221,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._linkRepository.GetWhere(x => x.linkStatusId == id, response);
+			this._linkRepository.GetWhere(x => x.LinkStatusId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -229,5 +229,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f5161fd52970fda395f1b174ef02c577</Hash>
+    <Hash>0abf545df3c1ea424cc25a318c65dd07</Hash>
 </Codenesium>*/

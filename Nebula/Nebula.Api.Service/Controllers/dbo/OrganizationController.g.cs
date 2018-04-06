@@ -123,13 +123,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,OrganizationModel model)
+		public virtual IActionResult Update(int Id,OrganizationModel model)
 		{
 			this._organizationModelValidator.UpdateMode();
 			var validationResult = this._organizationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._organizationRepository.Update(id,  model.Name);
+				this._organizationRepository.Update(Id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +154,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>74d72b2372a4a6a8c2f85fe3446344ae</Hash>
+    <Hash>c34498e557105390fa1e7108e172f6b0</Hash>
 </Codenesium>*/

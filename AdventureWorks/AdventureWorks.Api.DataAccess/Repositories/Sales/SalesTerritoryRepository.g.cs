@@ -46,7 +46,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesTerritory>().Add(record);
 			this._context.SaveChanges();
-			return record.territoryID;
+			return record.TerritoryID;
 		}
 
 		public virtual void Update(int territoryID, string name,
@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.territoryID == territoryID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",territoryID);
@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int territoryID)
 		{
-			var record = this.SearchLinqEF(x => x.territoryID == territoryID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -96,7 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int territoryID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.territoryID == territoryID,response);
+			this.SearchLinqPOCO(x => x.TerritoryID == territoryID,response);
 		}
 
 		protected virtual List<EFSalesTerritory> SearchLinqEF(Expression<Func<EFSalesTerritory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -141,16 +141,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesTerritory   efSalesTerritory)
 		{
-			efSalesTerritory.territoryID = territoryID;
-			efSalesTerritory.name = name;
-			efSalesTerritory.countryRegionCode = countryRegionCode;
-			efSalesTerritory.@group = @group;
-			efSalesTerritory.salesYTD = salesYTD;
-			efSalesTerritory.salesLastYear = salesLastYear;
-			efSalesTerritory.costYTD = costYTD;
-			efSalesTerritory.costLastYear = costLastYear;
-			efSalesTerritory.rowguid = rowguid;
-			efSalesTerritory.modifiedDate = modifiedDate;
+			efSalesTerritory.TerritoryID = territoryID;
+			efSalesTerritory.Name = name;
+			efSalesTerritory.CountryRegionCode = countryRegionCode;
+			efSalesTerritory.@Group = @group;
+			efSalesTerritory.SalesYTD = salesYTD;
+			efSalesTerritory.SalesLastYear = salesLastYear;
+			efSalesTerritory.CostYTD = costYTD;
+			efSalesTerritory.CostLastYear = costLastYear;
+			efSalesTerritory.Rowguid = rowguid;
+			efSalesTerritory.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesTerritory efSalesTerritory,Response response)
@@ -161,21 +161,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesTerritory(new POCOSalesTerritory()
 			{
-				TerritoryID = efSalesTerritory.territoryID.ToInt(),
-				Name = efSalesTerritory.name,
-				CountryRegionCode = efSalesTerritory.countryRegionCode,
-				@Group = efSalesTerritory.@group,
-				SalesYTD = efSalesTerritory.salesYTD,
-				SalesLastYear = efSalesTerritory.salesLastYear,
-				CostYTD = efSalesTerritory.costYTD,
-				CostLastYear = efSalesTerritory.costLastYear,
-				Rowguid = efSalesTerritory.rowguid,
-				ModifiedDate = efSalesTerritory.modifiedDate.ToDateTime(),
+				TerritoryID = efSalesTerritory.TerritoryID.ToInt(),
+				Name = efSalesTerritory.Name,
+				@Group = efSalesTerritory.@Group,
+				SalesYTD = efSalesTerritory.SalesYTD,
+				SalesLastYear = efSalesTerritory.SalesLastYear,
+				CostYTD = efSalesTerritory.CostYTD,
+				CostLastYear = efSalesTerritory.CostLastYear,
+				Rowguid = efSalesTerritory.Rowguid,
+				ModifiedDate = efSalesTerritory.ModifiedDate.ToDateTime(),
+
+				CountryRegionCode = new ReferenceEntity<string>(efSalesTerritory.CountryRegionCode,
+				                                                "CountryRegions"),
 			});
+
+			CountryRegionRepository.MapEFToPOCO(efSalesTerritory.CountryRegionRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bde7f545b33dc98ad6827120010cc9d1</Hash>
+    <Hash>a429297a9594cd5cb12f4f43dc684930</Hash>
 </Codenesium>*/

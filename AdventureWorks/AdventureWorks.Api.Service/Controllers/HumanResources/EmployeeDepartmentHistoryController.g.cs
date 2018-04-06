@@ -131,13 +131,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,EmployeeDepartmentHistoryModel model)
+		public virtual IActionResult Update(int BusinessEntityID,EmployeeDepartmentHistoryModel model)
 		{
 			this._employeeDepartmentHistoryModelValidator.UpdateMode();
 			var validationResult = this._employeeDepartmentHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._employeeDepartmentHistoryRepository.Update(businessEntityID,  model.DepartmentID,
+				this._employeeDepartmentHistoryRepository.Update(BusinessEntityID,  model.DepartmentID,
 				                                                 model.ShiftID,
 				                                                 model.StartDate,
 				                                                 model.EndDate,
@@ -162,9 +162,54 @@ namespace AdventureWorksNS.Api.Service
 			this._employeeDepartmentHistoryRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[EmployeeDepartmentHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Employees/{id}/EmployeeDepartmentHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._employeeDepartmentHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByDepartmentID/{id}")]
+		[EmployeeDepartmentHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Departments/{id}/EmployeeDepartmentHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByDepartmentID(short id)
+		{
+			var response = new Response();
+
+			this._employeeDepartmentHistoryRepository.GetWhere(x => x.DepartmentID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByShiftID/{id}")]
+		[EmployeeDepartmentHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Shifts/{id}/EmployeeDepartmentHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByShiftID(int id)
+		{
+			var response = new Response();
+
+			this._employeeDepartmentHistoryRepository.GetWhere(x => x.ShiftID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>592f22a6e6c65e58259c6be803a8cf73</Hash>
+    <Hash>f0c5709afde8c53763759204d0a4760e</Hash>
 </Codenesium>*/

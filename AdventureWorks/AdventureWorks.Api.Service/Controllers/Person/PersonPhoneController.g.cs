@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,PersonPhoneModel model)
+		public virtual IActionResult Update(int BusinessEntityID,PersonPhoneModel model)
 		{
 			this._personPhoneModelValidator.UpdateMode();
 			var validationResult = this._personPhoneModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._personPhoneRepository.Update(businessEntityID,  model.PhoneNumber,
+				this._personPhoneRepository.Update(BusinessEntityID,  model.PhoneNumber,
 				                                   model.PhoneNumberTypeID,
 				                                   model.ModifiedDate);
 				return Ok();
@@ -156,9 +156,39 @@ namespace AdventureWorksNS.Api.Service
 			this._personPhoneRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[PersonPhoneFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/People/{id}/PersonPhones")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._personPhoneRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByPhoneNumberTypeID/{id}")]
+		[PersonPhoneFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/PhoneNumberTypes/{id}/PersonPhones")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByPhoneNumberTypeID(int id)
+		{
+			var response = new Response();
+
+			this._personPhoneRepository.GetWhere(x => x.PhoneNumberTypeID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76b3d79c723c9db54e1e750eb3e29a75</Hash>
+    <Hash>3245a5cc64eb6dddee702273ec8ad8cb</Hash>
 </Codenesium>*/

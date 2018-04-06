@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int shiftID,ShiftModel model)
+		public virtual IActionResult Update(int ShiftID,ShiftModel model)
 		{
 			this._shiftModelValidator.UpdateMode();
 			var validationResult = this._shiftModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._shiftRepository.Update(shiftID,  model.Name,
+				this._shiftRepository.Update(ShiftID,  model.Name,
 				                             model.StartTime,
 				                             model.EndTime,
 				                             model.ModifiedDate);
@@ -163,5 +163,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>26dd532e8a10f181388c20222b95a687</Hash>
+    <Hash>b5b8cd4c359ded2a76957aa6b9fceae9</Hash>
 </Codenesium>*/

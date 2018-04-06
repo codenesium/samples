@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFIllustration>().Add(record);
 			this._context.SaveChanges();
-			return record.illustrationID;
+			return record.IllustrationID;
 		}
 
 		public virtual void Update(int illustrationID, string diagram,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.illustrationID == illustrationID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.IllustrationID == illustrationID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",illustrationID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int illustrationID)
 		{
-			var record = this.SearchLinqEF(x => x.illustrationID == illustrationID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.IllustrationID == illustrationID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int illustrationID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.illustrationID == illustrationID,response);
+			this.SearchLinqPOCO(x => x.IllustrationID == illustrationID,response);
 		}
 
 		protected virtual List<EFIllustration> SearchLinqEF(Expression<Func<EFIllustration, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int illustrationID, string diagram,
 		                               DateTime modifiedDate, EFIllustration   efIllustration)
 		{
-			efIllustration.illustrationID = illustrationID;
-			efIllustration.diagram = diagram;
-			efIllustration.modifiedDate = modifiedDate;
+			efIllustration.IllustrationID = illustrationID;
+			efIllustration.Diagram = diagram;
+			efIllustration.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFIllustration efIllustration,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddIllustration(new POCOIllustration()
 			{
-				IllustrationID = efIllustration.illustrationID.ToInt(),
-				Diagram = efIllustration.diagram,
-				ModifiedDate = efIllustration.modifiedDate.ToDateTime(),
+				IllustrationID = efIllustration.IllustrationID.ToInt(),
+				Diagram = efIllustration.Diagram,
+				ModifiedDate = efIllustration.ModifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>62639b3662483e234a01533ebbb0bdcb</Hash>
+    <Hash>6a0b10065d68253a0849cc6b7bd004b1</Hash>
 </Codenesium>*/

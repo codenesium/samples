@@ -10,14 +10,23 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int productID {get; set;}
-		public DateTime startDate {get; set;}
-		public Nullable<DateTime> endDate {get; set;}
-		public decimal listPrice {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("ProductID", TypeName="int")]
+		public int ProductID {get; set;}
+		[Column("StartDate", TypeName="datetime")]
+		public DateTime StartDate {get; set;}
+		[Column("EndDate", TypeName="datetime")]
+		public Nullable<DateTime> EndDate {get; set;}
+		[Column("ListPrice", TypeName="money")]
+		public decimal ListPrice {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("ProductID")]
+		public virtual EFProduct ProductRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d42500440045fee296e24cc0e21d798e</Hash>
+    <Hash>6c5a1494367a770ba4d3258d318fdfa5</Hash>
 </Codenesium>*/

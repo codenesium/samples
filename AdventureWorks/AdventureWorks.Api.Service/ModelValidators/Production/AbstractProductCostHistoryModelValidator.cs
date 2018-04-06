@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public IProductRepository ProductRepository {get; set;}
 		public virtual void StartDateRules()
 		{
 			RuleFor(x => x.StartDate).NotNull();
@@ -37,9 +38,17 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidProduct(int id)
+		{
+			Response response = new Response();
+
+			this.ProductRepository.GetById(id,response);
+			return response.Products.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e8451be3e4b96201b2965f4a716dece4</Hash>
+    <Hash>599689aaf725b7ee1d033a3125bc30ff</Hash>
 </Codenesium>*/

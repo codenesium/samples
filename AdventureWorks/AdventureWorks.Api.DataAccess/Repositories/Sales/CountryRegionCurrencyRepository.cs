@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFCountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy("countryRegionCode ASC").Skip(skip).Take(take).ToList<EFCountryRegionCurrency>();
+				return this._context.Set<EFCountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy("CountryRegionCode ASC").Skip(skip).Take(take).ToList<EFCountryRegionCurrency>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFCountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy("countryRegionCode ASC").Skip(skip).Take(take).ToList<EFCountryRegionCurrency>();
+				return this._context.Set<EFCountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy("CountryRegionCode ASC").Skip(skip).Take(take).ToList<EFCountryRegionCurrency>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>68d1ce7e18372fe642a533b83be9f0bc</Hash>
+    <Hash>a3ebda6abfe74e61bb5505eb45ae7e67</Hash>
 </Codenesium>*/

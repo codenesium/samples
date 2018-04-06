@@ -10,17 +10,26 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int databaseLogID {get; set;}
-		public DateTime postTime {get; set;}
-		public string databaseUser {get; set;}
-		public string @event {get; set;}
-		public string schema {get; set;}
-		public string @object {get; set;}
-		public string tSQL {get; set;}
-		public string xmlEvent {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("DatabaseLogID", TypeName="int")]
+		public int DatabaseLogID {get; set;}
+		[Column("PostTime", TypeName="datetime")]
+		public DateTime PostTime {get; set;}
+		[Column("DatabaseUser", TypeName="nvarchar(128)")]
+		public string DatabaseUser {get; set;}
+		[Column("Event", TypeName="nvarchar(128)")]
+		public string @Event {get; set;}
+		[Column("Schema", TypeName="nvarchar(128)")]
+		public string Schema {get; set;}
+		[Column("Object", TypeName="nvarchar(128)")]
+		public string @Object {get; set;}
+		[Column("TSQL", TypeName="nvarchar(-1)")]
+		public string TSQL {get; set;}
+		[Column("XmlEvent", TypeName="xml(-1)")]
+		public string XmlEvent {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>34fb2362259a569973d895c0d1750fa6</Hash>
+    <Hash>3dea829bdc03f9f2f9e89dbecec9f442</Hash>
 </Codenesium>*/

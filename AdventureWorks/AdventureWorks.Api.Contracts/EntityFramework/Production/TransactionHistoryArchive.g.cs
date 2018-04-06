@@ -10,18 +10,28 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int transactionID {get; set;}
-		public int productID {get; set;}
-		public int referenceOrderID {get; set;}
-		public int referenceOrderLineID {get; set;}
-		public DateTime transactionDate {get; set;}
-		public string transactionType {get; set;}
-		public int quantity {get; set;}
-		public decimal actualCost {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("TransactionID", TypeName="int")]
+		public int TransactionID {get; set;}
+		[Column("ProductID", TypeName="int")]
+		public int ProductID {get; set;}
+		[Column("ReferenceOrderID", TypeName="int")]
+		public int ReferenceOrderID {get; set;}
+		[Column("ReferenceOrderLineID", TypeName="int")]
+		public int ReferenceOrderLineID {get; set;}
+		[Column("TransactionDate", TypeName="datetime")]
+		public DateTime TransactionDate {get; set;}
+		[Column("TransactionType", TypeName="nchar(1)")]
+		public string TransactionType {get; set;}
+		[Column("Quantity", TypeName="int")]
+		public int Quantity {get; set;}
+		[Column("ActualCost", TypeName="money")]
+		public decimal ActualCost {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd2af2bf1ed936a5450143f6f613949b</Hash>
+    <Hash>7a4c98ff68a5c127154e8c7ff6b67863</Hash>
 </Codenesium>*/

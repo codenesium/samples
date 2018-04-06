@@ -135,13 +135,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int productReviewID,ProductReviewModel model)
+		public virtual IActionResult Update(int ProductReviewID,ProductReviewModel model)
 		{
 			this._productReviewModelValidator.UpdateMode();
 			var validationResult = this._productReviewModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productReviewRepository.Update(productReviewID,  model.ProductID,
+				this._productReviewRepository.Update(ProductReviewID,  model.ProductID,
 				                                     model.ReviewerName,
 				                                     model.ReviewDate,
 				                                     model.EmailAddress,
@@ -168,9 +168,24 @@ namespace AdventureWorksNS.Api.Service
 			this._productReviewRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[ProductReviewFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Products/{id}/ProductReviews")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			var response = new Response();
+
+			this._productReviewRepository.GetWhere(x => x.ProductID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c58dce9d5010a974e843111ffda7a28</Hash>
+    <Hash>6f8a43cc964e9e64021184fd66355c9c</Hash>
 </Codenesium>*/

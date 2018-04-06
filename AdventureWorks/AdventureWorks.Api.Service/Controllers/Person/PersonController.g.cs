@@ -145,13 +145,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,PersonModel model)
+		public virtual IActionResult Update(int BusinessEntityID,PersonModel model)
 		{
 			this._personModelValidator.UpdateMode();
 			var validationResult = this._personModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._personRepository.Update(businessEntityID,  model.PersonType,
+				this._personRepository.Update(BusinessEntityID,  model.PersonType,
 				                              model.NameStyle,
 				                              model.Title,
 				                              model.FirstName,
@@ -183,9 +183,24 @@ namespace AdventureWorksNS.Api.Service
 			this._personRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[PersonFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/BusinessEntities/{id}/People")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._personRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a15cf9f3efb3c54123b4f41f8e57a88</Hash>
+    <Hash>91f5040233ff916e2425a4931f251fd3</Hash>
 </Codenesium>*/

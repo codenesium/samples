@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductSubcategory>().Add(record);
 			this._context.SaveChanges();
-			return record.productSubcategoryID;
+			return record.ProductSubcategoryID;
 		}
 
 		public virtual void Update(int productSubcategoryID, int productCategoryID,
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.productSubcategoryID == productSubcategoryID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.ProductSubcategoryID == productSubcategoryID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productSubcategoryID);
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productSubcategoryID)
 		{
-			var record = this.SearchLinqEF(x => x.productSubcategoryID == productSubcategoryID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductSubcategoryID == productSubcategoryID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productSubcategoryID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.productSubcategoryID == productSubcategoryID,response);
+			this.SearchLinqPOCO(x => x.ProductSubcategoryID == productSubcategoryID,response);
 		}
 
 		protected virtual List<EFProductSubcategory> SearchLinqEF(Expression<Func<EFProductSubcategory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,11 +116,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProductSubcategory   efProductSubcategory)
 		{
-			efProductSubcategory.productSubcategoryID = productSubcategoryID;
-			efProductSubcategory.productCategoryID = productCategoryID;
-			efProductSubcategory.name = name;
-			efProductSubcategory.rowguid = rowguid;
-			efProductSubcategory.modifiedDate = modifiedDate;
+			efProductSubcategory.ProductSubcategoryID = productSubcategoryID;
+			efProductSubcategory.ProductCategoryID = productCategoryID;
+			efProductSubcategory.Name = name;
+			efProductSubcategory.Rowguid = rowguid;
+			efProductSubcategory.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductSubcategory efProductSubcategory,Response response)
@@ -131,16 +131,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductSubcategory(new POCOProductSubcategory()
 			{
-				ProductSubcategoryID = efProductSubcategory.productSubcategoryID.ToInt(),
-				ProductCategoryID = efProductSubcategory.productCategoryID.ToInt(),
-				Name = efProductSubcategory.name,
-				Rowguid = efProductSubcategory.rowguid,
-				ModifiedDate = efProductSubcategory.modifiedDate.ToDateTime(),
+				ProductSubcategoryID = efProductSubcategory.ProductSubcategoryID.ToInt(),
+				Name = efProductSubcategory.Name,
+				Rowguid = efProductSubcategory.Rowguid,
+				ModifiedDate = efProductSubcategory.ModifiedDate.ToDateTime(),
+
+				ProductCategoryID = new ReferenceEntity<int>(efProductSubcategory.ProductCategoryID,
+				                                             "ProductCategories"),
 			});
+
+			ProductCategoryRepository.MapEFToPOCO(efProductSubcategory.ProductCategoryRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>82e693fb7502eb66a54c44aa81470e21</Hash>
+    <Hash>502b3ec73ff48efca450ca6ec0998ca7</Hash>
 </Codenesium>*/

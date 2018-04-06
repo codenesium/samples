@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFPurchaseOrderDetail>().Add(record);
 			this._context.SaveChanges();
-			return record.purchaseOrderID;
+			return record.PurchaseOrderID;
 		}
 
 		public virtual void Update(int purchaseOrderID, int purchaseOrderDetailID,
@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           decimal stockedQty,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.purchaseOrderID == purchaseOrderID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",purchaseOrderID);
@@ -85,7 +85,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int purchaseOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.purchaseOrderID == purchaseOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -100,7 +100,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int purchaseOrderID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.purchaseOrderID == purchaseOrderID,response);
+			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID,response);
 		}
 
 		protected virtual List<EFPurchaseOrderDetail> SearchLinqEF(Expression<Func<EFPurchaseOrderDetail, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -146,17 +146,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal stockedQty,
 		                               DateTime modifiedDate, EFPurchaseOrderDetail   efPurchaseOrderDetail)
 		{
-			efPurchaseOrderDetail.purchaseOrderID = purchaseOrderID;
-			efPurchaseOrderDetail.purchaseOrderDetailID = purchaseOrderDetailID;
-			efPurchaseOrderDetail.dueDate = dueDate;
-			efPurchaseOrderDetail.orderQty = orderQty;
-			efPurchaseOrderDetail.productID = productID;
-			efPurchaseOrderDetail.unitPrice = unitPrice;
-			efPurchaseOrderDetail.lineTotal = lineTotal;
-			efPurchaseOrderDetail.receivedQty = receivedQty;
-			efPurchaseOrderDetail.rejectedQty = rejectedQty;
-			efPurchaseOrderDetail.stockedQty = stockedQty;
-			efPurchaseOrderDetail.modifiedDate = modifiedDate;
+			efPurchaseOrderDetail.PurchaseOrderID = purchaseOrderID;
+			efPurchaseOrderDetail.PurchaseOrderDetailID = purchaseOrderDetailID;
+			efPurchaseOrderDetail.DueDate = dueDate;
+			efPurchaseOrderDetail.OrderQty = orderQty;
+			efPurchaseOrderDetail.ProductID = productID;
+			efPurchaseOrderDetail.UnitPrice = unitPrice;
+			efPurchaseOrderDetail.LineTotal = lineTotal;
+			efPurchaseOrderDetail.ReceivedQty = receivedQty;
+			efPurchaseOrderDetail.RejectedQty = rejectedQty;
+			efPurchaseOrderDetail.StockedQty = stockedQty;
+			efPurchaseOrderDetail.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFPurchaseOrderDetail efPurchaseOrderDetail,Response response)
@@ -167,22 +167,29 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddPurchaseOrderDetail(new POCOPurchaseOrderDetail()
 			{
-				PurchaseOrderID = efPurchaseOrderDetail.purchaseOrderID.ToInt(),
-				PurchaseOrderDetailID = efPurchaseOrderDetail.purchaseOrderDetailID.ToInt(),
-				DueDate = efPurchaseOrderDetail.dueDate.ToDateTime(),
-				OrderQty = efPurchaseOrderDetail.orderQty,
-				ProductID = efPurchaseOrderDetail.productID.ToInt(),
-				UnitPrice = efPurchaseOrderDetail.unitPrice,
-				LineTotal = efPurchaseOrderDetail.lineTotal,
-				ReceivedQty = efPurchaseOrderDetail.receivedQty.ToDecimal(),
-				RejectedQty = efPurchaseOrderDetail.rejectedQty.ToDecimal(),
-				StockedQty = efPurchaseOrderDetail.stockedQty.ToDecimal(),
-				ModifiedDate = efPurchaseOrderDetail.modifiedDate.ToDateTime(),
+				PurchaseOrderDetailID = efPurchaseOrderDetail.PurchaseOrderDetailID.ToInt(),
+				DueDate = efPurchaseOrderDetail.DueDate.ToDateTime(),
+				OrderQty = efPurchaseOrderDetail.OrderQty,
+				UnitPrice = efPurchaseOrderDetail.UnitPrice,
+				LineTotal = efPurchaseOrderDetail.LineTotal,
+				ReceivedQty = efPurchaseOrderDetail.ReceivedQty.ToDecimal(),
+				RejectedQty = efPurchaseOrderDetail.RejectedQty.ToDecimal(),
+				StockedQty = efPurchaseOrderDetail.StockedQty.ToDecimal(),
+				ModifiedDate = efPurchaseOrderDetail.ModifiedDate.ToDateTime(),
+
+				PurchaseOrderID = new ReferenceEntity<int>(efPurchaseOrderDetail.PurchaseOrderID,
+				                                           "PurchaseOrderHeaders"),
+				ProductID = new ReferenceEntity<int>(efPurchaseOrderDetail.ProductID,
+				                                     "Products"),
 			});
+
+			PurchaseOrderHeaderRepository.MapEFToPOCO(efPurchaseOrderDetail.PurchaseOrderHeaderRef, response);
+
+			ProductRepository.MapEFToPOCO(efPurchaseOrderDetail.ProductRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8da84230821b3631ef827e23f0e45787</Hash>
+    <Hash>257f0d642e5a88bb6185317128067dcd</Hash>
 </Codenesium>*/

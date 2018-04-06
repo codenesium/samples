@@ -143,13 +143,13 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,FileModel model)
+		public virtual IActionResult Update(int Id,FileModel model)
 		{
 			this._fileModelValidator.UpdateMode();
 			var validationResult = this._fileModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._fileRepository.Update(id,  model.ExternalId,
+				this._fileRepository.Update(Id,  model.ExternalId,
 				                            model.PrivateKey,
 				                            model.PublicKey,
 				                            model.Location,
@@ -191,7 +191,7 @@ namespace FileServiceNS.Api.Service
 		{
 			var response = new Response();
 
-			this._fileRepository.GetWhere(x => x.fileTypeId == id, response);
+			this._fileRepository.GetWhere(x => x.FileTypeId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -206,7 +206,7 @@ namespace FileServiceNS.Api.Service
 		{
 			var response = new Response();
 
-			this._fileRepository.GetWhere(x => x.bucketId == id, response);
+			this._fileRepository.GetWhere(x => x.BucketId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -214,5 +214,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4c1d6aee739197da843eaa0d13d34178</Hash>
+    <Hash>06c8be1621fcc0024a507d0c6218c607</Hash>
 </Codenesium>*/

@@ -13,13 +13,16 @@ namespace AdventureWorksNS.Api.Contracts
 		                                       int salesReasonID,
 		                                       DateTime modifiedDate)
 		{
-			this.SalesOrderID = salesOrderID.ToInt();
-			this.SalesReasonID = salesReasonID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			SalesOrderID = new ReferenceEntity<int>(salesOrderID,
+			                                        "SalesOrderHeader");
+			SalesReasonID = new ReferenceEntity<int>(salesReasonID,
+			                                         "SalesReason");
 		}
 
-		public int SalesOrderID {get; set;}
-		public int SalesReasonID {get; set;}
+		public ReferenceEntity<int>SalesOrderID {get; set;}
+		public ReferenceEntity<int>SalesReasonID {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -56,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1d88e9db044b48193089b05267a219ae</Hash>
+    <Hash>f2c05aaf607f827701f31a7aa6a02720</Hash>
 </Codenesium>*/

@@ -125,13 +125,13 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,BucketModel model)
+		public virtual IActionResult Update(int Id,BucketModel model)
 		{
 			this._bucketModelValidator.UpdateMode();
 			var validationResult = this._bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._bucketRepository.Update(id,  model.Name,
+				this._bucketRepository.Update(Id,  model.Name,
 				                              model.ExternalId);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f80b1d1dd57e3270a1de82ae0804ad50</Hash>
+    <Hash>f85ef4d5e724207d5d400f65391b75bd</Hash>
 </Codenesium>*/

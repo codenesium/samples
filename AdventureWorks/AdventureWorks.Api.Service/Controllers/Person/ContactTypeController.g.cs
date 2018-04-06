@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int contactTypeID,ContactTypeModel model)
+		public virtual IActionResult Update(int ContactTypeID,ContactTypeModel model)
 		{
 			this._contactTypeModelValidator.UpdateMode();
 			var validationResult = this._contactTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._contactTypeRepository.Update(contactTypeID,  model.Name,
+				this._contactTypeRepository.Update(ContactTypeID,  model.Name,
 				                                   model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f60f385ee6f1ee22f62c2597a3d5f240</Hash>
+    <Hash>87661bdf0bc5a994ab46005dd44fd27a</Hash>
 </Codenesium>*/

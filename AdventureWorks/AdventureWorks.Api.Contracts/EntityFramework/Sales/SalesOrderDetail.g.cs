@@ -10,20 +10,38 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int salesOrderID {get; set;}
-		public int salesOrderDetailID {get; set;}
-		public string carrierTrackingNumber {get; set;}
-		public short orderQty {get; set;}
-		public int productID {get; set;}
-		public int specialOfferID {get; set;}
-		public decimal unitPrice {get; set;}
-		public decimal unitPriceDiscount {get; set;}
-		public decimal lineTotal {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("SalesOrderID", TypeName="int")]
+		public int SalesOrderID {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("SalesOrderDetailID", TypeName="int")]
+		public int SalesOrderDetailID {get; set;}
+		[Column("CarrierTrackingNumber", TypeName="nvarchar(25)")]
+		public string CarrierTrackingNumber {get; set;}
+		[Column("OrderQty", TypeName="smallint")]
+		public short OrderQty {get; set;}
+		[Column("ProductID", TypeName="int")]
+		public int ProductID {get; set;}
+		[Column("SpecialOfferID", TypeName="int")]
+		public int SpecialOfferID {get; set;}
+		[Column("UnitPrice", TypeName="money")]
+		public decimal UnitPrice {get; set;}
+		[Column("UnitPriceDiscount", TypeName="money")]
+		public decimal UnitPriceDiscount {get; set;}
+		[Column("LineTotal", TypeName="numeric")]
+		public decimal LineTotal {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("SalesOrderID")]
+		public virtual EFSalesOrderHeader SalesOrderHeaderRef { get; set; }
+		[ForeignKey("SpecialOfferID")]
+		public virtual EFSpecialOfferProduct SpecialOfferProductRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>40d0260ac8efea9379bcee64b909a47f</Hash>
+    <Hash>e342bfd961b846345aab85f5bef1a48b</Hash>
 </Codenesium>*/

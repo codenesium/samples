@@ -10,14 +10,24 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public int emailAddressID {get; set;}
-		public string emailAddress {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("EmailAddressID", TypeName="int")]
+		public int EmailAddressID {get; set;}
+		[Column("EmailAddress", TypeName="nvarchar(50)")]
+		public string EmailAddress1 {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFPerson PersonRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>cef0c5966249c546506fde2c4970e04a</Hash>
+    <Hash>fc44d01e134b56250a8d5ec6e8773887</Hash>
 </Codenesium>*/

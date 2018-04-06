@@ -36,7 +36,7 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFChain>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, string name,
@@ -44,7 +44,7 @@ namespace NebulaNS.Api.DataAccess
 		                           int chainStatusId,
 		                           Guid externalId)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -61,7 +61,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFChain> SearchLinqEF(Expression<Func<EFChain, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,11 +116,11 @@ namespace NebulaNS.Api.DataAccess
 		                               int chainStatusId,
 		                               Guid externalId, EFChain   efChain)
 		{
-			efChain.id = id;
-			efChain.name = name;
-			efChain.teamId = teamId;
-			efChain.chainStatusId = chainStatusId;
-			efChain.externalId = externalId;
+			efChain.Id = id;
+			efChain.Name = name;
+			efChain.TeamId = teamId;
+			efChain.ChainStatusId = chainStatusId;
+			efChain.ExternalId = externalId;
 		}
 
 		public static void MapEFToPOCO(EFChain efChain,Response response)
@@ -131,13 +131,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddChain(new POCOChain()
 			{
-				Id = efChain.id.ToInt(),
-				Name = efChain.name,
-				ExternalId = efChain.externalId,
+				Id = efChain.Id.ToInt(),
+				Name = efChain.Name,
+				ExternalId = efChain.ExternalId,
 
-				TeamId = new ReferenceEntity<int>(efChain.teamId,
+				TeamId = new ReferenceEntity<int>(efChain.TeamId,
 				                                  "Teams"),
-				ChainStatusId = new ReferenceEntity<int>(efChain.chainStatusId,
+				ChainStatusId = new ReferenceEntity<int>(efChain.ChainStatusId,
 				                                         "ChainStatus"),
 			});
 
@@ -149,5 +149,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b0cbdd3f076d866b49a9d05449f2bb32</Hash>
+    <Hash>f7313b29b3e70be20e007e4e8a4325cf</Hash>
 </Codenesium>*/

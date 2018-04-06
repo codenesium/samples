@@ -32,13 +32,13 @@ namespace FileServiceNS.Api.DataAccess
 
 			this._context.Set<EFBucket>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, string name,
 		                           Guid externalId)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -53,7 +53,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace FileServiceNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, string name,
 		                               Guid externalId, EFBucket   efBucket)
 		{
-			efBucket.id = id;
-			efBucket.name = name;
-			efBucket.externalId = externalId;
+			efBucket.Id = id;
+			efBucket.Name = name;
+			efBucket.ExternalId = externalId;
 		}
 
 		public static void MapEFToPOCO(EFBucket efBucket,Response response)
@@ -119,14 +119,14 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			response.AddBucket(new POCOBucket()
 			{
-				Id = efBucket.id.ToInt(),
-				Name = efBucket.name,
-				ExternalId = efBucket.externalId,
+				Id = efBucket.Id.ToInt(),
+				Name = efBucket.Name,
+				ExternalId = efBucket.ExternalId,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0db4023912ffa66b319c0c8a1bed1c67</Hash>
+    <Hash>d631868682a3182851abec9373738d1a</Hash>
 </Codenesium>*/

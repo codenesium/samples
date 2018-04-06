@@ -32,13 +32,13 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFClasp>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, int previousChainId,
 		                           int nextChainId)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace NebulaNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, int previousChainId,
 		                               int nextChainId, EFClasp   efClasp)
 		{
-			efClasp.id = id;
-			efClasp.previousChainId = previousChainId;
-			efClasp.nextChainId = nextChainId;
+			efClasp.Id = id;
+			efClasp.PreviousChainId = previousChainId;
+			efClasp.NextChainId = nextChainId;
 		}
 
 		public static void MapEFToPOCO(EFClasp efClasp,Response response)
@@ -119,11 +119,11 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddClasp(new POCOClasp()
 			{
-				Id = efClasp.id.ToInt(),
+				Id = efClasp.Id.ToInt(),
 
-				PreviousChainId = new ReferenceEntity<int>(efClasp.previousChainId,
+				PreviousChainId = new ReferenceEntity<int>(efClasp.PreviousChainId,
 				                                           "Chains"),
-				NextChainId = new ReferenceEntity<int>(efClasp.nextChainId,
+				NextChainId = new ReferenceEntity<int>(efClasp.NextChainId,
 				                                       "Chains"),
 			});
 
@@ -135,5 +135,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e7ce28f6ecfa217e5d085ecdbdb7cee3</Hash>
+    <Hash>3875072248e40fcee097c66c5e1700fc</Hash>
 </Codenesium>*/

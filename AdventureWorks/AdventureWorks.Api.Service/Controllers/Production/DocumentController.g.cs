@@ -89,7 +89,7 @@ namespace AdventureWorksNS.Api.Service
 				                                         model.ChangeNumber,
 				                                         model.Status,
 				                                         model.DocumentSummary,
-				                                         model.Document,
+				                                         model.Document1,
 				                                         model.Rowguid,
 				                                         model.ModifiedDate);
 				return Ok(id);
@@ -133,7 +133,7 @@ namespace AdventureWorksNS.Api.Service
 				                                model.ChangeNumber,
 				                                model.Status,
 				                                model.DocumentSummary,
-				                                model.Document,
+				                                model.Document1,
 				                                model.Rowguid,
 				                                model.ModifiedDate);
 			}
@@ -147,13 +147,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(Guid documentNode,DocumentModel model)
+		public virtual IActionResult Update(Guid DocumentNode,DocumentModel model)
 		{
 			this._documentModelValidator.UpdateMode();
 			var validationResult = this._documentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._documentRepository.Update(documentNode,  model.DocumentLevel,
+				this._documentRepository.Update(DocumentNode,  model.DocumentLevel,
 				                                model.Title,
 				                                model.Owner,
 				                                model.FolderFlag,
@@ -163,7 +163,7 @@ namespace AdventureWorksNS.Api.Service
 				                                model.ChangeNumber,
 				                                model.Status,
 				                                model.DocumentSummary,
-				                                model.Document,
+				                                model.Document1,
 				                                model.Rowguid,
 				                                model.ModifiedDate);
 				return Ok();
@@ -186,9 +186,24 @@ namespace AdventureWorksNS.Api.Service
 			this._documentRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByOwner/{id}")]
+		[DocumentFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Employees/{id}/Documents")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByOwner(int id)
+		{
+			var response = new Response();
+
+			this._documentRepository.GetWhere(x => x.Owner == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd47afc3993c066e549b3fb47fd93a23</Hash>
+    <Hash>e326af6b8a8c77f0443b6290edfd29fc</Hash>
 </Codenesium>*/

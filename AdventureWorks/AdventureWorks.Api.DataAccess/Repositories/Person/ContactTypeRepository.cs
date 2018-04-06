@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("contactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
+				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("ContactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("contactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
+				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("ContactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>72007e56549e18a00cb1378c121e1d66</Hash>
+    <Hash>403b8485d3d5df3a39c1389c17ecb350</Hash>
 </Codenesium>*/

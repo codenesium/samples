@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFWorkOrderRouting>().Add(record);
 			this._context.SaveChanges();
-			return record.workOrderID;
+			return record.WorkOrderID;
 		}
 
 		public virtual void Update(int workOrderID, int productID,
@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Nullable<decimal> actualCost,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.workOrderID == workOrderID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",workOrderID);
@@ -89,7 +89,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int workOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.workOrderID == workOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -104,7 +104,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int workOrderID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.workOrderID == workOrderID,response);
+			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID,response);
 		}
 
 		protected virtual List<EFWorkOrderRouting> SearchLinqEF(Expression<Func<EFWorkOrderRouting, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -151,18 +151,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Nullable<decimal> actualCost,
 		                               DateTime modifiedDate, EFWorkOrderRouting   efWorkOrderRouting)
 		{
-			efWorkOrderRouting.workOrderID = workOrderID;
-			efWorkOrderRouting.productID = productID;
-			efWorkOrderRouting.operationSequence = operationSequence;
-			efWorkOrderRouting.locationID = locationID;
-			efWorkOrderRouting.scheduledStartDate = scheduledStartDate;
-			efWorkOrderRouting.scheduledEndDate = scheduledEndDate;
-			efWorkOrderRouting.actualStartDate = actualStartDate;
-			efWorkOrderRouting.actualEndDate = actualEndDate;
-			efWorkOrderRouting.actualResourceHrs = actualResourceHrs;
-			efWorkOrderRouting.plannedCost = plannedCost;
-			efWorkOrderRouting.actualCost = actualCost;
-			efWorkOrderRouting.modifiedDate = modifiedDate;
+			efWorkOrderRouting.WorkOrderID = workOrderID;
+			efWorkOrderRouting.ProductID = productID;
+			efWorkOrderRouting.OperationSequence = operationSequence;
+			efWorkOrderRouting.LocationID = locationID;
+			efWorkOrderRouting.ScheduledStartDate = scheduledStartDate;
+			efWorkOrderRouting.ScheduledEndDate = scheduledEndDate;
+			efWorkOrderRouting.ActualStartDate = actualStartDate;
+			efWorkOrderRouting.ActualEndDate = actualEndDate;
+			efWorkOrderRouting.ActualResourceHrs = actualResourceHrs;
+			efWorkOrderRouting.PlannedCost = plannedCost;
+			efWorkOrderRouting.ActualCost = actualCost;
+			efWorkOrderRouting.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFWorkOrderRouting efWorkOrderRouting,Response response)
@@ -173,23 +173,30 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddWorkOrderRouting(new POCOWorkOrderRouting()
 			{
-				WorkOrderID = efWorkOrderRouting.workOrderID.ToInt(),
-				ProductID = efWorkOrderRouting.productID.ToInt(),
-				OperationSequence = efWorkOrderRouting.operationSequence,
-				LocationID = efWorkOrderRouting.locationID,
-				ScheduledStartDate = efWorkOrderRouting.scheduledStartDate.ToDateTime(),
-				ScheduledEndDate = efWorkOrderRouting.scheduledEndDate.ToDateTime(),
-				ActualStartDate = efWorkOrderRouting.actualStartDate.ToNullableDateTime(),
-				ActualEndDate = efWorkOrderRouting.actualEndDate.ToNullableDateTime(),
-				ActualResourceHrs = efWorkOrderRouting.actualResourceHrs.ToNullableDecimal(),
-				PlannedCost = efWorkOrderRouting.plannedCost,
-				ActualCost = efWorkOrderRouting.actualCost,
-				ModifiedDate = efWorkOrderRouting.modifiedDate.ToDateTime(),
+				ProductID = efWorkOrderRouting.ProductID.ToInt(),
+				OperationSequence = efWorkOrderRouting.OperationSequence,
+				ScheduledStartDate = efWorkOrderRouting.ScheduledStartDate.ToDateTime(),
+				ScheduledEndDate = efWorkOrderRouting.ScheduledEndDate.ToDateTime(),
+				ActualStartDate = efWorkOrderRouting.ActualStartDate.ToNullableDateTime(),
+				ActualEndDate = efWorkOrderRouting.ActualEndDate.ToNullableDateTime(),
+				ActualResourceHrs = efWorkOrderRouting.ActualResourceHrs.ToNullableDecimal(),
+				PlannedCost = efWorkOrderRouting.PlannedCost,
+				ActualCost = efWorkOrderRouting.ActualCost,
+				ModifiedDate = efWorkOrderRouting.ModifiedDate.ToDateTime(),
+
+				WorkOrderID = new ReferenceEntity<int>(efWorkOrderRouting.WorkOrderID,
+				                                       "WorkOrders"),
+				LocationID = new ReferenceEntity<short>(efWorkOrderRouting.LocationID,
+				                                        "Locations"),
 			});
+
+			WorkOrderRepository.MapEFToPOCO(efWorkOrderRouting.WorkOrderRef, response);
+
+			LocationRepository.MapEFToPOCO(efWorkOrderRouting.LocationRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>70dc7bacf17fb509511c1a5caf2d8652</Hash>
+    <Hash>f5abb1137cb9e81287f9478b072174eb</Hash>
 </Codenesium>*/

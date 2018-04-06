@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int productModelID,ProductModelIllustrationModel model)
+		public virtual IActionResult Update(int ProductModelID,ProductModelIllustrationModel model)
 		{
 			this._productModelIllustrationModelValidator.UpdateMode();
 			var validationResult = this._productModelIllustrationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productModelIllustrationRepository.Update(productModelID,  model.IllustrationID,
+				this._productModelIllustrationRepository.Update(ProductModelID,  model.IllustrationID,
 				                                                model.ModifiedDate);
 				return Ok();
 			}
@@ -153,9 +153,39 @@ namespace AdventureWorksNS.Api.Service
 			this._productModelIllustrationRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByProductModelID/{id}")]
+		[ProductModelIllustrationFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/ProductModels/{id}/ProductModelIllustrations")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByProductModelID(int id)
+		{
+			var response = new Response();
+
+			this._productModelIllustrationRepository.GetWhere(x => x.ProductModelID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByIllustrationID/{id}")]
+		[ProductModelIllustrationFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Illustrations/{id}/ProductModelIllustrations")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByIllustrationID(int id)
+		{
+			var response = new Response();
+
+			this._productModelIllustrationRepository.GetWhere(x => x.IllustrationID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>90f0dca12439a0c5a47b4b2f30d14ead</Hash>
+    <Hash>d3a721627266cd772356916b9b91b910</Hash>
 </Codenesium>*/

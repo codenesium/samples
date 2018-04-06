@@ -10,17 +10,29 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public string accountNumber {get; set;}
-		public string name {get; set;}
-		public int creditRating {get; set;}
-		public bool preferredVendorStatus {get; set;}
-		public bool activeFlag {get; set;}
-		public string purchasingWebServiceURL {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[Column("AccountNumber", TypeName="nvarchar(15)")]
+		public string AccountNumber {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("CreditRating", TypeName="tinyint")]
+		public int CreditRating {get; set;}
+		[Column("PreferredVendorStatus", TypeName="bit")]
+		public bool PreferredVendorStatus {get; set;}
+		[Column("ActiveFlag", TypeName="bit")]
+		public bool ActiveFlag {get; set;}
+		[Column("PurchasingWebServiceURL", TypeName="nvarchar(1024)")]
+		public string PurchasingWebServiceURL {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFBusinessEntity BusinessEntityRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5583cc6230c3a0b4e4d682ed0a57f5d5</Hash>
+    <Hash>b43ef83b782b6488cb583fa812e258fc</Hash>
 </Codenesium>*/

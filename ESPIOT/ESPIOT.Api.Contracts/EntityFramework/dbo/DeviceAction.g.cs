@@ -10,16 +10,21 @@ namespace ESPIOTNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public int deviceId {get; set;}
-		public string name {get; set;}
-		public string @value {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("deviceId", TypeName="int")]
+		public int DeviceId {get; set;}
+		[Column("name", TypeName="varchar(90)")]
+		public string Name {get; set;}
+		[Column("value", TypeName="varchar(4000)")]
+		public string @Value {get; set;}
 
-		[ForeignKey("deviceId")]
+		[ForeignKey("DeviceId")]
 		public virtual EFDevice DeviceRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2918fe65356954c15aa3437e8c12ec4</Hash>
+    <Hash>ce4fb8e9e95796cce28551582a2094ee</Hash>
 </Codenesium>*/

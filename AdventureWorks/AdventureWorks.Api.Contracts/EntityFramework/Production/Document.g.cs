@@ -10,23 +10,41 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public Guid documentNode {get; set;}
-		public Nullable<short> documentLevel {get; set;}
-		public string title {get; set;}
-		public int owner {get; set;}
-		public bool folderFlag {get; set;}
-		public string fileName {get; set;}
-		public string fileExtension {get; set;}
-		public string revision {get; set;}
-		public int changeNumber {get; set;}
-		public int status {get; set;}
-		public string documentSummary {get; set;}
-		public byte[] document {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("DocumentNode", TypeName="hierarchyid(892)")]
+		public Guid DocumentNode {get; set;}
+		[Column("DocumentLevel", TypeName="smallint")]
+		public Nullable<short> DocumentLevel {get; set;}
+		[Column("Title", TypeName="nvarchar(50)")]
+		public string Title {get; set;}
+		[Column("Owner", TypeName="int")]
+		public int Owner {get; set;}
+		[Column("FolderFlag", TypeName="bit")]
+		public bool FolderFlag {get; set;}
+		[Column("FileName", TypeName="nvarchar(400)")]
+		public string FileName {get; set;}
+		[Column("FileExtension", TypeName="nvarchar(8)")]
+		public string FileExtension {get; set;}
+		[Column("Revision", TypeName="nchar(5)")]
+		public string Revision {get; set;}
+		[Column("ChangeNumber", TypeName="int")]
+		public int ChangeNumber {get; set;}
+		[Column("Status", TypeName="tinyint")]
+		public int Status {get; set;}
+		[Column("DocumentSummary", TypeName="nvarchar(-1)")]
+		public string DocumentSummary {get; set;}
+		[Column("Document", TypeName="varbinary(-1)")]
+		public byte[] Document1 {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("Owner")]
+		public virtual EFEmployee EmployeeRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>aeb9b32e4ca9a0236125aeb2b8df685a</Hash>
+    <Hash>af1e2b89ae82fdf92c0ef42f3f5134d4</Hash>
 </Codenesium>*/

@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFCulture>().Add(record);
 			this._context.SaveChanges();
-			return record.cultureID;
+			return record.CultureID;
 		}
 
 		public virtual void Update(string cultureID, string name,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.cultureID == cultureID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",cultureID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(string cultureID)
 		{
-			var record = this.SearchLinqEF(x => x.cultureID == cultureID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(string cultureID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.cultureID == cultureID,response);
+			this.SearchLinqPOCO(x => x.CultureID == cultureID,response);
 		}
 
 		protected virtual List<EFCulture> SearchLinqEF(Expression<Func<EFCulture, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string cultureID, string name,
 		                               DateTime modifiedDate, EFCulture   efCulture)
 		{
-			efCulture.cultureID = cultureID;
-			efCulture.name = name;
-			efCulture.modifiedDate = modifiedDate;
+			efCulture.CultureID = cultureID;
+			efCulture.Name = name;
+			efCulture.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFCulture efCulture,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddCulture(new POCOCulture()
 			{
-				CultureID = efCulture.cultureID,
-				Name = efCulture.name,
-				ModifiedDate = efCulture.modifiedDate.ToDateTime(),
+				CultureID = efCulture.CultureID,
+				Name = efCulture.Name,
+				ModifiedDate = efCulture.ModifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bbef61c064f0514410a979c66d441235</Hash>
+    <Hash>c76466dba7b150c1d850c365119a43f2</Hash>
 </Codenesium>*/

@@ -23,7 +23,6 @@ namespace AdventureWorksNS.Api.Contracts
 		                  Guid rowguid,
 		                  DateTime modifiedDate)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
 			this.PersonType = personType;
 			this.NameStyle = nameStyle;
 			this.Title = title;
@@ -36,9 +35,12 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Demographics = demographics;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                            "BusinessEntity");
 		}
 
-		public int BusinessEntityID {get; set;}
+		public ReferenceEntity<int>BusinessEntityID {get; set;}
 		public string PersonType {get; set;}
 		public bool NameStyle {get; set;}
 		public string Title {get; set;}
@@ -176,5 +178,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>45801046d4e4017136ecfc3ca4699773</Hash>
+    <Hash>303d35b81b91373f03a7f41dd12305ab</Hash>
 </Codenesium>*/

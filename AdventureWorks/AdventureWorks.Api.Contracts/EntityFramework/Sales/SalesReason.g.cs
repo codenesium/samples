@@ -10,13 +10,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int salesReasonID {get; set;}
-		public string name {get; set;}
-		public string reasonType {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("SalesReasonID", TypeName="int")]
+		public int SalesReasonID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("ReasonType", TypeName="nvarchar(50)")]
+		public string ReasonType {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>782b35e02a40e6d6a43387f0ec4c2bad</Hash>
+    <Hash>805f4ab229297ff159463d07c7106252</Hash>
 </Codenesium>*/

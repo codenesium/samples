@@ -48,7 +48,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSpecialOffer>().Add(record);
 			this._context.SaveChanges();
-			return record.specialOfferID;
+			return record.SpecialOfferID;
 		}
 
 		public virtual void Update(int specialOfferID, string description,
@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.specialOfferID == specialOfferID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",specialOfferID);
@@ -85,7 +85,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int specialOfferID)
 		{
-			var record = this.SearchLinqEF(x => x.specialOfferID == specialOfferID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -100,7 +100,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int specialOfferID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.specialOfferID == specialOfferID,response);
+			this.SearchLinqPOCO(x => x.SpecialOfferID == specialOfferID,response);
 		}
 
 		protected virtual List<EFSpecialOffer> SearchLinqEF(Expression<Func<EFSpecialOffer, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -146,17 +146,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSpecialOffer   efSpecialOffer)
 		{
-			efSpecialOffer.specialOfferID = specialOfferID;
-			efSpecialOffer.description = description;
-			efSpecialOffer.discountPct = discountPct;
-			efSpecialOffer.type = type;
-			efSpecialOffer.category = category;
-			efSpecialOffer.startDate = startDate;
-			efSpecialOffer.endDate = endDate;
-			efSpecialOffer.minQty = minQty;
-			efSpecialOffer.maxQty = maxQty;
-			efSpecialOffer.rowguid = rowguid;
-			efSpecialOffer.modifiedDate = modifiedDate;
+			efSpecialOffer.SpecialOfferID = specialOfferID;
+			efSpecialOffer.Description = description;
+			efSpecialOffer.DiscountPct = discountPct;
+			efSpecialOffer.Type = type;
+			efSpecialOffer.Category = category;
+			efSpecialOffer.StartDate = startDate;
+			efSpecialOffer.EndDate = endDate;
+			efSpecialOffer.MinQty = minQty;
+			efSpecialOffer.MaxQty = maxQty;
+			efSpecialOffer.Rowguid = rowguid;
+			efSpecialOffer.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSpecialOffer efSpecialOffer,Response response)
@@ -167,22 +167,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSpecialOffer(new POCOSpecialOffer()
 			{
-				SpecialOfferID = efSpecialOffer.specialOfferID.ToInt(),
-				Description = efSpecialOffer.description,
-				DiscountPct = efSpecialOffer.discountPct,
-				Type = efSpecialOffer.type,
-				Category = efSpecialOffer.category,
-				StartDate = efSpecialOffer.startDate.ToDateTime(),
-				EndDate = efSpecialOffer.endDate.ToDateTime(),
-				MinQty = efSpecialOffer.minQty.ToInt(),
-				MaxQty = efSpecialOffer.maxQty.ToNullableInt(),
-				Rowguid = efSpecialOffer.rowguid,
-				ModifiedDate = efSpecialOffer.modifiedDate.ToDateTime(),
+				SpecialOfferID = efSpecialOffer.SpecialOfferID.ToInt(),
+				Description = efSpecialOffer.Description,
+				DiscountPct = efSpecialOffer.DiscountPct,
+				Type = efSpecialOffer.Type,
+				Category = efSpecialOffer.Category,
+				StartDate = efSpecialOffer.StartDate.ToDateTime(),
+				EndDate = efSpecialOffer.EndDate.ToDateTime(),
+				MinQty = efSpecialOffer.MinQty.ToInt(),
+				MaxQty = efSpecialOffer.MaxQty.ToNullableInt(),
+				Rowguid = efSpecialOffer.Rowguid,
+				ModifiedDate = efSpecialOffer.ModifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c90f95c7f9cc35ed45cbf17a835ee77c</Hash>
+    <Hash>f5ac4bb5d855ac815043c4a148811c4d</Hash>
 </Codenesium>*/

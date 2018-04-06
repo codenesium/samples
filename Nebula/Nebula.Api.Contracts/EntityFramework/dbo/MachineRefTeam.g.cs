@@ -10,17 +10,21 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public int machineId {get; set;}
-		public int teamId {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("machineId", TypeName="int")]
+		public int MachineId {get; set;}
+		[Column("teamId", TypeName="int")]
+		public int TeamId {get; set;}
 
-		[ForeignKey("machineId")]
+		[ForeignKey("MachineId")]
 		public virtual EFMachine MachineRef { get; set; }
-		[ForeignKey("teamId")]
+		[ForeignKey("TeamId")]
 		public virtual EFTeam TeamRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec6bf85463663afd8a508b556eabba1d</Hash>
+    <Hash>d4fa002f7dae6a3e8eb621d4b09e57f0</Hash>
 </Codenesium>*/

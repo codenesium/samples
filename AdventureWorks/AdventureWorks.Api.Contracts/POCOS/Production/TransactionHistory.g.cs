@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.Contracts
 		                              DateTime modifiedDate)
 		{
 			this.TransactionID = transactionID.ToInt();
-			this.ProductID = productID.ToInt();
 			this.ReferenceOrderID = referenceOrderID.ToInt();
 			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
 			this.TransactionDate = transactionDate.ToDateTime();
@@ -28,10 +27,13 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Quantity = quantity.ToInt();
 			this.ActualCost = actualCost;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			ProductID = new ReferenceEntity<int>(productID,
+			                                     "Product");
 		}
 
 		public int TransactionID {get; set;}
-		public int ProductID {get; set;}
+		public ReferenceEntity<int>ProductID {get; set;}
 		public int ReferenceOrderID {get; set;}
 		public int ReferenceOrderLineID {get; set;}
 		public DateTime TransactionDate {get; set;}
@@ -128,5 +130,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b1b34c1a80934c7cdbeb5db0161ddabf</Hash>
+    <Hash>74dd385598fe224c05c670a0be389217</Hash>
 </Codenesium>*/

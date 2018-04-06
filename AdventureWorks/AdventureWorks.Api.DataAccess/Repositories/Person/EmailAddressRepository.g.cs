@@ -23,28 +23,28 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual int Create(int emailAddressID,
-		                          string emailAddress,
+		                          string emailAddress1,
 		                          Guid rowguid,
 		                          DateTime modifiedDate)
 		{
 			var record = new EFEmailAddress ();
 
 			MapPOCOToEF(0, emailAddressID,
-			            emailAddress,
+			            emailAddress1,
 			            rowguid,
 			            modifiedDate, record);
 
 			this._context.Set<EFEmailAddress>().Add(record);
 			this._context.SaveChanges();
-			return record.businessEntityID;
+			return record.BusinessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, int emailAddressID,
-		                           string emailAddress,
+		                           string emailAddress1,
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				MapPOCOToEF(businessEntityID,  emailAddressID,
-				            emailAddress,
+				            emailAddress1,
 				            rowguid,
 				            modifiedDate, record);
 				this._context.SaveChanges();
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFEmailAddress> SearchLinqEF(Expression<Func<EFEmailAddress, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -112,15 +112,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public static void MapPOCOToEF(int businessEntityID, int emailAddressID,
-		                               string emailAddress,
+		                               string emailAddress1,
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFEmailAddress   efEmailAddress)
 		{
-			efEmailAddress.businessEntityID = businessEntityID;
-			efEmailAddress.emailAddressID = emailAddressID;
-			efEmailAddress.emailAddress = emailAddress;
-			efEmailAddress.rowguid = rowguid;
-			efEmailAddress.modifiedDate = modifiedDate;
+			efEmailAddress.BusinessEntityID = businessEntityID;
+			efEmailAddress.EmailAddressID = emailAddressID;
+			efEmailAddress.EmailAddress1 = emailAddress1;
+			efEmailAddress.Rowguid = rowguid;
+			efEmailAddress.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFEmailAddress efEmailAddress,Response response)
@@ -131,16 +131,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddEmailAddress(new POCOEmailAddress()
 			{
-				BusinessEntityID = efEmailAddress.businessEntityID.ToInt(),
-				EmailAddressID = efEmailAddress.emailAddressID.ToInt(),
-				EmailAddress = efEmailAddress.emailAddress,
-				Rowguid = efEmailAddress.rowguid,
-				ModifiedDate = efEmailAddress.modifiedDate.ToDateTime(),
+				EmailAddressID = efEmailAddress.EmailAddressID.ToInt(),
+				EmailAddress1 = efEmailAddress.EmailAddress1,
+				Rowguid = efEmailAddress.Rowguid,
+				ModifiedDate = efEmailAddress.ModifiedDate.ToDateTime(),
+
+				BusinessEntityID = new ReferenceEntity<int>(efEmailAddress.BusinessEntityID,
+				                                            "People"),
 			});
+
+			PersonRepository.MapEFToPOCO(efEmailAddress.PersonRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fab6b1bcbfddc8b96e77e61773ce305b</Hash>
+    <Hash>d68df11b6370e5a3f8f639c0f0cf529a</Hash>
 </Codenesium>*/

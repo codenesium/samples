@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short scrapReasonID,ScrapReasonModel model)
+		public virtual IActionResult Update(short ScrapReasonID,ScrapReasonModel model)
 		{
 			this._scrapReasonModelValidator.UpdateMode();
 			var validationResult = this._scrapReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._scrapReasonRepository.Update(scrapReasonID,  model.Name,
+				this._scrapReasonRepository.Update(ScrapReasonID,  model.Name,
 				                                   model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c17610edf9ba89c564ad5747f02d11a9</Hash>
+    <Hash>c1ec0bf28fbe6eaee458fdaeebc28e75</Hash>
 </Codenesium>*/

@@ -123,13 +123,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ChainStatusModel model)
+		public virtual IActionResult Update(int Id,ChainStatusModel model)
 		{
 			this._chainStatusModelValidator.UpdateMode();
 			var validationResult = this._chainStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._chainStatusRepository.Update(id,  model.Name);
+				this._chainStatusRepository.Update(Id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +154,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c0e44a86f973c30d83eadaefc79e15f5</Hash>
+    <Hash>9cee76322428b8b2c9efecee4f04c28c</Hash>
 </Codenesium>*/

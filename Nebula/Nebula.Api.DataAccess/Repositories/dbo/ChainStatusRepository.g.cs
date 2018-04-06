@@ -30,12 +30,12 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFChainStatus>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, string name)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -49,7 +49,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -64,7 +64,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFChainStatus> SearchLinqEF(Expression<Func<EFChainStatus, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -101,8 +101,8 @@ namespace NebulaNS.Api.DataAccess
 
 		public static void MapPOCOToEF(int id, string name, EFChainStatus   efChainStatus)
 		{
-			efChainStatus.id = id;
-			efChainStatus.name = name;
+			efChainStatus.Id = id;
+			efChainStatus.Name = name;
 		}
 
 		public static void MapEFToPOCO(EFChainStatus efChainStatus,Response response)
@@ -113,13 +113,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddChainStatus(new POCOChainStatus()
 			{
-				Id = efChainStatus.id.ToInt(),
-				Name = efChainStatus.name,
+				Id = efChainStatus.Id.ToInt(),
+				Name = efChainStatus.Name,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8c03849d647d40a6e4924d623ec25a26</Hash>
+    <Hash>30c4902aa187aae7118cf77b6b584435</Hash>
 </Codenesium>*/

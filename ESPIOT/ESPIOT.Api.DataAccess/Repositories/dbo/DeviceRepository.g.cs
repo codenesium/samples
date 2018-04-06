@@ -32,13 +32,13 @@ namespace ESPIOTNS.Api.DataAccess
 
 			this._context.Set<EFDevice>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, Guid publicId,
 		                           string name)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -53,7 +53,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFDevice> SearchLinqEF(Expression<Func<EFDevice, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace ESPIOTNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, Guid publicId,
 		                               string name, EFDevice   efDevice)
 		{
-			efDevice.id = id;
-			efDevice.publicId = publicId;
-			efDevice.name = name;
+			efDevice.Id = id;
+			efDevice.PublicId = publicId;
+			efDevice.Name = name;
 		}
 
 		public static void MapEFToPOCO(EFDevice efDevice,Response response)
@@ -119,14 +119,14 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			response.AddDevice(new POCODevice()
 			{
-				Id = efDevice.id.ToInt(),
-				PublicId = efDevice.publicId,
-				Name = efDevice.name,
+				Id = efDevice.Id.ToInt(),
+				PublicId = efDevice.PublicId,
+				Name = efDevice.Name,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2224fc373c2119ac5847edf8dd2def0c</Hash>
+    <Hash>fffd957807c9247e65865260170eab8e</Hash>
 </Codenesium>*/

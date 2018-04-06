@@ -38,7 +38,7 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFMachine>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, string name,
@@ -47,7 +47,7 @@ namespace NebulaNS.Api.DataAccess
 		                           string lastIpAddress,
 		                           string description)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -65,7 +65,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -80,7 +80,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -121,12 +121,12 @@ namespace NebulaNS.Api.DataAccess
 		                               string lastIpAddress,
 		                               string description, EFMachine   efMachine)
 		{
-			efMachine.id = id;
-			efMachine.name = name;
-			efMachine.machineGuid = machineGuid;
-			efMachine.jwtKey = jwtKey;
-			efMachine.lastIpAddress = lastIpAddress;
-			efMachine.description = description;
+			efMachine.Id = id;
+			efMachine.Name = name;
+			efMachine.MachineGuid = machineGuid;
+			efMachine.JwtKey = jwtKey;
+			efMachine.LastIpAddress = lastIpAddress;
+			efMachine.Description = description;
 		}
 
 		public static void MapEFToPOCO(EFMachine efMachine,Response response)
@@ -137,17 +137,17 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddMachine(new POCOMachine()
 			{
-				Id = efMachine.id.ToInt(),
-				Name = efMachine.name,
-				MachineGuid = efMachine.machineGuid,
-				JwtKey = efMachine.jwtKey,
-				LastIpAddress = efMachine.lastIpAddress,
-				Description = efMachine.description,
+				Id = efMachine.Id.ToInt(),
+				Name = efMachine.Name,
+				MachineGuid = efMachine.MachineGuid,
+				JwtKey = efMachine.JwtKey,
+				LastIpAddress = efMachine.LastIpAddress,
+				Description = efMachine.Description,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d230e2c3dcf2ce04e34cdd2a26d1b1f</Hash>
+    <Hash>d53ed77451083b24532182fc69737e9c</Hash>
 </Codenesium>*/

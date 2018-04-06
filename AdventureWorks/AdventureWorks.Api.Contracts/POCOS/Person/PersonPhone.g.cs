@@ -14,15 +14,18 @@ namespace AdventureWorksNS.Api.Contracts
 		                       int phoneNumberTypeID,
 		                       DateTime modifiedDate)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
 			this.PhoneNumber = phoneNumber;
-			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                            "Person");
+			PhoneNumberTypeID = new ReferenceEntity<int>(phoneNumberTypeID,
+			                                             "PhoneNumberType");
 		}
 
-		public int BusinessEntityID {get; set;}
+		public ReferenceEntity<int>BusinessEntityID {get; set;}
 		public string PhoneNumber {get; set;}
-		public int PhoneNumberTypeID {get; set;}
+		public ReferenceEntity<int>PhoneNumberTypeID {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -68,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>174202b5cd69407f53c329bd22f03fe8</Hash>
+    <Hash>b074e7fe04268b3230e8865729718ab9</Hash>
 </Codenesium>*/

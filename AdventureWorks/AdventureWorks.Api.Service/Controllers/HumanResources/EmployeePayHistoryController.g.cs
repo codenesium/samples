@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,EmployeePayHistoryModel model)
+		public virtual IActionResult Update(int BusinessEntityID,EmployeePayHistoryModel model)
 		{
 			this._employeePayHistoryModelValidator.UpdateMode();
 			var validationResult = this._employeePayHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._employeePayHistoryRepository.Update(businessEntityID,  model.RateChangeDate,
+				this._employeePayHistoryRepository.Update(BusinessEntityID,  model.RateChangeDate,
 				                                          model.Rate,
 				                                          model.PayFrequency,
 				                                          model.ModifiedDate);
@@ -159,9 +159,24 @@ namespace AdventureWorksNS.Api.Service
 			this._employeePayHistoryRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[EmployeePayHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Employees/{id}/EmployeePayHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._employeePayHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf5f6646f39c014d69642f5de04cd19c</Hash>
+    <Hash>6d3597267090c766d350c0e63f17b50f</Hash>
 </Codenesium>*/

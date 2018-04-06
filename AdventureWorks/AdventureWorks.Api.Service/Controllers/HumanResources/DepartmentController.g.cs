@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short departmentID,DepartmentModel model)
+		public virtual IActionResult Update(short DepartmentID,DepartmentModel model)
 		{
 			this._departmentModelValidator.UpdateMode();
 			var validationResult = this._departmentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._departmentRepository.Update(departmentID,  model.Name,
+				this._departmentRepository.Update(DepartmentID,  model.Name,
 				                                  model.GroupName,
 				                                  model.ModifiedDate);
 				return Ok();
@@ -160,5 +160,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>32b893ba2ee9b9c96bdd884a240f7597</Hash>
+    <Hash>9f9cb5228285a8249a03c7096662ee6c</Hash>
 </Codenesium>*/

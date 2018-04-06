@@ -151,13 +151,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,EmployeeModel model)
+		public virtual IActionResult Update(int BusinessEntityID,EmployeeModel model)
 		{
 			this._employeeModelValidator.UpdateMode();
 			var validationResult = this._employeeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._employeeRepository.Update(businessEntityID,  model.NationalIDNumber,
+				this._employeeRepository.Update(BusinessEntityID,  model.NationalIDNumber,
 				                                model.LoginID,
 				                                model.OrganizationNode,
 				                                model.OrganizationLevel,
@@ -192,9 +192,24 @@ namespace AdventureWorksNS.Api.Service
 			this._employeeRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[EmployeeFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/People/{id}/Employees")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._employeeRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f56e668a73523795247e34bec689533f</Hash>
+    <Hash>29e3eb1db335418b2d06e3b4bd6781cb</Hash>
 </Codenesium>*/

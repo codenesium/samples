@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFAddressType>().Where(predicate).AsQueryable().OrderBy("addressTypeID ASC").Skip(skip).Take(take).ToList<EFAddressType>();
+				return this._context.Set<EFAddressType>().Where(predicate).AsQueryable().OrderBy("AddressTypeID ASC").Skip(skip).Take(take).ToList<EFAddressType>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFAddressType>().Where(predicate).AsQueryable().OrderBy("addressTypeID ASC").Skip(skip).Take(take).ToList<EFAddressType>();
+				return this._context.Set<EFAddressType>().Where(predicate).AsQueryable().OrderBy("AddressTypeID ASC").Skip(skip).Take(take).ToList<EFAddressType>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4c8e49009149c8085f21ca1f11754c9c</Hash>
+    <Hash>2fc4ff661d266aeced4bb1a650370777</Hash>
 </Codenesium>*/

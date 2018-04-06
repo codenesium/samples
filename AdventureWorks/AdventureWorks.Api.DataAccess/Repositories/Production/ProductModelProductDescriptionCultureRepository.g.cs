@@ -34,14 +34,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductModelProductDescriptionCulture>().Add(record);
 			this._context.SaveChanges();
-			return record.productModelID;
+			return record.ProductModelID;
 		}
 
 		public virtual void Update(int productModelID, int productDescriptionID,
 		                           string cultureID,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.productModelID == productModelID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productModelID);
@@ -57,7 +57,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productModelID)
 		{
-			var record = this.SearchLinqEF(x => x.productModelID == productModelID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productModelID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.productModelID == productModelID,response);
+			this.SearchLinqPOCO(x => x.ProductModelID == productModelID,response);
 		}
 
 		protected virtual List<EFProductModelProductDescriptionCulture> SearchLinqEF(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string cultureID,
 		                               DateTime modifiedDate, EFProductModelProductDescriptionCulture   efProductModelProductDescriptionCulture)
 		{
-			efProductModelProductDescriptionCulture.productModelID = productModelID;
-			efProductModelProductDescriptionCulture.productDescriptionID = productDescriptionID;
-			efProductModelProductDescriptionCulture.cultureID = cultureID;
-			efProductModelProductDescriptionCulture.modifiedDate = modifiedDate;
+			efProductModelProductDescriptionCulture.ProductModelID = productModelID;
+			efProductModelProductDescriptionCulture.ProductDescriptionID = productDescriptionID;
+			efProductModelProductDescriptionCulture.CultureID = cultureID;
+			efProductModelProductDescriptionCulture.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductModelProductDescriptionCulture efProductModelProductDescriptionCulture,Response response)
@@ -125,15 +125,25 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductModelProductDescriptionCulture(new POCOProductModelProductDescriptionCulture()
 			{
-				ProductModelID = efProductModelProductDescriptionCulture.productModelID.ToInt(),
-				ProductDescriptionID = efProductModelProductDescriptionCulture.productDescriptionID.ToInt(),
-				CultureID = efProductModelProductDescriptionCulture.cultureID,
-				ModifiedDate = efProductModelProductDescriptionCulture.modifiedDate.ToDateTime(),
+				ModifiedDate = efProductModelProductDescriptionCulture.ModifiedDate.ToDateTime(),
+
+				ProductModelID = new ReferenceEntity<int>(efProductModelProductDescriptionCulture.ProductModelID,
+				                                          "ProductModels"),
+				ProductDescriptionID = new ReferenceEntity<int>(efProductModelProductDescriptionCulture.ProductDescriptionID,
+				                                                "ProductDescriptions"),
+				CultureID = new ReferenceEntity<string>(efProductModelProductDescriptionCulture.CultureID,
+				                                        "Cultures"),
 			});
+
+			ProductModelRepository.MapEFToPOCO(efProductModelProductDescriptionCulture.ProductModelRef, response);
+
+			ProductDescriptionRepository.MapEFToPOCO(efProductModelProductDescriptionCulture.ProductDescriptionRef, response);
+
+			CultureRepository.MapEFToPOCO(efProductModelProductDescriptionCulture.CultureRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8bfc9612cd5cc55ac94c5e2c37932394</Hash>
+    <Hash>fd29ce3dcc420d6cf0be688fee3d378c</Hash>
 </Codenesium>*/

@@ -10,25 +10,45 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public string nationalIDNumber {get; set;}
-		public string loginID {get; set;}
-		public Nullable<Guid> organizationNode {get; set;}
-		public Nullable<short> organizationLevel {get; set;}
-		public string jobTitle {get; set;}
-		public DateTime birthDate {get; set;}
-		public string maritalStatus {get; set;}
-		public string gender {get; set;}
-		public DateTime hireDate {get; set;}
-		public bool salariedFlag {get; set;}
-		public short vacationHours {get; set;}
-		public short sickLeaveHours {get; set;}
-		public bool currentFlag {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[Column("NationalIDNumber", TypeName="nvarchar(15)")]
+		public string NationalIDNumber {get; set;}
+		[Column("LoginID", TypeName="nvarchar(256)")]
+		public string LoginID {get; set;}
+		[Column("OrganizationNode", TypeName="hierarchyid(892)")]
+		public Nullable<Guid> OrganizationNode {get; set;}
+		[Column("OrganizationLevel", TypeName="smallint")]
+		public Nullable<short> OrganizationLevel {get; set;}
+		[Column("JobTitle", TypeName="nvarchar(50)")]
+		public string JobTitle {get; set;}
+		[Column("BirthDate", TypeName="date")]
+		public DateTime BirthDate {get; set;}
+		[Column("MaritalStatus", TypeName="nchar(1)")]
+		public string MaritalStatus {get; set;}
+		[Column("Gender", TypeName="nchar(1)")]
+		public string Gender {get; set;}
+		[Column("HireDate", TypeName="date")]
+		public DateTime HireDate {get; set;}
+		[Column("SalariedFlag", TypeName="bit")]
+		public bool SalariedFlag {get; set;}
+		[Column("VacationHours", TypeName="smallint")]
+		public short VacationHours {get; set;}
+		[Column("SickLeaveHours", TypeName="smallint")]
+		public short SickLeaveHours {get; set;}
+		[Column("CurrentFlag", TypeName="bit")]
+		public bool CurrentFlag {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFPerson PersonRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d5f1b944555f230615a3e8092abd23d</Hash>
+    <Hash>e0b1d04a0de51f1066030203d4c32cc3</Hash>
 </Codenesium>*/

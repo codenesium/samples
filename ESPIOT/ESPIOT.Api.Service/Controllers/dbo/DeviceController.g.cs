@@ -125,13 +125,13 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,DeviceModel model)
+		public virtual IActionResult Update(int Id,DeviceModel model)
 		{
 			this._deviceModelValidator.UpdateMode();
 			var validationResult = this._deviceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._deviceRepository.Update(id,  model.PublicId,
+				this._deviceRepository.Update(Id,  model.PublicId,
 				                              model.Name);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1a399e0895c2f423d88450f85ce12d64</Hash>
+    <Hash>529dec58754699e8198a5113b7962166</Hash>
 </Codenesium>*/

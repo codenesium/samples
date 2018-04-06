@@ -20,22 +20,26 @@ namespace AdventureWorksNS.Api.Contracts
 		                           DateTime modifiedDate)
 		{
 			this.BillOfMaterialsID = billOfMaterialsID.ToInt();
-			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
-			this.ComponentID = componentID.ToInt();
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.UnitMeasureCode = unitMeasureCode;
 			this.BOMLevel = bOMLevel;
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			ProductAssemblyID = new ReferenceEntity<Nullable<int>>(productAssemblyID,
+			                                                       "Product");
+			ComponentID = new ReferenceEntity<int>(componentID,
+			                                       "Product");
+			UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
+			                                              "UnitMeasure");
 		}
 
 		public int BillOfMaterialsID {get; set;}
-		public Nullable<int> ProductAssemblyID {get; set;}
-		public int ComponentID {get; set;}
+		public ReferenceEntity<Nullable<int>>ProductAssemblyID {get; set;}
+		public ReferenceEntity<int>ComponentID {get; set;}
 		public DateTime StartDate {get; set;}
 		public Nullable<DateTime> EndDate {get; set;}
-		public string UnitMeasureCode {get; set;}
+		public ReferenceEntity<string>UnitMeasureCode {get; set;}
 		public short BOMLevel {get; set;}
 		public decimal PerAssemblyQty {get; set;}
 		public DateTime ModifiedDate {get; set;}
@@ -128,5 +132,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9c96a4680923276f952e882b0d4e9f6c</Hash>
+    <Hash>ffc9080dd97861e8294749913deff510</Hash>
 </Codenesium>*/

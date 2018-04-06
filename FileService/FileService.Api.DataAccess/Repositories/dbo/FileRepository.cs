@@ -19,7 +19,7 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFFile>();
+				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFFile>();
+				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a10b7cde4d506627f049c00b9e61a99a</Hash>
+    <Hash>e99f7bf24a600e74902cfd7ec96d9c16</Hash>
 </Codenesium>*/

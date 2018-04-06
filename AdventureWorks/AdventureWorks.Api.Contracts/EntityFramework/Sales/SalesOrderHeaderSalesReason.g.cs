@@ -10,12 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int salesOrderID {get; set;}
-		public int salesReasonID {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("SalesOrderID", TypeName="int")]
+		public int SalesOrderID {get; set;}
+		[Column("SalesReasonID", TypeName="int")]
+		public int SalesReasonID {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("SalesOrderID")]
+		public virtual EFSalesOrderHeader SalesOrderHeaderRef { get; set; }
+		[ForeignKey("SalesReasonID")]
+		public virtual EFSalesReason SalesReasonRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>02a3fc2f5c896d49c5ae2f430cf0ce06</Hash>
+    <Hash>d2aca6a35eaf21e98bfb1e7f254c4472</Hash>
 </Codenesium>*/

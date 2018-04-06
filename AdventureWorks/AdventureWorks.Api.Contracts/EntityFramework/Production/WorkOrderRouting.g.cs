@@ -10,21 +10,39 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int workOrderID {get; set;}
-		public int productID {get; set;}
-		public short operationSequence {get; set;}
-		public short locationID {get; set;}
-		public DateTime scheduledStartDate {get; set;}
-		public DateTime scheduledEndDate {get; set;}
-		public Nullable<DateTime> actualStartDate {get; set;}
-		public Nullable<DateTime> actualEndDate {get; set;}
-		public Nullable<decimal> actualResourceHrs {get; set;}
-		public decimal plannedCost {get; set;}
-		public Nullable<decimal> actualCost {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("WorkOrderID", TypeName="int")]
+		public int WorkOrderID {get; set;}
+		[Column("ProductID", TypeName="int")]
+		public int ProductID {get; set;}
+		[Column("OperationSequence", TypeName="smallint")]
+		public short OperationSequence {get; set;}
+		[Column("LocationID", TypeName="smallint")]
+		public short LocationID {get; set;}
+		[Column("ScheduledStartDate", TypeName="datetime")]
+		public DateTime ScheduledStartDate {get; set;}
+		[Column("ScheduledEndDate", TypeName="datetime")]
+		public DateTime ScheduledEndDate {get; set;}
+		[Column("ActualStartDate", TypeName="datetime")]
+		public Nullable<DateTime> ActualStartDate {get; set;}
+		[Column("ActualEndDate", TypeName="datetime")]
+		public Nullable<DateTime> ActualEndDate {get; set;}
+		[Column("ActualResourceHrs", TypeName="decimal")]
+		public Nullable<decimal> ActualResourceHrs {get; set;}
+		[Column("PlannedCost", TypeName="money")]
+		public decimal PlannedCost {get; set;}
+		[Column("ActualCost", TypeName="money")]
+		public Nullable<decimal> ActualCost {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("WorkOrderID")]
+		public virtual EFWorkOrder WorkOrderRef { get; set; }
+		[ForeignKey("LocationID")]
+		public virtual EFLocation LocationRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>488ec4d72e9faee943c8ec7e49e3da5e</Hash>
+    <Hash>e0e621f091f18118c3366fdc886bfef8</Hash>
 </Codenesium>*/

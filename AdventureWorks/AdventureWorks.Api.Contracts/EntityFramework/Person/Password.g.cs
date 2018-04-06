@@ -10,14 +10,23 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public string passwordHash {get; set;}
-		public string passwordSalt {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[Column("PasswordHash", TypeName="varchar(128)")]
+		public string PasswordHash {get; set;}
+		[Column("PasswordSalt", TypeName="varchar(10)")]
+		public string PasswordSalt {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFPerson PersonRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fdf45438a6125495e19ae0015c73cb41</Hash>
+    <Hash>14c882a2b8c2c2c3211c6eb3d7d9fba0</Hash>
 </Codenesium>*/

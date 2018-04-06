@@ -141,13 +141,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int productID,ProductVendorModel model)
+		public virtual IActionResult Update(int ProductID,ProductVendorModel model)
 		{
 			this._productVendorModelValidator.UpdateMode();
 			var validationResult = this._productVendorModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productVendorRepository.Update(productID,  model.BusinessEntityID,
+				this._productVendorRepository.Update(ProductID,  model.BusinessEntityID,
 				                                     model.AverageLeadTime,
 				                                     model.StandardPrice,
 				                                     model.LastReceiptCost,
@@ -177,9 +177,54 @@ namespace AdventureWorksNS.Api.Service
 			this._productVendorRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[ProductVendorFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Products/{id}/ProductVendors")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			var response = new Response();
+
+			this._productVendorRepository.GetWhere(x => x.ProductID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[ProductVendorFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Vendors/{id}/ProductVendors")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._productVendorRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByUnitMeasureCode/{id}")]
+		[ProductVendorFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/UnitMeasures/{id}/ProductVendors")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByUnitMeasureCode(string id)
+		{
+			var response = new Response();
+
+			this._productVendorRepository.GetWhere(x => x.UnitMeasureCode == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c80a143958ef87cbfad257d2fead6b4</Hash>
+    <Hash>a04070d95a7cdb76c8877ff63bda0805</Hash>
 </Codenesium>*/

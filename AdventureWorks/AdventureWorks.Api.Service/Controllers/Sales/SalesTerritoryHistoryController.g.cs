@@ -131,13 +131,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,SalesTerritoryHistoryModel model)
+		public virtual IActionResult Update(int BusinessEntityID,SalesTerritoryHistoryModel model)
 		{
 			this._salesTerritoryHistoryModelValidator.UpdateMode();
 			var validationResult = this._salesTerritoryHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._salesTerritoryHistoryRepository.Update(businessEntityID,  model.TerritoryID,
+				this._salesTerritoryHistoryRepository.Update(BusinessEntityID,  model.TerritoryID,
 				                                             model.StartDate,
 				                                             model.EndDate,
 				                                             model.Rowguid,
@@ -162,9 +162,39 @@ namespace AdventureWorksNS.Api.Service
 			this._salesTerritoryHistoryRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[SalesTerritoryHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesPersons/{id}/SalesTerritoryHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._salesTerritoryHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByTerritoryID/{id}")]
+		[SalesTerritoryHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesTerritories/{id}/SalesTerritoryHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByTerritoryID(int id)
+		{
+			var response = new Response();
+
+			this._salesTerritoryHistoryRepository.GetWhere(x => x.TerritoryID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8457d9fc6f92d25a9418abaadbbb5d29</Hash>
+    <Hash>26fc900ccfaff161195791d15a04979e</Hash>
 </Codenesium>*/

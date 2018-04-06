@@ -20,6 +20,9 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public IEmployeeRepository EmployeeRepository {get; set;}
+		public IVendorRepository VendorRepository {get; set;}
+		public IShipMethodRepository ShipMethodRepository {get; set;}
 		public virtual void RevisionNumberRules()
 		{
 			RuleFor(x => x.RevisionNumber).NotNull();
@@ -33,16 +36,19 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void EmployeeIDRules()
 		{
 			RuleFor(x => x.EmployeeID).NotNull();
+			RuleFor(x => x.EmployeeID).Must(BeValidEmployee).When(x => x ?.EmployeeID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void VendorIDRules()
 		{
 			RuleFor(x => x.VendorID).NotNull();
+			RuleFor(x => x.VendorID).Must(BeValidVendor).When(x => x ?.VendorID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShipMethodIDRules()
 		{
 			RuleFor(x => x.ShipMethodID).NotNull();
+			RuleFor(x => x.ShipMethodID).Must(BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void OrderDateRules()
@@ -77,9 +83,33 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidEmployee(int id)
+		{
+			Response response = new Response();
+
+			this.EmployeeRepository.GetById(id,response);
+			return response.Employees.Count > 0;
+		}
+
+		public bool BeValidVendor(int id)
+		{
+			Response response = new Response();
+
+			this.VendorRepository.GetById(id,response);
+			return response.Vendors.Count > 0;
+		}
+
+		public bool BeValidShipMethod(int id)
+		{
+			Response response = new Response();
+
+			this.ShipMethodRepository.GetById(id,response);
+			return response.ShipMethods.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6f255f6f9a026d7e0754238f2d04d21</Hash>
+    <Hash>35c6d215629b3ed647dedbfa8e3d20b2</Hash>
 </Codenesium>*/

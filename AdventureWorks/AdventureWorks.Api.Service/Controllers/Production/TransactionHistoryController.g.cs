@@ -137,13 +137,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int transactionID,TransactionHistoryModel model)
+		public virtual IActionResult Update(int TransactionID,TransactionHistoryModel model)
 		{
 			this._transactionHistoryModelValidator.UpdateMode();
 			var validationResult = this._transactionHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._transactionHistoryRepository.Update(transactionID,  model.ProductID,
+				this._transactionHistoryRepository.Update(TransactionID,  model.ProductID,
 				                                          model.ReferenceOrderID,
 				                                          model.ReferenceOrderLineID,
 				                                          model.TransactionDate,
@@ -171,9 +171,24 @@ namespace AdventureWorksNS.Api.Service
 			this._transactionHistoryRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[TransactionHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Products/{id}/TransactionHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			var response = new Response();
+
+			this._transactionHistoryRepository.GetWhere(x => x.ProductID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>90cedddfdac2513f946e13ebb57aa8d1</Hash>
+    <Hash>db33795e0dbc61a403ce2de5e983c2de</Hash>
 </Codenesium>*/

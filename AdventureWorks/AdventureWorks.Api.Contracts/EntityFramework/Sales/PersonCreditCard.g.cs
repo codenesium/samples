@@ -10,12 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public int creditCardID {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[Column("CreditCardID", TypeName="int")]
+		public int CreditCardID {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFPerson PersonRef { get; set; }
+		[ForeignKey("CreditCardID")]
+		public virtual EFCreditCard CreditCardRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>baf860d159e20c3393d6639211e951b1</Hash>
+    <Hash>1badd7b5245581ffde39606e35aeee41</Hash>
 </Codenesium>*/

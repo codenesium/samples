@@ -125,13 +125,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,MachineRefTeamModel model)
+		public virtual IActionResult Update(int Id,MachineRefTeamModel model)
 		{
 			this._machineRefTeamModelValidator.UpdateMode();
 			var validationResult = this._machineRefTeamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._machineRefTeamRepository.Update(id,  model.MachineId,
+				this._machineRefTeamRepository.Update(Id,  model.MachineId,
 				                                      model.TeamId);
 				return Ok();
 			}
@@ -164,7 +164,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._machineRefTeamRepository.GetWhere(x => x.machineId == id, response);
+			this._machineRefTeamRepository.GetWhere(x => x.MachineId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -179,7 +179,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._machineRefTeamRepository.GetWhere(x => x.teamId == id, response);
+			this._machineRefTeamRepository.GetWhere(x => x.TeamId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -187,5 +187,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f9190f0b973d7002a6a50a7a7f3ecf4b</Hash>
+    <Hash>861493508c823817ed87bf97474aa63a</Hash>
 </Codenesium>*/

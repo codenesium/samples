@@ -143,13 +143,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int workOrderID,WorkOrderRoutingModel model)
+		public virtual IActionResult Update(int WorkOrderID,WorkOrderRoutingModel model)
 		{
 			this._workOrderRoutingModelValidator.UpdateMode();
 			var validationResult = this._workOrderRoutingModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._workOrderRoutingRepository.Update(workOrderID,  model.ProductID,
+				this._workOrderRoutingRepository.Update(WorkOrderID,  model.ProductID,
 				                                        model.OperationSequence,
 				                                        model.LocationID,
 				                                        model.ScheduledStartDate,
@@ -180,9 +180,39 @@ namespace AdventureWorksNS.Api.Service
 			this._workOrderRoutingRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByWorkOrderID/{id}")]
+		[WorkOrderRoutingFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/WorkOrders/{id}/WorkOrderRoutings")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByWorkOrderID(int id)
+		{
+			var response = new Response();
+
+			this._workOrderRoutingRepository.GetWhere(x => x.WorkOrderID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByLocationID/{id}")]
+		[WorkOrderRoutingFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Locations/{id}/WorkOrderRoutings")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByLocationID(short id)
+		{
+			var response = new Response();
+
+			this._workOrderRoutingRepository.GetWhere(x => x.LocationID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>866f7c9e03ba760031cfe6375464e735</Hash>
+    <Hash>96417b688b29995260f3ee6b436220da</Hash>
 </Codenesium>*/

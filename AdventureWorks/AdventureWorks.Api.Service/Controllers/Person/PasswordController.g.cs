@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,PasswordModel model)
+		public virtual IActionResult Update(int BusinessEntityID,PasswordModel model)
 		{
 			this._passwordModelValidator.UpdateMode();
 			var validationResult = this._passwordModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._passwordRepository.Update(businessEntityID,  model.PasswordHash,
+				this._passwordRepository.Update(BusinessEntityID,  model.PasswordHash,
 				                                model.PasswordSalt,
 				                                model.Rowguid,
 				                                model.ModifiedDate);
@@ -159,9 +159,24 @@ namespace AdventureWorksNS.Api.Service
 			this._passwordRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[PasswordFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/People/{id}/Passwords")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._passwordRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>25af67a02d912b62c7b84cc3cdc9648b</Hash>
+    <Hash>5885b5aa8635ef3a650baec2bf293ce6</Hash>
 </Codenesium>*/

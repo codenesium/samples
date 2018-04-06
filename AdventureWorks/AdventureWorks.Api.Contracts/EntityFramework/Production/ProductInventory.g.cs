@@ -10,16 +10,29 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int productID {get; set;}
-		public short locationID {get; set;}
-		public string shelf {get; set;}
-		public int bin {get; set;}
-		public short quantity {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("ProductID", TypeName="int")]
+		public int ProductID {get; set;}
+		[Column("LocationID", TypeName="smallint")]
+		public short LocationID {get; set;}
+		[Column("Shelf", TypeName="nvarchar(10)")]
+		public string Shelf {get; set;}
+		[Column("Bin", TypeName="tinyint")]
+		public int Bin {get; set;}
+		[Column("Quantity", TypeName="smallint")]
+		public short Quantity {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("ProductID")]
+		public virtual EFProduct ProductRef { get; set; }
+		[ForeignKey("LocationID")]
+		public virtual EFLocation LocationRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c45fdfc7a981295858a74058aeca10cf</Hash>
+    <Hash>e1e5a7d065c59dd5c6caa80e3677f6c4</Hash>
 </Codenesium>*/

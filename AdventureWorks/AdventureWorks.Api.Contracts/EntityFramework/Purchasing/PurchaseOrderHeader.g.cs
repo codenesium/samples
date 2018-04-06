@@ -10,22 +10,43 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int purchaseOrderID {get; set;}
-		public int revisionNumber {get; set;}
-		public int status {get; set;}
-		public int employeeID {get; set;}
-		public int vendorID {get; set;}
-		public int shipMethodID {get; set;}
-		public DateTime orderDate {get; set;}
-		public Nullable<DateTime> shipDate {get; set;}
-		public decimal subTotal {get; set;}
-		public decimal taxAmt {get; set;}
-		public decimal freight {get; set;}
-		public decimal totalDue {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("PurchaseOrderID", TypeName="int")]
+		public int PurchaseOrderID {get; set;}
+		[Column("RevisionNumber", TypeName="tinyint")]
+		public int RevisionNumber {get; set;}
+		[Column("Status", TypeName="tinyint")]
+		public int Status {get; set;}
+		[Column("EmployeeID", TypeName="int")]
+		public int EmployeeID {get; set;}
+		[Column("VendorID", TypeName="int")]
+		public int VendorID {get; set;}
+		[Column("ShipMethodID", TypeName="int")]
+		public int ShipMethodID {get; set;}
+		[Column("OrderDate", TypeName="datetime")]
+		public DateTime OrderDate {get; set;}
+		[Column("ShipDate", TypeName="datetime")]
+		public Nullable<DateTime> ShipDate {get; set;}
+		[Column("SubTotal", TypeName="money")]
+		public decimal SubTotal {get; set;}
+		[Column("TaxAmt", TypeName="money")]
+		public decimal TaxAmt {get; set;}
+		[Column("Freight", TypeName="money")]
+		public decimal Freight {get; set;}
+		[Column("TotalDue", TypeName="money")]
+		public decimal TotalDue {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("EmployeeID")]
+		public virtual EFEmployee EmployeeRef { get; set; }
+		[ForeignKey("VendorID")]
+		public virtual EFVendor VendorRef { get; set; }
+		[ForeignKey("ShipMethodID")]
+		public virtual EFShipMethod ShipMethodRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>338b1dfc3de2c0b082cf589fd79138c6</Hash>
+    <Hash>f6d51d5fe0b4549568de28f9a3241920</Hash>
 </Codenesium>*/

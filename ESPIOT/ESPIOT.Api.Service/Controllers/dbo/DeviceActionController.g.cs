@@ -127,13 +127,13 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,DeviceActionModel model)
+		public virtual IActionResult Update(int Id,DeviceActionModel model)
 		{
 			this._deviceActionModelValidator.UpdateMode();
 			var validationResult = this._deviceActionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._deviceActionRepository.Update(id,  model.DeviceId,
+				this._deviceActionRepository.Update(Id,  model.DeviceId,
 				                                    model.Name,
 				                                    model.@Value);
 				return Ok();
@@ -167,7 +167,7 @@ namespace ESPIOTNS.Api.Service
 		{
 			var response = new Response();
 
-			this._deviceActionRepository.GetWhere(x => x.deviceId == id, response);
+			this._deviceActionRepository.GetWhere(x => x.DeviceId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -175,5 +175,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>da1372cd62d4bd3562ea0231c42131be</Hash>
+    <Hash>0bcd36d05627073941424ccace7c6a71</Hash>
 </Codenesium>*/

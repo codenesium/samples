@@ -34,14 +34,14 @@ namespace ESPIOTNS.Api.DataAccess
 
 			this._context.Set<EFDeviceAction>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, int deviceId,
 		                           string name,
 		                           string @value)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -57,7 +57,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace ESPIOTNS.Api.DataAccess
 		                               string name,
 		                               string @value, EFDeviceAction   efDeviceAction)
 		{
-			efDeviceAction.id = id;
-			efDeviceAction.deviceId = deviceId;
-			efDeviceAction.name = name;
-			efDeviceAction.@value = @value;
+			efDeviceAction.Id = id;
+			efDeviceAction.DeviceId = deviceId;
+			efDeviceAction.Name = name;
+			efDeviceAction.@Value = @value;
 		}
 
 		public static void MapEFToPOCO(EFDeviceAction efDeviceAction,Response response)
@@ -125,11 +125,11 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			response.AddDeviceAction(new POCODeviceAction()
 			{
-				Id = efDeviceAction.id.ToInt(),
-				Name = efDeviceAction.name,
-				@Value = efDeviceAction.@value,
+				Id = efDeviceAction.Id.ToInt(),
+				Name = efDeviceAction.Name,
+				@Value = efDeviceAction.@Value,
 
-				DeviceId = new ReferenceEntity<int>(efDeviceAction.deviceId,
+				DeviceId = new ReferenceEntity<int>(efDeviceAction.DeviceId,
 				                                    "Devices"),
 			});
 
@@ -139,5 +139,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6c3c9d0519aaa8fb12ba87df1abe2edb</Hash>
+    <Hash>36e985ab21f0ee131e6395479b0122b7</Hash>
 </Codenesium>*/

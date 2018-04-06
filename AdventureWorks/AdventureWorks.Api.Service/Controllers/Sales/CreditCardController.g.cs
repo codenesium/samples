@@ -131,13 +131,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int creditCardID,CreditCardModel model)
+		public virtual IActionResult Update(int CreditCardID,CreditCardModel model)
 		{
 			this._creditCardModelValidator.UpdateMode();
 			var validationResult = this._creditCardModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._creditCardRepository.Update(creditCardID,  model.CardType,
+				this._creditCardRepository.Update(CreditCardID,  model.CardType,
 				                                  model.CardNumber,
 				                                  model.ExpMonth,
 				                                  model.ExpYear,
@@ -166,5 +166,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cdb2ee3b56090773451f1e1ede410f50</Hash>
+    <Hash>5ece3749e7703b0b9a22f8e4c14796bc</Hash>
 </Codenesium>*/

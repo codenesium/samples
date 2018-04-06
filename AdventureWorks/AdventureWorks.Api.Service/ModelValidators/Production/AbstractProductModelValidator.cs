@@ -20,6 +20,9 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public IUnitMeasureRepository UnitMeasureRepository {get; set;}
+		public IProductSubcategoryRepository ProductSubcategoryRepository {get; set;}
+		public IProductModelRepository ProductModelRepository {get; set;}
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -74,11 +77,13 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void SizeUnitMeasureCodeRules()
 		{
+			RuleFor(x => x.SizeUnitMeasureCode).Must(BeValidUnitMeasure).When(x => x ?.SizeUnitMeasureCode != null).WithMessage("Invalid reference");
 			RuleFor(x => x.SizeUnitMeasureCode).Length(0,3);
 		}
 
 		public virtual void WeightUnitMeasureCodeRules()
 		{
+			RuleFor(x => x.WeightUnitMeasureCode).Must(BeValidUnitMeasure).When(x => x ?.WeightUnitMeasureCode != null).WithMessage("Invalid reference");
 			RuleFor(x => x.WeightUnitMeasureCode).Length(0,3);
 		}
 
@@ -106,10 +111,14 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		public virtual void ProductSubcategoryIDRules()
-		{                       }
+		{
+			RuleFor(x => x.ProductSubcategoryID).Must(BeValidProductSubcategory).When(x => x ?.ProductSubcategoryID != null).WithMessage("Invalid reference");
+		}
 
 		public virtual void ProductModelIDRules()
-		{                       }
+		{
+			RuleFor(x => x.ProductModelID).Must(BeValidProductModel).When(x => x ?.ProductModelID != null).WithMessage("Invalid reference");
+		}
 
 		public virtual void SellStartDateRules()
 		{
@@ -131,9 +140,33 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidUnitMeasure(string id)
+		{
+			Response response = new Response();
+
+			this.UnitMeasureRepository.GetById(id.GetValueOrDefault(),response);
+			return response.UnitMeasures.Count > 0;
+		}
+
+		public bool BeValidProductSubcategory(Nullable<int> id)
+		{
+			Response response = new Response();
+
+			this.ProductSubcategoryRepository.GetById(id.GetValueOrDefault(),response);
+			return response.ProductSubcategories.Count > 0;
+		}
+
+		public bool BeValidProductModel(Nullable<int> id)
+		{
+			Response response = new Response();
+
+			this.ProductModelRepository.GetById(id.GetValueOrDefault(),response);
+			return response.ProductModels.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>818ef1b6385e2a4278d6d6a6080f03c5</Hash>
+    <Hash>bc7f3e8f9932e95a51486b4d8ce75836</Hash>
 </Codenesium>*/

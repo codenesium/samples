@@ -21,26 +21,29 @@ namespace AdventureWorksNS.Api.Contracts
 		                     DateTime modifiedDate)
 		{
 			this.WorkOrderID = workOrderID.ToInt();
-			this.ProductID = productID.ToInt();
 			this.OrderQty = orderQty.ToInt();
 			this.StockedQty = stockedQty.ToInt();
 			this.ScrappedQty = scrappedQty;
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.DueDate = dueDate.ToDateTime();
-			this.ScrapReasonID = scrapReasonID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			ProductID = new ReferenceEntity<int>(productID,
+			                                     "Product");
+			ScrapReasonID = new ReferenceEntity<Nullable<short>>(scrapReasonID,
+			                                                     "ScrapReason");
 		}
 
 		public int WorkOrderID {get; set;}
-		public int ProductID {get; set;}
+		public ReferenceEntity<int>ProductID {get; set;}
 		public int OrderQty {get; set;}
 		public int StockedQty {get; set;}
 		public short ScrappedQty {get; set;}
 		public DateTime StartDate {get; set;}
 		public Nullable<DateTime> EndDate {get; set;}
 		public DateTime DueDate {get; set;}
-		public Nullable<short> ScrapReasonID {get; set;}
+		public ReferenceEntity<Nullable<short>>ScrapReasonID {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -140,5 +143,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>16158ef6c0e7f623c2c81582e9930bad</Hash>
+    <Hash>95256a283babecab7d5fb4065a3b3a00</Hash>
 </Codenesium>*/

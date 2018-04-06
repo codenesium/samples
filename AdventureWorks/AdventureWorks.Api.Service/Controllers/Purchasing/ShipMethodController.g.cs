@@ -131,13 +131,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int shipMethodID,ShipMethodModel model)
+		public virtual IActionResult Update(int ShipMethodID,ShipMethodModel model)
 		{
 			this._shipMethodModelValidator.UpdateMode();
 			var validationResult = this._shipMethodModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._shipMethodRepository.Update(shipMethodID,  model.Name,
+				this._shipMethodRepository.Update(ShipMethodID,  model.Name,
 				                                  model.ShipBase,
 				                                  model.ShipRate,
 				                                  model.Rowguid,
@@ -166,5 +166,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7aafac9121e883f3aef84cce8cadb25c</Hash>
+    <Hash>143bc69698d66bd314cfdc63ef102015</Hash>
 </Codenesium>*/

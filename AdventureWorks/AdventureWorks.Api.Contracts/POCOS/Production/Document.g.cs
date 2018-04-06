@@ -20,14 +20,13 @@ namespace AdventureWorksNS.Api.Contracts
 		                    int changeNumber,
 		                    int status,
 		                    string documentSummary,
-		                    byte[] document,
+		                    byte[] document1,
 		                    Guid rowguid,
 		                    DateTime modifiedDate)
 		{
 			this.DocumentNode = documentNode;
 			this.DocumentLevel = documentLevel;
 			this.Title = title;
-			this.Owner = owner.ToInt();
 			this.FolderFlag = folderFlag;
 			this.FileName = fileName;
 			this.FileExtension = fileExtension;
@@ -35,15 +34,18 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ChangeNumber = changeNumber.ToInt();
 			this.Status = status;
 			this.DocumentSummary = documentSummary;
-			this.Document = document;
+			this.Document1 = document1;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			Owner = new ReferenceEntity<int>(owner,
+			                                 "Employee");
 		}
 
 		public Guid DocumentNode {get; set;}
 		public Nullable<short> DocumentLevel {get; set;}
 		public string Title {get; set;}
-		public int Owner {get; set;}
+		public ReferenceEntity<int>Owner {get; set;}
 		public bool FolderFlag {get; set;}
 		public string FileName {get; set;}
 		public string FileExtension {get; set;}
@@ -51,7 +53,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public int ChangeNumber {get; set;}
 		public int Status {get; set;}
 		public string DocumentSummary {get; set;}
-		public byte[] Document {get; set;}
+		public byte[] Document1 {get; set;}
 		public Guid Rowguid {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
@@ -144,11 +146,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDocumentValue {get; set;} = true;
+		public bool ShouldSerializeDocument1Value {get; set;} = true;
 
-		public bool ShouldSerializeDocument()
+		public bool ShouldSerializeDocument1()
 		{
-			return ShouldSerializeDocumentValue;
+			return ShouldSerializeDocument1Value;
 		}
 
 		[JsonIgnore]
@@ -180,7 +182,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ShouldSerializeChangeNumberValue = false;
 			this.ShouldSerializeStatusValue = false;
 			this.ShouldSerializeDocumentSummaryValue = false;
-			this.ShouldSerializeDocumentValue = false;
+			this.ShouldSerializeDocument1Value = false;
 			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
 		}
@@ -188,5 +190,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0cf87a7850fdef0cb7f11c50a54832f5</Hash>
+    <Hash>be26cbb3b3577189beee193418c634d6</Hash>
 </Codenesium>*/

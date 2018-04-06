@@ -13,13 +13,16 @@ namespace AdventureWorksNS.Api.Contracts
 		                            int creditCardID,
 		                            DateTime modifiedDate)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
-			this.CreditCardID = creditCardID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                            "Person");
+			CreditCardID = new ReferenceEntity<int>(creditCardID,
+			                                        "CreditCard");
 		}
 
-		public int BusinessEntityID {get; set;}
-		public int CreditCardID {get; set;}
+		public ReferenceEntity<int>BusinessEntityID {get; set;}
+		public ReferenceEntity<int>CreditCardID {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -56,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>47f250543b4a42cda1df0977160c7e53</Hash>
+    <Hash>b2721dbeb0767beee6b25223f9e75cac</Hash>
 </Codenesium>*/

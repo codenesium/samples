@@ -129,13 +129,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,SalesPersonQuotaHistoryModel model)
+		public virtual IActionResult Update(int BusinessEntityID,SalesPersonQuotaHistoryModel model)
 		{
 			this._salesPersonQuotaHistoryModelValidator.UpdateMode();
 			var validationResult = this._salesPersonQuotaHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._salesPersonQuotaHistoryRepository.Update(businessEntityID,  model.QuotaDate,
+				this._salesPersonQuotaHistoryRepository.Update(BusinessEntityID,  model.QuotaDate,
 				                                               model.SalesQuota,
 				                                               model.Rowguid,
 				                                               model.ModifiedDate);
@@ -159,9 +159,24 @@ namespace AdventureWorksNS.Api.Service
 			this._salesPersonQuotaHistoryRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[SalesPersonQuotaHistoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesPersons/{id}/SalesPersonQuotaHistories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._salesPersonQuotaHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d47471de4981ed71d1a5ecde97565cb</Hash>
+    <Hash>edeb96ac504890ec052cb7d7f9850161</Hash>
 </Codenesium>*/

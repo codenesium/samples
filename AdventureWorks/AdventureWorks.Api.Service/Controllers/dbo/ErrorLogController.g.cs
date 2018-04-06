@@ -137,13 +137,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int errorLogID,ErrorLogModel model)
+		public virtual IActionResult Update(int ErrorLogID,ErrorLogModel model)
 		{
 			this._errorLogModelValidator.UpdateMode();
 			var validationResult = this._errorLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._errorLogRepository.Update(errorLogID,  model.ErrorTime,
+				this._errorLogRepository.Update(ErrorLogID,  model.ErrorTime,
 				                                model.UserName,
 				                                model.ErrorNumber,
 				                                model.ErrorSeverity,
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3a76dfeba7864b24a00cb1c357b0fe83</Hash>
+    <Hash>10f814aa617c85094971cfb1db867856</Hash>
 </Codenesium>*/

@@ -10,11 +10,14 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public string name {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("name", TypeName="varchar(128)")]
+		public string Name {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>61679a42f37fc67cc461e6c2af56110e</Hash>
+    <Hash>f1de0e6feb9e5f4c5b135b66cb200c15</Hash>
 </Codenesium>*/

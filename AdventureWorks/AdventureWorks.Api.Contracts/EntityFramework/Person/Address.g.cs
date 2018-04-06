@@ -10,18 +10,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int addressID {get; set;}
-		public string addressLine1 {get; set;}
-		public string addressLine2 {get; set;}
-		public string city {get; set;}
-		public int stateProvinceID {get; set;}
-		public string postalCode {get; set;}
-		public object spatialLocation {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("AddressID", TypeName="int")]
+		public int AddressID {get; set;}
+		[Column("AddressLine1", TypeName="nvarchar(60)")]
+		public string AddressLine1 {get; set;}
+		[Column("AddressLine2", TypeName="nvarchar(60)")]
+		public string AddressLine2 {get; set;}
+		[Column("City", TypeName="nvarchar(30)")]
+		public string City {get; set;}
+		[Column("StateProvinceID", TypeName="int")]
+		public int StateProvinceID {get; set;}
+		[Column("PostalCode", TypeName="nvarchar(15)")]
+		public string PostalCode {get; set;}
+		[Column("SpatialLocation", TypeName="geography(-1)")]
+		public object SpatialLocation {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("StateProvinceID")]
+		public virtual EFStateProvince StateProvinceRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>606b1c966ad16892ebf1377e7a6754c8</Hash>
+    <Hash>7faf65952f4afcb57905df9cecd09e76</Hash>
 </Codenesium>*/

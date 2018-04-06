@@ -10,14 +10,20 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public short locationID {get; set;}
-		public string name {get; set;}
-		public decimal costRate {get; set;}
-		public decimal availability {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("LocationID", TypeName="smallint")]
+		public short LocationID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("CostRate", TypeName="smallmoney")]
+		public decimal CostRate {get; set;}
+		[Column("Availability", TypeName="decimal")]
+		public decimal Availability {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ace5d29666d49997677ff9f616dd98a</Hash>
+    <Hash>354032d073e066361911582c9836f7cd</Hash>
 </Codenesium>*/

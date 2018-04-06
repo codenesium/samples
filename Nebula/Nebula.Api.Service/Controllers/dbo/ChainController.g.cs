@@ -129,13 +129,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ChainModel model)
+		public virtual IActionResult Update(int Id,ChainModel model)
 		{
 			this._chainModelValidator.UpdateMode();
 			var validationResult = this._chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._chainRepository.Update(id,  model.Name,
+				this._chainRepository.Update(Id,  model.Name,
 				                             model.TeamId,
 				                             model.ChainStatusId,
 				                             model.ExternalId);
@@ -170,7 +170,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._chainRepository.GetWhere(x => x.teamId == id, response);
+			this._chainRepository.GetWhere(x => x.TeamId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -185,7 +185,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._chainRepository.GetWhere(x => x.chainStatusId == id, response);
+			this._chainRepository.GetWhere(x => x.ChainStatusId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -193,5 +193,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5106209db3a662ee2095aa5cab7d29bd</Hash>
+    <Hash>ee4ba9968df51c216d8def3be05e5655</Hash>
 </Codenesium>*/

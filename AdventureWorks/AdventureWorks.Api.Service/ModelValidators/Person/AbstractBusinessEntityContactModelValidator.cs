@@ -20,14 +20,19 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public IBusinessEntityRepository BusinessEntityRepository {get; set;}
+		public IPersonRepository PersonRepository {get; set;}
+		public IContactTypeRepository ContactTypeRepository {get; set;}
 		public virtual void PersonIDRules()
 		{
 			RuleFor(x => x.PersonID).NotNull();
+			RuleFor(x => x.PersonID).Must(BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ContactTypeIDRules()
 		{
 			RuleFor(x => x.ContactTypeID).NotNull();
+			RuleFor(x => x.ContactTypeID).Must(BeValidContactType).When(x => x ?.ContactTypeID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RowguidRules()
@@ -39,9 +44,33 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidBusinessEntity(int id)
+		{
+			Response response = new Response();
+
+			this.BusinessEntityRepository.GetById(id,response);
+			return response.BusinessEntities.Count > 0;
+		}
+
+		public bool BeValidPerson(int id)
+		{
+			Response response = new Response();
+
+			this.PersonRepository.GetById(id,response);
+			return response.People.Count > 0;
+		}
+
+		public bool BeValidContactType(int id)
+		{
+			Response response = new Response();
+
+			this.ContactTypeRepository.GetById(id,response);
+			return response.ContactTypes.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec9e4c86de9ce23b0dab10059b3261ed</Hash>
+    <Hash>277995d2e1edf9d55a528bfe59de4be6</Hash>
 </Codenesium>*/

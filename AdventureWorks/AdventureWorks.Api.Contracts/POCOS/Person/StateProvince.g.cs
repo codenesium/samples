@@ -20,20 +20,23 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.StateProvinceID = stateProvinceID.ToInt();
 			this.StateProvinceCode = stateProvinceCode;
-			this.CountryRegionCode = countryRegionCode;
 			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
 			this.Name = name;
-			this.TerritoryID = territoryID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
+			                                                "CountryRegion");
+			TerritoryID = new ReferenceEntity<int>(territoryID,
+			                                       "SalesTerritory");
 		}
 
 		public int StateProvinceID {get; set;}
 		public string StateProvinceCode {get; set;}
-		public string CountryRegionCode {get; set;}
+		public ReferenceEntity<string>CountryRegionCode {get; set;}
 		public bool IsOnlyStateProvinceFlag {get; set;}
 		public string Name {get; set;}
-		public int TerritoryID {get; set;}
+		public ReferenceEntity<int>TerritoryID {get; set;}
 		public Guid Rowguid {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
@@ -116,5 +119,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ef8bdc962674114c96fad4799caaaf32</Hash>
+    <Hash>8de6f2a658dff09dd8cbe2541bd87994</Hash>
 </Codenesium>*/

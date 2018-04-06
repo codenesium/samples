@@ -10,17 +10,21 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public int previousChainId {get; set;}
-		public int nextChainId {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("previousChainId", TypeName="int")]
+		public int PreviousChainId {get; set;}
+		[Column("nextChainId", TypeName="int")]
+		public int NextChainId {get; set;}
 
-		[ForeignKey("previousChainId")]
+		[ForeignKey("PreviousChainId")]
 		public virtual EFChain ChainRef { get; set; }
-		[ForeignKey("nextChainId")]
+		[ForeignKey("NextChainId")]
 		public virtual EFChain ChainRef1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4ca24bbae3bb3c00f0d83db3e266eef</Hash>
+    <Hash>fc113ed2d7c947a4ffd73ffb53e403d2</Hash>
 </Codenesium>*/

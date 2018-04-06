@@ -10,20 +10,32 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int specialOfferID {get; set;}
-		public string description {get; set;}
-		public decimal discountPct {get; set;}
-		public string type {get; set;}
-		public string category {get; set;}
-		public DateTime startDate {get; set;}
-		public DateTime endDate {get; set;}
-		public int minQty {get; set;}
-		public Nullable<int> maxQty {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("SpecialOfferID", TypeName="int")]
+		public int SpecialOfferID {get; set;}
+		[Column("Description", TypeName="nvarchar(255)")]
+		public string Description {get; set;}
+		[Column("DiscountPct", TypeName="smallmoney")]
+		public decimal DiscountPct {get; set;}
+		[Column("Type", TypeName="nvarchar(50)")]
+		public string Type {get; set;}
+		[Column("Category", TypeName="nvarchar(50)")]
+		public string Category {get; set;}
+		[Column("StartDate", TypeName="datetime")]
+		public DateTime StartDate {get; set;}
+		[Column("EndDate", TypeName="datetime")]
+		public DateTime EndDate {get; set;}
+		[Column("MinQty", TypeName="int")]
+		public int MinQty {get; set;}
+		[Column("MaxQty", TypeName="int")]
+		public Nullable<int> MaxQty {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1bc753bf776a1bb60bbb230f9dc94ebc</Hash>
+    <Hash>072f7380c6803e21c4b5083cbe5eefd3</Hash>
 </Codenesium>*/

@@ -171,13 +171,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int salesOrderID,SalesOrderHeaderModel model)
+		public virtual IActionResult Update(int SalesOrderID,SalesOrderHeaderModel model)
 		{
 			this._salesOrderHeaderModelValidator.UpdateMode();
 			var validationResult = this._salesOrderHeaderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._salesOrderHeaderRepository.Update(salesOrderID,  model.RevisionNumber,
+				this._salesOrderHeaderRepository.Update(SalesOrderID,  model.RevisionNumber,
 				                                        model.OrderDate,
 				                                        model.DueDate,
 				                                        model.ShipDate,
@@ -222,9 +222,129 @@ namespace AdventureWorksNS.Api.Service
 			this._salesOrderHeaderRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByCustomerID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Customers/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByCustomerID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.CustomerID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("BySalesPersonID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesPersons/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult BySalesPersonID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.SalesPersonID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByTerritoryID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesTerritories/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByTerritoryID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.TerritoryID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByBillToAddressID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBillToAddressID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.BillToAddressID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByShipToAddressID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByShipToAddressID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.ShipToAddressID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByShipMethodID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/ShipMethods/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByShipMethodID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByCreditCardID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/CreditCards/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByCreditCardID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.CreditCardID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByCurrencyRateID/{id}")]
+		[SalesOrderHeaderFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/CurrencyRates/{id}/SalesOrderHeaders")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByCurrencyRateID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderRepository.GetWhere(x => x.CurrencyRateID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97ea224a6c0998cbb4c0235a6bbc244e</Hash>
+    <Hash>cd0fb7ff6c15230739270f822f024973</Hash>
 </Codenesium>*/

@@ -10,12 +10,16 @@ namespace FileServiceNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public string name {get; set;}
-		public Guid externalId {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("name", TypeName="nvarchar(255)")]
+		public string Name {get; set;}
+		[Column("externalId", TypeName="uniqueidentifier")]
+		public Guid ExternalId {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae24a60ab10c6bf860a6a0ffb6da7f3d</Hash>
+    <Hash>38b22237f93170239e36a7b85a6dee5c</Hash>
 </Codenesium>*/

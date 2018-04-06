@@ -10,19 +10,35 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int workOrderID {get; set;}
-		public int productID {get; set;}
-		public int orderQty {get; set;}
-		public int stockedQty {get; set;}
-		public short scrappedQty {get; set;}
-		public DateTime startDate {get; set;}
-		public Nullable<DateTime> endDate {get; set;}
-		public DateTime dueDate {get; set;}
-		public Nullable<short> scrapReasonID {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("WorkOrderID", TypeName="int")]
+		public int WorkOrderID {get; set;}
+		[Column("ProductID", TypeName="int")]
+		public int ProductID {get; set;}
+		[Column("OrderQty", TypeName="int")]
+		public int OrderQty {get; set;}
+		[Column("StockedQty", TypeName="int")]
+		public int StockedQty {get; set;}
+		[Column("ScrappedQty", TypeName="smallint")]
+		public short ScrappedQty {get; set;}
+		[Column("StartDate", TypeName="datetime")]
+		public DateTime StartDate {get; set;}
+		[Column("EndDate", TypeName="datetime")]
+		public Nullable<DateTime> EndDate {get; set;}
+		[Column("DueDate", TypeName="datetime")]
+		public DateTime DueDate {get; set;}
+		[Column("ScrapReasonID", TypeName="smallint")]
+		public Nullable<short> ScrapReasonID {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("ProductID")]
+		public virtual EFProduct ProductRef { get; set; }
+		[ForeignKey("ScrapReasonID")]
+		public virtual EFScrapReason ScrapReasonRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d1b87ae88e6e66bac87c468fa204ab5</Hash>
+    <Hash>a18c08be95f32f33043a9cfcbf1f0dfe</Hash>
 </Codenesium>*/

@@ -21,8 +21,6 @@ namespace AdventureWorksNS.Api.Contracts
 		                         string unitMeasureCode,
 		                         DateTime modifiedDate)
 		{
-			this.ProductID = productID.ToInt();
-			this.BusinessEntityID = businessEntityID.ToInt();
 			this.AverageLeadTime = averageLeadTime.ToInt();
 			this.StandardPrice = standardPrice;
 			this.LastReceiptCost = lastReceiptCost;
@@ -30,12 +28,18 @@ namespace AdventureWorksNS.Api.Contracts
 			this.MinOrderQty = minOrderQty.ToInt();
 			this.MaxOrderQty = maxOrderQty.ToInt();
 			this.OnOrderQty = onOrderQty.ToNullableInt();
-			this.UnitMeasureCode = unitMeasureCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			ProductID = new ReferenceEntity<int>(productID,
+			                                     "Product");
+			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                            "Vendor");
+			UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
+			                                              "UnitMeasure");
 		}
 
-		public int ProductID {get; set;}
-		public int BusinessEntityID {get; set;}
+		public ReferenceEntity<int>ProductID {get; set;}
+		public ReferenceEntity<int>BusinessEntityID {get; set;}
 		public int AverageLeadTime {get; set;}
 		public decimal StandardPrice {get; set;}
 		public Nullable<decimal> LastReceiptCost {get; set;}
@@ -43,7 +47,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public int MinOrderQty {get; set;}
 		public int MaxOrderQty {get; set;}
 		public Nullable<int> OnOrderQty {get; set;}
-		public string UnitMeasureCode {get; set;}
+		public ReferenceEntity<string>UnitMeasureCode {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -152,5 +156,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5bedeb4298c793f3ec045a67cc09665e</Hash>
+    <Hash>59f4ad92a915ec87443f6879b884dda1</Hash>
 </Codenesium>*/

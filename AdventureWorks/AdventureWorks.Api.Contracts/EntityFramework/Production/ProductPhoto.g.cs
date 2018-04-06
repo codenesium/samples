@@ -10,15 +10,22 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int productPhotoID {get; set;}
-		public byte[] thumbNailPhoto {get; set;}
-		public string thumbnailPhotoFileName {get; set;}
-		public byte[] largePhoto {get; set;}
-		public string largePhotoFileName {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("ProductPhotoID", TypeName="int")]
+		public int ProductPhotoID {get; set;}
+		[Column("ThumbNailPhoto", TypeName="varbinary(-1)")]
+		public byte[] ThumbNailPhoto {get; set;}
+		[Column("ThumbnailPhotoFileName", TypeName="nvarchar(50)")]
+		public string ThumbnailPhotoFileName {get; set;}
+		[Column("LargePhoto", TypeName="varbinary(-1)")]
+		public byte[] LargePhoto {get; set;}
+		[Column("LargePhotoFileName", TypeName="nvarchar(50)")]
+		public string LargePhotoFileName {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b65f60de70e4879b6d967f8fb14fbaf5</Hash>
+    <Hash>1879730fde22852f7adacb06e8468e7d</Hash>
 </Codenesium>*/

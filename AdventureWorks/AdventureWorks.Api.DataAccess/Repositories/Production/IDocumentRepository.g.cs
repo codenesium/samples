@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		            int changeNumber,
 		            int status,
 		            string documentSummary,
-		            byte[] document,
+		            byte[] document1,
 		            Guid rowguid,
 		            DateTime modifiedDate);
 
@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		            int changeNumber,
 		            int status,
 		            string documentSummary,
-		            byte[] document,
+		            byte[] document1,
 		            Guid rowguid,
 		            DateTime modifiedDate);
 
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a4caad42ccfad77f1ab53cf61fdb82a1</Hash>
+    <Hash>ca2b61e3fb2a8c2f0ac436e78337b785</Hash>
 </Codenesium>*/

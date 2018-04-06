@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductPhoto>().Where(predicate).AsQueryable().OrderBy("productPhotoID ASC").Skip(skip).Take(take).ToList<EFProductPhoto>();
+				return this._context.Set<EFProductPhoto>().Where(predicate).AsQueryable().OrderBy("ProductPhotoID ASC").Skip(skip).Take(take).ToList<EFProductPhoto>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductPhoto>().Where(predicate).AsQueryable().OrderBy("productPhotoID ASC").Skip(skip).Take(take).ToList<EFProductPhoto>();
+				return this._context.Set<EFProductPhoto>().Where(predicate).AsQueryable().OrderBy("ProductPhotoID ASC").Skip(skip).Take(take).ToList<EFProductPhoto>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>07bc265c690d64649ae0986208ba8714</Hash>
+    <Hash>82ecbdb4e068fbec872e6f8f213c5541</Hash>
 </Codenesium>*/

@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int jobCandidateID,JobCandidateModel model)
+		public virtual IActionResult Update(int JobCandidateID,JobCandidateModel model)
 		{
 			this._jobCandidateModelValidator.UpdateMode();
 			var validationResult = this._jobCandidateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._jobCandidateRepository.Update(jobCandidateID,  model.BusinessEntityID,
+				this._jobCandidateRepository.Update(JobCandidateID,  model.BusinessEntityID,
 				                                    model.Resume,
 				                                    model.ModifiedDate);
 				return Ok();
@@ -156,9 +156,24 @@ namespace AdventureWorksNS.Api.Service
 			this._jobCandidateRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[JobCandidateFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Employees/{id}/JobCandidates")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._jobCandidateRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c266fb18ca81940b62123154f2e79745</Hash>
+    <Hash>c6bfff6038bb1afcee3e3d3fe5d9b218</Hash>
 </Codenesium>*/

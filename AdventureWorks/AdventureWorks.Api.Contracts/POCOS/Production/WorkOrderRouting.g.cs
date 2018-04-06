@@ -22,10 +22,8 @@ namespace AdventureWorksNS.Api.Contracts
 		                            Nullable<decimal> actualCost,
 		                            DateTime modifiedDate)
 		{
-			this.WorkOrderID = workOrderID.ToInt();
 			this.ProductID = productID.ToInt();
 			this.OperationSequence = operationSequence;
-			this.LocationID = locationID;
 			this.ScheduledStartDate = scheduledStartDate.ToDateTime();
 			this.ScheduledEndDate = scheduledEndDate.ToDateTime();
 			this.ActualStartDate = actualStartDate.ToNullableDateTime();
@@ -34,12 +32,17 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PlannedCost = plannedCost;
 			this.ActualCost = actualCost;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			WorkOrderID = new ReferenceEntity<int>(workOrderID,
+			                                       "WorkOrder");
+			LocationID = new ReferenceEntity<short>(locationID,
+			                                        "Location");
 		}
 
-		public int WorkOrderID {get; set;}
+		public ReferenceEntity<int>WorkOrderID {get; set;}
 		public int ProductID {get; set;}
 		public short OperationSequence {get; set;}
-		public short LocationID {get; set;}
+		public ReferenceEntity<short>LocationID {get; set;}
 		public DateTime ScheduledStartDate {get; set;}
 		public DateTime ScheduledEndDate {get; set;}
 		public Nullable<DateTime> ActualStartDate {get; set;}
@@ -164,5 +167,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c729641727871be3d19968e2242bf382</Hash>
+    <Hash>b7404bd2f70aee5fbdb098486ca26cfd</Hash>
 </Codenesium>*/

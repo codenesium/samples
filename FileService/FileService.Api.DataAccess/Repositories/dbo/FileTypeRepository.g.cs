@@ -30,12 +30,12 @@ namespace FileServiceNS.Api.DataAccess
 
 			this._context.Set<EFFileType>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, string name)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -49,7 +49,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -64,7 +64,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFFileType> SearchLinqEF(Expression<Func<EFFileType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -101,8 +101,8 @@ namespace FileServiceNS.Api.DataAccess
 
 		public static void MapPOCOToEF(int id, string name, EFFileType   efFileType)
 		{
-			efFileType.id = id;
-			efFileType.name = name;
+			efFileType.Id = id;
+			efFileType.Name = name;
 		}
 
 		public static void MapEFToPOCO(EFFileType efFileType,Response response)
@@ -113,13 +113,13 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			response.AddFileType(new POCOFileType()
 			{
-				Id = efFileType.id.ToInt(),
-				Name = efFileType.name,
+				Id = efFileType.Id.ToInt(),
+				Name = efFileType.Name,
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>65abcc42dc323c94d599a54d6c4ee907</Hash>
+    <Hash>c401214995b3049f9913a23f18b15a80</Hash>
 </Codenesium>*/

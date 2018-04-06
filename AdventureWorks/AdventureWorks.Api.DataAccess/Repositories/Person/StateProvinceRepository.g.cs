@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFStateProvince>().Add(record);
 			this._context.SaveChanges();
-			return record.stateProvinceID;
+			return record.StateProvinceID;
 		}
 
 		public virtual void Update(int stateProvinceID, string stateProvinceCode,
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.stateProvinceID == stateProvinceID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",stateProvinceID);
@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int stateProvinceID)
 		{
-			var record = this.SearchLinqEF(x => x.stateProvinceID == stateProvinceID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int stateProvinceID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.stateProvinceID == stateProvinceID,response);
+			this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID,response);
 		}
 
 		protected virtual List<EFStateProvince> SearchLinqEF(Expression<Func<EFStateProvince, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -131,14 +131,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFStateProvince   efStateProvince)
 		{
-			efStateProvince.stateProvinceID = stateProvinceID;
-			efStateProvince.stateProvinceCode = stateProvinceCode;
-			efStateProvince.countryRegionCode = countryRegionCode;
-			efStateProvince.isOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
-			efStateProvince.name = name;
-			efStateProvince.territoryID = territoryID;
-			efStateProvince.rowguid = rowguid;
-			efStateProvince.modifiedDate = modifiedDate;
+			efStateProvince.StateProvinceID = stateProvinceID;
+			efStateProvince.StateProvinceCode = stateProvinceCode;
+			efStateProvince.CountryRegionCode = countryRegionCode;
+			efStateProvince.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
+			efStateProvince.Name = name;
+			efStateProvince.TerritoryID = territoryID;
+			efStateProvince.Rowguid = rowguid;
+			efStateProvince.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFStateProvince efStateProvince,Response response)
@@ -149,19 +149,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddStateProvince(new POCOStateProvince()
 			{
-				StateProvinceID = efStateProvince.stateProvinceID.ToInt(),
-				StateProvinceCode = efStateProvince.stateProvinceCode,
-				CountryRegionCode = efStateProvince.countryRegionCode,
-				IsOnlyStateProvinceFlag = efStateProvince.isOnlyStateProvinceFlag,
-				Name = efStateProvince.name,
-				TerritoryID = efStateProvince.territoryID.ToInt(),
-				Rowguid = efStateProvince.rowguid,
-				ModifiedDate = efStateProvince.modifiedDate.ToDateTime(),
+				StateProvinceID = efStateProvince.StateProvinceID.ToInt(),
+				StateProvinceCode = efStateProvince.StateProvinceCode,
+				IsOnlyStateProvinceFlag = efStateProvince.IsOnlyStateProvinceFlag,
+				Name = efStateProvince.Name,
+				Rowguid = efStateProvince.Rowguid,
+				ModifiedDate = efStateProvince.ModifiedDate.ToDateTime(),
+
+				CountryRegionCode = new ReferenceEntity<string>(efStateProvince.CountryRegionCode,
+				                                                "CountryRegions"),
+				TerritoryID = new ReferenceEntity<int>(efStateProvince.TerritoryID,
+				                                       "SalesTerritories"),
 			});
+
+			CountryRegionRepository.MapEFToPOCO(efStateProvince.CountryRegionRef, response);
+
+			SalesTerritoryRepository.MapEFToPOCO(efStateProvince.SalesTerritoryRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c30c0dcd4c34b3b29d7a02bef506dd9</Hash>
+    <Hash>6f583a958f392c1251af74c0994d6bc4</Hash>
 </Codenesium>*/

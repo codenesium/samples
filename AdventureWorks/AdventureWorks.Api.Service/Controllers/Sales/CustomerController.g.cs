@@ -133,13 +133,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int customerID,CustomerModel model)
+		public virtual IActionResult Update(int CustomerID,CustomerModel model)
 		{
 			this._customerModelValidator.UpdateMode();
 			var validationResult = this._customerModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._customerRepository.Update(customerID,  model.PersonID,
+				this._customerRepository.Update(CustomerID,  model.PersonID,
 				                                model.StoreID,
 				                                model.TerritoryID,
 				                                model.AccountNumber,
@@ -165,9 +165,54 @@ namespace AdventureWorksNS.Api.Service
 			this._customerRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByPersonID/{id}")]
+		[CustomerFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/People/{id}/Customers")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByPersonID(int id)
+		{
+			var response = new Response();
+
+			this._customerRepository.GetWhere(x => x.PersonID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByStoreID/{id}")]
+		[CustomerFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Stores/{id}/Customers")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByStoreID(int id)
+		{
+			var response = new Response();
+
+			this._customerRepository.GetWhere(x => x.StoreID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByTerritoryID/{id}")]
+		[CustomerFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesTerritories/{id}/Customers")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByTerritoryID(int id)
+		{
+			var response = new Response();
+
+			this._customerRepository.GetWhere(x => x.TerritoryID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0bd9cf149c3b4a99121901dbf9386d4</Hash>
+    <Hash>e813da5e2fff01fcfd1bce5191ed41e8</Hash>
 </Codenesium>*/

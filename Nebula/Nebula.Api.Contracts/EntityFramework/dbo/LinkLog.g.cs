@@ -10,16 +10,21 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public int linkId {get; set;}
-		public string log {get; set;}
-		public DateTime dateEntered {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("linkId", TypeName="int")]
+		public int LinkId {get; set;}
+		[Column("log", TypeName="text(2147483647)")]
+		public string Log {get; set;}
+		[Column("dateEntered", TypeName="datetime")]
+		public DateTime DateEntered {get; set;}
 
-		[ForeignKey("linkId")]
+		[ForeignKey("LinkId")]
 		public virtual EFLink LinkRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2bd4212d36870948a80ecadaa57bdd10</Hash>
+    <Hash>33353d31183e8177083a2c03f3a83315</Hash>
 </Codenesium>*/

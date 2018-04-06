@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFCustomer>().Add(record);
 			this._context.SaveChanges();
-			return record.customerID;
+			return record.CustomerID;
 		}
 
 		public virtual void Update(int customerID, Nullable<int> personID,
@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.customerID == customerID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",customerID);
@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int customerID)
 		{
-			var record = this.SearchLinqEF(x => x.customerID == customerID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -84,7 +84,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int customerID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.customerID == customerID,response);
+			this.SearchLinqPOCO(x => x.CustomerID == customerID,response);
 		}
 
 		protected virtual List<EFCustomer> SearchLinqEF(Expression<Func<EFCustomer, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -126,13 +126,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFCustomer   efCustomer)
 		{
-			efCustomer.customerID = customerID;
-			efCustomer.personID = personID;
-			efCustomer.storeID = storeID;
-			efCustomer.territoryID = territoryID;
-			efCustomer.accountNumber = accountNumber;
-			efCustomer.rowguid = rowguid;
-			efCustomer.modifiedDate = modifiedDate;
+			efCustomer.CustomerID = customerID;
+			efCustomer.PersonID = personID;
+			efCustomer.StoreID = storeID;
+			efCustomer.TerritoryID = territoryID;
+			efCustomer.AccountNumber = accountNumber;
+			efCustomer.Rowguid = rowguid;
+			efCustomer.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFCustomer efCustomer,Response response)
@@ -143,18 +143,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddCustomer(new POCOCustomer()
 			{
-				CustomerID = efCustomer.customerID.ToInt(),
-				PersonID = efCustomer.personID.ToNullableInt(),
-				StoreID = efCustomer.storeID.ToNullableInt(),
-				TerritoryID = efCustomer.territoryID.ToNullableInt(),
-				AccountNumber = efCustomer.accountNumber,
-				Rowguid = efCustomer.rowguid,
-				ModifiedDate = efCustomer.modifiedDate.ToDateTime(),
+				CustomerID = efCustomer.CustomerID.ToInt(),
+				AccountNumber = efCustomer.AccountNumber,
+				Rowguid = efCustomer.Rowguid,
+				ModifiedDate = efCustomer.ModifiedDate.ToDateTime(),
+
+				PersonID = new ReferenceEntity<Nullable<int>>(efCustomer.PersonID,
+				                                              "People"),
+				StoreID = new ReferenceEntity<Nullable<int>>(efCustomer.StoreID,
+				                                             "Stores"),
+				TerritoryID = new ReferenceEntity<Nullable<int>>(efCustomer.TerritoryID,
+				                                                 "SalesTerritories"),
 			});
+
+			PersonRepository.MapEFToPOCO(efCustomer.PersonRef, response);
+
+			StoreRepository.MapEFToPOCO(efCustomer.StoreRef, response);
+
+			SalesTerritoryRepository.MapEFToPOCO(efCustomer.SalesTerritoryRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e9752a6d7f1a63793758f7d8bfb3f35</Hash>
+    <Hash>3e0100e74254cc3a30850eb4b85281ce</Hash>
 </Codenesium>*/

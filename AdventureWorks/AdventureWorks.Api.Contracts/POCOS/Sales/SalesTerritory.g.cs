@@ -22,7 +22,6 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.TerritoryID = territoryID.ToInt();
 			this.Name = name;
-			this.CountryRegionCode = countryRegionCode;
 			this.@Group = @group;
 			this.SalesYTD = salesYTD;
 			this.SalesLastYear = salesLastYear;
@@ -30,11 +29,14 @@ namespace AdventureWorksNS.Api.Contracts
 			this.CostLastYear = costLastYear;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
+			                                                "CountryRegion");
 		}
 
 		public int TerritoryID {get; set;}
 		public string Name {get; set;}
-		public string CountryRegionCode {get; set;}
+		public ReferenceEntity<string>CountryRegionCode {get; set;}
 		public string @Group {get; set;}
 		public decimal SalesYTD {get; set;}
 		public decimal SalesLastYear {get; set;}
@@ -140,5 +142,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>74ef4428a706ebaaf1faa5d06992321a</Hash>
+    <Hash>f850d41ed5f55156525a2fbd54db1ca8</Hash>
 </Codenesium>*/

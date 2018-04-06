@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int addressTypeID,AddressTypeModel model)
+		public virtual IActionResult Update(int AddressTypeID,AddressTypeModel model)
 		{
 			this._addressTypeModelValidator.UpdateMode();
 			var validationResult = this._addressTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._addressTypeRepository.Update(addressTypeID,  model.Name,
+				this._addressTypeRepository.Update(AddressTypeID,  model.Name,
 				                                   model.Rowguid,
 				                                   model.ModifiedDate);
 				return Ok();
@@ -160,5 +160,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>feab6014fe5ea03539022b9fef40bf79</Hash>
+    <Hash>128a89803a558f76b2624ba7852506db</Hash>
 </Codenesium>*/

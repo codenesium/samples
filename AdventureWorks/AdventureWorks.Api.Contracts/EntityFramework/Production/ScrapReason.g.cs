@@ -10,12 +10,16 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public short scrapReasonID {get; set;}
-		public string name {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("ScrapReasonID", TypeName="smallint")]
+		public short ScrapReasonID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d78cb4d98f2de7fcf21456ad03afb206</Hash>
+    <Hash>db847373079c94780079de4c853db5f1</Hash>
 </Codenesium>*/

@@ -10,19 +10,33 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int territoryID {get; set;}
-		public string name {get; set;}
-		public string countryRegionCode {get; set;}
-		public string @group {get; set;}
-		public decimal salesYTD {get; set;}
-		public decimal salesLastYear {get; set;}
-		public decimal costYTD {get; set;}
-		public decimal costLastYear {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("TerritoryID", TypeName="int")]
+		public int TerritoryID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("CountryRegionCode", TypeName="nvarchar(3)")]
+		public string CountryRegionCode {get; set;}
+		[Column("Group", TypeName="nvarchar(50)")]
+		public string @Group {get; set;}
+		[Column("SalesYTD", TypeName="money")]
+		public decimal SalesYTD {get; set;}
+		[Column("SalesLastYear", TypeName="money")]
+		public decimal SalesLastYear {get; set;}
+		[Column("CostYTD", TypeName="money")]
+		public decimal CostYTD {get; set;}
+		[Column("CostLastYear", TypeName="money")]
+		public decimal CostLastYear {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("CountryRegionCode")]
+		public virtual EFCountryRegion CountryRegionRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c24d12ce6ed7348615f4a0dd859c52a</Hash>
+    <Hash>42ec837390cda4398832303c105039f9</Hash>
 </Codenesium>*/

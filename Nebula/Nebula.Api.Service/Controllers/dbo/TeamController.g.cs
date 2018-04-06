@@ -125,13 +125,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,TeamModel model)
+		public virtual IActionResult Update(int Id,TeamModel model)
 		{
 			this._teamModelValidator.UpdateMode();
 			var validationResult = this._teamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._teamRepository.Update(id,  model.Name,
+				this._teamRepository.Update(Id,  model.Name,
 				                            model.OrganizationId);
 				return Ok();
 			}
@@ -164,7 +164,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._teamRepository.GetWhere(x => x.organizationId == id, response);
+			this._teamRepository.GetWhere(x => x.OrganizationId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -172,5 +172,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ec34f238daf287afc39b1b23d3fd6774</Hash>
+    <Hash>1325b587b1642ca195622e6bcd5be399</Hash>
 </Codenesium>*/

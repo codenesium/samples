@@ -80,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			if (validationResult.IsValid)
 			{
 				var id = this._emailAddressRepository.Create(model.EmailAddressID,
-				                                             model.EmailAddress,
+				                                             model.EmailAddress1,
 				                                             model.Rowguid,
 				                                             model.ModifiedDate);
 				return Ok(id);
@@ -115,7 +115,7 @@ namespace AdventureWorksNS.Api.Service
 			foreach(var model in models)
 			{
 				this._emailAddressRepository.Create(model.EmailAddressID,
-				                                    model.EmailAddress,
+				                                    model.EmailAddress1,
 				                                    model.Rowguid,
 				                                    model.ModifiedDate);
 			}
@@ -129,14 +129,14 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int businessEntityID,EmailAddressModel model)
+		public virtual IActionResult Update(int BusinessEntityID,EmailAddressModel model)
 		{
 			this._emailAddressModelValidator.UpdateMode();
 			var validationResult = this._emailAddressModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._emailAddressRepository.Update(businessEntityID,  model.EmailAddressID,
-				                                    model.EmailAddress,
+				this._emailAddressRepository.Update(BusinessEntityID,  model.EmailAddressID,
+				                                    model.EmailAddress1,
 				                                    model.Rowguid,
 				                                    model.ModifiedDate);
 				return Ok();
@@ -159,9 +159,24 @@ namespace AdventureWorksNS.Api.Service
 			this._emailAddressRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[EmailAddressFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/People/{id}/EmailAddresses")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			var response = new Response();
+
+			this._emailAddressRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f1fa8eb55fa8b29b02c6dd2b2d24daf</Hash>
+    <Hash>45c49f22ab11018c5ecca4cbfa629698</Hash>
 </Codenesium>*/

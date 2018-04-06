@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProduct>().Add(record);
 			this._context.SaveChanges();
-			return record.productID;
+			return record.ProductID;
 		}
 
 		public virtual void Update(int productID, string name,
@@ -104,7 +104,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productID);
@@ -141,7 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productID)
 		{
-			var record = this.SearchLinqEF(x => x.productID == productID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -156,7 +156,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.productID == productID,response);
+			this.SearchLinqPOCO(x => x.ProductID == productID,response);
 		}
 
 		protected virtual List<EFProduct> SearchLinqEF(Expression<Func<EFProduct, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -216,31 +216,31 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProduct   efProduct)
 		{
-			efProduct.productID = productID;
-			efProduct.name = name;
-			efProduct.productNumber = productNumber;
-			efProduct.makeFlag = makeFlag;
-			efProduct.finishedGoodsFlag = finishedGoodsFlag;
-			efProduct.color = color;
-			efProduct.safetyStockLevel = safetyStockLevel;
-			efProduct.reorderPoint = reorderPoint;
-			efProduct.standardCost = standardCost;
-			efProduct.listPrice = listPrice;
-			efProduct.size = size;
-			efProduct.sizeUnitMeasureCode = sizeUnitMeasureCode;
-			efProduct.weightUnitMeasureCode = weightUnitMeasureCode;
-			efProduct.weight = weight;
-			efProduct.daysToManufacture = daysToManufacture;
-			efProduct.productLine = productLine;
-			efProduct.@class = @class;
-			efProduct.style = style;
-			efProduct.productSubcategoryID = productSubcategoryID;
-			efProduct.productModelID = productModelID;
-			efProduct.sellStartDate = sellStartDate;
-			efProduct.sellEndDate = sellEndDate;
-			efProduct.discontinuedDate = discontinuedDate;
-			efProduct.rowguid = rowguid;
-			efProduct.modifiedDate = modifiedDate;
+			efProduct.ProductID = productID;
+			efProduct.Name = name;
+			efProduct.ProductNumber = productNumber;
+			efProduct.MakeFlag = makeFlag;
+			efProduct.FinishedGoodsFlag = finishedGoodsFlag;
+			efProduct.Color = color;
+			efProduct.SafetyStockLevel = safetyStockLevel;
+			efProduct.ReorderPoint = reorderPoint;
+			efProduct.StandardCost = standardCost;
+			efProduct.ListPrice = listPrice;
+			efProduct.Size = size;
+			efProduct.SizeUnitMeasureCode = sizeUnitMeasureCode;
+			efProduct.WeightUnitMeasureCode = weightUnitMeasureCode;
+			efProduct.Weight = weight;
+			efProduct.DaysToManufacture = daysToManufacture;
+			efProduct.ProductLine = productLine;
+			efProduct.@Class = @class;
+			efProduct.Style = style;
+			efProduct.ProductSubcategoryID = productSubcategoryID;
+			efProduct.ProductModelID = productModelID;
+			efProduct.SellStartDate = sellStartDate;
+			efProduct.SellEndDate = sellEndDate;
+			efProduct.DiscontinuedDate = discontinuedDate;
+			efProduct.Rowguid = rowguid;
+			efProduct.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProduct efProduct,Response response)
@@ -251,36 +251,49 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProduct(new POCOProduct()
 			{
-				ProductID = efProduct.productID.ToInt(),
-				Name = efProduct.name,
-				ProductNumber = efProduct.productNumber,
-				MakeFlag = efProduct.makeFlag,
-				FinishedGoodsFlag = efProduct.finishedGoodsFlag,
-				Color = efProduct.color,
-				SafetyStockLevel = efProduct.safetyStockLevel,
-				ReorderPoint = efProduct.reorderPoint,
-				StandardCost = efProduct.standardCost,
-				ListPrice = efProduct.listPrice,
-				Size = efProduct.size,
-				SizeUnitMeasureCode = efProduct.sizeUnitMeasureCode,
-				WeightUnitMeasureCode = efProduct.weightUnitMeasureCode,
-				Weight = efProduct.weight.ToNullableDecimal(),
-				DaysToManufacture = efProduct.daysToManufacture.ToInt(),
-				ProductLine = efProduct.productLine,
-				@Class = efProduct.@class,
-				Style = efProduct.style,
-				ProductSubcategoryID = efProduct.productSubcategoryID.ToNullableInt(),
-				ProductModelID = efProduct.productModelID.ToNullableInt(),
-				SellStartDate = efProduct.sellStartDate.ToDateTime(),
-				SellEndDate = efProduct.sellEndDate.ToNullableDateTime(),
-				DiscontinuedDate = efProduct.discontinuedDate.ToNullableDateTime(),
-				Rowguid = efProduct.rowguid,
-				ModifiedDate = efProduct.modifiedDate.ToDateTime(),
+				ProductID = efProduct.ProductID.ToInt(),
+				Name = efProduct.Name,
+				ProductNumber = efProduct.ProductNumber,
+				MakeFlag = efProduct.MakeFlag,
+				FinishedGoodsFlag = efProduct.FinishedGoodsFlag,
+				Color = efProduct.Color,
+				SafetyStockLevel = efProduct.SafetyStockLevel,
+				ReorderPoint = efProduct.ReorderPoint,
+				StandardCost = efProduct.StandardCost,
+				ListPrice = efProduct.ListPrice,
+				Size = efProduct.Size,
+				Weight = efProduct.Weight.ToNullableDecimal(),
+				DaysToManufacture = efProduct.DaysToManufacture.ToInt(),
+				ProductLine = efProduct.ProductLine,
+				@Class = efProduct.@Class,
+				Style = efProduct.Style,
+				SellStartDate = efProduct.SellStartDate.ToDateTime(),
+				SellEndDate = efProduct.SellEndDate.ToNullableDateTime(),
+				DiscontinuedDate = efProduct.DiscontinuedDate.ToNullableDateTime(),
+				Rowguid = efProduct.Rowguid,
+				ModifiedDate = efProduct.ModifiedDate.ToDateTime(),
+
+				SizeUnitMeasureCode = new ReferenceEntity<string>(efProduct.SizeUnitMeasureCode,
+				                                                  "UnitMeasures"),
+				WeightUnitMeasureCode = new ReferenceEntity<string>(efProduct.WeightUnitMeasureCode,
+				                                                    "UnitMeasures"),
+				ProductSubcategoryID = new ReferenceEntity<Nullable<int>>(efProduct.ProductSubcategoryID,
+				                                                          "ProductSubcategories"),
+				ProductModelID = new ReferenceEntity<Nullable<int>>(efProduct.ProductModelID,
+				                                                    "ProductModels"),
 			});
+
+			UnitMeasureRepository.MapEFToPOCO(efProduct.UnitMeasureRef, response);
+
+			UnitMeasureRepository.MapEFToPOCO(efProduct.UnitMeasureRef1, response);
+
+			ProductSubcategoryRepository.MapEFToPOCO(efProduct.ProductSubcategoryRef, response);
+
+			ProductModelRepository.MapEFToPOCO(efProduct.ProductModelRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>936fa709cf488f5d9b020b376650d9c9</Hash>
+    <Hash>e7721d618f497b72a6247eb884347c0e</Hash>
 </Codenesium>*/

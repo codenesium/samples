@@ -10,14 +10,20 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int shiftID {get; set;}
-		public string name {get; set;}
-		public TimeSpan startTime {get; set;}
-		public TimeSpan endTime {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("ShiftID", TypeName="tinyint")]
+		public int ShiftID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("StartTime", TypeName="time")]
+		public TimeSpan StartTime {get; set;}
+		[Column("EndTime", TypeName="time")]
+		public TimeSpan EndTime {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>451486c825862ede4500b5cbd67b3a9f</Hash>
+    <Hash>96e3870359193a36bf99cf943ff85550</Hash>
 </Codenesium>*/

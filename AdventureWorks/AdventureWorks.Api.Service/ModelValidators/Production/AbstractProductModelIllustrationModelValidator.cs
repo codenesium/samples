@@ -20,18 +20,37 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public IProductModelRepository ProductModelRepository {get; set;}
+		public IIllustrationRepository IllustrationRepository {get; set;}
 		public virtual void IllustrationIDRules()
 		{
 			RuleFor(x => x.IllustrationID).NotNull();
+			RuleFor(x => x.IllustrationID).Must(BeValidIllustration).When(x => x ?.IllustrationID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ModifiedDateRules()
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidProductModel(int id)
+		{
+			Response response = new Response();
+
+			this.ProductModelRepository.GetById(id,response);
+			return response.ProductModels.Count > 0;
+		}
+
+		public bool BeValidIllustration(int id)
+		{
+			Response response = new Response();
+
+			this.IllustrationRepository.GetById(id,response);
+			return response.Illustrations.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e1b9197adbda1e58e71292c1cc98f5d</Hash>
+    <Hash>baf6e0096855f28aa7ff8bd51bbaf924</Hash>
 </Codenesium>*/

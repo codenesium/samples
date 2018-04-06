@@ -13,13 +13,16 @@ namespace AdventureWorksNS.Api.Contracts
 		                                 string currencyCode,
 		                                 DateTime modifiedDate)
 		{
-			this.CountryRegionCode = countryRegionCode;
-			this.CurrencyCode = currencyCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
+			                                                "CountryRegion");
+			CurrencyCode = new ReferenceEntity<string>(currencyCode,
+			                                           "Currency");
 		}
 
-		public string CountryRegionCode {get; set;}
-		public string CurrencyCode {get; set;}
+		public ReferenceEntity<string>CountryRegionCode {get; set;}
+		public ReferenceEntity<string>CurrencyCode {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -56,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3d75e5ddcd7d5888b38946f2ad28e6d2</Hash>
+    <Hash>4a5593aaa24238feaae2182c351447b5</Hash>
 </Codenesium>*/

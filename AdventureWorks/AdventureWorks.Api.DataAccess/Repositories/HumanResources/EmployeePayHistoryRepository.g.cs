@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFEmployeePayHistory>().Add(record);
 			this._context.SaveChanges();
-			return record.businessEntityID;
+			return record.BusinessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, DateTime rateChangeDate,
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           int payFrequency,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFEmployeePayHistory> SearchLinqEF(Expression<Func<EFEmployeePayHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,11 +116,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               int payFrequency,
 		                               DateTime modifiedDate, EFEmployeePayHistory   efEmployeePayHistory)
 		{
-			efEmployeePayHistory.businessEntityID = businessEntityID;
-			efEmployeePayHistory.rateChangeDate = rateChangeDate;
-			efEmployeePayHistory.rate = rate;
-			efEmployeePayHistory.payFrequency = payFrequency;
-			efEmployeePayHistory.modifiedDate = modifiedDate;
+			efEmployeePayHistory.BusinessEntityID = businessEntityID;
+			efEmployeePayHistory.RateChangeDate = rateChangeDate;
+			efEmployeePayHistory.Rate = rate;
+			efEmployeePayHistory.PayFrequency = payFrequency;
+			efEmployeePayHistory.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFEmployeePayHistory efEmployeePayHistory,Response response)
@@ -131,16 +131,20 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddEmployeePayHistory(new POCOEmployeePayHistory()
 			{
-				BusinessEntityID = efEmployeePayHistory.businessEntityID.ToInt(),
-				RateChangeDate = efEmployeePayHistory.rateChangeDate.ToDateTime(),
-				Rate = efEmployeePayHistory.rate,
-				PayFrequency = efEmployeePayHistory.payFrequency,
-				ModifiedDate = efEmployeePayHistory.modifiedDate.ToDateTime(),
+				RateChangeDate = efEmployeePayHistory.RateChangeDate.ToDateTime(),
+				Rate = efEmployeePayHistory.Rate,
+				PayFrequency = efEmployeePayHistory.PayFrequency,
+				ModifiedDate = efEmployeePayHistory.ModifiedDate.ToDateTime(),
+
+				BusinessEntityID = new ReferenceEntity<int>(efEmployeePayHistory.BusinessEntityID,
+				                                            "Employees"),
 			});
+
+			EmployeeRepository.MapEFToPOCO(efEmployeePayHistory.EmployeeRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>adf9c492aaea12a4606d8a06715b4965</Hash>
+    <Hash>470ceae1f0d0f8fd33954b26faf89547</Hash>
 </Codenesium>*/

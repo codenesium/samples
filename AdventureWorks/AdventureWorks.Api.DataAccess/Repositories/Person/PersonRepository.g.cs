@@ -52,7 +52,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFPerson>().Add(record);
 			this._context.SaveChanges();
-			return record.businessEntityID;
+			return record.BusinessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, string personType,
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -93,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -108,7 +108,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFPerson> SearchLinqEF(Expression<Func<EFPerson, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -156,19 +156,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFPerson   efPerson)
 		{
-			efPerson.businessEntityID = businessEntityID;
-			efPerson.personType = personType;
-			efPerson.nameStyle = nameStyle;
-			efPerson.title = title;
-			efPerson.firstName = firstName;
-			efPerson.middleName = middleName;
-			efPerson.lastName = lastName;
-			efPerson.suffix = suffix;
-			efPerson.emailPromotion = emailPromotion;
-			efPerson.additionalContactInfo = additionalContactInfo;
-			efPerson.demographics = demographics;
-			efPerson.rowguid = rowguid;
-			efPerson.modifiedDate = modifiedDate;
+			efPerson.BusinessEntityID = businessEntityID;
+			efPerson.PersonType = personType;
+			efPerson.NameStyle = nameStyle;
+			efPerson.Title = title;
+			efPerson.FirstName = firstName;
+			efPerson.MiddleName = middleName;
+			efPerson.LastName = lastName;
+			efPerson.Suffix = suffix;
+			efPerson.EmailPromotion = emailPromotion;
+			efPerson.AdditionalContactInfo = additionalContactInfo;
+			efPerson.Demographics = demographics;
+			efPerson.Rowguid = rowguid;
+			efPerson.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFPerson efPerson,Response response)
@@ -179,24 +179,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddPerson(new POCOPerson()
 			{
-				BusinessEntityID = efPerson.businessEntityID.ToInt(),
-				PersonType = efPerson.personType,
-				NameStyle = efPerson.nameStyle,
-				Title = efPerson.title,
-				FirstName = efPerson.firstName,
-				MiddleName = efPerson.middleName,
-				LastName = efPerson.lastName,
-				Suffix = efPerson.suffix,
-				EmailPromotion = efPerson.emailPromotion.ToInt(),
-				AdditionalContactInfo = efPerson.additionalContactInfo,
-				Demographics = efPerson.demographics,
-				Rowguid = efPerson.rowguid,
-				ModifiedDate = efPerson.modifiedDate.ToDateTime(),
+				PersonType = efPerson.PersonType,
+				NameStyle = efPerson.NameStyle,
+				Title = efPerson.Title,
+				FirstName = efPerson.FirstName,
+				MiddleName = efPerson.MiddleName,
+				LastName = efPerson.LastName,
+				Suffix = efPerson.Suffix,
+				EmailPromotion = efPerson.EmailPromotion.ToInt(),
+				AdditionalContactInfo = efPerson.AdditionalContactInfo,
+				Demographics = efPerson.Demographics,
+				Rowguid = efPerson.Rowguid,
+				ModifiedDate = efPerson.ModifiedDate.ToDateTime(),
+
+				BusinessEntityID = new ReferenceEntity<int>(efPerson.BusinessEntityID,
+				                                            "BusinessEntities"),
 			});
+
+			BusinessEntityRepository.MapEFToPOCO(efPerson.BusinessEntityRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d5019173cec89a633bc19c64bfc7d12</Hash>
+    <Hash>07fb8b9f2dd1c4c27d5e475df38a4de1</Hash>
 </Codenesium>*/

@@ -10,18 +10,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int transactionID {get; set;}
-		public int productID {get; set;}
-		public int referenceOrderID {get; set;}
-		public int referenceOrderLineID {get; set;}
-		public DateTime transactionDate {get; set;}
-		public string transactionType {get; set;}
-		public int quantity {get; set;}
-		public decimal actualCost {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("TransactionID", TypeName="int")]
+		public int TransactionID {get; set;}
+		[Column("ProductID", TypeName="int")]
+		public int ProductID {get; set;}
+		[Column("ReferenceOrderID", TypeName="int")]
+		public int ReferenceOrderID {get; set;}
+		[Column("ReferenceOrderLineID", TypeName="int")]
+		public int ReferenceOrderLineID {get; set;}
+		[Column("TransactionDate", TypeName="datetime")]
+		public DateTime TransactionDate {get; set;}
+		[Column("TransactionType", TypeName="nchar(1)")]
+		public string TransactionType {get; set;}
+		[Column("Quantity", TypeName="int")]
+		public int Quantity {get; set;}
+		[Column("ActualCost", TypeName="money")]
+		public decimal ActualCost {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("ProductID")]
+		public virtual EFProduct ProductRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f2896ce7affddcaab39e82ce785284b</Hash>
+    <Hash>3b291853e8844100ee37333e883f3431</Hash>
 </Codenesium>*/

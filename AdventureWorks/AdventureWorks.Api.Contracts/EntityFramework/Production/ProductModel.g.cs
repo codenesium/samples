@@ -10,15 +10,22 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int productModelID {get; set;}
-		public string name {get; set;}
-		public string catalogDescription {get; set;}
-		public string instructions {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("ProductModelID", TypeName="int")]
+		public int ProductModelID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("CatalogDescription", TypeName="xml(-1)")]
+		public string CatalogDescription {get; set;}
+		[Column("Instructions", TypeName="xml(-1)")]
+		public string Instructions {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c627b77765a88b109bb6565e0e62edef</Hash>
+    <Hash>81357feca992fddf3cf3ceaf4681620d</Hash>
 </Codenesium>*/

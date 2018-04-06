@@ -10,13 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int jobCandidateID {get; set;}
-		public Nullable<int> businessEntityID {get; set;}
-		public string resume {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("JobCandidateID", TypeName="int")]
+		public int JobCandidateID {get; set;}
+		[Column("BusinessEntityID", TypeName="int")]
+		public Nullable<int> BusinessEntityID {get; set;}
+		[Column("Resume", TypeName="xml(-1)")]
+		public string Resume {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFEmployee EmployeeRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e611178951f03a0d2a05cb64c3edd8de</Hash>
+    <Hash>f7e32af29e499a0bdad12fcc110ec399</Hash>
 </Codenesium>*/

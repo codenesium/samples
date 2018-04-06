@@ -139,13 +139,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int territoryID,SalesTerritoryModel model)
+		public virtual IActionResult Update(int TerritoryID,SalesTerritoryModel model)
 		{
 			this._salesTerritoryModelValidator.UpdateMode();
 			var validationResult = this._salesTerritoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._salesTerritoryRepository.Update(territoryID,  model.Name,
+				this._salesTerritoryRepository.Update(TerritoryID,  model.Name,
 				                                      model.CountryRegionCode,
 				                                      model.@Group,
 				                                      model.SalesYTD,
@@ -174,9 +174,24 @@ namespace AdventureWorksNS.Api.Service
 			this._salesTerritoryRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByCountryRegionCode/{id}")]
+		[SalesTerritoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/CountryRegions/{id}/SalesTerritories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByCountryRegionCode(string id)
+		{
+			var response = new Response();
+
+			this._salesTerritoryRepository.GetWhere(x => x.CountryRegionCode == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef5da5e60fe9dcf2fb9231d620ff0350</Hash>
+    <Hash>344c9f41e527cec57922ccb5ad57dd15</Hash>
 </Codenesium>*/

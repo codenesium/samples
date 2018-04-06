@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFSalesPerson>().Add(record);
 			this._context.SaveChanges();
-			return record.businessEntityID;
+			return record.BusinessEntityID;
 		}
 
 		public virtual void Update(int businessEntityID, Nullable<int> territoryID,
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           Guid rowguid,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",businessEntityID);
@@ -77,7 +77,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.businessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -92,7 +92,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int businessEntityID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.businessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
 		}
 
 		protected virtual List<EFSalesPerson> SearchLinqEF(Expression<Func<EFSalesPerson, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -136,15 +136,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesPerson   efSalesPerson)
 		{
-			efSalesPerson.businessEntityID = businessEntityID;
-			efSalesPerson.territoryID = territoryID;
-			efSalesPerson.salesQuota = salesQuota;
-			efSalesPerson.bonus = bonus;
-			efSalesPerson.commissionPct = commissionPct;
-			efSalesPerson.salesYTD = salesYTD;
-			efSalesPerson.salesLastYear = salesLastYear;
-			efSalesPerson.rowguid = rowguid;
-			efSalesPerson.modifiedDate = modifiedDate;
+			efSalesPerson.BusinessEntityID = businessEntityID;
+			efSalesPerson.TerritoryID = territoryID;
+			efSalesPerson.SalesQuota = salesQuota;
+			efSalesPerson.Bonus = bonus;
+			efSalesPerson.CommissionPct = commissionPct;
+			efSalesPerson.SalesYTD = salesYTD;
+			efSalesPerson.SalesLastYear = salesLastYear;
+			efSalesPerson.Rowguid = rowguid;
+			efSalesPerson.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFSalesPerson efSalesPerson,Response response)
@@ -155,20 +155,27 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddSalesPerson(new POCOSalesPerson()
 			{
-				BusinessEntityID = efSalesPerson.businessEntityID.ToInt(),
-				TerritoryID = efSalesPerson.territoryID.ToNullableInt(),
-				SalesQuota = efSalesPerson.salesQuota,
-				Bonus = efSalesPerson.bonus,
-				CommissionPct = efSalesPerson.commissionPct,
-				SalesYTD = efSalesPerson.salesYTD,
-				SalesLastYear = efSalesPerson.salesLastYear,
-				Rowguid = efSalesPerson.rowguid,
-				ModifiedDate = efSalesPerson.modifiedDate.ToDateTime(),
+				SalesQuota = efSalesPerson.SalesQuota,
+				Bonus = efSalesPerson.Bonus,
+				CommissionPct = efSalesPerson.CommissionPct,
+				SalesYTD = efSalesPerson.SalesYTD,
+				SalesLastYear = efSalesPerson.SalesLastYear,
+				Rowguid = efSalesPerson.Rowguid,
+				ModifiedDate = efSalesPerson.ModifiedDate.ToDateTime(),
+
+				BusinessEntityID = new ReferenceEntity<int>(efSalesPerson.BusinessEntityID,
+				                                            "Employees"),
+				TerritoryID = new ReferenceEntity<Nullable<int>>(efSalesPerson.TerritoryID,
+				                                                 "SalesTerritories"),
 			});
+
+			EmployeeRepository.MapEFToPOCO(efSalesPerson.EmployeeRef, response);
+
+			SalesTerritoryRepository.MapEFToPOCO(efSalesPerson.SalesTerritoryRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>655468f4f589eafcba601fb216f65492</Hash>
+    <Hash>f65ce82fe96c6b85387fa11a3e6e1ed0</Hash>
 </Codenesium>*/

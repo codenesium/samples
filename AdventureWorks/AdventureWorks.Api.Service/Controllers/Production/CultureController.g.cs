@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string cultureID,CultureModel model)
+		public virtual IActionResult Update(string CultureID,CultureModel model)
 		{
 			this._cultureModelValidator.UpdateMode();
 			var validationResult = this._cultureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._cultureRepository.Update(cultureID,  model.Name,
+				this._cultureRepository.Update(CultureID,  model.Name,
 				                               model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e77f24f78ab98581fddf38a6aefa0b31</Hash>
+    <Hash>70686cf1ddd7a739753bb5971bbde337</Hash>
 </Codenesium>*/

@@ -10,16 +10,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int customerID {get; set;}
-		public Nullable<int> personID {get; set;}
-		public Nullable<int> storeID {get; set;}
-		public Nullable<int> territoryID {get; set;}
-		public string accountNumber {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("CustomerID", TypeName="int")]
+		public int CustomerID {get; set;}
+		[Column("PersonID", TypeName="int")]
+		public Nullable<int> PersonID {get; set;}
+		[Column("StoreID", TypeName="int")]
+		public Nullable<int> StoreID {get; set;}
+		[Column("TerritoryID", TypeName="int")]
+		public Nullable<int> TerritoryID {get; set;}
+		[Column("AccountNumber", TypeName="varchar(10)")]
+		public string AccountNumber {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("PersonID")]
+		public virtual EFPerson PersonRef { get; set; }
+		[ForeignKey("StoreID")]
+		public virtual EFStore StoreRef { get; set; }
+		[ForeignKey("TerritoryID")]
+		public virtual EFSalesTerritory SalesTerritoryRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>dbe1094e07eb67602508dd86eeb696f0</Hash>
+    <Hash>a8e9a5fbb6b128ecde1fe085b2cafa0c</Hash>
 </Codenesium>*/

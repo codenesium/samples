@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Contracts
 		                     int changeNumber,
 		                     int status,
 		                     string documentSummary,
-		                     byte[] document,
+		                     byte[] document1,
 		                     Guid rowguid,
 		                     DateTime modifiedDate)
 		{
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ChangeNumber = changeNumber.ToInt();
 			this.Status = status;
 			this.DocumentSummary = documentSummary;
-			this.Document = document;
+			this.Document1 = document1;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
@@ -176,16 +176,16 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private byte[] _document;
-		public byte[] Document
+		private byte[] _document1;
+		public byte[] Document1
 		{
 			get
 			{
-				return _document.IsEmptyOrZeroOrNull() ? null : _document;
+				return _document1.IsEmptyOrZeroOrNull() ? null : _document1;
 			}
 			set
 			{
-				this._document = value;
+				this._document1 = value;
 			}
 		}
 
@@ -220,5 +220,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>28a3038fcff9207ffa12863e99e87852</Hash>
+    <Hash>f791b24965822d40ebc1e23205277100</Hash>
 </Codenesium>*/

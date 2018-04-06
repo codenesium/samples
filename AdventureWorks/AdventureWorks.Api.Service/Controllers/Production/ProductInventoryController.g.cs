@@ -133,13 +133,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int productID,ProductInventoryModel model)
+		public virtual IActionResult Update(int ProductID,ProductInventoryModel model)
 		{
 			this._productInventoryModelValidator.UpdateMode();
 			var validationResult = this._productInventoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productInventoryRepository.Update(productID,  model.LocationID,
+				this._productInventoryRepository.Update(ProductID,  model.LocationID,
 				                                        model.Shelf,
 				                                        model.Bin,
 				                                        model.Quantity,
@@ -165,9 +165,39 @@ namespace AdventureWorksNS.Api.Service
 			this._productInventoryRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[ProductInventoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Products/{id}/ProductInventories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			var response = new Response();
+
+			this._productInventoryRepository.GetWhere(x => x.ProductID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByLocationID/{id}")]
+		[ProductInventoryFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Locations/{id}/ProductInventories")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByLocationID(short id)
+		{
+			var response = new Response();
+
+			this._productInventoryRepository.GetWhere(x => x.LocationID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1fcb6e4a5964913948e6cb0a4b623080</Hash>
+    <Hash>e95907354746fd6bedffeffa9042d3f1</Hash>
 </Codenesium>*/

@@ -32,13 +32,13 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFTeam>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, string name,
 		                           int organizationId)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFTeam> SearchLinqEF(Expression<Func<EFTeam, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace NebulaNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, string name,
 		                               int organizationId, EFTeam   efTeam)
 		{
-			efTeam.id = id;
-			efTeam.name = name;
-			efTeam.organizationId = organizationId;
+			efTeam.Id = id;
+			efTeam.Name = name;
+			efTeam.OrganizationId = organizationId;
 		}
 
 		public static void MapEFToPOCO(EFTeam efTeam,Response response)
@@ -119,10 +119,10 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddTeam(new POCOTeam()
 			{
-				Id = efTeam.id.ToInt(),
-				Name = efTeam.name,
+				Id = efTeam.Id.ToInt(),
+				Name = efTeam.Name,
 
-				OrganizationId = new ReferenceEntity<int>(efTeam.organizationId,
+				OrganizationId = new ReferenceEntity<int>(efTeam.OrganizationId,
 				                                          "Organizations"),
 			});
 
@@ -132,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>efa63048f50b637a5f3fef6094c1b3e3</Hash>
+    <Hash>2941b74cde08e329bbd8db0e2d49f1f0</Hash>
 </Codenesium>*/

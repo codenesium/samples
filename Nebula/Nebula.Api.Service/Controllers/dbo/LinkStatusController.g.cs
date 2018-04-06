@@ -123,13 +123,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,LinkStatusModel model)
+		public virtual IActionResult Update(int Id,LinkStatusModel model)
 		{
 			this._linkStatusModelValidator.UpdateMode();
 			var validationResult = this._linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkStatusRepository.Update(id,  model.Name);
+				this._linkStatusRepository.Update(Id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +154,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>715916a2306921e451fdb180fe6a5477</Hash>
+    <Hash>3eceb5a79702a0c0ba0a6d8800e5f6f2</Hash>
 </Codenesium>*/

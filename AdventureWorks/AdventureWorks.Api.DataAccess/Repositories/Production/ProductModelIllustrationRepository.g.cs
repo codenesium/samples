@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFProductModelIllustration>().Add(record);
 			this._context.SaveChanges();
-			return record.productModelID;
+			return record.ProductModelID;
 		}
 
 		public virtual void Update(int productModelID, int illustrationID,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.productModelID == productModelID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",productModelID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int productModelID)
 		{
-			var record = this.SearchLinqEF(x => x.productModelID == productModelID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int productModelID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.productModelID == productModelID,response);
+			this.SearchLinqPOCO(x => x.ProductModelID == productModelID,response);
 		}
 
 		protected virtual List<EFProductModelIllustration> SearchLinqEF(Expression<Func<EFProductModelIllustration, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int productModelID, int illustrationID,
 		                               DateTime modifiedDate, EFProductModelIllustration   efProductModelIllustration)
 		{
-			efProductModelIllustration.productModelID = productModelID;
-			efProductModelIllustration.illustrationID = illustrationID;
-			efProductModelIllustration.modifiedDate = modifiedDate;
+			efProductModelIllustration.ProductModelID = productModelID;
+			efProductModelIllustration.IllustrationID = illustrationID;
+			efProductModelIllustration.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFProductModelIllustration efProductModelIllustration,Response response)
@@ -119,14 +119,21 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddProductModelIllustration(new POCOProductModelIllustration()
 			{
-				ProductModelID = efProductModelIllustration.productModelID.ToInt(),
-				IllustrationID = efProductModelIllustration.illustrationID.ToInt(),
-				ModifiedDate = efProductModelIllustration.modifiedDate.ToDateTime(),
+				ModifiedDate = efProductModelIllustration.ModifiedDate.ToDateTime(),
+
+				ProductModelID = new ReferenceEntity<int>(efProductModelIllustration.ProductModelID,
+				                                          "ProductModels"),
+				IllustrationID = new ReferenceEntity<int>(efProductModelIllustration.IllustrationID,
+				                                          "Illustrations"),
 			});
+
+			ProductModelRepository.MapEFToPOCO(efProductModelIllustration.ProductModelRef, response);
+
+			IllustrationRepository.MapEFToPOCO(efProductModelIllustration.IllustrationRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e2d19b54a83545e9232b287ab9bcb10</Hash>
+    <Hash>14faaa02904e6d8c15764539a33fbbd6</Hash>
 </Codenesium>*/

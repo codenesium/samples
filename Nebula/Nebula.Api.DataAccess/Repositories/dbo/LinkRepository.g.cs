@@ -50,7 +50,7 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFLink>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, string name,
@@ -65,7 +65,7 @@ namespace NebulaNS.Api.DataAccess
 		                           string response,
 		                           Guid externalId)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -89,7 +89,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -104,7 +104,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFLink> SearchLinqEF(Expression<Func<EFLink, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -151,18 +151,18 @@ namespace NebulaNS.Api.DataAccess
 		                               string response,
 		                               Guid externalId, EFLink   efLink)
 		{
-			efLink.id = id;
-			efLink.name = name;
-			efLink.dynamicParameters = dynamicParameters;
-			efLink.staticParameters = staticParameters;
-			efLink.chainId = chainId;
-			efLink.assignedMachineId = assignedMachineId;
-			efLink.linkStatusId = linkStatusId;
-			efLink.order = order;
-			efLink.dateStarted = dateStarted;
-			efLink.dateCompleted = dateCompleted;
-			efLink.response = response;
-			efLink.externalId = externalId;
+			efLink.Id = id;
+			efLink.Name = name;
+			efLink.DynamicParameters = dynamicParameters;
+			efLink.StaticParameters = staticParameters;
+			efLink.ChainId = chainId;
+			efLink.AssignedMachineId = assignedMachineId;
+			efLink.LinkStatusId = linkStatusId;
+			efLink.Order = order;
+			efLink.DateStarted = dateStarted;
+			efLink.DateCompleted = dateCompleted;
+			efLink.Response = response;
+			efLink.ExternalId = externalId;
 		}
 
 		public static void MapEFToPOCO(EFLink efLink,Response response)
@@ -173,21 +173,21 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddLink(new POCOLink()
 			{
-				Id = efLink.id.ToInt(),
-				Name = efLink.name,
-				DynamicParameters = efLink.dynamicParameters,
-				StaticParameters = efLink.staticParameters,
-				Order = efLink.order.ToInt(),
-				DateStarted = efLink.dateStarted.ToNullableDateTime(),
-				DateCompleted = efLink.dateCompleted.ToNullableDateTime(),
-				Response = efLink.response,
-				ExternalId = efLink.externalId,
+				Id = efLink.Id.ToInt(),
+				Name = efLink.Name,
+				DynamicParameters = efLink.DynamicParameters,
+				StaticParameters = efLink.StaticParameters,
+				Order = efLink.Order.ToInt(),
+				DateStarted = efLink.DateStarted.ToNullableDateTime(),
+				DateCompleted = efLink.DateCompleted.ToNullableDateTime(),
+				Response = efLink.Response,
+				ExternalId = efLink.ExternalId,
 
-				ChainId = new ReferenceEntity<int>(efLink.chainId,
+				ChainId = new ReferenceEntity<int>(efLink.ChainId,
 				                                   "Chains"),
-				AssignedMachineId = new ReferenceEntity<Nullable<int>>(efLink.assignedMachineId,
+				AssignedMachineId = new ReferenceEntity<Nullable<int>>(efLink.AssignedMachineId,
 				                                                       "Machines"),
-				LinkStatusId = new ReferenceEntity<int>(efLink.linkStatusId,
+				LinkStatusId = new ReferenceEntity<int>(efLink.LinkStatusId,
 				                                        "LinkStatus"),
 			});
 
@@ -201,5 +201,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>62cba74fc18da749341958d28f3d8198</Hash>
+    <Hash>bd50ff9e986631317763f24f66fe722b</Hash>
 </Codenesium>*/

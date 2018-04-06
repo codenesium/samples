@@ -10,12 +10,16 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public string countryRegionCode {get; set;}
-		public string name {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("CountryRegionCode", TypeName="nvarchar(3)")]
+		public string CountryRegionCode {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d1d9708bda2cf40bdf8744f1c4eb4b6</Hash>
+    <Hash>14bbfa9575385287fb20e1a837f48ef7</Hash>
 </Codenesium>*/

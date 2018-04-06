@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFCountryRegionCurrency>().Add(record);
 			this._context.SaveChanges();
-			return record.countryRegionCode;
+			return record.CountryRegionCode;
 		}
 
 		public virtual void Update(string countryRegionCode, string currencyCode,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.countryRegionCode == countryRegionCode).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",countryRegionCode);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(string countryRegionCode)
 		{
-			var record = this.SearchLinqEF(x => x.countryRegionCode == countryRegionCode).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(string countryRegionCode, Response response)
 		{
-			this.SearchLinqPOCO(x => x.countryRegionCode == countryRegionCode,response);
+			this.SearchLinqPOCO(x => x.CountryRegionCode == countryRegionCode,response);
 		}
 
 		protected virtual List<EFCountryRegionCurrency> SearchLinqEF(Expression<Func<EFCountryRegionCurrency, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string countryRegionCode, string currencyCode,
 		                               DateTime modifiedDate, EFCountryRegionCurrency   efCountryRegionCurrency)
 		{
-			efCountryRegionCurrency.countryRegionCode = countryRegionCode;
-			efCountryRegionCurrency.currencyCode = currencyCode;
-			efCountryRegionCurrency.modifiedDate = modifiedDate;
+			efCountryRegionCurrency.CountryRegionCode = countryRegionCode;
+			efCountryRegionCurrency.CurrencyCode = currencyCode;
+			efCountryRegionCurrency.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFCountryRegionCurrency efCountryRegionCurrency,Response response)
@@ -119,14 +119,21 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddCountryRegionCurrency(new POCOCountryRegionCurrency()
 			{
-				CountryRegionCode = efCountryRegionCurrency.countryRegionCode,
-				CurrencyCode = efCountryRegionCurrency.currencyCode,
-				ModifiedDate = efCountryRegionCurrency.modifiedDate.ToDateTime(),
+				ModifiedDate = efCountryRegionCurrency.ModifiedDate.ToDateTime(),
+
+				CountryRegionCode = new ReferenceEntity<string>(efCountryRegionCurrency.CountryRegionCode,
+				                                                "CountryRegions"),
+				CurrencyCode = new ReferenceEntity<string>(efCountryRegionCurrency.CurrencyCode,
+				                                           "Currencies"),
 			});
+
+			CountryRegionRepository.MapEFToPOCO(efCountryRegionCurrency.CountryRegionRef, response);
+
+			CurrencyRepository.MapEFToPOCO(efCountryRegionCurrency.CurrencyRef, response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb1dc559e384be168e28bebb1f2b2214</Hash>
+    <Hash>8e554d80a8a46072c1ea2194f95f3ee7</Hash>
 </Codenesium>*/

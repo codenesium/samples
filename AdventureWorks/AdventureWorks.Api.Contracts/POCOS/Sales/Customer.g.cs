@@ -18,18 +18,22 @@ namespace AdventureWorksNS.Api.Contracts
 		                    DateTime modifiedDate)
 		{
 			this.CustomerID = customerID.ToInt();
-			this.PersonID = personID.ToNullableInt();
-			this.StoreID = storeID.ToNullableInt();
-			this.TerritoryID = territoryID.ToNullableInt();
 			this.AccountNumber = accountNumber;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			PersonID = new ReferenceEntity<Nullable<int>>(personID,
+			                                              "Person");
+			StoreID = new ReferenceEntity<Nullable<int>>(storeID,
+			                                             "Store");
+			TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
+			                                                 "SalesTerritory");
 		}
 
 		public int CustomerID {get; set;}
-		public Nullable<int> PersonID {get; set;}
-		public Nullable<int> StoreID {get; set;}
-		public Nullable<int> TerritoryID {get; set;}
+		public ReferenceEntity<Nullable<int>>PersonID {get; set;}
+		public ReferenceEntity<Nullable<int>>StoreID {get; set;}
+		public ReferenceEntity<Nullable<int>>TerritoryID {get; set;}
 		public string AccountNumber {get; set;}
 		public Guid Rowguid {get; set;}
 		public DateTime ModifiedDate {get; set;}
@@ -104,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>aa8181a00a72a1a2a3fc9d2714f9783d</Hash>
+    <Hash>a5ddeb7ba4f914f5e51bc96b5d8e3030</Hash>
 </Codenesium>*/

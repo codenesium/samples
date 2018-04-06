@@ -26,7 +26,6 @@ namespace AdventureWorksNS.Api.Contracts
 		                    Guid rowguid,
 		                    DateTime modifiedDate)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
 			this.NationalIDNumber = nationalIDNumber;
 			this.LoginID = loginID;
 			this.OrganizationNode = organizationNode;
@@ -42,9 +41,12 @@ namespace AdventureWorksNS.Api.Contracts
 			this.CurrentFlag = currentFlag;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                            "Person");
 		}
 
-		public int BusinessEntityID {get; set;}
+		public ReferenceEntity<int>BusinessEntityID {get; set;}
 		public string NationalIDNumber {get; set;}
 		public string LoginID {get; set;}
 		public Nullable<Guid> OrganizationNode {get; set;}
@@ -212,5 +214,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>150b09823689bd4f62342e8ce85e528d</Hash>
+    <Hash>fd80d4304372ba20cafddbb213ab5930</Hash>
 </Codenesium>*/

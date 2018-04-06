@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPhoneNumberType>().Where(predicate).AsQueryable().OrderBy("phoneNumberTypeID ASC").Skip(skip).Take(take).ToList<EFPhoneNumberType>();
+				return this._context.Set<EFPhoneNumberType>().Where(predicate).AsQueryable().OrderBy("PhoneNumberTypeID ASC").Skip(skip).Take(take).ToList<EFPhoneNumberType>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPhoneNumberType>().Where(predicate).AsQueryable().OrderBy("phoneNumberTypeID ASC").Skip(skip).Take(take).ToList<EFPhoneNumberType>();
+				return this._context.Set<EFPhoneNumberType>().Where(predicate).AsQueryable().OrderBy("PhoneNumberTypeID ASC").Skip(skip).Take(take).ToList<EFPhoneNumberType>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d096239fdd17019adf5ba4f7808e3b0</Hash>
+    <Hash>d8ce24a84932815c68f15d3dc6225d12</Hash>
 </Codenesium>*/

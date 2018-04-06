@@ -10,14 +10,27 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public int addressID {get; set;}
-		public int addressTypeID {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[Column("AddressID", TypeName="int")]
+		public int AddressID {get; set;}
+		[Column("AddressTypeID", TypeName="int")]
+		public int AddressTypeID {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFBusinessEntity BusinessEntityRef { get; set; }
+		[ForeignKey("AddressID")]
+		public virtual EFAddress AddressRef { get; set; }
+		[ForeignKey("AddressTypeID")]
+		public virtual EFAddressType AddressTypeRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f550a5c8483c8ea082a7c01383c19d3</Hash>
+    <Hash>59a8e221d1a3ea765075e0439a5f1512</Hash>
 </Codenesium>*/

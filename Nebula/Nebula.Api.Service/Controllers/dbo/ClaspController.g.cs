@@ -125,13 +125,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ClaspModel model)
+		public virtual IActionResult Update(int Id,ClaspModel model)
 		{
 			this._claspModelValidator.UpdateMode();
 			var validationResult = this._claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._claspRepository.Update(id,  model.PreviousChainId,
+				this._claspRepository.Update(Id,  model.PreviousChainId,
 				                             model.NextChainId);
 				return Ok();
 			}
@@ -164,7 +164,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._claspRepository.GetWhere(x => x.previousChainId == id, response);
+			this._claspRepository.GetWhere(x => x.PreviousChainId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -179,7 +179,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._claspRepository.GetWhere(x => x.nextChainId == id, response);
+			this._claspRepository.GetWhere(x => x.NextChainId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -187,5 +187,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>077b35acdba7382ac1efa15ef8b490f6</Hash>
+    <Hash>f93fd392c26dc574d49947d2dd8861d3</Hash>
 </Codenesium>*/

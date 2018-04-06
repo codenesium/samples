@@ -10,14 +10,23 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int productSubcategoryID {get; set;}
-		public int productCategoryID {get; set;}
-		public string name {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("ProductSubcategoryID", TypeName="int")]
+		public int ProductSubcategoryID {get; set;}
+		[Column("ProductCategoryID", TypeName="int")]
+		public int ProductCategoryID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("ProductCategoryID")]
+		public virtual EFProductCategory ProductCategoryRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>72b20b27ab90a45bd3266eaa9dbe0f21</Hash>
+    <Hash>d5e857efa4d4f0df9d18efd723da645e</Hash>
 </Codenesium>*/

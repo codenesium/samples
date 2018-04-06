@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy("salesTaxRateID ASC").Skip(skip).Take(take).ToList<EFSalesTaxRate>();
+				return this._context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy("SalesTaxRateID ASC").Skip(skip).Take(take).ToList<EFSalesTaxRate>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy("salesTaxRateID ASC").Skip(skip).Take(take).ToList<EFSalesTaxRate>();
+				return this._context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy("SalesTaxRateID ASC").Skip(skip).Take(take).ToList<EFSalesTaxRate>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>139a842914a1b62a4a7360e29293c21e</Hash>
+    <Hash>001e0770020f2f827c2216b20aa6e51c</Hash>
 </Codenesium>*/

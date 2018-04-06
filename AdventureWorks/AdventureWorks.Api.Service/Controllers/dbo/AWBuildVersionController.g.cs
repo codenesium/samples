@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int systemInformationID,AWBuildVersionModel model)
+		public virtual IActionResult Update(int SystemInformationID,AWBuildVersionModel model)
 		{
 			this._aWBuildVersionModelValidator.UpdateMode();
 			var validationResult = this._aWBuildVersionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._aWBuildVersionRepository.Update(systemInformationID,  model.Database_Version,
+				this._aWBuildVersionRepository.Update(SystemInformationID,  model.Database_Version,
 				                                      model.VersionDate,
 				                                      model.ModifiedDate);
 				return Ok();
@@ -160,5 +160,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ef299ecbf0f0a973556df782641d0835</Hash>
+    <Hash>c610a0a538238e928f4f4dfac89606ac</Hash>
 </Codenesium>*/

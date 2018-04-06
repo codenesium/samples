@@ -10,19 +10,25 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public string name {get; set;}
-		public int teamId {get; set;}
-		public int chainStatusId {get; set;}
-		public Guid externalId {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("name", TypeName="varchar(128)")]
+		public string Name {get; set;}
+		[Column("teamId", TypeName="int")]
+		public int TeamId {get; set;}
+		[Column("chainStatusId", TypeName="int")]
+		public int ChainStatusId {get; set;}
+		[Column("externalId", TypeName="uniqueidentifier")]
+		public Guid ExternalId {get; set;}
 
-		[ForeignKey("teamId")]
+		[ForeignKey("TeamId")]
 		public virtual EFTeam TeamRef { get; set; }
-		[ForeignKey("chainStatusId")]
+		[ForeignKey("ChainStatusId")]
 		public virtual EFChainStatus ChainStatusRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fef8d914aaa7b61652a5a6daa385ccf8</Hash>
+    <Hash>1db6ace1a10ca87bd3ffd6717120184f</Hash>
 </Codenesium>*/

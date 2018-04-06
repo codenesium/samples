@@ -10,12 +10,16 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int illustrationID {get; set;}
-		public string diagram {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("IllustrationID", TypeName="int")]
+		public int IllustrationID {get; set;}
+		[Column("Diagram", TypeName="xml(-1)")]
+		public string Diagram {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e57adc84e8f847a1ff245f3b482b2cde</Hash>
+    <Hash>e306ffac4f44df0a479351afafda66f0</Hash>
 </Codenesium>*/

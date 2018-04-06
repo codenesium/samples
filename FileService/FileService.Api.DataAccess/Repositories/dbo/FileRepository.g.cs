@@ -50,7 +50,7 @@ namespace FileServiceNS.Api.DataAccess
 
 			this._context.Set<EFFile>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, Guid externalId,
@@ -65,7 +65,7 @@ namespace FileServiceNS.Api.DataAccess
 		                           Nullable<int> bucketId,
 		                           string description)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -89,7 +89,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -104,7 +104,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -151,18 +151,18 @@ namespace FileServiceNS.Api.DataAccess
 		                               Nullable<int> bucketId,
 		                               string description, EFFile   efFile)
 		{
-			efFile.id = id;
-			efFile.externalId = externalId;
-			efFile.privateKey = privateKey;
-			efFile.publicKey = publicKey;
-			efFile.location = location;
-			efFile.expiration = expiration;
-			efFile.extension = extension;
-			efFile.dateCreated = dateCreated;
-			efFile.fileSizeInBytes = fileSizeInBytes;
-			efFile.fileTypeId = fileTypeId;
-			efFile.bucketId = bucketId;
-			efFile.description = description;
+			efFile.Id = id;
+			efFile.ExternalId = externalId;
+			efFile.PrivateKey = privateKey;
+			efFile.PublicKey = publicKey;
+			efFile.Location = location;
+			efFile.Expiration = expiration;
+			efFile.Extension = extension;
+			efFile.DateCreated = dateCreated;
+			efFile.FileSizeInBytes = fileSizeInBytes;
+			efFile.FileTypeId = fileTypeId;
+			efFile.BucketId = bucketId;
+			efFile.Description = description;
 		}
 
 		public static void MapEFToPOCO(EFFile efFile,Response response)
@@ -173,20 +173,20 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			response.AddFile(new POCOFile()
 			{
-				Id = efFile.id.ToInt(),
-				ExternalId = efFile.externalId,
-				PrivateKey = efFile.privateKey,
-				PublicKey = efFile.publicKey,
-				Location = efFile.location,
-				Expiration = efFile.expiration.ToDateTime(),
-				Extension = efFile.extension,
-				DateCreated = efFile.dateCreated.ToDateTime(),
-				FileSizeInBytes = efFile.fileSizeInBytes.ToDecimal(),
-				Description = efFile.description,
+				Id = efFile.Id.ToInt(),
+				ExternalId = efFile.ExternalId,
+				PrivateKey = efFile.PrivateKey,
+				PublicKey = efFile.PublicKey,
+				Location = efFile.Location,
+				Expiration = efFile.Expiration.ToDateTime(),
+				Extension = efFile.Extension,
+				DateCreated = efFile.DateCreated.ToDateTime(),
+				FileSizeInBytes = efFile.FileSizeInBytes.ToDecimal(),
+				Description = efFile.Description,
 
-				FileTypeId = new ReferenceEntity<int>(efFile.fileTypeId,
+				FileTypeId = new ReferenceEntity<int>(efFile.FileTypeId,
 				                                      "FileTypes"),
-				BucketId = new ReferenceEntity<Nullable<int>>(efFile.bucketId,
+				BucketId = new ReferenceEntity<Nullable<int>>(efFile.BucketId,
 				                                              "Buckets"),
 			});
 
@@ -198,5 +198,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c6cde465ab13dd7f0a9b3fd03213686d</Hash>
+    <Hash>4e7bad0cacdd6eac7ae6df631ef72262</Hash>
 </Codenesium>*/

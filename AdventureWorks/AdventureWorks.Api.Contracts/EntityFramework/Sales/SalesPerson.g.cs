@@ -10,18 +10,33 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public Nullable<int> territoryID {get; set;}
-		public Nullable<decimal> salesQuota {get; set;}
-		public decimal bonus {get; set;}
-		public decimal commissionPct {get; set;}
-		public decimal salesYTD {get; set;}
-		public decimal salesLastYear {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[Column("TerritoryID", TypeName="int")]
+		public Nullable<int> TerritoryID {get; set;}
+		[Column("SalesQuota", TypeName="money")]
+		public Nullable<decimal> SalesQuota {get; set;}
+		[Column("Bonus", TypeName="money")]
+		public decimal Bonus {get; set;}
+		[Column("CommissionPct", TypeName="smallmoney")]
+		public decimal CommissionPct {get; set;}
+		[Column("SalesYTD", TypeName="money")]
+		public decimal SalesYTD {get; set;}
+		[Column("SalesLastYear", TypeName="money")]
+		public decimal SalesLastYear {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFEmployee EmployeeRef { get; set; }
+		[ForeignKey("TerritoryID")]
+		public virtual EFSalesTerritory SalesTerritoryRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>af29a8b91648299fa071e38ecb72b3f2</Hash>
+    <Hash>1517b66ceef96a49958dff5b62b8ca4b</Hash>
 </Codenesium>*/

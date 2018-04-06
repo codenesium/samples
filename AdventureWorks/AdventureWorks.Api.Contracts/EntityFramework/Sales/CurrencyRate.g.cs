@@ -10,16 +10,29 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int currencyRateID {get; set;}
-		public DateTime currencyRateDate {get; set;}
-		public string fromCurrencyCode {get; set;}
-		public string toCurrencyCode {get; set;}
-		public decimal averageRate {get; set;}
-		public decimal endOfDayRate {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("CurrencyRateID", TypeName="int")]
+		public int CurrencyRateID {get; set;}
+		[Column("CurrencyRateDate", TypeName="datetime")]
+		public DateTime CurrencyRateDate {get; set;}
+		[Column("FromCurrencyCode", TypeName="nchar(3)")]
+		public string FromCurrencyCode {get; set;}
+		[Column("ToCurrencyCode", TypeName="nchar(3)")]
+		public string ToCurrencyCode {get; set;}
+		[Column("AverageRate", TypeName="money")]
+		public decimal AverageRate {get; set;}
+		[Column("EndOfDayRate", TypeName="money")]
+		public decimal EndOfDayRate {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("FromCurrencyCode")]
+		public virtual EFCurrency CurrencyRef { get; set; }
+		[ForeignKey("ToCurrencyCode")]
+		public virtual EFCurrency CurrencyRef1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>473e87ff99bd747ad6a6631c0e00ca88</Hash>
+    <Hash>dfcb0f5088caa31f4bd008ad4cfa77b0</Hash>
 </Codenesium>*/

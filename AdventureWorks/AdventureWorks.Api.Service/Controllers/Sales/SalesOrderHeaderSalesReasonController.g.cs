@@ -125,13 +125,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int salesOrderID,SalesOrderHeaderSalesReasonModel model)
+		public virtual IActionResult Update(int SalesOrderID,SalesOrderHeaderSalesReasonModel model)
 		{
 			this._salesOrderHeaderSalesReasonModelValidator.UpdateMode();
 			var validationResult = this._salesOrderHeaderSalesReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._salesOrderHeaderSalesReasonRepository.Update(salesOrderID,  model.SalesReasonID,
+				this._salesOrderHeaderSalesReasonRepository.Update(SalesOrderID,  model.SalesReasonID,
 				                                                   model.ModifiedDate);
 				return Ok();
 			}
@@ -153,9 +153,39 @@ namespace AdventureWorksNS.Api.Service
 			this._salesOrderHeaderSalesReasonRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("BySalesOrderID/{id}")]
+		[SalesOrderHeaderSalesReasonFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesOrderHeaders/{id}/SalesOrderHeaderSalesReasons")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult BySalesOrderID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderSalesReasonRepository.GetWhere(x => x.SalesOrderID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("BySalesReasonID/{id}")]
+		[SalesOrderHeaderSalesReasonFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SalesReasons/{id}/SalesOrderHeaderSalesReasons")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult BySalesReasonID(int id)
+		{
+			var response = new Response();
+
+			this._salesOrderHeaderSalesReasonRepository.GetWhere(x => x.SalesReasonID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9cab132c2e22ab9b24ac6944ce9d5937</Hash>
+    <Hash>1fb276a3dc5220d64b0ad292c569a17f</Hash>
 </Codenesium>*/

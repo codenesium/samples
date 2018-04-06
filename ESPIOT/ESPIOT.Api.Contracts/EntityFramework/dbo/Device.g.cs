@@ -10,12 +10,16 @@ namespace ESPIOTNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public Guid publicId {get; set;}
-		public string name {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("publicId", TypeName="uniqueidentifier")]
+		public Guid PublicId {get; set;}
+		[Column("name", TypeName="varchar(90)")]
+		public string Name {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3e71786a06b7186f5e019db62f1f6364</Hash>
+    <Hash>1e08b5893269b8bfb6471c3a50487f11</Hash>
 </Codenesium>*/

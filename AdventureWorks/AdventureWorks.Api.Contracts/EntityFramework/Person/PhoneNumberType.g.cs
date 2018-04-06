@@ -10,12 +10,16 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int phoneNumberTypeID {get; set;}
-		public string name {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("PhoneNumberTypeID", TypeName="int")]
+		public int PhoneNumberTypeID {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>938ff59492a743473187c02e02c5f59e</Hash>
+    <Hash>5abce09c1131239a5ade13f0a86786a9</Hash>
 </Codenesium>*/

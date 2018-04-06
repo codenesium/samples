@@ -10,14 +10,23 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int businessEntityID {get; set;}
-		public DateTime rateChangeDate {get; set;}
-		public decimal rate {get; set;}
-		public int payFrequency {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID {get; set;}
+		[Column("RateChangeDate", TypeName="datetime")]
+		public DateTime RateChangeDate {get; set;}
+		[Column("Rate", TypeName="money")]
+		public decimal Rate {get; set;}
+		[Column("PayFrequency", TypeName="tinyint")]
+		public int PayFrequency {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFEmployee EmployeeRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4b513c8cac28d67f9dc28a73bb5f965</Hash>
+    <Hash>0c39bdcc7cd1baa38b5f956c31b44d79</Hash>
 </Codenesium>*/

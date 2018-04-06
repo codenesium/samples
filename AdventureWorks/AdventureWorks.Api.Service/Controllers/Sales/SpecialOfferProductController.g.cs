@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int specialOfferID,SpecialOfferProductModel model)
+		public virtual IActionResult Update(int SpecialOfferID,SpecialOfferProductModel model)
 		{
 			this._specialOfferProductModelValidator.UpdateMode();
 			var validationResult = this._specialOfferProductModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._specialOfferProductRepository.Update(specialOfferID,  model.ProductID,
+				this._specialOfferProductRepository.Update(SpecialOfferID,  model.ProductID,
 				                                           model.Rowguid,
 				                                           model.ModifiedDate);
 				return Ok();
@@ -156,9 +156,39 @@ namespace AdventureWorksNS.Api.Service
 			this._specialOfferProductRepository.Delete(id);
 			return Ok();
 		}
+
+		[HttpGet]
+		[Route("BySpecialOfferID/{id}")]
+		[SpecialOfferProductFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/SpecialOffers/{id}/SpecialOfferProducts")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult BySpecialOfferID(int id)
+		{
+			var response = new Response();
+
+			this._specialOfferProductRepository.GetWhere(x => x.SpecialOfferID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
+
+		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[SpecialOfferProductFilter]
+		[ReadOnlyFilter]
+		[Route("~/api/Products/{id}/SpecialOfferProducts")]
+		[ProducesResponseType(typeof(Response), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			var response = new Response();
+
+			this._specialOfferProductRepository.GetWhere(x => x.ProductID == id, response);
+			response.DisableSerializationOfEmptyFields();
+			return Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f3d037e95837e221c5fd5b3891de5529</Hash>
+    <Hash>2664a5d9633e25ca9de82131893c66f6</Hash>
 </Codenesium>*/

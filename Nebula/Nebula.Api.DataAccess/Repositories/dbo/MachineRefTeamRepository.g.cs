@@ -32,13 +32,13 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFMachineRefTeam>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, int machineId,
 		                           int teamId)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFMachineRefTeam> SearchLinqEF(Expression<Func<EFMachineRefTeam, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace NebulaNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, int machineId,
 		                               int teamId, EFMachineRefTeam   efMachineRefTeam)
 		{
-			efMachineRefTeam.id = id;
-			efMachineRefTeam.machineId = machineId;
-			efMachineRefTeam.teamId = teamId;
+			efMachineRefTeam.Id = id;
+			efMachineRefTeam.MachineId = machineId;
+			efMachineRefTeam.TeamId = teamId;
 		}
 
 		public static void MapEFToPOCO(EFMachineRefTeam efMachineRefTeam,Response response)
@@ -119,11 +119,11 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddMachineRefTeam(new POCOMachineRefTeam()
 			{
-				Id = efMachineRefTeam.id.ToInt(),
+				Id = efMachineRefTeam.Id.ToInt(),
 
-				MachineId = new ReferenceEntity<int>(efMachineRefTeam.machineId,
+				MachineId = new ReferenceEntity<int>(efMachineRefTeam.MachineId,
 				                                     "Machines"),
-				TeamId = new ReferenceEntity<int>(efMachineRefTeam.teamId,
+				TeamId = new ReferenceEntity<int>(efMachineRefTeam.TeamId,
 				                                  "Teams"),
 			});
 
@@ -135,5 +135,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51ed3036de278db5703ab4b8c4eb41a4</Hash>
+    <Hash>1cdb2c32912320234c20dd54705f426a</Hash>
 </Codenesium>*/

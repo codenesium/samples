@@ -127,13 +127,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int productCategoryID,ProductCategoryModel model)
+		public virtual IActionResult Update(int ProductCategoryID,ProductCategoryModel model)
 		{
 			this._productCategoryModelValidator.UpdateMode();
 			var validationResult = this._productCategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._productCategoryRepository.Update(productCategoryID,  model.Name,
+				this._productCategoryRepository.Update(ProductCategoryID,  model.Name,
 				                                       model.Rowguid,
 				                                       model.ModifiedDate);
 				return Ok();
@@ -160,5 +160,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>84e6af0e891db9c0c7513c408c2574a5</Hash>
+    <Hash>fd271c837f6b25495eb46da1addc3b1e</Hash>
 </Codenesium>*/

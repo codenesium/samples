@@ -20,9 +20,11 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public IProductRepository ProductRepository {get; set;}
 		public virtual void ProductIDRules()
 		{
 			RuleFor(x => x.ProductID).NotNull();
+			RuleFor(x => x.ProductID).Must(BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ReviewerNameRules()
@@ -56,9 +58,17 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidProduct(int id)
+		{
+			Response response = new Response();
+
+			this.ProductRepository.GetById(id,response);
+			return response.Products.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>816727714444f94798ae607fbc008aaa</Hash>
+    <Hash>6f69f91b95995b16f0e7f636dd64aa77</Hash>
 </Codenesium>*/

@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFContactType>().Add(record);
 			this._context.SaveChanges();
-			return record.contactTypeID;
+			return record.ContactTypeID;
 		}
 
 		public virtual void Update(int contactTypeID, string name,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.contactTypeID == contactTypeID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.ContactTypeID == contactTypeID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",contactTypeID);
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int contactTypeID)
 		{
-			var record = this.SearchLinqEF(x => x.contactTypeID == contactTypeID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ContactTypeID == contactTypeID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -68,7 +68,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int contactTypeID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.contactTypeID == contactTypeID,response);
+			this.SearchLinqPOCO(x => x.ContactTypeID == contactTypeID,response);
 		}
 
 		protected virtual List<EFContactType> SearchLinqEF(Expression<Func<EFContactType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -106,9 +106,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int contactTypeID, string name,
 		                               DateTime modifiedDate, EFContactType   efContactType)
 		{
-			efContactType.contactTypeID = contactTypeID;
-			efContactType.name = name;
-			efContactType.modifiedDate = modifiedDate;
+			efContactType.ContactTypeID = contactTypeID;
+			efContactType.Name = name;
+			efContactType.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFContactType efContactType,Response response)
@@ -119,14 +119,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddContactType(new POCOContactType()
 			{
-				ContactTypeID = efContactType.contactTypeID.ToInt(),
-				Name = efContactType.name,
-				ModifiedDate = efContactType.modifiedDate.ToDateTime(),
+				ContactTypeID = efContactType.ContactTypeID.ToInt(),
+				Name = efContactType.Name,
+				ModifiedDate = efContactType.ModifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0383bb14a4ffc10c6699263d1a4e40d8</Hash>
+    <Hash>d822b62ff489fdc53c5d182ce35ade7b</Hash>
 </Codenesium>*/

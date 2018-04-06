@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
+		public ICountryRegionRepository CountryRegionRepository {get; set;}
 		public virtual void NameRules()
 		{
 			RuleFor(x => x.Name).NotNull();
@@ -29,6 +30,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual void CountryRegionCodeRules()
 		{
 			RuleFor(x => x.CountryRegionCode).NotNull();
+			RuleFor(x => x.CountryRegionCode).Must(BeValidCountryRegion).When(x => x ?.CountryRegionCode != null).WithMessage("Invalid reference");
 			RuleFor(x => x.CountryRegionCode).Length(0,3);
 		}
 
@@ -67,9 +69,17 @@ namespace AdventureWorksNS.Api.Service
 		{
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public bool BeValidCountryRegion(string id)
+		{
+			Response response = new Response();
+
+			this.CountryRegionRepository.GetById(id,response);
+			return response.CountryRegions.Count > 0;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>169cb15e11568fc21e3c4681bfd07124</Hash>
+    <Hash>3fd5a6fc3c05a4a180533a0a6cb18d29</Hash>
 </Codenesium>*/

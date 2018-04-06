@@ -10,15 +10,19 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public string name {get; set;}
-		public int organizationId {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("name", TypeName="varchar(128)")]
+		public string Name {get; set;}
+		[Column("organizationId", TypeName="int")]
+		public int OrganizationId {get; set;}
 
-		[ForeignKey("organizationId")]
+		[ForeignKey("OrganizationId")]
 		public virtual EFOrganization OrganizationRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9da38ae82d5d560418431c784968392</Hash>
+    <Hash>29ac57593e48ee15df572bd7d4b482d5</Hash>
 </Codenesium>*/

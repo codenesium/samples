@@ -19,7 +19,7 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
+				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
+				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9671548099c18487b1643ad88adaed16</Hash>
+    <Hash>8dfa165fe0dfb27ecbcc23abff11ab48</Hash>
 </Codenesium>*/

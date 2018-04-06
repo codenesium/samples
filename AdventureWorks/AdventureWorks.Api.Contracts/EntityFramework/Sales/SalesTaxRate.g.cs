@@ -10,16 +10,27 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		[Key]
-		public int salesTaxRateID {get; set;}
-		public int stateProvinceID {get; set;}
-		public int taxType {get; set;}
-		public decimal taxRate {get; set;}
-		public string name {get; set;}
-		public Guid rowguid {get; set;}
-		public DateTime modifiedDate {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("SalesTaxRateID", TypeName="int")]
+		public int SalesTaxRateID {get; set;}
+		[Column("StateProvinceID", TypeName="int")]
+		public int StateProvinceID {get; set;}
+		[Column("TaxType", TypeName="tinyint")]
+		public int TaxType {get; set;}
+		[Column("TaxRate", TypeName="smallmoney")]
+		public decimal TaxRate {get; set;}
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name {get; set;}
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid {get; set;}
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate {get; set;}
+
+		[ForeignKey("StateProvinceID")]
+		public virtual EFStateProvince StateProvinceRef { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a7c4124484e3230f87e4c7c4eccabaef</Hash>
+    <Hash>0dae0289bcf07731daebb83ad79f484c</Hash>
 </Codenesium>*/

@@ -36,7 +36,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this._context.Set<EFShift>().Add(record);
 			this._context.SaveChanges();
-			return record.shiftID;
+			return record.ShiftID;
 		}
 
 		public virtual void Update(int shiftID, string name,
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                           TimeSpan endTime,
 		                           DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.shiftID == shiftID).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",shiftID);
@@ -61,7 +61,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Delete(int shiftID)
 		{
-			var record = this.SearchLinqEF(x => x.shiftID == shiftID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void GetById(int shiftID, Response response)
 		{
-			this.SearchLinqPOCO(x => x.shiftID == shiftID,response);
+			this.SearchLinqPOCO(x => x.ShiftID == shiftID,response);
 		}
 
 		protected virtual List<EFShift> SearchLinqEF(Expression<Func<EFShift, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,11 +116,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               TimeSpan endTime,
 		                               DateTime modifiedDate, EFShift   efShift)
 		{
-			efShift.shiftID = shiftID;
-			efShift.name = name;
-			efShift.startTime = startTime;
-			efShift.endTime = endTime;
-			efShift.modifiedDate = modifiedDate;
+			efShift.ShiftID = shiftID;
+			efShift.Name = name;
+			efShift.StartTime = startTime;
+			efShift.EndTime = endTime;
+			efShift.ModifiedDate = modifiedDate;
 		}
 
 		public static void MapEFToPOCO(EFShift efShift,Response response)
@@ -131,16 +131,16 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			response.AddShift(new POCOShift()
 			{
-				ShiftID = efShift.shiftID,
-				Name = efShift.name,
-				StartTime = efShift.startTime,
-				EndTime = efShift.endTime,
-				ModifiedDate = efShift.modifiedDate.ToDateTime(),
+				ShiftID = efShift.ShiftID,
+				Name = efShift.Name,
+				StartTime = efShift.StartTime,
+				EndTime = efShift.EndTime,
+				ModifiedDate = efShift.ModifiedDate.ToDateTime(),
 			});
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14fd5012647203efcd277ae92689b11e</Hash>
+    <Hash>0702d90e5c55d9442f7a34341d9aba07</Hash>
 </Codenesium>*/

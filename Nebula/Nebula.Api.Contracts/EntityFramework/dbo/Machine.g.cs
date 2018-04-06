@@ -10,15 +10,22 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public string name {get; set;}
-		public Guid machineGuid {get; set;}
-		public string jwtKey {get; set;}
-		public string lastIpAddress {get; set;}
-		public string description {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("name", TypeName="varchar(128)")]
+		public string Name {get; set;}
+		[Column("machineGuid", TypeName="uniqueidentifier")]
+		public Guid MachineGuid {get; set;}
+		[Column("jwtKey", TypeName="varchar(128)")]
+		public string JwtKey {get; set;}
+		[Column("lastIpAddress", TypeName="varchar(128)")]
+		public string LastIpAddress {get; set;}
+		[Column("description", TypeName="text(2147483647)")]
+		public string Description {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ca06c729754c1fc9ab7cab0f3473361</Hash>
+    <Hash>1486cfd9e238838dcaffdef35ebd318a</Hash>
 </Codenesium>*/

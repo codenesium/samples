@@ -16,17 +16,21 @@ namespace AdventureWorksNS.Api.Contracts
 		                                     Nullable<DateTime> endDate,
 		                                     DateTime modifiedDate)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
-			this.DepartmentID = departmentID;
-			this.ShiftID = shiftID;
 			this.StartDate = startDate;
 			this.EndDate = endDate;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                            "Employee");
+			DepartmentID = new ReferenceEntity<short>(departmentID,
+			                                          "Department");
+			ShiftID = new ReferenceEntity<int>(shiftID,
+			                                   "Shift");
 		}
 
-		public int BusinessEntityID {get; set;}
-		public short DepartmentID {get; set;}
-		public int ShiftID {get; set;}
+		public ReferenceEntity<int>BusinessEntityID {get; set;}
+		public ReferenceEntity<short>DepartmentID {get; set;}
+		public ReferenceEntity<int>ShiftID {get; set;}
 		public DateTime StartDate {get; set;}
 		public Nullable<DateTime> EndDate {get; set;}
 		public DateTime ModifiedDate {get; set;}
@@ -92,5 +96,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d955ed64f48c61e5cabeeb652ae0614e</Hash>
+    <Hash>3ee41127cf8c6b7d8f36d384ad335d38</Hash>
 </Codenesium>*/

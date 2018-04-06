@@ -123,13 +123,13 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,FileTypeModel model)
+		public virtual IActionResult Update(int Id,FileTypeModel model)
 		{
 			this._fileTypeModelValidator.UpdateMode();
 			var validationResult = this._fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._fileTypeRepository.Update(id,  model.Name);
+				this._fileTypeRepository.Update(Id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +154,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cb5eda1189e44a4600a680cc2723962f</Hash>
+    <Hash>0cf67dcf037f62a46eeeddd267e4be4d</Hash>
 </Codenesium>*/

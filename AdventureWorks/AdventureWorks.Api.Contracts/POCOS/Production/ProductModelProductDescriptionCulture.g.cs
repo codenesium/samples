@@ -14,15 +14,19 @@ namespace AdventureWorksNS.Api.Contracts
 		                                                 string cultureID,
 		                                                 DateTime modifiedDate)
 		{
-			this.ProductModelID = productModelID.ToInt();
-			this.ProductDescriptionID = productDescriptionID.ToInt();
-			this.CultureID = cultureID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+
+			ProductModelID = new ReferenceEntity<int>(productModelID,
+			                                          "ProductModel");
+			ProductDescriptionID = new ReferenceEntity<int>(productDescriptionID,
+			                                                "ProductDescription");
+			CultureID = new ReferenceEntity<string>(cultureID,
+			                                        "Culture");
 		}
 
-		public int ProductModelID {get; set;}
-		public int ProductDescriptionID {get; set;}
-		public string CultureID {get; set;}
+		public ReferenceEntity<int>ProductModelID {get; set;}
+		public ReferenceEntity<int>ProductDescriptionID {get; set;}
+		public ReferenceEntity<string>CultureID {get; set;}
 		public DateTime ModifiedDate {get; set;}
 
 		[JsonIgnore]
@@ -68,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ade8a63a70eb3fe9a7b3fe953b7e14ee</Hash>
+    <Hash>d13c4c690771b64d161b69e7d2c06441</Hash>
 </Codenesium>*/

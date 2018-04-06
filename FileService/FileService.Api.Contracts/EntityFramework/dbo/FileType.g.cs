@@ -10,11 +10,14 @@ namespace FileServiceNS.Api.Contracts
 		{}
 
 		[Key]
-		public int id {get; set;}
-		public string name {get; set;}
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id", TypeName="int")]
+		public int Id {get; set;}
+		[Column("name", TypeName="varchar(255)")]
+		public string Name {get; set;}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a494e2c0687d71e922995f05668fc70</Hash>
+    <Hash>a715fc28a5c6fb006b10620dacf445b7</Hash>
 </Codenesium>*/

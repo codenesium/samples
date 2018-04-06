@@ -34,14 +34,14 @@ namespace NebulaNS.Api.DataAccess
 
 			this._context.Set<EFLinkLog>().Add(record);
 			this._context.SaveChanges();
-			return record.id;
+			return record.Id;
 		}
 
 		public virtual void Update(int id, int linkId,
 		                           string log,
 		                           DateTime dateEntered)
 		{
-			var record =  this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this._logger.LogError("Unable to find id:{0}",id);
@@ -57,7 +57,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Delete(int id)
 		{
-			var record = this.SearchLinqEF(x => x.id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -72,7 +72,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void GetById(int id, Response response)
 		{
-			this.SearchLinqPOCO(x => x.id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 		}
 
 		protected virtual List<EFLinkLog> SearchLinqEF(Expression<Func<EFLinkLog, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -111,10 +111,10 @@ namespace NebulaNS.Api.DataAccess
 		                               string log,
 		                               DateTime dateEntered, EFLinkLog   efLinkLog)
 		{
-			efLinkLog.id = id;
-			efLinkLog.linkId = linkId;
-			efLinkLog.log = log;
-			efLinkLog.dateEntered = dateEntered;
+			efLinkLog.Id = id;
+			efLinkLog.LinkId = linkId;
+			efLinkLog.Log = log;
+			efLinkLog.DateEntered = dateEntered;
 		}
 
 		public static void MapEFToPOCO(EFLinkLog efLinkLog,Response response)
@@ -125,11 +125,11 @@ namespace NebulaNS.Api.DataAccess
 			}
 			response.AddLinkLog(new POCOLinkLog()
 			{
-				Id = efLinkLog.id.ToInt(),
-				Log = efLinkLog.log,
-				DateEntered = efLinkLog.dateEntered.ToDateTime(),
+				Id = efLinkLog.Id.ToInt(),
+				Log = efLinkLog.Log,
+				DateEntered = efLinkLog.DateEntered.ToDateTime(),
 
-				LinkId = new ReferenceEntity<int>(efLinkLog.linkId,
+				LinkId = new ReferenceEntity<int>(efLinkLog.LinkId,
 				                                  "Links"),
 			});
 
@@ -139,5 +139,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d7e7c5e41be596b2e95c9d33d7a2959f</Hash>
+    <Hash>f7d7805180202a8e7ad0094f27aaec40</Hash>
 </Codenesium>*/

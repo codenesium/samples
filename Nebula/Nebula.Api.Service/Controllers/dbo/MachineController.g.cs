@@ -131,13 +131,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,MachineModel model)
+		public virtual IActionResult Update(int Id,MachineModel model)
 		{
 			this._machineModelValidator.UpdateMode();
 			var validationResult = this._machineModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._machineRepository.Update(id,  model.Name,
+				this._machineRepository.Update(Id,  model.Name,
 				                               model.MachineGuid,
 				                               model.JwtKey,
 				                               model.LastIpAddress,
@@ -166,5 +166,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1a3300de3569dfae11937ba54d9318a9</Hash>
+    <Hash>90e8a3b859018e39d37dc6a9c7d29bcb</Hash>
 </Codenesium>*/

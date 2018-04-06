@@ -141,13 +141,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int specialOfferID,SpecialOfferModel model)
+		public virtual IActionResult Update(int SpecialOfferID,SpecialOfferModel model)
 		{
 			this._specialOfferModelValidator.UpdateMode();
 			var validationResult = this._specialOfferModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._specialOfferRepository.Update(specialOfferID,  model.Description,
+				this._specialOfferRepository.Update(SpecialOfferID,  model.Description,
 				                                    model.DiscountPct,
 				                                    model.Type,
 				                                    model.Category,
@@ -181,5 +181,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>aefcb11321f046f5f987e13d85630a57</Hash>
+    <Hash>98314db959c3820bb071eac304fff79a</Hash>
 </Codenesium>*/

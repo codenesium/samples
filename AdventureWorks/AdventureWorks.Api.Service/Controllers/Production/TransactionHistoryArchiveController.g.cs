@@ -137,13 +137,13 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int transactionID,TransactionHistoryArchiveModel model)
+		public virtual IActionResult Update(int TransactionID,TransactionHistoryArchiveModel model)
 		{
 			this._transactionHistoryArchiveModelValidator.UpdateMode();
 			var validationResult = this._transactionHistoryArchiveModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._transactionHistoryArchiveRepository.Update(transactionID,  model.ProductID,
+				this._transactionHistoryArchiveRepository.Update(TransactionID,  model.ProductID,
 				                                                 model.ReferenceOrderID,
 				                                                 model.ReferenceOrderLineID,
 				                                                 model.TransactionDate,
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cd0e93db787b3bf99fde65ecca2f7094</Hash>
+    <Hash>b1ed079a356266a2e554fe7841559be3</Hash>
 </Codenesium>*/

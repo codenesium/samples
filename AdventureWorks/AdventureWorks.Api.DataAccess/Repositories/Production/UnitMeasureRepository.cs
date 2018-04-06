@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy("unitMeasureCode ASC").Skip(skip).Take(take).ToList<EFUnitMeasure>();
+				return this._context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy("UnitMeasureCode ASC").Skip(skip).Take(take).ToList<EFUnitMeasure>();
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy("unitMeasureCode ASC").Skip(skip).Take(take).ToList<EFUnitMeasure>();
+				return this._context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy("UnitMeasureCode ASC").Skip(skip).Take(take).ToList<EFUnitMeasure>();
 			}
 			else
 			{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aacebdb92379d402e52026725fb79a05</Hash>
+    <Hash>1b3a3cc703ebaade2171f2fc13afbbcd</Hash>
 </Codenesium>*/

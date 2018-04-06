@@ -127,13 +127,13 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,LinkLogModel model)
+		public virtual IActionResult Update(int Id,LinkLogModel model)
 		{
 			this._linkLogModelValidator.UpdateMode();
 			var validationResult = this._linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this._linkLogRepository.Update(id,  model.LinkId,
+				this._linkLogRepository.Update(Id,  model.LinkId,
 				                               model.Log,
 				                               model.DateEntered);
 				return Ok();
@@ -167,7 +167,7 @@ namespace NebulaNS.Api.Service
 		{
 			var response = new Response();
 
-			this._linkLogRepository.GetWhere(x => x.linkId == id, response);
+			this._linkLogRepository.GetWhere(x => x.LinkId == id, response);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -175,5 +175,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c11b70977ecedbf000f3977b0c71bbc7</Hash>
+    <Hash>adba01f29dee439ca0c6a2be13ce79ca</Hash>
 </Codenesium>*/
