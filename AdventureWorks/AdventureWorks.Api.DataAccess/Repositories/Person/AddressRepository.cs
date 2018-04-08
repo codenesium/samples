@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class AddressRepository: AbstractAddressRepository, IAddressRepository
 	{
 		public AddressRepository(ILogger<AddressRepository> logger,
-		                         ApplicationContext context) : base(logger,context)
+		                         ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFAddress> SearchLinqEF(Expression<Func<EFAddress, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy("AddressID ASC").Skip(skip).Take(take).ToList<EFAddress>();
+				return this.context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy("AddressID ASC").Skip(skip).Take(take).ToList<EFAddress>();
 			}
 			else
 			{
-				return this._context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAddress>();
+				return this.context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAddress>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy("AddressID ASC").Skip(skip).Take(take).ToList<EFAddress>();
+				return this.context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy("AddressID ASC").Skip(skip).Take(take).ToList<EFAddress>();
 			}
 			else
 			{
-				return this._context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAddress>();
+				return this.context.Set<EFAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAddress>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e355b8582b59c5d67a629a7beeb783c5</Hash>
+    <Hash>abd565d5e87f5d5c5928974d859ca725</Hash>
 </Codenesium>*/

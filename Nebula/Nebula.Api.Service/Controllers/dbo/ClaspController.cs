@@ -14,11 +14,11 @@ namespace NebulaNS.Api.Service
 	{
 		public ClaspsController(
 			ILogger<ClaspsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IClaspRepository claspRepository,
 			IClaspModelValidator claspModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         claspRepository,
 			         claspModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a5cf5e418d2579771982bbfc2e009630</Hash>
+    <Hash>8fb5045311f8570f5d1fdc61005fe918</Hash>
 </Codenesium>*/

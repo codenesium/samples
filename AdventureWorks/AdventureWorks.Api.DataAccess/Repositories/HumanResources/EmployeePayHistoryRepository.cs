@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class EmployeePayHistoryRepository: AbstractEmployeePayHistoryRepository, IEmployeePayHistoryRepository
 	{
 		public EmployeePayHistoryRepository(ILogger<EmployeePayHistoryRepository> logger,
-		                                    ApplicationContext context) : base(logger,context)
+		                                    ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFEmployeePayHistory> SearchLinqEF(Expression<Func<EFEmployeePayHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
+				return this.context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
+				return this.context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
+				return this.context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
+				return this.context.Set<EFEmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeePayHistory>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2394f836955f5e53408acfd0994d4788</Hash>
+    <Hash>2420b644d76b673c6e851696a1d700a7</Hash>
 </Codenesium>*/

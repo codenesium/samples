@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public CountryRegionsController(
 			ILogger<CountryRegionsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ICountryRegionRepository countryRegionRepository,
 			ICountryRegionModelValidator countryRegionModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         countryRegionRepository,
 			         countryRegionModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>836f5f8dbcfcb2728cd1391d987f1ab7</Hash>
+    <Hash>8991f9818e1532750fe0bacd38967c24</Hash>
 </Codenesium>*/

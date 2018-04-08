@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductDescriptionRepository: AbstractProductDescriptionRepository, IProductDescriptionRepository
 	{
 		public ProductDescriptionRepository(ILogger<ProductDescriptionRepository> logger,
-		                                    ApplicationContext context) : base(logger,context)
+		                                    ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFProductDescription> SearchLinqEF(Expression<Func<EFProductDescription, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy("ProductDescriptionID ASC").Skip(skip).Take(take).ToList<EFProductDescription>();
+				return this.context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy("ProductDescriptionID ASC").Skip(skip).Take(take).ToList<EFProductDescription>();
 			}
 			else
 			{
-				return this._context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDescription>();
+				return this.context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDescription>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy("ProductDescriptionID ASC").Skip(skip).Take(take).ToList<EFProductDescription>();
+				return this.context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy("ProductDescriptionID ASC").Skip(skip).Take(take).ToList<EFProductDescription>();
 			}
 			else
 			{
-				return this._context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDescription>();
+				return this.context.Set<EFProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDescription>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>681fe3f93155c2701b56477e6823e715</Hash>
+    <Hash>196dc0098dff88abe4914ed9a19f6368</Hash>
 </Codenesium>*/

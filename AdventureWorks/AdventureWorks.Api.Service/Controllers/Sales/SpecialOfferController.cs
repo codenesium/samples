@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public SpecialOffersController(
 			ILogger<SpecialOffersController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ISpecialOfferRepository specialOfferRepository,
 			ISpecialOfferModelValidator specialOfferModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         specialOfferRepository,
 			         specialOfferModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dc6e647237bbd140213510a128653d44</Hash>
+    <Hash>c6041dcf053abd19291f555cafd80a70</Hash>
 </Codenesium>*/

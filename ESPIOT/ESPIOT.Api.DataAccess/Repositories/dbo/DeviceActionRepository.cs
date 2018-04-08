@@ -12,18 +12,18 @@ namespace ESPIOTNS.Api.DataAccess
 	public class DeviceActionRepository: AbstractDeviceActionRepository, IDeviceActionRepository
 	{
 		public DeviceActionRepository(ILogger<DeviceActionRepository> logger,
-		                              ApplicationContext context) : base(logger,context)
+		                              ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
+				return this.context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 			else
 			{
-				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDeviceAction>();
+				return this.context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
+				return this.context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 			else
 			{
-				return this._context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDeviceAction>();
+				return this.context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8dfa165fe0dfb27ecbcc23abff11ab48</Hash>
+    <Hash>51545da68474233d3c590bee2edf6316</Hash>
 </Codenesium>*/

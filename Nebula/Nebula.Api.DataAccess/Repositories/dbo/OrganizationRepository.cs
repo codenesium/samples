@@ -12,18 +12,18 @@ namespace NebulaNS.Api.DataAccess
 	public class OrganizationRepository: AbstractOrganizationRepository, IOrganizationRepository
 	{
 		public OrganizationRepository(ILogger<OrganizationRepository> logger,
-		                              ApplicationContext context) : base(logger,context)
+		                              ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFOrganization> SearchLinqEF(Expression<Func<EFOrganization, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFOrganization>();
+				return this.context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 			else
 			{
-				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFOrganization>();
+				return this.context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace NebulaNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFOrganization>();
+				return this.context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 			else
 			{
-				return this._context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFOrganization>();
+				return this.context.Set<EFOrganization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFOrganization>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b66f872aa0abe0cd10720a78c71d94e5</Hash>
+    <Hash>95b873156eede38e327b1cd6033615b0</Hash>
 </Codenesium>*/

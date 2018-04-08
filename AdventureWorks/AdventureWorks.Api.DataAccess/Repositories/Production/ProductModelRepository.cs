@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductModelRepository: AbstractProductModelRepository, IProductModelRepository
 	{
 		public ProductModelRepository(ILogger<ProductModelRepository> logger,
-		                              ApplicationContext context) : base(logger,context)
+		                              ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFProductModel> SearchLinqEF(Expression<Func<EFProductModel, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy("ProductModelID ASC").Skip(skip).Take(take).ToList<EFProductModel>();
+				return this.context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy("ProductModelID ASC").Skip(skip).Take(take).ToList<EFProductModel>();
 			}
 			else
 			{
-				return this._context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductModel>();
+				return this.context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductModel>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy("ProductModelID ASC").Skip(skip).Take(take).ToList<EFProductModel>();
+				return this.context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy("ProductModelID ASC").Skip(skip).Take(take).ToList<EFProductModel>();
 			}
 			else
 			{
-				return this._context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductModel>();
+				return this.context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductModel>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d959424e045a55f7324fa5f2709401bc</Hash>
+    <Hash>dd7f97e24e02098272175a159c999073</Hash>
 </Codenesium>*/

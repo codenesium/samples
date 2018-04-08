@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public CurrencyRatesController(
 			ILogger<CurrencyRatesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ICurrencyRateRepository currencyRateRepository,
 			ICurrencyRateModelValidator currencyRateModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         currencyRateRepository,
 			         currencyRateModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3d39cf3cc4a05f925805f3b40d3dcf0f</Hash>
+    <Hash>e0b86f1f17fc337a9b941800f0945804</Hash>
 </Codenesium>*/

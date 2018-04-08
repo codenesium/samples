@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductDocumentRepository: AbstractProductDocumentRepository, IProductDocumentRepository
 	{
 		public ProductDocumentRepository(ILogger<ProductDocumentRepository> logger,
-		                                 ApplicationContext context) : base(logger,context)
+		                                 ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFProductDocument> SearchLinqEF(Expression<Func<EFProductDocument, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 			else
 			{
-				return this._context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 			else
 			{
-				return this._context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>90a3ef78a301c518d4e3a11920d59301</Hash>
+    <Hash>ff49f3ce978704b4e109ee69814dd8fd</Hash>
 </Codenesium>*/

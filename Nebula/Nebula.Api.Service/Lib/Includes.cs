@@ -10,23 +10,73 @@ using System.Linq;
 namespace Codenesium.Foundation.CommonMVC
 {
     /// <summary>
-    /// This is the base controller for any controller that needs transaction support.
-    /// We use an action filter to start and commit transactions using the Conttext.
+    /// ITransactionCoordinator is an interface that is injecteded into controllers and allows
+    /// us to handle transactions on requests and enable and disable change tracking for entity framework
     /// </summary>
-    public abstract class AbstractEntityFrameworkApiController : Controller
+    public interface ITransactionCoordinator
     {
-        public DbContext Context { get; private set; }
+        void BeginTransaction();
+        void CommitTransaction();
+        void RollbackTransaction();
+        void EnableChangeTracking();
+        void DisableChangeTracking();
+    }
+
+    public class EntityFrameworkTransactionCoordinator : ITransactionCoordinator
+    {
+        private DbContext context;
+        public EntityFrameworkTransactionCoordinator(DbContext context)
+        {
+            this.context = context;
+        }
+        public void BeginTransaction()
+        {
+            this.context.Database.BeginTransaction();
+        }
+
+        public void CommitTransaction()
+        {
+            if (this.context.Database.CurrentTransaction != null)
+            {
+                this.context.Database.CommitTransaction();
+            }
+        }
+
+        public void DisableChangeTracking()
+        {
+            this.context.ChangeTracker.AutoDetectChangesEnabled = false;
+        }
+
+        public void EnableChangeTracking()
+        {
+            this.context.ChangeTracker.AutoDetectChangesEnabled = true;
+        }
+
+        public void RollbackTransaction()
+        {
+            if (this.context.Database.CurrentTransaction != null)
+            {
+                this.context.Database.RollbackTransaction();
+            }
+        }
+    }
+
+    /// <summary>
+    /// This is the base controller for any controller that needs transaction support.
+    /// We use an action filter to start and commit transactions using the TransactionCooordinator.
+    /// </summary>
+    public abstract class AbstractApiController : Controller
+    {
+        public ITransactionCoordinator TransactionCooordinator { get; private set; }
         protected ILogger _logger { get; set; }
 
-        public AbstractEntityFrameworkApiController(
+        public AbstractApiController(
             ILogger logger,
-            DbContext context
-
+            ITransactionCoordinator transactionCooordinator
             )
         {
             this._logger = logger;
-            this.Context = context;
-            //this.Context.Database.Configuration.LazyLoadingEnabled = false not supported yet
+            this.TransactionCooordinator = transactionCooordinator;
         }
     }
 
@@ -53,14 +103,15 @@ namespace Codenesium.Foundation.CommonMVC
     }
 
     /// <summary>
-    /// This attribute can be added to disable entity framework change tracking
+    /// This attribute can be added to disable entity framework change tracking for read only scenarios. This can
+	/// drastically improve performance.
     /// </summary>
     public class ReadOnlyFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-            AbstractEntityFrameworkApiController controller = (AbstractEntityFrameworkApiController)actionContext.Controller;
-            controller.Context.ChangeTracker.AutoDetectChangesEnabled = false; //disable change tracking in context
+            AbstractApiController controller = (AbstractApiController)actionContext.Controller;
+            controller.TransactionCooordinator.DisableChangeTracking();
         }
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
@@ -69,52 +120,43 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
+	/// <summary>
+    /// This attribute enabled transaction support on a rrequest by hooking in to the request pipeline
+	/// and starting a transaction when a request begins and committing or rolling back the transaction if 
+	/// there is an exception during the request. 
+    /// </summary>
     public class UnitOfWorkActionFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-            AbstractEntityFrameworkApiController controller = (AbstractEntityFrameworkApiController)actionContext.Controller;
-            controller.Context.Database.BeginTransaction();
+            AbstractApiController controller = (AbstractApiController)actionContext.Controller;
+            controller.TransactionCooordinator.BeginTransaction();
         }
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
         {
-            AbstractEntityFrameworkApiController controller = (AbstractEntityFrameworkApiController)actionExecutedContext.Controller;
+            AbstractApiController controller = (AbstractApiController)actionExecutedContext.Controller;
 
             if (actionExecutedContext.Exception == null)
             {
                 try
                 {
-                    if (controller.Context.Database.CurrentTransaction != null)
-                    {
-                        controller.Context.Database.CurrentTransaction.Commit();
-                    }
+                    controller.TransactionCooordinator.CommitTransaction();
                 }
                 catch (Exception)
                 {
                     throw;
-                }
-                finally
-                {
-                    controller.Context.Dispose();
                 }
             }
             else
             {
                 try
                 {
-                    if (controller.Context.Database.CurrentTransaction != null)
-                    {
-                        controller.Context.Database.CurrentTransaction.Rollback();
-                    }
+                    controller.TransactionCooordinator.RollbackTransaction();
                 }
                 catch (Exception)
                 {
                     throw;
-                }
-                finally
-                {
-                    controller.Context.Dispose();
                 }
             }
 

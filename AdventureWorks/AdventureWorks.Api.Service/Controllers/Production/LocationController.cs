@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public LocationsController(
 			ILogger<LocationsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ILocationRepository locationRepository,
 			ILocationModelValidator locationModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         locationRepository,
 			         locationModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5f4b33f3993a37a20c25de8e97902089</Hash>
+    <Hash>b07cecb37c827cfe71c78245bbd78253</Hash>
 </Codenesium>*/

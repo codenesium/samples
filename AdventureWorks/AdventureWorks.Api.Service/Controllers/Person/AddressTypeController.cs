@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public AddressTypesController(
 			ILogger<AddressTypesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IAddressTypeRepository addressTypeRepository,
 			IAddressTypeModelValidator addressTypeModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         addressTypeRepository,
 			         addressTypeModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>acda3a18efef27cc10f2f8bcf74188c4</Hash>
+    <Hash>84a96ef490c16da19259d18bca84c7ea</Hash>
 </Codenesium>*/

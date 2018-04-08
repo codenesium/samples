@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public JobCandidatesController(
 			ILogger<JobCandidatesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IJobCandidateRepository jobCandidateRepository,
 			IJobCandidateModelValidator jobCandidateModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         jobCandidateRepository,
 			         jobCandidateModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1bb5b9d155a55a4d59094b2363573b08</Hash>
+    <Hash>9e6420f631cf81484e0e3d4ea6cb54fa</Hash>
 </Codenesium>*/

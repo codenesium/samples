@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductInventoryRepository: AbstractProductInventoryRepository, IProductInventoryRepository
 	{
 		public ProductInventoryRepository(ILogger<ProductInventoryRepository> logger,
-		                                  ApplicationContext context) : base(logger,context)
+		                                  ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFProductInventory> SearchLinqEF(Expression<Func<EFProductInventory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductInventory>();
+				return this.context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductInventory>();
 			}
 			else
 			{
-				return this._context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductInventory>();
+				return this.context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductInventory>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductInventory>();
+				return this.context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductInventory>();
 			}
 			else
 			{
-				return this._context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductInventory>();
+				return this.context.Set<EFProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductInventory>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2d69caffcc7ade837f0fe47d4b87b8bd</Hash>
+    <Hash>abca6fe80f010dc5d638393ffe7bf4a6</Hash>
 </Codenesium>*/

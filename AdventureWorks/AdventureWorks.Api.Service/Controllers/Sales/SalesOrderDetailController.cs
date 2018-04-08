@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public SalesOrderDetailsController(
 			ILogger<SalesOrderDetailsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ISalesOrderDetailRepository salesOrderDetailRepository,
 			ISalesOrderDetailModelValidator salesOrderDetailModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         salesOrderDetailRepository,
 			         salesOrderDetailModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7f82a05422b8f74c4515c098bd947ded</Hash>
+    <Hash>633be548d672333aa61016aaf398e519</Hash>
 </Codenesium>*/

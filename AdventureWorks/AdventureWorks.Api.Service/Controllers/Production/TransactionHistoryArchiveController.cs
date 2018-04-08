@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public TransactionHistoryArchivesController(
 			ILogger<TransactionHistoryArchivesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
 			ITransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         transactionHistoryArchiveRepository,
 			         transactionHistoryArchiveModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>451115b33a2e2d69b92be3ff4833ee0b</Hash>
+    <Hash>b210e91f9e33b4aca215282ee2720417</Hash>
 </Codenesium>*/

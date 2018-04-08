@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public ContactTypesController(
 			ILogger<ContactTypesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IContactTypeRepository contactTypeRepository,
 			IContactTypeModelValidator contactTypeModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         contactTypeRepository,
 			         contactTypeModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bf05805b0f47ef88522891bf8336f4a1</Hash>
+    <Hash>ebd1048899ddb0fa9f36d08c3b110c8d</Hash>
 </Codenesium>*/

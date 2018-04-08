@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.1" />
-	<PackageReference Include="Codenesium.DataConversionExtensions.AspNetCore" Version="2018.1.1" />
+	<PackageReference Include="Codenesium.DataConversionExtensions.AspNetCore" Version="2018.1.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.0" />
 	<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="2.2.0" />

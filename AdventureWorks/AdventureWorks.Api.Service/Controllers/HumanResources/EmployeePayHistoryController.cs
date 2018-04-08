@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public EmployeePayHistoriesController(
 			ILogger<EmployeePayHistoriesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IEmployeePayHistoryRepository employeePayHistoryRepository,
 			IEmployeePayHistoryModelValidator employeePayHistoryModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         employeePayHistoryRepository,
 			         employeePayHistoryModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6a376f2e952149b550230d5ffa457229</Hash>
+    <Hash>b2b16fe130ef89d85bfdb26a83008afd</Hash>
 </Codenesium>*/

@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public ProductPhotoesController(
 			ILogger<ProductPhotoesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IProductPhotoRepository productPhotoRepository,
 			IProductPhotoModelValidator productPhotoModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         productPhotoRepository,
 			         productPhotoModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ae7abbe7fe065a2ae54b282562cf3cfd</Hash>
+    <Hash>2968cac561771e0c4ea3d09f472566ef</Hash>
 </Codenesium>*/

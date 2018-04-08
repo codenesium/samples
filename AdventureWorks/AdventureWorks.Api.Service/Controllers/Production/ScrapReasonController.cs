@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public ScrapReasonsController(
 			ILogger<ScrapReasonsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IScrapReasonRepository scrapReasonRepository,
 			IScrapReasonModelValidator scrapReasonModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         scrapReasonRepository,
 			         scrapReasonModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9f630e9fa6961d71496c58cc07177e46</Hash>
+    <Hash>8c6414c3fd32e932b03f55057156cd0e</Hash>
 </Codenesium>*/

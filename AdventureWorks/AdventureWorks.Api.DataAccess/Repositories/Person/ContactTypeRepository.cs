@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ContactTypeRepository: AbstractContactTypeRepository, IContactTypeRepository
 	{
 		public ContactTypeRepository(ILogger<ContactTypeRepository> logger,
-		                             ApplicationContext context) : base(logger,context)
+		                             ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFContactType> SearchLinqEF(Expression<Func<EFContactType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("ContactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
+				return this.context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("ContactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
 			}
 			else
 			{
-				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFContactType>();
+				return this.context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFContactType>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("ContactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
+				return this.context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy("ContactTypeID ASC").Skip(skip).Take(take).ToList<EFContactType>();
 			}
 			else
 			{
-				return this._context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFContactType>();
+				return this.context.Set<EFContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFContactType>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>403b8485d3d5df3a39c1389c17ecb350</Hash>
+    <Hash>29f32e539ac4069a1d25c61ca4d49370</Hash>
 </Codenesium>*/

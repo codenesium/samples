@@ -12,18 +12,18 @@ namespace NebulaNS.Api.DataAccess
 	public class ChainRepository: AbstractChainRepository, IChainRepository
 	{
 		public ChainRepository(ILogger<ChainRepository> logger,
-		                       ApplicationContext context) : base(logger,context)
+		                       ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFChain> SearchLinqEF(Expression<Func<EFChain, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
+				return this.context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
 			}
 			else
 			{
-				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
+				return this.context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace NebulaNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
+				return this.context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
 			}
 			else
 			{
-				return this._context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
+				return this.context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>42b8bb3af1939a3618a00c48479c7cdc</Hash>
+    <Hash>fff11ed909ea9d97214d2dff7cd12f80</Hash>
 </Codenesium>*/

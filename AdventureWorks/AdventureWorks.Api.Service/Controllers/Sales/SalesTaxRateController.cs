@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public SalesTaxRatesController(
 			ILogger<SalesTaxRatesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			ISalesTaxRateModelValidator salesTaxRateModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         salesTaxRateRepository,
 			         salesTaxRateModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>de590633a200f325acc81734861ca0f9</Hash>
+    <Hash>a4e62e01d50bbc954119539daf7ec273</Hash>
 </Codenesium>*/

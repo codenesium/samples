@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PersonPhoneRepository: AbstractPersonPhoneRepository, IPersonPhoneRepository
 	{
 		public PersonPhoneRepository(ILogger<PersonPhoneRepository> logger,
-		                             ApplicationContext context) : base(logger,context)
+		                             ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFPersonPhone> SearchLinqEF(Expression<Func<EFPersonPhone, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 			else
 			{
-				return this._context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 			else
 			{
-				return this._context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a52be7f8be8932ac1529fb0c8b00efc1</Hash>
+    <Hash>3152ed7b3c48e09617b3dc954a384bed</Hash>
 </Codenesium>*/

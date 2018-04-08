@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public CulturesController(
 			ILogger<CulturesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ICultureRepository cultureRepository,
 			ICultureModelValidator cultureModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         cultureRepository,
 			         cultureModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8a173482b28698a25d6abcf7f318945f</Hash>
+    <Hash>f2c41e05d8c11de60ab8a66a64c94a19</Hash>
 </Codenesium>*/

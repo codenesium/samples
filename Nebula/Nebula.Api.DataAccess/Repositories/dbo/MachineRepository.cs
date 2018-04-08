@@ -12,18 +12,18 @@ namespace NebulaNS.Api.DataAccess
 	public class MachineRepository: AbstractMachineRepository, IMachineRepository
 	{
 		public MachineRepository(ILogger<MachineRepository> logger,
-		                         ApplicationContext context) : base(logger,context)
+		                         ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
+				return this.context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
 			}
 			else
 			{
-				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
+				return this.context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace NebulaNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
+				return this.context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
 			}
 			else
 			{
-				return this._context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
+				return this.context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd7f1ea1c0b4550ef9ea50e83624cb92</Hash>
+    <Hash>a4c5ea0ef81f4103b5850a278757cfac</Hash>
 </Codenesium>*/

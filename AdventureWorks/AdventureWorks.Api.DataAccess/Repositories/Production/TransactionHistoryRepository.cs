@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class TransactionHistoryRepository: AbstractTransactionHistoryRepository, ITransactionHistoryRepository
 	{
 		public TransactionHistoryRepository(ILogger<TransactionHistoryRepository> logger,
-		                                    ApplicationContext context) : base(logger,context)
+		                                    ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFTransactionHistory> SearchLinqEF(Expression<Func<EFTransactionHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy("TransactionID ASC").Skip(skip).Take(take).ToList<EFTransactionHistory>();
+				return this.context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy("TransactionID ASC").Skip(skip).Take(take).ToList<EFTransactionHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTransactionHistory>();
+				return this.context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTransactionHistory>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy("TransactionID ASC").Skip(skip).Take(take).ToList<EFTransactionHistory>();
+				return this.context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy("TransactionID ASC").Skip(skip).Take(take).ToList<EFTransactionHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTransactionHistory>();
+				return this.context.Set<EFTransactionHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTransactionHistory>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9df9f9584ca366ed151306cc1c644203</Hash>
+    <Hash>e464ffa2645cda7216349f1496072557</Hash>
 </Codenesium>*/

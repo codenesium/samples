@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductReviewRepository: AbstractProductReviewRepository, IProductReviewRepository
 	{
 		public ProductReviewRepository(ILogger<ProductReviewRepository> logger,
-		                               ApplicationContext context) : base(logger,context)
+		                               ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFProductReview> SearchLinqEF(Expression<Func<EFProductReview, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy("ProductReviewID ASC").Skip(skip).Take(take).ToList<EFProductReview>();
+				return this.context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy("ProductReviewID ASC").Skip(skip).Take(take).ToList<EFProductReview>();
 			}
 			else
 			{
-				return this._context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductReview>();
+				return this.context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductReview>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy("ProductReviewID ASC").Skip(skip).Take(take).ToList<EFProductReview>();
+				return this.context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy("ProductReviewID ASC").Skip(skip).Take(take).ToList<EFProductReview>();
 			}
 			else
 			{
-				return this._context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductReview>();
+				return this.context.Set<EFProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductReview>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8dcc2c50a79f032944558b8414a3445d</Hash>
+    <Hash>c4223b41d9929dc4f3ac0cdab3da78fe</Hash>
 </Codenesium>*/

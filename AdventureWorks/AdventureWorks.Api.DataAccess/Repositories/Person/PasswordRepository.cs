@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PasswordRepository: AbstractPasswordRepository, IPasswordRepository
 	{
 		public PasswordRepository(ILogger<PasswordRepository> logger,
-		                          ApplicationContext context) : base(logger,context)
+		                          ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFPassword> SearchLinqEF(Expression<Func<EFPassword, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPassword>();
+				return this.context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPassword>();
 			}
 			else
 			{
-				return this._context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPassword>();
+				return this.context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPassword>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPassword>();
+				return this.context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPassword>();
 			}
 			else
 			{
-				return this._context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPassword>();
+				return this.context.Set<EFPassword>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPassword>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8722b2bb8e63d82dcb4ce638ad0147d6</Hash>
+    <Hash>2bc83eb2a7545ff419c82a27f328ec13</Hash>
 </Codenesium>*/

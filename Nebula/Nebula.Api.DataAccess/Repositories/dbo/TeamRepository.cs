@@ -12,18 +12,18 @@ namespace NebulaNS.Api.DataAccess
 	public class TeamRepository: AbstractTeamRepository, ITeamRepository
 	{
 		public TeamRepository(ILogger<TeamRepository> logger,
-		                      ApplicationContext context) : base(logger,context)
+		                      ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFTeam> SearchLinqEF(Expression<Func<EFTeam, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeam>();
+				return this.context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeam>();
 			}
 			else
 			{
-				return this._context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTeam>();
+				return this.context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTeam>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace NebulaNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeam>();
+				return this.context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeam>();
 			}
 			else
 			{
-				return this._context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTeam>();
+				return this.context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTeam>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d973f5e4a0965a27a667ac130eecce2</Hash>
+    <Hash>250375774db97da964de01d614769739</Hash>
 </Codenesium>*/

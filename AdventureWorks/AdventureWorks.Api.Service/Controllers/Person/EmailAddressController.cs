@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public EmailAddressesController(
 			ILogger<EmailAddressesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IEmailAddressRepository emailAddressRepository,
 			IEmailAddressModelValidator emailAddressModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         emailAddressRepository,
 			         emailAddressModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2b65a110fb767c220689132299aab29c</Hash>
+    <Hash>3a2e5bf032fd49ec7bcb1782e28ecede</Hash>
 </Codenesium>*/

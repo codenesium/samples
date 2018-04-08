@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class WorkOrderRepository: AbstractWorkOrderRepository, IWorkOrderRepository
 	{
 		public WorkOrderRepository(ILogger<WorkOrderRepository> logger,
-		                           ApplicationContext context) : base(logger,context)
+		                           ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFWorkOrder> SearchLinqEF(Expression<Func<EFWorkOrder, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy("WorkOrderID ASC").Skip(skip).Take(take).ToList<EFWorkOrder>();
+				return this.context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy("WorkOrderID ASC").Skip(skip).Take(take).ToList<EFWorkOrder>();
 			}
 			else
 			{
-				return this._context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFWorkOrder>();
+				return this.context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFWorkOrder>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy("WorkOrderID ASC").Skip(skip).Take(take).ToList<EFWorkOrder>();
+				return this.context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy("WorkOrderID ASC").Skip(skip).Take(take).ToList<EFWorkOrder>();
 			}
 			else
 			{
-				return this._context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFWorkOrder>();
+				return this.context.Set<EFWorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFWorkOrder>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2c1cd51356d24f27a6bb91f0fa3ed230</Hash>
+    <Hash>862975c58dcc76e99e867054197dd107</Hash>
 </Codenesium>*/

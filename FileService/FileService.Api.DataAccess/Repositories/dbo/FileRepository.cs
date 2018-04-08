@@ -12,18 +12,18 @@ namespace FileServiceNS.Api.DataAccess
 	public class FileRepository: AbstractFileRepository, IFileRepository
 	{
 		public FileRepository(ILogger<FileRepository> logger,
-		                      ApplicationContext context) : base(logger,context)
+		                      ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
+				return this.context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
 			else
 			{
-				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
+				return this.context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
+				return this.context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
 			else
 			{
-				return this._context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
+				return this.context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e99f7bf24a600e74902cfd7ec96d9c16</Hash>
+    <Hash>e2139726532d274d400226a93eab0521</Hash>
 </Codenesium>*/

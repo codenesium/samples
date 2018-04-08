@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PersonRepository: AbstractPersonRepository, IPersonRepository
 	{
 		public PersonRepository(ILogger<PersonRepository> logger,
-		                        ApplicationContext context) : base(logger,context)
+		                        ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFPerson> SearchLinqEF(Expression<Func<EFPerson, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPerson>();
+				return this.context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPerson>();
 			}
 			else
 			{
-				return this._context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPerson>();
+				return this.context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPerson>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPerson>();
+				return this.context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPerson>();
 			}
 			else
 			{
-				return this._context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPerson>();
+				return this.context.Set<EFPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPerson>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d8dad6184ab3699961e892c7cae1063</Hash>
+    <Hash>ca8677908a8e92b8c3f77f646d445cc6</Hash>
 </Codenesium>*/

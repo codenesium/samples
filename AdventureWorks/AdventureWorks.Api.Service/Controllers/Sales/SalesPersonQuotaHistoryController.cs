@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public SalesPersonQuotaHistoriesController(
 			ILogger<SalesPersonQuotaHistoriesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
 			ISalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         salesPersonQuotaHistoryRepository,
 			         salesPersonQuotaHistoryModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>47ab5552312e752e38562ff326d64a63</Hash>
+    <Hash>af77e17b5a23952ea4cbef0db89c41cf</Hash>
 </Codenesium>*/

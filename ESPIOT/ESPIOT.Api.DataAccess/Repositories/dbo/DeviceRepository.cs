@@ -12,18 +12,18 @@ namespace ESPIOTNS.Api.DataAccess
 	public class DeviceRepository: AbstractDeviceRepository, IDeviceRepository
 	{
 		public DeviceRepository(ILogger<DeviceRepository> logger,
-		                        ApplicationContext context) : base(logger,context)
+		                        ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFDevice> SearchLinqEF(Expression<Func<EFDevice, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDevice>();
+				return this.context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDevice>();
 			}
 			else
 			{
-				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
+				return this.context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDevice>();
+				return this.context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDevice>();
 			}
 			else
 			{
-				return this._context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
+				return this.context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a7b59d2e9e24cfd66e2aa18df7a194d</Hash>
+    <Hash>cb6a2c4d0489e1ebffdcefc6a4bc60a1</Hash>
 </Codenesium>*/

@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public ShoppingCartItemsController(
 			ILogger<ShoppingCartItemsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IShoppingCartItemRepository shoppingCartItemRepository,
 			IShoppingCartItemModelValidator shoppingCartItemModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         shoppingCartItemRepository,
 			         shoppingCartItemModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a2676ad0db16d3b8467f92fb1462dd49</Hash>
+    <Hash>d12d96e7e7be89e68ed368b24ce5d738</Hash>
 </Codenesium>*/

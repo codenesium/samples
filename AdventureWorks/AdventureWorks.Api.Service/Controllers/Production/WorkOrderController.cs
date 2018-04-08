@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public WorkOrdersController(
 			ILogger<WorkOrdersController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IWorkOrderRepository workOrderRepository,
 			IWorkOrderModelValidator workOrderModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         workOrderRepository,
 			         workOrderModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>693c77e0284f26eb70b3c68a0bdcba21</Hash>
+    <Hash>bb504029ce860596c2428108f6e56b93</Hash>
 </Codenesium>*/

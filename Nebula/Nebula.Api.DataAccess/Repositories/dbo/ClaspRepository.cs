@@ -12,18 +12,18 @@ namespace NebulaNS.Api.DataAccess
 	public class ClaspRepository: AbstractClaspRepository, IClaspRepository
 	{
 		public ClaspRepository(ILogger<ClaspRepository> logger,
-		                       ApplicationContext context) : base(logger,context)
+		                       ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
+				return this.context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
 			}
 			else
 			{
-				return this._context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
+				return this.context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace NebulaNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
+				return this.context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
 			}
 			else
 			{
-				return this._context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
+				return this.context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0dd10a8bc572d8f183de9a19eab8b683</Hash>
+    <Hash>9d45484a82d2ab8b4def55da0fd06c5d</Hash>
 </Codenesium>*/

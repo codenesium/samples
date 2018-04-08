@@ -14,11 +14,11 @@ namespace FileServiceNS.Api.Service
 	{
 		public FileTypesController(
 			ILogger<FileTypesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IFileTypeRepository fileTypeRepository,
 			IFileTypeModelValidator fileTypeModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         fileTypeRepository,
 			         fileTypeModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d812f805b3c73925fe198570ed97c64e</Hash>
+    <Hash>055138f51a1070227f0e1d5cc8c2f736</Hash>
 </Codenesium>*/

@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public ErrorLogsController(
 			ILogger<ErrorLogsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IErrorLogRepository errorLogRepository,
 			IErrorLogModelValidator errorLogModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         errorLogRepository,
 			         errorLogModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5413386b81ab09a9bdd0501e1878ff01</Hash>
+    <Hash>825b3f9996abfa599a8001ff16088cdd</Hash>
 </Codenesium>*/

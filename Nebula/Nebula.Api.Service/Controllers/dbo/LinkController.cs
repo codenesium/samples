@@ -14,11 +14,11 @@ namespace NebulaNS.Api.Service
 	{
 		public LinksController(
 			ILogger<LinksController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ILinkRepository linkRepository,
 			ILinkModelValidator linkModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         linkRepository,
 			         linkModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>754a24a58f8ee3b706d95f38c16ab9e8</Hash>
+    <Hash>aef4aa306c7b0ef385504b50b3145fa9</Hash>
 </Codenesium>*/

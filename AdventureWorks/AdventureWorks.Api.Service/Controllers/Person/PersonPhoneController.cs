@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public PersonPhonesController(
 			ILogger<PersonPhonesController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IPersonPhoneRepository personPhoneRepository,
 			IPersonPhoneModelValidator personPhoneModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         personPhoneRepository,
 			         personPhoneModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>87fb639d8e22d57e9d48a728c2ae8afd</Hash>
+    <Hash>fc7862110c2db41af161586ed1eca7e5</Hash>
 </Codenesium>*/

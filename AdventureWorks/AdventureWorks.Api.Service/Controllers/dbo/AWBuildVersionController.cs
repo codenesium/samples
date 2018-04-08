@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public AWBuildVersionsController(
 			ILogger<AWBuildVersionsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IAWBuildVersionRepository aWBuildVersionRepository,
 			IAWBuildVersionModelValidator aWBuildVersionModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         aWBuildVersionRepository,
 			         aWBuildVersionModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>16d927673b033327a996f9606331291f</Hash>
+    <Hash>36d4c475924a3f9c0fbaf400582247d7</Hash>
 </Codenesium>*/

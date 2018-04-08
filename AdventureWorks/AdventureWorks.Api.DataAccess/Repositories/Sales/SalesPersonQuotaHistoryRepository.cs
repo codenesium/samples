@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesPersonQuotaHistoryRepository: AbstractSalesPersonQuotaHistoryRepository, ISalesPersonQuotaHistoryRepository
 	{
 		public SalesPersonQuotaHistoryRepository(ILogger<SalesPersonQuotaHistoryRepository> logger,
-		                                         ApplicationContext context) : base(logger,context)
+		                                         ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFSalesPersonQuotaHistory> SearchLinqEF(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
+				return this.context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
+				return this.context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
+				return this.context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
+				return this.context.Set<EFSalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesPersonQuotaHistory>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>68558c34af349ceba392a9dcc5bc78b1</Hash>
+    <Hash>e089bf233ea2ad052c62fb945a57b2a5</Hash>
 </Codenesium>*/

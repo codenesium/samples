@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public CreditCardsController(
 			ILogger<CreditCardsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			ICreditCardRepository creditCardRepository,
 			ICreditCardModelValidator creditCardModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         creditCardRepository,
 			         creditCardModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>df6825e54f9509d6518dccee81b58728</Hash>
+    <Hash>fe15d6bbac766624be819667262b9ef6</Hash>
 </Codenesium>*/

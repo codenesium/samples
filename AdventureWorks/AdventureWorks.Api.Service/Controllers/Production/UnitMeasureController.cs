@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public UnitMeasuresController(
 			ILogger<UnitMeasuresController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IUnitMeasureRepository unitMeasureRepository,
 			IUnitMeasureModelValidator unitMeasureModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         unitMeasureRepository,
 			         unitMeasureModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d9c8ba500ffd165b43ddaed05a904a61</Hash>
+    <Hash>4bf2fc9c80825317889fdb1b41dea7dc</Hash>
 </Codenesium>*/

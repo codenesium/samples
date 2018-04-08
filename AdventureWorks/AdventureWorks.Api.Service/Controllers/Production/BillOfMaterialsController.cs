@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public BillOfMaterialsController(
 			ILogger<BillOfMaterialsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IBillOfMaterialsRepository billOfMaterialsRepository,
 			IBillOfMaterialsModelValidator billOfMaterialsModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         billOfMaterialsRepository,
 			         billOfMaterialsModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6b6b474c7351fd6df4c8deb2ffdbf01e</Hash>
+    <Hash>61eb1f2d2f7a0a817b076d8ba53a614b</Hash>
 </Codenesium>*/

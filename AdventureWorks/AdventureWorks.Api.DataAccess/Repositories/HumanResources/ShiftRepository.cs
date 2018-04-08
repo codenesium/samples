@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ShiftRepository: AbstractShiftRepository, IShiftRepository
 	{
 		public ShiftRepository(ILogger<ShiftRepository> logger,
-		                       ApplicationContext context) : base(logger,context)
+		                       ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFShift> SearchLinqEF(Expression<Func<EFShift, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy("ShiftID ASC").Skip(skip).Take(take).ToList<EFShift>();
+				return this.context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy("ShiftID ASC").Skip(skip).Take(take).ToList<EFShift>();
 			}
 			else
 			{
-				return this._context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFShift>();
+				return this.context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFShift>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy("ShiftID ASC").Skip(skip).Take(take).ToList<EFShift>();
+				return this.context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy("ShiftID ASC").Skip(skip).Take(take).ToList<EFShift>();
 			}
 			else
 			{
-				return this._context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFShift>();
+				return this.context.Set<EFShift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFShift>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a3ec1e210b57ad6f456275947ee5d2f</Hash>
+    <Hash>8e9d7b40f5484735bc14a92714664b01</Hash>
 </Codenesium>*/

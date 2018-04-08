@@ -14,11 +14,11 @@ namespace NebulaNS.Api.Service
 	{
 		public ChainsController(
 			ILogger<ChainsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IChainRepository chainRepository,
 			IChainModelValidator chainModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         chainRepository,
 			         chainModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2cf6a92e6ca1f0dd2a321672f62880d7</Hash>
+    <Hash>32f5a9e882c80ca547a3c654b71181c9</Hash>
 </Codenesium>*/

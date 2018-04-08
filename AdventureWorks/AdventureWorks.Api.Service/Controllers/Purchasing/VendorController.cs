@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public VendorsController(
 			ILogger<VendorsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IVendorRepository vendorRepository,
 			IVendorModelValidator vendorModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         vendorRepository,
 			         vendorModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4c451ca887e0868cd1310bc73c9870b6</Hash>
+    <Hash>c3ea7306eb11180525a11a27dfba6f12</Hash>
 </Codenesium>*/

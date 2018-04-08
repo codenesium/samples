@@ -12,18 +12,18 @@ namespace FileServiceNS.Api.DataAccess
 	public class BucketRepository: AbstractBucketRepository, IBucketRepository
 	{
 		public BucketRepository(ILogger<BucketRepository> logger,
-		                        ApplicationContext context) : base(logger,context)
+		                        ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBucket>();
+				return this.context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBucket>();
 			}
 			else
 			{
-				return this._context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBucket>();
+				return this.context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBucket>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBucket>();
+				return this.context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBucket>();
 			}
 			else
 			{
-				return this._context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBucket>();
+				return this.context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBucket>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b1b0808e1f09c729e1a01eed534ce4e</Hash>
+    <Hash>27f58a2d51b17c8151fb91eb5304a8b3</Hash>
 </Codenesium>*/

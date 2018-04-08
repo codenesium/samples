@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class DepartmentRepository: AbstractDepartmentRepository, IDepartmentRepository
 	{
 		public DepartmentRepository(ILogger<DepartmentRepository> logger,
-		                            ApplicationContext context) : base(logger,context)
+		                            ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFDepartment> SearchLinqEF(Expression<Func<EFDepartment, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy("DepartmentID ASC").Skip(skip).Take(take).ToList<EFDepartment>();
+				return this.context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy("DepartmentID ASC").Skip(skip).Take(take).ToList<EFDepartment>();
 			}
 			else
 			{
-				return this._context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDepartment>();
+				return this.context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDepartment>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy("DepartmentID ASC").Skip(skip).Take(take).ToList<EFDepartment>();
+				return this.context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy("DepartmentID ASC").Skip(skip).Take(take).ToList<EFDepartment>();
 			}
 			else
 			{
-				return this._context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDepartment>();
+				return this.context.Set<EFDepartment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDepartment>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2611b91fc273cf856fae68eedb5444bc</Hash>
+    <Hash>5143b6160407cb1eb9fb16c8065655a4</Hash>
 </Codenesium>*/

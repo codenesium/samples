@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Features.Metadata;
 using Autofac.Features.ResolveAnything;
+using Codenesium.Foundation.CommonMVC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -21,6 +22,7 @@ using System.Reflection;
 using System.Text;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
     public class Startup
@@ -43,9 +45,9 @@ namespace AdventureWorksNS.Api.Service
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationContext>((serviceProvider, options) =>
+            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext"));
+                options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext"));
             });
 
 			services.AddSwaggerGen(c =>
@@ -71,8 +73,8 @@ namespace AdventureWorksNS.Api.Service
             {
                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
                 {
-                   // ValidateActor = true,
-                   //  ValidateAudience = true,
+                    //ValidateActor = true,
+                    //ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["Jwt:Issuer"],
@@ -109,17 +111,31 @@ namespace AdventureWorksNS.Api.Service
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
 
+            // Register our application context as DbContext. This is 
+            //injected into the transaction coordinator
+            builder.RegisterType<ApplicationDbContext>().As<DbContext>();
+
+            // Set up the transaction coordinator for Entity Framework
+            builder.RegisterType<EntityFrameworkTransactionCoordinator>()
+                .As<ITransactionCoordinator>()
+                .InstancePerLifetimeScope();
+
+            // AutofacHack is a static empty class we reference to make it possible
+            // to get the assembly name in any project without having to look up an assembly 
+            // dynamically. This section registers repositories by convention.
             var dataAccessAssembly = typeof(AutofacHack).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
 				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
 				.AsImplementedInterfaces();
 
+            // Register our model validators by convention
            builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
                     .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ModelValidator"))
                     .AsImplementedInterfaces()
                     .AsSelf()
                     .PropertiesAutowired();
 
+            // Register anything else we might have that isn't a system, Microsoft, Abstract or Generic class
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource(
                 t =>
                     !t.FullName.StartsWith("System") &&
@@ -153,8 +169,8 @@ namespace AdventureWorksNS.Api.Service
             {
 				// remove .. from this line to make the swagger endpoint work from a console app
 				// we have this to make it work in IIS with a virtual directory
-				// c.SwaggerEndpoint("../swagger/v1/swagger.json", "AdventureWorks");
-                c.SwaggerEndpoint("../swagger/v1/swagger.json", "AdventureWorks");
+				// c.SwaggerEndpoint("../swagger/v1/swagger.json", "ESPIOT");
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "ESPIOT");
             });
 
             app.UseMvc();

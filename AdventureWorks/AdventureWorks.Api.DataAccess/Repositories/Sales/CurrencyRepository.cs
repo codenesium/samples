@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CurrencyRepository: AbstractCurrencyRepository, ICurrencyRepository
 	{
 		public CurrencyRepository(ILogger<CurrencyRepository> logger,
-		                          ApplicationContext context) : base(logger,context)
+		                          ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFCurrency> SearchLinqEF(Expression<Func<EFCurrency, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy("CurrencyCode ASC").Skip(skip).Take(take).ToList<EFCurrency>();
+				return this.context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy("CurrencyCode ASC").Skip(skip).Take(take).ToList<EFCurrency>();
 			}
 			else
 			{
-				return this._context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrency>();
+				return this.context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrency>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy("CurrencyCode ASC").Skip(skip).Take(take).ToList<EFCurrency>();
+				return this.context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy("CurrencyCode ASC").Skip(skip).Take(take).ToList<EFCurrency>();
 			}
 			else
 			{
-				return this._context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrency>();
+				return this.context.Set<EFCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrency>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2deab9e8d4fc27934abd9a1446c50172</Hash>
+    <Hash>d444953ba1de8cae321f43ee4119233e</Hash>
 </Codenesium>*/

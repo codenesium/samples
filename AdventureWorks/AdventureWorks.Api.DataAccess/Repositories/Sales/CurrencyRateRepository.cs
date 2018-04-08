@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CurrencyRateRepository: AbstractCurrencyRateRepository, ICurrencyRateRepository
 	{
 		public CurrencyRateRepository(ILogger<CurrencyRateRepository> logger,
-		                              ApplicationContext context) : base(logger,context)
+		                              ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFCurrencyRate> SearchLinqEF(Expression<Func<EFCurrencyRate, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 			else
 			{
-				return this._context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 			else
 			{
-				return this._context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fdf3105cd9adf754ff05b2e365ad6962</Hash>
+    <Hash>cae662af1a5384d7e5d9aa0541e475da</Hash>
 </Codenesium>*/

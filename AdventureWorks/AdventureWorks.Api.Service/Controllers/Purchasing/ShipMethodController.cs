@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public ShipMethodsController(
 			ILogger<ShipMethodsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IShipMethodRepository shipMethodRepository,
 			IShipMethodModelValidator shipMethodModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         shipMethodRepository,
 			         shipMethodModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7926d5d5354acf2cdf7a662b8e686f7f</Hash>
+    <Hash>739941660afb632d87836efa5efe514a</Hash>
 </Codenesium>*/

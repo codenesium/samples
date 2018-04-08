@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class LocationRepository: AbstractLocationRepository, ILocationRepository
 	{
 		public LocationRepository(ILogger<LocationRepository> logger,
-		                          ApplicationContext context) : base(logger,context)
+		                          ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFLocation> SearchLinqEF(Expression<Func<EFLocation, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy("LocationID ASC").Skip(skip).Take(take).ToList<EFLocation>();
+				return this.context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy("LocationID ASC").Skip(skip).Take(take).ToList<EFLocation>();
 			}
 			else
 			{
-				return this._context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLocation>();
+				return this.context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLocation>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy("LocationID ASC").Skip(skip).Take(take).ToList<EFLocation>();
+				return this.context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy("LocationID ASC").Skip(skip).Take(take).ToList<EFLocation>();
 			}
 			else
 			{
-				return this._context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLocation>();
+				return this.context.Set<EFLocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLocation>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df4a5b4bf457c4de7ffbdfc0315d6f37</Hash>
+    <Hash>67b783f0a54769ae54c94dc4a88f6929</Hash>
 </Codenesium>*/

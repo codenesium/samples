@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public PasswordsController(
 			ILogger<PasswordsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IPasswordRepository passwordRepository,
 			IPasswordModelValidator passwordModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         passwordRepository,
 			         passwordModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e4db6025a2e01c14196d9040feb9372b</Hash>
+    <Hash>d32f889286fa9796610185745ae680e5</Hash>
 </Codenesium>*/

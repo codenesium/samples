@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class EmployeeDepartmentHistoryRepository: AbstractEmployeeDepartmentHistoryRepository, IEmployeeDepartmentHistoryRepository
 	{
 		public EmployeeDepartmentHistoryRepository(ILogger<EmployeeDepartmentHistoryRepository> logger,
-		                                           ApplicationContext context) : base(logger,context)
+		                                           ApplicationDbContext context) : base(logger,context)
 		{}
 
 		protected override List<EFEmployeeDepartmentHistory> SearchLinqEF(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
+				return this.context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
+				return this.context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
 			}
 		}
 
@@ -31,16 +31,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if(String.IsNullOrEmpty(orderClause))
 			{
-				return this._context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
+				return this.context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
 			}
 			else
 			{
-				return this._context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
+				return this.context.Set<EFEmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFEmployeeDepartmentHistory>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>40e9ef68542cdd2e633609cdfd39c279</Hash>
+    <Hash>06c02f8dd1603ed661b7f413c0f4a05f</Hash>
 </Codenesium>*/

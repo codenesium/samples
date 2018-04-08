@@ -14,11 +14,11 @@ namespace AdventureWorksNS.Api.Service
 	{
 		public ShiftsController(
 			ILogger<ShiftsController> logger,
-			ApplicationContext context,
+			ITransactionCoordinator transactionCoordinator,
 			IShiftRepository shiftRepository,
 			IShiftModelValidator shiftModelValidator
 			) : base(logger,
-			         context,
+			         transactionCoordinator,
 			         shiftRepository,
 			         shiftModelValidator)
 		{
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bdd96aacd7b2571a758adb491702f8af</Hash>
+    <Hash>f1956786291124c2d7cd1df81969cad0</Hash>
 </Codenesium>*/
