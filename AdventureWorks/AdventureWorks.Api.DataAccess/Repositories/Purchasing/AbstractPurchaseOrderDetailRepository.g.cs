@@ -123,7 +123,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		public virtual List<POCOPurchaseOrderDetail > GetWhereDirect(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOPurchaseOrderDetail> GetWhereDirect(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -206,5 +206,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>368c553e120cadcf1a188ba538f317bf</Hash>
+    <Hash>9a1b2892df692b36359279421ad96db3</Hash>
 </Codenesium>*/

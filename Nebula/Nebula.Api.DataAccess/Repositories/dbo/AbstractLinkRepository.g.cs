@@ -127,7 +127,7 @@ namespace NebulaNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		public virtual List<POCOLink > GetWhereDirect(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOLink> GetWhereDirect(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -138,7 +138,7 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id, response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 			return response.Links.FirstOrDefault();
 		}
 
@@ -216,5 +216,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d775397d3949e771a75ac87ff1777b29</Hash>
+    <Hash>a02d685d03784ec58fd3b9011f65cdc0</Hash>
 </Codenesium>*/

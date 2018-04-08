@@ -91,7 +91,7 @@ namespace ESPIOTNS.Api.DataAccess
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 		}
 
-		public virtual List<POCODevice > GetWhereDirect(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCODevice> GetWhereDirect(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -102,7 +102,7 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id, response);
+			this.SearchLinqPOCO(x => x.Id == id,response);
 			return response.Devices.FirstOrDefault();
 		}
 
@@ -143,5 +143,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cd2a8c98710a6e4b5f04c0005a79d6c3</Hash>
+    <Hash>769c828cfcfcff09649944f1fa48aae1</Hash>
 </Codenesium>*/
