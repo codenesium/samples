@@ -26,13 +26,12 @@ namespace NebulaNS.Api.Contracts
 		[Column("externalId", TypeName="uniqueidentifier")]
 		public Guid ExternalId {get; set;}
 
-		[ForeignKey("teamId")]
 		public virtual EFTeam Team { get; set; }
-		[ForeignKey("chainStatusId")]
+
 		public virtual EFChainStatus ChainStatus { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2513221be2f41ab8b1f77aa805d0bad3</Hash>
+    <Hash>1ef2aa4ec9a8681eacb94760a423025b</Hash>
 </Codenesium>*/

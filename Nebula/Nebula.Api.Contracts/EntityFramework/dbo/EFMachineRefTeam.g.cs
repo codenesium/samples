@@ -20,13 +20,12 @@ namespace NebulaNS.Api.Contracts
 		[Column("teamId", TypeName="int")]
 		public int TeamId {get; set;}
 
-		[ForeignKey("machineId")]
 		public virtual EFMachine Machine { get; set; }
-		[ForeignKey("teamId")]
+
 		public virtual EFTeam Team { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2bef72ac4a634feb0947608db8702c78</Hash>
+    <Hash>cc7562890c455581dc57348cbc6dbffb</Hash>
 </Codenesium>*/

@@ -20,11 +20,10 @@ namespace NebulaNS.Api.Contracts
 		[Column("organizationId", TypeName="int")]
 		public int OrganizationId {get; set;}
 
-		[ForeignKey("organizationId")]
 		public virtual EFOrganization Organization { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2f02c7fe566207228738e70701baa908</Hash>
+    <Hash>d47581a12f6ab141dea568efb85ec912</Hash>
 </Codenesium>*/

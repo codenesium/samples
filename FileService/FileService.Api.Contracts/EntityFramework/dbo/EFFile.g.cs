@@ -47,13 +47,12 @@ namespace FileServiceNS.Api.Contracts
 		[Column("description", TypeName="nvarchar(255)")]
 		public string Description {get; set;}
 
-		[ForeignKey("fileTypeId")]
 		public virtual EFFileType FileType { get; set; }
-		[ForeignKey("bucketId")]
+
 		public virtual EFBucket Bucket { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e563cc3a936298afe06aa316baabe919</Hash>
+    <Hash>3ec7310b4322453c87523f6bd316e70e</Hash>
 </Codenesium>*/

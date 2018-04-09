@@ -23,11 +23,10 @@ namespace ESPIOTNS.Api.Contracts
 		[Column("value", TypeName="varchar(4000)")]
 		public string @Value {get; set;}
 
-		[ForeignKey("deviceId")]
 		public virtual EFDevice Device { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2d14e7fc1bb2ae88a72f3bf56a569a3d</Hash>
+    <Hash>f0b0ddeaf246ebd857c2397240a65f42</Hash>
 </Codenesium>*/

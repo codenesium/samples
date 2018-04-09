@@ -47,15 +47,14 @@ namespace NebulaNS.Api.Contracts
 		[Column("externalId", TypeName="uniqueidentifier")]
 		public Guid ExternalId {get; set;}
 
-		[ForeignKey("chainId")]
 		public virtual EFChain Chain { get; set; }
-		[ForeignKey("assignedMachineId")]
+
 		public virtual EFMachine Machine { get; set; }
-		[ForeignKey("linkStatusId")]
+
 		public virtual EFLinkStatus LinkStatus { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4969f81542fbd15b91cd56d65bd19162</Hash>
+    <Hash>d59f0c5a34c29f783eedc3e4a93cac0a</Hash>
 </Codenesium>*/

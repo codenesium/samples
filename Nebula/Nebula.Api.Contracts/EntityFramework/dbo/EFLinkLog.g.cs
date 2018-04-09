@@ -23,11 +23,10 @@ namespace NebulaNS.Api.Contracts
 		[Column("dateEntered", TypeName="datetime")]
 		public DateTime DateEntered {get; set;}
 
-		[ForeignKey("linkId")]
 		public virtual EFLink Link { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d8b7b4a54fda9fdf015d1da2e92898a8</Hash>
+    <Hash>4ebe0aa01b9bc011945b6949f374cdf9</Hash>
 </Codenesium>*/
