@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.transactionHistoryRepository.GetById(id,response);
+			Response response = this.transactionHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.transactionHistoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.transactionHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -137,13 +133,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int TransactionID,TransactionHistoryModel model)
+		public virtual IActionResult Update(int id,TransactionHistoryModel model)
 		{
+			if(this.transactionHistoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.transactionHistoryModelValidator.UpdateMode();
 			var validationResult = this.transactionHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.transactionHistoryRepository.Update(TransactionID,  model.ProductID,
+				this.transactionHistoryRepository.Update(id,  model.ProductID,
 				                                         model.ReferenceOrderID,
 				                                         model.ReferenceOrderLineID,
 				                                         model.TransactionDate,
@@ -180,9 +181,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			var response = new Response();
-
-			this.transactionHistoryRepository.GetWhere(x => x.ProductID == id, response);
+			Response response = this.transactionHistoryRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -190,5 +189,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>782c56dae8c43091412df907c38e99e1</Hash>
+    <Hash>f2aed867ca450b92815df37268bb1b90</Hash>
 </Codenesium>*/

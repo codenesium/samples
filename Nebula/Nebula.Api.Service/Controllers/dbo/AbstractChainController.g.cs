@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.chainRepository.GetById(id,response);
+			Response response = this.chainRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.chainRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.chainRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,ChainModel model)
+		public virtual IActionResult Update(int id,ChainModel model)
 		{
+			if(this.chainRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.chainModelValidator.UpdateMode();
 			var validationResult = this.chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.chainRepository.Update(Id,  model.Name,
+				this.chainRepository.Update(id,  model.Name,
 				                            model.TeamId,
 				                            model.ChainStatusId,
 				                            model.ExternalId);
@@ -168,9 +169,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByTeamId(int id)
 		{
-			var response = new Response();
-
-			this.chainRepository.GetWhere(x => x.TeamId == id, response);
+			Response response = this.chainRepository.GetWhere(x => x.TeamId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -183,9 +182,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByChainStatusId(int id)
 		{
-			var response = new Response();
-
-			this.chainRepository.GetWhere(x => x.ChainStatusId == id, response);
+			Response response = this.chainRepository.GetWhere(x => x.ChainStatusId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -193,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3bb802702c218d7e413e14a60ce71a4c</Hash>
+    <Hash>98b892ce1fe61b75d430164d0511b49d</Hash>
 </Codenesium>*/

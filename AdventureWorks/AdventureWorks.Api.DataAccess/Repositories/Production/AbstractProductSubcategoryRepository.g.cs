@@ -74,29 +74,36 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual void GetById(int productSubcategoryID, Response response)
+		public virtual Response GetById(int productSubcategoryID)
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCO(x => x.ProductSubcategoryID == productSubcategoryID,response);
+			return response;
 		}
 
-		protected virtual List<EFProductSubcategory> SearchLinqEF(Expression<Func<EFProductSubcategory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual POCOProductSubcategory GetByIdDirect(int productSubcategoryID)
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			var response = new Response();
+
+			this.SearchLinqPOCO(x => x.ProductSubcategoryID == productSubcategoryID,response);
+			return response.ProductSubcategories.FirstOrDefault();
 		}
 
-		protected virtual List<EFProductSubcategory> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual Response GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
+			var response = new Response();
 
-		public virtual void GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
-		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
-		public virtual void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
 		public virtual List<POCOProductSubcategory> GetWhereDirect(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
@@ -105,13 +112,6 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ProductSubcategories;
-		}
-		public virtual POCOProductSubcategory GetByIdDirect(int productSubcategoryID)
-		{
-			var response = new Response();
-
-			this.SearchLinqPOCO(x => x.ProductSubcategoryID == productSubcategoryID,response);
-			return response.ProductSubcategories.FirstOrDefault();
 		}
 
 		private void SearchLinqPOCO(Expression<Func<EFProductSubcategory, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -124,6 +124,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			List<EFProductSubcategory> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
+		}
+
+		protected virtual List<EFProductSubcategory> SearchLinqEF(Expression<Func<EFProductSubcategory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
+		}
+
+		protected virtual List<EFProductSubcategory> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
 		public static void MapPOCOToEF(int productSubcategoryID, int productCategoryID,
@@ -161,5 +171,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>91ffbd26342465e7d4de574bf693d271</Hash>
+    <Hash>70e3021a0fa1cd558c2254527d453270</Hash>
 </Codenesium>*/

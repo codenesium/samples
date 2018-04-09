@@ -70,29 +70,36 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual void GetById(int productModelID, Response response)
+		public virtual Response GetById(int productModelID)
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCO(x => x.ProductModelID == productModelID,response);
+			return response;
 		}
 
-		protected virtual List<EFProductModelProductDescriptionCulture> SearchLinqEF(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual POCOProductModelProductDescriptionCulture GetByIdDirect(int productModelID)
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			var response = new Response();
+
+			this.SearchLinqPOCO(x => x.ProductModelID == productModelID,response);
+			return response.ProductModelProductDescriptionCultures.FirstOrDefault();
 		}
 
-		protected virtual List<EFProductModelProductDescriptionCulture> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual Response GetWhere(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
+			var response = new Response();
 
-		public virtual void GetWhere(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
-		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
-		public virtual void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
 		public virtual List<POCOProductModelProductDescriptionCulture> GetWhereDirect(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
@@ -101,13 +108,6 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ProductModelProductDescriptionCultures;
-		}
-		public virtual POCOProductModelProductDescriptionCulture GetByIdDirect(int productModelID)
-		{
-			var response = new Response();
-
-			this.SearchLinqPOCO(x => x.ProductModelID == productModelID,response);
-			return response.ProductModelProductDescriptionCultures.FirstOrDefault();
 		}
 
 		private void SearchLinqPOCO(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -120,6 +120,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			List<EFProductModelProductDescriptionCulture> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
+		}
+
+		protected virtual List<EFProductModelProductDescriptionCulture> SearchLinqEF(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
+		}
+
+		protected virtual List<EFProductModelProductDescriptionCulture> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
 		public static void MapPOCOToEF(int productModelID, int productDescriptionID,
@@ -160,5 +170,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3aecb72155d24e8bf0bd4183b5b51362</Hash>
+    <Hash>5255ff0d48bc4213ccf2ace833d9b078</Hash>
 </Codenesium>*/

@@ -155,64 +155,43 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidCustomer(int id)
+		private bool BeValidCustomer(int id)
 		{
-			Response response = new Response();
-
-			this.CustomerRepository.GetById(id,response);
-			return response.Customers.Count > 0;
+			return this.CustomerRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidSalesPerson(Nullable<int> id)
+		private bool BeValidSalesPerson(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.SalesPersonRepository.GetById(id.GetValueOrDefault(),response);
-			return response.SalesPersons.Count > 0;
+			return this.SalesPersonRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		public bool BeValidSalesTerritory(Nullable<int> id)
+		private bool BeValidSalesTerritory(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.SalesTerritoryRepository.GetById(id.GetValueOrDefault(),response);
-			return response.SalesTerritories.Count > 0;
+			return this.SalesTerritoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		public bool BeValidAddress(int id)
+		private bool BeValidAddress(int id)
 		{
-			Response response = new Response();
-
-			this.AddressRepository.GetById(id,response);
-			return response.Addresses.Count > 0;
+			return this.AddressRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidShipMethod(int id)
+		private bool BeValidShipMethod(int id)
 		{
-			Response response = new Response();
-
-			this.ShipMethodRepository.GetById(id,response);
-			return response.ShipMethods.Count > 0;
+			return this.ShipMethodRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidCreditCard(Nullable<int> id)
+		private bool BeValidCreditCard(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.CreditCardRepository.GetById(id.GetValueOrDefault(),response);
-			return response.CreditCards.Count > 0;
+			return this.CreditCardRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		public bool BeValidCurrencyRate(Nullable<int> id)
+		private bool BeValidCurrencyRate(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.CurrencyRateRepository.GetById(id.GetValueOrDefault(),response);
-			return response.CurrencyRates.Count > 0;
+			return this.CurrencyRateRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c102714eb40a7b94217db89281dd2d10</Hash>
+    <Hash>94fae84774c84e6c0f83be4d35c0eb70</Hash>
 </Codenesium>*/

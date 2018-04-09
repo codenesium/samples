@@ -29,19 +29,11 @@ namespace AdventureWorksNS.Api.Service
 			this.XmlEventRules();
 		}
 
-		public void PatchMode()
-		{
-			this.PostTimeRules();
-			this.DatabaseUserRules();
-			this.@EventRules();
-			this.SchemaRules();
-			this.@ObjectRules();
-			this.TSQLRules();
-			this.XmlEventRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>06254fcd06686791d95e54eae4ee9123</Hash>
+    <Hash>c60b98353ffdf071ba5d7ce459975da9</Hash>
 </Codenesium>*/

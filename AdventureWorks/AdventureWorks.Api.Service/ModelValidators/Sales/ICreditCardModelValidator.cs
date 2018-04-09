@@ -12,10 +12,10 @@ namespace AdventureWorksNS.Api.Service
 
 		void UpdateMode();
 
-		void PatchMode();
+		void DeleteMode();
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3eb4644e098b73bd53334625a4e32bd</Hash>
+    <Hash>7e595b31aa4baf53d2a8a311614054ad</Hash>
 </Codenesium>*/

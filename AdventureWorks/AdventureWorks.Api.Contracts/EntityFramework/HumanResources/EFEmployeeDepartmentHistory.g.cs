@@ -29,15 +29,14 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("BusinessEntityID")]
 		public virtual EFEmployee Employee { get; set; }
-		[ForeignKey("DepartmentID")]
+
 		public virtual EFDepartment Department { get; set; }
-		[ForeignKey("ShiftID")]
+
 		public virtual EFShift Shift { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>589032590beaac6cc3ce436a3bd4843e</Hash>
+    <Hash>7ac85e8c1b925070bab87b9eacc0e634</Hash>
 </Codenesium>*/

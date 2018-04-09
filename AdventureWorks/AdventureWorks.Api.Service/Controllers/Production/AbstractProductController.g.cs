@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.productRepository.GetById(id,response);
+			Response response = this.productRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.productRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.productRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -169,13 +165,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductID,ProductModel model)
+		public virtual IActionResult Update(int id,ProductModel model)
 		{
+			if(this.productRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.productModelValidator.UpdateMode();
 			var validationResult = this.productModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productRepository.Update(ProductID,  model.Name,
+				this.productRepository.Update(id,  model.Name,
 				                              model.ProductNumber,
 				                              model.MakeFlag,
 				                              model.FinishedGoodsFlag,
@@ -228,9 +229,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult BySizeUnitMeasureCode(string id)
 		{
-			var response = new Response();
-
-			this.productRepository.GetWhere(x => x.SizeUnitMeasureCode == id, response);
+			Response response = this.productRepository.GetWhere(x => x.SizeUnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -243,9 +242,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByWeightUnitMeasureCode(string id)
 		{
-			var response = new Response();
-
-			this.productRepository.GetWhere(x => x.WeightUnitMeasureCode == id, response);
+			Response response = this.productRepository.GetWhere(x => x.WeightUnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -258,9 +255,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductSubcategoryID(int id)
 		{
-			var response = new Response();
-
-			this.productRepository.GetWhere(x => x.ProductSubcategoryID == id, response);
+			Response response = this.productRepository.GetWhere(x => x.ProductSubcategoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -273,9 +268,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductModelID(int id)
 		{
-			var response = new Response();
-
-			this.productRepository.GetWhere(x => x.ProductModelID == id, response);
+			Response response = this.productRepository.GetWhere(x => x.ProductModelID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -283,5 +276,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>799ae27abdbd67e735a3d7f5124f94bb</Hash>
+    <Hash>002b5daedd277d94606b5a9c45e7d527</Hash>
 </Codenesium>*/

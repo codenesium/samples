@@ -55,16 +55,13 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidCurrency(string id)
+		private bool BeValidCurrency(string id)
 		{
-			Response response = new Response();
-
-			this.CurrencyRepository.GetById(id,response);
-			return response.Currencies.Count > 0;
+			return this.CurrencyRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c407b304f6107ba8a89f98ff470bb45</Hash>
+    <Hash>9d84ecc92c39f567f4d3bdbd9bdbe480</Hash>
 </Codenesium>*/

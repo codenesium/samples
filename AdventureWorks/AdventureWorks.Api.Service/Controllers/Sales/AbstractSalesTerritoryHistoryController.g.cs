@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.salesTerritoryHistoryRepository.GetById(id,response);
+			Response response = this.salesTerritoryHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.salesTerritoryHistoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.salesTerritoryHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,SalesTerritoryHistoryModel model)
+		public virtual IActionResult Update(int id,SalesTerritoryHistoryModel model)
 		{
+			if(this.salesTerritoryHistoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.salesTerritoryHistoryModelValidator.UpdateMode();
 			var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesTerritoryHistoryRepository.Update(BusinessEntityID,  model.TerritoryID,
+				this.salesTerritoryHistoryRepository.Update(id,  model.TerritoryID,
 				                                            model.StartDate,
 				                                            model.EndDate,
 				                                            model.Rowguid,
@@ -171,9 +172,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.salesTerritoryHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.salesTerritoryHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -186,9 +185,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			var response = new Response();
-
-			this.salesTerritoryHistoryRepository.GetWhere(x => x.TerritoryID == id, response);
+			Response response = this.salesTerritoryHistoryRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -196,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2560a23ab7fb6917a73939bb09c69f71</Hash>
+    <Hash>323db181d1dc9f0da3253d11779a6d49</Hash>
 </Codenesium>*/

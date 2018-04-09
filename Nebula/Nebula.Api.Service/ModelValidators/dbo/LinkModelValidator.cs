@@ -37,23 +37,11 @@ namespace NebulaNS.Api.Service
 			this.ExternalIdRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-			this.DynamicParametersRules();
-			this.StaticParametersRules();
-			this.ChainIdRules();
-			this.AssignedMachineIdRules();
-			this.LinkStatusIdRules();
-			this.OrderRules();
-			this.DateStartedRules();
-			this.DateCompletedRules();
-			this.ResponseRules();
-			this.ExternalIdRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>63e7bc18c5ebcaad3916068b20fdf7b2</Hash>
+    <Hash>e97cb2c3c321af7230c83cf099b40d5a</Hash>
 </Codenesium>*/

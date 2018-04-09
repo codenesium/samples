@@ -70,16 +70,13 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidCountryRegion(string id)
+		private bool BeValidCountryRegion(string id)
 		{
-			Response response = new Response();
-
-			this.CountryRegionRepository.GetById(id,response);
-			return response.CountryRegions.Count > 0;
+			return this.CountryRegionRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3fd5a6fc3c05a4a180533a0a6cb18d29</Hash>
+    <Hash>8c8652c6025dcaac919962a30ff9180a</Hash>
 </Codenesium>*/

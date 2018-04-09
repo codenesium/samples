@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.shipMethodRepository.GetById(id,response);
+			Response response = this.shipMethodRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.shipMethodRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.shipMethodRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ShipMethodID,ShipMethodModel model)
+		public virtual IActionResult Update(int id,ShipMethodModel model)
 		{
+			if(this.shipMethodRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.shipMethodModelValidator.UpdateMode();
 			var validationResult = this.shipMethodModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.shipMethodRepository.Update(ShipMethodID,  model.Name,
+				this.shipMethodRepository.Update(id,  model.Name,
 				                                 model.ShipBase,
 				                                 model.ShipRate,
 				                                 model.Rowguid,
@@ -166,5 +167,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9c5ebd380deeb89e2cd265178c16edbc</Hash>
+    <Hash>e1d468c80f9ef9667d4341b581eed853</Hash>
 </Codenesium>*/

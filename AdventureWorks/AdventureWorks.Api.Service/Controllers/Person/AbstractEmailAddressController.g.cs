@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.emailAddressRepository.GetById(id,response);
+			Response response = this.emailAddressRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.emailAddressRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.emailAddressRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,EmailAddressModel model)
+		public virtual IActionResult Update(int id,EmailAddressModel model)
 		{
+			if(this.emailAddressRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.emailAddressModelValidator.UpdateMode();
 			var validationResult = this.emailAddressModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.emailAddressRepository.Update(BusinessEntityID,  model.EmailAddressID,
+				this.emailAddressRepository.Update(id,  model.EmailAddressID,
 				                                   model.EmailAddress1,
 				                                   model.Rowguid,
 				                                   model.ModifiedDate);
@@ -168,9 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.emailAddressRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.emailAddressRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -178,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>82d975153edc4990957cdeef5322bd74</Hash>
+    <Hash>8eda65cbeadb46a4b97e537e58ba6c98</Hash>
 </Codenesium>*/

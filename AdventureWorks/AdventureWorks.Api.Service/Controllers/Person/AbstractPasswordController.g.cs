@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.passwordRepository.GetById(id,response);
+			Response response = this.passwordRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.passwordRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.passwordRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,PasswordModel model)
+		public virtual IActionResult Update(int id,PasswordModel model)
 		{
+			if(this.passwordRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.passwordModelValidator.UpdateMode();
 			var validationResult = this.passwordModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.passwordRepository.Update(BusinessEntityID,  model.PasswordHash,
+				this.passwordRepository.Update(id,  model.PasswordHash,
 				                               model.PasswordSalt,
 				                               model.Rowguid,
 				                               model.ModifiedDate);
@@ -168,9 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.passwordRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.passwordRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -178,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a42c47e6341f7215c2174ef04bc836bf</Hash>
+    <Hash>c9a4d2f2b0d7484d705d8a95bdd37428</Hash>
 </Codenesium>*/

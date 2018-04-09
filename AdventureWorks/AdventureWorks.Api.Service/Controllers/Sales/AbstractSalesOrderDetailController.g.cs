@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.salesOrderDetailRepository.GetById(id,response);
+			Response response = this.salesOrderDetailRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.salesOrderDetailRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.salesOrderDetailRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -141,13 +137,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int SalesOrderID,SalesOrderDetailModel model)
+		public virtual IActionResult Update(int id,SalesOrderDetailModel model)
 		{
+			if(this.salesOrderDetailRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.salesOrderDetailModelValidator.UpdateMode();
 			var validationResult = this.salesOrderDetailModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesOrderDetailRepository.Update(SalesOrderID,  model.SalesOrderDetailID,
+				this.salesOrderDetailRepository.Update(id,  model.SalesOrderDetailID,
 				                                       model.CarrierTrackingNumber,
 				                                       model.OrderQty,
 				                                       model.ProductID,
@@ -186,9 +187,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult BySalesOrderID(int id)
 		{
-			var response = new Response();
-
-			this.salesOrderDetailRepository.GetWhere(x => x.SalesOrderID == id, response);
+			Response response = this.salesOrderDetailRepository.GetWhere(x => x.SalesOrderID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -201,9 +200,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult BySpecialOfferID(int id)
 		{
-			var response = new Response();
-
-			this.salesOrderDetailRepository.GetWhere(x => x.SpecialOfferID == id, response);
+			Response response = this.salesOrderDetailRepository.GetWhere(x => x.SpecialOfferID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -211,5 +208,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>82d9b104814bbc663bcc4a9462f565f5</Hash>
+    <Hash>04e10250f90d43ba294f9d30826de21b</Hash>
 </Codenesium>*/

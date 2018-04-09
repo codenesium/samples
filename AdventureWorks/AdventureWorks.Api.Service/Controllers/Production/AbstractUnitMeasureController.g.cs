@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			Response response = new Response();
-
-			this.unitMeasureRepository.GetById(id,response);
+			Response response = this.unitMeasureRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.unitMeasureRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.unitMeasureRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string UnitMeasureCode,UnitMeasureModel model)
+		public virtual IActionResult Update(string id,UnitMeasureModel model)
 		{
+			if(this.unitMeasureRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.unitMeasureModelValidator.UpdateMode();
 			var validationResult = this.unitMeasureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.unitMeasureRepository.Update(UnitMeasureCode,  model.Name,
+				this.unitMeasureRepository.Update(id,  model.Name,
 				                                  model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c5ac0afd7d42218a0c7a3d4c67075deb</Hash>
+    <Hash>937c8b03a102991fe01da20609295fee</Hash>
 </Codenesium>*/

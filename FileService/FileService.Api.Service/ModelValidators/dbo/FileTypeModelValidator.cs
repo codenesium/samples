@@ -17,13 +17,11 @@ namespace FileServiceNS.Api.Service
 			this.NameRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1bbc47439510d41dd2597cc21c075a31</Hash>
+    <Hash>4c972e3bef018936c33ea46b67a2d850</Hash>
 </Codenesium>*/

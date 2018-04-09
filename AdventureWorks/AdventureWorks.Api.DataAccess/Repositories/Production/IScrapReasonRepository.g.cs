@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -14,14 +15,18 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(short scrapReasonID);
 
-		void GetById(short scrapReasonID, Response response);
+		Response GetById(short scrapReasonID);
 
-		void GetWhere(Expression<Func<EFScrapReason, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		POCOScrapReason GetByIdDirect(short scrapReasonID);
 
-		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>58ea7ac514dd332b1f7fcdd472cd3fee</Hash>
+    <Hash>e1b09605a83bdf419add0623ee8bc08b</Hash>
 </Codenesium>*/

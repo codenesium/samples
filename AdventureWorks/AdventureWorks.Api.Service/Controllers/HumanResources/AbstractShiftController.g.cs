@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.shiftRepository.GetById(id,response);
+			Response response = this.shiftRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.shiftRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.shiftRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ShiftID,ShiftModel model)
+		public virtual IActionResult Update(int id,ShiftModel model)
 		{
+			if(this.shiftRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.shiftModelValidator.UpdateMode();
 			var validationResult = this.shiftModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.shiftRepository.Update(ShiftID,  model.Name,
+				this.shiftRepository.Update(id,  model.Name,
 				                            model.StartTime,
 				                            model.EndTime,
 				                            model.ModifiedDate);
@@ -163,5 +164,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>25bda53a2c257b1f81fef0e6b502922e</Hash>
+    <Hash>fe51deeac7fe7b1facb25c30d745cabc</Hash>
 </Codenesium>*/

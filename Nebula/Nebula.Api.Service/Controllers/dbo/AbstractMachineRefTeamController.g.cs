@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.machineRefTeamRepository.GetById(id,response);
+			Response response = this.machineRefTeamRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.machineRefTeamRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.machineRefTeamRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,MachineRefTeamModel model)
+		public virtual IActionResult Update(int id,MachineRefTeamModel model)
 		{
+			if(this.machineRefTeamRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.machineRefTeamModelValidator.UpdateMode();
 			var validationResult = this.machineRefTeamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.machineRefTeamRepository.Update(Id,  model.MachineId,
+				this.machineRefTeamRepository.Update(id,  model.MachineId,
 				                                     model.TeamId);
 				return Ok();
 			}
@@ -162,9 +163,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByMachineId(int id)
 		{
-			var response = new Response();
-
-			this.machineRefTeamRepository.GetWhere(x => x.MachineId == id, response);
+			Response response = this.machineRefTeamRepository.GetWhere(x => x.MachineId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -177,9 +176,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByTeamId(int id)
 		{
-			var response = new Response();
-
-			this.machineRefTeamRepository.GetWhere(x => x.TeamId == id, response);
+			Response response = this.machineRefTeamRepository.GetWhere(x => x.TeamId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -187,5 +184,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>038c1b836479915bd1bc6673b793d751</Hash>
+    <Hash>180d0b5779d0003fe2272627a839d8a5</Hash>
 </Codenesium>*/

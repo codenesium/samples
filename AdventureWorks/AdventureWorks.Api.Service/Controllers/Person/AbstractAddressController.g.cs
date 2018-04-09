@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.addressRepository.GetById(id,response);
+			Response response = this.addressRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.addressRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.addressRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -137,13 +133,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int AddressID,AddressModel model)
+		public virtual IActionResult Update(int id,AddressModel model)
 		{
+			if(this.addressRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.addressModelValidator.UpdateMode();
 			var validationResult = this.addressModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.addressRepository.Update(AddressID,  model.AddressLine1,
+				this.addressRepository.Update(id,  model.AddressLine1,
 				                              model.AddressLine2,
 				                              model.City,
 				                              model.StateProvinceID,
@@ -180,9 +181,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByStateProvinceID(int id)
 		{
-			var response = new Response();
-
-			this.addressRepository.GetWhere(x => x.StateProvinceID == id, response);
+			Response response = this.addressRepository.GetWhere(x => x.StateProvinceID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -190,5 +189,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a642150d3056b28c11afd0acd92e9619</Hash>
+    <Hash>e4a05cf0c9cd34ed5b6dcbca8102132f</Hash>
 </Codenesium>*/

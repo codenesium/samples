@@ -45,27 +45,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NationalIDNumberRules();
-			this.LoginIDRules();
-			this.OrganizationNodeRules();
-			this.OrganizationLevelRules();
-			this.JobTitleRules();
-			this.BirthDateRules();
-			this.MaritalStatusRules();
-			this.GenderRules();
-			this.HireDateRules();
-			this.SalariedFlagRules();
-			this.VacationHoursRules();
-			this.SickLeaveHoursRules();
-			this.CurrentFlagRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0a125da7137abf950b69f0b0889b70c</Hash>
+    <Hash>d0b5dcefbce7ff48e67553604117195e</Hash>
 </Codenesium>*/

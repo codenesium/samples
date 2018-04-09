@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.salesPersonRepository.GetById(id,response);
+			Response response = this.salesPersonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.salesPersonRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.salesPersonRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -137,13 +133,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,SalesPersonModel model)
+		public virtual IActionResult Update(int id,SalesPersonModel model)
 		{
+			if(this.salesPersonRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.salesPersonModelValidator.UpdateMode();
 			var validationResult = this.salesPersonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesPersonRepository.Update(BusinessEntityID,  model.TerritoryID,
+				this.salesPersonRepository.Update(id,  model.TerritoryID,
 				                                  model.SalesQuota,
 				                                  model.Bonus,
 				                                  model.CommissionPct,
@@ -180,9 +181,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.salesPersonRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.salesPersonRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -195,9 +194,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			var response = new Response();
-
-			this.salesPersonRepository.GetWhere(x => x.TerritoryID == id, response);
+			Response response = this.salesPersonRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -205,5 +202,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>46c8e933b8bd6009ec9279bac9c6493d</Hash>
+    <Hash>6f8305bd0aabb3a7302cc885f3edccb5</Hash>
 </Codenesium>*/

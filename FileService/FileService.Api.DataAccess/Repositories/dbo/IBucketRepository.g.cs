@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 using FileServiceNS.Api.Contracts;
 
 namespace FileServiceNS.Api.DataAccess
@@ -14,14 +15,18 @@ namespace FileServiceNS.Api.DataAccess
 
 		void Delete(int id);
 
-		void GetById(int id, Response response);
+		Response GetById(int id);
 
-		void GetWhere(Expression<Func<EFBucket, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		POCOBucket GetByIdDirect(int id);
 
-		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		List<POCOBucket> GetWhereDirect(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>54428918c63e629264d5772db4383378</Hash>
+    <Hash>84bb08d84a5d1c7c8c19c5f426b312c7</Hash>
 </Codenesium>*/

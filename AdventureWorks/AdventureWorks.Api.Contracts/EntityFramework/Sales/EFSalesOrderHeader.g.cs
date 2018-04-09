@@ -89,25 +89,24 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("CustomerID")]
 		public virtual EFCustomer Customer { get; set; }
-		[ForeignKey("SalesPersonID")]
+
 		public virtual EFSalesPerson SalesPerson { get; set; }
-		[ForeignKey("TerritoryID")]
+
 		public virtual EFSalesTerritory SalesTerritory { get; set; }
-		[ForeignKey("BillToAddressID")]
+
 		public virtual EFAddress Address { get; set; }
-		[ForeignKey("ShipToAddressID")]
+
 		public virtual EFAddress Address1 { get; set; }
-		[ForeignKey("ShipMethodID")]
+
 		public virtual EFShipMethod ShipMethod { get; set; }
-		[ForeignKey("CreditCardID")]
+
 		public virtual EFCreditCard CreditCard { get; set; }
-		[ForeignKey("CurrencyRateID")]
+
 		public virtual EFCurrencyRate CurrencyRate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>154fbe9863f7b64b19394bb0191004c8</Hash>
+    <Hash>25523e0a1879cdb8b8e92f5f593e1b8f</Hash>
 </Codenesium>*/

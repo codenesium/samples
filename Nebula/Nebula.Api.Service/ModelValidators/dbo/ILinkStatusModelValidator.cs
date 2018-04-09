@@ -12,10 +12,10 @@ namespace NebulaNS.Api.Service
 
 		void UpdateMode();
 
-		void PatchMode();
+		void DeleteMode();
 	}
 }
 
 /*<Codenesium>
-    <Hash>5efb9cb6682c66c98a19581d66ee3573</Hash>
+    <Hash>8796d9411670acb95292e0e79ac13df8</Hash>
 </Codenesium>*/

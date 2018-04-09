@@ -82,24 +82,18 @@ namespace FileServiceNS.Api.Service
 			RuleFor(x => x.Description).Length(0,255);
 		}
 
-		public bool BeValidFileType(int id)
+		private bool BeValidFileType(int id)
 		{
-			Response response = new Response();
-
-			this.FileTypeRepository.GetById(id,response);
-			return response.FileTypes.Count > 0;
+			return this.FileTypeRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidBucket(Nullable<int> id)
+		private bool BeValidBucket(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.BucketRepository.GetById(id.GetValueOrDefault(),response);
-			return response.Buckets.Count > 0;
+			return this.BucketRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cc77e5782f7615fbadefa7f46d78bfbb</Hash>
+    <Hash>962aa212d7c86959dbdbf976e033bfd8</Hash>
 </Codenesium>*/

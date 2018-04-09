@@ -34,24 +34,18 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
 		}
 
-		public bool BeValidMachine(int id)
+		private bool BeValidMachine(int id)
 		{
-			Response response = new Response();
-
-			this.MachineRepository.GetById(id,response);
-			return response.Machines.Count > 0;
+			return this.MachineRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidTeam(int id)
+		private bool BeValidTeam(int id)
 		{
-			Response response = new Response();
-
-			this.TeamRepository.GetById(id,response);
-			return response.Teams.Count > 0;
+			return this.TeamRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>209f08df33b3be8e9eb7bce1f2c98055</Hash>
+    <Hash>c4d4cd326f53766f15deea9085fe953a</Hash>
 </Codenesium>*/

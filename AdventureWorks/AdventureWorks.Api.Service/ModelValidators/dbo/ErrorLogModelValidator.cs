@@ -31,20 +31,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ErrorMessageRules();
 		}
 
-		public void PatchMode()
-		{
-			this.ErrorTimeRules();
-			this.UserNameRules();
-			this.ErrorNumberRules();
-			this.ErrorSeverityRules();
-			this.ErrorStateRules();
-			this.ErrorProcedureRules();
-			this.ErrorLineRules();
-			this.ErrorMessageRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>230fdd97f956ecb2e30695b55ec091e3</Hash>
+    <Hash>f5f8ad6b84f519820f40f39ac4a3206e</Hash>
 </Codenesium>*/

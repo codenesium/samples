@@ -21,15 +21,11 @@ namespace NebulaNS.Api.Service
 			this.DateEnteredRules();
 		}
 
-		public void PatchMode()
-		{
-			this.LinkIdRules();
-			this.LogRules();
-			this.DateEnteredRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b26a6c3a19309e1da8082d530d6d82c8</Hash>
+    <Hash>82856482b461a119000a3d2868388df3</Hash>
 </Codenesium>*/

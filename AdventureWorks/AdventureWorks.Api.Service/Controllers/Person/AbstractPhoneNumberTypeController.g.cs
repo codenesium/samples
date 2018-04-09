@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.phoneNumberTypeRepository.GetById(id,response);
+			Response response = this.phoneNumberTypeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.phoneNumberTypeRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.phoneNumberTypeRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int PhoneNumberTypeID,PhoneNumberTypeModel model)
+		public virtual IActionResult Update(int id,PhoneNumberTypeModel model)
 		{
+			if(this.phoneNumberTypeRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.phoneNumberTypeModelValidator.UpdateMode();
 			var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.phoneNumberTypeRepository.Update(PhoneNumberTypeID,  model.Name,
+				this.phoneNumberTypeRepository.Update(id,  model.Name,
 				                                      model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5d7aaf1c80b4e70869c1d5be37fe4c77</Hash>
+    <Hash>b008330810ac52c968a051ff06e56797</Hash>
 </Codenesium>*/

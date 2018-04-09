@@ -41,13 +41,12 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
-		[ForeignKey("ScrapReasonID")]
+
 		public virtual EFScrapReason ScrapReason { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f12f65bb24af17d4f4164d18624a06be</Hash>
+    <Hash>cb8c65f23bc861eff9f444d50fd6e4a2</Hash>
 </Codenesium>*/

@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.productListPriceHistoryRepository.GetById(id,response);
+			Response response = this.productListPriceHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.productListPriceHistoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.productListPriceHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductID,ProductListPriceHistoryModel model)
+		public virtual IActionResult Update(int id,ProductListPriceHistoryModel model)
 		{
+			if(this.productListPriceHistoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.productListPriceHistoryModelValidator.UpdateMode();
 			var validationResult = this.productListPriceHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productListPriceHistoryRepository.Update(ProductID,  model.StartDate,
+				this.productListPriceHistoryRepository.Update(id,  model.StartDate,
 				                                              model.EndDate,
 				                                              model.ListPrice,
 				                                              model.ModifiedDate);
@@ -168,9 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			var response = new Response();
-
-			this.productListPriceHistoryRepository.GetWhere(x => x.ProductID == id, response);
+			Response response = this.productListPriceHistoryRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -178,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>477f7468d885af4b8502b03d199ca94f</Hash>
+    <Hash>11b129503a99f8097e4d66b50ea3325d</Hash>
 </Codenesium>*/

@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.productCategoryRepository.GetById(id,response);
+			Response response = this.productCategoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.productCategoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.productCategoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -127,13 +123,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductCategoryID,ProductCategoryModel model)
+		public virtual IActionResult Update(int id,ProductCategoryModel model)
 		{
+			if(this.productCategoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.productCategoryModelValidator.UpdateMode();
 			var validationResult = this.productCategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productCategoryRepository.Update(ProductCategoryID,  model.Name,
+				this.productCategoryRepository.Update(id,  model.Name,
 				                                      model.Rowguid,
 				                                      model.ModifiedDate);
 				return Ok();
@@ -160,5 +161,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>21d054fbe0889c74c2712b383a394ff8</Hash>
+    <Hash>9d4709dfaf313f08dd06c5ca38c02abf</Hash>
 </Codenesium>*/

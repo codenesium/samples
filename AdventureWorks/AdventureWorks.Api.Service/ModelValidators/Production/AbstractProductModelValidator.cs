@@ -141,32 +141,23 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidUnitMeasure(string id)
+		private bool BeValidUnitMeasure(string id)
 		{
-			Response response = new Response();
-
-			this.UnitMeasureRepository.GetById(id.GetValueOrDefault(),response);
-			return response.UnitMeasures.Count > 0;
+			return this.UnitMeasureRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		public bool BeValidProductSubcategory(Nullable<int> id)
+		private bool BeValidProductSubcategory(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.ProductSubcategoryRepository.GetById(id.GetValueOrDefault(),response);
-			return response.ProductSubcategories.Count > 0;
+			return this.ProductSubcategoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		public bool BeValidProductModel(Nullable<int> id)
+		private bool BeValidProductModel(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.ProductModelRepository.GetById(id.GetValueOrDefault(),response);
-			return response.ProductModels.Count > 0;
+			return this.ProductModelRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc7f3e8f9932e95a51486b4d8ce75836</Hash>
+    <Hash>b5f2aca72a1dec70961edc7f4ad9b493</Hash>
 </Codenesium>*/

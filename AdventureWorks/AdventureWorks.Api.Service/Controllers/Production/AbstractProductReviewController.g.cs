@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.productReviewRepository.GetById(id,response);
+			Response response = this.productReviewRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.productReviewRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.productReviewRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -135,13 +131,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductReviewID,ProductReviewModel model)
+		public virtual IActionResult Update(int id,ProductReviewModel model)
 		{
+			if(this.productReviewRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.productReviewModelValidator.UpdateMode();
 			var validationResult = this.productReviewModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productReviewRepository.Update(ProductReviewID,  model.ProductID,
+				this.productReviewRepository.Update(id,  model.ProductID,
 				                                    model.ReviewerName,
 				                                    model.ReviewDate,
 				                                    model.EmailAddress,
@@ -177,9 +178,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			var response = new Response();
-
-			this.productReviewRepository.GetWhere(x => x.ProductID == id, response);
+			Response response = this.productReviewRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -187,5 +186,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a77e57ad04e194ab077ad57b02a80e8d</Hash>
+    <Hash>1954365e21da48b71abb57bbe1b46752</Hash>
 </Codenesium>*/

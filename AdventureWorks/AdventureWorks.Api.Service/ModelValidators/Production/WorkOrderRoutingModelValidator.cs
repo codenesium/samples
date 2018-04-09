@@ -37,23 +37,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.ProductIDRules();
-			this.OperationSequenceRules();
-			this.LocationIDRules();
-			this.ScheduledStartDateRules();
-			this.ScheduledEndDateRules();
-			this.ActualStartDateRules();
-			this.ActualEndDateRules();
-			this.ActualResourceHrsRules();
-			this.PlannedCostRules();
-			this.ActualCostRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eac54c7d7a41d94f040b2b2b851ce2d8</Hash>
+    <Hash>77be6cd52a81cafe928d3f790ceb0738</Hash>
 </Codenesium>*/

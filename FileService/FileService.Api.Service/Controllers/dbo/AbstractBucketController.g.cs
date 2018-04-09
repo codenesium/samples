@@ -42,9 +42,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.bucketRepository.GetById(id,response);
+			Response response = this.bucketRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace FileServiceNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.bucketRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.bucketRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,BucketModel model)
+		public virtual IActionResult Update(int id,BucketModel model)
 		{
+			if(this.bucketRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.bucketModelValidator.UpdateMode();
 			var validationResult = this.bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.bucketRepository.Update(Id,  model.Name,
+				this.bucketRepository.Update(id,  model.Name,
 				                             model.ExternalId);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d28fb8f40a4cfa51c7cbcedbf322d6ca</Hash>
+    <Hash>91861e15110953991f0c75122f780473</Hash>
 </Codenesium>*/

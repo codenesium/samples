@@ -41,16 +41,13 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidEmployee(int id)
+		private bool BeValidEmployee(int id)
 		{
-			Response response = new Response();
-
-			this.EmployeeRepository.GetById(id,response);
-			return response.Employees.Count > 0;
+			return this.EmployeeRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ada33ac8fb7e3fbfdba1ce2e670ec27</Hash>
+    <Hash>edf1a5c489f587ba32af49072b9d4d76</Hash>
 </Codenesium>*/

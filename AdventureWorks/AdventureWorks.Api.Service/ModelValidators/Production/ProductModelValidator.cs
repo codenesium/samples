@@ -63,36 +63,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-			this.ProductNumberRules();
-			this.MakeFlagRules();
-			this.FinishedGoodsFlagRules();
-			this.ColorRules();
-			this.SafetyStockLevelRules();
-			this.ReorderPointRules();
-			this.StandardCostRules();
-			this.ListPriceRules();
-			this.SizeRules();
-			this.SizeUnitMeasureCodeRules();
-			this.WeightUnitMeasureCodeRules();
-			this.WeightRules();
-			this.DaysToManufactureRules();
-			this.ProductLineRules();
-			this.@ClassRules();
-			this.StyleRules();
-			this.ProductSubcategoryIDRules();
-			this.ProductModelIDRules();
-			this.SellStartDateRules();
-			this.SellEndDateRules();
-			this.DiscontinuedDateRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>831008f41d1ec87f09ec8fa206b67202</Hash>
+    <Hash>8c3df5dad416f1823a4062576ea7c7de</Hash>
 </Codenesium>*/

@@ -23,16 +23,11 @@ namespace NebulaNS.Api.Service
 			this.ExternalIdRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-			this.TeamIdRules();
-			this.ChainStatusIdRules();
-			this.ExternalIdRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e4f540e3cad55054ca3fbb5ee1a9313</Hash>
+    <Hash>768929c65db643283bd11b7a724a0540</Hash>
 </Codenesium>*/

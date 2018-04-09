@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 using ESPIOTNS.Api.Contracts;
 
 namespace ESPIOTNS.Api.DataAccess
@@ -16,14 +17,18 @@ namespace ESPIOTNS.Api.DataAccess
 
 		void Delete(int id);
 
-		void GetById(int id, Response response);
+		Response GetById(int id);
 
-		void GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		POCODeviceAction GetByIdDirect(int id);
 
-		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		List<POCODeviceAction> GetWhereDirect(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>961668d23ed3986b33ae6438d98c7534</Hash>
+    <Hash>c39f88e58f7bfbfbfafcac5d16318c98</Hash>
 </Codenesium>*/

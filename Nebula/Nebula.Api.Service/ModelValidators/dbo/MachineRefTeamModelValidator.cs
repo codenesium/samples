@@ -19,14 +19,11 @@ namespace NebulaNS.Api.Service
 			this.TeamIdRules();
 		}
 
-		public void PatchMode()
-		{
-			this.MachineIdRules();
-			this.TeamIdRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d323ca22e614de6f552ee0a25b4e8d60</Hash>
+    <Hash>6cbc1b356e8274d516ab9dbb7288aaf0</Hash>
 </Codenesium>*/

@@ -42,9 +42,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.fileRepository.GetById(id,response);
+			Response response = this.fileRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace FileServiceNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.fileRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.fileRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -143,13 +139,18 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,FileModel model)
+		public virtual IActionResult Update(int id,FileModel model)
 		{
+			if(this.fileRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.fileModelValidator.UpdateMode();
 			var validationResult = this.fileModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.fileRepository.Update(Id,  model.ExternalId,
+				this.fileRepository.Update(id,  model.ExternalId,
 				                           model.PrivateKey,
 				                           model.PublicKey,
 				                           model.Location,
@@ -189,9 +190,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByFileTypeId(int id)
 		{
-			var response = new Response();
-
-			this.fileRepository.GetWhere(x => x.FileTypeId == id, response);
+			Response response = this.fileRepository.GetWhere(x => x.FileTypeId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -204,9 +203,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBucketId(int id)
 		{
-			var response = new Response();
-
-			this.fileRepository.GetWhere(x => x.BucketId == id, response);
+			Response response = this.fileRepository.GetWhere(x => x.BucketId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -214,5 +211,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a64a28452423610bb62e11a829d875c6</Hash>
+    <Hash>f50dd17c53d1d26a17dff802ecf812e1</Hash>
 </Codenesium>*/

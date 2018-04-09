@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(short id)
 		{
-			Response response = new Response();
-
-			this.locationRepository.GetById(id,response);
+			Response response = this.locationRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.locationRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.locationRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short LocationID,LocationModel model)
+		public virtual IActionResult Update(short id,LocationModel model)
 		{
+			if(this.locationRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.locationModelValidator.UpdateMode();
 			var validationResult = this.locationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.locationRepository.Update(LocationID,  model.Name,
+				this.locationRepository.Update(id,  model.Name,
 				                               model.CostRate,
 				                               model.Availability,
 				                               model.ModifiedDate);
@@ -163,5 +164,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>72d3470a2af4256fdc1e0da198b82659</Hash>
+    <Hash>1bb18cec4bd4c2fffdcf8927183687f2</Hash>
 </Codenesium>*/

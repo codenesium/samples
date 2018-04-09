@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.employeePayHistoryRepository.GetById(id,response);
+			Response response = this.employeePayHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.employeePayHistoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.employeePayHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,EmployeePayHistoryModel model)
+		public virtual IActionResult Update(int id,EmployeePayHistoryModel model)
 		{
+			if(this.employeePayHistoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.employeePayHistoryModelValidator.UpdateMode();
 			var validationResult = this.employeePayHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.employeePayHistoryRepository.Update(BusinessEntityID,  model.RateChangeDate,
+				this.employeePayHistoryRepository.Update(id,  model.RateChangeDate,
 				                                         model.Rate,
 				                                         model.PayFrequency,
 				                                         model.ModifiedDate);
@@ -168,9 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.employeePayHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.employeePayHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -178,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>29069240516f2d341650709a56cf76d2</Hash>
+    <Hash>c319965ba04890207ae5aa2bdae31f29</Hash>
 </Codenesium>*/

@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.salesReasonRepository.GetById(id,response);
+			Response response = this.salesReasonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.salesReasonRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.salesReasonRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -127,13 +123,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int SalesReasonID,SalesReasonModel model)
+		public virtual IActionResult Update(int id,SalesReasonModel model)
 		{
+			if(this.salesReasonRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.salesReasonModelValidator.UpdateMode();
 			var validationResult = this.salesReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesReasonRepository.Update(SalesReasonID,  model.Name,
+				this.salesReasonRepository.Update(id,  model.Name,
 				                                  model.ReasonType,
 				                                  model.ModifiedDate);
 				return Ok();
@@ -160,5 +161,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4b60180330f8f1d632d1924ddd1bc8f0</Hash>
+    <Hash>878a8678dac616c61afd5cad08a048f8</Hash>
 </Codenesium>*/

@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.purchaseOrderDetailRepository.GetById(id,response);
+			Response response = this.purchaseOrderDetailRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.purchaseOrderDetailRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.purchaseOrderDetailRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -141,13 +137,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int PurchaseOrderID,PurchaseOrderDetailModel model)
+		public virtual IActionResult Update(int id,PurchaseOrderDetailModel model)
 		{
+			if(this.purchaseOrderDetailRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.purchaseOrderDetailModelValidator.UpdateMode();
 			var validationResult = this.purchaseOrderDetailModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.purchaseOrderDetailRepository.Update(PurchaseOrderID,  model.PurchaseOrderDetailID,
+				this.purchaseOrderDetailRepository.Update(id,  model.PurchaseOrderDetailID,
 				                                          model.DueDate,
 				                                          model.OrderQty,
 				                                          model.ProductID,
@@ -186,9 +187,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByPurchaseOrderID(int id)
 		{
-			var response = new Response();
-
-			this.purchaseOrderDetailRepository.GetWhere(x => x.PurchaseOrderID == id, response);
+			Response response = this.purchaseOrderDetailRepository.GetWhere(x => x.PurchaseOrderID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -201,9 +200,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			var response = new Response();
-
-			this.purchaseOrderDetailRepository.GetWhere(x => x.ProductID == id, response);
+			Response response = this.purchaseOrderDetailRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -211,5 +208,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6571a865051edb954f7c7a6aa92af03a</Hash>
+    <Hash>7b9149a123dfd10e7aaf0642f916dbf9</Hash>
 </Codenesium>*/

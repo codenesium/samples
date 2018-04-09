@@ -32,13 +32,12 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("FromCurrencyCode")]
 		public virtual EFCurrency Currency { get; set; }
-		[ForeignKey("ToCurrencyCode")]
+
 		public virtual EFCurrency Currency1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ecff3751b5572c3b4a3bdae14b02a507</Hash>
+    <Hash>9e99005ce9ed47101123444f167a35f3</Hash>
 </Codenesium>*/

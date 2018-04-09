@@ -38,16 +38,13 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.DateEntered).NotNull();
 		}
 
-		public bool BeValidLink(int id)
+		private bool BeValidLink(int id)
 		{
-			Response response = new Response();
-
-			this.LinkRepository.GetById(id,response);
-			return response.Links.Count > 0;
+			return this.LinkRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e410d468989e80c2e6bb27fc66ae8064</Hash>
+    <Hash>675626995b853478c6b0974fed6b5740</Hash>
 </Codenesium>*/

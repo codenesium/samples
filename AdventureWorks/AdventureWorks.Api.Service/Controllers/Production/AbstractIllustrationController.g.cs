@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.illustrationRepository.GetById(id,response);
+			Response response = this.illustrationRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.illustrationRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.illustrationRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int IllustrationID,IllustrationModel model)
+		public virtual IActionResult Update(int id,IllustrationModel model)
 		{
+			if(this.illustrationRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.illustrationModelValidator.UpdateMode();
 			var validationResult = this.illustrationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.illustrationRepository.Update(IllustrationID,  model.Diagram,
+				this.illustrationRepository.Update(id,  model.Diagram,
 				                                   model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>edd47194c7a1a463da19fd398c9164b0</Hash>
+    <Hash>89e80fa103679d62e558c5873362b4e9</Hash>
 </Codenesium>*/

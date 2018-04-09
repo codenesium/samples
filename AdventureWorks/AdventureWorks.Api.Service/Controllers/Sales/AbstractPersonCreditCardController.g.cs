@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.personCreditCardRepository.GetById(id,response);
+			Response response = this.personCreditCardRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.personCreditCardRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.personCreditCardRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,PersonCreditCardModel model)
+		public virtual IActionResult Update(int id,PersonCreditCardModel model)
 		{
+			if(this.personCreditCardRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.personCreditCardModelValidator.UpdateMode();
 			var validationResult = this.personCreditCardModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.personCreditCardRepository.Update(BusinessEntityID,  model.CreditCardID,
+				this.personCreditCardRepository.Update(id,  model.CreditCardID,
 				                                       model.ModifiedDate);
 				return Ok();
 			}
@@ -162,9 +163,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.personCreditCardRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.personCreditCardRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -177,9 +176,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByCreditCardID(int id)
 		{
-			var response = new Response();
-
-			this.personCreditCardRepository.GetWhere(x => x.CreditCardID == id, response);
+			Response response = this.personCreditCardRepository.GetWhere(x => x.CreditCardID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -187,5 +184,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>112dc38c24a8aee219bb6dda7f3b5b87</Hash>
+    <Hash>301abf9c9e0e9dbd5f73b286a824d94e</Hash>
 </Codenesium>*/

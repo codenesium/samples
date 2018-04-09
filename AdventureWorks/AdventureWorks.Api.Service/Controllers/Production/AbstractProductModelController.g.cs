@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.productModelRepository.GetById(id,response);
+			Response response = this.productModelRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.productModelRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.productModelRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductModelID,ProductModelModel model)
+		public virtual IActionResult Update(int id,ProductModelModel model)
 		{
+			if(this.productModelRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.productModelModelValidator.UpdateMode();
 			var validationResult = this.productModelModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productModelRepository.Update(ProductModelID,  model.Name,
+				this.productModelRepository.Update(id,  model.Name,
 				                                   model.CatalogDescription,
 				                                   model.Instructions,
 				                                   model.Rowguid,
@@ -166,5 +167,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c2ca61cb2a5e060d25fb2471459b635c</Hash>
+    <Hash>d8bace4d5f03ecb5d76a945a04c05726</Hash>
 </Codenesium>*/

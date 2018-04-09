@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
@@ -32,14 +33,18 @@ namespace NebulaNS.Api.DataAccess
 
 		void Delete(int id);
 
-		void GetById(int id, Response response);
+		Response GetById(int id);
 
-		void GetWhere(Expression<Func<EFLink, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		POCOLink GetByIdDirect(int id);
 
-		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		List<POCOLink> GetWhereDirect(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9e3f42cd4218641c3fd8630d8a25b2d</Hash>
+    <Hash>da15f35a1b8784d7c28dfe3ffcf4551e</Hash>
 </Codenesium>*/

@@ -62,29 +62,36 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public virtual void GetById(int id, Response response)
+		public virtual Response GetById(int id)
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCO(x => x.Id == id,response);
+			return response;
 		}
 
-		protected virtual List<EFChainStatus> SearchLinqEF(Expression<Func<EFChainStatus, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual POCOChainStatus GetByIdDirect(int id)
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			var response = new Response();
+
+			this.SearchLinqPOCO(x => x.Id == id,response);
+			return response.ChainStatus.FirstOrDefault();
 		}
 
-		protected virtual List<EFChainStatus> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual Response GetWhere(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
+			var response = new Response();
 
-		public virtual void GetWhere(Expression<Func<EFChainStatus, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
-		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
-		public virtual void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
 		public virtual List<POCOChainStatus> GetWhereDirect(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
@@ -93,13 +100,6 @@ namespace NebulaNS.Api.DataAccess
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ChainStatus;
-		}
-		public virtual POCOChainStatus GetByIdDirect(int id)
-		{
-			var response = new Response();
-
-			this.SearchLinqPOCO(x => x.Id == id,response);
-			return response.ChainStatus.FirstOrDefault();
 		}
 
 		private void SearchLinqPOCO(Expression<Func<EFChainStatus, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -112,6 +112,16 @@ namespace NebulaNS.Api.DataAccess
 		{
 			List<EFChainStatus> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
+		}
+
+		protected virtual List<EFChainStatus> SearchLinqEF(Expression<Func<EFChainStatus, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
+		}
+
+		protected virtual List<EFChainStatus> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
 		public static void MapPOCOToEF(int id, string name, EFChainStatus   efChainStatus)
@@ -136,5 +146,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b121f9d59c4dd4ceafb863b7fe6d6077</Hash>
+    <Hash>d30fcb58cd90bbe2fee82dc5bbb01373</Hash>
 </Codenesium>*/

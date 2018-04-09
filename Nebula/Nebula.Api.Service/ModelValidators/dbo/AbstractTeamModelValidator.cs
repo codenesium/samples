@@ -33,16 +33,13 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.OrganizationId).Must(BeValidOrganization).When(x => x ?.OrganizationId != null).WithMessage("Invalid reference");
 		}
 
-		public bool BeValidOrganization(int id)
+		private bool BeValidOrganization(int id)
 		{
-			Response response = new Response();
-
-			this.OrganizationRepository.GetById(id,response);
-			return response.Organizations.Count > 0;
+			return this.OrganizationRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e0b449af43b2f7a3987875e627ecd069</Hash>
+    <Hash>b567b9ae62973d858e0e5bea6fb0c434</Hash>
 </Codenesium>*/

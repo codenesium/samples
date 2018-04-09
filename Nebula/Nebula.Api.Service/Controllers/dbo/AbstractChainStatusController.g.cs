@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.chainStatusRepository.GetById(id,response);
+			Response response = this.chainStatusRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.chainStatusRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.chainStatusRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -123,13 +119,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,ChainStatusModel model)
+		public virtual IActionResult Update(int id,ChainStatusModel model)
 		{
+			if(this.chainStatusRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.chainStatusModelValidator.UpdateMode();
 			var validationResult = this.chainStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.chainStatusRepository.Update(Id,  model.Name);
+				this.chainStatusRepository.Update(id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +155,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0f43074b973eb5d9d67e9c4cc2b16413</Hash>
+    <Hash>60bc1a06720a0fc10467b69d9a20b726</Hash>
 </Codenesium>*/

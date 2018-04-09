@@ -39,16 +39,13 @@ namespace ESPIOTNS.Api.Service
 			RuleFor(x => x.@Value).Length(0,4000);
 		}
 
-		public bool BeValidDevice(int id)
+		private bool BeValidDevice(int id)
 		{
-			Response response = new Response();
-
-			this.DeviceRepository.GetById(id,response);
-			return response.Devices.Count > 0;
+			return this.DeviceRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9229f59471eccd2f5d688757096d4b25</Hash>
+    <Hash>ae86588f75e789bac8b84afa95cfb1d3</Hash>
 </Codenesium>*/

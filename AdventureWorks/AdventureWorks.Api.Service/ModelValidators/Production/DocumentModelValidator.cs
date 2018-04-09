@@ -41,25 +41,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.DocumentLevelRules();
-			this.TitleRules();
-			this.OwnerRules();
-			this.FolderFlagRules();
-			this.FileNameRules();
-			this.FileExtensionRules();
-			this.RevisionRules();
-			this.ChangeNumberRules();
-			this.StatusRules();
-			this.DocumentSummaryRules();
-			this.Document1Rules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d7b66d631fb5383dab7b5c359afe107</Hash>
+    <Hash>812eb58644b14a4176db691821ad2b50</Hash>
 </Codenesium>*/

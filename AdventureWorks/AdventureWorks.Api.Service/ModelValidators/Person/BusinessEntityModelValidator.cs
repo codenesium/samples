@@ -19,14 +19,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.RowguidRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d26eae7d1b6a7b6f9ee492a4949b6131</Hash>
+    <Hash>7ca162f439fc612ae3c62a5109780a56</Hash>
 </Codenesium>*/

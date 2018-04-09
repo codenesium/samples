@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.organizationRepository.GetById(id,response);
+			Response response = this.organizationRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.organizationRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.organizationRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -123,13 +119,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,OrganizationModel model)
+		public virtual IActionResult Update(int id,OrganizationModel model)
 		{
+			if(this.organizationRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.organizationModelValidator.UpdateMode();
 			var validationResult = this.organizationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.organizationRepository.Update(Id,  model.Name);
+				this.organizationRepository.Update(id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +155,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f487b535e64aec73e7abbd93d2bf3ab5</Hash>
+    <Hash>36d017973e7ca179546dfed5856029aa</Hash>
 </Codenesium>*/

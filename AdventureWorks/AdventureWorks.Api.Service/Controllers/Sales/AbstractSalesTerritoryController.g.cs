@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.salesTerritoryRepository.GetById(id,response);
+			Response response = this.salesTerritoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.salesTerritoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.salesTerritoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -139,13 +135,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int TerritoryID,SalesTerritoryModel model)
+		public virtual IActionResult Update(int id,SalesTerritoryModel model)
 		{
+			if(this.salesTerritoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.salesTerritoryModelValidator.UpdateMode();
 			var validationResult = this.salesTerritoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesTerritoryRepository.Update(TerritoryID,  model.Name,
+				this.salesTerritoryRepository.Update(id,  model.Name,
 				                                     model.CountryRegionCode,
 				                                     model.@Group,
 				                                     model.SalesYTD,
@@ -183,9 +184,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByCountryRegionCode(string id)
 		{
-			var response = new Response();
-
-			this.salesTerritoryRepository.GetWhere(x => x.CountryRegionCode == id, response);
+			Response response = this.salesTerritoryRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -193,5 +192,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>009c3c2784edad5fbf9afe891bfe69d3</Hash>
+    <Hash>72196a1821cda5236579ec125f975fff</Hash>
 </Codenesium>*/

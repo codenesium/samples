@@ -27,18 +27,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.CurrencyRateDateRules();
-			this.FromCurrencyCodeRules();
-			this.ToCurrencyCodeRules();
-			this.AverageRateRules();
-			this.EndOfDayRateRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0857dcf194d7944f5ead04480c8e0bef</Hash>
+    <Hash>287754587aae943f98f5fc096930e82f</Hash>
 </Codenesium>*/

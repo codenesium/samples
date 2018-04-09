@@ -77,32 +77,23 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.ExternalId).NotNull();
 		}
 
-		public bool BeValidChain(int id)
+		private bool BeValidChain(int id)
 		{
-			Response response = new Response();
-
-			this.ChainRepository.GetById(id,response);
-			return response.Chains.Count > 0;
+			return this.ChainRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidMachine(Nullable<int> id)
+		private bool BeValidMachine(Nullable<int> id)
 		{
-			Response response = new Response();
-
-			this.MachineRepository.GetById(id.GetValueOrDefault(),response);
-			return response.Machines.Count > 0;
+			return this.MachineRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		public bool BeValidLinkStatus(int id)
+		private bool BeValidLinkStatus(int id)
 		{
-			Response response = new Response();
-
-			this.LinkStatusRepository.GetById(id,response);
-			return response.LinkStatus.Count > 0;
+			return this.LinkStatusRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca2fc6b7785263c8182956c60a267047</Hash>
+    <Hash>0ccaa1698cee3f2a465821172495a384</Hash>
 </Codenesium>*/

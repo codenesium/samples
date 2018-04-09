@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.customerRepository.GetById(id,response);
+			Response response = this.customerRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.customerRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.customerRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -133,13 +129,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int CustomerID,CustomerModel model)
+		public virtual IActionResult Update(int id,CustomerModel model)
 		{
+			if(this.customerRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.customerModelValidator.UpdateMode();
 			var validationResult = this.customerModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.customerRepository.Update(CustomerID,  model.PersonID,
+				this.customerRepository.Update(id,  model.PersonID,
 				                               model.StoreID,
 				                               model.TerritoryID,
 				                               model.AccountNumber,
@@ -174,9 +175,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByPersonID(int id)
 		{
-			var response = new Response();
-
-			this.customerRepository.GetWhere(x => x.PersonID == id, response);
+			Response response = this.customerRepository.GetWhere(x => x.PersonID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -189,9 +188,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByStoreID(int id)
 		{
-			var response = new Response();
-
-			this.customerRepository.GetWhere(x => x.StoreID == id, response);
+			Response response = this.customerRepository.GetWhere(x => x.StoreID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -204,9 +201,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			var response = new Response();
-
-			this.customerRepository.GetWhere(x => x.TerritoryID == id, response);
+			Response response = this.customerRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -214,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a9f50f73cbd980d8291f3f322a602ee8</Hash>
+    <Hash>7cbe0f975d40231e47c08d14fd135e83</Hash>
 </Codenesium>*/

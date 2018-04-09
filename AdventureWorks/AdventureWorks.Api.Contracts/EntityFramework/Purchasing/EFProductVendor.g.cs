@@ -44,15 +44,14 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
-		[ForeignKey("BusinessEntityID")]
+
 		public virtual EFVendor Vendor { get; set; }
-		[ForeignKey("UnitMeasureCode")]
+
 		public virtual EFUnitMeasure UnitMeasure { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c00e9848a8d6a581a7995b1f3a3f4551</Hash>
+    <Hash>b6df0ddaf52b6355c375d97e70a12414</Hash>
 </Codenesium>*/

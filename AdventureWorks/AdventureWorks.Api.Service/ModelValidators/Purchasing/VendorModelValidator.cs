@@ -29,19 +29,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.AccountNumberRules();
-			this.NameRules();
-			this.CreditRatingRules();
-			this.PreferredVendorStatusRules();
-			this.ActiveFlagRules();
-			this.PurchasingWebServiceURLRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>206e218c002da83da464fc866cf53434</Hash>
+    <Hash>e84eabf079f81aa1eed95cbb390c06f5</Hash>
 </Codenesium>*/

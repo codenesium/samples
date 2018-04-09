@@ -86,17 +86,16 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("SizeUnitMeasureCode")]
 		public virtual EFUnitMeasure UnitMeasure { get; set; }
-		[ForeignKey("WeightUnitMeasureCode")]
+
 		public virtual EFUnitMeasure UnitMeasure1 { get; set; }
-		[ForeignKey("ProductSubcategoryID")]
+
 		public virtual EFProductSubcategory ProductSubcategory { get; set; }
-		[ForeignKey("ProductModelID")]
+
 		public virtual EFProductModel ProductModel { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>41213ec757a071db406d4cc90dc2e0b1</Hash>
+    <Hash>f4d5d8345a6855f03d78670f5191576f</Hash>
 </Codenesium>*/

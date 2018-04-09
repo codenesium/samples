@@ -70,29 +70,36 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
-		public virtual void GetById(int id, Response response)
+		public virtual Response GetById(int id)
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCO(x => x.Id == id,response);
+			return response;
 		}
 
-		protected virtual List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual POCODeviceAction GetByIdDirect(int id)
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			var response = new Response();
+
+			this.SearchLinqPOCO(x => x.Id == id,response);
+			return response.DeviceActions.FirstOrDefault();
 		}
 
-		protected virtual List<EFDeviceAction> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual Response GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
+			var response = new Response();
 
-		public virtual void GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
-		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
-		public virtual void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
 		public virtual List<POCODeviceAction> GetWhereDirect(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
@@ -101,13 +108,6 @@ namespace ESPIOTNS.Api.DataAccess
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.DeviceActions;
-		}
-		public virtual POCODeviceAction GetByIdDirect(int id)
-		{
-			var response = new Response();
-
-			this.SearchLinqPOCO(x => x.Id == id,response);
-			return response.DeviceActions.FirstOrDefault();
 		}
 
 		private void SearchLinqPOCO(Expression<Func<EFDeviceAction, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -120,6 +120,16 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			List<EFDeviceAction> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
+		}
+
+		protected virtual List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
+		}
+
+		protected virtual List<EFDeviceAction> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
 		public static void MapPOCOToEF(int id, int deviceId,
@@ -154,5 +164,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>03248ba9cfc66b0711d2c9156ee5b591</Hash>
+    <Hash>e7a7101173f1fcd871880ebbf86d80d4</Hash>
 </Codenesium>*/

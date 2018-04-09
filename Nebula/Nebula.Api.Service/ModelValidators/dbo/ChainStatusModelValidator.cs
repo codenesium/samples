@@ -17,13 +17,11 @@ namespace NebulaNS.Api.Service
 			this.NameRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d71330e1f43dd449c02a0244ff6776aa</Hash>
+    <Hash>0cd705f00d8fc480a4c95db0ffd04ee4</Hash>
 </Codenesium>*/

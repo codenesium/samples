@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.machineRepository.GetById(id,response);
+			Response response = this.machineRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.machineRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.machineRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,MachineModel model)
+		public virtual IActionResult Update(int id,MachineModel model)
 		{
+			if(this.machineRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.machineModelValidator.UpdateMode();
 			var validationResult = this.machineModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.machineRepository.Update(Id,  model.Name,
+				this.machineRepository.Update(id,  model.Name,
 				                              model.MachineGuid,
 				                              model.JwtKey,
 				                              model.LastIpAddress,
@@ -166,5 +167,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ad4598d9f1c10ba7fcc4dd6ff59312e0</Hash>
+    <Hash>472ae628725aa50c6276b9d8ae4abe8e</Hash>
 </Codenesium>*/

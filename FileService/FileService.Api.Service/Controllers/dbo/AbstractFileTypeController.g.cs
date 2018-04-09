@@ -42,9 +42,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.fileTypeRepository.GetById(id,response);
+			Response response = this.fileTypeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace FileServiceNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.fileTypeRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.fileTypeRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -123,13 +119,18 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,FileTypeModel model)
+		public virtual IActionResult Update(int id,FileTypeModel model)
 		{
+			if(this.fileTypeRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.fileTypeModelValidator.UpdateMode();
 			var validationResult = this.fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.fileTypeRepository.Update(Id,  model.Name);
+				this.fileTypeRepository.Update(id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +155,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4f34c489fb1b281493a8750c61cdb030</Hash>
+    <Hash>d12aec2514753bd43de83c195344f52a</Hash>
 </Codenesium>*/

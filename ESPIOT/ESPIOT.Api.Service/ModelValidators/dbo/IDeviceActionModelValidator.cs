@@ -12,10 +12,10 @@ namespace ESPIOTNS.Api.Service
 
 		void UpdateMode();
 
-		void PatchMode();
+		void DeleteMode();
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3830c5dd37d728e50ac764c178ac123</Hash>
+    <Hash>451076a91501b2a605f39426857b37c0</Hash>
 </Codenesium>*/

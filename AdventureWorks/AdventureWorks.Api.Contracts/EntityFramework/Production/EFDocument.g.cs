@@ -53,11 +53,10 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("Owner")]
 		public virtual EFEmployee Employee { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f0cd5e4aab491f3f520912d30aed0ca</Hash>
+    <Hash>d49f3eae2d05187edf2a07c8f7f9c455</Hash>
 </Codenesium>*/

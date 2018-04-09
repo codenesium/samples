@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.shoppingCartItemRepository.GetById(id,response);
+			Response response = this.shoppingCartItemRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.shoppingCartItemRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.shoppingCartItemRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ShoppingCartItemID,ShoppingCartItemModel model)
+		public virtual IActionResult Update(int id,ShoppingCartItemModel model)
 		{
+			if(this.shoppingCartItemRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.shoppingCartItemModelValidator.UpdateMode();
 			var validationResult = this.shoppingCartItemModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.shoppingCartItemRepository.Update(ShoppingCartItemID,  model.ShoppingCartID,
+				this.shoppingCartItemRepository.Update(id,  model.ShoppingCartID,
 				                                       model.Quantity,
 				                                       model.ProductID,
 				                                       model.DateCreated,
@@ -171,9 +172,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			var response = new Response();
-
-			this.shoppingCartItemRepository.GetWhere(x => x.ProductID == id, response);
+			Response response = this.shoppingCartItemRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -181,5 +180,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>95ce3466c8ad859dfbcc8c7ab8742b9d</Hash>
+    <Hash>bfde5603e7752075c386e2abe63034ab</Hash>
 </Codenesium>*/

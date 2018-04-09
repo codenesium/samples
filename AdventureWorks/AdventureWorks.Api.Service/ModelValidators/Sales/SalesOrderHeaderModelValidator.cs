@@ -65,37 +65,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.RevisionNumberRules();
-			this.OrderDateRules();
-			this.DueDateRules();
-			this.ShipDateRules();
-			this.StatusRules();
-			this.OnlineOrderFlagRules();
-			this.SalesOrderNumberRules();
-			this.PurchaseOrderNumberRules();
-			this.AccountNumberRules();
-			this.CustomerIDRules();
-			this.SalesPersonIDRules();
-			this.TerritoryIDRules();
-			this.BillToAddressIDRules();
-			this.ShipToAddressIDRules();
-			this.ShipMethodIDRules();
-			this.CreditCardIDRules();
-			this.CreditCardApprovalCodeRules();
-			this.CurrencyRateIDRules();
-			this.SubTotalRules();
-			this.TaxAmtRules();
-			this.FreightRules();
-			this.TotalDueRules();
-			this.CommentRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5574881be1caff93777603dbac3a39e5</Hash>
+    <Hash>4d76c31bb9bbf7a16eacfd3d2b7749bc</Hash>
 </Codenesium>*/

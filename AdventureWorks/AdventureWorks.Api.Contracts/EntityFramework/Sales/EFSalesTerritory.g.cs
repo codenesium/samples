@@ -41,11 +41,10 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("CountryRegionCode")]
 		public virtual EFCountryRegion CountryRegion { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff80840737d949e2f7561d6c9ac944b9</Hash>
+    <Hash>ee792d0041537a105aa78179892b9724</Hash>
 </Codenesium>*/

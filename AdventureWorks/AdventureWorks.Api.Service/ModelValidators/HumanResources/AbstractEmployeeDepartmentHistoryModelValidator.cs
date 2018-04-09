@@ -48,32 +48,23 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidEmployee(int id)
+		private bool BeValidEmployee(int id)
 		{
-			Response response = new Response();
-
-			this.EmployeeRepository.GetById(id,response);
-			return response.Employees.Count > 0;
+			return this.EmployeeRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidDepartment(short id)
+		private bool BeValidDepartment(short id)
 		{
-			Response response = new Response();
-
-			this.DepartmentRepository.GetById(id,response);
-			return response.Departments.Count > 0;
+			return this.DepartmentRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidShift(int id)
+		private bool BeValidShift(int id)
 		{
-			Response response = new Response();
-
-			this.ShiftRepository.GetById(id,response);
-			return response.Shifts.Count > 0;
+			return this.ShiftRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a068be6590f0bb526b2d832f4f05afd</Hash>
+    <Hash>dc72b5370ec39d5972b8fbc63bfef822</Hash>
 </Codenesium>*/

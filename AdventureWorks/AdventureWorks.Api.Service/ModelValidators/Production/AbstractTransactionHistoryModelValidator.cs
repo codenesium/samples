@@ -63,16 +63,13 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidProduct(int id)
+		private bool BeValidProduct(int id)
 		{
-			Response response = new Response();
-
-			this.ProductRepository.GetById(id,response);
-			return response.Products.Count > 0;
+			return this.ProductRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>333988fcaa6e71081432ab807701bb68</Hash>
+    <Hash>e739e46da1aa14fde7c3912a8e05b175</Hash>
 </Codenesium>*/

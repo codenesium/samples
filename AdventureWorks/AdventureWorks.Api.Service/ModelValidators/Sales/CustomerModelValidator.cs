@@ -27,18 +27,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.PersonIDRules();
-			this.StoreIDRules();
-			this.TerritoryIDRules();
-			this.AccountNumberRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f002516c0a6677fa5bf04bec3c4d6975</Hash>
+    <Hash>db18f4d2b3d5475594959faa92ae377a</Hash>
 </Codenesium>*/

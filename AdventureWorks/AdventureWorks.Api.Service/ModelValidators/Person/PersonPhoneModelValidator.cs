@@ -21,15 +21,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.PhoneNumberRules();
-			this.PhoneNumberTypeIDRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1cd09cdca07386fdf1bb821817655c4e</Hash>
+    <Hash>54ddcc725a8389f16ceb58957bdadb9d</Hash>
 </Codenesium>*/

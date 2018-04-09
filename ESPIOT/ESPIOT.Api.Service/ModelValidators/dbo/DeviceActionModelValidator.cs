@@ -21,15 +21,11 @@ namespace ESPIOTNS.Api.Service
 			this.@ValueRules();
 		}
 
-		public void PatchMode()
-		{
-			this.DeviceIdRules();
-			this.NameRules();
-			this.@ValueRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>57cacb2c3ec0d566d9d11f8f1b8593a9</Hash>
+    <Hash>b75c8d9e04a6522ad35dd364a0144a66</Hash>
 </Codenesium>*/

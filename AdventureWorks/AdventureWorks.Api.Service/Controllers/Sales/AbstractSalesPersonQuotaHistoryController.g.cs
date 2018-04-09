@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.salesPersonQuotaHistoryRepository.GetById(id,response);
+			Response response = this.salesPersonQuotaHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.salesPersonQuotaHistoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.salesPersonQuotaHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -129,13 +125,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,SalesPersonQuotaHistoryModel model)
+		public virtual IActionResult Update(int id,SalesPersonQuotaHistoryModel model)
 		{
+			if(this.salesPersonQuotaHistoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.salesPersonQuotaHistoryModelValidator.UpdateMode();
 			var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesPersonQuotaHistoryRepository.Update(BusinessEntityID,  model.QuotaDate,
+				this.salesPersonQuotaHistoryRepository.Update(id,  model.QuotaDate,
 				                                              model.SalesQuota,
 				                                              model.Rowguid,
 				                                              model.ModifiedDate);
@@ -168,9 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.salesPersonQuotaHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.salesPersonQuotaHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -178,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>07dbee6e8766287be3fd46e31e1b564d</Hash>
+    <Hash>fc5a363f64d9e45100afa1db839b9505</Hash>
 </Codenesium>*/

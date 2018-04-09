@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.workOrderRoutingRepository.GetById(id,response);
+			Response response = this.workOrderRoutingRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.workOrderRoutingRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.workOrderRoutingRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -143,13 +139,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int WorkOrderID,WorkOrderRoutingModel model)
+		public virtual IActionResult Update(int id,WorkOrderRoutingModel model)
 		{
+			if(this.workOrderRoutingRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.workOrderRoutingModelValidator.UpdateMode();
 			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.workOrderRoutingRepository.Update(WorkOrderID,  model.ProductID,
+				this.workOrderRoutingRepository.Update(id,  model.ProductID,
 				                                       model.OperationSequence,
 				                                       model.LocationID,
 				                                       model.ScheduledStartDate,
@@ -189,9 +190,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByWorkOrderID(int id)
 		{
-			var response = new Response();
-
-			this.workOrderRoutingRepository.GetWhere(x => x.WorkOrderID == id, response);
+			Response response = this.workOrderRoutingRepository.GetWhere(x => x.WorkOrderID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -204,9 +203,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByLocationID(short id)
 		{
-			var response = new Response();
-
-			this.workOrderRoutingRepository.GetWhere(x => x.LocationID == id, response);
+			Response response = this.workOrderRoutingRepository.GetWhere(x => x.LocationID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -214,5 +211,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>43b3c654d2d40f161bc3c603e11ed1ec</Hash>
+    <Hash>f5e5df586421eeec27777be0a43b5610</Hash>
 </Codenesium>*/

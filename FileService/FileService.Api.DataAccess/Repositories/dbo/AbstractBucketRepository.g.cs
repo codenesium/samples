@@ -66,29 +66,36 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public virtual void GetById(int id, Response response)
+		public virtual Response GetById(int id)
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCO(x => x.Id == id,response);
+			return response;
 		}
 
-		protected virtual List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual POCOBucket GetByIdDirect(int id)
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			var response = new Response();
+
+			this.SearchLinqPOCO(x => x.Id == id,response);
+			return response.Buckets.FirstOrDefault();
 		}
 
-		protected virtual List<EFBucket> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		public virtual Response GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
+			var response = new Response();
 
-		public virtual void GetWhere(Expression<Func<EFBucket, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
-		{
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
-		public virtual void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
 		{
+			var response = new Response();
+
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
+			return response;
 		}
 
 		public virtual List<POCOBucket> GetWhereDirect(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
@@ -97,13 +104,6 @@ namespace FileServiceNS.Api.DataAccess
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Buckets;
-		}
-		public virtual POCOBucket GetByIdDirect(int id)
-		{
-			var response = new Response();
-
-			this.SearchLinqPOCO(x => x.Id == id,response);
-			return response.Buckets.FirstOrDefault();
 		}
 
 		private void SearchLinqPOCO(Expression<Func<EFBucket, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
@@ -116,6 +116,16 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			List<EFBucket> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
 			records.ForEach(x => MapEFToPOCO(x,response));
+		}
+
+		protected virtual List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
+		}
+
+		protected virtual List<EFBucket> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		{
+			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
 		public static void MapPOCOToEF(int id, string name,
@@ -143,5 +153,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>057b45bde41e6f68e83bdda22cddb1c3</Hash>
+    <Hash>e4861f748c8ada10ae83b82af48b6661</Hash>
 </Codenesium>*/

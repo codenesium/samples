@@ -42,9 +42,7 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.deviceActionRepository.GetById(id,response);
+			Response response = this.deviceActionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace ESPIOTNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.deviceActionRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.deviceActionRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -127,13 +123,18 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,DeviceActionModel model)
+		public virtual IActionResult Update(int id,DeviceActionModel model)
 		{
+			if(this.deviceActionRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.deviceActionModelValidator.UpdateMode();
 			var validationResult = this.deviceActionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.deviceActionRepository.Update(Id,  model.DeviceId,
+				this.deviceActionRepository.Update(id,  model.DeviceId,
 				                                   model.Name,
 				                                   model.@Value);
 				return Ok();
@@ -165,9 +166,7 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByDeviceId(int id)
 		{
-			var response = new Response();
-
-			this.deviceActionRepository.GetWhere(x => x.DeviceId == id, response);
+			Response response = this.deviceActionRepository.GetWhere(x => x.DeviceId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -175,5 +174,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dc707ada9738f3b6e992eac2ebf1f6a8</Hash>
+    <Hash>d4b0e6201f493d474fb80992b71c63d2</Hash>
 </Codenesium>*/

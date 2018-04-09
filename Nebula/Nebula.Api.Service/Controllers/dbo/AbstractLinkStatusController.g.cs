@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.linkStatusRepository.GetById(id,response);
+			Response response = this.linkStatusRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.linkStatusRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.linkStatusRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -123,13 +119,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,LinkStatusModel model)
+		public virtual IActionResult Update(int id,LinkStatusModel model)
 		{
+			if(this.linkStatusRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.linkStatusModelValidator.UpdateMode();
 			var validationResult = this.linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkStatusRepository.Update(Id,  model.Name);
+				this.linkStatusRepository.Update(id,  model.Name);
 				return Ok();
 			}
 			else
@@ -154,5 +155,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a64de98f57a185a9ea4b4ec6d1ee8687</Hash>
+    <Hash>fc4af66a59c4b433e5681c6ffb81ce8e</Hash>
 </Codenesium>*/

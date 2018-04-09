@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.personPhoneRepository.GetById(id,response);
+			Response response = this.personPhoneRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.personPhoneRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.personPhoneRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -127,13 +123,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,PersonPhoneModel model)
+		public virtual IActionResult Update(int id,PersonPhoneModel model)
 		{
+			if(this.personPhoneRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.personPhoneModelValidator.UpdateMode();
 			var validationResult = this.personPhoneModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.personPhoneRepository.Update(BusinessEntityID,  model.PhoneNumber,
+				this.personPhoneRepository.Update(id,  model.PhoneNumber,
 				                                  model.PhoneNumberTypeID,
 				                                  model.ModifiedDate);
 				return Ok();
@@ -165,9 +166,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.personPhoneRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.personPhoneRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -180,9 +179,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByPhoneNumberTypeID(int id)
 		{
-			var response = new Response();
-
-			this.personPhoneRepository.GetWhere(x => x.PhoneNumberTypeID == id, response);
+			Response response = this.personPhoneRepository.GetWhere(x => x.PhoneNumberTypeID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -190,5 +187,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>35d6492687f9820926ba393aad3c0d0e</Hash>
+    <Hash>30225b75e6fd4d5ec84ac65305c84c3c</Hash>
 </Codenesium>*/

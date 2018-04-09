@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(short id)
 		{
-			Response response = new Response();
-
-			this.scrapReasonRepository.GetById(id,response);
+			Response response = this.scrapReasonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.scrapReasonRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.scrapReasonRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short ScrapReasonID,ScrapReasonModel model)
+		public virtual IActionResult Update(short id,ScrapReasonModel model)
 		{
+			if(this.scrapReasonRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.scrapReasonModelValidator.UpdateMode();
 			var validationResult = this.scrapReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.scrapReasonRepository.Update(ScrapReasonID,  model.Name,
+				this.scrapReasonRepository.Update(id,  model.Name,
 				                                  model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>489331d85e6cdcae577c896b2f76d6e9</Hash>
+    <Hash>0121fd569d13f049fd1f5fb946be3117</Hash>
 </Codenesium>*/

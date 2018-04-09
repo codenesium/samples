@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.specialOfferRepository.GetById(id,response);
+			Response response = this.specialOfferRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.specialOfferRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.specialOfferRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -141,13 +137,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int SpecialOfferID,SpecialOfferModel model)
+		public virtual IActionResult Update(int id,SpecialOfferModel model)
 		{
+			if(this.specialOfferRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.specialOfferModelValidator.UpdateMode();
 			var validationResult = this.specialOfferModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.specialOfferRepository.Update(SpecialOfferID,  model.Description,
+				this.specialOfferRepository.Update(id,  model.Description,
 				                                   model.DiscountPct,
 				                                   model.Type,
 				                                   model.Category,
@@ -181,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a75afa542ed86a3a72d648069fbd8dee</Hash>
+    <Hash>80af2cefd1fc3a1428170b46db8d273f</Hash>
 </Codenesium>*/

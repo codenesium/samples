@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			Response response = new Response();
-
-			this.cultureRepository.GetById(id,response);
+			Response response = this.cultureRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.cultureRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.cultureRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string CultureID,CultureModel model)
+		public virtual IActionResult Update(string id,CultureModel model)
 		{
+			if(this.cultureRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.cultureModelValidator.UpdateMode();
 			var validationResult = this.cultureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.cultureRepository.Update(CultureID,  model.Name,
+				this.cultureRepository.Update(id,  model.Name,
 				                              model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bf925736c8de37e4f91758c4a7c038ab</Hash>
+    <Hash>5c4c35f73fc73c5e8f9fa817ffd41ef7</Hash>
 </Codenesium>*/

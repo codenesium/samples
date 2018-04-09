@@ -70,32 +70,23 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidProduct(int id)
+		private bool BeValidProduct(int id)
 		{
-			Response response = new Response();
-
-			this.ProductRepository.GetById(id,response);
-			return response.Products.Count > 0;
+			return this.ProductRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidVendor(int id)
+		private bool BeValidVendor(int id)
 		{
-			Response response = new Response();
-
-			this.VendorRepository.GetById(id,response);
-			return response.Vendors.Count > 0;
+			return this.VendorRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidUnitMeasure(string id)
+		private bool BeValidUnitMeasure(string id)
 		{
-			Response response = new Response();
-
-			this.UnitMeasureRepository.GetById(id,response);
-			return response.UnitMeasures.Count > 0;
+			return this.UnitMeasureRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d21b7ecd72d82bc4dd47adb2ebadadd</Hash>
+    <Hash>58d76f2fbafa8eb69d0c6a477752af89</Hash>
 </Codenesium>*/

@@ -33,24 +33,18 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidPerson(int id)
+		private bool BeValidPerson(int id)
 		{
-			Response response = new Response();
-
-			this.PersonRepository.GetById(id,response);
-			return response.People.Count > 0;
+			return this.PersonRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidCreditCard(int id)
+		private bool BeValidCreditCard(int id)
 		{
-			Response response = new Response();
-
-			this.CreditCardRepository.GetById(id,response);
-			return response.CreditCards.Count > 0;
+			return this.CreditCardRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>948de5ef3e1e7189bfd9e1859c0bd9cb</Hash>
+    <Hash>68d1d540a5eb9f997d16a42190a4830f</Hash>
 </Codenesium>*/

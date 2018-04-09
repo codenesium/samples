@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.workOrderRepository.GetById(id,response);
+			Response response = this.workOrderRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.workOrderRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.workOrderRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -139,13 +135,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int WorkOrderID,WorkOrderModel model)
+		public virtual IActionResult Update(int id,WorkOrderModel model)
 		{
+			if(this.workOrderRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.workOrderModelValidator.UpdateMode();
 			var validationResult = this.workOrderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.workOrderRepository.Update(WorkOrderID,  model.ProductID,
+				this.workOrderRepository.Update(id,  model.ProductID,
 				                                model.OrderQty,
 				                                model.StockedQty,
 				                                model.ScrappedQty,
@@ -183,9 +184,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			var response = new Response();
-
-			this.workOrderRepository.GetWhere(x => x.ProductID == id, response);
+			Response response = this.workOrderRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -198,9 +197,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByScrapReasonID(short id)
 		{
-			var response = new Response();
-
-			this.workOrderRepository.GetWhere(x => x.ScrapReasonID == id, response);
+			Response response = this.workOrderRepository.GetWhere(x => x.ScrapReasonID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -208,5 +205,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>19f6eaa8a227fcc2c167c980cbb6bbc1</Hash>
+    <Hash>3ff980f1ad25f30001e4db7c07d3d46a</Hash>
 </Codenesium>*/

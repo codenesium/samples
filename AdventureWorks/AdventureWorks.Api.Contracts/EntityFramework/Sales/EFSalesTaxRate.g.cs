@@ -32,11 +32,10 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("StateProvinceID")]
 		public virtual EFStateProvince StateProvince { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ab3b04e5a0d223d321de9ea9ea6c615</Hash>
+    <Hash>8a39b94f127b28c365a63c4fdd29f17c</Hash>
 </Codenesium>*/

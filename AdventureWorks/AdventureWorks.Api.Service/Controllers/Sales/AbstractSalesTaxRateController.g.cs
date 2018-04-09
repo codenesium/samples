@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.salesTaxRateRepository.GetById(id,response);
+			Response response = this.salesTaxRateRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.salesTaxRateRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.salesTaxRateRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -133,13 +129,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int SalesTaxRateID,SalesTaxRateModel model)
+		public virtual IActionResult Update(int id,SalesTaxRateModel model)
 		{
+			if(this.salesTaxRateRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.salesTaxRateModelValidator.UpdateMode();
 			var validationResult = this.salesTaxRateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesTaxRateRepository.Update(SalesTaxRateID,  model.StateProvinceID,
+				this.salesTaxRateRepository.Update(id,  model.StateProvinceID,
 				                                   model.TaxType,
 				                                   model.TaxRate,
 				                                   model.Name,
@@ -174,9 +175,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByStateProvinceID(int id)
 		{
-			var response = new Response();
-
-			this.salesTaxRateRepository.GetWhere(x => x.StateProvinceID == id, response);
+			Response response = this.salesTaxRateRepository.GetWhere(x => x.StateProvinceID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -184,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f39689f4b3c0352719a9d333c2e22415</Hash>
+    <Hash>1456dc8210b603516939c8d8288a5a54</Hash>
 </Codenesium>*/

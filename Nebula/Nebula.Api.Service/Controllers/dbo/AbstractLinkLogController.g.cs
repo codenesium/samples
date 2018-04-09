@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.linkLogRepository.GetById(id,response);
+			Response response = this.linkLogRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.linkLogRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.linkLogRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -127,13 +123,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,LinkLogModel model)
+		public virtual IActionResult Update(int id,LinkLogModel model)
 		{
+			if(this.linkLogRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.linkLogModelValidator.UpdateMode();
 			var validationResult = this.linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkLogRepository.Update(Id,  model.LinkId,
+				this.linkLogRepository.Update(id,  model.LinkId,
 				                              model.Log,
 				                              model.DateEntered);
 				return Ok();
@@ -165,9 +166,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByLinkId(int id)
 		{
-			var response = new Response();
-
-			this.linkLogRepository.GetWhere(x => x.LinkId == id, response);
+			Response response = this.linkLogRepository.GetWhere(x => x.LinkId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -175,5 +174,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2d4709ea3e3bba3352d9af13cad8b313</Hash>
+    <Hash>af3aa1a34b7a764fc668e2b62e70f84e</Hash>
 </Codenesium>*/

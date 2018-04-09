@@ -45,32 +45,23 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidBusinessEntity(int id)
+		private bool BeValidBusinessEntity(int id)
 		{
-			Response response = new Response();
-
-			this.BusinessEntityRepository.GetById(id,response);
-			return response.BusinessEntities.Count > 0;
+			return this.BusinessEntityRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidPerson(int id)
+		private bool BeValidPerson(int id)
 		{
-			Response response = new Response();
-
-			this.PersonRepository.GetById(id,response);
-			return response.People.Count > 0;
+			return this.PersonRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidContactType(int id)
+		private bool BeValidContactType(int id)
 		{
-			Response response = new Response();
-
-			this.ContactTypeRepository.GetById(id,response);
-			return response.ContactTypes.Count > 0;
+			return this.ContactTypeRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>277995d2e1edf9d55a528bfe59de4be6</Hash>
+    <Hash>0d8206895af9a676e73e3da3dbf14c6f</Hash>
 </Codenesium>*/

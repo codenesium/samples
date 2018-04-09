@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.productPhotoRepository.GetById(id,response);
+			Response response = this.productPhotoRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.productPhotoRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.productPhotoRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ProductPhotoID,ProductPhotoModel model)
+		public virtual IActionResult Update(int id,ProductPhotoModel model)
 		{
+			if(this.productPhotoRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.productPhotoModelValidator.UpdateMode();
 			var validationResult = this.productPhotoModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productPhotoRepository.Update(ProductPhotoID,  model.ThumbNailPhoto,
+				this.productPhotoRepository.Update(id,  model.ThumbNailPhoto,
 				                                   model.ThumbnailPhotoFileName,
 				                                   model.LargePhoto,
 				                                   model.LargePhotoFileName,
@@ -166,5 +167,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>25401637febcfe464fedd8c39beab750</Hash>
+    <Hash>545ca51d7336d43e803c549f05896531</Hash>
 </Codenesium>*/

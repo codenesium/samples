@@ -73,24 +73,18 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidSalesOrderHeader(int id)
+		private bool BeValidSalesOrderHeader(int id)
 		{
-			Response response = new Response();
-
-			this.SalesOrderHeaderRepository.GetById(id,response);
-			return response.SalesOrderHeaders.Count > 0;
+			return this.SalesOrderHeaderRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidSpecialOfferProduct(int id)
+		private bool BeValidSpecialOfferProduct(int id)
 		{
-			Response response = new Response();
-
-			this.SpecialOfferProductRepository.GetById(id,response);
-			return response.SpecialOfferProducts.Count > 0;
+			return this.SpecialOfferProductRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>553ba27c46329816882c3ce98a99768a</Hash>
+    <Hash>dc4d56c8efc86a46e0045be20c3329d1</Hash>
 </Codenesium>*/

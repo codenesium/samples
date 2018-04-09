@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.stateProvinceRepository.GetById(id,response);
+			Response response = this.stateProvinceRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.stateProvinceRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.stateProvinceRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -135,13 +131,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int StateProvinceID,StateProvinceModel model)
+		public virtual IActionResult Update(int id,StateProvinceModel model)
 		{
+			if(this.stateProvinceRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.stateProvinceModelValidator.UpdateMode();
 			var validationResult = this.stateProvinceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.stateProvinceRepository.Update(StateProvinceID,  model.StateProvinceCode,
+				this.stateProvinceRepository.Update(id,  model.StateProvinceCode,
 				                                    model.CountryRegionCode,
 				                                    model.IsOnlyStateProvinceFlag,
 				                                    model.Name,
@@ -177,9 +178,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByCountryRegionCode(string id)
 		{
-			var response = new Response();
-
-			this.stateProvinceRepository.GetWhere(x => x.CountryRegionCode == id, response);
+			Response response = this.stateProvinceRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -192,9 +191,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			var response = new Response();
-
-			this.stateProvinceRepository.GetWhere(x => x.TerritoryID == id, response);
+			Response response = this.stateProvinceRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -202,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6ff627e42ce89f3dc5278a5f866c4d0d</Hash>
+    <Hash>490341d5d52e24790a83d445f3c51397</Hash>
 </Codenesium>*/

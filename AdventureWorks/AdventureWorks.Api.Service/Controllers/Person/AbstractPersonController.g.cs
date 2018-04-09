@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.personRepository.GetById(id,response);
+			Response response = this.personRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.personRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.personRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -145,13 +141,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,PersonModel model)
+		public virtual IActionResult Update(int id,PersonModel model)
 		{
+			if(this.personRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.personModelValidator.UpdateMode();
 			var validationResult = this.personModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.personRepository.Update(BusinessEntityID,  model.PersonType,
+				this.personRepository.Update(id,  model.PersonType,
 				                             model.NameStyle,
 				                             model.Title,
 				                             model.FirstName,
@@ -192,9 +193,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.personRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.personRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -202,5 +201,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>09996c8507e57dcdc78fb30f913cbfc3</Hash>
+    <Hash>d08bffbea3dfd1199fba8093f1ecfc2a</Hash>
 </Codenesium>*/

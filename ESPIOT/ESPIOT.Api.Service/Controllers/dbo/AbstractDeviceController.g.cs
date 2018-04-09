@@ -42,9 +42,7 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.deviceRepository.GetById(id,response);
+			Response response = this.deviceRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace ESPIOTNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.deviceRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.deviceRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,DeviceModel model)
+		public virtual IActionResult Update(int id,DeviceModel model)
 		{
+			if(this.deviceRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.deviceModelValidator.UpdateMode();
 			var validationResult = this.deviceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.deviceRepository.Update(Id,  model.PublicId,
+				this.deviceRepository.Update(id,  model.PublicId,
 				                             model.Name);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f8614502001e8ef30d140acee88e7d82</Hash>
+    <Hash>d5fc6040d3cd38ee24aa5028d1514b10</Hash>
 </Codenesium>*/

@@ -47,13 +47,12 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("WorkOrderID")]
 		public virtual EFWorkOrder WorkOrder { get; set; }
-		[ForeignKey("LocationID")]
+
 		public virtual EFLocation Location { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>3123dd9afe155ff294b71c688970cb6c</Hash>
+    <Hash>aa128e1eb2ea8d8a185cc35471ff86c3</Hash>
 </Codenesium>*/

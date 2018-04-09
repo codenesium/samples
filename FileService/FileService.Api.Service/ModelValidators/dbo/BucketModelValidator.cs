@@ -19,14 +19,11 @@ namespace FileServiceNS.Api.Service
 			this.ExternalIdRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-			this.ExternalIdRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35f60bf844267cbe7ac630f3b2b92642</Hash>
+    <Hash>277a93d01323ae264e061b2565973182</Hash>
 </Codenesium>*/

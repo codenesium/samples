@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.databaseLogRepository.GetById(id,response);
+			Response response = this.databaseLogRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.databaseLogRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.databaseLogRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -135,13 +131,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int DatabaseLogID,DatabaseLogModel model)
+		public virtual IActionResult Update(int id,DatabaseLogModel model)
 		{
+			if(this.databaseLogRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.databaseLogModelValidator.UpdateMode();
 			var validationResult = this.databaseLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.databaseLogRepository.Update(DatabaseLogID,  model.PostTime,
+				this.databaseLogRepository.Update(id,  model.PostTime,
 				                                  model.DatabaseUser,
 				                                  model.@Event,
 				                                  model.Schema,
@@ -172,5 +173,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>df6d4dd210dd737995295a8657ce378f</Hash>
+    <Hash>115afd2060f0d3d6dfd79bbd9405df7a</Hash>
 </Codenesium>*/

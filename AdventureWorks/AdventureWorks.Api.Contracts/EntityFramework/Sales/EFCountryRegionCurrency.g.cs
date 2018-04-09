@@ -20,13 +20,12 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("CountryRegionCode")]
 		public virtual EFCountryRegion CountryRegion { get; set; }
-		[ForeignKey("CurrencyCode")]
+
 		public virtual EFCurrency Currency { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8236fd8054449671a534d7dfaa2e796d</Hash>
+    <Hash>405cf8e9069292beaac8dbd6196af6c2</Hash>
 </Codenesium>*/

@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.currencyRateRepository.GetById(id,response);
+			Response response = this.currencyRateRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.currencyRateRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.currencyRateRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -133,13 +129,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int CurrencyRateID,CurrencyRateModel model)
+		public virtual IActionResult Update(int id,CurrencyRateModel model)
 		{
+			if(this.currencyRateRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.currencyRateModelValidator.UpdateMode();
 			var validationResult = this.currencyRateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.currencyRateRepository.Update(CurrencyRateID,  model.CurrencyRateDate,
+				this.currencyRateRepository.Update(id,  model.CurrencyRateDate,
 				                                   model.FromCurrencyCode,
 				                                   model.ToCurrencyCode,
 				                                   model.AverageRate,
@@ -174,9 +175,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByFromCurrencyCode(string id)
 		{
-			var response = new Response();
-
-			this.currencyRateRepository.GetWhere(x => x.FromCurrencyCode == id, response);
+			Response response = this.currencyRateRepository.GetWhere(x => x.FromCurrencyCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -189,9 +188,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByToCurrencyCode(string id)
 		{
-			var response = new Response();
-
-			this.currencyRateRepository.GetWhere(x => x.ToCurrencyCode == id, response);
+			Response response = this.currencyRateRepository.GetWhere(x => x.ToCurrencyCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -199,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>22b80c0654986cd866676943bc6af132</Hash>
+    <Hash>6c03fd50f31e8bb99e327c11e3c28665</Hash>
 </Codenesium>*/

@@ -45,24 +45,18 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.ExternalId).NotNull();
 		}
 
-		public bool BeValidTeam(int id)
+		private bool BeValidTeam(int id)
 		{
-			Response response = new Response();
-
-			this.TeamRepository.GetById(id,response);
-			return response.Teams.Count > 0;
+			return this.TeamRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidChainStatus(int id)
+		private bool BeValidChainStatus(int id)
 		{
-			Response response = new Response();
-
-			this.ChainStatusRepository.GetById(id,response);
-			return response.ChainStatus.Count > 0;
+			return this.ChainStatusRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>098c412ee4c75b716593d8fc55660287</Hash>
+    <Hash>49fcabbb22740270e7298d3cc87b8ae1</Hash>
 </Codenesium>*/

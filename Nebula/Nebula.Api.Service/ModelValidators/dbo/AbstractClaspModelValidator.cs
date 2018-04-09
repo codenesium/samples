@@ -33,16 +33,13 @@ namespace NebulaNS.Api.Service
 			RuleFor(x => x.NextChainId).Must(BeValidChain).When(x => x ?.NextChainId != null).WithMessage("Invalid reference");
 		}
 
-		public bool BeValidChain(int id)
+		private bool BeValidChain(int id)
 		{
-			Response response = new Response();
-
-			this.ChainRepository.GetById(id,response);
-			return response.Chains.Count > 0;
+			return this.ChainRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ceab6d2af143751ff5005c0c2808cab7</Hash>
+    <Hash>880780dbb61cdece8acc1710db6256fe</Hash>
 </Codenesium>*/

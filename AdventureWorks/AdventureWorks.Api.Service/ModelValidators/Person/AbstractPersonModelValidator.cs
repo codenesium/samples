@@ -80,16 +80,13 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidBusinessEntity(int id)
+		private bool BeValidBusinessEntity(int id)
 		{
-			Response response = new Response();
-
-			this.BusinessEntityRepository.GetById(id,response);
-			return response.BusinessEntities.Count > 0;
+			return this.BusinessEntityRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1e2736bcd6628d759a777e8c7373c74</Hash>
+    <Hash>12355084ac610a9e9996a77f6133508c</Hash>
 </Codenesium>*/

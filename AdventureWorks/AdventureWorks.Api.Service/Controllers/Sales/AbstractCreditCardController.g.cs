@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.creditCardRepository.GetById(id,response);
+			Response response = this.creditCardRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.creditCardRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.creditCardRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int CreditCardID,CreditCardModel model)
+		public virtual IActionResult Update(int id,CreditCardModel model)
 		{
+			if(this.creditCardRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.creditCardModelValidator.UpdateMode();
 			var validationResult = this.creditCardModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.creditCardRepository.Update(CreditCardID,  model.CardType,
+				this.creditCardRepository.Update(id,  model.CardType,
 				                                 model.CardNumber,
 				                                 model.ExpMonth,
 				                                 model.ExpYear,
@@ -166,5 +167,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a19c6bf479d339a3a51605cc11d20a11</Hash>
+    <Hash>cf8317fcf892da869affb34b795377fd</Hash>
 </Codenesium>*/

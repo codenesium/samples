@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			Response response = new Response();
-
-			this.countryRegionRepository.GetById(id,response);
+			Response response = this.countryRegionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.countryRegionRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.countryRegionRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string CountryRegionCode,CountryRegionModel model)
+		public virtual IActionResult Update(string id,CountryRegionModel model)
 		{
+			if(this.countryRegionRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.countryRegionModelValidator.UpdateMode();
 			var validationResult = this.countryRegionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.countryRegionRepository.Update(CountryRegionCode,  model.Name,
+				this.countryRegionRepository.Update(id,  model.Name,
 				                                    model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4c442d0d9eea5f5447ce093a37d6f8ac</Hash>
+    <Hash>df782c336e1e89a00fbeec15d2d4044d</Hash>
 </Codenesium>*/

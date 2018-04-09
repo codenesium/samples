@@ -21,15 +21,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.ProductDescriptionIDRules();
-			this.CultureIDRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>17c94de723a5e15fd998e949fd18180e</Hash>
+    <Hash>91afeb1342f73169b6b68b7c780fbe38</Hash>
 </Codenesium>*/

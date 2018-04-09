@@ -84,32 +84,23 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidEmployee(int id)
+		private bool BeValidEmployee(int id)
 		{
-			Response response = new Response();
-
-			this.EmployeeRepository.GetById(id,response);
-			return response.Employees.Count > 0;
+			return this.EmployeeRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidVendor(int id)
+		private bool BeValidVendor(int id)
 		{
-			Response response = new Response();
-
-			this.VendorRepository.GetById(id,response);
-			return response.Vendors.Count > 0;
+			return this.VendorRepository.GetByIdDirect(id) != null;
 		}
 
-		public bool BeValidShipMethod(int id)
+		private bool BeValidShipMethod(int id)
 		{
-			Response response = new Response();
-
-			this.ShipMethodRepository.GetById(id,response);
-			return response.ShipMethods.Count > 0;
+			return this.ShipMethodRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35c6d215629b3ed647dedbfa8e3d20b2</Hash>
+    <Hash>56575bdbd391cee0b212775ee4c9e1fe</Hash>
 </Codenesium>*/

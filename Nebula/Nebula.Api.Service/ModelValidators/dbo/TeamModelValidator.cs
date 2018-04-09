@@ -19,14 +19,11 @@ namespace NebulaNS.Api.Service
 			this.OrganizationIdRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-			this.OrganizationIdRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>599714a4343d012cc8fecad25a6423cf</Hash>
+    <Hash>9b17df627fdee3bd4c467cb2a11b9907</Hash>
 </Codenesium>*/

@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.aWBuildVersionRepository.GetById(id,response);
+			Response response = this.aWBuildVersionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.aWBuildVersionRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.aWBuildVersionRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -127,13 +123,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int SystemInformationID,AWBuildVersionModel model)
+		public virtual IActionResult Update(int id,AWBuildVersionModel model)
 		{
+			if(this.aWBuildVersionRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.aWBuildVersionModelValidator.UpdateMode();
 			var validationResult = this.aWBuildVersionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.aWBuildVersionRepository.Update(SystemInformationID,  model.Database_Version,
+				this.aWBuildVersionRepository.Update(id,  model.Database_Version,
 				                                     model.VersionDate,
 				                                     model.ModifiedDate);
 				return Ok();
@@ -160,5 +161,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ebf4bd2819f7f2644a657b94a94543b9</Hash>
+    <Hash>bd1dcf85392569ba641f849aa05ea21d</Hash>
 </Codenesium>*/

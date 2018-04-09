@@ -23,13 +23,12 @@ namespace AdventureWorksNS.Api.Contracts
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate {get; set;}
 
-		[ForeignKey("SpecialOfferID")]
 		public virtual EFSpecialOffer SpecialOffer { get; set; }
-		[ForeignKey("ProductID")]
+
 		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>64f6d8e0012d895a3567012329fd8ee3</Hash>
+    <Hash>4bd9ad29a5c30fb8c60ba8d12ad76a12</Hash>
 </Codenesium>*/

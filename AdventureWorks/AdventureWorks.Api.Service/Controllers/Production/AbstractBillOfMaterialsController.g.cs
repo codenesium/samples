@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.billOfMaterialsRepository.GetById(id,response);
+			Response response = this.billOfMaterialsRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -137,13 +133,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BillOfMaterialsID,BillOfMaterialsModel model)
+		public virtual IActionResult Update(int id,BillOfMaterialsModel model)
 		{
+			if(this.billOfMaterialsRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.billOfMaterialsModelValidator.UpdateMode();
 			var validationResult = this.billOfMaterialsModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.billOfMaterialsRepository.Update(BillOfMaterialsID,  model.ProductAssemblyID,
+				this.billOfMaterialsRepository.Update(id,  model.ProductAssemblyID,
 				                                      model.ComponentID,
 				                                      model.StartDate,
 				                                      model.EndDate,
@@ -180,9 +181,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByProductAssemblyID(int id)
 		{
-			var response = new Response();
-
-			this.billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id, response);
+			Response response = this.billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -195,9 +194,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByComponentID(int id)
 		{
-			var response = new Response();
-
-			this.billOfMaterialsRepository.GetWhere(x => x.ComponentID == id, response);
+			Response response = this.billOfMaterialsRepository.GetWhere(x => x.ComponentID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -210,9 +207,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByUnitMeasureCode(string id)
 		{
-			var response = new Response();
-
-			this.billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id, response);
+			Response response = this.billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -220,5 +215,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c8526f70b8bcb00b2b3008f3cc0fb193</Hash>
+    <Hash>25bc6556cb040edd2158fd6ff865b763</Hash>
 </Codenesium>*/

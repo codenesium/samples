@@ -25,17 +25,11 @@ namespace NebulaNS.Api.Service
 			this.DescriptionRules();
 		}
 
-		public void PatchMode()
-		{
-			this.NameRules();
-			this.MachineGuidRules();
-			this.JwtKeyRules();
-			this.LastIpAddressRules();
-			this.DescriptionRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>56d0ee6042eab0bacaab92c2c9dd81a2</Hash>
+    <Hash>15a1affd152f50efcb2ea2edcf52b45d</Hash>
 </Codenesium>*/

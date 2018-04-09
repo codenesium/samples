@@ -42,9 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.teamRepository.GetById(id,response);
+			Response response = this.teamRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.teamRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.teamRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int Id,TeamModel model)
+		public virtual IActionResult Update(int id,TeamModel model)
 		{
+			if(this.teamRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.teamModelValidator.UpdateMode();
 			var validationResult = this.teamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.teamRepository.Update(Id,  model.Name,
+				this.teamRepository.Update(id,  model.Name,
 				                           model.OrganizationId);
 				return Ok();
 			}
@@ -162,9 +163,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByOrganizationId(int id)
 		{
-			var response = new Response();
-
-			this.teamRepository.GetWhere(x => x.OrganizationId == id, response);
+			Response response = this.teamRepository.GetWhere(x => x.OrganizationId == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -172,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3f30b39df17525a29e4ccb3f33893b0c</Hash>
+    <Hash>a16ee04b9192b9f8be979eb4347de4e7</Hash>
 </Codenesium>*/

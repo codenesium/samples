@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -28,14 +29,18 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(int workOrderID);
 
-		void GetById(int workOrderID, Response response);
+		Response GetById(int workOrderID);
 
-		void GetWhere(Expression<Func<EFWorkOrder, bool>> predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		POCOWorkOrder GetByIdDirect(int workOrderID);
 
-		void GetWhereDynamic(string predicate, Response response,int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		List<POCOWorkOrder> GetWhereDirect(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3a2f5c80cd5423dd15e5cbbc3f3f60c</Hash>
+    <Hash>f754cce9fef412ad620638be027f6991</Hash>
 </Codenesium>*/

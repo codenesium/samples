@@ -19,14 +19,11 @@ namespace ESPIOTNS.Api.Service
 			this.NameRules();
 		}
 
-		public void PatchMode()
-		{
-			this.PublicIdRules();
-			this.NameRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9e366533f43e174d3883f6dd42d1b95</Hash>
+    <Hash>839f51b6d999e30e8f7b7ec4cdbd15e1</Hash>
 </Codenesium>*/

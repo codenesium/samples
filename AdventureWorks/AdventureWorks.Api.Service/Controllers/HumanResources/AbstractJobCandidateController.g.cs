@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.jobCandidateRepository.GetById(id,response);
+			Response response = this.jobCandidateRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.jobCandidateRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.jobCandidateRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -127,13 +123,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int JobCandidateID,JobCandidateModel model)
+		public virtual IActionResult Update(int id,JobCandidateModel model)
 		{
+			if(this.jobCandidateRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.jobCandidateModelValidator.UpdateMode();
 			var validationResult = this.jobCandidateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.jobCandidateRepository.Update(JobCandidateID,  model.BusinessEntityID,
+				this.jobCandidateRepository.Update(id,  model.BusinessEntityID,
 				                                   model.Resume,
 				                                   model.ModifiedDate);
 				return Ok();
@@ -165,9 +166,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.jobCandidateRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.jobCandidateRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -175,5 +174,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>56d40c761fcf72389e555354edb985ad</Hash>
+    <Hash>4fafa9f89c6c1ae97cf1bd4660cb0444</Hash>
 </Codenesium>*/

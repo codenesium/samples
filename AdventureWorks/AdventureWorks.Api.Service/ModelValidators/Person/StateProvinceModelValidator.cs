@@ -29,19 +29,11 @@ namespace AdventureWorksNS.Api.Service
 			this.ModifiedDateRules();
 		}
 
-		public void PatchMode()
-		{
-			this.StateProvinceCodeRules();
-			this.CountryRegionCodeRules();
-			this.IsOnlyStateProvinceFlagRules();
-			this.NameRules();
-			this.TerritoryIDRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5207122bbdfe373d1d6a27aa4ce2a218</Hash>
+    <Hash>44e83411971a0ba549ba865c1c586dc3</Hash>
 </Codenesium>*/

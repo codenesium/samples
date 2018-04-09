@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.transactionHistoryArchiveRepository.GetById(id,response);
+			Response response = this.transactionHistoryArchiveRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.transactionHistoryArchiveRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.transactionHistoryArchiveRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -137,13 +133,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int TransactionID,TransactionHistoryArchiveModel model)
+		public virtual IActionResult Update(int id,TransactionHistoryArchiveModel model)
 		{
+			if(this.transactionHistoryArchiveRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.transactionHistoryArchiveModelValidator.UpdateMode();
 			var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.transactionHistoryArchiveRepository.Update(TransactionID,  model.ProductID,
+				this.transactionHistoryArchiveRepository.Update(id,  model.ProductID,
 				                                                model.ReferenceOrderID,
 				                                                model.ReferenceOrderLineID,
 				                                                model.TransactionDate,
@@ -175,5 +176,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>42e42672560605c6175bd0b75f65eb70</Hash>
+    <Hash>6e122ccbd8476ebc90932461d47c17e4</Hash>
 </Codenesium>*/

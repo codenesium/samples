@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(Guid id)
 		{
-			Response response = new Response();
-
-			this.documentRepository.GetById(id,response);
+			Response response = this.documentRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.documentRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.documentRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -147,13 +143,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(Guid DocumentNode,DocumentModel model)
+		public virtual IActionResult Update(Guid id,DocumentModel model)
 		{
+			if(this.documentRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.documentModelValidator.UpdateMode();
 			var validationResult = this.documentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.documentRepository.Update(DocumentNode,  model.DocumentLevel,
+				this.documentRepository.Update(id,  model.DocumentLevel,
 				                               model.Title,
 				                               model.Owner,
 				                               model.FolderFlag,
@@ -195,9 +196,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByOwner(int id)
 		{
-			var response = new Response();
-
-			this.documentRepository.GetWhere(x => x.Owner == id, response);
+			Response response = this.documentRepository.GetWhere(x => x.Owner == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -205,5 +204,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fc5847a0d294bfe9bf3782033a6fc522</Hash>
+    <Hash>8c084bfa5ab6a63c3e334cd09fc05491</Hash>
 </Codenesium>*/

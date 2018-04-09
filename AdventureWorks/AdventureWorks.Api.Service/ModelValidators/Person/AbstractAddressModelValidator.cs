@@ -63,16 +63,13 @@ namespace AdventureWorksNS.Api.Service
 			RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public bool BeValidStateProvince(int id)
+		private bool BeValidStateProvince(int id)
 		{
-			Response response = new Response();
-
-			this.StateProvinceRepository.GetById(id,response);
-			return response.StateProvinces.Count > 0;
+			return this.StateProvinceRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>016de30a88c8ce46a5e7644d5b7d25c7</Hash>
+    <Hash>82ea1597cad2fd32d28be738603bb16d</Hash>
 </Codenesium>*/

@@ -12,10 +12,10 @@ namespace FileServiceNS.Api.Service
 
 		void UpdateMode();
 
-		void PatchMode();
+		void DeleteMode();
 	}
 }
 
 /*<Codenesium>
-    <Hash>6323b9440aeba7cbe9a28e3e680f5334</Hash>
+    <Hash>e0dafb44db089fc7237b7dc42e979e6d</Hash>
 </Codenesium>*/

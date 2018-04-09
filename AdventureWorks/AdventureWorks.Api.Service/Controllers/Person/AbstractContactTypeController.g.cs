@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.contactTypeRepository.GetById(id,response);
+			Response response = this.contactTypeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.contactTypeRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.contactTypeRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -125,13 +121,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int ContactTypeID,ContactTypeModel model)
+		public virtual IActionResult Update(int id,ContactTypeModel model)
 		{
+			if(this.contactTypeRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.contactTypeModelValidator.UpdateMode();
 			var validationResult = this.contactTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.contactTypeRepository.Update(ContactTypeID,  model.Name,
+				this.contactTypeRepository.Update(id,  model.Name,
 				                                  model.ModifiedDate);
 				return Ok();
 			}
@@ -157,5 +158,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>24da2c7f5293cfafe2f713fc05c9b321</Hash>
+    <Hash>172fcc9b72fe2da32d7507d61f4c0e40</Hash>
 </Codenesium>*/

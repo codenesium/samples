@@ -37,23 +37,11 @@ namespace FileServiceNS.Api.Service
 			this.DescriptionRules();
 		}
 
-		public void PatchMode()
-		{
-			this.ExternalIdRules();
-			this.PrivateKeyRules();
-			this.PublicKeyRules();
-			this.LocationRules();
-			this.ExpirationRules();
-			this.ExtensionRules();
-			this.DateCreatedRules();
-			this.FileSizeInBytesRules();
-			this.FileTypeIdRules();
-			this.BucketIdRules();
-			this.DescriptionRules();
-		}
+		public void DeleteMode()
+		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>da9aa4e9f1f2a26c0bbdde5576c5bf6d</Hash>
+    <Hash>5fa5737a86a815dcc505900d1197914c</Hash>
 </Codenesium>*/

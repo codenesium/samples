@@ -42,9 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = new Response();
-
-			this.employeeDepartmentHistoryRepository.GetById(id,response);
+			Response response = this.employeeDepartmentHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -59,9 +57,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = new Response();
-
-			this.employeeDepartmentHistoryRepository.GetWhereDynamic(query.WhereClause,response,query.Offset,query.Limit);
+			Response response = this.employeeDepartmentHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -131,13 +127,18 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int BusinessEntityID,EmployeeDepartmentHistoryModel model)
+		public virtual IActionResult Update(int id,EmployeeDepartmentHistoryModel model)
 		{
+			if(this.employeeDepartmentHistoryRepository.GetByIdDirect(id) == null)
+			{
+				return BadRequest(this.ModelState);
+			}
+
 			this.employeeDepartmentHistoryModelValidator.UpdateMode();
 			var validationResult = this.employeeDepartmentHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.employeeDepartmentHistoryRepository.Update(BusinessEntityID,  model.DepartmentID,
+				this.employeeDepartmentHistoryRepository.Update(id,  model.DepartmentID,
 				                                                model.ShiftID,
 				                                                model.StartDate,
 				                                                model.EndDate,
@@ -171,9 +172,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			var response = new Response();
-
-			this.employeeDepartmentHistoryRepository.GetWhere(x => x.BusinessEntityID == id, response);
+			Response response = this.employeeDepartmentHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -186,9 +185,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByDepartmentID(short id)
 		{
-			var response = new Response();
-
-			this.employeeDepartmentHistoryRepository.GetWhere(x => x.DepartmentID == id, response);
+			Response response = this.employeeDepartmentHistoryRepository.GetWhere(x => x.DepartmentID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -201,9 +198,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(Response), 200)]
 		public virtual IActionResult ByShiftID(int id)
 		{
-			var response = new Response();
-
-			this.employeeDepartmentHistoryRepository.GetWhere(x => x.ShiftID == id, response);
+			Response response = this.employeeDepartmentHistoryRepository.GetWhere(x => x.ShiftID == id);
 			response.DisableSerializationOfEmptyFields();
 			return Ok(response);
 		}
@@ -211,5 +206,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>49ebe6f2e4aee2270bca2cee23401539</Hash>
+    <Hash>2b2a6cf00c3fe25a0fa0faa64b84c6ec</Hash>
 </Codenesium>*/
