@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ProductReview", Schema="Production")]
@@ -8,6 +9,25 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFProductReview()
 		{}
+
+		public void SetProperties(int productReviewID,
+		                          int productID,
+		                          string reviewerName,
+		                          DateTime reviewDate,
+		                          string emailAddress,
+		                          int rating,
+		                          string comments,
+		                          DateTime modifiedDate)
+		{
+			this.ProductReviewID = productReviewID.ToInt();
+			this.ProductID = productID.ToInt();
+			this.ReviewerName = reviewerName;
+			this.ReviewDate = reviewDate.ToDateTime();
+			this.EmailAddress = emailAddress;
+			this.Rating = rating.ToInt();
+			this.Comments = comments;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -40,5 +60,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c3e0c87fd4f1f7c9a0c8a2df2ca0b1ba</Hash>
+    <Hash>c23dd7f81c7d23c81967d005d5cdd729</Hash>
 </Codenesium>*/

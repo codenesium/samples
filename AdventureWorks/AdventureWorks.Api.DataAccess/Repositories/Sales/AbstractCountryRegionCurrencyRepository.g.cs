@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",countryRegionCode);
+				this.logger.LogError($"Unable to find id:{countryRegionCode}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string countryRegionCode, string currencyCode,
 		                               DateTime modifiedDate, EFCountryRegionCurrency   efCountryRegionCurrency)
 		{
-			efCountryRegionCurrency.CountryRegionCode = countryRegionCode;
-			efCountryRegionCurrency.CurrencyCode = currencyCode;
-			efCountryRegionCurrency.ModifiedDate = modifiedDate;
+			efCountryRegionCurrency.SetProperties(countryRegionCode,currencyCode,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFCountryRegionCurrency efCountryRegionCurrency,Response response)
@@ -142,15 +140,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddCountryRegionCurrency(new POCOCountryRegionCurrency()
-			{
-				ModifiedDate = efCountryRegionCurrency.ModifiedDate.ToDateTime(),
-
-				CountryRegionCode = new ReferenceEntity<string>(efCountryRegionCurrency.CountryRegionCode,
-				                                                "CountryRegions"),
-				CurrencyCode = new ReferenceEntity<string>(efCountryRegionCurrency.CurrencyCode,
-				                                           "Currencies"),
-			});
+			response.AddCountryRegionCurrency(new POCOCountryRegionCurrency(efCountryRegionCurrency.CountryRegionCode,efCountryRegionCurrency.CurrencyCode,efCountryRegionCurrency.ModifiedDate.ToDateTime()));
 
 			CountryRegionRepository.MapEFToPOCO(efCountryRegionCurrency.CountryRegion, response);
 
@@ -160,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b344d69eec0fdbb96f87e9d4651f0170</Hash>
+    <Hash>138f6d6427aa26344a3872b71ee72122</Hash>
 </Codenesium>*/

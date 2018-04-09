@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productID);
+				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal standardCost,
 		                               DateTime modifiedDate, EFProductCostHistory   efProductCostHistory)
 		{
-			efProductCostHistory.ProductID = productID;
-			efProductCostHistory.StartDate = startDate;
-			efProductCostHistory.EndDate = endDate;
-			efProductCostHistory.StandardCost = standardCost;
-			efProductCostHistory.ModifiedDate = modifiedDate;
+			efProductCostHistory.SetProperties(productID.ToInt(),startDate.ToDateTime(),endDate.ToNullableDateTime(),standardCost,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductCostHistory efProductCostHistory,Response response)
@@ -154,16 +150,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductCostHistory(new POCOProductCostHistory()
-			{
-				StartDate = efProductCostHistory.StartDate.ToDateTime(),
-				EndDate = efProductCostHistory.EndDate.ToNullableDateTime(),
-				StandardCost = efProductCostHistory.StandardCost,
-				ModifiedDate = efProductCostHistory.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductCostHistory.ProductID,
-				                                     "Products"),
-			});
+			response.AddProductCostHistory(new POCOProductCostHistory(efProductCostHistory.ProductID.ToInt(),efProductCostHistory.StartDate.ToDateTime(),efProductCostHistory.EndDate.ToNullableDateTime(),efProductCostHistory.StandardCost,efProductCostHistory.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductCostHistory.Product, response);
 		}
@@ -171,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>29221027a13d3c51a2a2823d0c058add</Hash>
+    <Hash>2c0ccc1409d4fb290dc1841032a50eb8</Hash>
 </Codenesium>*/

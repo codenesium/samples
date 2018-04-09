@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.CurrencyCode == currencyCode).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",currencyCode);
+				this.logger.LogError($"Unable to find id:{currencyCode}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string currencyCode, string name,
 		                               DateTime modifiedDate, EFCurrency   efCurrency)
 		{
-			efCurrency.CurrencyCode = currencyCode;
-			efCurrency.Name = name;
-			efCurrency.ModifiedDate = modifiedDate;
+			efCurrency.SetProperties(currencyCode,name,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFCurrency efCurrency,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddCurrency(new POCOCurrency()
-			{
-				CurrencyCode = efCurrency.CurrencyCode,
-				Name = efCurrency.Name,
-				ModifiedDate = efCurrency.ModifiedDate.ToDateTime(),
-			});
+			response.AddCurrency(new POCOCurrency(efCurrency.CurrencyCode,efCurrency.Name,efCurrency.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bdd4e135ef7694aeb8c0ae51c86d9215</Hash>
+    <Hash>9d164376e25629c31af9341e4a4cd13a</Hash>
 </Codenesium>*/

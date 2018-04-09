@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int businessEntityID, int creditCardID,
 		                               DateTime modifiedDate, EFPersonCreditCard   efPersonCreditCard)
 		{
-			efPersonCreditCard.BusinessEntityID = businessEntityID;
-			efPersonCreditCard.CreditCardID = creditCardID;
-			efPersonCreditCard.ModifiedDate = modifiedDate;
+			efPersonCreditCard.SetProperties(businessEntityID.ToInt(),creditCardID.ToInt(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFPersonCreditCard efPersonCreditCard,Response response)
@@ -142,15 +140,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddPersonCreditCard(new POCOPersonCreditCard()
-			{
-				ModifiedDate = efPersonCreditCard.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efPersonCreditCard.BusinessEntityID,
-				                                            "People"),
-				CreditCardID = new ReferenceEntity<int>(efPersonCreditCard.CreditCardID,
-				                                        "CreditCards"),
-			});
+			response.AddPersonCreditCard(new POCOPersonCreditCard(efPersonCreditCard.BusinessEntityID.ToInt(),efPersonCreditCard.CreditCardID.ToInt(),efPersonCreditCard.ModifiedDate.ToDateTime()));
 
 			PersonRepository.MapEFToPOCO(efPersonCreditCard.Person, response);
 
@@ -160,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>034d2148789e2d78d4ce7cc0865da8b7</Hash>
+    <Hash>956fd40b41d770979e52693f48fa89e5</Hash>
 </Codenesium>*/

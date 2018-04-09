@@ -71,7 +71,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -181,19 +181,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFPerson   efPerson)
 		{
-			efPerson.BusinessEntityID = businessEntityID;
-			efPerson.PersonType = personType;
-			efPerson.NameStyle = nameStyle;
-			efPerson.Title = title;
-			efPerson.FirstName = firstName;
-			efPerson.MiddleName = middleName;
-			efPerson.LastName = lastName;
-			efPerson.Suffix = suffix;
-			efPerson.EmailPromotion = emailPromotion;
-			efPerson.AdditionalContactInfo = additionalContactInfo;
-			efPerson.Demographics = demographics;
-			efPerson.Rowguid = rowguid;
-			efPerson.ModifiedDate = modifiedDate;
+			efPerson.SetProperties(businessEntityID.ToInt(),personType,nameStyle,title,firstName,middleName,lastName,suffix,emailPromotion.ToInt(),additionalContactInfo,demographics,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFPerson efPerson,Response response)
@@ -202,24 +190,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddPerson(new POCOPerson()
-			{
-				PersonType = efPerson.PersonType,
-				NameStyle = efPerson.NameStyle,
-				Title = efPerson.Title,
-				FirstName = efPerson.FirstName,
-				MiddleName = efPerson.MiddleName,
-				LastName = efPerson.LastName,
-				Suffix = efPerson.Suffix,
-				EmailPromotion = efPerson.EmailPromotion.ToInt(),
-				AdditionalContactInfo = efPerson.AdditionalContactInfo,
-				Demographics = efPerson.Demographics,
-				Rowguid = efPerson.Rowguid,
-				ModifiedDate = efPerson.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efPerson.BusinessEntityID,
-				                                            "BusinessEntities"),
-			});
+			response.AddPerson(new POCOPerson(efPerson.BusinessEntityID.ToInt(),efPerson.PersonType,efPerson.NameStyle,efPerson.Title,efPerson.FirstName,efPerson.MiddleName,efPerson.LastName,efPerson.Suffix,efPerson.EmailPromotion.ToInt(),efPerson.AdditionalContactInfo,efPerson.Demographics,efPerson.Rowguid,efPerson.ModifiedDate.ToDateTime()));
 
 			BusinessEntityRepository.MapEFToPOCO(efPerson.BusinessEntity, response);
 		}
@@ -227,5 +198,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d4ceeaa51a6bd69c0a1e27fdf07c4ae7</Hash>
+    <Hash>6e475cccf8a6cbc0f1ca71673197b660</Hash>
 </Codenesium>*/

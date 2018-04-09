@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productModelID);
+				this.logger.LogError($"Unable to find id:{productModelID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string cultureID,
 		                               DateTime modifiedDate, EFProductModelProductDescriptionCulture   efProductModelProductDescriptionCulture)
 		{
-			efProductModelProductDescriptionCulture.ProductModelID = productModelID;
-			efProductModelProductDescriptionCulture.ProductDescriptionID = productDescriptionID;
-			efProductModelProductDescriptionCulture.CultureID = cultureID;
-			efProductModelProductDescriptionCulture.ModifiedDate = modifiedDate;
+			efProductModelProductDescriptionCulture.SetProperties(productModelID.ToInt(),productDescriptionID.ToInt(),cultureID,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductModelProductDescriptionCulture efProductModelProductDescriptionCulture,Response response)
@@ -148,17 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductModelProductDescriptionCulture(new POCOProductModelProductDescriptionCulture()
-			{
-				ModifiedDate = efProductModelProductDescriptionCulture.ModifiedDate.ToDateTime(),
-
-				ProductModelID = new ReferenceEntity<int>(efProductModelProductDescriptionCulture.ProductModelID,
-				                                          "ProductModels"),
-				ProductDescriptionID = new ReferenceEntity<int>(efProductModelProductDescriptionCulture.ProductDescriptionID,
-				                                                "ProductDescriptions"),
-				CultureID = new ReferenceEntity<string>(efProductModelProductDescriptionCulture.CultureID,
-				                                        "Cultures"),
-			});
+			response.AddProductModelProductDescriptionCulture(new POCOProductModelProductDescriptionCulture(efProductModelProductDescriptionCulture.ProductModelID.ToInt(),efProductModelProductDescriptionCulture.ProductDescriptionID.ToInt(),efProductModelProductDescriptionCulture.CultureID,efProductModelProductDescriptionCulture.ModifiedDate.ToDateTime()));
 
 			ProductModelRepository.MapEFToPOCO(efProductModelProductDescriptionCulture.ProductModel, response);
 
@@ -170,5 +157,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5255ff0d48bc4213ccf2ace833d9b078</Hash>
+    <Hash>b7dfe4995d5bd94523e5f78c54dd04a5</Hash>
 </Codenesium>*/

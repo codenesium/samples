@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("UnitMeasure", Schema="Production")]
@@ -8,6 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFUnitMeasure()
 		{}
+
+		public void SetProperties(string unitMeasureCode,
+		                          string name,
+		                          DateTime modifiedDate)
+		{
+			this.UnitMeasureCode = unitMeasureCode;
+			this.Name = name;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,5 +33,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>faf97ec42519b9d172040de9d6f63592</Hash>
+    <Hash>38024c5a1503c135ef8224e7bd28f60e</Hash>
 </Codenesium>*/

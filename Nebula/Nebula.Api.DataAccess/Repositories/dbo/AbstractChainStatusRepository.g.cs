@@ -38,7 +38,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -126,8 +126,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public static void MapPOCOToEF(int id, string name, EFChainStatus   efChainStatus)
 		{
-			efChainStatus.Id = id;
-			efChainStatus.Name = name;
+			efChainStatus.SetProperties(id.ToInt(),name);
 		}
 
 		public static void MapEFToPOCO(EFChainStatus efChainStatus,Response response)
@@ -136,15 +135,11 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddChainStatus(new POCOChainStatus()
-			{
-				Id = efChainStatus.Id.ToInt(),
-				Name = efChainStatus.Name,
-			});
+			response.AddChainStatus(new POCOChainStatus(efChainStatus.Id.ToInt(),efChainStatus.Name));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d30fcb58cd90bbe2fee82dc5bbb01373</Hash>
+    <Hash>c2ca4c3b354de28e5fdcb883f25254e1</Hash>
 </Codenesium>*/

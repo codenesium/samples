@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",customerID);
+				this.logger.LogError($"Unable to find id:{customerID}");
 			}
 			else
 			{
@@ -151,13 +151,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFCustomer   efCustomer)
 		{
-			efCustomer.CustomerID = customerID;
-			efCustomer.PersonID = personID;
-			efCustomer.StoreID = storeID;
-			efCustomer.TerritoryID = territoryID;
-			efCustomer.AccountNumber = accountNumber;
-			efCustomer.Rowguid = rowguid;
-			efCustomer.ModifiedDate = modifiedDate;
+			efCustomer.SetProperties(customerID.ToInt(),personID.ToNullableInt(),storeID.ToNullableInt(),territoryID.ToNullableInt(),accountNumber,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFCustomer efCustomer,Response response)
@@ -166,20 +160,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddCustomer(new POCOCustomer()
-			{
-				CustomerID = efCustomer.CustomerID.ToInt(),
-				AccountNumber = efCustomer.AccountNumber,
-				Rowguid = efCustomer.Rowguid,
-				ModifiedDate = efCustomer.ModifiedDate.ToDateTime(),
-
-				PersonID = new ReferenceEntity<Nullable<int>>(efCustomer.PersonID,
-				                                              "People"),
-				StoreID = new ReferenceEntity<Nullable<int>>(efCustomer.StoreID,
-				                                             "Stores"),
-				TerritoryID = new ReferenceEntity<Nullable<int>>(efCustomer.TerritoryID,
-				                                                 "SalesTerritories"),
-			});
+			response.AddCustomer(new POCOCustomer(efCustomer.CustomerID.ToInt(),efCustomer.PersonID.ToNullableInt(),efCustomer.StoreID.ToNullableInt(),efCustomer.TerritoryID.ToNullableInt(),efCustomer.AccountNumber,efCustomer.Rowguid,efCustomer.ModifiedDate.ToDateTime()));
 
 			PersonRepository.MapEFToPOCO(efCustomer.Person, response);
 
@@ -191,5 +172,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bb5ebb9d4762a22bb4fac1723225ebf9</Hash>
+    <Hash>1c1d409944015f3c1aad13d1ffa89b8c</Hash>
 </Codenesium>*/

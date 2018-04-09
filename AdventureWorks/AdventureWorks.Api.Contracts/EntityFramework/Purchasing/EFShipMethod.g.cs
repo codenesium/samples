@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ShipMethod", Schema="Purchasing")]
@@ -8,6 +9,21 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFShipMethod()
 		{}
+
+		public void SetProperties(int shipMethodID,
+		                          string name,
+		                          decimal shipBase,
+		                          decimal shipRate,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.ShipMethodID = shipMethodID.ToInt();
+			this.Name = name;
+			this.ShipBase = shipBase;
+			this.ShipRate = shipRate;
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,5 +48,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3cb34ea0b0f96c96a84c800aa1513c08</Hash>
+    <Hash>16656a994ef5c550c1a78e04a578c502</Hash>
 </Codenesium>*/

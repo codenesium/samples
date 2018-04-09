@@ -47,7 +47,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace NebulaNS.Api.DataAccess
 		                               int chainStatusId,
 		                               Guid externalId, EFChain   efChain)
 		{
-			efChain.Id = id;
-			efChain.Name = name;
-			efChain.TeamId = teamId;
-			efChain.ChainStatusId = chainStatusId;
-			efChain.ExternalId = externalId;
+			efChain.SetProperties(id.ToInt(),name,teamId.ToInt(),chainStatusId.ToInt(),externalId);
 		}
 
 		public static void MapEFToPOCO(EFChain efChain,Response response)
@@ -154,17 +150,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddChain(new POCOChain()
-			{
-				Id = efChain.Id.ToInt(),
-				Name = efChain.Name,
-				ExternalId = efChain.ExternalId,
-
-				TeamId = new ReferenceEntity<int>(efChain.TeamId,
-				                                  "Teams"),
-				ChainStatusId = new ReferenceEntity<int>(efChain.ChainStatusId,
-				                                         "ChainStatus"),
-			});
+			response.AddChain(new POCOChain(efChain.Id.ToInt(),efChain.Name,efChain.TeamId.ToInt(),efChain.ChainStatusId.ToInt(),efChain.ExternalId));
 
 			TeamRepository.MapEFToPOCO(efChain.Team, response);
 
@@ -174,5 +160,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c6eecb2368f9df0d3cc2b5f38713228f</Hash>
+    <Hash>56e361e4d40c83a9adc62e71aa9e8510</Hash>
 </Codenesium>*/

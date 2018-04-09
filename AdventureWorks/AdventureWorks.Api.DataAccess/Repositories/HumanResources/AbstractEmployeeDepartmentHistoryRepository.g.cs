@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -146,12 +146,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Nullable<DateTime> endDate,
 		                               DateTime modifiedDate, EFEmployeeDepartmentHistory   efEmployeeDepartmentHistory)
 		{
-			efEmployeeDepartmentHistory.BusinessEntityID = businessEntityID;
-			efEmployeeDepartmentHistory.DepartmentID = departmentID;
-			efEmployeeDepartmentHistory.ShiftID = shiftID;
-			efEmployeeDepartmentHistory.StartDate = startDate;
-			efEmployeeDepartmentHistory.EndDate = endDate;
-			efEmployeeDepartmentHistory.ModifiedDate = modifiedDate;
+			efEmployeeDepartmentHistory.SetProperties(businessEntityID.ToInt(),departmentID,shiftID,startDate,endDate,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFEmployeeDepartmentHistory efEmployeeDepartmentHistory,Response response)
@@ -160,19 +155,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddEmployeeDepartmentHistory(new POCOEmployeeDepartmentHistory()
-			{
-				StartDate = efEmployeeDepartmentHistory.StartDate,
-				EndDate = efEmployeeDepartmentHistory.EndDate,
-				ModifiedDate = efEmployeeDepartmentHistory.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efEmployeeDepartmentHistory.BusinessEntityID,
-				                                            "Employees"),
-				DepartmentID = new ReferenceEntity<short>(efEmployeeDepartmentHistory.DepartmentID,
-				                                          "Departments"),
-				ShiftID = new ReferenceEntity<int>(efEmployeeDepartmentHistory.ShiftID,
-				                                   "Shifts"),
-			});
+			response.AddEmployeeDepartmentHistory(new POCOEmployeeDepartmentHistory(efEmployeeDepartmentHistory.BusinessEntityID.ToInt(),efEmployeeDepartmentHistory.DepartmentID,efEmployeeDepartmentHistory.ShiftID,efEmployeeDepartmentHistory.StartDate,efEmployeeDepartmentHistory.EndDate,efEmployeeDepartmentHistory.ModifiedDate.ToDateTime()));
 
 			EmployeeRepository.MapEFToPOCO(efEmployeeDepartmentHistory.Employee, response);
 
@@ -184,5 +167,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5dc9e54d4f5fc4112fb552a888fcdd55</Hash>
+    <Hash>71f513db37fe9da41eb67ac1b4a9b5e2</Hash>
 </Codenesium>*/

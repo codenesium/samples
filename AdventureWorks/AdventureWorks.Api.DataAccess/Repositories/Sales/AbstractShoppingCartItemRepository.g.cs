@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",shoppingCartItemID);
+				this.logger.LogError($"Unable to find id:{shoppingCartItemID}");
 			}
 			else
 			{
@@ -146,12 +146,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               DateTime dateCreated,
 		                               DateTime modifiedDate, EFShoppingCartItem   efShoppingCartItem)
 		{
-			efShoppingCartItem.ShoppingCartItemID = shoppingCartItemID;
-			efShoppingCartItem.ShoppingCartID = shoppingCartID;
-			efShoppingCartItem.Quantity = quantity;
-			efShoppingCartItem.ProductID = productID;
-			efShoppingCartItem.DateCreated = dateCreated;
-			efShoppingCartItem.ModifiedDate = modifiedDate;
+			efShoppingCartItem.SetProperties(shoppingCartItemID.ToInt(),shoppingCartID,quantity.ToInt(),productID.ToInt(),dateCreated.ToDateTime(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFShoppingCartItem efShoppingCartItem,Response response)
@@ -160,17 +155,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddShoppingCartItem(new POCOShoppingCartItem()
-			{
-				ShoppingCartItemID = efShoppingCartItem.ShoppingCartItemID.ToInt(),
-				ShoppingCartID = efShoppingCartItem.ShoppingCartID,
-				Quantity = efShoppingCartItem.Quantity.ToInt(),
-				DateCreated = efShoppingCartItem.DateCreated.ToDateTime(),
-				ModifiedDate = efShoppingCartItem.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efShoppingCartItem.ProductID,
-				                                     "Products"),
-			});
+			response.AddShoppingCartItem(new POCOShoppingCartItem(efShoppingCartItem.ShoppingCartItemID.ToInt(),efShoppingCartItem.ShoppingCartID,efShoppingCartItem.Quantity.ToInt(),efShoppingCartItem.ProductID.ToInt(),efShoppingCartItem.DateCreated.ToDateTime(),efShoppingCartItem.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efShoppingCartItem.Product, response);
 		}
@@ -178,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a4c44ea2465aa7de0fa829117ef40767</Hash>
+    <Hash>1bf03282e26d52784f5824988a635851</Hash>
 </Codenesium>*/

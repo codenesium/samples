@@ -41,7 +41,7 @@ namespace FileServiceNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace FileServiceNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, string name,
 		                               Guid externalId, EFBucket   efBucket)
 		{
-			efBucket.Id = id;
-			efBucket.Name = name;
-			efBucket.ExternalId = externalId;
+			efBucket.SetProperties(id.ToInt(),name,externalId);
 		}
 
 		public static void MapEFToPOCO(EFBucket efBucket,Response response)
@@ -142,16 +140,11 @@ namespace FileServiceNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddBucket(new POCOBucket()
-			{
-				Id = efBucket.Id.ToInt(),
-				Name = efBucket.Name,
-				ExternalId = efBucket.ExternalId,
-			});
+			response.AddBucket(new POCOBucket(efBucket.Id.ToInt(),efBucket.Name,efBucket.ExternalId));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4861f748c8ada10ae83b82af48b6661</Hash>
+    <Hash>c0a5b660ad5533c0545cd9c9b7f459aa</Hash>
 </Codenesium>*/

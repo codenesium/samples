@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productID);
+				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -171,17 +171,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string unitMeasureCode,
 		                               DateTime modifiedDate, EFProductVendor   efProductVendor)
 		{
-			efProductVendor.ProductID = productID;
-			efProductVendor.BusinessEntityID = businessEntityID;
-			efProductVendor.AverageLeadTime = averageLeadTime;
-			efProductVendor.StandardPrice = standardPrice;
-			efProductVendor.LastReceiptCost = lastReceiptCost;
-			efProductVendor.LastReceiptDate = lastReceiptDate;
-			efProductVendor.MinOrderQty = minOrderQty;
-			efProductVendor.MaxOrderQty = maxOrderQty;
-			efProductVendor.OnOrderQty = onOrderQty;
-			efProductVendor.UnitMeasureCode = unitMeasureCode;
-			efProductVendor.ModifiedDate = modifiedDate;
+			efProductVendor.SetProperties(productID.ToInt(),businessEntityID.ToInt(),averageLeadTime.ToInt(),standardPrice,lastReceiptCost,lastReceiptDate.ToNullableDateTime(),minOrderQty.ToInt(),maxOrderQty.ToInt(),onOrderQty.ToNullableInt(),unitMeasureCode,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductVendor efProductVendor,Response response)
@@ -190,24 +180,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductVendor(new POCOProductVendor()
-			{
-				AverageLeadTime = efProductVendor.AverageLeadTime.ToInt(),
-				StandardPrice = efProductVendor.StandardPrice,
-				LastReceiptCost = efProductVendor.LastReceiptCost,
-				LastReceiptDate = efProductVendor.LastReceiptDate.ToNullableDateTime(),
-				MinOrderQty = efProductVendor.MinOrderQty.ToInt(),
-				MaxOrderQty = efProductVendor.MaxOrderQty.ToInt(),
-				OnOrderQty = efProductVendor.OnOrderQty.ToNullableInt(),
-				ModifiedDate = efProductVendor.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductVendor.ProductID,
-				                                     "Products"),
-				BusinessEntityID = new ReferenceEntity<int>(efProductVendor.BusinessEntityID,
-				                                            "Vendors"),
-				UnitMeasureCode = new ReferenceEntity<string>(efProductVendor.UnitMeasureCode,
-				                                              "UnitMeasures"),
-			});
+			response.AddProductVendor(new POCOProductVendor(efProductVendor.ProductID.ToInt(),efProductVendor.BusinessEntityID.ToInt(),efProductVendor.AverageLeadTime.ToInt(),efProductVendor.StandardPrice,efProductVendor.LastReceiptCost,efProductVendor.LastReceiptDate.ToNullableDateTime(),efProductVendor.MinOrderQty.ToInt(),efProductVendor.MaxOrderQty.ToInt(),efProductVendor.OnOrderQty.ToNullableInt(),efProductVendor.UnitMeasureCode,efProductVendor.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductVendor.Product, response);
 
@@ -219,5 +192,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6c1939ba13dd66873d13873b6344d752</Hash>
+    <Hash>4f33b579c620bdc1a2833ef7711ac72e</Hash>
 </Codenesium>*/

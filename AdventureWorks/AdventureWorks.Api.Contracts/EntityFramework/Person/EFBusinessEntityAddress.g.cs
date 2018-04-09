@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("BusinessEntityAddress", Schema="Person")]
@@ -8,6 +9,19 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFBusinessEntityAddress()
 		{}
+
+		public void SetProperties(int businessEntityID,
+		                          int addressID,
+		                          int addressTypeID,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.BusinessEntityID = businessEntityID.ToInt();
+			this.AddressID = addressID.ToInt();
+			this.AddressTypeID = addressTypeID.ToInt();
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -35,5 +49,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e99894277b5d037f241d9f64bcd686d4</Hash>
+    <Hash>3616740bce9e6dc23cc37ecfb145fc53</Hash>
 </Codenesium>*/

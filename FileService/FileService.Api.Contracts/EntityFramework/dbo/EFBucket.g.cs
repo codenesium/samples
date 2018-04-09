@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.Contracts
 {
 	[Table("Bucket", Schema="dbo")]
@@ -8,6 +9,15 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public EFBucket()
 		{}
+
+		public void SetProperties(int id,
+		                          string name,
+		                          Guid externalId)
+		{
+			this.Id = id.ToInt();
+			this.Name = name;
+			this.ExternalId = externalId;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,5 +33,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4d7aaceaac6bde4a044ab74687353257</Hash>
+    <Hash>e4e5527ff15b7a16e4f18f51e24d0a97</Hash>
 </Codenesium>*/

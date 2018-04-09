@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",transactionID);
+				this.logger.LogError($"Unable to find id:{transactionID}");
 			}
 			else
 			{
@@ -161,15 +161,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal actualCost,
 		                               DateTime modifiedDate, EFTransactionHistory   efTransactionHistory)
 		{
-			efTransactionHistory.TransactionID = transactionID;
-			efTransactionHistory.ProductID = productID;
-			efTransactionHistory.ReferenceOrderID = referenceOrderID;
-			efTransactionHistory.ReferenceOrderLineID = referenceOrderLineID;
-			efTransactionHistory.TransactionDate = transactionDate;
-			efTransactionHistory.TransactionType = transactionType;
-			efTransactionHistory.Quantity = quantity;
-			efTransactionHistory.ActualCost = actualCost;
-			efTransactionHistory.ModifiedDate = modifiedDate;
+			efTransactionHistory.SetProperties(transactionID.ToInt(),productID.ToInt(),referenceOrderID.ToInt(),referenceOrderLineID.ToInt(),transactionDate.ToDateTime(),transactionType,quantity.ToInt(),actualCost,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFTransactionHistory efTransactionHistory,Response response)
@@ -178,20 +170,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddTransactionHistory(new POCOTransactionHistory()
-			{
-				TransactionID = efTransactionHistory.TransactionID.ToInt(),
-				ReferenceOrderID = efTransactionHistory.ReferenceOrderID.ToInt(),
-				ReferenceOrderLineID = efTransactionHistory.ReferenceOrderLineID.ToInt(),
-				TransactionDate = efTransactionHistory.TransactionDate.ToDateTime(),
-				TransactionType = efTransactionHistory.TransactionType,
-				Quantity = efTransactionHistory.Quantity.ToInt(),
-				ActualCost = efTransactionHistory.ActualCost,
-				ModifiedDate = efTransactionHistory.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efTransactionHistory.ProductID,
-				                                     "Products"),
-			});
+			response.AddTransactionHistory(new POCOTransactionHistory(efTransactionHistory.TransactionID.ToInt(),efTransactionHistory.ProductID.ToInt(),efTransactionHistory.ReferenceOrderID.ToInt(),efTransactionHistory.ReferenceOrderLineID.ToInt(),efTransactionHistory.TransactionDate.ToDateTime(),efTransactionHistory.TransactionType,efTransactionHistory.Quantity.ToInt(),efTransactionHistory.ActualCost,efTransactionHistory.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efTransactionHistory.Product, response);
 		}
@@ -199,5 +178,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>134b0a87fe64ccbdcfbb0d427c0bfa41</Hash>
+    <Hash>ca6623a7d4b39e24c4ee192d8301184a</Hash>
 </Codenesium>*/

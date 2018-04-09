@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("LinkStatus", Schema="dbo")]
@@ -8,6 +9,13 @@ namespace NebulaNS.Api.Contracts
 	{
 		public EFLinkStatus()
 		{}
+
+		public void SetProperties(int id,
+		                          string name)
+		{
+			this.Id = id.ToInt();
+			this.Name = name;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,5 +28,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f1b06bba692ba77400aa00e280497510</Hash>
+    <Hash>703638bf1b42076920171646cb94299d</Hash>
 </Codenesium>*/

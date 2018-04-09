@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productID);
+				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               bool primary,
 		                               DateTime modifiedDate, EFProductProductPhoto   efProductProductPhoto)
 		{
-			efProductProductPhoto.ProductID = productID;
-			efProductProductPhoto.ProductPhotoID = productPhotoID;
-			efProductProductPhoto.Primary = primary;
-			efProductProductPhoto.ModifiedDate = modifiedDate;
+			efProductProductPhoto.SetProperties(productID.ToInt(),productPhotoID.ToInt(),primary,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductProductPhoto efProductProductPhoto,Response response)
@@ -148,16 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductProductPhoto(new POCOProductProductPhoto()
-			{
-				Primary = efProductProductPhoto.Primary,
-				ModifiedDate = efProductProductPhoto.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductProductPhoto.ProductID,
-				                                     "Products"),
-				ProductPhotoID = new ReferenceEntity<int>(efProductProductPhoto.ProductPhotoID,
-				                                          "ProductPhotoes"),
-			});
+			response.AddProductProductPhoto(new POCOProductProductPhoto(efProductProductPhoto.ProductID.ToInt(),efProductProductPhoto.ProductPhotoID.ToInt(),efProductProductPhoto.Primary,efProductProductPhoto.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductProductPhoto.Product, response);
 
@@ -167,5 +155,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>98504cfdbaa7fc2c22da98502ac38ace</Hash>
+    <Hash>31d98719544afde07a740a03b9ad3f61</Hash>
 </Codenesium>*/

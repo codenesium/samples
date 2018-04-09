@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productCategoryID);
+				this.logger.LogError($"Unable to find id:{productCategoryID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProductCategory   efProductCategory)
 		{
-			efProductCategory.ProductCategoryID = productCategoryID;
-			efProductCategory.Name = name;
-			efProductCategory.Rowguid = rowguid;
-			efProductCategory.ModifiedDate = modifiedDate;
+			efProductCategory.SetProperties(productCategoryID.ToInt(),name,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductCategory efProductCategory,Response response)
@@ -148,17 +145,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductCategory(new POCOProductCategory()
-			{
-				ProductCategoryID = efProductCategory.ProductCategoryID.ToInt(),
-				Name = efProductCategory.Name,
-				Rowguid = efProductCategory.Rowguid,
-				ModifiedDate = efProductCategory.ModifiedDate.ToDateTime(),
-			});
+			response.AddProductCategory(new POCOProductCategory(efProductCategory.ProductCategoryID.ToInt(),efProductCategory.Name,efProductCategory.Rowguid,efProductCategory.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8080cb58ceb55e55b3993cb37f3df623</Hash>
+    <Hash>43cce87025b32645bdefcaac8bac289d</Hash>
 </Codenesium>*/

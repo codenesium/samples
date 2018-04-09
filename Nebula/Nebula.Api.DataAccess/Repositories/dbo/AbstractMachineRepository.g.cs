@@ -50,7 +50,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -146,12 +146,7 @@ namespace NebulaNS.Api.DataAccess
 		                               string lastIpAddress,
 		                               string description, EFMachine   efMachine)
 		{
-			efMachine.Id = id;
-			efMachine.Name = name;
-			efMachine.MachineGuid = machineGuid;
-			efMachine.JwtKey = jwtKey;
-			efMachine.LastIpAddress = lastIpAddress;
-			efMachine.Description = description;
+			efMachine.SetProperties(id.ToInt(),name,machineGuid,jwtKey,lastIpAddress,description);
 		}
 
 		public static void MapEFToPOCO(EFMachine efMachine,Response response)
@@ -160,19 +155,11 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddMachine(new POCOMachine()
-			{
-				Id = efMachine.Id.ToInt(),
-				Name = efMachine.Name,
-				MachineGuid = efMachine.MachineGuid,
-				JwtKey = efMachine.JwtKey,
-				LastIpAddress = efMachine.LastIpAddress,
-				Description = efMachine.Description,
-			});
+			response.AddMachine(new POCOMachine(efMachine.Id.ToInt(),efMachine.Name,efMachine.MachineGuid,efMachine.JwtKey,efMachine.LastIpAddress,efMachine.Description));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae930b39aea0d85bf5ddc5f23ec609b5</Hash>
+    <Hash>f7a8229288fad9f09520badbe3af3f61</Hash>
 </Codenesium>*/

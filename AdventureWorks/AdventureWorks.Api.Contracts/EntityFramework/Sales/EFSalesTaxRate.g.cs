@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("SalesTaxRate", Schema="Sales")]
@@ -8,6 +9,23 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFSalesTaxRate()
 		{}
+
+		public void SetProperties(int salesTaxRateID,
+		                          int stateProvinceID,
+		                          int taxType,
+		                          decimal taxRate,
+		                          string name,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.SalesTaxRateID = salesTaxRateID.ToInt();
+			this.StateProvinceID = stateProvinceID.ToInt();
+			this.TaxType = taxType;
+			this.TaxRate = taxRate;
+			this.Name = name;
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -37,5 +55,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8a39b94f127b28c365a63c4fdd29f17c</Hash>
+    <Hash>10cc92314b5cdc0813daa8684a4b9933</Hash>
 </Codenesium>*/

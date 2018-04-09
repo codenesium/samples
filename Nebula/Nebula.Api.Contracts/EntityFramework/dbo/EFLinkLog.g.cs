@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("LinkLog", Schema="dbo")]
@@ -8,6 +9,17 @@ namespace NebulaNS.Api.Contracts
 	{
 		public EFLinkLog()
 		{}
+
+		public void SetProperties(int id,
+		                          int linkId,
+		                          string log,
+		                          DateTime dateEntered)
+		{
+			this.Id = id.ToInt();
+			this.LinkId = linkId.ToInt();
+			this.Log = log;
+			this.DateEntered = dateEntered.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,5 +40,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4ebe0aa01b9bc011945b6949f374cdf9</Hash>
+    <Hash>8bcc587f084f58a55ed9eb2d4be191e4</Hash>
 </Codenesium>*/

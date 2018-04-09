@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",systemInformationID);
+				this.logger.LogError($"Unable to find id:{systemInformationID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               DateTime versionDate,
 		                               DateTime modifiedDate, EFAWBuildVersion   efAWBuildVersion)
 		{
-			efAWBuildVersion.SystemInformationID = systemInformationID;
-			efAWBuildVersion.Database_Version = database_Version;
-			efAWBuildVersion.VersionDate = versionDate;
-			efAWBuildVersion.ModifiedDate = modifiedDate;
+			efAWBuildVersion.SetProperties(systemInformationID,database_Version,versionDate.ToDateTime(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFAWBuildVersion efAWBuildVersion,Response response)
@@ -148,17 +145,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddAWBuildVersion(new POCOAWBuildVersion()
-			{
-				SystemInformationID = efAWBuildVersion.SystemInformationID,
-				Database_Version = efAWBuildVersion.Database_Version,
-				VersionDate = efAWBuildVersion.VersionDate.ToDateTime(),
-				ModifiedDate = efAWBuildVersion.ModifiedDate.ToDateTime(),
-			});
+			response.AddAWBuildVersion(new POCOAWBuildVersion(efAWBuildVersion.SystemInformationID,efAWBuildVersion.Database_Version,efAWBuildVersion.VersionDate.ToDateTime(),efAWBuildVersion.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb0fa3c9f29a0061963cc555232b0d82</Hash>
+    <Hash>fdcf6c2b39d54b817c977e91051664c0</Hash>
 </Codenesium>*/

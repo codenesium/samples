@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("SalesTerritory", Schema="Sales")]
@@ -8,6 +9,29 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFSalesTerritory()
 		{}
+
+		public void SetProperties(int territoryID,
+		                          string name,
+		                          string countryRegionCode,
+		                          string @group,
+		                          decimal salesYTD,
+		                          decimal salesLastYear,
+		                          decimal costYTD,
+		                          decimal costLastYear,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.TerritoryID = territoryID.ToInt();
+			this.Name = name;
+			this.CountryRegionCode = countryRegionCode;
+			this.@Group = @group;
+			this.SalesYTD = salesYTD;
+			this.SalesLastYear = salesLastYear;
+			this.CostYTD = costYTD;
+			this.CostLastYear = costLastYear;
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -46,5 +70,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ee792d0041537a105aa78179892b9724</Hash>
+    <Hash>9929cf9a86e0dff6d3f14ced5f13420d</Hash>
 </Codenesium>*/

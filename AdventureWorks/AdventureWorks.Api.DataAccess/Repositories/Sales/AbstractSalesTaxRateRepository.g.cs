@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",salesTaxRateID);
+				this.logger.LogError($"Unable to find id:{salesTaxRateID}");
 			}
 			else
 			{
@@ -151,13 +151,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesTaxRate   efSalesTaxRate)
 		{
-			efSalesTaxRate.SalesTaxRateID = salesTaxRateID;
-			efSalesTaxRate.StateProvinceID = stateProvinceID;
-			efSalesTaxRate.TaxType = taxType;
-			efSalesTaxRate.TaxRate = taxRate;
-			efSalesTaxRate.Name = name;
-			efSalesTaxRate.Rowguid = rowguid;
-			efSalesTaxRate.ModifiedDate = modifiedDate;
+			efSalesTaxRate.SetProperties(salesTaxRateID.ToInt(),stateProvinceID.ToInt(),taxType,taxRate,name,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesTaxRate efSalesTaxRate,Response response)
@@ -166,18 +160,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesTaxRate(new POCOSalesTaxRate()
-			{
-				SalesTaxRateID = efSalesTaxRate.SalesTaxRateID.ToInt(),
-				TaxType = efSalesTaxRate.TaxType,
-				TaxRate = efSalesTaxRate.TaxRate,
-				Name = efSalesTaxRate.Name,
-				Rowguid = efSalesTaxRate.Rowguid,
-				ModifiedDate = efSalesTaxRate.ModifiedDate.ToDateTime(),
-
-				StateProvinceID = new ReferenceEntity<int>(efSalesTaxRate.StateProvinceID,
-				                                           "StateProvinces"),
-			});
+			response.AddSalesTaxRate(new POCOSalesTaxRate(efSalesTaxRate.SalesTaxRateID.ToInt(),efSalesTaxRate.StateProvinceID.ToInt(),efSalesTaxRate.TaxType,efSalesTaxRate.TaxRate,efSalesTaxRate.Name,efSalesTaxRate.Rowguid,efSalesTaxRate.ModifiedDate.ToDateTime()));
 
 			StateProvinceRepository.MapEFToPOCO(efSalesTaxRate.StateProvince, response);
 		}
@@ -185,5 +168,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3e451b325b241ffff197cae9ce7f5c29</Hash>
+    <Hash>f774d6af498712060b176899b65652fd</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace ESPIOTNS.Api.Contracts
 {
 	[Table("DeviceAction", Schema="dbo")]
@@ -8,6 +9,17 @@ namespace ESPIOTNS.Api.Contracts
 	{
 		public EFDeviceAction()
 		{}
+
+		public void SetProperties(int id,
+		                          int deviceId,
+		                          string name,
+		                          string @value)
+		{
+			this.Id = id.ToInt();
+			this.DeviceId = deviceId.ToInt();
+			this.Name = name;
+			this.@Value = @value;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,5 +40,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f0b0ddeaf246ebd857c2397240a65f42</Hash>
+    <Hash>f2f1c2175644533be4d14e5d4f5b6039</Hash>
 </Codenesium>*/

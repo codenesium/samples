@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ProductVendor", Schema="Purchasing")]
@@ -8,6 +9,31 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFProductVendor()
 		{}
+
+		public void SetProperties(int productID,
+		                          int businessEntityID,
+		                          int averageLeadTime,
+		                          decimal standardPrice,
+		                          Nullable<decimal> lastReceiptCost,
+		                          Nullable<DateTime> lastReceiptDate,
+		                          int minOrderQty,
+		                          int maxOrderQty,
+		                          Nullable<int> onOrderQty,
+		                          string unitMeasureCode,
+		                          DateTime modifiedDate)
+		{
+			this.ProductID = productID.ToInt();
+			this.BusinessEntityID = businessEntityID.ToInt();
+			this.AverageLeadTime = averageLeadTime.ToInt();
+			this.StandardPrice = standardPrice;
+			this.LastReceiptCost = lastReceiptCost;
+			this.LastReceiptDate = lastReceiptDate.ToNullableDateTime();
+			this.MinOrderQty = minOrderQty.ToInt();
+			this.MaxOrderQty = maxOrderQty.ToInt();
+			this.OnOrderQty = onOrderQty.ToNullableInt();
+			this.UnitMeasureCode = unitMeasureCode;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -53,5 +79,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b6df0ddaf52b6355c375d97e70a12414</Hash>
+    <Hash>ad6551cc6d1149e77b5c849d2b5c8397</Hash>
 </Codenesium>*/

@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",territoryID);
+				this.logger.LogError($"Unable to find id:{territoryID}");
 			}
 			else
 			{
@@ -166,16 +166,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesTerritory   efSalesTerritory)
 		{
-			efSalesTerritory.TerritoryID = territoryID;
-			efSalesTerritory.Name = name;
-			efSalesTerritory.CountryRegionCode = countryRegionCode;
-			efSalesTerritory.@Group = @group;
-			efSalesTerritory.SalesYTD = salesYTD;
-			efSalesTerritory.SalesLastYear = salesLastYear;
-			efSalesTerritory.CostYTD = costYTD;
-			efSalesTerritory.CostLastYear = costLastYear;
-			efSalesTerritory.Rowguid = rowguid;
-			efSalesTerritory.ModifiedDate = modifiedDate;
+			efSalesTerritory.SetProperties(territoryID.ToInt(),name,countryRegionCode,@group,salesYTD,salesLastYear,costYTD,costLastYear,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesTerritory efSalesTerritory,Response response)
@@ -184,21 +175,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesTerritory(new POCOSalesTerritory()
-			{
-				TerritoryID = efSalesTerritory.TerritoryID.ToInt(),
-				Name = efSalesTerritory.Name,
-				@Group = efSalesTerritory.@Group,
-				SalesYTD = efSalesTerritory.SalesYTD,
-				SalesLastYear = efSalesTerritory.SalesLastYear,
-				CostYTD = efSalesTerritory.CostYTD,
-				CostLastYear = efSalesTerritory.CostLastYear,
-				Rowguid = efSalesTerritory.Rowguid,
-				ModifiedDate = efSalesTerritory.ModifiedDate.ToDateTime(),
-
-				CountryRegionCode = new ReferenceEntity<string>(efSalesTerritory.CountryRegionCode,
-				                                                "CountryRegions"),
-			});
+			response.AddSalesTerritory(new POCOSalesTerritory(efSalesTerritory.TerritoryID.ToInt(),efSalesTerritory.Name,efSalesTerritory.CountryRegionCode,efSalesTerritory.@Group,efSalesTerritory.SalesYTD,efSalesTerritory.SalesLastYear,efSalesTerritory.CostYTD,efSalesTerritory.CostLastYear,efSalesTerritory.Rowguid,efSalesTerritory.ModifiedDate.ToDateTime()));
 
 			CountryRegionRepository.MapEFToPOCO(efSalesTerritory.CountryRegion, response);
 		}
@@ -206,5 +183,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>071b228aaaee30b99be42f3c8dfcc95c</Hash>
+    <Hash>1798698bfe47573787cf16888bf2d198</Hash>
 </Codenesium>*/

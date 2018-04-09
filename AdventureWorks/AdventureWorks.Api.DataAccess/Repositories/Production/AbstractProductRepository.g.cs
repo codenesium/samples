@@ -107,7 +107,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productID);
+				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -241,31 +241,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProduct   efProduct)
 		{
-			efProduct.ProductID = productID;
-			efProduct.Name = name;
-			efProduct.ProductNumber = productNumber;
-			efProduct.MakeFlag = makeFlag;
-			efProduct.FinishedGoodsFlag = finishedGoodsFlag;
-			efProduct.Color = color;
-			efProduct.SafetyStockLevel = safetyStockLevel;
-			efProduct.ReorderPoint = reorderPoint;
-			efProduct.StandardCost = standardCost;
-			efProduct.ListPrice = listPrice;
-			efProduct.Size = size;
-			efProduct.SizeUnitMeasureCode = sizeUnitMeasureCode;
-			efProduct.WeightUnitMeasureCode = weightUnitMeasureCode;
-			efProduct.Weight = weight;
-			efProduct.DaysToManufacture = daysToManufacture;
-			efProduct.ProductLine = productLine;
-			efProduct.@Class = @class;
-			efProduct.Style = style;
-			efProduct.ProductSubcategoryID = productSubcategoryID;
-			efProduct.ProductModelID = productModelID;
-			efProduct.SellStartDate = sellStartDate;
-			efProduct.SellEndDate = sellEndDate;
-			efProduct.DiscontinuedDate = discontinuedDate;
-			efProduct.Rowguid = rowguid;
-			efProduct.ModifiedDate = modifiedDate;
+			efProduct.SetProperties(productID.ToInt(),name,productNumber,makeFlag,finishedGoodsFlag,color,safetyStockLevel,reorderPoint,standardCost,listPrice,size,sizeUnitMeasureCode,weightUnitMeasureCode,weight.ToNullableDecimal(),daysToManufacture.ToInt(),productLine,@class,style,productSubcategoryID.ToNullableInt(),productModelID.ToNullableInt(),sellStartDate.ToDateTime(),sellEndDate.ToNullableDateTime(),discontinuedDate.ToNullableDateTime(),rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProduct efProduct,Response response)
@@ -274,39 +250,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProduct(new POCOProduct()
-			{
-				ProductID = efProduct.ProductID.ToInt(),
-				Name = efProduct.Name,
-				ProductNumber = efProduct.ProductNumber,
-				MakeFlag = efProduct.MakeFlag,
-				FinishedGoodsFlag = efProduct.FinishedGoodsFlag,
-				Color = efProduct.Color,
-				SafetyStockLevel = efProduct.SafetyStockLevel,
-				ReorderPoint = efProduct.ReorderPoint,
-				StandardCost = efProduct.StandardCost,
-				ListPrice = efProduct.ListPrice,
-				Size = efProduct.Size,
-				Weight = efProduct.Weight.ToNullableDecimal(),
-				DaysToManufacture = efProduct.DaysToManufacture.ToInt(),
-				ProductLine = efProduct.ProductLine,
-				@Class = efProduct.@Class,
-				Style = efProduct.Style,
-				SellStartDate = efProduct.SellStartDate.ToDateTime(),
-				SellEndDate = efProduct.SellEndDate.ToNullableDateTime(),
-				DiscontinuedDate = efProduct.DiscontinuedDate.ToNullableDateTime(),
-				Rowguid = efProduct.Rowguid,
-				ModifiedDate = efProduct.ModifiedDate.ToDateTime(),
-
-				SizeUnitMeasureCode = new ReferenceEntity<string>(efProduct.SizeUnitMeasureCode,
-				                                                  "UnitMeasures"),
-				WeightUnitMeasureCode = new ReferenceEntity<string>(efProduct.WeightUnitMeasureCode,
-				                                                    "UnitMeasures"),
-				ProductSubcategoryID = new ReferenceEntity<Nullable<int>>(efProduct.ProductSubcategoryID,
-				                                                          "ProductSubcategories"),
-				ProductModelID = new ReferenceEntity<Nullable<int>>(efProduct.ProductModelID,
-				                                                    "ProductModels"),
-			});
+			response.AddProduct(new POCOProduct(efProduct.ProductID.ToInt(),efProduct.Name,efProduct.ProductNumber,efProduct.MakeFlag,efProduct.FinishedGoodsFlag,efProduct.Color,efProduct.SafetyStockLevel,efProduct.ReorderPoint,efProduct.StandardCost,efProduct.ListPrice,efProduct.Size,efProduct.SizeUnitMeasureCode,efProduct.WeightUnitMeasureCode,efProduct.Weight.ToNullableDecimal(),efProduct.DaysToManufacture.ToInt(),efProduct.ProductLine,efProduct.@Class,efProduct.Style,efProduct.ProductSubcategoryID.ToNullableInt(),efProduct.ProductModelID.ToNullableInt(),efProduct.SellStartDate.ToDateTime(),efProduct.SellEndDate.ToNullableDateTime(),efProduct.DiscontinuedDate.ToNullableDateTime(),efProduct.Rowguid,efProduct.ModifiedDate.ToDateTime()));
 
 			UnitMeasureRepository.MapEFToPOCO(efProduct.UnitMeasure, response);
 
@@ -320,5 +264,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2092e87d99a11b4d33b3fb879eeec301</Hash>
+    <Hash>eac780507dc2b76926cbbc97d500ea83</Hash>
 </Codenesium>*/

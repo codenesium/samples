@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Team", Schema="dbo")]
@@ -8,6 +9,15 @@ namespace NebulaNS.Api.Contracts
 	{
 		public EFTeam()
 		{}
+
+		public void SetProperties(int id,
+		                          string name,
+		                          int organizationId)
+		{
+			this.Id = id.ToInt();
+			this.Name = name;
+			this.OrganizationId = organizationId.ToInt();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,5 +35,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d47581a12f6ab141dea568efb85ec912</Hash>
+    <Hash>41932e2bcbc29bd3dc407571f56bcea3</Hash>
 </Codenesium>*/

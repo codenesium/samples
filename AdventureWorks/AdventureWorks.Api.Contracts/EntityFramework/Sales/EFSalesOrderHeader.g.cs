@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("SalesOrderHeader", Schema="Sales")]
@@ -8,6 +9,61 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFSalesOrderHeader()
 		{}
+
+		public void SetProperties(int salesOrderID,
+		                          int revisionNumber,
+		                          DateTime orderDate,
+		                          DateTime dueDate,
+		                          Nullable<DateTime> shipDate,
+		                          int status,
+		                          bool onlineOrderFlag,
+		                          string salesOrderNumber,
+		                          string purchaseOrderNumber,
+		                          string accountNumber,
+		                          int customerID,
+		                          Nullable<int> salesPersonID,
+		                          Nullable<int> territoryID,
+		                          int billToAddressID,
+		                          int shipToAddressID,
+		                          int shipMethodID,
+		                          Nullable<int> creditCardID,
+		                          string creditCardApprovalCode,
+		                          Nullable<int> currencyRateID,
+		                          decimal subTotal,
+		                          decimal taxAmt,
+		                          decimal freight,
+		                          decimal totalDue,
+		                          string comment,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.SalesOrderID = salesOrderID.ToInt();
+			this.RevisionNumber = revisionNumber;
+			this.OrderDate = orderDate.ToDateTime();
+			this.DueDate = dueDate.ToDateTime();
+			this.ShipDate = shipDate.ToNullableDateTime();
+			this.Status = status;
+			this.OnlineOrderFlag = onlineOrderFlag;
+			this.SalesOrderNumber = salesOrderNumber;
+			this.PurchaseOrderNumber = purchaseOrderNumber;
+			this.AccountNumber = accountNumber;
+			this.CustomerID = customerID.ToInt();
+			this.SalesPersonID = salesPersonID.ToNullableInt();
+			this.TerritoryID = territoryID.ToNullableInt();
+			this.BillToAddressID = billToAddressID.ToInt();
+			this.ShipToAddressID = shipToAddressID.ToInt();
+			this.ShipMethodID = shipMethodID.ToInt();
+			this.CreditCardID = creditCardID.ToNullableInt();
+			this.CreditCardApprovalCode = creditCardApprovalCode;
+			this.CurrencyRateID = currencyRateID.ToNullableInt();
+			this.SubTotal = subTotal;
+			this.TaxAmt = taxAmt;
+			this.Freight = freight;
+			this.TotalDue = totalDue;
+			this.Comment = comment;
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -108,5 +164,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>25523e0a1879cdb8b8e92f5f593e1b8f</Hash>
+    <Hash>81a81dbd99f16dc8e1bdfdaf34e61bad</Hash>
 </Codenesium>*/

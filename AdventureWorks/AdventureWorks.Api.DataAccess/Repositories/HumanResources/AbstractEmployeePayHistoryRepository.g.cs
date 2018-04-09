@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               int payFrequency,
 		                               DateTime modifiedDate, EFEmployeePayHistory   efEmployeePayHistory)
 		{
-			efEmployeePayHistory.BusinessEntityID = businessEntityID;
-			efEmployeePayHistory.RateChangeDate = rateChangeDate;
-			efEmployeePayHistory.Rate = rate;
-			efEmployeePayHistory.PayFrequency = payFrequency;
-			efEmployeePayHistory.ModifiedDate = modifiedDate;
+			efEmployeePayHistory.SetProperties(businessEntityID.ToInt(),rateChangeDate.ToDateTime(),rate,payFrequency,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFEmployeePayHistory efEmployeePayHistory,Response response)
@@ -154,16 +150,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddEmployeePayHistory(new POCOEmployeePayHistory()
-			{
-				RateChangeDate = efEmployeePayHistory.RateChangeDate.ToDateTime(),
-				Rate = efEmployeePayHistory.Rate,
-				PayFrequency = efEmployeePayHistory.PayFrequency,
-				ModifiedDate = efEmployeePayHistory.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efEmployeePayHistory.BusinessEntityID,
-				                                            "Employees"),
-			});
+			response.AddEmployeePayHistory(new POCOEmployeePayHistory(efEmployeePayHistory.BusinessEntityID.ToInt(),efEmployeePayHistory.RateChangeDate.ToDateTime(),efEmployeePayHistory.Rate,efEmployeePayHistory.PayFrequency,efEmployeePayHistory.ModifiedDate.ToDateTime()));
 
 			EmployeeRepository.MapEFToPOCO(efEmployeePayHistory.Employee, response);
 		}
@@ -171,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b9c7286b1b2cfff7065ab4fe8d95c3e4</Hash>
+    <Hash>7c1a990befc950749af613ab6048f515</Hash>
 </Codenesium>*/

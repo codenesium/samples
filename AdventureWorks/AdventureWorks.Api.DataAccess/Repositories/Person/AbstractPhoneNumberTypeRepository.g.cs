@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",phoneNumberTypeID);
+				this.logger.LogError($"Unable to find id:{phoneNumberTypeID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int phoneNumberTypeID, string name,
 		                               DateTime modifiedDate, EFPhoneNumberType   efPhoneNumberType)
 		{
-			efPhoneNumberType.PhoneNumberTypeID = phoneNumberTypeID;
-			efPhoneNumberType.Name = name;
-			efPhoneNumberType.ModifiedDate = modifiedDate;
+			efPhoneNumberType.SetProperties(phoneNumberTypeID.ToInt(),name,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFPhoneNumberType efPhoneNumberType,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddPhoneNumberType(new POCOPhoneNumberType()
-			{
-				PhoneNumberTypeID = efPhoneNumberType.PhoneNumberTypeID.ToInt(),
-				Name = efPhoneNumberType.Name,
-				ModifiedDate = efPhoneNumberType.ModifiedDate.ToDateTime(),
-			});
+			response.AddPhoneNumberType(new POCOPhoneNumberType(efPhoneNumberType.PhoneNumberTypeID.ToInt(),efPhoneNumberType.Name,efPhoneNumberType.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>06e2740c9507167e58e29340e5b1b4dc</Hash>
+    <Hash>470d88b101d7480c83df227d64e32816</Hash>
 </Codenesium>*/

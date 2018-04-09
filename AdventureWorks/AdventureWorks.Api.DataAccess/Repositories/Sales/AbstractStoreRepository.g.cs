@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -146,12 +146,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFStore   efStore)
 		{
-			efStore.BusinessEntityID = businessEntityID;
-			efStore.Name = name;
-			efStore.SalesPersonID = salesPersonID;
-			efStore.Demographics = demographics;
-			efStore.Rowguid = rowguid;
-			efStore.ModifiedDate = modifiedDate;
+			efStore.SetProperties(businessEntityID.ToInt(),name,salesPersonID.ToNullableInt(),demographics,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFStore efStore,Response response)
@@ -160,18 +155,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddStore(new POCOStore()
-			{
-				Name = efStore.Name,
-				Demographics = efStore.Demographics,
-				Rowguid = efStore.Rowguid,
-				ModifiedDate = efStore.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efStore.BusinessEntityID,
-				                                            "BusinessEntities"),
-				SalesPersonID = new ReferenceEntity<Nullable<int>>(efStore.SalesPersonID,
-				                                                   "SalesPersons"),
-			});
+			response.AddStore(new POCOStore(efStore.BusinessEntityID.ToInt(),efStore.Name,efStore.SalesPersonID.ToNullableInt(),efStore.Demographics,efStore.Rowguid,efStore.ModifiedDate.ToDateTime()));
 
 			BusinessEntityRepository.MapEFToPOCO(efStore.BusinessEntity, response);
 
@@ -181,5 +165,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d362b4b66447cbf9be8fa0c798b9c86e</Hash>
+    <Hash>973a36f9c16677354ce17eb8684c8bc4</Hash>
 </Codenesium>*/

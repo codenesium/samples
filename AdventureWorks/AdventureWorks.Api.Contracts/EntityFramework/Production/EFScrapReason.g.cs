@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ScrapReason", Schema="Production")]
@@ -8,6 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFScrapReason()
 		{}
+
+		public void SetProperties(short scrapReasonID,
+		                          string name,
+		                          DateTime modifiedDate)
+		{
+			this.ScrapReasonID = scrapReasonID;
+			this.Name = name;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,5 +33,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e15d1e6a7dab38679d7091312d77b0a3</Hash>
+    <Hash>87a6f79692a66a852834b8744efc8818</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Link", Schema="dbo")]
@@ -8,6 +9,33 @@ namespace NebulaNS.Api.Contracts
 	{
 		public EFLink()
 		{}
+
+		public void SetProperties(int id,
+		                          string name,
+		                          string dynamicParameters,
+		                          string staticParameters,
+		                          int chainId,
+		                          Nullable<int> assignedMachineId,
+		                          int linkStatusId,
+		                          int order,
+		                          Nullable<DateTime> dateStarted,
+		                          Nullable<DateTime> dateCompleted,
+		                          string response,
+		                          Guid externalId)
+		{
+			this.Id = id.ToInt();
+			this.Name = name;
+			this.DynamicParameters = dynamicParameters;
+			this.StaticParameters = staticParameters;
+			this.ChainId = chainId.ToInt();
+			this.AssignedMachineId = assignedMachineId.ToNullableInt();
+			this.LinkStatusId = linkStatusId.ToInt();
+			this.Order = order.ToInt();
+			this.DateStarted = dateStarted.ToNullableDateTime();
+			this.DateCompleted = dateCompleted.ToNullableDateTime();
+			this.Response = response;
+			this.ExternalId = externalId;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -56,5 +84,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d59f0c5a34c29f783eedc3e4a93cac0a</Hash>
+    <Hash>c5c935f143b7b1d5c6e4b56c84868f96</Hash>
 </Codenesium>*/

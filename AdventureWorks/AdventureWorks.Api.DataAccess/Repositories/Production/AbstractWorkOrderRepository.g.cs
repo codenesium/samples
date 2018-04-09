@@ -62,7 +62,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",workOrderID);
+				this.logger.LogError($"Unable to find id:{workOrderID}");
 			}
 			else
 			{
@@ -166,16 +166,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Nullable<short> scrapReasonID,
 		                               DateTime modifiedDate, EFWorkOrder   efWorkOrder)
 		{
-			efWorkOrder.WorkOrderID = workOrderID;
-			efWorkOrder.ProductID = productID;
-			efWorkOrder.OrderQty = orderQty;
-			efWorkOrder.StockedQty = stockedQty;
-			efWorkOrder.ScrappedQty = scrappedQty;
-			efWorkOrder.StartDate = startDate;
-			efWorkOrder.EndDate = endDate;
-			efWorkOrder.DueDate = dueDate;
-			efWorkOrder.ScrapReasonID = scrapReasonID;
-			efWorkOrder.ModifiedDate = modifiedDate;
+			efWorkOrder.SetProperties(workOrderID.ToInt(),productID.ToInt(),orderQty.ToInt(),stockedQty.ToInt(),scrappedQty,startDate.ToDateTime(),endDate.ToNullableDateTime(),dueDate.ToDateTime(),scrapReasonID,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFWorkOrder efWorkOrder,Response response)
@@ -184,22 +175,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddWorkOrder(new POCOWorkOrder()
-			{
-				WorkOrderID = efWorkOrder.WorkOrderID.ToInt(),
-				OrderQty = efWorkOrder.OrderQty.ToInt(),
-				StockedQty = efWorkOrder.StockedQty.ToInt(),
-				ScrappedQty = efWorkOrder.ScrappedQty,
-				StartDate = efWorkOrder.StartDate.ToDateTime(),
-				EndDate = efWorkOrder.EndDate.ToNullableDateTime(),
-				DueDate = efWorkOrder.DueDate.ToDateTime(),
-				ModifiedDate = efWorkOrder.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efWorkOrder.ProductID,
-				                                     "Products"),
-				ScrapReasonID = new ReferenceEntity<Nullable<short>>(efWorkOrder.ScrapReasonID,
-				                                                     "ScrapReasons"),
-			});
+			response.AddWorkOrder(new POCOWorkOrder(efWorkOrder.WorkOrderID.ToInt(),efWorkOrder.ProductID.ToInt(),efWorkOrder.OrderQty.ToInt(),efWorkOrder.StockedQty.ToInt(),efWorkOrder.ScrappedQty,efWorkOrder.StartDate.ToDateTime(),efWorkOrder.EndDate.ToNullableDateTime(),efWorkOrder.DueDate.ToDateTime(),efWorkOrder.ScrapReasonID,efWorkOrder.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efWorkOrder.Product, response);
 
@@ -209,5 +185,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b0c75ce92d609c0a73a883c2a87ac9b</Hash>
+    <Hash>52ef8b69045207a09f834dabad3fe56a</Hash>
 </Codenesium>*/

@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.IllustrationID == illustrationID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",illustrationID);
+				this.logger.LogError($"Unable to find id:{illustrationID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int illustrationID, string diagram,
 		                               DateTime modifiedDate, EFIllustration   efIllustration)
 		{
-			efIllustration.IllustrationID = illustrationID;
-			efIllustration.Diagram = diagram;
-			efIllustration.ModifiedDate = modifiedDate;
+			efIllustration.SetProperties(illustrationID.ToInt(),diagram,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFIllustration efIllustration,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddIllustration(new POCOIllustration()
-			{
-				IllustrationID = efIllustration.IllustrationID.ToInt(),
-				Diagram = efIllustration.Diagram,
-				ModifiedDate = efIllustration.ModifiedDate.ToDateTime(),
-			});
+			response.AddIllustration(new POCOIllustration(efIllustration.IllustrationID.ToInt(),efIllustration.Diagram,efIllustration.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>db7757d4a8b352fb5a2a707a83fe043e</Hash>
+    <Hash>9edf7b71ceb6157e1107d87f2d712f08</Hash>
 </Codenesium>*/

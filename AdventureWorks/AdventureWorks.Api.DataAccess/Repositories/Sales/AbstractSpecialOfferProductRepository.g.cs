@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",specialOfferID);
+				this.logger.LogError($"Unable to find id:{specialOfferID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSpecialOfferProduct   efSpecialOfferProduct)
 		{
-			efSpecialOfferProduct.SpecialOfferID = specialOfferID;
-			efSpecialOfferProduct.ProductID = productID;
-			efSpecialOfferProduct.Rowguid = rowguid;
-			efSpecialOfferProduct.ModifiedDate = modifiedDate;
+			efSpecialOfferProduct.SetProperties(specialOfferID.ToInt(),productID.ToInt(),rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSpecialOfferProduct efSpecialOfferProduct,Response response)
@@ -148,16 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSpecialOfferProduct(new POCOSpecialOfferProduct()
-			{
-				Rowguid = efSpecialOfferProduct.Rowguid,
-				ModifiedDate = efSpecialOfferProduct.ModifiedDate.ToDateTime(),
-
-				SpecialOfferID = new ReferenceEntity<int>(efSpecialOfferProduct.SpecialOfferID,
-				                                          "SpecialOffers"),
-				ProductID = new ReferenceEntity<int>(efSpecialOfferProduct.ProductID,
-				                                     "Products"),
-			});
+			response.AddSpecialOfferProduct(new POCOSpecialOfferProduct(efSpecialOfferProduct.SpecialOfferID.ToInt(),efSpecialOfferProduct.ProductID.ToInt(),efSpecialOfferProduct.Rowguid,efSpecialOfferProduct.ModifiedDate.ToDateTime()));
 
 			SpecialOfferRepository.MapEFToPOCO(efSpecialOfferProduct.SpecialOffer, response);
 
@@ -167,5 +155,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>354dff8aee7a1857d7b827cdf9224528</Hash>
+    <Hash>43c7b17b3fcccb9a8c78461e10d6c729</Hash>
 </Codenesium>*/

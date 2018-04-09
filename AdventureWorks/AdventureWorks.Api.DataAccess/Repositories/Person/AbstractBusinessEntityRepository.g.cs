@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int businessEntityID, Guid rowguid,
 		                               DateTime modifiedDate, EFBusinessEntity   efBusinessEntity)
 		{
-			efBusinessEntity.BusinessEntityID = businessEntityID;
-			efBusinessEntity.Rowguid = rowguid;
-			efBusinessEntity.ModifiedDate = modifiedDate;
+			efBusinessEntity.SetProperties(businessEntityID.ToInt(),rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFBusinessEntity efBusinessEntity,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddBusinessEntity(new POCOBusinessEntity()
-			{
-				BusinessEntityID = efBusinessEntity.BusinessEntityID.ToInt(),
-				Rowguid = efBusinessEntity.Rowguid,
-				ModifiedDate = efBusinessEntity.ModifiedDate.ToDateTime(),
-			});
+			response.AddBusinessEntity(new POCOBusinessEntity(efBusinessEntity.BusinessEntityID.ToInt(),efBusinessEntity.Rowguid,efBusinessEntity.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2711c201839cafe7258380392d50c7d</Hash>
+    <Hash>9abff1b33445fdf7e0fcc4b8e8fe6a17</Hash>
 </Codenesium>*/

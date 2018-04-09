@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",transactionID);
+				this.logger.LogError($"Unable to find id:{transactionID}");
 			}
 			else
 			{
@@ -161,15 +161,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal actualCost,
 		                               DateTime modifiedDate, EFTransactionHistoryArchive   efTransactionHistoryArchive)
 		{
-			efTransactionHistoryArchive.TransactionID = transactionID;
-			efTransactionHistoryArchive.ProductID = productID;
-			efTransactionHistoryArchive.ReferenceOrderID = referenceOrderID;
-			efTransactionHistoryArchive.ReferenceOrderLineID = referenceOrderLineID;
-			efTransactionHistoryArchive.TransactionDate = transactionDate;
-			efTransactionHistoryArchive.TransactionType = transactionType;
-			efTransactionHistoryArchive.Quantity = quantity;
-			efTransactionHistoryArchive.ActualCost = actualCost;
-			efTransactionHistoryArchive.ModifiedDate = modifiedDate;
+			efTransactionHistoryArchive.SetProperties(transactionID.ToInt(),productID.ToInt(),referenceOrderID.ToInt(),referenceOrderLineID.ToInt(),transactionDate.ToDateTime(),transactionType,quantity.ToInt(),actualCost,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFTransactionHistoryArchive efTransactionHistoryArchive,Response response)
@@ -178,22 +170,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddTransactionHistoryArchive(new POCOTransactionHistoryArchive()
-			{
-				TransactionID = efTransactionHistoryArchive.TransactionID.ToInt(),
-				ProductID = efTransactionHistoryArchive.ProductID.ToInt(),
-				ReferenceOrderID = efTransactionHistoryArchive.ReferenceOrderID.ToInt(),
-				ReferenceOrderLineID = efTransactionHistoryArchive.ReferenceOrderLineID.ToInt(),
-				TransactionDate = efTransactionHistoryArchive.TransactionDate.ToDateTime(),
-				TransactionType = efTransactionHistoryArchive.TransactionType,
-				Quantity = efTransactionHistoryArchive.Quantity.ToInt(),
-				ActualCost = efTransactionHistoryArchive.ActualCost,
-				ModifiedDate = efTransactionHistoryArchive.ModifiedDate.ToDateTime(),
-			});
+			response.AddTransactionHistoryArchive(new POCOTransactionHistoryArchive(efTransactionHistoryArchive.TransactionID.ToInt(),efTransactionHistoryArchive.ProductID.ToInt(),efTransactionHistoryArchive.ReferenceOrderID.ToInt(),efTransactionHistoryArchive.ReferenceOrderLineID.ToInt(),efTransactionHistoryArchive.TransactionDate.ToDateTime(),efTransactionHistoryArchive.TransactionType,efTransactionHistoryArchive.Quantity.ToInt(),efTransactionHistoryArchive.ActualCost,efTransactionHistoryArchive.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a1c0816bb8bbd2ed1825cc8ace2df79</Hash>
+    <Hash>4c24355c0e442343903b4f04073022a8</Hash>
 </Codenesium>*/

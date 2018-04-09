@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductSubcategoryID == productSubcategoryID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productSubcategoryID);
+				this.logger.LogError($"Unable to find id:{productSubcategoryID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProductSubcategory   efProductSubcategory)
 		{
-			efProductSubcategory.ProductSubcategoryID = productSubcategoryID;
-			efProductSubcategory.ProductCategoryID = productCategoryID;
-			efProductSubcategory.Name = name;
-			efProductSubcategory.Rowguid = rowguid;
-			efProductSubcategory.ModifiedDate = modifiedDate;
+			efProductSubcategory.SetProperties(productSubcategoryID.ToInt(),productCategoryID.ToInt(),name,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductSubcategory efProductSubcategory,Response response)
@@ -154,16 +150,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductSubcategory(new POCOProductSubcategory()
-			{
-				ProductSubcategoryID = efProductSubcategory.ProductSubcategoryID.ToInt(),
-				Name = efProductSubcategory.Name,
-				Rowguid = efProductSubcategory.Rowguid,
-				ModifiedDate = efProductSubcategory.ModifiedDate.ToDateTime(),
-
-				ProductCategoryID = new ReferenceEntity<int>(efProductSubcategory.ProductCategoryID,
-				                                             "ProductCategories"),
-			});
+			response.AddProductSubcategory(new POCOProductSubcategory(efProductSubcategory.ProductSubcategoryID.ToInt(),efProductSubcategory.ProductCategoryID.ToInt(),efProductSubcategory.Name,efProductSubcategory.Rowguid,efProductSubcategory.ModifiedDate.ToDateTime()));
 
 			ProductCategoryRepository.MapEFToPOCO(efProductSubcategory.ProductCategory, response);
 		}
@@ -171,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70e3021a0fa1cd558c2254527d453270</Hash>
+    <Hash>a6cf4cef9156ba38ce10c2e16cdbc3a5</Hash>
 </Codenesium>*/

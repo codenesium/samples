@@ -68,7 +68,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -176,18 +176,7 @@ namespace NebulaNS.Api.DataAccess
 		                               string response,
 		                               Guid externalId, EFLink   efLink)
 		{
-			efLink.Id = id;
-			efLink.Name = name;
-			efLink.DynamicParameters = dynamicParameters;
-			efLink.StaticParameters = staticParameters;
-			efLink.ChainId = chainId;
-			efLink.AssignedMachineId = assignedMachineId;
-			efLink.LinkStatusId = linkStatusId;
-			efLink.Order = order;
-			efLink.DateStarted = dateStarted;
-			efLink.DateCompleted = dateCompleted;
-			efLink.Response = response;
-			efLink.ExternalId = externalId;
+			efLink.SetProperties(id.ToInt(),name,dynamicParameters,staticParameters,chainId.ToInt(),assignedMachineId.ToNullableInt(),linkStatusId.ToInt(),order.ToInt(),dateStarted.ToNullableDateTime(),dateCompleted.ToNullableDateTime(),response,externalId);
 		}
 
 		public static void MapEFToPOCO(EFLink efLink,Response response)
@@ -196,25 +185,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddLink(new POCOLink()
-			{
-				Id = efLink.Id.ToInt(),
-				Name = efLink.Name,
-				DynamicParameters = efLink.DynamicParameters,
-				StaticParameters = efLink.StaticParameters,
-				Order = efLink.Order.ToInt(),
-				DateStarted = efLink.DateStarted.ToNullableDateTime(),
-				DateCompleted = efLink.DateCompleted.ToNullableDateTime(),
-				Response = efLink.Response,
-				ExternalId = efLink.ExternalId,
-
-				ChainId = new ReferenceEntity<int>(efLink.ChainId,
-				                                   "Chains"),
-				AssignedMachineId = new ReferenceEntity<Nullable<int>>(efLink.AssignedMachineId,
-				                                                       "Machines"),
-				LinkStatusId = new ReferenceEntity<int>(efLink.LinkStatusId,
-				                                        "LinkStatus"),
-			});
+			response.AddLink(new POCOLink(efLink.Id.ToInt(),efLink.Name,efLink.DynamicParameters,efLink.StaticParameters,efLink.ChainId.ToInt(),efLink.AssignedMachineId.ToNullableInt(),efLink.LinkStatusId.ToInt(),efLink.Order.ToInt(),efLink.DateStarted.ToNullableDateTime(),efLink.DateCompleted.ToNullableDateTime(),efLink.Response,efLink.ExternalId));
 
 			ChainRepository.MapEFToPOCO(efLink.Chain, response);
 
@@ -226,5 +197,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd6280e24ed1852a2664514a94a6c0f8</Hash>
+    <Hash>df7a6c56f06abfbe4ba33cdb820a4b5b</Hash>
 </Codenesium>*/

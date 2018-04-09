@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -161,15 +161,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesPerson   efSalesPerson)
 		{
-			efSalesPerson.BusinessEntityID = businessEntityID;
-			efSalesPerson.TerritoryID = territoryID;
-			efSalesPerson.SalesQuota = salesQuota;
-			efSalesPerson.Bonus = bonus;
-			efSalesPerson.CommissionPct = commissionPct;
-			efSalesPerson.SalesYTD = salesYTD;
-			efSalesPerson.SalesLastYear = salesLastYear;
-			efSalesPerson.Rowguid = rowguid;
-			efSalesPerson.ModifiedDate = modifiedDate;
+			efSalesPerson.SetProperties(businessEntityID.ToInt(),territoryID.ToNullableInt(),salesQuota,bonus,commissionPct,salesYTD,salesLastYear,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesPerson efSalesPerson,Response response)
@@ -178,21 +170,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesPerson(new POCOSalesPerson()
-			{
-				SalesQuota = efSalesPerson.SalesQuota,
-				Bonus = efSalesPerson.Bonus,
-				CommissionPct = efSalesPerson.CommissionPct,
-				SalesYTD = efSalesPerson.SalesYTD,
-				SalesLastYear = efSalesPerson.SalesLastYear,
-				Rowguid = efSalesPerson.Rowguid,
-				ModifiedDate = efSalesPerson.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efSalesPerson.BusinessEntityID,
-				                                            "Employees"),
-				TerritoryID = new ReferenceEntity<Nullable<int>>(efSalesPerson.TerritoryID,
-				                                                 "SalesTerritories"),
-			});
+			response.AddSalesPerson(new POCOSalesPerson(efSalesPerson.BusinessEntityID.ToInt(),efSalesPerson.TerritoryID.ToNullableInt(),efSalesPerson.SalesQuota,efSalesPerson.Bonus,efSalesPerson.CommissionPct,efSalesPerson.SalesYTD,efSalesPerson.SalesLastYear,efSalesPerson.Rowguid,efSalesPerson.ModifiedDate.ToDateTime()));
 
 			EmployeeRepository.MapEFToPOCO(efSalesPerson.Employee, response);
 
@@ -202,5 +180,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a3a1a2db7d228ebe1432ac700e60c1d3</Hash>
+    <Hash>715847db95b876807a0eec7efbc9046c</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Machine", Schema="dbo")]
@@ -8,6 +9,21 @@ namespace NebulaNS.Api.Contracts
 	{
 		public EFMachine()
 		{}
+
+		public void SetProperties(int id,
+		                          string name,
+		                          Guid machineGuid,
+		                          string jwtKey,
+		                          string lastIpAddress,
+		                          string description)
+		{
+			this.Id = id.ToInt();
+			this.Name = name;
+			this.MachineGuid = machineGuid;
+			this.JwtKey = jwtKey;
+			this.LastIpAddress = lastIpAddress;
+			this.Description = description;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,5 +48,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a8f7a7f6a40b7d15e9cfe55fa14b5735</Hash>
+    <Hash>0bd117e931450f545602489176ecd86f</Hash>
 </Codenesium>*/

@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ShipMethodID == shipMethodID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",shipMethodID);
+				this.logger.LogError($"Unable to find id:{shipMethodID}");
 			}
 			else
 			{
@@ -146,12 +146,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFShipMethod   efShipMethod)
 		{
-			efShipMethod.ShipMethodID = shipMethodID;
-			efShipMethod.Name = name;
-			efShipMethod.ShipBase = shipBase;
-			efShipMethod.ShipRate = shipRate;
-			efShipMethod.Rowguid = rowguid;
-			efShipMethod.ModifiedDate = modifiedDate;
+			efShipMethod.SetProperties(shipMethodID.ToInt(),name,shipBase,shipRate,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFShipMethod efShipMethod,Response response)
@@ -160,19 +155,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddShipMethod(new POCOShipMethod()
-			{
-				ShipMethodID = efShipMethod.ShipMethodID.ToInt(),
-				Name = efShipMethod.Name,
-				ShipBase = efShipMethod.ShipBase,
-				ShipRate = efShipMethod.ShipRate,
-				Rowguid = efShipMethod.Rowguid,
-				ModifiedDate = efShipMethod.ModifiedDate.ToDateTime(),
-			});
+			response.AddShipMethod(new POCOShipMethod(efShipMethod.ShipMethodID.ToInt(),efShipMethod.Name,efShipMethod.ShipBase,efShipMethod.ShipRate,efShipMethod.Rowguid,efShipMethod.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6914f1f65d1b84fe032b3cb0b522bea9</Hash>
+    <Hash>ae459f7464193fb78bc90560d2898139</Hash>
 </Codenesium>*/

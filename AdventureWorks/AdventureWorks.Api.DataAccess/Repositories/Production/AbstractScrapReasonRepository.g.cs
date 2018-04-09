@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",scrapReasonID);
+				this.logger.LogError($"Unable to find id:{scrapReasonID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(short scrapReasonID, string name,
 		                               DateTime modifiedDate, EFScrapReason   efScrapReason)
 		{
-			efScrapReason.ScrapReasonID = scrapReasonID;
-			efScrapReason.Name = name;
-			efScrapReason.ModifiedDate = modifiedDate;
+			efScrapReason.SetProperties(scrapReasonID,name,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFScrapReason efScrapReason,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddScrapReason(new POCOScrapReason()
-			{
-				ScrapReasonID = efScrapReason.ScrapReasonID,
-				Name = efScrapReason.Name,
-				ModifiedDate = efScrapReason.ModifiedDate.ToDateTime(),
-			});
+			response.AddScrapReason(new POCOScrapReason(efScrapReason.ScrapReasonID,efScrapReason.Name,efScrapReason.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d8ac29e2fbc74174d37cd4e2e0e90d0</Hash>
+    <Hash>9667eabd20eaa358e8ef205af3375561</Hash>
 </Codenesium>*/

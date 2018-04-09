@@ -110,7 +110,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",salesOrderID);
+				this.logger.LogError($"Unable to find id:{salesOrderID}");
 			}
 			else
 			{
@@ -246,32 +246,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesOrderHeader   efSalesOrderHeader)
 		{
-			efSalesOrderHeader.SalesOrderID = salesOrderID;
-			efSalesOrderHeader.RevisionNumber = revisionNumber;
-			efSalesOrderHeader.OrderDate = orderDate;
-			efSalesOrderHeader.DueDate = dueDate;
-			efSalesOrderHeader.ShipDate = shipDate;
-			efSalesOrderHeader.Status = status;
-			efSalesOrderHeader.OnlineOrderFlag = onlineOrderFlag;
-			efSalesOrderHeader.SalesOrderNumber = salesOrderNumber;
-			efSalesOrderHeader.PurchaseOrderNumber = purchaseOrderNumber;
-			efSalesOrderHeader.AccountNumber = accountNumber;
-			efSalesOrderHeader.CustomerID = customerID;
-			efSalesOrderHeader.SalesPersonID = salesPersonID;
-			efSalesOrderHeader.TerritoryID = territoryID;
-			efSalesOrderHeader.BillToAddressID = billToAddressID;
-			efSalesOrderHeader.ShipToAddressID = shipToAddressID;
-			efSalesOrderHeader.ShipMethodID = shipMethodID;
-			efSalesOrderHeader.CreditCardID = creditCardID;
-			efSalesOrderHeader.CreditCardApprovalCode = creditCardApprovalCode;
-			efSalesOrderHeader.CurrencyRateID = currencyRateID;
-			efSalesOrderHeader.SubTotal = subTotal;
-			efSalesOrderHeader.TaxAmt = taxAmt;
-			efSalesOrderHeader.Freight = freight;
-			efSalesOrderHeader.TotalDue = totalDue;
-			efSalesOrderHeader.Comment = comment;
-			efSalesOrderHeader.Rowguid = rowguid;
-			efSalesOrderHeader.ModifiedDate = modifiedDate;
+			efSalesOrderHeader.SetProperties(salesOrderID.ToInt(),revisionNumber,orderDate.ToDateTime(),dueDate.ToDateTime(),shipDate.ToNullableDateTime(),status,onlineOrderFlag,salesOrderNumber,purchaseOrderNumber,accountNumber,customerID.ToInt(),salesPersonID.ToNullableInt(),territoryID.ToNullableInt(),billToAddressID.ToInt(),shipToAddressID.ToInt(),shipMethodID.ToInt(),creditCardID.ToNullableInt(),creditCardApprovalCode,currencyRateID.ToNullableInt(),subTotal,taxAmt,freight,totalDue,comment,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesOrderHeader efSalesOrderHeader,Response response)
@@ -280,44 +255,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesOrderHeader(new POCOSalesOrderHeader()
-			{
-				SalesOrderID = efSalesOrderHeader.SalesOrderID.ToInt(),
-				RevisionNumber = efSalesOrderHeader.RevisionNumber,
-				OrderDate = efSalesOrderHeader.OrderDate.ToDateTime(),
-				DueDate = efSalesOrderHeader.DueDate.ToDateTime(),
-				ShipDate = efSalesOrderHeader.ShipDate.ToNullableDateTime(),
-				Status = efSalesOrderHeader.Status,
-				OnlineOrderFlag = efSalesOrderHeader.OnlineOrderFlag,
-				SalesOrderNumber = efSalesOrderHeader.SalesOrderNumber,
-				PurchaseOrderNumber = efSalesOrderHeader.PurchaseOrderNumber,
-				AccountNumber = efSalesOrderHeader.AccountNumber,
-				CreditCardApprovalCode = efSalesOrderHeader.CreditCardApprovalCode,
-				SubTotal = efSalesOrderHeader.SubTotal,
-				TaxAmt = efSalesOrderHeader.TaxAmt,
-				Freight = efSalesOrderHeader.Freight,
-				TotalDue = efSalesOrderHeader.TotalDue,
-				Comment = efSalesOrderHeader.Comment,
-				Rowguid = efSalesOrderHeader.Rowguid,
-				ModifiedDate = efSalesOrderHeader.ModifiedDate.ToDateTime(),
-
-				CustomerID = new ReferenceEntity<int>(efSalesOrderHeader.CustomerID,
-				                                      "Customers"),
-				SalesPersonID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.SalesPersonID,
-				                                                   "SalesPersons"),
-				TerritoryID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.TerritoryID,
-				                                                 "SalesTerritories"),
-				BillToAddressID = new ReferenceEntity<int>(efSalesOrderHeader.BillToAddressID,
-				                                           "Addresses"),
-				ShipToAddressID = new ReferenceEntity<int>(efSalesOrderHeader.ShipToAddressID,
-				                                           "Addresses"),
-				ShipMethodID = new ReferenceEntity<int>(efSalesOrderHeader.ShipMethodID,
-				                                        "ShipMethods"),
-				CreditCardID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.CreditCardID,
-				                                                  "CreditCards"),
-				CurrencyRateID = new ReferenceEntity<Nullable<int>>(efSalesOrderHeader.CurrencyRateID,
-				                                                    "CurrencyRates"),
-			});
+			response.AddSalesOrderHeader(new POCOSalesOrderHeader(efSalesOrderHeader.SalesOrderID.ToInt(),efSalesOrderHeader.RevisionNumber,efSalesOrderHeader.OrderDate.ToDateTime(),efSalesOrderHeader.DueDate.ToDateTime(),efSalesOrderHeader.ShipDate.ToNullableDateTime(),efSalesOrderHeader.Status,efSalesOrderHeader.OnlineOrderFlag,efSalesOrderHeader.SalesOrderNumber,efSalesOrderHeader.PurchaseOrderNumber,efSalesOrderHeader.AccountNumber,efSalesOrderHeader.CustomerID.ToInt(),efSalesOrderHeader.SalesPersonID.ToNullableInt(),efSalesOrderHeader.TerritoryID.ToNullableInt(),efSalesOrderHeader.BillToAddressID.ToInt(),efSalesOrderHeader.ShipToAddressID.ToInt(),efSalesOrderHeader.ShipMethodID.ToInt(),efSalesOrderHeader.CreditCardID.ToNullableInt(),efSalesOrderHeader.CreditCardApprovalCode,efSalesOrderHeader.CurrencyRateID.ToNullableInt(),efSalesOrderHeader.SubTotal,efSalesOrderHeader.TaxAmt,efSalesOrderHeader.Freight,efSalesOrderHeader.TotalDue,efSalesOrderHeader.Comment,efSalesOrderHeader.Rowguid,efSalesOrderHeader.ModifiedDate.ToDateTime()));
 
 			CustomerRepository.MapEFToPOCO(efSalesOrderHeader.Customer, response);
 
@@ -339,5 +277,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d00f1cf21e5d6ace75f26d5b9428cd9f</Hash>
+    <Hash>24d214a1abafbd0e23037e3d81823741</Hash>
 </Codenesium>*/

@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",salesOrderID);
+				this.logger.LogError($"Unable to find id:{salesOrderID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int salesOrderID, int salesReasonID,
 		                               DateTime modifiedDate, EFSalesOrderHeaderSalesReason   efSalesOrderHeaderSalesReason)
 		{
-			efSalesOrderHeaderSalesReason.SalesOrderID = salesOrderID;
-			efSalesOrderHeaderSalesReason.SalesReasonID = salesReasonID;
-			efSalesOrderHeaderSalesReason.ModifiedDate = modifiedDate;
+			efSalesOrderHeaderSalesReason.SetProperties(salesOrderID.ToInt(),salesReasonID.ToInt(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason,Response response)
@@ -142,15 +140,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesOrderHeaderSalesReason(new POCOSalesOrderHeaderSalesReason()
-			{
-				ModifiedDate = efSalesOrderHeaderSalesReason.ModifiedDate.ToDateTime(),
-
-				SalesOrderID = new ReferenceEntity<int>(efSalesOrderHeaderSalesReason.SalesOrderID,
-				                                        "SalesOrderHeaders"),
-				SalesReasonID = new ReferenceEntity<int>(efSalesOrderHeaderSalesReason.SalesReasonID,
-				                                         "SalesReasons"),
-			});
+			response.AddSalesOrderHeaderSalesReason(new POCOSalesOrderHeaderSalesReason(efSalesOrderHeaderSalesReason.SalesOrderID.ToInt(),efSalesOrderHeaderSalesReason.SalesReasonID.ToInt(),efSalesOrderHeaderSalesReason.ModifiedDate.ToDateTime()));
 
 			SalesOrderHeaderRepository.MapEFToPOCO(efSalesOrderHeaderSalesReason.SalesOrderHeader, response);
 
@@ -160,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>caf0708e63c3c637aeb40b1658738eaa</Hash>
+    <Hash>bf29ac326081f4e92dc4872338aecb86</Hash>
 </Codenesium>*/

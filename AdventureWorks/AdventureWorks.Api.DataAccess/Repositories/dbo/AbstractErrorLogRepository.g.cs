@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",errorLogID);
+				this.logger.LogError($"Unable to find id:{errorLogID}");
 			}
 			else
 			{
@@ -161,15 +161,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Nullable<int> errorLine,
 		                               string errorMessage, EFErrorLog   efErrorLog)
 		{
-			efErrorLog.ErrorLogID = errorLogID;
-			efErrorLog.ErrorTime = errorTime;
-			efErrorLog.UserName = userName;
-			efErrorLog.ErrorNumber = errorNumber;
-			efErrorLog.ErrorSeverity = errorSeverity;
-			efErrorLog.ErrorState = errorState;
-			efErrorLog.ErrorProcedure = errorProcedure;
-			efErrorLog.ErrorLine = errorLine;
-			efErrorLog.ErrorMessage = errorMessage;
+			efErrorLog.SetProperties(errorLogID.ToInt(),errorTime.ToDateTime(),userName,errorNumber.ToInt(),errorSeverity.ToNullableInt(),errorState.ToNullableInt(),errorProcedure,errorLine.ToNullableInt(),errorMessage);
 		}
 
 		public static void MapEFToPOCO(EFErrorLog efErrorLog,Response response)
@@ -178,22 +170,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddErrorLog(new POCOErrorLog()
-			{
-				ErrorLogID = efErrorLog.ErrorLogID.ToInt(),
-				ErrorTime = efErrorLog.ErrorTime.ToDateTime(),
-				UserName = efErrorLog.UserName,
-				ErrorNumber = efErrorLog.ErrorNumber.ToInt(),
-				ErrorSeverity = efErrorLog.ErrorSeverity.ToNullableInt(),
-				ErrorState = efErrorLog.ErrorState.ToNullableInt(),
-				ErrorProcedure = efErrorLog.ErrorProcedure,
-				ErrorLine = efErrorLog.ErrorLine.ToNullableInt(),
-				ErrorMessage = efErrorLog.ErrorMessage,
-			});
+			response.AddErrorLog(new POCOErrorLog(efErrorLog.ErrorLogID.ToInt(),efErrorLog.ErrorTime.ToDateTime(),efErrorLog.UserName,efErrorLog.ErrorNumber.ToInt(),efErrorLog.ErrorSeverity.ToNullableInt(),efErrorLog.ErrorState.ToNullableInt(),efErrorLog.ErrorProcedure,efErrorLog.ErrorLine.ToNullableInt(),efErrorLog.ErrorMessage));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f516495a1c4482486049b3272b260b62</Hash>
+    <Hash>1fb200afa0e4a05fdd0099e28b91ebd9</Hash>
 </Codenesium>*/

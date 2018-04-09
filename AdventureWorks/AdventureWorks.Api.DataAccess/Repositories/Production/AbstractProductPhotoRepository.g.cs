@@ -50,7 +50,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductPhotoID == productPhotoID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productPhotoID);
+				this.logger.LogError($"Unable to find id:{productPhotoID}");
 			}
 			else
 			{
@@ -146,12 +146,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string largePhotoFileName,
 		                               DateTime modifiedDate, EFProductPhoto   efProductPhoto)
 		{
-			efProductPhoto.ProductPhotoID = productPhotoID;
-			efProductPhoto.ThumbNailPhoto = thumbNailPhoto;
-			efProductPhoto.ThumbnailPhotoFileName = thumbnailPhotoFileName;
-			efProductPhoto.LargePhoto = largePhoto;
-			efProductPhoto.LargePhotoFileName = largePhotoFileName;
-			efProductPhoto.ModifiedDate = modifiedDate;
+			efProductPhoto.SetProperties(productPhotoID.ToInt(),thumbNailPhoto,thumbnailPhotoFileName,largePhoto,largePhotoFileName,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductPhoto efProductPhoto,Response response)
@@ -160,19 +155,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductPhoto(new POCOProductPhoto()
-			{
-				ProductPhotoID = efProductPhoto.ProductPhotoID.ToInt(),
-				ThumbNailPhoto = efProductPhoto.ThumbNailPhoto,
-				ThumbnailPhotoFileName = efProductPhoto.ThumbnailPhotoFileName,
-				LargePhoto = efProductPhoto.LargePhoto,
-				LargePhotoFileName = efProductPhoto.LargePhotoFileName,
-				ModifiedDate = efProductPhoto.ModifiedDate.ToDateTime(),
-			});
+			response.AddProductPhoto(new POCOProductPhoto(efProductPhoto.ProductPhotoID.ToInt(),efProductPhoto.ThumbNailPhoto,efProductPhoto.ThumbnailPhotoFileName,efProductPhoto.LargePhoto,efProductPhoto.LargePhotoFileName,efProductPhoto.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>999ab829dd2f32b411f0074d0b29baac</Hash>
+    <Hash>a0c2f9e327f0a73fb7b3fe9d3b84d2a1</Hash>
 </Codenesium>*/

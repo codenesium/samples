@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",purchaseOrderID);
+				this.logger.LogError($"Unable to find id:{purchaseOrderID}");
 			}
 			else
 			{
@@ -171,17 +171,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal stockedQty,
 		                               DateTime modifiedDate, EFPurchaseOrderDetail   efPurchaseOrderDetail)
 		{
-			efPurchaseOrderDetail.PurchaseOrderID = purchaseOrderID;
-			efPurchaseOrderDetail.PurchaseOrderDetailID = purchaseOrderDetailID;
-			efPurchaseOrderDetail.DueDate = dueDate;
-			efPurchaseOrderDetail.OrderQty = orderQty;
-			efPurchaseOrderDetail.ProductID = productID;
-			efPurchaseOrderDetail.UnitPrice = unitPrice;
-			efPurchaseOrderDetail.LineTotal = lineTotal;
-			efPurchaseOrderDetail.ReceivedQty = receivedQty;
-			efPurchaseOrderDetail.RejectedQty = rejectedQty;
-			efPurchaseOrderDetail.StockedQty = stockedQty;
-			efPurchaseOrderDetail.ModifiedDate = modifiedDate;
+			efPurchaseOrderDetail.SetProperties(purchaseOrderID.ToInt(),purchaseOrderDetailID.ToInt(),dueDate.ToDateTime(),orderQty,productID.ToInt(),unitPrice,lineTotal,receivedQty.ToDecimal(),rejectedQty.ToDecimal(),stockedQty.ToDecimal(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFPurchaseOrderDetail efPurchaseOrderDetail,Response response)
@@ -190,23 +180,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddPurchaseOrderDetail(new POCOPurchaseOrderDetail()
-			{
-				PurchaseOrderDetailID = efPurchaseOrderDetail.PurchaseOrderDetailID.ToInt(),
-				DueDate = efPurchaseOrderDetail.DueDate.ToDateTime(),
-				OrderQty = efPurchaseOrderDetail.OrderQty,
-				UnitPrice = efPurchaseOrderDetail.UnitPrice,
-				LineTotal = efPurchaseOrderDetail.LineTotal,
-				ReceivedQty = efPurchaseOrderDetail.ReceivedQty.ToDecimal(),
-				RejectedQty = efPurchaseOrderDetail.RejectedQty.ToDecimal(),
-				StockedQty = efPurchaseOrderDetail.StockedQty.ToDecimal(),
-				ModifiedDate = efPurchaseOrderDetail.ModifiedDate.ToDateTime(),
-
-				PurchaseOrderID = new ReferenceEntity<int>(efPurchaseOrderDetail.PurchaseOrderID,
-				                                           "PurchaseOrderHeaders"),
-				ProductID = new ReferenceEntity<int>(efPurchaseOrderDetail.ProductID,
-				                                     "Products"),
-			});
+			response.AddPurchaseOrderDetail(new POCOPurchaseOrderDetail(efPurchaseOrderDetail.PurchaseOrderID.ToInt(),efPurchaseOrderDetail.PurchaseOrderDetailID.ToInt(),efPurchaseOrderDetail.DueDate.ToDateTime(),efPurchaseOrderDetail.OrderQty,efPurchaseOrderDetail.ProductID.ToInt(),efPurchaseOrderDetail.UnitPrice,efPurchaseOrderDetail.LineTotal,efPurchaseOrderDetail.ReceivedQty.ToDecimal(),efPurchaseOrderDetail.RejectedQty.ToDecimal(),efPurchaseOrderDetail.StockedQty.ToDecimal(),efPurchaseOrderDetail.ModifiedDate.ToDateTime()));
 
 			PurchaseOrderHeaderRepository.MapEFToPOCO(efPurchaseOrderDetail.PurchaseOrderHeader, response);
 
@@ -216,5 +190,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>72c0b2f76e139300122aab519513b8c7</Hash>
+    <Hash>e4b1c90a89475b7263d6c1fadcac623e</Hash>
 </Codenesium>*/

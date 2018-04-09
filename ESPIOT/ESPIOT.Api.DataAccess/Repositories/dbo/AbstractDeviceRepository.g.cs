@@ -41,7 +41,7 @@ namespace ESPIOTNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, Guid publicId,
 		                               string name, EFDevice   efDevice)
 		{
-			efDevice.Id = id;
-			efDevice.PublicId = publicId;
-			efDevice.Name = name;
+			efDevice.SetProperties(id.ToInt(),publicId,name);
 		}
 
 		public static void MapEFToPOCO(EFDevice efDevice,Response response)
@@ -142,16 +140,11 @@ namespace ESPIOTNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddDevice(new POCODevice()
-			{
-				Id = efDevice.Id.ToInt(),
-				PublicId = efDevice.PublicId,
-				Name = efDevice.Name,
-			});
+			response.AddDevice(new POCODevice(efDevice.Id.ToInt(),efDevice.PublicId,efDevice.Name));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>95f780553a2c1958e584adcbc11de66d</Hash>
+    <Hash>c5bbf9dcc4918d07caf3627fc039b3b7</Hash>
 </Codenesium>*/

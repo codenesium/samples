@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productID);
+				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -151,13 +151,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFProductInventory   efProductInventory)
 		{
-			efProductInventory.ProductID = productID;
-			efProductInventory.LocationID = locationID;
-			efProductInventory.Shelf = shelf;
-			efProductInventory.Bin = bin;
-			efProductInventory.Quantity = quantity;
-			efProductInventory.Rowguid = rowguid;
-			efProductInventory.ModifiedDate = modifiedDate;
+			efProductInventory.SetProperties(productID.ToInt(),locationID,shelf,bin,quantity,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductInventory efProductInventory,Response response)
@@ -166,19 +160,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductInventory(new POCOProductInventory()
-			{
-				Shelf = efProductInventory.Shelf,
-				Bin = efProductInventory.Bin,
-				Quantity = efProductInventory.Quantity,
-				Rowguid = efProductInventory.Rowguid,
-				ModifiedDate = efProductInventory.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductInventory.ProductID,
-				                                     "Products"),
-				LocationID = new ReferenceEntity<short>(efProductInventory.LocationID,
-				                                        "Locations"),
-			});
+			response.AddProductInventory(new POCOProductInventory(efProductInventory.ProductID.ToInt(),efProductInventory.LocationID,efProductInventory.Shelf,efProductInventory.Bin,efProductInventory.Quantity,efProductInventory.Rowguid,efProductInventory.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductInventory.Product, response);
 
@@ -188,5 +170,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9cc64547be63596e9a945ec163661684</Hash>
+    <Hash>21c93268f8f1d0b687b3f5a16e5d3156</Hash>
 </Codenesium>*/

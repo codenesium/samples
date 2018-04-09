@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",shiftID);
+				this.logger.LogError($"Unable to find id:{shiftID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               TimeSpan endTime,
 		                               DateTime modifiedDate, EFShift   efShift)
 		{
-			efShift.ShiftID = shiftID;
-			efShift.Name = name;
-			efShift.StartTime = startTime;
-			efShift.EndTime = endTime;
-			efShift.ModifiedDate = modifiedDate;
+			efShift.SetProperties(shiftID,name,startTime,endTime,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFShift efShift,Response response)
@@ -154,18 +150,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddShift(new POCOShift()
-			{
-				ShiftID = efShift.ShiftID,
-				Name = efShift.Name,
-				StartTime = efShift.StartTime,
-				EndTime = efShift.EndTime,
-				ModifiedDate = efShift.ModifiedDate.ToDateTime(),
-			});
+			response.AddShift(new POCOShift(efShift.ShiftID,efShift.Name,efShift.StartTime,efShift.EndTime,efShift.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>308d622cc8da18ae7223dd718c841b89</Hash>
+    <Hash>ead99fd4e0632f485fa800896454a9ca</Hash>
 </Codenesium>*/

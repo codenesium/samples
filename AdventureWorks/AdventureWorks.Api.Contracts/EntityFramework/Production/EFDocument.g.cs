@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Document", Schema="Production")]
@@ -8,6 +9,37 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFDocument()
 		{}
+
+		public void SetProperties(Guid documentNode,
+		                          Nullable<short> documentLevel,
+		                          string title,
+		                          int owner,
+		                          bool folderFlag,
+		                          string fileName,
+		                          string fileExtension,
+		                          string revision,
+		                          int changeNumber,
+		                          int status,
+		                          string documentSummary,
+		                          byte[] document1,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.DocumentNode = documentNode;
+			this.DocumentLevel = documentLevel;
+			this.Title = title;
+			this.Owner = owner.ToInt();
+			this.FolderFlag = folderFlag;
+			this.FileName = fileName;
+			this.FileExtension = fileExtension;
+			this.Revision = revision;
+			this.ChangeNumber = changeNumber.ToInt();
+			this.Status = status;
+			this.DocumentSummary = documentSummary;
+			this.Document1 = document1;
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -58,5 +90,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d49f3eae2d05187edf2a07c8f7f9c455</Hash>
+    <Hash>0fe1844ef6e5859e5e884e9ed27a3506</Hash>
 </Codenesium>*/

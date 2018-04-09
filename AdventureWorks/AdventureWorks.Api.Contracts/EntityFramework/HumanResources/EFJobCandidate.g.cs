@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("JobCandidate", Schema="HumanResources")]
@@ -8,6 +9,17 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFJobCandidate()
 		{}
+
+		public void SetProperties(int jobCandidateID,
+		                          Nullable<int> businessEntityID,
+		                          string resume,
+		                          DateTime modifiedDate)
+		{
+			this.JobCandidateID = jobCandidateID.ToInt();
+			this.BusinessEntityID = businessEntityID.ToNullableInt();
+			this.Resume = resume;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,5 +40,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0bfbe4ff96aa6c023ef4096037d00f13</Hash>
+    <Hash>d082f3e70a3482fb7151386f08e3660b</Hash>
 </Codenesium>*/

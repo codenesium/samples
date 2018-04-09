@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",unitMeasureCode);
+				this.logger.LogError($"Unable to find id:{unitMeasureCode}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string unitMeasureCode, string name,
 		                               DateTime modifiedDate, EFUnitMeasure   efUnitMeasure)
 		{
-			efUnitMeasure.UnitMeasureCode = unitMeasureCode;
-			efUnitMeasure.Name = name;
-			efUnitMeasure.ModifiedDate = modifiedDate;
+			efUnitMeasure.SetProperties(unitMeasureCode,name,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFUnitMeasure efUnitMeasure,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddUnitMeasure(new POCOUnitMeasure()
-			{
-				UnitMeasureCode = efUnitMeasure.UnitMeasureCode,
-				Name = efUnitMeasure.Name,
-				ModifiedDate = efUnitMeasure.ModifiedDate.ToDateTime(),
-			});
+			response.AddUnitMeasure(new POCOUnitMeasure(efUnitMeasure.UnitMeasureCode,efUnitMeasure.Name,efUnitMeasure.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e2c7a66c30c94505b6c0b287d1dec353</Hash>
+    <Hash>96703f9509917d3e69d38dc042d05144</Hash>
 </Codenesium>*/

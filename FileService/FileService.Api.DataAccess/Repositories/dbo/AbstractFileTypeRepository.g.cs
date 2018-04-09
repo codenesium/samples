@@ -38,7 +38,7 @@ namespace FileServiceNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -126,8 +126,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public static void MapPOCOToEF(int id, string name, EFFileType   efFileType)
 		{
-			efFileType.Id = id;
-			efFileType.Name = name;
+			efFileType.SetProperties(id.ToInt(),name);
 		}
 
 		public static void MapEFToPOCO(EFFileType efFileType,Response response)
@@ -136,15 +135,11 @@ namespace FileServiceNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddFileType(new POCOFileType()
-			{
-				Id = efFileType.Id.ToInt(),
-				Name = efFileType.Name,
-			});
+			response.AddFileType(new POCOFileType(efFileType.Id.ToInt(),efFileType.Name));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ee74b94f5be8233ce3161c4523f82b97</Hash>
+    <Hash>a190b49b856a45e92331c39489189a74</Hash>
 </Codenesium>*/

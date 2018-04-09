@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("DatabaseLog", Schema="dbo")]
@@ -8,6 +9,25 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFDatabaseLog()
 		{}
+
+		public void SetProperties(int databaseLogID,
+		                          DateTime postTime,
+		                          string databaseUser,
+		                          string @event,
+		                          string schema,
+		                          string @object,
+		                          string tSQL,
+		                          string xmlEvent)
+		{
+			this.DatabaseLogID = databaseLogID.ToInt();
+			this.PostTime = postTime.ToDateTime();
+			this.DatabaseUser = databaseUser;
+			this.@Event = @event;
+			this.Schema = schema;
+			this.@Object = @object;
+			this.TSQL = tSQL;
+			this.XmlEvent = xmlEvent;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -38,5 +58,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>eefbfc34b82a00ace09aebd47137a428</Hash>
+    <Hash>a4f276c71ba66e7a18bc477374942905</Hash>
 </Codenesium>*/

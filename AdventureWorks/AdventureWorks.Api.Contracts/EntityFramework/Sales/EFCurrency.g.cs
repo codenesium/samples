@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Currency", Schema="Sales")]
@@ -8,6 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFCurrency()
 		{}
+
+		public void SetProperties(string currencyCode,
+		                          string name,
+		                          DateTime modifiedDate)
+		{
+			this.CurrencyCode = currencyCode;
+			this.Name = name;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,5 +33,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3f0f254f02348e1e2b2e342c212ac974</Hash>
+    <Hash>d4120f5027c9d945984aa0eda77faefe</Hash>
 </Codenesium>*/

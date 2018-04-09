@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",currencyRateID);
+				this.logger.LogError($"Unable to find id:{currencyRateID}");
 			}
 			else
 			{
@@ -151,13 +151,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal endOfDayRate,
 		                               DateTime modifiedDate, EFCurrencyRate   efCurrencyRate)
 		{
-			efCurrencyRate.CurrencyRateID = currencyRateID;
-			efCurrencyRate.CurrencyRateDate = currencyRateDate;
-			efCurrencyRate.FromCurrencyCode = fromCurrencyCode;
-			efCurrencyRate.ToCurrencyCode = toCurrencyCode;
-			efCurrencyRate.AverageRate = averageRate;
-			efCurrencyRate.EndOfDayRate = endOfDayRate;
-			efCurrencyRate.ModifiedDate = modifiedDate;
+			efCurrencyRate.SetProperties(currencyRateID.ToInt(),currencyRateDate.ToDateTime(),fromCurrencyCode,toCurrencyCode,averageRate,endOfDayRate,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFCurrencyRate efCurrencyRate,Response response)
@@ -166,19 +160,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddCurrencyRate(new POCOCurrencyRate()
-			{
-				CurrencyRateID = efCurrencyRate.CurrencyRateID.ToInt(),
-				CurrencyRateDate = efCurrencyRate.CurrencyRateDate.ToDateTime(),
-				AverageRate = efCurrencyRate.AverageRate,
-				EndOfDayRate = efCurrencyRate.EndOfDayRate,
-				ModifiedDate = efCurrencyRate.ModifiedDate.ToDateTime(),
-
-				FromCurrencyCode = new ReferenceEntity<string>(efCurrencyRate.FromCurrencyCode,
-				                                               "Currencies"),
-				ToCurrencyCode = new ReferenceEntity<string>(efCurrencyRate.ToCurrencyCode,
-				                                             "Currencies"),
-			});
+			response.AddCurrencyRate(new POCOCurrencyRate(efCurrencyRate.CurrencyRateID.ToInt(),efCurrencyRate.CurrencyRateDate.ToDateTime(),efCurrencyRate.FromCurrencyCode,efCurrencyRate.ToCurrencyCode,efCurrencyRate.AverageRate,efCurrencyRate.EndOfDayRate,efCurrencyRate.ModifiedDate.ToDateTime()));
 
 			CurrencyRepository.MapEFToPOCO(efCurrencyRate.Currency, response);
 
@@ -188,5 +170,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fe501757cf7d45734d196ccfb0d8cd40</Hash>
+    <Hash>0483fbcb2855e69cc5df86d4c2c3db25</Hash>
 </Codenesium>*/

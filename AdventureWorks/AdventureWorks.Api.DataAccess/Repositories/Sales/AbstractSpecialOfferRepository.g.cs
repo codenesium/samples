@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",specialOfferID);
+				this.logger.LogError($"Unable to find id:{specialOfferID}");
 			}
 			else
 			{
@@ -171,17 +171,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSpecialOffer   efSpecialOffer)
 		{
-			efSpecialOffer.SpecialOfferID = specialOfferID;
-			efSpecialOffer.Description = description;
-			efSpecialOffer.DiscountPct = discountPct;
-			efSpecialOffer.Type = type;
-			efSpecialOffer.Category = category;
-			efSpecialOffer.StartDate = startDate;
-			efSpecialOffer.EndDate = endDate;
-			efSpecialOffer.MinQty = minQty;
-			efSpecialOffer.MaxQty = maxQty;
-			efSpecialOffer.Rowguid = rowguid;
-			efSpecialOffer.ModifiedDate = modifiedDate;
+			efSpecialOffer.SetProperties(specialOfferID.ToInt(),description,discountPct,type,category,startDate.ToDateTime(),endDate.ToDateTime(),minQty.ToInt(),maxQty.ToNullableInt(),rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSpecialOffer efSpecialOffer,Response response)
@@ -190,24 +180,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSpecialOffer(new POCOSpecialOffer()
-			{
-				SpecialOfferID = efSpecialOffer.SpecialOfferID.ToInt(),
-				Description = efSpecialOffer.Description,
-				DiscountPct = efSpecialOffer.DiscountPct,
-				Type = efSpecialOffer.Type,
-				Category = efSpecialOffer.Category,
-				StartDate = efSpecialOffer.StartDate.ToDateTime(),
-				EndDate = efSpecialOffer.EndDate.ToDateTime(),
-				MinQty = efSpecialOffer.MinQty.ToInt(),
-				MaxQty = efSpecialOffer.MaxQty.ToNullableInt(),
-				Rowguid = efSpecialOffer.Rowguid,
-				ModifiedDate = efSpecialOffer.ModifiedDate.ToDateTime(),
-			});
+			response.AddSpecialOffer(new POCOSpecialOffer(efSpecialOffer.SpecialOfferID.ToInt(),efSpecialOffer.Description,efSpecialOffer.DiscountPct,efSpecialOffer.Type,efSpecialOffer.Category,efSpecialOffer.StartDate.ToDateTime(),efSpecialOffer.EndDate.ToDateTime(),efSpecialOffer.MinQty.ToInt(),efSpecialOffer.MaxQty.ToNullableInt(),efSpecialOffer.Rowguid,efSpecialOffer.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f827a6dc52506757c59ec60486b5196</Hash>
+    <Hash>d29ae64ff92bc8dfb7a24a6c0832ebe8</Hash>
 </Codenesium>*/

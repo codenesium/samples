@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("WorkOrderRouting", Schema="Production")]
@@ -8,6 +9,33 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFWorkOrderRouting()
 		{}
+
+		public void SetProperties(int workOrderID,
+		                          int productID,
+		                          short operationSequence,
+		                          short locationID,
+		                          DateTime scheduledStartDate,
+		                          DateTime scheduledEndDate,
+		                          Nullable<DateTime> actualStartDate,
+		                          Nullable<DateTime> actualEndDate,
+		                          Nullable<decimal> actualResourceHrs,
+		                          decimal plannedCost,
+		                          Nullable<decimal> actualCost,
+		                          DateTime modifiedDate)
+		{
+			this.WorkOrderID = workOrderID.ToInt();
+			this.ProductID = productID.ToInt();
+			this.OperationSequence = operationSequence;
+			this.LocationID = locationID;
+			this.ScheduledStartDate = scheduledStartDate.ToDateTime();
+			this.ScheduledEndDate = scheduledEndDate.ToDateTime();
+			this.ActualStartDate = actualStartDate.ToNullableDateTime();
+			this.ActualEndDate = actualEndDate.ToNullableDateTime();
+			this.ActualResourceHrs = actualResourceHrs.ToNullableDecimal();
+			this.PlannedCost = plannedCost;
+			this.ActualCost = actualCost;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -54,5 +82,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>aa128e1eb2ea8d8a185cc35471ff86c3</Hash>
+    <Hash>655e9e7aa526a7bf3d16b4e81a90d044</Hash>
 </Codenesium>*/

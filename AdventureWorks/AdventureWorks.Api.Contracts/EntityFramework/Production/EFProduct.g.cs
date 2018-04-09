@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Product", Schema="Production")]
@@ -8,6 +9,59 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFProduct()
 		{}
+
+		public void SetProperties(int productID,
+		                          string name,
+		                          string productNumber,
+		                          bool makeFlag,
+		                          bool finishedGoodsFlag,
+		                          string color,
+		                          short safetyStockLevel,
+		                          short reorderPoint,
+		                          decimal standardCost,
+		                          decimal listPrice,
+		                          string size,
+		                          string sizeUnitMeasureCode,
+		                          string weightUnitMeasureCode,
+		                          Nullable<decimal> weight,
+		                          int daysToManufacture,
+		                          string productLine,
+		                          string @class,
+		                          string style,
+		                          Nullable<int> productSubcategoryID,
+		                          Nullable<int> productModelID,
+		                          DateTime sellStartDate,
+		                          Nullable<DateTime> sellEndDate,
+		                          Nullable<DateTime> discontinuedDate,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.ProductID = productID.ToInt();
+			this.Name = name;
+			this.ProductNumber = productNumber;
+			this.MakeFlag = makeFlag;
+			this.FinishedGoodsFlag = finishedGoodsFlag;
+			this.Color = color;
+			this.SafetyStockLevel = safetyStockLevel;
+			this.ReorderPoint = reorderPoint;
+			this.StandardCost = standardCost;
+			this.ListPrice = listPrice;
+			this.Size = size;
+			this.SizeUnitMeasureCode = sizeUnitMeasureCode;
+			this.WeightUnitMeasureCode = weightUnitMeasureCode;
+			this.Weight = weight.ToNullableDecimal();
+			this.DaysToManufacture = daysToManufacture.ToInt();
+			this.ProductLine = productLine;
+			this.@Class = @class;
+			this.Style = style;
+			this.ProductSubcategoryID = productSubcategoryID.ToNullableInt();
+			this.ProductModelID = productModelID.ToNullableInt();
+			this.SellStartDate = sellStartDate.ToDateTime();
+			this.SellEndDate = sellEndDate.ToNullableDateTime();
+			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -97,5 +151,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f4d5d8345a6855f03d78670f5191576f</Hash>
+    <Hash>5870d349dfa06d8eacf4f3b2ef5433cf</Hash>
 </Codenesium>*/

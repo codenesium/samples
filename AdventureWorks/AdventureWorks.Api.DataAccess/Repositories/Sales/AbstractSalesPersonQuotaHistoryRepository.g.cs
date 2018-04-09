@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesPersonQuotaHistory   efSalesPersonQuotaHistory)
 		{
-			efSalesPersonQuotaHistory.BusinessEntityID = businessEntityID;
-			efSalesPersonQuotaHistory.QuotaDate = quotaDate;
-			efSalesPersonQuotaHistory.SalesQuota = salesQuota;
-			efSalesPersonQuotaHistory.Rowguid = rowguid;
-			efSalesPersonQuotaHistory.ModifiedDate = modifiedDate;
+			efSalesPersonQuotaHistory.SetProperties(businessEntityID.ToInt(),quotaDate.ToDateTime(),salesQuota,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesPersonQuotaHistory efSalesPersonQuotaHistory,Response response)
@@ -154,16 +150,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesPersonQuotaHistory(new POCOSalesPersonQuotaHistory()
-			{
-				QuotaDate = efSalesPersonQuotaHistory.QuotaDate.ToDateTime(),
-				SalesQuota = efSalesPersonQuotaHistory.SalesQuota,
-				Rowguid = efSalesPersonQuotaHistory.Rowguid,
-				ModifiedDate = efSalesPersonQuotaHistory.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efSalesPersonQuotaHistory.BusinessEntityID,
-				                                            "SalesPersons"),
-			});
+			response.AddSalesPersonQuotaHistory(new POCOSalesPersonQuotaHistory(efSalesPersonQuotaHistory.BusinessEntityID.ToInt(),efSalesPersonQuotaHistory.QuotaDate.ToDateTime(),efSalesPersonQuotaHistory.SalesQuota,efSalesPersonQuotaHistory.Rowguid,efSalesPersonQuotaHistory.ModifiedDate.ToDateTime()));
 
 			SalesPersonRepository.MapEFToPOCO(efSalesPersonQuotaHistory.SalesPerson, response);
 		}
@@ -171,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>49b6ff7cacbcdcb2e5139cc0f0df8cbc</Hash>
+    <Hash>d39765a0162c36e9b49f976a30f13085</Hash>
 </Codenesium>*/

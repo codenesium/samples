@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("WorkOrder", Schema="Production")]
@@ -8,6 +9,29 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFWorkOrder()
 		{}
+
+		public void SetProperties(int workOrderID,
+		                          int productID,
+		                          int orderQty,
+		                          int stockedQty,
+		                          short scrappedQty,
+		                          DateTime startDate,
+		                          Nullable<DateTime> endDate,
+		                          DateTime dueDate,
+		                          Nullable<short> scrapReasonID,
+		                          DateTime modifiedDate)
+		{
+			this.WorkOrderID = workOrderID.ToInt();
+			this.ProductID = productID.ToInt();
+			this.OrderQty = orderQty.ToInt();
+			this.StockedQty = stockedQty.ToInt();
+			this.ScrappedQty = scrappedQty;
+			this.StartDate = startDate.ToDateTime();
+			this.EndDate = endDate.ToNullableDateTime();
+			this.DueDate = dueDate.ToDateTime();
+			this.ScrapReasonID = scrapReasonID;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -48,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cb8c65f23bc861eff9f444d50fd6e4a2</Hash>
+    <Hash>90d5853e2540b817c18bcc3ad0895544</Hash>
 </Codenesium>*/

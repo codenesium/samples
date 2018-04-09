@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",countryRegionCode);
+				this.logger.LogError($"Unable to find id:{countryRegionCode}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string countryRegionCode, string name,
 		                               DateTime modifiedDate, EFCountryRegion   efCountryRegion)
 		{
-			efCountryRegion.CountryRegionCode = countryRegionCode;
-			efCountryRegion.Name = name;
-			efCountryRegion.ModifiedDate = modifiedDate;
+			efCountryRegion.SetProperties(countryRegionCode,name,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFCountryRegion efCountryRegion,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddCountryRegion(new POCOCountryRegion()
-			{
-				CountryRegionCode = efCountryRegion.CountryRegionCode,
-				Name = efCountryRegion.Name,
-				ModifiedDate = efCountryRegion.ModifiedDate.ToDateTime(),
-			});
+			response.AddCountryRegion(new POCOCountryRegion(efCountryRegion.CountryRegionCode,efCountryRegion.Name,efCountryRegion.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6712c2cbd369092ccbd793182ed5bd89</Hash>
+    <Hash>b8bd5d7afc212054de46ea088e991b79</Hash>
 </Codenesium>*/

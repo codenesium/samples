@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Illustration", Schema="Production")]
@@ -8,6 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFIllustration()
 		{}
+
+		public void SetProperties(int illustrationID,
+		                          string diagram,
+		                          DateTime modifiedDate)
+		{
+			this.IllustrationID = illustrationID.ToInt();
+			this.Diagram = diagram;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,5 +33,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>39f4f90b7024180edbe2ad714e59f8dd</Hash>
+    <Hash>3ca0338ee62eedfce6f2c4e47c0bc143</Hash>
 </Codenesium>*/

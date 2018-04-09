@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Culture", Schema="Production")]
@@ -8,6 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFCulture()
 		{}
+
+		public void SetProperties(string cultureID,
+		                          string name,
+		                          DateTime modifiedDate)
+		{
+			this.CultureID = cultureID;
+			this.Name = name;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,5 +33,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1150ba66d57868392d91c6174ee3da20</Hash>
+    <Hash>e058c70d8f45a5268003509f71dd8718</Hash>
 </Codenesium>*/

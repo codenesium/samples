@@ -44,7 +44,7 @@ namespace ESPIOTNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace ESPIOTNS.Api.DataAccess
 		                               string name,
 		                               string @value, EFDeviceAction   efDeviceAction)
 		{
-			efDeviceAction.Id = id;
-			efDeviceAction.DeviceId = deviceId;
-			efDeviceAction.Name = name;
-			efDeviceAction.@Value = @value;
+			efDeviceAction.SetProperties(id.ToInt(),deviceId.ToInt(),name,@value);
 		}
 
 		public static void MapEFToPOCO(EFDeviceAction efDeviceAction,Response response)
@@ -148,15 +145,7 @@ namespace ESPIOTNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddDeviceAction(new POCODeviceAction()
-			{
-				Id = efDeviceAction.Id.ToInt(),
-				Name = efDeviceAction.Name,
-				@Value = efDeviceAction.@Value,
-
-				DeviceId = new ReferenceEntity<int>(efDeviceAction.DeviceId,
-				                                    "Devices"),
-			});
+			response.AddDeviceAction(new POCODeviceAction(efDeviceAction.Id.ToInt(),efDeviceAction.DeviceId.ToInt(),efDeviceAction.Name,efDeviceAction.@Value));
 
 			DeviceRepository.MapEFToPOCO(efDeviceAction.Device, response);
 		}
@@ -164,5 +153,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e7a7101173f1fcd871880ebbf86d80d4</Hash>
+    <Hash>ec7e337b1a5b34b2702fa0645d40e2ba</Hash>
 </Codenesium>*/

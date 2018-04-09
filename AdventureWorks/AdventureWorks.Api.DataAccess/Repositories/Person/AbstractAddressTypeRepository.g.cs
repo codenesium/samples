@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.AddressTypeID == addressTypeID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",addressTypeID);
+				this.logger.LogError($"Unable to find id:{addressTypeID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFAddressType   efAddressType)
 		{
-			efAddressType.AddressTypeID = addressTypeID;
-			efAddressType.Name = name;
-			efAddressType.Rowguid = rowguid;
-			efAddressType.ModifiedDate = modifiedDate;
+			efAddressType.SetProperties(addressTypeID.ToInt(),name,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFAddressType efAddressType,Response response)
@@ -148,17 +145,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddAddressType(new POCOAddressType()
-			{
-				AddressTypeID = efAddressType.AddressTypeID.ToInt(),
-				Name = efAddressType.Name,
-				Rowguid = efAddressType.Rowguid,
-				ModifiedDate = efAddressType.ModifiedDate.ToDateTime(),
-			});
+			response.AddAddressType(new POCOAddressType(efAddressType.AddressTypeID.ToInt(),efAddressType.Name,efAddressType.Rowguid,efAddressType.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0cc8c360c912fe935b24343eae4bf17b</Hash>
+    <Hash>5b160d11e7b7574ea76a44d310f54b79</Hash>
 </Codenesium>*/

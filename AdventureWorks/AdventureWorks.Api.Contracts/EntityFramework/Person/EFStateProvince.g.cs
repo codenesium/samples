@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("StateProvince", Schema="Person")]
@@ -8,6 +9,25 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFStateProvince()
 		{}
+
+		public void SetProperties(int stateProvinceID,
+		                          string stateProvinceCode,
+		                          string countryRegionCode,
+		                          bool isOnlyStateProvinceFlag,
+		                          string name,
+		                          int territoryID,
+		                          Guid rowguid,
+		                          DateTime modifiedDate)
+		{
+			this.StateProvinceID = stateProvinceID.ToInt();
+			this.StateProvinceCode = stateProvinceCode;
+			this.CountryRegionCode = countryRegionCode;
+			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
+			this.Name = name;
+			this.TerritoryID = territoryID.ToInt();
+			this.Rowguid = rowguid;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -42,5 +62,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8684e009dd0108d00f50bdc88fcdb16e</Hash>
+    <Hash>368e58cfefbac8f8c6620ce13a60cba0</Hash>
 </Codenesium>*/

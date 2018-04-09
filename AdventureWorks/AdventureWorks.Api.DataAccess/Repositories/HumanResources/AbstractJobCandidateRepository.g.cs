@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",jobCandidateID);
+				this.logger.LogError($"Unable to find id:{jobCandidateID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string resume,
 		                               DateTime modifiedDate, EFJobCandidate   efJobCandidate)
 		{
-			efJobCandidate.JobCandidateID = jobCandidateID;
-			efJobCandidate.BusinessEntityID = businessEntityID;
-			efJobCandidate.Resume = resume;
-			efJobCandidate.ModifiedDate = modifiedDate;
+			efJobCandidate.SetProperties(jobCandidateID.ToInt(),businessEntityID.ToNullableInt(),resume,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFJobCandidate efJobCandidate,Response response)
@@ -148,15 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddJobCandidate(new POCOJobCandidate()
-			{
-				JobCandidateID = efJobCandidate.JobCandidateID.ToInt(),
-				Resume = efJobCandidate.Resume,
-				ModifiedDate = efJobCandidate.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<Nullable<int>>(efJobCandidate.BusinessEntityID,
-				                                                      "Employees"),
-			});
+			response.AddJobCandidate(new POCOJobCandidate(efJobCandidate.JobCandidateID.ToInt(),efJobCandidate.BusinessEntityID.ToNullableInt(),efJobCandidate.Resume,efJobCandidate.ModifiedDate.ToDateTime()));
 
 			EmployeeRepository.MapEFToPOCO(efJobCandidate.Employee, response);
 		}
@@ -164,5 +153,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d93b7654aada7e3e9d817bfbabfc21e7</Hash>
+    <Hash>7681891aeae510f3aeaad5ac4b0fce64</Hash>
 </Codenesium>*/

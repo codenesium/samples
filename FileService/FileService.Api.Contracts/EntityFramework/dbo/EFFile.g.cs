@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.Contracts
 {
 	[Table("File", Schema="dbo")]
@@ -8,6 +9,33 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public EFFile()
 		{}
+
+		public void SetProperties(int id,
+		                          Guid externalId,
+		                          string privateKey,
+		                          string publicKey,
+		                          string location,
+		                          DateTime expiration,
+		                          string extension,
+		                          DateTime dateCreated,
+		                          decimal fileSizeInBytes,
+		                          int fileTypeId,
+		                          Nullable<int> bucketId,
+		                          string description)
+		{
+			this.Id = id.ToInt();
+			this.ExternalId = externalId;
+			this.PrivateKey = privateKey;
+			this.PublicKey = publicKey;
+			this.Location = location;
+			this.Expiration = expiration.ToDateTime();
+			this.Extension = extension;
+			this.DateCreated = dateCreated.ToDateTime();
+			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
+			this.FileTypeId = fileTypeId.ToInt();
+			this.BucketId = bucketId.ToNullableInt();
+			this.Description = description;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -54,5 +82,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3ec7310b4322453c87523f6bd316e70e</Hash>
+    <Hash>ac9f5471fc98568e616527d9b5c3c5d2</Hash>
 </Codenesium>*/

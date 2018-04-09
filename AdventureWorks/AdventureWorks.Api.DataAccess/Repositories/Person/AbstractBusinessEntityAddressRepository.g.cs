@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFBusinessEntityAddress   efBusinessEntityAddress)
 		{
-			efBusinessEntityAddress.BusinessEntityID = businessEntityID;
-			efBusinessEntityAddress.AddressID = addressID;
-			efBusinessEntityAddress.AddressTypeID = addressTypeID;
-			efBusinessEntityAddress.Rowguid = rowguid;
-			efBusinessEntityAddress.ModifiedDate = modifiedDate;
+			efBusinessEntityAddress.SetProperties(businessEntityID.ToInt(),addressID.ToInt(),addressTypeID.ToInt(),rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFBusinessEntityAddress efBusinessEntityAddress,Response response)
@@ -154,18 +150,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddBusinessEntityAddress(new POCOBusinessEntityAddress()
-			{
-				Rowguid = efBusinessEntityAddress.Rowguid,
-				ModifiedDate = efBusinessEntityAddress.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efBusinessEntityAddress.BusinessEntityID,
-				                                            "BusinessEntities"),
-				AddressID = new ReferenceEntity<int>(efBusinessEntityAddress.AddressID,
-				                                     "Addresses"),
-				AddressTypeID = new ReferenceEntity<int>(efBusinessEntityAddress.AddressTypeID,
-				                                         "AddressTypes"),
-			});
+			response.AddBusinessEntityAddress(new POCOBusinessEntityAddress(efBusinessEntityAddress.BusinessEntityID.ToInt(),efBusinessEntityAddress.AddressID.ToInt(),efBusinessEntityAddress.AddressTypeID.ToInt(),efBusinessEntityAddress.Rowguid,efBusinessEntityAddress.ModifiedDate.ToDateTime()));
 
 			BusinessEntityRepository.MapEFToPOCO(efBusinessEntityAddress.BusinessEntity, response);
 
@@ -177,5 +162,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3433be40437074dbcb75323d9b24a665</Hash>
+    <Hash>282766b5b8ff83083cae08d963b9aa5c</Hash>
 </Codenesium>*/

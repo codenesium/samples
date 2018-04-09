@@ -74,7 +74,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",documentNode);
+				this.logger.LogError($"Unable to find id:{documentNode}");
 			}
 			else
 			{
@@ -186,20 +186,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFDocument   efDocument)
 		{
-			efDocument.DocumentNode = documentNode;
-			efDocument.DocumentLevel = documentLevel;
-			efDocument.Title = title;
-			efDocument.Owner = owner;
-			efDocument.FolderFlag = folderFlag;
-			efDocument.FileName = fileName;
-			efDocument.FileExtension = fileExtension;
-			efDocument.Revision = revision;
-			efDocument.ChangeNumber = changeNumber;
-			efDocument.Status = status;
-			efDocument.DocumentSummary = documentSummary;
-			efDocument.Document1 = document1;
-			efDocument.Rowguid = rowguid;
-			efDocument.ModifiedDate = modifiedDate;
+			efDocument.SetProperties(documentNode,documentLevel,title,owner.ToInt(),folderFlag,fileName,fileExtension,revision,changeNumber.ToInt(),status,documentSummary,document1,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFDocument efDocument,Response response)
@@ -208,25 +195,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddDocument(new POCODocument()
-			{
-				DocumentNode = efDocument.DocumentNode,
-				DocumentLevel = efDocument.DocumentLevel,
-				Title = efDocument.Title,
-				FolderFlag = efDocument.FolderFlag,
-				FileName = efDocument.FileName,
-				FileExtension = efDocument.FileExtension,
-				Revision = efDocument.Revision,
-				ChangeNumber = efDocument.ChangeNumber.ToInt(),
-				Status = efDocument.Status,
-				DocumentSummary = efDocument.DocumentSummary,
-				Document1 = efDocument.Document1,
-				Rowguid = efDocument.Rowguid,
-				ModifiedDate = efDocument.ModifiedDate.ToDateTime(),
-
-				Owner = new ReferenceEntity<int>(efDocument.Owner,
-				                                 "Employees"),
-			});
+			response.AddDocument(new POCODocument(efDocument.DocumentNode,efDocument.DocumentLevel,efDocument.Title,efDocument.Owner.ToInt(),efDocument.FolderFlag,efDocument.FileName,efDocument.FileExtension,efDocument.Revision,efDocument.ChangeNumber.ToInt(),efDocument.Status,efDocument.DocumentSummary,efDocument.Document1,efDocument.Rowguid,efDocument.ModifiedDate.ToDateTime()));
 
 			EmployeeRepository.MapEFToPOCO(efDocument.Employee, response);
 		}
@@ -234,5 +203,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4698f80e8aa17a78c023cf37b2d55255</Hash>
+    <Hash>a41d12d37f0f9d7f0daceb26a1f68712</Hash>
 </Codenesium>*/

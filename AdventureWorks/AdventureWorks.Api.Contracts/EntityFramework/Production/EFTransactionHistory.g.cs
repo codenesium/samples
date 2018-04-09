@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("TransactionHistory", Schema="Production")]
@@ -8,6 +9,27 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFTransactionHistory()
 		{}
+
+		public void SetProperties(int transactionID,
+		                          int productID,
+		                          int referenceOrderID,
+		                          int referenceOrderLineID,
+		                          DateTime transactionDate,
+		                          string transactionType,
+		                          int quantity,
+		                          decimal actualCost,
+		                          DateTime modifiedDate)
+		{
+			this.TransactionID = transactionID.ToInt();
+			this.ProductID = productID.ToInt();
+			this.ReferenceOrderID = referenceOrderID.ToInt();
+			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
+			this.TransactionDate = transactionDate.ToDateTime();
+			this.TransactionType = transactionType;
+			this.Quantity = quantity.ToInt();
+			this.ActualCost = actualCost;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -43,5 +65,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c1c38d45f1c0467b12871d8e62d8e897</Hash>
+    <Hash>e6c9fcb8a68c1b7042d70485df218f98</Hash>
 </Codenesium>*/

@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",stateProvinceID);
+				this.logger.LogError($"Unable to find id:{stateProvinceID}");
 			}
 			else
 			{
@@ -156,14 +156,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFStateProvince   efStateProvince)
 		{
-			efStateProvince.StateProvinceID = stateProvinceID;
-			efStateProvince.StateProvinceCode = stateProvinceCode;
-			efStateProvince.CountryRegionCode = countryRegionCode;
-			efStateProvince.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
-			efStateProvince.Name = name;
-			efStateProvince.TerritoryID = territoryID;
-			efStateProvince.Rowguid = rowguid;
-			efStateProvince.ModifiedDate = modifiedDate;
+			efStateProvince.SetProperties(stateProvinceID.ToInt(),stateProvinceCode,countryRegionCode,isOnlyStateProvinceFlag,name,territoryID.ToInt(),rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFStateProvince efStateProvince,Response response)
@@ -172,20 +165,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddStateProvince(new POCOStateProvince()
-			{
-				StateProvinceID = efStateProvince.StateProvinceID.ToInt(),
-				StateProvinceCode = efStateProvince.StateProvinceCode,
-				IsOnlyStateProvinceFlag = efStateProvince.IsOnlyStateProvinceFlag,
-				Name = efStateProvince.Name,
-				Rowguid = efStateProvince.Rowguid,
-				ModifiedDate = efStateProvince.ModifiedDate.ToDateTime(),
-
-				CountryRegionCode = new ReferenceEntity<string>(efStateProvince.CountryRegionCode,
-				                                                "CountryRegions"),
-				TerritoryID = new ReferenceEntity<int>(efStateProvince.TerritoryID,
-				                                       "SalesTerritories"),
-			});
+			response.AddStateProvince(new POCOStateProvince(efStateProvince.StateProvinceID.ToInt(),efStateProvince.StateProvinceCode,efStateProvince.CountryRegionCode,efStateProvince.IsOnlyStateProvinceFlag,efStateProvince.Name,efStateProvince.TerritoryID.ToInt(),efStateProvince.Rowguid,efStateProvince.ModifiedDate.ToDateTime()));
 
 			CountryRegionRepository.MapEFToPOCO(efStateProvince.CountryRegion, response);
 
@@ -195,5 +175,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6fbc539f48a00c74ca10f6dc3a105981</Hash>
+    <Hash>135f6c147f0bdf8ee3fe2a154df264d3</Hash>
 </Codenesium>*/

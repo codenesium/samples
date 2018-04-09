@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",departmentID);
+				this.logger.LogError($"Unable to find id:{departmentID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string groupName,
 		                               DateTime modifiedDate, EFDepartment   efDepartment)
 		{
-			efDepartment.DepartmentID = departmentID;
-			efDepartment.Name = name;
-			efDepartment.GroupName = groupName;
-			efDepartment.ModifiedDate = modifiedDate;
+			efDepartment.SetProperties(departmentID,name,groupName,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFDepartment efDepartment,Response response)
@@ -148,17 +145,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddDepartment(new POCODepartment()
-			{
-				DepartmentID = efDepartment.DepartmentID,
-				Name = efDepartment.Name,
-				GroupName = efDepartment.GroupName,
-				ModifiedDate = efDepartment.ModifiedDate.ToDateTime(),
-			});
+			response.AddDepartment(new POCODepartment(efDepartment.DepartmentID,efDepartment.Name,efDepartment.GroupName,efDepartment.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>22fe7b8c5125cc3f6f14177bf0921fd4</Hash>
+    <Hash>0566c23252cc898b4c64bf45d955d9eb</Hash>
 </Codenesium>*/

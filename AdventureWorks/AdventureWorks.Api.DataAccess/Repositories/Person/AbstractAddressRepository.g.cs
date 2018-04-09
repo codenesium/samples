@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",addressID);
+				this.logger.LogError($"Unable to find id:{addressID}");
 			}
 			else
 			{
@@ -161,15 +161,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFAddress   efAddress)
 		{
-			efAddress.AddressID = addressID;
-			efAddress.AddressLine1 = addressLine1;
-			efAddress.AddressLine2 = addressLine2;
-			efAddress.City = city;
-			efAddress.StateProvinceID = stateProvinceID;
-			efAddress.PostalCode = postalCode;
-			efAddress.SpatialLocation = spatialLocation;
-			efAddress.Rowguid = rowguid;
-			efAddress.ModifiedDate = modifiedDate;
+			efAddress.SetProperties(addressID.ToInt(),addressLine1,addressLine2,city,stateProvinceID.ToInt(),postalCode,spatialLocation,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFAddress efAddress,Response response)
@@ -178,20 +170,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddAddress(new POCOAddress()
-			{
-				AddressID = efAddress.AddressID.ToInt(),
-				AddressLine1 = efAddress.AddressLine1,
-				AddressLine2 = efAddress.AddressLine2,
-				City = efAddress.City,
-				PostalCode = efAddress.PostalCode,
-				SpatialLocation = efAddress.SpatialLocation,
-				Rowguid = efAddress.Rowguid,
-				ModifiedDate = efAddress.ModifiedDate.ToDateTime(),
-
-				StateProvinceID = new ReferenceEntity<int>(efAddress.StateProvinceID,
-				                                           "StateProvinces"),
-			});
+			response.AddAddress(new POCOAddress(efAddress.AddressID.ToInt(),efAddress.AddressLine1,efAddress.AddressLine2,efAddress.City,efAddress.StateProvinceID.ToInt(),efAddress.PostalCode,efAddress.SpatialLocation,efAddress.Rowguid,efAddress.ModifiedDate.ToDateTime()));
 
 			StateProvinceRepository.MapEFToPOCO(efAddress.StateProvince, response);
 		}
@@ -199,5 +178,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d63ba1bd0e3aca33ab2bf9f3f2aaa7b1</Hash>
+    <Hash>45c89e0bfe3be7e670181e6c759fa583</Hash>
 </Codenesium>*/

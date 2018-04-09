@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",billOfMaterialsID);
+				this.logger.LogError($"Unable to find id:{billOfMaterialsID}");
 			}
 			else
 			{
@@ -161,15 +161,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal perAssemblyQty,
 		                               DateTime modifiedDate, EFBillOfMaterials   efBillOfMaterials)
 		{
-			efBillOfMaterials.BillOfMaterialsID = billOfMaterialsID;
-			efBillOfMaterials.ProductAssemblyID = productAssemblyID;
-			efBillOfMaterials.ComponentID = componentID;
-			efBillOfMaterials.StartDate = startDate;
-			efBillOfMaterials.EndDate = endDate;
-			efBillOfMaterials.UnitMeasureCode = unitMeasureCode;
-			efBillOfMaterials.BOMLevel = bOMLevel;
-			efBillOfMaterials.PerAssemblyQty = perAssemblyQty;
-			efBillOfMaterials.ModifiedDate = modifiedDate;
+			efBillOfMaterials.SetProperties(billOfMaterialsID.ToInt(),productAssemblyID.ToNullableInt(),componentID.ToInt(),startDate.ToDateTime(),endDate.ToNullableDateTime(),unitMeasureCode,bOMLevel,perAssemblyQty.ToDecimal(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFBillOfMaterials efBillOfMaterials,Response response)
@@ -178,22 +170,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddBillOfMaterials(new POCOBillOfMaterials()
-			{
-				BillOfMaterialsID = efBillOfMaterials.BillOfMaterialsID.ToInt(),
-				StartDate = efBillOfMaterials.StartDate.ToDateTime(),
-				EndDate = efBillOfMaterials.EndDate.ToNullableDateTime(),
-				BOMLevel = efBillOfMaterials.BOMLevel,
-				PerAssemblyQty = efBillOfMaterials.PerAssemblyQty.ToDecimal(),
-				ModifiedDate = efBillOfMaterials.ModifiedDate.ToDateTime(),
-
-				ProductAssemblyID = new ReferenceEntity<Nullable<int>>(efBillOfMaterials.ProductAssemblyID,
-				                                                       "Products"),
-				ComponentID = new ReferenceEntity<int>(efBillOfMaterials.ComponentID,
-				                                       "Products"),
-				UnitMeasureCode = new ReferenceEntity<string>(efBillOfMaterials.UnitMeasureCode,
-				                                              "UnitMeasures"),
-			});
+			response.AddBillOfMaterials(new POCOBillOfMaterials(efBillOfMaterials.BillOfMaterialsID.ToInt(),efBillOfMaterials.ProductAssemblyID.ToNullableInt(),efBillOfMaterials.ComponentID.ToInt(),efBillOfMaterials.StartDate.ToDateTime(),efBillOfMaterials.EndDate.ToNullableDateTime(),efBillOfMaterials.UnitMeasureCode,efBillOfMaterials.BOMLevel,efBillOfMaterials.PerAssemblyQty.ToDecimal(),efBillOfMaterials.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efBillOfMaterials.Product, response);
 
@@ -205,5 +182,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>85dc1b41d84b0d9177b5c4ab71361557</Hash>
+    <Hash>5d5de45a1128e62f2242aaf6012b310a</Hash>
 </Codenesium>*/

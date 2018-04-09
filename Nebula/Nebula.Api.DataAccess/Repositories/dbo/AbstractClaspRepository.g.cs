@@ -41,7 +41,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace NebulaNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, int previousChainId,
 		                               int nextChainId, EFClasp   efClasp)
 		{
-			efClasp.Id = id;
-			efClasp.PreviousChainId = previousChainId;
-			efClasp.NextChainId = nextChainId;
+			efClasp.SetProperties(id.ToInt(),previousChainId.ToInt(),nextChainId.ToInt());
 		}
 
 		public static void MapEFToPOCO(EFClasp efClasp,Response response)
@@ -142,15 +140,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddClasp(new POCOClasp()
-			{
-				Id = efClasp.Id.ToInt(),
-
-				PreviousChainId = new ReferenceEntity<int>(efClasp.PreviousChainId,
-				                                           "Chains"),
-				NextChainId = new ReferenceEntity<int>(efClasp.NextChainId,
-				                                       "Chains"),
-			});
+			response.AddClasp(new POCOClasp(efClasp.Id.ToInt(),efClasp.PreviousChainId.ToInt(),efClasp.NextChainId.ToInt()));
 
 			ChainRepository.MapEFToPOCO(efClasp.Chain, response);
 
@@ -160,5 +150,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e5da4883d8d6d01e78f6554780a28ac</Hash>
+    <Hash>39d271f80ef720cbf0dae2778bce9967</Hash>
 </Codenesium>*/

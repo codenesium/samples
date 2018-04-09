@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("BillOfMaterials", Schema="Production")]
@@ -8,6 +9,27 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFBillOfMaterials()
 		{}
+
+		public void SetProperties(int billOfMaterialsID,
+		                          Nullable<int> productAssemblyID,
+		                          int componentID,
+		                          DateTime startDate,
+		                          Nullable<DateTime> endDate,
+		                          string unitMeasureCode,
+		                          short bOMLevel,
+		                          decimal perAssemblyQty,
+		                          DateTime modifiedDate)
+		{
+			this.BillOfMaterialsID = billOfMaterialsID.ToInt();
+			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
+			this.ComponentID = componentID.ToInt();
+			this.StartDate = startDate.ToDateTime();
+			this.EndDate = endDate.ToNullableDateTime();
+			this.UnitMeasureCode = unitMeasureCode;
+			this.BOMLevel = bOMLevel;
+			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -47,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c52be30c7b7395eda572b54c12493d34</Hash>
+    <Hash>b535b075f41d6cc3bf2029727ad6c8cf</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.Contracts
 {
 	[Table("FileType", Schema="dbo")]
@@ -8,6 +9,13 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public EFFileType()
 		{}
+
+		public void SetProperties(int id,
+		                          string name)
+		{
+			this.Id = id.ToInt();
+			this.Name = name;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,5 +28,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9816d0d6d9fc196c6b7dabb2a8e13ee5</Hash>
+    <Hash>16ecb5ca4141fc27ec7d77f366845562</Hash>
 </Codenesium>*/

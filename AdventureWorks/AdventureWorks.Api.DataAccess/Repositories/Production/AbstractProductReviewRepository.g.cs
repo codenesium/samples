@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productReviewID);
+				this.logger.LogError($"Unable to find id:{productReviewID}");
 			}
 			else
 			{
@@ -156,14 +156,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string comments,
 		                               DateTime modifiedDate, EFProductReview   efProductReview)
 		{
-			efProductReview.ProductReviewID = productReviewID;
-			efProductReview.ProductID = productID;
-			efProductReview.ReviewerName = reviewerName;
-			efProductReview.ReviewDate = reviewDate;
-			efProductReview.EmailAddress = emailAddress;
-			efProductReview.Rating = rating;
-			efProductReview.Comments = comments;
-			efProductReview.ModifiedDate = modifiedDate;
+			efProductReview.SetProperties(productReviewID.ToInt(),productID.ToInt(),reviewerName,reviewDate.ToDateTime(),emailAddress,rating.ToInt(),comments,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductReview efProductReview,Response response)
@@ -172,19 +165,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductReview(new POCOProductReview()
-			{
-				ProductReviewID = efProductReview.ProductReviewID.ToInt(),
-				ReviewerName = efProductReview.ReviewerName,
-				ReviewDate = efProductReview.ReviewDate.ToDateTime(),
-				EmailAddress = efProductReview.EmailAddress,
-				Rating = efProductReview.Rating.ToInt(),
-				Comments = efProductReview.Comments,
-				ModifiedDate = efProductReview.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductReview.ProductID,
-				                                     "Products"),
-			});
+			response.AddProductReview(new POCOProductReview(efProductReview.ProductReviewID.ToInt(),efProductReview.ProductID.ToInt(),efProductReview.ReviewerName,efProductReview.ReviewDate.ToDateTime(),efProductReview.EmailAddress,efProductReview.Rating.ToInt(),efProductReview.Comments,efProductReview.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductReview.Product, response);
 		}
@@ -192,5 +173,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9696255ce1fe6588b78c9602a2156578</Hash>
+    <Hash>60a15e95762d30742c30da4877ac664c</Hash>
 </Codenesium>*/

@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ContactTypeID == contactTypeID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",contactTypeID);
+				this.logger.LogError($"Unable to find id:{contactTypeID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int contactTypeID, string name,
 		                               DateTime modifiedDate, EFContactType   efContactType)
 		{
-			efContactType.ContactTypeID = contactTypeID;
-			efContactType.Name = name;
-			efContactType.ModifiedDate = modifiedDate;
+			efContactType.SetProperties(contactTypeID.ToInt(),name,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFContactType efContactType,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddContactType(new POCOContactType()
-			{
-				ContactTypeID = efContactType.ContactTypeID.ToInt(),
-				Name = efContactType.Name,
-				ModifiedDate = efContactType.ModifiedDate.ToDateTime(),
-			});
+			response.AddContactType(new POCOContactType(efContactType.ContactTypeID.ToInt(),efContactType.Name,efContactType.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0f8fa37ae17603048a28765bc258693</Hash>
+    <Hash>f8dec739b4df8d477482c74bc21a69ba</Hash>
 </Codenesium>*/

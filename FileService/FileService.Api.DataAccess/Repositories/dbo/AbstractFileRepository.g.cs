@@ -68,7 +68,7 @@ namespace FileServiceNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -176,18 +176,7 @@ namespace FileServiceNS.Api.DataAccess
 		                               Nullable<int> bucketId,
 		                               string description, EFFile   efFile)
 		{
-			efFile.Id = id;
-			efFile.ExternalId = externalId;
-			efFile.PrivateKey = privateKey;
-			efFile.PublicKey = publicKey;
-			efFile.Location = location;
-			efFile.Expiration = expiration;
-			efFile.Extension = extension;
-			efFile.DateCreated = dateCreated;
-			efFile.FileSizeInBytes = fileSizeInBytes;
-			efFile.FileTypeId = fileTypeId;
-			efFile.BucketId = bucketId;
-			efFile.Description = description;
+			efFile.SetProperties(id.ToInt(),externalId,privateKey,publicKey,location,expiration.ToDateTime(),extension,dateCreated.ToDateTime(),fileSizeInBytes.ToDecimal(),fileTypeId.ToInt(),bucketId.ToNullableInt(),description);
 		}
 
 		public static void MapEFToPOCO(EFFile efFile,Response response)
@@ -196,24 +185,7 @@ namespace FileServiceNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddFile(new POCOFile()
-			{
-				Id = efFile.Id.ToInt(),
-				ExternalId = efFile.ExternalId,
-				PrivateKey = efFile.PrivateKey,
-				PublicKey = efFile.PublicKey,
-				Location = efFile.Location,
-				Expiration = efFile.Expiration.ToDateTime(),
-				Extension = efFile.Extension,
-				DateCreated = efFile.DateCreated.ToDateTime(),
-				FileSizeInBytes = efFile.FileSizeInBytes.ToDecimal(),
-				Description = efFile.Description,
-
-				FileTypeId = new ReferenceEntity<int>(efFile.FileTypeId,
-				                                      "FileTypes"),
-				BucketId = new ReferenceEntity<Nullable<int>>(efFile.BucketId,
-				                                              "Buckets"),
-			});
+			response.AddFile(new POCOFile(efFile.Id.ToInt(),efFile.ExternalId,efFile.PrivateKey,efFile.PublicKey,efFile.Location,efFile.Expiration.ToDateTime(),efFile.Extension,efFile.DateCreated.ToDateTime(),efFile.FileSizeInBytes.ToDecimal(),efFile.FileTypeId.ToInt(),efFile.BucketId.ToNullableInt(),efFile.Description));
 
 			FileTypeRepository.MapEFToPOCO(efFile.FileType, response);
 
@@ -223,5 +195,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6a32ab66b13dc0b329cb5a6f9e955856</Hash>
+    <Hash>7c7a88bd26a48bf09cef3937d9f0aa3f</Hash>
 </Codenesium>*/

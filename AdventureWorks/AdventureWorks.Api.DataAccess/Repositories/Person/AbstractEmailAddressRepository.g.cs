@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFEmailAddress   efEmailAddress)
 		{
-			efEmailAddress.BusinessEntityID = businessEntityID;
-			efEmailAddress.EmailAddressID = emailAddressID;
-			efEmailAddress.EmailAddress1 = emailAddress1;
-			efEmailAddress.Rowguid = rowguid;
-			efEmailAddress.ModifiedDate = modifiedDate;
+			efEmailAddress.SetProperties(businessEntityID.ToInt(),emailAddressID.ToInt(),emailAddress1,rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFEmailAddress efEmailAddress,Response response)
@@ -154,16 +150,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddEmailAddress(new POCOEmailAddress()
-			{
-				EmailAddressID = efEmailAddress.EmailAddressID.ToInt(),
-				EmailAddress1 = efEmailAddress.EmailAddress1,
-				Rowguid = efEmailAddress.Rowguid,
-				ModifiedDate = efEmailAddress.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efEmailAddress.BusinessEntityID,
-				                                            "People"),
-			});
+			response.AddEmailAddress(new POCOEmailAddress(efEmailAddress.BusinessEntityID.ToInt(),efEmailAddress.EmailAddressID.ToInt(),efEmailAddress.EmailAddress1,efEmailAddress.Rowguid,efEmailAddress.ModifiedDate.ToDateTime()));
 
 			PersonRepository.MapEFToPOCO(efEmailAddress.Person, response);
 		}
@@ -171,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6457b2fa93498c39cf8e26b13d99ead0</Hash>
+    <Hash>da7a7ddaafb95e26c7052acc1f8baed9</Hash>
 </Codenesium>*/

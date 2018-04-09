@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productID);
+				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal listPrice,
 		                               DateTime modifiedDate, EFProductListPriceHistory   efProductListPriceHistory)
 		{
-			efProductListPriceHistory.ProductID = productID;
-			efProductListPriceHistory.StartDate = startDate;
-			efProductListPriceHistory.EndDate = endDate;
-			efProductListPriceHistory.ListPrice = listPrice;
-			efProductListPriceHistory.ModifiedDate = modifiedDate;
+			efProductListPriceHistory.SetProperties(productID.ToInt(),startDate.ToDateTime(),endDate.ToNullableDateTime(),listPrice,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductListPriceHistory efProductListPriceHistory,Response response)
@@ -154,16 +150,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductListPriceHistory(new POCOProductListPriceHistory()
-			{
-				StartDate = efProductListPriceHistory.StartDate.ToDateTime(),
-				EndDate = efProductListPriceHistory.EndDate.ToNullableDateTime(),
-				ListPrice = efProductListPriceHistory.ListPrice,
-				ModifiedDate = efProductListPriceHistory.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductListPriceHistory.ProductID,
-				                                     "Products"),
-			});
+			response.AddProductListPriceHistory(new POCOProductListPriceHistory(efProductListPriceHistory.ProductID.ToInt(),efProductListPriceHistory.StartDate.ToDateTime(),efProductListPriceHistory.EndDate.ToNullableDateTime(),efProductListPriceHistory.ListPrice,efProductListPriceHistory.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductListPriceHistory.Product, response);
 		}
@@ -171,5 +158,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>965e1461ec059d569f25ed7a1939b789</Hash>
+    <Hash>c099e68a33a922c7685aa34d48fe981d</Hash>
 </Codenesium>*/

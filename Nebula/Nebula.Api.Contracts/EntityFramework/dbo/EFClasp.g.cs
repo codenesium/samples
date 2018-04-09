@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Clasp", Schema="dbo")]
@@ -8,6 +9,15 @@ namespace NebulaNS.Api.Contracts
 	{
 		public EFClasp()
 		{}
+
+		public void SetProperties(int id,
+		                          int previousChainId,
+		                          int nextChainId)
+		{
+			this.Id = id.ToInt();
+			this.PreviousChainId = previousChainId.ToInt();
+			this.NextChainId = nextChainId.ToInt();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,5 +37,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3c6db5e9cf724c36b68f7dc458a1769a</Hash>
+    <Hash>1ee5a5aa2befe607db640738ad258961</Hash>
 </Codenesium>*/

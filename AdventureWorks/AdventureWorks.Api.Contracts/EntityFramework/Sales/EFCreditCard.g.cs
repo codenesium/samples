@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("CreditCard", Schema="Sales")]
@@ -8,6 +9,21 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFCreditCard()
 		{}
+
+		public void SetProperties(int creditCardID,
+		                          string cardType,
+		                          string cardNumber,
+		                          int expMonth,
+		                          short expYear,
+		                          DateTime modifiedDate)
+		{
+			this.CreditCardID = creditCardID.ToInt();
+			this.CardType = cardType;
+			this.CardNumber = cardNumber;
+			this.ExpMonth = expMonth;
+			this.ExpYear = expYear;
+			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,5 +48,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>35e2d8e4aef7dddfed9b8de76d714667</Hash>
+    <Hash>b0aa90899d41a9a3116316bc2e013f48</Hash>
 </Codenesium>*/

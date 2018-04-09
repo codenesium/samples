@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Chain", Schema="dbo")]
@@ -8,6 +9,19 @@ namespace NebulaNS.Api.Contracts
 	{
 		public EFChain()
 		{}
+
+		public void SetProperties(int id,
+		                          string name,
+		                          int teamId,
+		                          int chainStatusId,
+		                          Guid externalId)
+		{
+			this.Id = id.ToInt();
+			this.Name = name;
+			this.TeamId = teamId.ToInt();
+			this.ChainStatusId = chainStatusId.ToInt();
+			this.ExternalId = externalId;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -33,5 +47,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1ef2aa4ec9a8681eacb94760a423025b</Hash>
+    <Hash>0f4787e270edfacb11b0432e0c03a2fe</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace NebulaNS.Api.DataAccess
 		                               string log,
 		                               DateTime dateEntered, EFLinkLog   efLinkLog)
 		{
-			efLinkLog.Id = id;
-			efLinkLog.LinkId = linkId;
-			efLinkLog.Log = log;
-			efLinkLog.DateEntered = dateEntered;
+			efLinkLog.SetProperties(id.ToInt(),linkId.ToInt(),log,dateEntered.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFLinkLog efLinkLog,Response response)
@@ -148,15 +145,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddLinkLog(new POCOLinkLog()
-			{
-				Id = efLinkLog.Id.ToInt(),
-				Log = efLinkLog.Log,
-				DateEntered = efLinkLog.DateEntered.ToDateTime(),
-
-				LinkId = new ReferenceEntity<int>(efLinkLog.LinkId,
-				                                  "Links"),
-			});
+			response.AddLinkLog(new POCOLinkLog(efLinkLog.Id.ToInt(),efLinkLog.LinkId.ToInt(),efLinkLog.Log,efLinkLog.DateEntered.ToDateTime()));
 
 			LinkRepository.MapEFToPOCO(efLinkLog.Link, response);
 		}
@@ -164,5 +153,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e9e7941cc66618f8e1be50b1600f140e</Hash>
+    <Hash>a00f7a3bd30ff54e446c4b281956e434</Hash>
 </Codenesium>*/

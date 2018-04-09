@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",cultureID);
+				this.logger.LogError($"Unable to find id:{cultureID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(string cultureID, string name,
 		                               DateTime modifiedDate, EFCulture   efCulture)
 		{
-			efCulture.CultureID = cultureID;
-			efCulture.Name = name;
-			efCulture.ModifiedDate = modifiedDate;
+			efCulture.SetProperties(cultureID,name,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFCulture efCulture,Response response)
@@ -142,16 +140,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddCulture(new POCOCulture()
-			{
-				CultureID = efCulture.CultureID,
-				Name = efCulture.Name,
-				ModifiedDate = efCulture.ModifiedDate.ToDateTime(),
-			});
+			response.AddCulture(new POCOCulture(efCulture.CultureID,efCulture.Name,efCulture.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>085bd44b93d260822ffccc9853ba8fc6</Hash>
+    <Hash>337f263f51f3062aa286a2e5a2856e77</Hash>
 </Codenesium>*/

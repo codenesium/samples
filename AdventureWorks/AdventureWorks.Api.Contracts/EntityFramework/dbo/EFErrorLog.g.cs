@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ErrorLog", Schema="dbo")]
@@ -8,6 +9,27 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EFErrorLog()
 		{}
+
+		public void SetProperties(int errorLogID,
+		                          DateTime errorTime,
+		                          string userName,
+		                          int errorNumber,
+		                          Nullable<int> errorSeverity,
+		                          Nullable<int> errorState,
+		                          string errorProcedure,
+		                          Nullable<int> errorLine,
+		                          string errorMessage)
+		{
+			this.ErrorLogID = errorLogID.ToInt();
+			this.ErrorTime = errorTime.ToDateTime();
+			this.UserName = userName;
+			this.ErrorNumber = errorNumber.ToInt();
+			this.ErrorSeverity = errorSeverity.ToNullableInt();
+			this.ErrorState = errorState.ToNullableInt();
+			this.ErrorProcedure = errorProcedure;
+			this.ErrorLine = errorLine.ToNullableInt();
+			this.ErrorMessage = errorMessage;
+		}
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -41,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d8cca6c38ef2f4c04d0e35f2ff2aacb0</Hash>
+    <Hash>7f88df2eed8966662890b030e8b13edc</Hash>
 </Codenesium>*/

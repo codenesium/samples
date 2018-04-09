@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               int phoneNumberTypeID,
 		                               DateTime modifiedDate, EFPersonPhone   efPersonPhone)
 		{
-			efPersonPhone.BusinessEntityID = businessEntityID;
-			efPersonPhone.PhoneNumber = phoneNumber;
-			efPersonPhone.PhoneNumberTypeID = phoneNumberTypeID;
-			efPersonPhone.ModifiedDate = modifiedDate;
+			efPersonPhone.SetProperties(businessEntityID.ToInt(),phoneNumber,phoneNumberTypeID.ToInt(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFPersonPhone efPersonPhone,Response response)
@@ -148,16 +145,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddPersonPhone(new POCOPersonPhone()
-			{
-				PhoneNumber = efPersonPhone.PhoneNumber,
-				ModifiedDate = efPersonPhone.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efPersonPhone.BusinessEntityID,
-				                                            "People"),
-				PhoneNumberTypeID = new ReferenceEntity<int>(efPersonPhone.PhoneNumberTypeID,
-				                                             "PhoneNumberTypes"),
-			});
+			response.AddPersonPhone(new POCOPersonPhone(efPersonPhone.BusinessEntityID.ToInt(),efPersonPhone.PhoneNumber,efPersonPhone.PhoneNumberTypeID.ToInt(),efPersonPhone.ModifiedDate.ToDateTime()));
 
 			PersonRepository.MapEFToPOCO(efPersonPhone.Person, response);
 
@@ -167,5 +155,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3e115faae769687bb5784313ac5622d0</Hash>
+    <Hash>1869b3af856322079538b10908598520</Hash>
 </Codenesium>*/

@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productModelID);
+				this.logger.LogError($"Unable to find id:{productModelID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int productModelID, int illustrationID,
 		                               DateTime modifiedDate, EFProductModelIllustration   efProductModelIllustration)
 		{
-			efProductModelIllustration.ProductModelID = productModelID;
-			efProductModelIllustration.IllustrationID = illustrationID;
-			efProductModelIllustration.ModifiedDate = modifiedDate;
+			efProductModelIllustration.SetProperties(productModelID.ToInt(),illustrationID.ToInt(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductModelIllustration efProductModelIllustration,Response response)
@@ -142,15 +140,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductModelIllustration(new POCOProductModelIllustration()
-			{
-				ModifiedDate = efProductModelIllustration.ModifiedDate.ToDateTime(),
-
-				ProductModelID = new ReferenceEntity<int>(efProductModelIllustration.ProductModelID,
-				                                          "ProductModels"),
-				IllustrationID = new ReferenceEntity<int>(efProductModelIllustration.IllustrationID,
-				                                          "Illustrations"),
-			});
+			response.AddProductModelIllustration(new POCOProductModelIllustration(efProductModelIllustration.ProductModelID.ToInt(),efProductModelIllustration.IllustrationID.ToInt(),efProductModelIllustration.ModifiedDate.ToDateTime()));
 
 			ProductModelRepository.MapEFToPOCO(efProductModelIllustration.ProductModel, response);
 
@@ -160,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9f2802ccf95e265b716e538bae7f59f0</Hash>
+    <Hash>6ed68962fdb7d848b124be5405b76e03</Hash>
 </Codenesium>*/

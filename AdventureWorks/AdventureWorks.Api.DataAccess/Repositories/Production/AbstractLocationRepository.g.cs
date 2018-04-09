@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",locationID);
+				this.logger.LogError($"Unable to find id:{locationID}");
 			}
 			else
 			{
@@ -141,11 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               decimal availability,
 		                               DateTime modifiedDate, EFLocation   efLocation)
 		{
-			efLocation.LocationID = locationID;
-			efLocation.Name = name;
-			efLocation.CostRate = costRate;
-			efLocation.Availability = availability;
-			efLocation.ModifiedDate = modifiedDate;
+			efLocation.SetProperties(locationID,name,costRate,availability.ToDecimal(),modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFLocation efLocation,Response response)
@@ -154,18 +150,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddLocation(new POCOLocation()
-			{
-				LocationID = efLocation.LocationID,
-				Name = efLocation.Name,
-				CostRate = efLocation.CostRate,
-				Availability = efLocation.Availability.ToDecimal(),
-				ModifiedDate = efLocation.ModifiedDate.ToDateTime(),
-			});
+			response.AddLocation(new POCOLocation(efLocation.LocationID,efLocation.Name,efLocation.CostRate,efLocation.Availability.ToDecimal(),efLocation.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb798030324342af13324c73dcc88e49</Hash>
+    <Hash>69d282e15879ce9d45c924faff36295b</Hash>
 </Codenesium>*/

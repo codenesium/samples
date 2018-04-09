@@ -65,7 +65,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",salesOrderID);
+				this.logger.LogError($"Unable to find id:{salesOrderID}");
 			}
 			else
 			{
@@ -171,17 +171,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               Guid rowguid,
 		                               DateTime modifiedDate, EFSalesOrderDetail   efSalesOrderDetail)
 		{
-			efSalesOrderDetail.SalesOrderID = salesOrderID;
-			efSalesOrderDetail.SalesOrderDetailID = salesOrderDetailID;
-			efSalesOrderDetail.CarrierTrackingNumber = carrierTrackingNumber;
-			efSalesOrderDetail.OrderQty = orderQty;
-			efSalesOrderDetail.ProductID = productID;
-			efSalesOrderDetail.SpecialOfferID = specialOfferID;
-			efSalesOrderDetail.UnitPrice = unitPrice;
-			efSalesOrderDetail.UnitPriceDiscount = unitPriceDiscount;
-			efSalesOrderDetail.LineTotal = lineTotal;
-			efSalesOrderDetail.Rowguid = rowguid;
-			efSalesOrderDetail.ModifiedDate = modifiedDate;
+			efSalesOrderDetail.SetProperties(salesOrderID.ToInt(),salesOrderDetailID.ToInt(),carrierTrackingNumber,orderQty,productID.ToInt(),specialOfferID.ToInt(),unitPrice,unitPriceDiscount,lineTotal.ToDecimal(),rowguid,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesOrderDetail efSalesOrderDetail,Response response)
@@ -190,23 +180,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesOrderDetail(new POCOSalesOrderDetail()
-			{
-				SalesOrderDetailID = efSalesOrderDetail.SalesOrderDetailID.ToInt(),
-				CarrierTrackingNumber = efSalesOrderDetail.CarrierTrackingNumber,
-				OrderQty = efSalesOrderDetail.OrderQty,
-				ProductID = efSalesOrderDetail.ProductID.ToInt(),
-				UnitPrice = efSalesOrderDetail.UnitPrice,
-				UnitPriceDiscount = efSalesOrderDetail.UnitPriceDiscount,
-				LineTotal = efSalesOrderDetail.LineTotal.ToDecimal(),
-				Rowguid = efSalesOrderDetail.Rowguid,
-				ModifiedDate = efSalesOrderDetail.ModifiedDate.ToDateTime(),
-
-				SalesOrderID = new ReferenceEntity<int>(efSalesOrderDetail.SalesOrderID,
-				                                        "SalesOrderHeaders"),
-				SpecialOfferID = new ReferenceEntity<int>(efSalesOrderDetail.SpecialOfferID,
-				                                          "SpecialOfferProducts"),
-			});
+			response.AddSalesOrderDetail(new POCOSalesOrderDetail(efSalesOrderDetail.SalesOrderID.ToInt(),efSalesOrderDetail.SalesOrderDetailID.ToInt(),efSalesOrderDetail.CarrierTrackingNumber,efSalesOrderDetail.OrderQty,efSalesOrderDetail.ProductID.ToInt(),efSalesOrderDetail.SpecialOfferID.ToInt(),efSalesOrderDetail.UnitPrice,efSalesOrderDetail.UnitPriceDiscount,efSalesOrderDetail.LineTotal.ToDecimal(),efSalesOrderDetail.Rowguid,efSalesOrderDetail.ModifiedDate.ToDateTime()));
 
 			SalesOrderHeaderRepository.MapEFToPOCO(efSalesOrderDetail.SalesOrderHeader, response);
 
@@ -216,5 +190,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dbb3066e1913015af5b3e4cd7907b200</Hash>
+    <Hash>1eabcb22028183fbc0cfeb168f6deabe</Hash>
 </Codenesium>*/

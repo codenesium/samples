@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.SalesReasonID == salesReasonID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",salesReasonID);
+				this.logger.LogError($"Unable to find id:{salesReasonID}");
 			}
 			else
 			{
@@ -136,10 +136,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string reasonType,
 		                               DateTime modifiedDate, EFSalesReason   efSalesReason)
 		{
-			efSalesReason.SalesReasonID = salesReasonID;
-			efSalesReason.Name = name;
-			efSalesReason.ReasonType = reasonType;
-			efSalesReason.ModifiedDate = modifiedDate;
+			efSalesReason.SetProperties(salesReasonID.ToInt(),name,reasonType,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFSalesReason efSalesReason,Response response)
@@ -148,17 +145,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddSalesReason(new POCOSalesReason()
-			{
-				SalesReasonID = efSalesReason.SalesReasonID.ToInt(),
-				Name = efSalesReason.Name,
-				ReasonType = efSalesReason.ReasonType,
-				ModifiedDate = efSalesReason.ModifiedDate.ToDateTime(),
-			});
+			response.AddSalesReason(new POCOSalesReason(efSalesReason.SalesReasonID.ToInt(),efSalesReason.Name,efSalesReason.ReasonType,efSalesReason.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4c84c85a11960a826db6a32128f354e</Hash>
+    <Hash>1c63668b06487af3981c7c0fefe53f7a</Hash>
 </Codenesium>*/

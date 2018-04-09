@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",businessEntityID);
+				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -156,14 +156,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		                               string purchasingWebServiceURL,
 		                               DateTime modifiedDate, EFVendor   efVendor)
 		{
-			efVendor.BusinessEntityID = businessEntityID;
-			efVendor.AccountNumber = accountNumber;
-			efVendor.Name = name;
-			efVendor.CreditRating = creditRating;
-			efVendor.PreferredVendorStatus = preferredVendorStatus;
-			efVendor.ActiveFlag = activeFlag;
-			efVendor.PurchasingWebServiceURL = purchasingWebServiceURL;
-			efVendor.ModifiedDate = modifiedDate;
+			efVendor.SetProperties(businessEntityID.ToInt(),accountNumber,name,creditRating,preferredVendorStatus,activeFlag,purchasingWebServiceURL,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFVendor efVendor,Response response)
@@ -172,19 +165,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddVendor(new POCOVendor()
-			{
-				AccountNumber = efVendor.AccountNumber,
-				Name = efVendor.Name,
-				CreditRating = efVendor.CreditRating,
-				PreferredVendorStatus = efVendor.PreferredVendorStatus,
-				ActiveFlag = efVendor.ActiveFlag,
-				PurchasingWebServiceURL = efVendor.PurchasingWebServiceURL,
-				ModifiedDate = efVendor.ModifiedDate.ToDateTime(),
-
-				BusinessEntityID = new ReferenceEntity<int>(efVendor.BusinessEntityID,
-				                                            "BusinessEntities"),
-			});
+			response.AddVendor(new POCOVendor(efVendor.BusinessEntityID.ToInt(),efVendor.AccountNumber,efVendor.Name,efVendor.CreditRating,efVendor.PreferredVendorStatus,efVendor.ActiveFlag,efVendor.PurchasingWebServiceURL,efVendor.ModifiedDate.ToDateTime()));
 
 			BusinessEntityRepository.MapEFToPOCO(efVendor.BusinessEntity, response);
 		}
@@ -192,5 +173,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54a80739803115e251f49d04744858a2</Hash>
+    <Hash>80e8e706d14e0366ec34b81456da2a1f</Hash>
 </Codenesium>*/

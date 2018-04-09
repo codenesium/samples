@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",productID);
+				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public static void MapPOCOToEF(int productID, Guid documentNode,
 		                               DateTime modifiedDate, EFProductDocument   efProductDocument)
 		{
-			efProductDocument.ProductID = productID;
-			efProductDocument.DocumentNode = documentNode;
-			efProductDocument.ModifiedDate = modifiedDate;
+			efProductDocument.SetProperties(productID.ToInt(),documentNode,modifiedDate.ToDateTime());
 		}
 
 		public static void MapEFToPOCO(EFProductDocument efProductDocument,Response response)
@@ -142,15 +140,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddProductDocument(new POCOProductDocument()
-			{
-				ModifiedDate = efProductDocument.ModifiedDate.ToDateTime(),
-
-				ProductID = new ReferenceEntity<int>(efProductDocument.ProductID,
-				                                     "Products"),
-				DocumentNode = new ReferenceEntity<Guid>(efProductDocument.DocumentNode,
-				                                         "Documents"),
-			});
+			response.AddProductDocument(new POCOProductDocument(efProductDocument.ProductID.ToInt(),efProductDocument.DocumentNode,efProductDocument.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductDocument.Product, response);
 
@@ -160,5 +150,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e15c97362728bfd8d9330ce04d6edf9</Hash>
+    <Hash>98e732c0fe88291e97b43b3b0e5d83d3</Hash>
 </Codenesium>*/

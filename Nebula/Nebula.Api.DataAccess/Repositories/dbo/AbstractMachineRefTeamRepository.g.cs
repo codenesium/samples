@@ -41,7 +41,7 @@ namespace NebulaNS.Api.DataAccess
 			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError("Unable to find id:{0}",id);
+				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -131,9 +131,7 @@ namespace NebulaNS.Api.DataAccess
 		public static void MapPOCOToEF(int id, int machineId,
 		                               int teamId, EFMachineRefTeam   efMachineRefTeam)
 		{
-			efMachineRefTeam.Id = id;
-			efMachineRefTeam.MachineId = machineId;
-			efMachineRefTeam.TeamId = teamId;
+			efMachineRefTeam.SetProperties(id.ToInt(),machineId.ToInt(),teamId.ToInt());
 		}
 
 		public static void MapEFToPOCO(EFMachineRefTeam efMachineRefTeam,Response response)
@@ -142,15 +140,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				return;
 			}
-			response.AddMachineRefTeam(new POCOMachineRefTeam()
-			{
-				Id = efMachineRefTeam.Id.ToInt(),
-
-				MachineId = new ReferenceEntity<int>(efMachineRefTeam.MachineId,
-				                                     "Machines"),
-				TeamId = new ReferenceEntity<int>(efMachineRefTeam.TeamId,
-				                                  "Teams"),
-			});
+			response.AddMachineRefTeam(new POCOMachineRefTeam(efMachineRefTeam.Id.ToInt(),efMachineRefTeam.MachineId.ToInt(),efMachineRefTeam.TeamId.ToInt()));
 
 			MachineRepository.MapEFToPOCO(efMachineRefTeam.Machine, response);
 
@@ -160,5 +150,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eedae0f2d7238f196cbb56063eaa1cb4</Hash>
+    <Hash>a738789f91205c73445d2b58ca66b769</Hash>
 </Codenesium>*/
