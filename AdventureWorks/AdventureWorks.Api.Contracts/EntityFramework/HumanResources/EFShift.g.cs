@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Shift", Schema="HumanResources")]
@@ -10,11 +11,12 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFShift()
 		{}
 
-		public void SetProperties(int shiftID,
-		                          string name,
-		                          TimeSpan startTime,
-		                          TimeSpan endTime,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int shiftID,
+			string name,
+			TimeSpan startTime,
+			TimeSpan endTime,
+			DateTime modifiedDate)
 		{
 			this.ShiftID = shiftID;
 			this.Name = name;
@@ -26,22 +28,22 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ShiftID", TypeName="tinyint")]
-		public int ShiftID {get; set;}
+		public int ShiftID { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("StartTime", TypeName="time")]
-		public TimeSpan StartTime {get; set;}
+		public TimeSpan StartTime { get; set; }
 
 		[Column("EndTime", TypeName="time")]
-		public TimeSpan EndTime {get; set;}
+		public TimeSpan EndTime { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1e797eca2f26e788121eb512ebbd2bcf</Hash>
+    <Hash>c7a67a06aa74f11aa63e3f442ee22ea8</Hash>
 </Codenesium>*/

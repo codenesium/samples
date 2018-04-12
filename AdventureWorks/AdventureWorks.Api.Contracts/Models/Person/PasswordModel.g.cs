@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PasswordModel()
 		{}
-		public PasswordModel(string passwordHash,
-		                     string passwordSalt,
-		                     Guid rowguid,
-		                     DateTime modifiedDate)
+
+		public PasswordModel(
+			string passwordHash,
+			string passwordSalt,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.PasswordHash = passwordHash;
 			this.PasswordSalt = passwordSalt;
@@ -20,64 +22,72 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _passwordHash;
+		private string passwordHash;
+
 		[Required]
 		public string PasswordHash
 		{
 			get
 			{
-				return _passwordHash;
+				return this.passwordHash;
 			}
+
 			set
 			{
-				this._passwordHash = value;
+				this.passwordHash = value;
 			}
 		}
 
-		private string _passwordSalt;
+		private string passwordSalt;
+
 		[Required]
 		public string PasswordSalt
 		{
 			get
 			{
-				return _passwordSalt;
+				return this.passwordSalt;
 			}
+
 			set
 			{
-				this._passwordSalt = value;
+				this.passwordSalt = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c37a90a4a4e1662505babbd35d985583</Hash>
+    <Hash>717a7be61a3d33418d0b8a68739d76c3</Hash>
 </Codenesium>*/

@@ -25,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a15ded1a98d92c72601dd4b45a3972b5</Hash>
+    <Hash>bc72b7dd020d72bb75a4c67b3a2bb62f</Hash>
 </Codenesium>*/

@@ -15,67 +15,78 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractBillOfMaterialsRepository(ILogger logger,
-		                                         ApplicationDbContext context)
+		public AbstractBillOfMaterialsRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(Nullable<int> productAssemblyID,
-		                          int componentID,
-		                          DateTime startDate,
-		                          Nullable<DateTime> endDate,
-		                          string unitMeasureCode,
-		                          short bOMLevel,
-		                          decimal perAssemblyQty,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			Nullable<int> productAssemblyID,
+			int componentID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			string unitMeasureCode,
+			short bOMLevel,
+			decimal perAssemblyQty,
+			DateTime modifiedDate)
 		{
-			var record = new EFBillOfMaterials ();
+			var record = new EFBillOfMaterials();
 
-			MapPOCOToEF(0, productAssemblyID,
-			            componentID,
-			            startDate,
-			            endDate,
-			            unitMeasureCode,
-			            bOMLevel,
-			            perAssemblyQty,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				productAssemblyID,
+				componentID,
+				startDate,
+				endDate,
+				unitMeasureCode,
+				bOMLevel,
+				perAssemblyQty,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFBillOfMaterials>().Add(record);
 			this.context.SaveChanges();
 			return record.BillOfMaterialsID;
 		}
 
-		public virtual void Update(int billOfMaterialsID, Nullable<int> productAssemblyID,
-		                           int componentID,
-		                           DateTime startDate,
-		                           Nullable<DateTime> endDate,
-		                           string unitMeasureCode,
-		                           short bOMLevel,
-		                           decimal perAssemblyQty,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int billOfMaterialsID,
+			Nullable<int> productAssemblyID,
+			int componentID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			string unitMeasureCode,
+			short bOMLevel,
+			decimal perAssemblyQty,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{billOfMaterialsID}");
 			}
 			else
 			{
-				MapPOCOToEF(billOfMaterialsID,  productAssemblyID,
-				            componentID,
-				            startDate,
-				            endDate,
-				            unitMeasureCode,
-				            bOMLevel,
-				            perAssemblyQty,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					billOfMaterialsID,
+					productAssemblyID,
+					componentID,
+					startDate,
+					endDate,
+					unitMeasureCode,
+					bOMLevel,
+					perAssemblyQty,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int billOfMaterialsID)
+		public virtual void Delete(
+			int billOfMaterialsID)
 		{
 			var record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
 
@@ -94,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.BillOfMaterialsID == billOfMaterialsID,response);
+			this.SearchLinqPOCO(x => x.BillOfMaterialsID == billOfMaterialsID, response);
 			return response;
 		}
 
@@ -102,11 +113,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.BillOfMaterialsID == billOfMaterialsID,response);
+			this.SearchLinqPOCO(x => x.BillOfMaterialsID == billOfMaterialsID, response);
 			return response.BillOfMaterials.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -114,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -122,7 +133,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOBillOfMaterials> GetWhereDirect(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOBillOfMaterials> GetWhereDirect(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -130,47 +141,53 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.BillOfMaterials;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFBillOfMaterials, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFBillOfMaterials, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFBillOfMaterials> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFBillOfMaterials> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFBillOfMaterials> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFBillOfMaterials> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFBillOfMaterials> SearchLinqEF(Expression<Func<EFBillOfMaterials, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFBillOfMaterials> SearchLinqEF(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFBillOfMaterials> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFBillOfMaterials> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int billOfMaterialsID, Nullable<int> productAssemblyID,
-		                               int componentID,
-		                               DateTime startDate,
-		                               Nullable<DateTime> endDate,
-		                               string unitMeasureCode,
-		                               short bOMLevel,
-		                               decimal perAssemblyQty,
-		                               DateTime modifiedDate, EFBillOfMaterials   efBillOfMaterials)
+		public static void MapPOCOToEF(
+			int billOfMaterialsID,
+			Nullable<int> productAssemblyID,
+			int componentID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			string unitMeasureCode,
+			short bOMLevel,
+			decimal perAssemblyQty,
+			DateTime modifiedDate,
+			EFBillOfMaterials efBillOfMaterials)
 		{
-			efBillOfMaterials.SetProperties(billOfMaterialsID.ToInt(),productAssemblyID.ToNullableInt(),componentID.ToInt(),startDate.ToDateTime(),endDate.ToNullableDateTime(),unitMeasureCode,bOMLevel,perAssemblyQty.ToDecimal(),modifiedDate.ToDateTime());
+			efBillOfMaterials.SetProperties(billOfMaterialsID.ToInt(), productAssemblyID.ToNullableInt(), componentID.ToInt(), startDate.ToDateTime(), endDate.ToNullableDateTime(), unitMeasureCode, bOMLevel, perAssemblyQty.ToDecimal(), modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFBillOfMaterials efBillOfMaterials,Response response)
+		public static void MapEFToPOCO(
+			EFBillOfMaterials efBillOfMaterials,
+			Response response)
 		{
-			if(efBillOfMaterials == null)
+			if (efBillOfMaterials == null)
 			{
 				return;
 			}
-			response.AddBillOfMaterials(new POCOBillOfMaterials(efBillOfMaterials.BillOfMaterialsID.ToInt(),efBillOfMaterials.ProductAssemblyID.ToNullableInt(),efBillOfMaterials.ComponentID.ToInt(),efBillOfMaterials.StartDate.ToDateTime(),efBillOfMaterials.EndDate.ToNullableDateTime(),efBillOfMaterials.UnitMeasureCode,efBillOfMaterials.BOMLevel,efBillOfMaterials.PerAssemblyQty.ToDecimal(),efBillOfMaterials.ModifiedDate.ToDateTime()));
+
+			response.AddBillOfMaterials(new POCOBillOfMaterials(efBillOfMaterials.BillOfMaterialsID.ToInt(), efBillOfMaterials.ProductAssemblyID.ToNullableInt(), efBillOfMaterials.ComponentID.ToInt(), efBillOfMaterials.StartDate.ToDateTime(), efBillOfMaterials.EndDate.ToNullableDateTime(), efBillOfMaterials.UnitMeasureCode, efBillOfMaterials.BOMLevel, efBillOfMaterials.PerAssemblyQty.ToDecimal(), efBillOfMaterials.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efBillOfMaterials.Product, response);
 
@@ -182,5 +199,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5d5de45a1128e62f2242aaf6012b310a</Hash>
+    <Hash>bb6188170832287233a14f53d8736a9c</Hash>
 </Codenesium>*/

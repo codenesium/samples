@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractCurrenciesController: AbstractApiController
+	public abstract class AbstractCurrencyController: AbstractApiController
 	{
 		protected ICurrencyRepository currencyRepository;
+
 		protected ICurrencyModelValidator currencyModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractCurrenciesController(
-			ILogger<AbstractCurrenciesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractCurrencyController(
+			ILogger<AbstractCurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICurrencyRepository currencyRepository,
 			ICurrencyModelValidator currencyModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.currencyRepository = currencyRepository;
 			this.currencyModelValidator = currencyModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.currencyRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.currencyRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.currencyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,14 +81,15 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.currencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.currencyRepository.Create(model.Name,
-				                                        model.ModifiedDate);
-				return Ok(id);
+				var id = this.currencyRepository.Create(
+					model.Name,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -96,22 +103,24 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<CurrencyModel> models)
 		{
 			this.currencyModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.currencyModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.currencyRepository.Create(model.Name,
-				                               model.ModifiedDate);
+				this.currencyRepository.Create(
+					model.Name,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -121,25 +130,27 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id,CurrencyModel model)
+		public virtual IActionResult Update(string id, CurrencyModel model)
 		{
-			if(this.currencyRepository.GetByIdDirect(id) == null)
+			if (this.currencyRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.currencyModelValidator.UpdateMode();
 			var validationResult = this.currencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.currencyRepository.Update(id,  model.Name,
-				                               model.ModifiedDate);
-				return Ok();
+				this.currencyRepository.Update(
+					id,
+					model.Name,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -152,11 +163,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(string id)
 		{
 			this.currencyRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>02f6ed5d5ed46ddea928dce83062a842</Hash>
+    <Hash>3b5013111e1cf6ca0b48c707d8e42abf</Hash>
 </Codenesium>*/

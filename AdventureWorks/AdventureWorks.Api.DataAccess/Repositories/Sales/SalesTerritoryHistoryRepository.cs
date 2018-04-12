@@ -11,13 +11,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public class SalesTerritoryHistoryRepository: AbstractSalesTerritoryHistoryRepository, ISalesTerritoryHistoryRepository
 	{
-		public SalesTerritoryHistoryRepository(ILogger<SalesTerritoryHistoryRepository> logger,
-		                                       ApplicationDbContext context) : base(logger,context)
+		public SalesTerritoryHistoryRepository(
+			ILogger<SalesTerritoryHistoryRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFSalesTerritoryHistory> SearchLinqEF(Expression<Func<EFSalesTerritoryHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFSalesTerritoryHistory> SearchLinqEF(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFSalesTerritoryHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFSalesTerritoryHistory>();
 			}
@@ -27,9 +29,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFSalesTerritoryHistory> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFSalesTerritoryHistory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFSalesTerritoryHistory>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFSalesTerritoryHistory>();
 			}
@@ -42,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f72fced7c16c1546d7f03b31d1744cd5</Hash>
+    <Hash>8a3ef711b1cbc937021d2881d27a13f4</Hash>
 </Codenesium>*/

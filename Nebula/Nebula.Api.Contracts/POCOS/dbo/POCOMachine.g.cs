@@ -9,12 +9,13 @@ namespace NebulaNS.Api.Contracts
 		public POCOMachine()
 		{}
 
-		public POCOMachine(int id,
-		                   string name,
-		                   Guid machineGuid,
-		                   string jwtKey,
-		                   string lastIpAddress,
-		                   string description)
+		public POCOMachine(
+			int id,
+			string name,
+			Guid machineGuid,
+			string jwtKey,
+			string lastIpAddress,
+			string description)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
@@ -24,59 +25,59 @@ namespace NebulaNS.Api.Contracts
 			this.Description = description;
 		}
 
-		public int Id {get; set;}
-		public string Name {get; set;}
-		public Guid MachineGuid {get; set;}
-		public string JwtKey {get; set;}
-		public string LastIpAddress {get; set;}
-		public string Description {get; set;}
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public Guid MachineGuid { get; set; }
+		public string JwtKey { get; set; }
+		public string LastIpAddress { get; set; }
+		public string Description { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMachineGuidValue {get; set;} = true;
+		public bool ShouldSerializeMachineGuidValue { get; set; } = true;
 
 		public bool ShouldSerializeMachineGuid()
 		{
-			return ShouldSerializeMachineGuidValue;
+			return this.ShouldSerializeMachineGuidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeJwtKeyValue {get; set;} = true;
+		public bool ShouldSerializeJwtKeyValue { get; set; } = true;
 
 		public bool ShouldSerializeJwtKey()
 		{
-			return ShouldSerializeJwtKeyValue;
+			return this.ShouldSerializeJwtKeyValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLastIpAddressValue {get; set;} = true;
+		public bool ShouldSerializeLastIpAddressValue { get; set; } = true;
 
 		public bool ShouldSerializeLastIpAddress()
 		{
-			return ShouldSerializeLastIpAddressValue;
+			return this.ShouldSerializeLastIpAddressValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDescriptionValue {get; set;} = true;
+		public bool ShouldSerializeDescriptionValue { get; set; } = true;
 
 		public bool ShouldSerializeDescription()
 		{
-			return ShouldSerializeDescriptionValue;
+			return this.ShouldSerializeDescriptionValue;
 		}
 
 		public void DisableAllFields()
@@ -92,5 +93,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>419c2ded0b2329f963f246649ad2548e</Hash>
+    <Hash>933b5452160a8e49eec81270532dbabe</Hash>
 </Codenesium>*/

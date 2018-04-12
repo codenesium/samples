@@ -7,12 +7,14 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPasswordRepository
 	{
-		int Create(string passwordHash,
-		           string passwordSalt,
-		           Guid rowguid,
-		           DateTime modifiedDate);
+		int Create(
+			string passwordHash,
+			string passwordSalt,
+			Guid rowguid,
+			DateTime modifiedDate);
 
-		void Update(int businessEntityID, string passwordHash,
+		void Update(int businessEntityID,
+		            string passwordHash,
 		            string passwordSalt,
 		            Guid rowguid,
 		            DateTime modifiedDate);
@@ -23,14 +25,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOPassword GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOPassword> GetWhereDirect(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOPassword> GetWhereDirect(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd51bb9a7b2ca028182249ca7368a0d2</Hash>
+    <Hash>62eeee2875776c6f16a70fedbbe6b7e8</Hash>
 </Codenesium>*/

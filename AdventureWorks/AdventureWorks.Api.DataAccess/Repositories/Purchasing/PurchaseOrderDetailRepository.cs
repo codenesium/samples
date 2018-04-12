@@ -11,13 +11,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public class PurchaseOrderDetailRepository: AbstractPurchaseOrderDetailRepository, IPurchaseOrderDetailRepository
 	{
-		public PurchaseOrderDetailRepository(ILogger<PurchaseOrderDetailRepository> logger,
-		                                     ApplicationDbContext context) : base(logger,context)
+		public PurchaseOrderDetailRepository(
+			ILogger<PurchaseOrderDetailRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFPurchaseOrderDetail> SearchLinqEF(Expression<Func<EFPurchaseOrderDetail, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFPurchaseOrderDetail> SearchLinqEF(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFPurchaseOrderDetail>().Where(predicate).AsQueryable().OrderBy("PurchaseOrderID ASC").Skip(skip).Take(take).ToList<EFPurchaseOrderDetail>();
 			}
@@ -27,9 +29,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFPurchaseOrderDetail> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFPurchaseOrderDetail> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFPurchaseOrderDetail>().Where(predicate).AsQueryable().OrderBy("PurchaseOrderID ASC").Skip(skip).Take(take).ToList<EFPurchaseOrderDetail>();
 			}
@@ -42,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>05bf547583fb05d92c51a53d04545898</Hash>
+    <Hash>f2de6bb88ec3c6a9b4c368b46e0f5110</Hash>
 </Codenesium>*/

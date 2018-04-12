@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/locations")]
-	public class LocationsController: AbstractLocationsController
+	public class LocationController: AbstractLocationController
 	{
-		public LocationsController(
-			ILogger<LocationsController> logger,
+		public LocationController(
+			ILogger<LocationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILocationRepository locationRepository,
 			ILocationModelValidator locationModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         locationRepository,
-			         locationModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       locationRepository,
+			       locationModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b07cecb37c827cfe71c78245bbd78253</Hash>
+    <Hash>388e7739d7a68c096a1dc448ce5eaeb4</Hash>
 </Codenesium>*/

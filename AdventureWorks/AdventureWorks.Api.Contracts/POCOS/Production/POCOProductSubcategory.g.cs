@@ -9,65 +9,66 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOProductSubcategory()
 		{}
 
-		public POCOProductSubcategory(int productSubcategoryID,
-		                              int productCategoryID,
-		                              string name,
-		                              Guid rowguid,
-		                              DateTime modifiedDate)
+		public POCOProductSubcategory(
+			int productSubcategoryID,
+			int productCategoryID,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ProductSubcategoryID = productSubcategoryID.ToInt();
 			this.Name = name;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			ProductCategoryID = new ReferenceEntity<int>(productCategoryID,
-			                                             "ProductCategory");
+			this.ProductCategoryID = new ReferenceEntity<int>(productCategoryID,
+			                                                  "ProductCategory");
 		}
 
-		public int ProductSubcategoryID {get; set;}
-		public ReferenceEntity<int>ProductCategoryID {get; set;}
-		public string Name {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int ProductSubcategoryID { get; set; }
+		public ReferenceEntity<int> ProductCategoryID { get; set; }
+		public string Name { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductSubcategoryIDValue {get; set;} = true;
+		public bool ShouldSerializeProductSubcategoryIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductSubcategoryID()
 		{
-			return ShouldSerializeProductSubcategoryIDValue;
+			return this.ShouldSerializeProductSubcategoryIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductCategoryIDValue {get; set;} = true;
+		public bool ShouldSerializeProductCategoryIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductCategoryID()
 		{
-			return ShouldSerializeProductCategoryIDValue;
+			return this.ShouldSerializeProductCategoryIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -82,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ea826ef47b2a683fe8766fa3b1fb78c9</Hash>
+    <Hash>73e09d1ed700395efdb349232566a1ec</Hash>
 </Codenesium>*/

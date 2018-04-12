@@ -20,42 +20,42 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IBusinessEntityRepository BusinessEntityRepository {get; set;}
+		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
 		public virtual void AccountNumberRules()
 		{
-			RuleFor(x => x.AccountNumber).NotNull();
-			RuleFor(x => x.AccountNumber).Length(0,15);
+			this.RuleFor(x => x.AccountNumber).NotNull();
+			this.RuleFor(x => x.AccountNumber).Length(0, 15);
 		}
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,50);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void CreditRatingRules()
 		{
-			RuleFor(x => x.CreditRating).NotNull();
+			this.RuleFor(x => x.CreditRating).NotNull();
 		}
 
 		public virtual void PreferredVendorStatusRules()
 		{
-			RuleFor(x => x.PreferredVendorStatus).NotNull();
+			this.RuleFor(x => x.PreferredVendorStatus).NotNull();
 		}
 
 		public virtual void ActiveFlagRules()
 		{
-			RuleFor(x => x.ActiveFlag).NotNull();
+			this.RuleFor(x => x.ActiveFlag).NotNull();
 		}
 
 		public virtual void PurchasingWebServiceURLRules()
 		{
-			RuleFor(x => x.PurchasingWebServiceURL).Length(0,1024);
+			this.RuleFor(x => x.PurchasingWebServiceURL).Length(0, 1024);
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidBusinessEntity(int id)
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ba611c6aa22d683d9f6a5d423718814b</Hash>
+    <Hash>d42f051fb5abb43f2577d01866eec711</Hash>
 </Codenesium>*/

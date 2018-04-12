@@ -9,12 +9,14 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CurrencyRateModel()
 		{}
-		public CurrencyRateModel(DateTime currencyRateDate,
-		                         string fromCurrencyCode,
-		                         string toCurrencyCode,
-		                         decimal averageRate,
-		                         decimal endOfDayRate,
-		                         DateTime modifiedDate)
+
+		public CurrencyRateModel(
+			DateTime currencyRateDate,
+			string fromCurrencyCode,
+			string toCurrencyCode,
+			decimal averageRate,
+			decimal endOfDayRate,
+			DateTime modifiedDate)
 		{
 			this.CurrencyRateDate = currencyRateDate.ToDateTime();
 			this.FromCurrencyCode = fromCurrencyCode;
@@ -24,92 +26,104 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private DateTime _currencyRateDate;
+		private DateTime currencyRateDate;
+
 		[Required]
 		public DateTime CurrencyRateDate
 		{
 			get
 			{
-				return _currencyRateDate;
+				return this.currencyRateDate;
 			}
+
 			set
 			{
-				this._currencyRateDate = value;
+				this.currencyRateDate = value;
 			}
 		}
 
-		private string _fromCurrencyCode;
+		private string fromCurrencyCode;
+
 		[Required]
 		public string FromCurrencyCode
 		{
 			get
 			{
-				return _fromCurrencyCode;
+				return this.fromCurrencyCode;
 			}
+
 			set
 			{
-				this._fromCurrencyCode = value;
+				this.fromCurrencyCode = value;
 			}
 		}
 
-		private string _toCurrencyCode;
+		private string toCurrencyCode;
+
 		[Required]
 		public string ToCurrencyCode
 		{
 			get
 			{
-				return _toCurrencyCode;
+				return this.toCurrencyCode;
 			}
+
 			set
 			{
-				this._toCurrencyCode = value;
+				this.toCurrencyCode = value;
 			}
 		}
 
-		private decimal _averageRate;
+		private decimal averageRate;
+
 		[Required]
 		public decimal AverageRate
 		{
 			get
 			{
-				return _averageRate;
+				return this.averageRate;
 			}
+
 			set
 			{
-				this._averageRate = value;
+				this.averageRate = value;
 			}
 		}
 
-		private decimal _endOfDayRate;
+		private decimal endOfDayRate;
+
 		[Required]
 		public decimal EndOfDayRate
 		{
 			get
 			{
-				return _endOfDayRate;
+				return this.endOfDayRate;
 			}
+
 			set
 			{
-				this._endOfDayRate = value;
+				this.endOfDayRate = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9049666adff842c2305c0a1cbc7b14af</Hash>
+    <Hash>80d5e258b401ca42fbaa0cc02c3f9bda</Hash>
 </Codenesium>*/

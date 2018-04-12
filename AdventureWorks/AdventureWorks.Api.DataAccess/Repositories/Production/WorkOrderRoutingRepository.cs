@@ -11,13 +11,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public class WorkOrderRoutingRepository: AbstractWorkOrderRoutingRepository, IWorkOrderRoutingRepository
 	{
-		public WorkOrderRoutingRepository(ILogger<WorkOrderRoutingRepository> logger,
-		                                  ApplicationDbContext context) : base(logger,context)
+		public WorkOrderRoutingRepository(
+			ILogger<WorkOrderRoutingRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFWorkOrderRouting> SearchLinqEF(Expression<Func<EFWorkOrderRouting, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFWorkOrderRouting> SearchLinqEF(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFWorkOrderRouting>().Where(predicate).AsQueryable().OrderBy("WorkOrderID ASC").Skip(skip).Take(take).ToList<EFWorkOrderRouting>();
 			}
@@ -27,9 +29,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFWorkOrderRouting> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFWorkOrderRouting> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFWorkOrderRouting>().Where(predicate).AsQueryable().OrderBy("WorkOrderID ASC").Skip(skip).Take(take).ToList<EFWorkOrderRouting>();
 			}
@@ -42,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c935bc412ee7becb73bbc10cc062dbf6</Hash>
+    <Hash>9dff408d8b64aea57955fff646222eb9</Hash>
 </Codenesium>*/

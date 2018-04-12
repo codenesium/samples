@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Chain", Schema="dbo")]
@@ -10,11 +11,12 @@ namespace NebulaNS.Api.Contracts
 		public EFChain()
 		{}
 
-		public void SetProperties(int id,
-		                          string name,
-		                          int teamId,
-		                          int chainStatusId,
-		                          Guid externalId)
+		public void SetProperties(
+			int id,
+			string name,
+			int teamId,
+			int chainStatusId,
+			Guid externalId)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
@@ -26,26 +28,28 @@ namespace NebulaNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
-		public int Id {get; set;}
+		public int Id { get; set; }
 
 		[Column("name", TypeName="varchar(128)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("teamId", TypeName="int")]
-		public int TeamId {get; set;}
+		public int TeamId { get; set; }
 
 		[Column("chainStatusId", TypeName="int")]
-		public int ChainStatusId {get; set;}
+		public int ChainStatusId { get; set; }
 
 		[Column("externalId", TypeName="uniqueidentifier")]
-		public Guid ExternalId {get; set;}
+		public Guid ExternalId { get; set; }
 
+		[ForeignKey("TeamId")]
 		public virtual EFTeam Team { get; set; }
 
+		[ForeignKey("ChainStatusId")]
 		public virtual EFChainStatus ChainStatus { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f4787e270edfacb11b0432e0c03a2fe</Hash>
+    <Hash>88e6b4972bfea0d21dca8869f836e2ac</Hash>
 </Codenesium>*/

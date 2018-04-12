@@ -11,13 +11,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public class ProductModelRepository: AbstractProductModelRepository, IProductModelRepository
 	{
-		public ProductModelRepository(ILogger<ProductModelRepository> logger,
-		                              ApplicationDbContext context) : base(logger,context)
+		public ProductModelRepository(
+			ILogger<ProductModelRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFProductModel> SearchLinqEF(Expression<Func<EFProductModel, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFProductModel> SearchLinqEF(Expression<Func<EFProductModel, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy("ProductModelID ASC").Skip(skip).Take(take).ToList<EFProductModel>();
 			}
@@ -27,9 +29,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFProductModel> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFProductModel> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFProductModel>().Where(predicate).AsQueryable().OrderBy("ProductModelID ASC").Skip(skip).Take(take).ToList<EFProductModel>();
 			}
@@ -42,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd7f97e24e02098272175a159c999073</Hash>
+    <Hash>6b6f0ab4034637bf9ea091099064dc96</Hash>
 </Codenesium>*/

@@ -20,17 +20,17 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductModelRepository ProductModelRepository {get; set;}
-		public IIllustrationRepository IllustrationRepository {get; set;}
+		public IProductModelRepository ProductModelRepository { get; set; }
+		public IIllustrationRepository IllustrationRepository { get; set; }
 		public virtual void IllustrationIDRules()
 		{
-			RuleFor(x => x.IllustrationID).NotNull();
-			RuleFor(x => x.IllustrationID).Must(BeValidIllustration).When(x => x ?.IllustrationID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.IllustrationID).NotNull();
+			this.RuleFor(x => x.IllustrationID).Must(this.BeValidIllustration).When(x => x ?.IllustrationID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProductModel(int id)
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4debc8de1bc57a9b3c9fd919704ae654</Hash>
+    <Hash>258d703b73ecbc39c040096e4c6c9512</Hash>
 </Codenesium>*/

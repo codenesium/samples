@@ -9,15 +9,17 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public WorkOrderModel()
 		{}
-		public WorkOrderModel(int productID,
-		                      int orderQty,
-		                      int stockedQty,
-		                      short scrappedQty,
-		                      DateTime startDate,
-		                      Nullable<DateTime> endDate,
-		                      DateTime dueDate,
-		                      Nullable<short> scrapReasonID,
-		                      DateTime modifiedDate)
+
+		public WorkOrderModel(
+			int productID,
+			int orderQty,
+			int stockedQty,
+			short scrappedQty,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			DateTime dueDate,
+			Nullable<short> scrapReasonID,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.OrderQty = orderQty.ToInt();
@@ -30,132 +32,150 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private int _orderQty;
+		private int orderQty;
+
 		[Required]
 		public int OrderQty
 		{
 			get
 			{
-				return _orderQty;
+				return this.orderQty;
 			}
+
 			set
 			{
-				this._orderQty = value;
+				this.orderQty = value;
 			}
 		}
 
-		private int _stockedQty;
+		private int stockedQty;
+
 		[Required]
 		public int StockedQty
 		{
 			get
 			{
-				return _stockedQty;
+				return this.stockedQty;
 			}
+
 			set
 			{
-				this._stockedQty = value;
+				this.stockedQty = value;
 			}
 		}
 
-		private short _scrappedQty;
+		private short scrappedQty;
+
 		[Required]
 		public short ScrappedQty
 		{
 			get
 			{
-				return _scrappedQty;
+				return this.scrappedQty;
 			}
+
 			set
 			{
-				this._scrappedQty = value;
+				this.scrappedQty = value;
 			}
 		}
 
-		private DateTime _startDate;
+		private DateTime startDate;
+
 		[Required]
 		public DateTime StartDate
 		{
 			get
 			{
-				return _startDate;
+				return this.startDate;
 			}
+
 			set
 			{
-				this._startDate = value;
+				this.startDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _endDate;
+		private Nullable<DateTime> endDate;
+
 		public Nullable<DateTime> EndDate
 		{
 			get
 			{
-				return _endDate.IsEmptyOrZeroOrNull() ? null : _endDate;
+				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
 			}
+
 			set
 			{
-				this._endDate = value;
+				this.endDate = value;
 			}
 		}
 
-		private DateTime _dueDate;
+		private DateTime dueDate;
+
 		[Required]
 		public DateTime DueDate
 		{
 			get
 			{
-				return _dueDate;
+				return this.dueDate;
 			}
+
 			set
 			{
-				this._dueDate = value;
+				this.dueDate = value;
 			}
 		}
 
-		private Nullable<short> _scrapReasonID;
+		private Nullable<short> scrapReasonID;
+
 		public Nullable<short> ScrapReasonID
 		{
 			get
 			{
-				return _scrapReasonID.IsEmptyOrZeroOrNull() ? null : _scrapReasonID;
+				return this.scrapReasonID.IsEmptyOrZeroOrNull() ? null : this.scrapReasonID;
 			}
+
 			set
 			{
-				this._scrapReasonID = value;
+				this.scrapReasonID = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6eb38fec4f6554c23af03334fabf3a7c</Hash>
+    <Hash>f0312ff9790950a785b2a09ff7907d1f</Hash>
 </Codenesium>*/

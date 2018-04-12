@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/currencies")]
-	public class CurrenciesController: AbstractCurrenciesController
+	public class CurrencyController: AbstractCurrencyController
 	{
-		public CurrenciesController(
-			ILogger<CurrenciesController> logger,
+		public CurrencyController(
+			ILogger<CurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICurrencyRepository currencyRepository,
 			ICurrencyModelValidator currencyModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         currencyRepository,
-			         currencyModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       currencyRepository,
+			       currencyModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6241471ca5de4f5b61b4bd99db339f2d</Hash>
+    <Hash>9ccbe3610bc89b4eae1dda022c201239</Hash>
 </Codenesium>*/

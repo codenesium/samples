@@ -15,51 +15,62 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractLocationRepository(ILogger logger,
-		                                  ApplicationDbContext context)
+		public AbstractLocationRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual short Create(string name,
-		                            decimal costRate,
-		                            decimal availability,
-		                            DateTime modifiedDate)
+		public virtual short Create(
+			string name,
+			decimal costRate,
+			decimal availability,
+			DateTime modifiedDate)
 		{
-			var record = new EFLocation ();
+			var record = new EFLocation();
 
-			MapPOCOToEF(0, name,
-			            costRate,
-			            availability,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				name,
+				costRate,
+				availability,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFLocation>().Add(record);
 			this.context.SaveChanges();
 			return record.LocationID;
 		}
 
-		public virtual void Update(short locationID, string name,
-		                           decimal costRate,
-		                           decimal availability,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			short locationID,
+			string name,
+			decimal costRate,
+			decimal availability,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{locationID}");
 			}
 			else
 			{
-				MapPOCOToEF(locationID,  name,
-				            costRate,
-				            availability,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					locationID,
+					name,
+					costRate,
+					availability,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(short locationID)
+		public virtual void Delete(
+			short locationID)
 		{
 			var record = this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
 
@@ -78,7 +89,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.LocationID == locationID,response);
+			this.SearchLinqPOCO(x => x.LocationID == locationID, response);
 			return response;
 		}
 
@@ -86,11 +97,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.LocationID == locationID,response);
+			this.SearchLinqPOCO(x => x.LocationID == locationID, response);
 			return response.Locations.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,7 +117,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOLocation> GetWhereDirect(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOLocation> GetWhereDirect(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -114,47 +125,53 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.Locations;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFLocation, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFLocation, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFLocation> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFLocation> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFLocation> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFLocation> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFLocation> SearchLinqEF(Expression<Func<EFLocation, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFLocation> SearchLinqEF(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFLocation> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFLocation> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(short locationID, string name,
-		                               decimal costRate,
-		                               decimal availability,
-		                               DateTime modifiedDate, EFLocation   efLocation)
+		public static void MapPOCOToEF(
+			short locationID,
+			string name,
+			decimal costRate,
+			decimal availability,
+			DateTime modifiedDate,
+			EFLocation efLocation)
 		{
-			efLocation.SetProperties(locationID,name,costRate,availability.ToDecimal(),modifiedDate.ToDateTime());
+			efLocation.SetProperties(locationID, name, costRate, availability.ToDecimal(), modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFLocation efLocation,Response response)
+		public static void MapEFToPOCO(
+			EFLocation efLocation,
+			Response response)
 		{
-			if(efLocation == null)
+			if (efLocation == null)
 			{
 				return;
 			}
-			response.AddLocation(new POCOLocation(efLocation.LocationID,efLocation.Name,efLocation.CostRate,efLocation.Availability.ToDecimal(),efLocation.ModifiedDate.ToDateTime()));
+
+			response.AddLocation(new POCOLocation(efLocation.LocationID, efLocation.Name, efLocation.CostRate, efLocation.Availability.ToDecimal(), efLocation.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69d282e15879ce9d45c924faff36295b</Hash>
+    <Hash>e756a60b0fac7ed9f23df8dc4cec4998</Hash>
 </Codenesium>*/

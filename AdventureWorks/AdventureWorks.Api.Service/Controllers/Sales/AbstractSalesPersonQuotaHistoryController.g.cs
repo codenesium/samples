@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractSalesPersonQuotaHistoriesController: AbstractApiController
+	public abstract class AbstractSalesPersonQuotaHistoryController: AbstractApiController
 	{
 		protected ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
+
 		protected ISalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractSalesPersonQuotaHistoriesController(
-			ILogger<AbstractSalesPersonQuotaHistoriesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractSalesPersonQuotaHistoryController(
+			ILogger<AbstractSalesPersonQuotaHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
 			ISalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.salesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
 			this.salesPersonQuotaHistoryModelValidator = salesPersonQuotaHistoryModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesPersonQuotaHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesPersonQuotaHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.salesPersonQuotaHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesPersonQuotaHistoryRepository.Create(model.QuotaDate,
-				                                                       model.SalesQuota,
-				                                                       model.Rowguid,
-				                                                       model.ModifiedDate);
-				return Ok(id);
+				var id = this.salesPersonQuotaHistoryRepository.Create(
+					model.QuotaDate,
+					model.SalesQuota,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<SalesPersonQuotaHistoryModel> models)
 		{
 			this.salesPersonQuotaHistoryModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.salesPersonQuotaHistoryRepository.Create(model.QuotaDate,
-				                                              model.SalesQuota,
-				                                              model.Rowguid,
-				                                              model.ModifiedDate);
+				this.salesPersonQuotaHistoryRepository.Create(
+					model.QuotaDate,
+					model.SalesQuota,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,SalesPersonQuotaHistoryModel model)
+		public virtual IActionResult Update(int id, SalesPersonQuotaHistoryModel model)
 		{
-			if(this.salesPersonQuotaHistoryRepository.GetByIdDirect(id) == null)
+			if (this.salesPersonQuotaHistoryRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.salesPersonQuotaHistoryModelValidator.UpdateMode();
 			var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesPersonQuotaHistoryRepository.Update(id,  model.QuotaDate,
-				                                              model.SalesQuota,
-				                                              model.Rowguid,
-				                                              model.ModifiedDate);
-				return Ok();
+				this.salesPersonQuotaHistoryRepository.Update(
+					id,
+					model.QuotaDate,
+					model.SalesQuota,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.salesPersonQuotaHistoryRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -171,11 +182,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesPersonQuotaHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc5a363f64d9e45100afa1db839b9505</Hash>
+    <Hash>2c568bc566a7b2de10c9a9d2212719b9</Hash>
 </Codenesium>*/

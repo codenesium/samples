@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BusinessEntityAddressModel()
 		{}
-		public BusinessEntityAddressModel(int addressID,
-		                                  int addressTypeID,
-		                                  Guid rowguid,
-		                                  DateTime modifiedDate)
+
+		public BusinessEntityAddressModel(
+			int addressID,
+			int addressTypeID,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.AddressID = addressID.ToInt();
 			this.AddressTypeID = addressTypeID.ToInt();
@@ -20,64 +22,72 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _addressID;
+		private int addressID;
+
 		[Required]
 		public int AddressID
 		{
 			get
 			{
-				return _addressID;
+				return this.addressID;
 			}
+
 			set
 			{
-				this._addressID = value;
+				this.addressID = value;
 			}
 		}
 
-		private int _addressTypeID;
+		private int addressTypeID;
+
 		[Required]
 		public int AddressTypeID
 		{
 			get
 			{
-				return _addressTypeID;
+				return this.addressTypeID;
 			}
+
 			set
 			{
-				this._addressTypeID = value;
+				this.addressTypeID = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ee5143027a659d1181ee6fee25d4aac9</Hash>
+    <Hash>ca5a30d1a54c1583e799ef9255c246e9</Hash>
 </Codenesium>*/

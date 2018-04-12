@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractProductSubcategoriesController: AbstractApiController
+	public abstract class AbstractProductSubcategoryController: AbstractApiController
 	{
 		protected IProductSubcategoryRepository productSubcategoryRepository;
+
 		protected IProductSubcategoryModelValidator productSubcategoryModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractProductSubcategoriesController(
-			ILogger<AbstractProductSubcategoriesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractProductSubcategoryController(
+			ILogger<AbstractProductSubcategoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductSubcategoryRepository productSubcategoryRepository,
 			IProductSubcategoryModelValidator productSubcategoryModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.productSubcategoryRepository = productSubcategoryRepository;
 			this.productSubcategoryModelValidator = productSubcategoryModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productSubcategoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productSubcategoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.productSubcategoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productSubcategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productSubcategoryRepository.Create(model.ProductCategoryID,
-				                                                  model.Name,
-				                                                  model.Rowguid,
-				                                                  model.ModifiedDate);
-				return Ok(id);
+				var id = this.productSubcategoryRepository.Create(
+					model.ProductCategoryID,
+					model.Name,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ProductSubcategoryModel> models)
 		{
 			this.productSubcategoryModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.productSubcategoryModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.productSubcategoryRepository.Create(model.ProductCategoryID,
-				                                         model.Name,
-				                                         model.Rowguid,
-				                                         model.ModifiedDate);
+				this.productSubcategoryRepository.Create(
+					model.ProductCategoryID,
+					model.Name,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ProductSubcategoryModel model)
+		public virtual IActionResult Update(int id, ProductSubcategoryModel model)
 		{
-			if(this.productSubcategoryRepository.GetByIdDirect(id) == null)
+			if (this.productSubcategoryRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.productSubcategoryModelValidator.UpdateMode();
 			var validationResult = this.productSubcategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productSubcategoryRepository.Update(id,  model.ProductCategoryID,
-				                                         model.Name,
-				                                         model.Rowguid,
-				                                         model.ModifiedDate);
-				return Ok();
+				this.productSubcategoryRepository.Update(
+					id,
+					model.ProductCategoryID,
+					model.Name,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.productSubcategoryRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -171,11 +182,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productSubcategoryRepository.GetWhere(x => x.ProductCategoryID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3930d8295405d27d77504e759f0d249</Hash>
+    <Hash>a5a71eb12df23b96bcf8cff9c6095f01</Hash>
 </Codenesium>*/

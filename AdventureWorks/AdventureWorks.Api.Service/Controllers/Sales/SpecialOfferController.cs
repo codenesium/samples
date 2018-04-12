@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/specialOffers")]
-	public class SpecialOffersController: AbstractSpecialOffersController
+	public class SpecialOfferController: AbstractSpecialOfferController
 	{
-		public SpecialOffersController(
-			ILogger<SpecialOffersController> logger,
+		public SpecialOfferController(
+			ILogger<SpecialOfferController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpecialOfferRepository specialOfferRepository,
 			ISpecialOfferModelValidator specialOfferModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         specialOfferRepository,
-			         specialOfferModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       specialOfferRepository,
+			       specialOfferModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c6041dcf053abd19291f555cafd80a70</Hash>
+    <Hash>e413116a8d11ff8b048863e0be85df1c</Hash>
 </Codenesium>*/

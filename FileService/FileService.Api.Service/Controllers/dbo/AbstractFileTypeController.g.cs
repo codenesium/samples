@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+
 namespace FileServiceNS.Api.Service
 {
-	public abstract class AbstractFileTypesController: AbstractApiController
+	public abstract class AbstractFileTypeController: AbstractApiController
 	{
 		protected IFileTypeRepository fileTypeRepository;
+
 		protected IFileTypeModelValidator fileTypeModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractFileTypesController(
-			ILogger<AbstractFileTypesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractFileTypeController(
+			ILogger<AbstractFileTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFileTypeRepository fileTypeRepository,
 			IFileTypeModelValidator fileTypeModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.fileTypeRepository = fileTypeRepository;
 			this.fileTypeModelValidator = fileTypeModelValidator;
@@ -31,7 +37,7 @@ namespace FileServiceNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace FileServiceNS.Api.Service
 		{
 			Response response = this.fileTypeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace FileServiceNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.fileTypeRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.fileTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,13 +81,14 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.fileTypeRepository.Create(model.Name);
-				return Ok(id);
+				var id = this.fileTypeRepository.Create(
+					model.Name);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -95,21 +102,23 @@ namespace FileServiceNS.Api.Service
 		public virtual IActionResult BulkInsert(List<FileTypeModel> models)
 		{
 			this.fileTypeModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.fileTypeModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.fileTypeRepository.Create(model.Name);
+				this.fileTypeRepository.Create(
+					model.Name);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -119,24 +128,26 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,FileTypeModel model)
+		public virtual IActionResult Update(int id, FileTypeModel model)
 		{
-			if(this.fileTypeRepository.GetByIdDirect(id) == null)
+			if (this.fileTypeRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.fileTypeModelValidator.UpdateMode();
 			var validationResult = this.fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.fileTypeRepository.Update(id,  model.Name);
-				return Ok();
+				this.fileTypeRepository.Update(
+					id,
+					model.Name);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -149,11 +160,11 @@ namespace FileServiceNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.fileTypeRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d12aec2514753bd43de83c195344f52a</Hash>
+    <Hash>8c479f8ba3e703a070c572d022c00a37</Hash>
 </Codenesium>*/

@@ -9,32 +9,33 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOSalesOrderHeader()
 		{}
 
-		public POCOSalesOrderHeader(int salesOrderID,
-		                            int revisionNumber,
-		                            DateTime orderDate,
-		                            DateTime dueDate,
-		                            Nullable<DateTime> shipDate,
-		                            int status,
-		                            bool onlineOrderFlag,
-		                            string salesOrderNumber,
-		                            string purchaseOrderNumber,
-		                            string accountNumber,
-		                            int customerID,
-		                            Nullable<int> salesPersonID,
-		                            Nullable<int> territoryID,
-		                            int billToAddressID,
-		                            int shipToAddressID,
-		                            int shipMethodID,
-		                            Nullable<int> creditCardID,
-		                            string creditCardApprovalCode,
-		                            Nullable<int> currencyRateID,
-		                            decimal subTotal,
-		                            decimal taxAmt,
-		                            decimal freight,
-		                            decimal totalDue,
-		                            string comment,
-		                            Guid rowguid,
-		                            DateTime modifiedDate)
+		public POCOSalesOrderHeader(
+			int salesOrderID,
+			int revisionNumber,
+			DateTime orderDate,
+			DateTime dueDate,
+			Nullable<DateTime> shipDate,
+			int status,
+			bool onlineOrderFlag,
+			string salesOrderNumber,
+			string purchaseOrderNumber,
+			string accountNumber,
+			int customerID,
+			Nullable<int> salesPersonID,
+			Nullable<int> territoryID,
+			int billToAddressID,
+			int shipToAddressID,
+			int shipMethodID,
+			Nullable<int> creditCardID,
+			string creditCardApprovalCode,
+			Nullable<int> currencyRateID,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			string comment,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.SalesOrderID = salesOrderID.ToInt();
 			this.RevisionNumber = revisionNumber;
@@ -55,257 +56,257 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			CustomerID = new ReferenceEntity<int>(customerID,
-			                                      "Customer");
-			SalesPersonID = new ReferenceEntity<Nullable<int>>(salesPersonID,
-			                                                   "SalesPerson");
-			TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
-			                                                 "SalesTerritory");
-			BillToAddressID = new ReferenceEntity<int>(billToAddressID,
-			                                           "Address");
-			ShipToAddressID = new ReferenceEntity<int>(shipToAddressID,
-			                                           "Address");
-			ShipMethodID = new ReferenceEntity<int>(shipMethodID,
-			                                        "ShipMethod");
-			CreditCardID = new ReferenceEntity<Nullable<int>>(creditCardID,
-			                                                  "CreditCard");
-			CurrencyRateID = new ReferenceEntity<Nullable<int>>(currencyRateID,
-			                                                    "CurrencyRate");
+			this.CustomerID = new ReferenceEntity<int>(customerID,
+			                                           "Customer");
+			this.SalesPersonID = new ReferenceEntity<Nullable<int>>(salesPersonID,
+			                                                        "SalesPerson");
+			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
+			                                                      "SalesTerritory");
+			this.BillToAddressID = new ReferenceEntity<int>(billToAddressID,
+			                                                "Address");
+			this.ShipToAddressID = new ReferenceEntity<int>(shipToAddressID,
+			                                                "Address");
+			this.ShipMethodID = new ReferenceEntity<int>(shipMethodID,
+			                                             "ShipMethod");
+			this.CreditCardID = new ReferenceEntity<Nullable<int>>(creditCardID,
+			                                                       "CreditCard");
+			this.CurrencyRateID = new ReferenceEntity<Nullable<int>>(currencyRateID,
+			                                                         "CurrencyRate");
 		}
 
-		public int SalesOrderID {get; set;}
-		public int RevisionNumber {get; set;}
-		public DateTime OrderDate {get; set;}
-		public DateTime DueDate {get; set;}
-		public Nullable<DateTime> ShipDate {get; set;}
-		public int Status {get; set;}
-		public bool OnlineOrderFlag {get; set;}
-		public string SalesOrderNumber {get; set;}
-		public string PurchaseOrderNumber {get; set;}
-		public string AccountNumber {get; set;}
-		public ReferenceEntity<int>CustomerID {get; set;}
-		public ReferenceEntity<Nullable<int>>SalesPersonID {get; set;}
-		public ReferenceEntity<Nullable<int>>TerritoryID {get; set;}
-		public ReferenceEntity<int>BillToAddressID {get; set;}
-		public ReferenceEntity<int>ShipToAddressID {get; set;}
-		public ReferenceEntity<int>ShipMethodID {get; set;}
-		public ReferenceEntity<Nullable<int>>CreditCardID {get; set;}
-		public string CreditCardApprovalCode {get; set;}
-		public ReferenceEntity<Nullable<int>>CurrencyRateID {get; set;}
-		public decimal SubTotal {get; set;}
-		public decimal TaxAmt {get; set;}
-		public decimal Freight {get; set;}
-		public decimal TotalDue {get; set;}
-		public string Comment {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int SalesOrderID { get; set; }
+		public int RevisionNumber { get; set; }
+		public DateTime OrderDate { get; set; }
+		public DateTime DueDate { get; set; }
+		public Nullable<DateTime> ShipDate { get; set; }
+		public int Status { get; set; }
+		public bool OnlineOrderFlag { get; set; }
+		public string SalesOrderNumber { get; set; }
+		public string PurchaseOrderNumber { get; set; }
+		public string AccountNumber { get; set; }
+		public ReferenceEntity<int> CustomerID { get; set; }
+		public ReferenceEntity<Nullable<int>> SalesPersonID { get; set; }
+		public ReferenceEntity<Nullable<int>> TerritoryID { get; set; }
+		public ReferenceEntity<int> BillToAddressID { get; set; }
+		public ReferenceEntity<int> ShipToAddressID { get; set; }
+		public ReferenceEntity<int> ShipMethodID { get; set; }
+		public ReferenceEntity<Nullable<int>> CreditCardID { get; set; }
+		public string CreditCardApprovalCode { get; set; }
+		public ReferenceEntity<Nullable<int>> CurrencyRateID { get; set; }
+		public decimal SubTotal { get; set; }
+		public decimal TaxAmt { get; set; }
+		public decimal Freight { get; set; }
+		public decimal TotalDue { get; set; }
+		public string Comment { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderIDValue {get; set;} = true;
+		public bool ShouldSerializeSalesOrderIDValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesOrderID()
 		{
-			return ShouldSerializeSalesOrderIDValue;
+			return this.ShouldSerializeSalesOrderIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRevisionNumberValue {get; set;} = true;
+		public bool ShouldSerializeRevisionNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeRevisionNumber()
 		{
-			return ShouldSerializeRevisionNumberValue;
+			return this.ShouldSerializeRevisionNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrderDateValue {get; set;} = true;
+		public bool ShouldSerializeOrderDateValue { get; set; } = true;
 
 		public bool ShouldSerializeOrderDate()
 		{
-			return ShouldSerializeOrderDateValue;
+			return this.ShouldSerializeOrderDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDueDateValue {get; set;} = true;
+		public bool ShouldSerializeDueDateValue { get; set; } = true;
 
 		public bool ShouldSerializeDueDate()
 		{
-			return ShouldSerializeDueDateValue;
+			return this.ShouldSerializeDueDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipDateValue {get; set;} = true;
+		public bool ShouldSerializeShipDateValue { get; set; } = true;
 
 		public bool ShouldSerializeShipDate()
 		{
-			return ShouldSerializeShipDateValue;
+			return this.ShouldSerializeShipDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStatusValue {get; set;} = true;
+		public bool ShouldSerializeStatusValue { get; set; } = true;
 
 		public bool ShouldSerializeStatus()
 		{
-			return ShouldSerializeStatusValue;
+			return this.ShouldSerializeStatusValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOnlineOrderFlagValue {get; set;} = true;
+		public bool ShouldSerializeOnlineOrderFlagValue { get; set; } = true;
 
 		public bool ShouldSerializeOnlineOrderFlag()
 		{
-			return ShouldSerializeOnlineOrderFlagValue;
+			return this.ShouldSerializeOnlineOrderFlagValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderNumberValue {get; set;} = true;
+		public bool ShouldSerializeSalesOrderNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesOrderNumber()
 		{
-			return ShouldSerializeSalesOrderNumberValue;
+			return this.ShouldSerializeSalesOrderNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderNumberValue {get; set;} = true;
+		public bool ShouldSerializePurchaseOrderNumberValue { get; set; } = true;
 
 		public bool ShouldSerializePurchaseOrderNumber()
 		{
-			return ShouldSerializePurchaseOrderNumberValue;
+			return this.ShouldSerializePurchaseOrderNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAccountNumberValue {get; set;} = true;
+		public bool ShouldSerializeAccountNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeAccountNumber()
 		{
-			return ShouldSerializeAccountNumberValue;
+			return this.ShouldSerializeAccountNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCustomerIDValue {get; set;} = true;
+		public bool ShouldSerializeCustomerIDValue { get; set; } = true;
 
 		public bool ShouldSerializeCustomerID()
 		{
-			return ShouldSerializeCustomerIDValue;
+			return this.ShouldSerializeCustomerIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesPersonIDValue {get; set;} = true;
+		public bool ShouldSerializeSalesPersonIDValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesPersonID()
 		{
-			return ShouldSerializeSalesPersonIDValue;
+			return this.ShouldSerializeSalesPersonIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTerritoryIDValue {get; set;} = true;
+		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
 
 		public bool ShouldSerializeTerritoryID()
 		{
-			return ShouldSerializeTerritoryIDValue;
+			return this.ShouldSerializeTerritoryIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBillToAddressIDValue {get; set;} = true;
+		public bool ShouldSerializeBillToAddressIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBillToAddressID()
 		{
-			return ShouldSerializeBillToAddressIDValue;
+			return this.ShouldSerializeBillToAddressIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipToAddressIDValue {get; set;} = true;
+		public bool ShouldSerializeShipToAddressIDValue { get; set; } = true;
 
 		public bool ShouldSerializeShipToAddressID()
 		{
-			return ShouldSerializeShipToAddressIDValue;
+			return this.ShouldSerializeShipToAddressIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipMethodIDValue {get; set;} = true;
+		public bool ShouldSerializeShipMethodIDValue { get; set; } = true;
 
 		public bool ShouldSerializeShipMethodID()
 		{
-			return ShouldSerializeShipMethodIDValue;
+			return this.ShouldSerializeShipMethodIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCreditCardIDValue {get; set;} = true;
+		public bool ShouldSerializeCreditCardIDValue { get; set; } = true;
 
 		public bool ShouldSerializeCreditCardID()
 		{
-			return ShouldSerializeCreditCardIDValue;
+			return this.ShouldSerializeCreditCardIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCreditCardApprovalCodeValue {get; set;} = true;
+		public bool ShouldSerializeCreditCardApprovalCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeCreditCardApprovalCode()
 		{
-			return ShouldSerializeCreditCardApprovalCodeValue;
+			return this.ShouldSerializeCreditCardApprovalCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRateIDValue {get; set;} = true;
+		public bool ShouldSerializeCurrencyRateIDValue { get; set; } = true;
 
 		public bool ShouldSerializeCurrencyRateID()
 		{
-			return ShouldSerializeCurrencyRateIDValue;
+			return this.ShouldSerializeCurrencyRateIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSubTotalValue {get; set;} = true;
+		public bool ShouldSerializeSubTotalValue { get; set; } = true;
 
 		public bool ShouldSerializeSubTotal()
 		{
-			return ShouldSerializeSubTotalValue;
+			return this.ShouldSerializeSubTotalValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTaxAmtValue {get; set;} = true;
+		public bool ShouldSerializeTaxAmtValue { get; set; } = true;
 
 		public bool ShouldSerializeTaxAmt()
 		{
-			return ShouldSerializeTaxAmtValue;
+			return this.ShouldSerializeTaxAmtValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFreightValue {get; set;} = true;
+		public bool ShouldSerializeFreightValue { get; set; } = true;
 
 		public bool ShouldSerializeFreight()
 		{
-			return ShouldSerializeFreightValue;
+			return this.ShouldSerializeFreightValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTotalDueValue {get; set;} = true;
+		public bool ShouldSerializeTotalDueValue { get; set; } = true;
 
 		public bool ShouldSerializeTotalDue()
 		{
-			return ShouldSerializeTotalDueValue;
+			return this.ShouldSerializeTotalDueValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCommentValue {get; set;} = true;
+		public bool ShouldSerializeCommentValue { get; set; } = true;
 
 		public bool ShouldSerializeComment()
 		{
-			return ShouldSerializeCommentValue;
+			return this.ShouldSerializeCommentValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -341,5 +342,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>68ac9b2042dc02727e9a8fd7f462a922</Hash>
+    <Hash>cebdef920e52ddf436e86de3f093e8fa</Hash>
 </Codenesium>*/

@@ -22,16 +22,16 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6131c172910e9d70956e0090167f2f85</Hash>
+    <Hash>1c72a5b9179e963a048e181cf138672f</Hash>
 </Codenesium>*/

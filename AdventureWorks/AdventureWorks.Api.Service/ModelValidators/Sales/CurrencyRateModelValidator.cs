@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class CurrencyRateModelValidator: AbstractCurrencyRateModelValidator,ICurrencyRateModelValidator
+	public class CurrencyRateModelValidator: AbstractCurrencyRateModelValidator, ICurrencyRateModelValidator
 	{
 		public CurrencyRateModelValidator()
 		{   }
@@ -33,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>287754587aae943f98f5fc096930e82f</Hash>
+    <Hash>dd630ff69b66be04dc6f7b73e8f5d329</Hash>
 </Codenesium>*/

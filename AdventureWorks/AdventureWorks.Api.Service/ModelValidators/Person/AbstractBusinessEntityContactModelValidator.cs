@@ -20,29 +20,29 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IBusinessEntityRepository BusinessEntityRepository {get; set;}
-		public IPersonRepository PersonRepository {get; set;}
-		public IContactTypeRepository ContactTypeRepository {get; set;}
+		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
+		public IPersonRepository PersonRepository { get; set; }
+		public IContactTypeRepository ContactTypeRepository { get; set; }
 		public virtual void PersonIDRules()
 		{
-			RuleFor(x => x.PersonID).NotNull();
-			RuleFor(x => x.PersonID).Must(BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PersonID).NotNull();
+			this.RuleFor(x => x.PersonID).Must(this.BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ContactTypeIDRules()
 		{
-			RuleFor(x => x.ContactTypeID).NotNull();
-			RuleFor(x => x.ContactTypeID).Must(BeValidContactType).When(x => x ?.ContactTypeID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ContactTypeID).NotNull();
+			this.RuleFor(x => x.ContactTypeID).Must(this.BeValidContactType).When(x => x ?.ContactTypeID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidBusinessEntity(int id)
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0d8206895af9a676e73e3da3dbf14c6f</Hash>
+    <Hash>6e357e4e731cc1a0cfec73247788a78c</Hash>
 </Codenesium>*/

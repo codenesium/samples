@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class StateProvinceModelValidator: AbstractStateProvinceModelValidator,IStateProvinceModelValidator
+	public class StateProvinceModelValidator: AbstractStateProvinceModelValidator, IStateProvinceModelValidator
 	{
 		public StateProvinceModelValidator()
 		{   }
@@ -35,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>44e83411971a0ba549ba865c1c586dc3</Hash>
+    <Hash>15f2306c710f5ad72c10e63310839506</Hash>
 </Codenesium>*/

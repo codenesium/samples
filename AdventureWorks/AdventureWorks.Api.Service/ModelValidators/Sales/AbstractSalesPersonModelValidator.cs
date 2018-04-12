@@ -20,11 +20,11 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
-		public ISalesTerritoryRepository SalesTerritoryRepository {get; set;}
+		public IEmployeeRepository EmployeeRepository { get; set; }
+		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void TerritoryIDRules()
 		{
-			RuleFor(x => x.TerritoryID).Must(BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void SalesQuotaRules()
@@ -32,32 +32,32 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void BonusRules()
 		{
-			RuleFor(x => x.Bonus).NotNull();
+			this.RuleFor(x => x.Bonus).NotNull();
 		}
 
 		public virtual void CommissionPctRules()
 		{
-			RuleFor(x => x.CommissionPct).NotNull();
+			this.RuleFor(x => x.CommissionPct).NotNull();
 		}
 
 		public virtual void SalesYTDRules()
 		{
-			RuleFor(x => x.SalesYTD).NotNull();
+			this.RuleFor(x => x.SalesYTD).NotNull();
 		}
 
 		public virtual void SalesLastYearRules()
 		{
-			RuleFor(x => x.SalesLastYear).NotNull();
+			this.RuleFor(x => x.SalesLastYear).NotNull();
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidEmployee(int id)
@@ -73,5 +73,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1e67041cebf6de5de02495dbb5d6a35d</Hash>
+    <Hash>353283f57ba5bb7a91400e7917df6144</Hash>
 </Codenesium>*/

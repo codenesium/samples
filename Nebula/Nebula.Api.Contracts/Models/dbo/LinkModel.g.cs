@@ -9,17 +9,19 @@ namespace NebulaNS.Api.Contracts
 	{
 		public LinkModel()
 		{}
-		public LinkModel(string name,
-		                 string dynamicParameters,
-		                 string staticParameters,
-		                 int chainId,
-		                 Nullable<int> assignedMachineId,
-		                 int linkStatusId,
-		                 int order,
-		                 Nullable<DateTime> dateStarted,
-		                 Nullable<DateTime> dateCompleted,
-		                 string response,
-		                 Guid externalId)
+
+		public LinkModel(
+			string name,
+			string dynamicParameters,
+			string staticParameters,
+			int chainId,
+			Nullable<int> assignedMachineId,
+			int linkStatusId,
+			int order,
+			Nullable<DateTime> dateStarted,
+			Nullable<DateTime> dateCompleted,
+			string response,
+			Guid externalId)
 		{
 			this.Name = name;
 			this.DynamicParameters = dynamicParameters;
@@ -34,156 +36,178 @@ namespace NebulaNS.Api.Contracts
 			this.ExternalId = externalId;
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private string _dynamicParameters;
+		private string dynamicParameters;
+
 		public string DynamicParameters
 		{
 			get
 			{
-				return _dynamicParameters.IsEmptyOrZeroOrNull() ? null : _dynamicParameters;
+				return this.dynamicParameters.IsEmptyOrZeroOrNull() ? null : this.dynamicParameters;
 			}
+
 			set
 			{
-				this._dynamicParameters = value;
+				this.dynamicParameters = value;
 			}
 		}
 
-		private string _staticParameters;
+		private string staticParameters;
+
 		public string StaticParameters
 		{
 			get
 			{
-				return _staticParameters.IsEmptyOrZeroOrNull() ? null : _staticParameters;
+				return this.staticParameters.IsEmptyOrZeroOrNull() ? null : this.staticParameters;
 			}
+
 			set
 			{
-				this._staticParameters = value;
+				this.staticParameters = value;
 			}
 		}
 
-		private int _chainId;
+		private int chainId;
+
 		[Required]
 		public int ChainId
 		{
 			get
 			{
-				return _chainId;
+				return this.chainId;
 			}
+
 			set
 			{
-				this._chainId = value;
+				this.chainId = value;
 			}
 		}
 
-		private Nullable<int> _assignedMachineId;
+		private Nullable<int> assignedMachineId;
+
 		public Nullable<int> AssignedMachineId
 		{
 			get
 			{
-				return _assignedMachineId.IsEmptyOrZeroOrNull() ? null : _assignedMachineId;
+				return this.assignedMachineId.IsEmptyOrZeroOrNull() ? null : this.assignedMachineId;
 			}
+
 			set
 			{
-				this._assignedMachineId = value;
+				this.assignedMachineId = value;
 			}
 		}
 
-		private int _linkStatusId;
+		private int linkStatusId;
+
 		[Required]
 		public int LinkStatusId
 		{
 			get
 			{
-				return _linkStatusId;
+				return this.linkStatusId;
 			}
+
 			set
 			{
-				this._linkStatusId = value;
+				this.linkStatusId = value;
 			}
 		}
 
-		private int _order;
+		private int order;
+
 		[Required]
 		public int Order
 		{
 			get
 			{
-				return _order;
+				return this.order;
 			}
+
 			set
 			{
-				this._order = value;
+				this.order = value;
 			}
 		}
 
-		private Nullable<DateTime> _dateStarted;
+		private Nullable<DateTime> dateStarted;
+
 		public Nullable<DateTime> DateStarted
 		{
 			get
 			{
-				return _dateStarted.IsEmptyOrZeroOrNull() ? null : _dateStarted;
+				return this.dateStarted.IsEmptyOrZeroOrNull() ? null : this.dateStarted;
 			}
+
 			set
 			{
-				this._dateStarted = value;
+				this.dateStarted = value;
 			}
 		}
 
-		private Nullable<DateTime> _dateCompleted;
+		private Nullable<DateTime> dateCompleted;
+
 		public Nullable<DateTime> DateCompleted
 		{
 			get
 			{
-				return _dateCompleted.IsEmptyOrZeroOrNull() ? null : _dateCompleted;
+				return this.dateCompleted.IsEmptyOrZeroOrNull() ? null : this.dateCompleted;
 			}
+
 			set
 			{
-				this._dateCompleted = value;
+				this.dateCompleted = value;
 			}
 		}
 
-		private string _response;
+		private string response;
+
 		public string Response
 		{
 			get
 			{
-				return _response.IsEmptyOrZeroOrNull() ? null : _response;
+				return this.response.IsEmptyOrZeroOrNull() ? null : this.response;
 			}
+
 			set
 			{
-				this._response = value;
+				this.response = value;
 			}
 		}
 
-		private Guid _externalId;
+		private Guid externalId;
+
 		[Required]
 		public Guid ExternalId
 		{
 			get
 			{
-				return _externalId;
+				return this.externalId;
 			}
+
 			set
 			{
-				this._externalId = value;
+				this.externalId = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ea512edb7d25e9051e347a967cabf2fe</Hash>
+    <Hash>f43a0548521270f03576931c0abcd22f</Hash>
 </Codenesium>*/

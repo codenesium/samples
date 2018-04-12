@@ -15,43 +15,54 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractPhoneNumberTypeRepository(ILogger logger,
-		                                         ApplicationDbContext context)
+		public AbstractPhoneNumberTypeRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(string name,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			string name,
+			DateTime modifiedDate)
 		{
-			var record = new EFPhoneNumberType ();
+			var record = new EFPhoneNumberType();
 
-			MapPOCOToEF(0, name,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				name,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFPhoneNumberType>().Add(record);
 			this.context.SaveChanges();
 			return record.PhoneNumberTypeID;
 		}
 
-		public virtual void Update(int phoneNumberTypeID, string name,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int phoneNumberTypeID,
+			string name,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{phoneNumberTypeID}");
 			}
 			else
 			{
-				MapPOCOToEF(phoneNumberTypeID,  name,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					phoneNumberTypeID,
+					name,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int phoneNumberTypeID)
+		public virtual void Delete(
+			int phoneNumberTypeID)
 		{
 			var record = this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID).FirstOrDefault();
 
@@ -70,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.PhoneNumberTypeID == phoneNumberTypeID,response);
+			this.SearchLinqPOCO(x => x.PhoneNumberTypeID == phoneNumberTypeID, response);
 			return response;
 		}
 
@@ -78,11 +89,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.PhoneNumberTypeID == phoneNumberTypeID,response);
+			this.SearchLinqPOCO(x => x.PhoneNumberTypeID == phoneNumberTypeID, response);
 			return response.PhoneNumberTypes.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -90,7 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOPhoneNumberType> GetWhereDirect(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOPhoneNumberType> GetWhereDirect(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,45 +117,51 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.PhoneNumberTypes;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFPhoneNumberType, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFPhoneNumberType, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFPhoneNumberType> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFPhoneNumberType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFPhoneNumberType> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFPhoneNumberType> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFPhoneNumberType> SearchLinqEF(Expression<Func<EFPhoneNumberType, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFPhoneNumberType> SearchLinqEF(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFPhoneNumberType> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFPhoneNumberType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int phoneNumberTypeID, string name,
-		                               DateTime modifiedDate, EFPhoneNumberType   efPhoneNumberType)
+		public static void MapPOCOToEF(
+			int phoneNumberTypeID,
+			string name,
+			DateTime modifiedDate,
+			EFPhoneNumberType efPhoneNumberType)
 		{
-			efPhoneNumberType.SetProperties(phoneNumberTypeID.ToInt(),name,modifiedDate.ToDateTime());
+			efPhoneNumberType.SetProperties(phoneNumberTypeID.ToInt(), name, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFPhoneNumberType efPhoneNumberType,Response response)
+		public static void MapEFToPOCO(
+			EFPhoneNumberType efPhoneNumberType,
+			Response response)
 		{
-			if(efPhoneNumberType == null)
+			if (efPhoneNumberType == null)
 			{
 				return;
 			}
-			response.AddPhoneNumberType(new POCOPhoneNumberType(efPhoneNumberType.PhoneNumberTypeID.ToInt(),efPhoneNumberType.Name,efPhoneNumberType.ModifiedDate.ToDateTime()));
+
+			response.AddPhoneNumberType(new POCOPhoneNumberType(efPhoneNumberType.PhoneNumberTypeID.ToInt(), efPhoneNumberType.Name, efPhoneNumberType.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>470d88b101d7480c83df227d64e32816</Hash>
+    <Hash>4466a01600f5744ef73f91894782b75e</Hash>
 </Codenesium>*/

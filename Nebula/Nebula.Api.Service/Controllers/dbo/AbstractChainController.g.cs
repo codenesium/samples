@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public abstract class AbstractChainsController: AbstractApiController
+	public abstract class AbstractChainController: AbstractApiController
 	{
 		protected IChainRepository chainRepository;
+
 		protected IChainModelValidator chainModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractChainsController(
-			ILogger<AbstractChainsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractChainController(
+			ILogger<AbstractChainController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IChainRepository chainRepository,
 			IChainModelValidator chainModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.chainRepository = chainRepository;
 			this.chainModelValidator = chainModelValidator;
@@ -31,7 +37,7 @@ namespace NebulaNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.chainRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace NebulaNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.chainRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.chainRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.chainRepository.Create(model.Name,
-				                                     model.TeamId,
-				                                     model.ChainStatusId,
-				                                     model.ExternalId);
-				return Ok(id);
+				var id = this.chainRepository.Create(
+					model.Name,
+					model.TeamId,
+					model.ChainStatusId,
+					model.ExternalId);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ChainModel> models)
 		{
 			this.chainModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.chainModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.chainRepository.Create(model.Name,
-				                            model.TeamId,
-				                            model.ChainStatusId,
-				                            model.ExternalId);
+				this.chainRepository.Create(
+					model.Name,
+					model.TeamId,
+					model.ChainStatusId,
+					model.ExternalId);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ChainModel model)
+		public virtual IActionResult Update(int id, ChainModel model)
 		{
-			if(this.chainRepository.GetByIdDirect(id) == null)
+			if (this.chainRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.chainModelValidator.UpdateMode();
 			var validationResult = this.chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.chainRepository.Update(id,  model.Name,
-				                            model.TeamId,
-				                            model.ChainStatusId,
-				                            model.ExternalId);
-				return Ok();
+				this.chainRepository.Update(
+					id,
+					model.Name,
+					model.TeamId,
+					model.ChainStatusId,
+					model.ExternalId);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.chainRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -171,7 +182,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.chainRepository.GetWhere(x => x.TeamId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -184,11 +195,11 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.chainRepository.GetWhere(x => x.ChainStatusId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>98b892ce1fe61b75d430164d0511b49d</Hash>
+    <Hash>051c87e543954a59f29d14128f1d6bb1</Hash>
 </Codenesium>*/

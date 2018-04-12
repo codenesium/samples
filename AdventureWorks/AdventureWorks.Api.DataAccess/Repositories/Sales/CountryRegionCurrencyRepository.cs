@@ -11,13 +11,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public class CountryRegionCurrencyRepository: AbstractCountryRegionCurrencyRepository, ICountryRegionCurrencyRepository
 	{
-		public CountryRegionCurrencyRepository(ILogger<CountryRegionCurrencyRepository> logger,
-		                                       ApplicationDbContext context) : base(logger,context)
+		public CountryRegionCurrencyRepository(
+			ILogger<CountryRegionCurrencyRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFCountryRegionCurrency> SearchLinqEF(Expression<Func<EFCountryRegionCurrency, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFCountryRegionCurrency> SearchLinqEF(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFCountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy("CountryRegionCode ASC").Skip(skip).Take(take).ToList<EFCountryRegionCurrency>();
 			}
@@ -27,9 +29,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFCountryRegionCurrency> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFCountryRegionCurrency> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFCountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy("CountryRegionCode ASC").Skip(skip).Take(take).ToList<EFCountryRegionCurrency>();
 			}
@@ -42,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb68cc03616d8c0cce75e5fbd56e1801</Hash>
+    <Hash>3c14dd2d840699ac47cd63ab77cd6e9f</Hash>
 </Codenesium>*/

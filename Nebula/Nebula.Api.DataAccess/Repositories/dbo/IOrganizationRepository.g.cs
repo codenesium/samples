@@ -7,9 +7,11 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IOrganizationRepository
 	{
-		int Create(string name);
+		int Create(
+			string name);
 
-		void Update(int id, string name);
+		void Update(int id,
+		            string name);
 
 		void Delete(int id);
 
@@ -17,14 +19,14 @@ namespace NebulaNS.Api.DataAccess
 
 		POCOOrganization GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOOrganization> GetWhereDirect(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOOrganization> GetWhereDirect(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ede170ecc19167723d8561f3280b2c33</Hash>
+    <Hash>58b5dd1826334db3aa0a1a0a4eb06964</Hash>
 </Codenesium>*/

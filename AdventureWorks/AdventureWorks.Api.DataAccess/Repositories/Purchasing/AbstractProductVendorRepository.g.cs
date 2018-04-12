@@ -15,75 +15,86 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractProductVendorRepository(ILogger logger,
-		                                       ApplicationDbContext context)
+		public AbstractProductVendorRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(int businessEntityID,
-		                          int averageLeadTime,
-		                          decimal standardPrice,
-		                          Nullable<decimal> lastReceiptCost,
-		                          Nullable<DateTime> lastReceiptDate,
-		                          int minOrderQty,
-		                          int maxOrderQty,
-		                          Nullable<int> onOrderQty,
-		                          string unitMeasureCode,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			int businessEntityID,
+			int averageLeadTime,
+			decimal standardPrice,
+			Nullable<decimal> lastReceiptCost,
+			Nullable<DateTime> lastReceiptDate,
+			int minOrderQty,
+			int maxOrderQty,
+			Nullable<int> onOrderQty,
+			string unitMeasureCode,
+			DateTime modifiedDate)
 		{
-			var record = new EFProductVendor ();
+			var record = new EFProductVendor();
 
-			MapPOCOToEF(0, businessEntityID,
-			            averageLeadTime,
-			            standardPrice,
-			            lastReceiptCost,
-			            lastReceiptDate,
-			            minOrderQty,
-			            maxOrderQty,
-			            onOrderQty,
-			            unitMeasureCode,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				businessEntityID,
+				averageLeadTime,
+				standardPrice,
+				lastReceiptCost,
+				lastReceiptDate,
+				minOrderQty,
+				maxOrderQty,
+				onOrderQty,
+				unitMeasureCode,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFProductVendor>().Add(record);
 			this.context.SaveChanges();
 			return record.ProductID;
 		}
 
-		public virtual void Update(int productID, int businessEntityID,
-		                           int averageLeadTime,
-		                           decimal standardPrice,
-		                           Nullable<decimal> lastReceiptCost,
-		                           Nullable<DateTime> lastReceiptDate,
-		                           int minOrderQty,
-		                           int maxOrderQty,
-		                           Nullable<int> onOrderQty,
-		                           string unitMeasureCode,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int productID,
+			int businessEntityID,
+			int averageLeadTime,
+			decimal standardPrice,
+			Nullable<decimal> lastReceiptCost,
+			Nullable<DateTime> lastReceiptDate,
+			int minOrderQty,
+			int maxOrderQty,
+			Nullable<int> onOrderQty,
+			string unitMeasureCode,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
-				MapPOCOToEF(productID,  businessEntityID,
-				            averageLeadTime,
-				            standardPrice,
-				            lastReceiptCost,
-				            lastReceiptDate,
-				            minOrderQty,
-				            maxOrderQty,
-				            onOrderQty,
-				            unitMeasureCode,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					productID,
+					businessEntityID,
+					averageLeadTime,
+					standardPrice,
+					lastReceiptCost,
+					lastReceiptDate,
+					minOrderQty,
+					maxOrderQty,
+					onOrderQty,
+					unitMeasureCode,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int productID)
+		public virtual void Delete(
+			int productID)
 		{
 			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 
@@ -102,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response;
 		}
 
@@ -110,11 +121,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response.ProductVendors.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -122,7 +133,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -130,7 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOProductVendor> GetWhereDirect(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOProductVendor> GetWhereDirect(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -138,49 +149,55 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.ProductVendors;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProductVendor, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFProductVendor, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFProductVendor> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFProductVendor> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFProductVendor> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFProductVendor> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFProductVendor> SearchLinqEF(Expression<Func<EFProductVendor, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFProductVendor> SearchLinqEF(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFProductVendor> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFProductVendor> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int productID, int businessEntityID,
-		                               int averageLeadTime,
-		                               decimal standardPrice,
-		                               Nullable<decimal> lastReceiptCost,
-		                               Nullable<DateTime> lastReceiptDate,
-		                               int minOrderQty,
-		                               int maxOrderQty,
-		                               Nullable<int> onOrderQty,
-		                               string unitMeasureCode,
-		                               DateTime modifiedDate, EFProductVendor   efProductVendor)
+		public static void MapPOCOToEF(
+			int productID,
+			int businessEntityID,
+			int averageLeadTime,
+			decimal standardPrice,
+			Nullable<decimal> lastReceiptCost,
+			Nullable<DateTime> lastReceiptDate,
+			int minOrderQty,
+			int maxOrderQty,
+			Nullable<int> onOrderQty,
+			string unitMeasureCode,
+			DateTime modifiedDate,
+			EFProductVendor efProductVendor)
 		{
-			efProductVendor.SetProperties(productID.ToInt(),businessEntityID.ToInt(),averageLeadTime.ToInt(),standardPrice,lastReceiptCost,lastReceiptDate.ToNullableDateTime(),minOrderQty.ToInt(),maxOrderQty.ToInt(),onOrderQty.ToNullableInt(),unitMeasureCode,modifiedDate.ToDateTime());
+			efProductVendor.SetProperties(productID.ToInt(), businessEntityID.ToInt(), averageLeadTime.ToInt(), standardPrice, lastReceiptCost, lastReceiptDate.ToNullableDateTime(), minOrderQty.ToInt(), maxOrderQty.ToInt(), onOrderQty.ToNullableInt(), unitMeasureCode, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFProductVendor efProductVendor,Response response)
+		public static void MapEFToPOCO(
+			EFProductVendor efProductVendor,
+			Response response)
 		{
-			if(efProductVendor == null)
+			if (efProductVendor == null)
 			{
 				return;
 			}
-			response.AddProductVendor(new POCOProductVendor(efProductVendor.ProductID.ToInt(),efProductVendor.BusinessEntityID.ToInt(),efProductVendor.AverageLeadTime.ToInt(),efProductVendor.StandardPrice,efProductVendor.LastReceiptCost,efProductVendor.LastReceiptDate.ToNullableDateTime(),efProductVendor.MinOrderQty.ToInt(),efProductVendor.MaxOrderQty.ToInt(),efProductVendor.OnOrderQty.ToNullableInt(),efProductVendor.UnitMeasureCode,efProductVendor.ModifiedDate.ToDateTime()));
+
+			response.AddProductVendor(new POCOProductVendor(efProductVendor.ProductID.ToInt(), efProductVendor.BusinessEntityID.ToInt(), efProductVendor.AverageLeadTime.ToInt(), efProductVendor.StandardPrice, efProductVendor.LastReceiptCost, efProductVendor.LastReceiptDate.ToNullableDateTime(), efProductVendor.MinOrderQty.ToInt(), efProductVendor.MaxOrderQty.ToInt(), efProductVendor.OnOrderQty.ToNullableInt(), efProductVendor.UnitMeasureCode, efProductVendor.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductVendor.Product, response);
 
@@ -192,5 +209,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f33b579c620bdc1a2833ef7711ac72e</Hash>
+    <Hash>b177cbda6aa8b3fd0c333f6b687f308f</Hash>
 </Codenesium>*/

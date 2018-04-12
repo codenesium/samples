@@ -9,59 +9,67 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PersonPhoneModel()
 		{}
-		public PersonPhoneModel(string phoneNumber,
-		                        int phoneNumberTypeID,
-		                        DateTime modifiedDate)
+
+		public PersonPhoneModel(
+			string phoneNumber,
+			int phoneNumberTypeID,
+			DateTime modifiedDate)
 		{
 			this.PhoneNumber = phoneNumber;
 			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _phoneNumber;
+		private string phoneNumber;
+
 		[Required]
 		public string PhoneNumber
 		{
 			get
 			{
-				return _phoneNumber;
+				return this.phoneNumber;
 			}
+
 			set
 			{
-				this._phoneNumber = value;
+				this.phoneNumber = value;
 			}
 		}
 
-		private int _phoneNumberTypeID;
+		private int phoneNumberTypeID;
+
 		[Required]
 		public int PhoneNumberTypeID
 		{
 			get
 			{
-				return _phoneNumberTypeID;
+				return this.phoneNumberTypeID;
 			}
+
 			set
 			{
-				this._phoneNumberTypeID = value;
+				this.phoneNumberTypeID = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e1913cd3914830f41243425dbd01b18</Hash>
+    <Hash>1dada64670a07b10f666576639e6ffec</Hash>
 </Codenesium>*/

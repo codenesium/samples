@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+
 namespace FileServiceNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
 		public T Value { get; set; }
+
 		public string Href
 		{
 			get
@@ -14,6 +16,7 @@ namespace FileServiceNS.Api.Contracts
 				return $"/{this.ReferenceObjectName}/{this.Value.ToString()}";
 			}
 		}
+
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -27,16 +30,18 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public Response()
 		{}
-		public List<POCOBucket> Buckets { get; private set; }  = new  List<POCOBucket>();
-		public List<POCOFile> Files { get; private set; }  = new  List<POCOFile>();
-		public List<POCOFileType> FileTypes { get; private set; }  = new  List<POCOFileType>();
+		public List<POCOBucket> Buckets { get; private set; } = new List<POCOBucket>();
+
+		public List<POCOFile> Files { get; private set; } = new List<POCOFile>();
+
+		public List<POCOFileType> FileTypes { get; private set; } = new List<POCOFileType>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeBucketsValue {get; set;} = true;
+		public bool ShouldSerializeBucketsValue { get; set; } = true;
 
 		public bool ShouldSerializeBuckets()
 		{
-			return ShouldSerializeBucketsValue;
+			return this.ShouldSerializeBucketsValue;
 		}
 
 		public void AddBucket(POCOBucket item)
@@ -48,11 +53,11 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFilesValue {get; set;} = true;
+		public bool ShouldSerializeFilesValue { get; set; } = true;
 
 		public bool ShouldSerializeFiles()
 		{
-			return ShouldSerializeFilesValue;
+			return this.ShouldSerializeFilesValue;
 		}
 
 		public void AddFile(POCOFile item)
@@ -64,11 +69,11 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFileTypesValue {get; set;} = true;
+		public bool ShouldSerializeFileTypesValue { get; set; } = true;
 
 		public bool ShouldSerializeFileTypes()
 		{
-			return ShouldSerializeFileTypesValue;
+			return this.ShouldSerializeFileTypesValue;
 		}
 
 		public void AddFileType(POCOFileType item)
@@ -81,15 +86,17 @@ namespace FileServiceNS.Api.Contracts
 
 		public void DisableSerializationOfEmptyFields()
 		{
-			if(this.Buckets.Count == 0)
+			if (this.Buckets.Count == 0)
 			{
 				this.ShouldSerializeBucketsValue = false;
 			}
-			if(this.Files.Count == 0)
+
+			if (this.Files.Count == 0)
 			{
 				this.ShouldSerializeFilesValue = false;
 			}
-			if(this.FileTypes.Count == 0)
+
+			if (this.FileTypes.Count == 0)
 			{
 				this.ShouldSerializeFileTypesValue = false;
 			}
@@ -98,5 +105,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5abd9ab119930ec67b89cdab06573428</Hash>
+    <Hash>0240329c495710010de10295891fc4b8</Hash>
 </Codenesium>*/

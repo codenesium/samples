@@ -20,57 +20,57 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ISalesOrderHeaderRepository SalesOrderHeaderRepository {get; set;}
-		public ISpecialOfferProductRepository SpecialOfferProductRepository {get; set;}
+		public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
+		public ISpecialOfferProductRepository SpecialOfferProductRepository { get; set; }
 		public virtual void SalesOrderDetailIDRules()
 		{
-			RuleFor(x => x.SalesOrderDetailID).NotNull();
+			this.RuleFor(x => x.SalesOrderDetailID).NotNull();
 		}
 
 		public virtual void CarrierTrackingNumberRules()
 		{
-			RuleFor(x => x.CarrierTrackingNumber).Length(0,25);
+			this.RuleFor(x => x.CarrierTrackingNumber).Length(0, 25);
 		}
 
 		public virtual void OrderQtyRules()
 		{
-			RuleFor(x => x.OrderQty).NotNull();
+			this.RuleFor(x => x.OrderQty).NotNull();
 		}
 
 		public virtual void ProductIDRules()
 		{
-			RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).NotNull();
 		}
 
 		public virtual void SpecialOfferIDRules()
 		{
-			RuleFor(x => x.SpecialOfferID).NotNull();
-			RuleFor(x => x.SpecialOfferID).Must(BeValidSpecialOfferProduct).When(x => x ?.SpecialOfferID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SpecialOfferID).NotNull();
+			this.RuleFor(x => x.SpecialOfferID).Must(this.BeValidSpecialOfferProduct).When(x => x ?.SpecialOfferID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void UnitPriceRules()
 		{
-			RuleFor(x => x.UnitPrice).NotNull();
+			this.RuleFor(x => x.UnitPrice).NotNull();
 		}
 
 		public virtual void UnitPriceDiscountRules()
 		{
-			RuleFor(x => x.UnitPriceDiscount).NotNull();
+			this.RuleFor(x => x.UnitPriceDiscount).NotNull();
 		}
 
 		public virtual void LineTotalRules()
 		{
-			RuleFor(x => x.LineTotal).NotNull();
+			this.RuleFor(x => x.LineTotal).NotNull();
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidSalesOrderHeader(int id)
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dc4d56c8efc86a46e0045be20c3329d1</Hash>
+    <Hash>f5d0a073148e700a822281c2782d3752</Hash>
 </Codenesium>*/

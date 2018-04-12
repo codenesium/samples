@@ -9,43 +9,49 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CultureModel()
 		{}
-		public CultureModel(string name,
-		                    DateTime modifiedDate)
+
+		public CultureModel(
+			string name,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1407625d41ebdca138798cf2691d1678</Hash>
+    <Hash>a0e282d0cb9d45965183efb25e1684cf</Hash>
 </Codenesium>*/

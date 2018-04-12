@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class UnitMeasureModelValidator: AbstractUnitMeasureModelValidator,IUnitMeasureModelValidator
+	public class UnitMeasureModelValidator: AbstractUnitMeasureModelValidator, IUnitMeasureModelValidator
 	{
 		public UnitMeasureModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2e9463f8753a0eeff8dfb24ca55907d2</Hash>
+    <Hash>a6bd03c6f655626b49219e6c2fe57b27</Hash>
 </Codenesium>*/

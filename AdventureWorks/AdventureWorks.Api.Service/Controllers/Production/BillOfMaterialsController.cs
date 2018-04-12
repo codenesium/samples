@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/billOfMaterials")]
@@ -17,10 +18,11 @@ namespace AdventureWorksNS.Api.Service
 			ITransactionCoordinator transactionCoordinator,
 			IBillOfMaterialsRepository billOfMaterialsRepository,
 			IBillOfMaterialsModelValidator billOfMaterialsModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         billOfMaterialsRepository,
-			         billOfMaterialsModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       billOfMaterialsRepository,
+			       billOfMaterialsModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>61eb1f2d2f7a0a817b076d8ba53a614b</Hash>
+    <Hash>d53b750aff2f206a90ccfed07e7dfd31</Hash>
 </Codenesium>*/

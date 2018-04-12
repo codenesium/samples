@@ -9,11 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EmployeeDepartmentHistoryModel()
 		{}
-		public EmployeeDepartmentHistoryModel(short departmentID,
-		                                      int shiftID,
-		                                      DateTime startDate,
-		                                      Nullable<DateTime> endDate,
-		                                      DateTime modifiedDate)
+
+		public EmployeeDepartmentHistoryModel(
+			short departmentID,
+			int shiftID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate)
 		{
 			this.DepartmentID = departmentID;
 			this.ShiftID = shiftID;
@@ -22,77 +24,87 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private short _departmentID;
+		private short departmentID;
+
 		[Required]
 		public short DepartmentID
 		{
 			get
 			{
-				return _departmentID;
+				return this.departmentID;
 			}
+
 			set
 			{
-				this._departmentID = value;
+				this.departmentID = value;
 			}
 		}
 
-		private int _shiftID;
+		private int shiftID;
+
 		[Required]
 		public int ShiftID
 		{
 			get
 			{
-				return _shiftID;
+				return this.shiftID;
 			}
+
 			set
 			{
-				this._shiftID = value;
+				this.shiftID = value;
 			}
 		}
 
-		private DateTime _startDate;
+		private DateTime startDate;
+
 		[Required]
 		public DateTime StartDate
 		{
 			get
 			{
-				return _startDate;
+				return this.startDate;
 			}
+
 			set
 			{
-				this._startDate = value;
+				this.startDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _endDate;
+		private Nullable<DateTime> endDate;
+
 		public Nullable<DateTime> EndDate
 		{
 			get
 			{
-				return _endDate.IsEmptyOrZeroOrNull() ? null : _endDate;
+				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
 			}
+
 			set
 			{
-				this._endDate = value;
+				this.endDate = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e28f728e6428d19c6c7204409fe81d98</Hash>
+    <Hash>a905971e3c3aa204e1d17b18affb28d4</Hash>
 </Codenesium>*/

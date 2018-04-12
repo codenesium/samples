@@ -9,43 +9,49 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PhoneNumberTypeModel()
 		{}
-		public PhoneNumberTypeModel(string name,
-		                            DateTime modifiedDate)
+
+		public PhoneNumberTypeModel(
+			string name,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7dbdb48f2ce6189a67e8a067ea0204e7</Hash>
+    <Hash>6cfcbd0aea930bc00abbf0348731926d</Hash>
 </Codenesium>*/

@@ -20,46 +20,46 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ICountryRegionRepository CountryRegionRepository {get; set;}
-		public ISalesTerritoryRepository SalesTerritoryRepository {get; set;}
+		public ICountryRegionRepository CountryRegionRepository { get; set; }
+		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void StateProvinceCodeRules()
 		{
-			RuleFor(x => x.StateProvinceCode).NotNull();
-			RuleFor(x => x.StateProvinceCode).Length(0,3);
+			this.RuleFor(x => x.StateProvinceCode).NotNull();
+			this.RuleFor(x => x.StateProvinceCode).Length(0, 3);
 		}
 
 		public virtual void CountryRegionCodeRules()
 		{
-			RuleFor(x => x.CountryRegionCode).NotNull();
-			RuleFor(x => x.CountryRegionCode).Must(BeValidCountryRegion).When(x => x ?.CountryRegionCode != null).WithMessage("Invalid reference");
-			RuleFor(x => x.CountryRegionCode).Length(0,3);
+			this.RuleFor(x => x.CountryRegionCode).NotNull();
+			this.RuleFor(x => x.CountryRegionCode).Must(this.BeValidCountryRegion).When(x => x ?.CountryRegionCode != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CountryRegionCode).Length(0, 3);
 		}
 
 		public virtual void IsOnlyStateProvinceFlagRules()
 		{
-			RuleFor(x => x.IsOnlyStateProvinceFlag).NotNull();
+			this.RuleFor(x => x.IsOnlyStateProvinceFlag).NotNull();
 		}
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,50);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void TerritoryIDRules()
 		{
-			RuleFor(x => x.TerritoryID).NotNull();
-			RuleFor(x => x.TerritoryID).Must(BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TerritoryID).NotNull();
+			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidCountryRegion(string id)
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d19c0df01b2e89100151f5822c5a5a70</Hash>
+    <Hash>a18603d539f125dbbe34d5d0c0bc5c67</Hash>
 </Codenesium>*/

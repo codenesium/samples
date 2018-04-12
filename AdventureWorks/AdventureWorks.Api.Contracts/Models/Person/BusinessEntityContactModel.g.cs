@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BusinessEntityContactModel()
 		{}
-		public BusinessEntityContactModel(int personID,
-		                                  int contactTypeID,
-		                                  Guid rowguid,
-		                                  DateTime modifiedDate)
+
+		public BusinessEntityContactModel(
+			int personID,
+			int contactTypeID,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.PersonID = personID.ToInt();
 			this.ContactTypeID = contactTypeID.ToInt();
@@ -20,64 +22,72 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _personID;
+		private int personID;
+
 		[Required]
 		public int PersonID
 		{
 			get
 			{
-				return _personID;
+				return this.personID;
 			}
+
 			set
 			{
-				this._personID = value;
+				this.personID = value;
 			}
 		}
 
-		private int _contactTypeID;
+		private int contactTypeID;
+
 		[Required]
 		public int ContactTypeID
 		{
 			get
 			{
-				return _contactTypeID;
+				return this.contactTypeID;
 			}
+
 			set
 			{
-				this._contactTypeID = value;
+				this.contactTypeID = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6000f494c57027fdd3d8a0bc4ab52e8b</Hash>
+    <Hash>cd0ba05a18f0ac08929f09b8f1e7ab3c</Hash>
 </Codenesium>*/

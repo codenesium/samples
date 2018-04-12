@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/databaseLogs")]
-	public class DatabaseLogsController: AbstractDatabaseLogsController
+	public class DatabaseLogController: AbstractDatabaseLogController
 	{
-		public DatabaseLogsController(
-			ILogger<DatabaseLogsController> logger,
+		public DatabaseLogController(
+			ILogger<DatabaseLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDatabaseLogRepository databaseLogRepository,
 			IDatabaseLogModelValidator databaseLogModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         databaseLogRepository,
-			         databaseLogModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       databaseLogRepository,
+			       databaseLogModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ddd88f53eb0f824ad0f90c06609ce1c1</Hash>
+    <Hash>57f00b32b7f7ae6943aa30f022b6d526</Hash>
 </Codenesium>*/

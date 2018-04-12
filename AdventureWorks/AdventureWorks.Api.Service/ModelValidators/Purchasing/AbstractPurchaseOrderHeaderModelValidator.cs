@@ -20,40 +20,40 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
-		public IVendorRepository VendorRepository {get; set;}
-		public IShipMethodRepository ShipMethodRepository {get; set;}
+		public IEmployeeRepository EmployeeRepository { get; set; }
+		public IVendorRepository VendorRepository { get; set; }
+		public IShipMethodRepository ShipMethodRepository { get; set; }
 		public virtual void RevisionNumberRules()
 		{
-			RuleFor(x => x.RevisionNumber).NotNull();
+			this.RuleFor(x => x.RevisionNumber).NotNull();
 		}
 
 		public virtual void StatusRules()
 		{
-			RuleFor(x => x.Status).NotNull();
+			this.RuleFor(x => x.Status).NotNull();
 		}
 
 		public virtual void EmployeeIDRules()
 		{
-			RuleFor(x => x.EmployeeID).NotNull();
-			RuleFor(x => x.EmployeeID).Must(BeValidEmployee).When(x => x ?.EmployeeID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.EmployeeID).NotNull();
+			this.RuleFor(x => x.EmployeeID).Must(this.BeValidEmployee).When(x => x ?.EmployeeID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void VendorIDRules()
 		{
-			RuleFor(x => x.VendorID).NotNull();
-			RuleFor(x => x.VendorID).Must(BeValidVendor).When(x => x ?.VendorID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.VendorID).NotNull();
+			this.RuleFor(x => x.VendorID).Must(this.BeValidVendor).When(x => x ?.VendorID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShipMethodIDRules()
 		{
-			RuleFor(x => x.ShipMethodID).NotNull();
-			RuleFor(x => x.ShipMethodID).Must(BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ShipMethodID).NotNull();
+			this.RuleFor(x => x.ShipMethodID).Must(this.BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void OrderDateRules()
 		{
-			RuleFor(x => x.OrderDate).NotNull();
+			this.RuleFor(x => x.OrderDate).NotNull();
 		}
 
 		public virtual void ShipDateRules()
@@ -61,27 +61,27 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void SubTotalRules()
 		{
-			RuleFor(x => x.SubTotal).NotNull();
+			this.RuleFor(x => x.SubTotal).NotNull();
 		}
 
 		public virtual void TaxAmtRules()
 		{
-			RuleFor(x => x.TaxAmt).NotNull();
+			this.RuleFor(x => x.TaxAmt).NotNull();
 		}
 
 		public virtual void FreightRules()
 		{
-			RuleFor(x => x.Freight).NotNull();
+			this.RuleFor(x => x.Freight).NotNull();
 		}
 
 		public virtual void TotalDueRules()
 		{
-			RuleFor(x => x.TotalDue).NotNull();
+			this.RuleFor(x => x.TotalDue).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidEmployee(int id)
@@ -102,5 +102,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>56575bdbd391cee0b212775ee4c9e1fe</Hash>
+    <Hash>465a4b69e5e92f3b9792fd73ccc6fa63</Hash>
 </Codenesium>*/

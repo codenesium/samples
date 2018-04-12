@@ -9,89 +9,90 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOCustomer()
 		{}
 
-		public POCOCustomer(int customerID,
-		                    Nullable<int> personID,
-		                    Nullable<int> storeID,
-		                    Nullable<int> territoryID,
-		                    string accountNumber,
-		                    Guid rowguid,
-		                    DateTime modifiedDate)
+		public POCOCustomer(
+			int customerID,
+			Nullable<int> personID,
+			Nullable<int> storeID,
+			Nullable<int> territoryID,
+			string accountNumber,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.CustomerID = customerID.ToInt();
 			this.AccountNumber = accountNumber;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			PersonID = new ReferenceEntity<Nullable<int>>(personID,
-			                                              "Person");
-			StoreID = new ReferenceEntity<Nullable<int>>(storeID,
-			                                             "Store");
-			TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
-			                                                 "SalesTerritory");
+			this.PersonID = new ReferenceEntity<Nullable<int>>(personID,
+			                                                   "Person");
+			this.StoreID = new ReferenceEntity<Nullable<int>>(storeID,
+			                                                  "Store");
+			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
+			                                                      "SalesTerritory");
 		}
 
-		public int CustomerID {get; set;}
-		public ReferenceEntity<Nullable<int>>PersonID {get; set;}
-		public ReferenceEntity<Nullable<int>>StoreID {get; set;}
-		public ReferenceEntity<Nullable<int>>TerritoryID {get; set;}
-		public string AccountNumber {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int CustomerID { get; set; }
+		public ReferenceEntity<Nullable<int>> PersonID { get; set; }
+		public ReferenceEntity<Nullable<int>> StoreID { get; set; }
+		public ReferenceEntity<Nullable<int>> TerritoryID { get; set; }
+		public string AccountNumber { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeCustomerIDValue {get; set;} = true;
+		public bool ShouldSerializeCustomerIDValue { get; set; } = true;
 
 		public bool ShouldSerializeCustomerID()
 		{
-			return ShouldSerializeCustomerIDValue;
+			return this.ShouldSerializeCustomerIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePersonIDValue {get; set;} = true;
+		public bool ShouldSerializePersonIDValue { get; set; } = true;
 
 		public bool ShouldSerializePersonID()
 		{
-			return ShouldSerializePersonIDValue;
+			return this.ShouldSerializePersonIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStoreIDValue {get; set;} = true;
+		public bool ShouldSerializeStoreIDValue { get; set; } = true;
 
 		public bool ShouldSerializeStoreID()
 		{
-			return ShouldSerializeStoreIDValue;
+			return this.ShouldSerializeStoreIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTerritoryIDValue {get; set;} = true;
+		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
 
 		public bool ShouldSerializeTerritoryID()
 		{
-			return ShouldSerializeTerritoryIDValue;
+			return this.ShouldSerializeTerritoryIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAccountNumberValue {get; set;} = true;
+		public bool ShouldSerializeAccountNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeAccountNumber()
 		{
-			return ShouldSerializeAccountNumberValue;
+			return this.ShouldSerializeAccountNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -108,5 +109,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a5ddeb7ba4f914f5e51bc96b5d8e3030</Hash>
+    <Hash>afeffe08e9bfe97f197adb9487dba59e</Hash>
 </Codenesium>*/

@@ -9,11 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ShipMethodModel()
 		{}
-		public ShipMethodModel(string name,
-		                       decimal shipBase,
-		                       decimal shipRate,
-		                       Guid rowguid,
-		                       DateTime modifiedDate)
+
+		public ShipMethodModel(
+			string name,
+			decimal shipBase,
+			decimal shipRate,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ShipBase = shipBase;
@@ -22,78 +24,88 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private decimal _shipBase;
+		private decimal shipBase;
+
 		[Required]
 		public decimal ShipBase
 		{
 			get
 			{
-				return _shipBase;
+				return this.shipBase;
 			}
+
 			set
 			{
-				this._shipBase = value;
+				this.shipBase = value;
 			}
 		}
 
-		private decimal _shipRate;
+		private decimal shipRate;
+
 		[Required]
 		public decimal ShipRate
 		{
 			get
 			{
-				return _shipRate;
+				return this.shipRate;
 			}
+
 			set
 			{
-				this._shipRate = value;
+				this.shipRate = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ae858ee223c8e7ad9067a9fe791509b</Hash>
+    <Hash>db53b92efb97754552dbf897241ada38</Hash>
 </Codenesium>*/

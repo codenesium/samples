@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("TransactionHistoryArchive", Schema="Production")]
@@ -10,15 +11,16 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFTransactionHistoryArchive()
 		{}
 
-		public void SetProperties(int transactionID,
-		                          int productID,
-		                          int referenceOrderID,
-		                          int referenceOrderLineID,
-		                          DateTime transactionDate,
-		                          string transactionType,
-		                          int quantity,
-		                          decimal actualCost,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int transactionID,
+			int productID,
+			int referenceOrderID,
+			int referenceOrderLineID,
+			DateTime transactionDate,
+			string transactionType,
+			int quantity,
+			decimal actualCost,
+			DateTime modifiedDate)
 		{
 			this.TransactionID = transactionID.ToInt();
 			this.ProductID = productID.ToInt();
@@ -32,36 +34,35 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("TransactionID", TypeName="int")]
-		public int TransactionID {get; set;}
+		public int TransactionID { get; set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID {get; set;}
+		public int ProductID { get; set; }
 
 		[Column("ReferenceOrderID", TypeName="int")]
-		public int ReferenceOrderID {get; set;}
+		public int ReferenceOrderID { get; set; }
 
 		[Column("ReferenceOrderLineID", TypeName="int")]
-		public int ReferenceOrderLineID {get; set;}
+		public int ReferenceOrderLineID { get; set; }
 
 		[Column("TransactionDate", TypeName="datetime")]
-		public DateTime TransactionDate {get; set;}
+		public DateTime TransactionDate { get; set; }
 
 		[Column("TransactionType", TypeName="nchar(1)")]
-		public string TransactionType {get; set;}
+		public string TransactionType { get; set; }
 
 		[Column("Quantity", TypeName="int")]
-		public int Quantity {get; set;}
+		public int Quantity { get; set; }
 
 		[Column("ActualCost", TypeName="money")]
-		public decimal ActualCost {get; set;}
+		public decimal ActualCost { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3b014fdf0e24bb03d371b3f33237d70</Hash>
+    <Hash>0d8723b203ee5ae07fbfee35ee70347b</Hash>
 </Codenesium>*/

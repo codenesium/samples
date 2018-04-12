@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class ProductSubcategoryModelValidator: AbstractProductSubcategoryModelValidator,IProductSubcategoryModelValidator
+	public class ProductSubcategoryModelValidator: AbstractProductSubcategoryModelValidator, IProductSubcategoryModelValidator
 	{
 		public ProductSubcategoryModelValidator()
 		{   }
@@ -29,5 +30,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2de3968de42f71faa00db50ccdcef2f1</Hash>
+    <Hash>b3ecb17120fc51ae9f977a736b3acf91</Hash>
 </Codenesium>*/

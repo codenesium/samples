@@ -15,43 +15,54 @@ namespace NebulaNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractClaspRepository(ILogger logger,
-		                               ApplicationDbContext context)
+		public AbstractClaspRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(int previousChainId,
-		                          int nextChainId)
+		public virtual int Create(
+			int previousChainId,
+			int nextChainId)
 		{
-			var record = new EFClasp ();
+			var record = new EFClasp();
 
-			MapPOCOToEF(0, previousChainId,
-			            nextChainId, record);
+			MapPOCOToEF(
+				0,
+				previousChainId,
+				nextChainId,
+				record);
 
 			this.context.Set<EFClasp>().Add(record);
 			this.context.SaveChanges();
 			return record.Id;
 		}
 
-		public virtual void Update(int id, int previousChainId,
-		                           int nextChainId)
+		public virtual void Update(
+			int id,
+			int previousChainId,
+			int nextChainId)
 		{
-			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
-				MapPOCOToEF(id,  previousChainId,
-				            nextChainId, record);
+				MapPOCOToEF(
+					id,
+					previousChainId,
+					nextChainId,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int id)
+		public virtual void Delete(
+			int id)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
@@ -70,7 +81,7 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
 		}
 
@@ -78,11 +89,11 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.Clasps.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -90,7 +101,7 @@ namespace NebulaNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace NebulaNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOClasp> GetWhereDirect(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOClasp> GetWhereDirect(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,41 +117,47 @@ namespace NebulaNS.Api.DataAccess
 			return response.Clasps;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFClasp, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFClasp, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFClasp> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFClasp> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFClasp> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFClasp> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFClasp> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFClasp> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int id, int previousChainId,
-		                               int nextChainId, EFClasp   efClasp)
+		public static void MapPOCOToEF(
+			int id,
+			int previousChainId,
+			int nextChainId,
+			EFClasp efClasp)
 		{
-			efClasp.SetProperties(id.ToInt(),previousChainId.ToInt(),nextChainId.ToInt());
+			efClasp.SetProperties(id.ToInt(), previousChainId.ToInt(), nextChainId.ToInt());
 		}
 
-		public static void MapEFToPOCO(EFClasp efClasp,Response response)
+		public static void MapEFToPOCO(
+			EFClasp efClasp,
+			Response response)
 		{
-			if(efClasp == null)
+			if (efClasp == null)
 			{
 				return;
 			}
-			response.AddClasp(new POCOClasp(efClasp.Id.ToInt(),efClasp.PreviousChainId.ToInt(),efClasp.NextChainId.ToInt()));
+
+			response.AddClasp(new POCOClasp(efClasp.Id.ToInt(), efClasp.PreviousChainId.ToInt(), efClasp.NextChainId.ToInt()));
 
 			ChainRepository.MapEFToPOCO(efClasp.Chain, response);
 
@@ -150,5 +167,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39d271f80ef720cbf0dae2778bce9967</Hash>
+    <Hash>e7d29e16693a0ea90f014ae3305c0f53</Hash>
 </Codenesium>*/

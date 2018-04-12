@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class ProductModelIllustrationModelValidator: AbstractProductModelIllustrationModelValidator,IProductModelIllustrationModelValidator
+	public class ProductModelIllustrationModelValidator: AbstractProductModelIllustrationModelValidator, IProductModelIllustrationModelValidator
 	{
 		public ProductModelIllustrationModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5912acfba850e3e9e98845a24b07d530</Hash>
+    <Hash>42b2021b3d7a9432808f748e6e54fc20</Hash>
 </Codenesium>*/

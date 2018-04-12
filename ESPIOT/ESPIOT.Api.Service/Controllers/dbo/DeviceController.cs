@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+
 namespace ESPIOTNS.Api.Service
 {
 	[Route("api/devices")]
-	public class DevicesController: AbstractDevicesController
+	public class DeviceController: AbstractDeviceController
 	{
-		public DevicesController(
-			ILogger<DevicesController> logger,
+		public DeviceController(
+			ILogger<DeviceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDeviceRepository deviceRepository,
 			IDeviceModelValidator deviceModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         deviceRepository,
-			         deviceModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       deviceRepository,
+			       deviceModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0292efe1cdc97cc07d0f46f33896b521</Hash>
+    <Hash>d209bc2a3b4be7043edc42823766e533</Hash>
 </Codenesium>*/

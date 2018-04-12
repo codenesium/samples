@@ -22,47 +22,47 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ProductIDRules()
 		{
-			RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).NotNull();
 		}
 
 		public virtual void ReferenceOrderIDRules()
 		{
-			RuleFor(x => x.ReferenceOrderID).NotNull();
+			this.RuleFor(x => x.ReferenceOrderID).NotNull();
 		}
 
 		public virtual void ReferenceOrderLineIDRules()
 		{
-			RuleFor(x => x.ReferenceOrderLineID).NotNull();
+			this.RuleFor(x => x.ReferenceOrderLineID).NotNull();
 		}
 
 		public virtual void TransactionDateRules()
 		{
-			RuleFor(x => x.TransactionDate).NotNull();
+			this.RuleFor(x => x.TransactionDate).NotNull();
 		}
 
 		public virtual void TransactionTypeRules()
 		{
-			RuleFor(x => x.TransactionType).NotNull();
-			RuleFor(x => x.TransactionType).Length(0,1);
+			this.RuleFor(x => x.TransactionType).NotNull();
+			this.RuleFor(x => x.TransactionType).Length(0, 1);
 		}
 
 		public virtual void QuantityRules()
 		{
-			RuleFor(x => x.Quantity).NotNull();
+			this.RuleFor(x => x.Quantity).NotNull();
 		}
 
 		public virtual void ActualCostRules()
 		{
-			RuleFor(x => x.ActualCost).NotNull();
+			this.RuleFor(x => x.ActualCost).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>00ac9112fd2a5fb52eeffb087b7c1ef0</Hash>
+    <Hash>cf2b4e307f4ec058bccf9a05167e4b2b</Hash>
 </Codenesium>*/

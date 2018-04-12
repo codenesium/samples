@@ -11,13 +11,15 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class TeamRepository: AbstractTeamRepository, ITeamRepository
 	{
-		public TeamRepository(ILogger<TeamRepository> logger,
-		                      ApplicationDbContext context) : base(logger,context)
+		public TeamRepository(
+			ILogger<TeamRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFTeam> SearchLinqEF(Expression<Func<EFTeam, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFTeam> SearchLinqEF(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeam>();
 			}
@@ -27,9 +29,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFTeam> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFTeam> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeam>();
 			}
@@ -42,5 +44,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>250375774db97da964de01d614769739</Hash>
+    <Hash>7a0d426f18e463f5e6bb03d4a653388b</Hash>
 </Codenesium>*/

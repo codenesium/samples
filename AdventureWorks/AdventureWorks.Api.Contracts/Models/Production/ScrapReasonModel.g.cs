@@ -9,43 +9,49 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ScrapReasonModel()
 		{}
-		public ScrapReasonModel(string name,
-		                        DateTime modifiedDate)
+
+		public ScrapReasonModel(
+			string name,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91a0ac1e04e4166e0ead5d183b02bb93</Hash>
+    <Hash>558a278f429d7dcf7192819c8b126065</Hash>
 </Codenesium>*/

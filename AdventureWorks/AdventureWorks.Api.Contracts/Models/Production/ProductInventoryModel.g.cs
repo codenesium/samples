@@ -9,12 +9,14 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductInventoryModel()
 		{}
-		public ProductInventoryModel(short locationID,
-		                             string shelf,
-		                             int bin,
-		                             short quantity,
-		                             Guid rowguid,
-		                             DateTime modifiedDate)
+
+		public ProductInventoryModel(
+			short locationID,
+			string shelf,
+			int bin,
+			short quantity,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.LocationID = locationID;
 			this.Shelf = shelf;
@@ -24,92 +26,104 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private short _locationID;
+		private short locationID;
+
 		[Required]
 		public short LocationID
 		{
 			get
 			{
-				return _locationID;
+				return this.locationID;
 			}
+
 			set
 			{
-				this._locationID = value;
+				this.locationID = value;
 			}
 		}
 
-		private string _shelf;
+		private string shelf;
+
 		[Required]
 		public string Shelf
 		{
 			get
 			{
-				return _shelf;
+				return this.shelf;
 			}
+
 			set
 			{
-				this._shelf = value;
+				this.shelf = value;
 			}
 		}
 
-		private int _bin;
+		private int bin;
+
 		[Required]
 		public int Bin
 		{
 			get
 			{
-				return _bin;
+				return this.bin;
 			}
+
 			set
 			{
-				this._bin = value;
+				this.bin = value;
 			}
 		}
 
-		private short _quantity;
+		private short quantity;
+
 		[Required]
 		public short Quantity
 		{
 			get
 			{
-				return _quantity;
+				return this.quantity;
 			}
+
 			set
 			{
-				this._quantity = value;
+				this.quantity = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0289b63269665ffcb4ee32ee4ccef39</Hash>
+    <Hash>0d38347b61b6a7a4bf8950842fb07bf6</Hash>
 </Codenesium>*/

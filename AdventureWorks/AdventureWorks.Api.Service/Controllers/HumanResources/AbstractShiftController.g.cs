@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractShiftsController: AbstractApiController
+	public abstract class AbstractShiftController: AbstractApiController
 	{
 		protected IShiftRepository shiftRepository;
+
 		protected IShiftModelValidator shiftModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractShiftsController(
-			ILogger<AbstractShiftsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractShiftController(
+			ILogger<AbstractShiftController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShiftRepository shiftRepository,
 			IShiftModelValidator shiftModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.shiftRepository = shiftRepository;
 			this.shiftModelValidator = shiftModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.shiftRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.shiftRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.shiftRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.shiftModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.shiftRepository.Create(model.Name,
-				                                     model.StartTime,
-				                                     model.EndTime,
-				                                     model.ModifiedDate);
-				return Ok(id);
+				var id = this.shiftRepository.Create(
+					model.Name,
+					model.StartTime,
+					model.EndTime,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ShiftModel> models)
 		{
 			this.shiftModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.shiftModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.shiftRepository.Create(model.Name,
-				                            model.StartTime,
-				                            model.EndTime,
-				                            model.ModifiedDate);
+				this.shiftRepository.Create(
+					model.Name,
+					model.StartTime,
+					model.EndTime,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ShiftModel model)
+		public virtual IActionResult Update(int id, ShiftModel model)
 		{
-			if(this.shiftRepository.GetByIdDirect(id) == null)
+			if (this.shiftRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.shiftModelValidator.UpdateMode();
 			var validationResult = this.shiftModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.shiftRepository.Update(id,  model.Name,
-				                            model.StartTime,
-				                            model.EndTime,
-				                            model.ModifiedDate);
-				return Ok();
+				this.shiftRepository.Update(
+					id,
+					model.Name,
+					model.StartTime,
+					model.EndTime,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,11 +169,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.shiftRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe51deeac7fe7b1facb25c30d745cabc</Hash>
+    <Hash>94d1aaefe5a61d3425fac81ca207764a</Hash>
 </Codenesium>*/

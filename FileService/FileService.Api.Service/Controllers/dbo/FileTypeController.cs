@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/fileTypes")]
-	public class FileTypesController: AbstractFileTypesController
+	public class FileTypeController: AbstractFileTypeController
 	{
-		public FileTypesController(
-			ILogger<FileTypesController> logger,
+		public FileTypeController(
+			ILogger<FileTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IFileTypeRepository fileTypeRepository,
 			IFileTypeModelValidator fileTypeModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         fileTypeRepository,
-			         fileTypeModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       fileTypeRepository,
+			       fileTypeModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>055138f51a1070227f0e1d5cc8c2f736</Hash>
+    <Hash>0fb2ba5458346c2541ad4f653baed6e1</Hash>
 </Codenesium>*/

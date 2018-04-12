@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productVendors")]
-	public class ProductVendorsController: AbstractProductVendorsController
+	public class ProductVendorController: AbstractProductVendorController
 	{
-		public ProductVendorsController(
-			ILogger<ProductVendorsController> logger,
+		public ProductVendorController(
+			ILogger<ProductVendorController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductVendorRepository productVendorRepository,
 			IProductVendorModelValidator productVendorModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         productVendorRepository,
-			         productVendorModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       productVendorRepository,
+			       productVendorModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7fbc67f816343b68bd2ea1637045101c</Hash>
+    <Hash>e9d082e4cdce9b81ed6e24c0b476f684</Hash>
 </Codenesium>*/

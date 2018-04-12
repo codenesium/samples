@@ -22,17 +22,17 @@ namespace FileServiceNS.Api.Service
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,255);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 255);
 		}
 
 		public virtual void ExternalIdRules()
 		{
-			RuleFor(x => x.ExternalId).NotNull();
+			this.RuleFor(x => x.ExternalId).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67e20a17da4d8d09f5cb221b46c8a1bc</Hash>
+    <Hash>088e5ad3efdf93cb510714fe673f97eb</Hash>
 </Codenesium>*/

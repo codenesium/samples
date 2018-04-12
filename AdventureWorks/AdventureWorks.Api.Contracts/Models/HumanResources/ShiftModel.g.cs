@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ShiftModel()
 		{}
-		public ShiftModel(string name,
-		                  TimeSpan startTime,
-		                  TimeSpan endTime,
-		                  DateTime modifiedDate)
+
+		public ShiftModel(
+			string name,
+			TimeSpan startTime,
+			TimeSpan endTime,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.StartTime = startTime;
@@ -20,64 +22,72 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private TimeSpan _startTime;
+		private TimeSpan startTime;
+
 		[Required]
 		public TimeSpan StartTime
 		{
 			get
 			{
-				return _startTime;
+				return this.startTime;
 			}
+
 			set
 			{
-				this._startTime = value;
+				this.startTime = value;
 			}
 		}
 
-		private TimeSpan _endTime;
+		private TimeSpan endTime;
+
 		[Required]
 		public TimeSpan EndTime
 		{
 			get
 			{
-				return _endTime;
+				return this.endTime;
 			}
+
 			set
 			{
-				this._endTime = value;
+				this.endTime = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>020dc102ff643bca7ead772b35a13d8d</Hash>
+    <Hash>5f650c9865a39397f94e4bc37d8319b2</Hash>
 </Codenesium>*/

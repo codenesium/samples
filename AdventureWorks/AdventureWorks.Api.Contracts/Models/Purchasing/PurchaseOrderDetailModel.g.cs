@@ -9,16 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PurchaseOrderDetailModel()
 		{}
-		public PurchaseOrderDetailModel(int purchaseOrderDetailID,
-		                                DateTime dueDate,
-		                                short orderQty,
-		                                int productID,
-		                                decimal unitPrice,
-		                                decimal lineTotal,
-		                                decimal receivedQty,
-		                                decimal rejectedQty,
-		                                decimal stockedQty,
-		                                DateTime modifiedDate)
+
+		public PurchaseOrderDetailModel(
+			int purchaseOrderDetailID,
+			DateTime dueDate,
+			short orderQty,
+			int productID,
+			decimal unitPrice,
+			decimal lineTotal,
+			decimal receivedQty,
+			decimal rejectedQty,
+			decimal stockedQty,
+			DateTime modifiedDate)
 		{
 			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
 			this.DueDate = dueDate.ToDateTime();
@@ -32,148 +34,168 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _purchaseOrderDetailID;
+		private int purchaseOrderDetailID;
+
 		[Required]
 		public int PurchaseOrderDetailID
 		{
 			get
 			{
-				return _purchaseOrderDetailID;
+				return this.purchaseOrderDetailID;
 			}
+
 			set
 			{
-				this._purchaseOrderDetailID = value;
+				this.purchaseOrderDetailID = value;
 			}
 		}
 
-		private DateTime _dueDate;
+		private DateTime dueDate;
+
 		[Required]
 		public DateTime DueDate
 		{
 			get
 			{
-				return _dueDate;
+				return this.dueDate;
 			}
+
 			set
 			{
-				this._dueDate = value;
+				this.dueDate = value;
 			}
 		}
 
-		private short _orderQty;
+		private short orderQty;
+
 		[Required]
 		public short OrderQty
 		{
 			get
 			{
-				return _orderQty;
+				return this.orderQty;
 			}
+
 			set
 			{
-				this._orderQty = value;
+				this.orderQty = value;
 			}
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private decimal _unitPrice;
+		private decimal unitPrice;
+
 		[Required]
 		public decimal UnitPrice
 		{
 			get
 			{
-				return _unitPrice;
+				return this.unitPrice;
 			}
+
 			set
 			{
-				this._unitPrice = value;
+				this.unitPrice = value;
 			}
 		}
 
-		private decimal _lineTotal;
+		private decimal lineTotal;
+
 		[Required]
 		public decimal LineTotal
 		{
 			get
 			{
-				return _lineTotal;
+				return this.lineTotal;
 			}
+
 			set
 			{
-				this._lineTotal = value;
+				this.lineTotal = value;
 			}
 		}
 
-		private decimal _receivedQty;
+		private decimal receivedQty;
+
 		[Required]
 		public decimal ReceivedQty
 		{
 			get
 			{
-				return _receivedQty;
+				return this.receivedQty;
 			}
+
 			set
 			{
-				this._receivedQty = value;
+				this.receivedQty = value;
 			}
 		}
 
-		private decimal _rejectedQty;
+		private decimal rejectedQty;
+
 		[Required]
 		public decimal RejectedQty
 		{
 			get
 			{
-				return _rejectedQty;
+				return this.rejectedQty;
 			}
+
 			set
 			{
-				this._rejectedQty = value;
+				this.rejectedQty = value;
 			}
 		}
 
-		private decimal _stockedQty;
+		private decimal stockedQty;
+
 		[Required]
 		public decimal StockedQty
 		{
 			get
 			{
-				return _stockedQty;
+				return this.stockedQty;
 			}
+
 			set
 			{
-				this._stockedQty = value;
+				this.stockedQty = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74c9f34640b97b7a2b1a1f1eaa9c1593</Hash>
+    <Hash>a73ecfc43c6cad93361457e60fe533a7</Hash>
 </Codenesium>*/

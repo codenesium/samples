@@ -7,10 +7,12 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICountryRegionCurrencyRepository
 	{
-		string Create(string currencyCode,
-		              DateTime modifiedDate);
+		string Create(
+			string currencyCode,
+			DateTime modifiedDate);
 
-		void Update(string countryRegionCode, string currencyCode,
+		void Update(string countryRegionCode,
+		            string currencyCode,
 		            DateTime modifiedDate);
 
 		void Delete(string countryRegionCode);
@@ -19,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOCountryRegionCurrency GetByIdDirect(string countryRegionCode);
 
-		Response GetWhere(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOCountryRegionCurrency> GetWhereDirect(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOCountryRegionCurrency> GetWhereDirect(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>1865f1b0ad64b95926a9bab645c9d3f4</Hash>
+    <Hash>25d570760ee39ec56bd4b19be928bb35</Hash>
 </Codenesium>*/

@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public LocationModel()
 		{}
-		public LocationModel(string name,
-		                     decimal costRate,
-		                     decimal availability,
-		                     DateTime modifiedDate)
+
+		public LocationModel(
+			string name,
+			decimal costRate,
+			decimal availability,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.CostRate = costRate;
@@ -20,64 +22,72 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private decimal _costRate;
+		private decimal costRate;
+
 		[Required]
 		public decimal CostRate
 		{
 			get
 			{
-				return _costRate;
+				return this.costRate;
 			}
+
 			set
 			{
-				this._costRate = value;
+				this.costRate = value;
 			}
 		}
 
-		private decimal _availability;
+		private decimal availability;
+
 		[Required]
 		public decimal Availability
 		{
 			get
 			{
-				return _availability;
+				return this.availability;
 			}
+
 			set
 			{
-				this._availability = value;
+				this.availability = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b7a6229f0850bca2f4088fd842ad2d6c</Hash>
+    <Hash>566a049b5aa42373f777faf99f190dc0</Hash>
 </Codenesium>*/

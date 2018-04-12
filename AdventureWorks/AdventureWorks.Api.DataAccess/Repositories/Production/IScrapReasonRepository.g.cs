@@ -7,10 +7,12 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IScrapReasonRepository
 	{
-		short Create(string name,
-		             DateTime modifiedDate);
+		short Create(
+			string name,
+			DateTime modifiedDate);
 
-		void Update(short scrapReasonID, string name,
+		void Update(short scrapReasonID,
+		            string name,
 		            DateTime modifiedDate);
 
 		void Delete(short scrapReasonID);
@@ -19,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOScrapReason GetByIdDirect(short scrapReasonID);
 
-		Response GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1b09605a83bdf419add0623ee8bc08b</Hash>
+    <Hash>dc8827d38896c9c8c0e9592dafc806d5</Hash>
 </Codenesium>*/

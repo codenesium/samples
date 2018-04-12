@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractWorkOrderRoutingsController: AbstractApiController
+	public abstract class AbstractWorkOrderRoutingController: AbstractApiController
 	{
 		protected IWorkOrderRoutingRepository workOrderRoutingRepository;
+
 		protected IWorkOrderRoutingModelValidator workOrderRoutingModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractWorkOrderRoutingsController(
-			ILogger<AbstractWorkOrderRoutingsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractWorkOrderRoutingController(
+			ILogger<AbstractWorkOrderRoutingController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IWorkOrderRoutingRepository workOrderRoutingRepository,
 			IWorkOrderRoutingModelValidator workOrderRoutingModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.workOrderRoutingRepository = workOrderRoutingRepository;
 			this.workOrderRoutingModelValidator = workOrderRoutingModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.workOrderRoutingRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.workOrderRoutingRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.workOrderRoutingRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,23 +81,24 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.workOrderRoutingRepository.Create(model.ProductID,
-				                                                model.OperationSequence,
-				                                                model.LocationID,
-				                                                model.ScheduledStartDate,
-				                                                model.ScheduledEndDate,
-				                                                model.ActualStartDate,
-				                                                model.ActualEndDate,
-				                                                model.ActualResourceHrs,
-				                                                model.PlannedCost,
-				                                                model.ActualCost,
-				                                                model.ModifiedDate);
-				return Ok(id);
+				var id = this.workOrderRoutingRepository.Create(
+					model.ProductID,
+					model.OperationSequence,
+					model.LocationID,
+					model.ScheduledStartDate,
+					model.ScheduledEndDate,
+					model.ActualStartDate,
+					model.ActualEndDate,
+					model.ActualResourceHrs,
+					model.PlannedCost,
+					model.ActualCost,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -105,31 +112,33 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<WorkOrderRoutingModel> models)
 		{
 			this.workOrderRoutingModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.workOrderRoutingModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.workOrderRoutingRepository.Create(model.ProductID,
-				                                       model.OperationSequence,
-				                                       model.LocationID,
-				                                       model.ScheduledStartDate,
-				                                       model.ScheduledEndDate,
-				                                       model.ActualStartDate,
-				                                       model.ActualEndDate,
-				                                       model.ActualResourceHrs,
-				                                       model.PlannedCost,
-				                                       model.ActualCost,
-				                                       model.ModifiedDate);
+				this.workOrderRoutingRepository.Create(
+					model.ProductID,
+					model.OperationSequence,
+					model.LocationID,
+					model.ScheduledStartDate,
+					model.ScheduledEndDate,
+					model.ActualStartDate,
+					model.ActualEndDate,
+					model.ActualResourceHrs,
+					model.PlannedCost,
+					model.ActualCost,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -139,34 +148,36 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,WorkOrderRoutingModel model)
+		public virtual IActionResult Update(int id, WorkOrderRoutingModel model)
 		{
-			if(this.workOrderRoutingRepository.GetByIdDirect(id) == null)
+			if (this.workOrderRoutingRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.workOrderRoutingModelValidator.UpdateMode();
 			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.workOrderRoutingRepository.Update(id,  model.ProductID,
-				                                       model.OperationSequence,
-				                                       model.LocationID,
-				                                       model.ScheduledStartDate,
-				                                       model.ScheduledEndDate,
-				                                       model.ActualStartDate,
-				                                       model.ActualEndDate,
-				                                       model.ActualResourceHrs,
-				                                       model.PlannedCost,
-				                                       model.ActualCost,
-				                                       model.ModifiedDate);
-				return Ok();
+				this.workOrderRoutingRepository.Update(
+					id,
+					model.ProductID,
+					model.OperationSequence,
+					model.LocationID,
+					model.ScheduledStartDate,
+					model.ScheduledEndDate,
+					model.ActualStartDate,
+					model.ActualEndDate,
+					model.ActualResourceHrs,
+					model.PlannedCost,
+					model.ActualCost,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -179,7 +190,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.workOrderRoutingRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -192,7 +203,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.workOrderRoutingRepository.GetWhere(x => x.WorkOrderID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -205,11 +216,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.workOrderRoutingRepository.GetWhere(x => x.LocationID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5e5df586421eeec27777be0a43b5610</Hash>
+    <Hash>656fbc0b3f9ff3a28748bb0634bf19cf</Hash>
 </Codenesium>*/

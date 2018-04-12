@@ -15,51 +15,62 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractShiftRepository(ILogger logger,
-		                               ApplicationDbContext context)
+		public AbstractShiftRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(string name,
-		                          TimeSpan startTime,
-		                          TimeSpan endTime,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			string name,
+			TimeSpan startTime,
+			TimeSpan endTime,
+			DateTime modifiedDate)
 		{
-			var record = new EFShift ();
+			var record = new EFShift();
 
-			MapPOCOToEF(0, name,
-			            startTime,
-			            endTime,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				name,
+				startTime,
+				endTime,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFShift>().Add(record);
 			this.context.SaveChanges();
 			return record.ShiftID;
 		}
 
-		public virtual void Update(int shiftID, string name,
-		                           TimeSpan startTime,
-		                           TimeSpan endTime,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int shiftID,
+			string name,
+			TimeSpan startTime,
+			TimeSpan endTime,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{shiftID}");
 			}
 			else
 			{
-				MapPOCOToEF(shiftID,  name,
-				            startTime,
-				            endTime,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					shiftID,
+					name,
+					startTime,
+					endTime,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int shiftID)
+		public virtual void Delete(
+			int shiftID)
 		{
 			var record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 
@@ -78,7 +89,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ShiftID == shiftID,response);
+			this.SearchLinqPOCO(x => x.ShiftID == shiftID, response);
 			return response;
 		}
 
@@ -86,11 +97,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ShiftID == shiftID,response);
+			this.SearchLinqPOCO(x => x.ShiftID == shiftID, response);
 			return response.Shifts.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,7 +117,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOShift> GetWhereDirect(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOShift> GetWhereDirect(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -114,47 +125,53 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.Shifts;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFShift, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFShift, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFShift> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFShift> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFShift> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFShift> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFShift> SearchLinqEF(Expression<Func<EFShift, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFShift> SearchLinqEF(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFShift> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFShift> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int shiftID, string name,
-		                               TimeSpan startTime,
-		                               TimeSpan endTime,
-		                               DateTime modifiedDate, EFShift   efShift)
+		public static void MapPOCOToEF(
+			int shiftID,
+			string name,
+			TimeSpan startTime,
+			TimeSpan endTime,
+			DateTime modifiedDate,
+			EFShift efShift)
 		{
-			efShift.SetProperties(shiftID,name,startTime,endTime,modifiedDate.ToDateTime());
+			efShift.SetProperties(shiftID, name, startTime, endTime, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFShift efShift,Response response)
+		public static void MapEFToPOCO(
+			EFShift efShift,
+			Response response)
 		{
-			if(efShift == null)
+			if (efShift == null)
 			{
 				return;
 			}
-			response.AddShift(new POCOShift(efShift.ShiftID,efShift.Name,efShift.StartTime,efShift.EndTime,efShift.ModifiedDate.ToDateTime()));
+
+			response.AddShift(new POCOShift(efShift.ShiftID, efShift.Name, efShift.StartTime, efShift.EndTime, efShift.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ead99fd4e0632f485fa800896454a9ca</Hash>
+    <Hash>61fa86c6f844a52454472b4cd5586751</Hash>
 </Codenesium>*/

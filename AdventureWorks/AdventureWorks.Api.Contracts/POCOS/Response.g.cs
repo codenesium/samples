@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
 		public T Value { get; set; }
+
 		public string Href
 		{
 			get
@@ -14,6 +16,7 @@ namespace AdventureWorksNS.Api.Contracts
 				return $"/{this.ReferenceObjectName}/{this.Value.ToString()}";
 			}
 		}
+
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -27,84 +30,154 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public Response()
 		{}
-		public List<POCOAWBuildVersion> AWBuildVersions { get; private set; }  = new  List<POCOAWBuildVersion>();
-		public List<POCODatabaseLog> DatabaseLogs { get; private set; }  = new  List<POCODatabaseLog>();
-		public List<POCOErrorLog> ErrorLogs { get; private set; }  = new  List<POCOErrorLog>();
-		public List<POCODepartment> Departments { get; private set; }  = new  List<POCODepartment>();
-		public List<POCOEmployee> Employees { get; private set; }  = new  List<POCOEmployee>();
-		public List<POCOEmployeeDepartmentHistory> EmployeeDepartmentHistories { get; private set; }  = new  List<POCOEmployeeDepartmentHistory>();
-		public List<POCOEmployeePayHistory> EmployeePayHistories { get; private set; }  = new  List<POCOEmployeePayHistory>();
-		public List<POCOJobCandidate> JobCandidates { get; private set; }  = new  List<POCOJobCandidate>();
-		public List<POCOShift> Shifts { get; private set; }  = new  List<POCOShift>();
-		public List<POCOAddress> Addresses { get; private set; }  = new  List<POCOAddress>();
-		public List<POCOAddressType> AddressTypes { get; private set; }  = new  List<POCOAddressType>();
-		public List<POCOBusinessEntity> BusinessEntities { get; private set; }  = new  List<POCOBusinessEntity>();
-		public List<POCOBusinessEntityAddress> BusinessEntityAddresses { get; private set; }  = new  List<POCOBusinessEntityAddress>();
-		public List<POCOBusinessEntityContact> BusinessEntityContacts { get; private set; }  = new  List<POCOBusinessEntityContact>();
-		public List<POCOContactType> ContactTypes { get; private set; }  = new  List<POCOContactType>();
-		public List<POCOCountryRegion> CountryRegions { get; private set; }  = new  List<POCOCountryRegion>();
-		public List<POCOEmailAddress> EmailAddresses { get; private set; }  = new  List<POCOEmailAddress>();
-		public List<POCOPassword> Passwords { get; private set; }  = new  List<POCOPassword>();
-		public List<POCOPerson> People { get; private set; }  = new  List<POCOPerson>();
-		public List<POCOPersonPhone> PersonPhones { get; private set; }  = new  List<POCOPersonPhone>();
-		public List<POCOPhoneNumberType> PhoneNumberTypes { get; private set; }  = new  List<POCOPhoneNumberType>();
-		public List<POCOStateProvince> StateProvinces { get; private set; }  = new  List<POCOStateProvince>();
-		public List<POCOBillOfMaterials> BillOfMaterials { get; private set; }  = new  List<POCOBillOfMaterials>();
-		public List<POCOCulture> Cultures { get; private set; }  = new  List<POCOCulture>();
-		public List<POCODocument> Documents { get; private set; }  = new  List<POCODocument>();
-		public List<POCOIllustration> Illustrations { get; private set; }  = new  List<POCOIllustration>();
-		public List<POCOLocation> Locations { get; private set; }  = new  List<POCOLocation>();
-		public List<POCOProduct> Products { get; private set; }  = new  List<POCOProduct>();
-		public List<POCOProductCategory> ProductCategories { get; private set; }  = new  List<POCOProductCategory>();
-		public List<POCOProductCostHistory> ProductCostHistories { get; private set; }  = new  List<POCOProductCostHistory>();
-		public List<POCOProductDescription> ProductDescriptions { get; private set; }  = new  List<POCOProductDescription>();
-		public List<POCOProductDocument> ProductDocuments { get; private set; }  = new  List<POCOProductDocument>();
-		public List<POCOProductInventory> ProductInventories { get; private set; }  = new  List<POCOProductInventory>();
-		public List<POCOProductListPriceHistory> ProductListPriceHistories { get; private set; }  = new  List<POCOProductListPriceHistory>();
-		public List<POCOProductModel> ProductModels { get; private set; }  = new  List<POCOProductModel>();
-		public List<POCOProductModelIllustration> ProductModelIllustrations { get; private set; }  = new  List<POCOProductModelIllustration>();
-		public List<POCOProductModelProductDescriptionCulture> ProductModelProductDescriptionCultures { get; private set; }  = new  List<POCOProductModelProductDescriptionCulture>();
-		public List<POCOProductPhoto> ProductPhotoes { get; private set; }  = new  List<POCOProductPhoto>();
-		public List<POCOProductProductPhoto> ProductProductPhotoes { get; private set; }  = new  List<POCOProductProductPhoto>();
-		public List<POCOProductReview> ProductReviews { get; private set; }  = new  List<POCOProductReview>();
-		public List<POCOProductSubcategory> ProductSubcategories { get; private set; }  = new  List<POCOProductSubcategory>();
-		public List<POCOScrapReason> ScrapReasons { get; private set; }  = new  List<POCOScrapReason>();
-		public List<POCOTransactionHistory> TransactionHistories { get; private set; }  = new  List<POCOTransactionHistory>();
-		public List<POCOTransactionHistoryArchive> TransactionHistoryArchives { get; private set; }  = new  List<POCOTransactionHistoryArchive>();
-		public List<POCOUnitMeasure> UnitMeasures { get; private set; }  = new  List<POCOUnitMeasure>();
-		public List<POCOWorkOrder> WorkOrders { get; private set; }  = new  List<POCOWorkOrder>();
-		public List<POCOWorkOrderRouting> WorkOrderRoutings { get; private set; }  = new  List<POCOWorkOrderRouting>();
-		public List<POCOProductVendor> ProductVendors { get; private set; }  = new  List<POCOProductVendor>();
-		public List<POCOPurchaseOrderDetail> PurchaseOrderDetails { get; private set; }  = new  List<POCOPurchaseOrderDetail>();
-		public List<POCOPurchaseOrderHeader> PurchaseOrderHeaders { get; private set; }  = new  List<POCOPurchaseOrderHeader>();
-		public List<POCOShipMethod> ShipMethods { get; private set; }  = new  List<POCOShipMethod>();
-		public List<POCOVendor> Vendors { get; private set; }  = new  List<POCOVendor>();
-		public List<POCOCountryRegionCurrency> CountryRegionCurrencies { get; private set; }  = new  List<POCOCountryRegionCurrency>();
-		public List<POCOCreditCard> CreditCards { get; private set; }  = new  List<POCOCreditCard>();
-		public List<POCOCurrency> Currencies { get; private set; }  = new  List<POCOCurrency>();
-		public List<POCOCurrencyRate> CurrencyRates { get; private set; }  = new  List<POCOCurrencyRate>();
-		public List<POCOCustomer> Customers { get; private set; }  = new  List<POCOCustomer>();
-		public List<POCOPersonCreditCard> PersonCreditCards { get; private set; }  = new  List<POCOPersonCreditCard>();
-		public List<POCOSalesOrderDetail> SalesOrderDetails { get; private set; }  = new  List<POCOSalesOrderDetail>();
-		public List<POCOSalesOrderHeader> SalesOrderHeaders { get; private set; }  = new  List<POCOSalesOrderHeader>();
-		public List<POCOSalesOrderHeaderSalesReason> SalesOrderHeaderSalesReasons { get; private set; }  = new  List<POCOSalesOrderHeaderSalesReason>();
-		public List<POCOSalesPerson> SalesPersons { get; private set; }  = new  List<POCOSalesPerson>();
-		public List<POCOSalesPersonQuotaHistory> SalesPersonQuotaHistories { get; private set; }  = new  List<POCOSalesPersonQuotaHistory>();
-		public List<POCOSalesReason> SalesReasons { get; private set; }  = new  List<POCOSalesReason>();
-		public List<POCOSalesTaxRate> SalesTaxRates { get; private set; }  = new  List<POCOSalesTaxRate>();
-		public List<POCOSalesTerritory> SalesTerritories { get; private set; }  = new  List<POCOSalesTerritory>();
-		public List<POCOSalesTerritoryHistory> SalesTerritoryHistories { get; private set; }  = new  List<POCOSalesTerritoryHistory>();
-		public List<POCOShoppingCartItem> ShoppingCartItems { get; private set; }  = new  List<POCOShoppingCartItem>();
-		public List<POCOSpecialOffer> SpecialOffers { get; private set; }  = new  List<POCOSpecialOffer>();
-		public List<POCOSpecialOfferProduct> SpecialOfferProducts { get; private set; }  = new  List<POCOSpecialOfferProduct>();
-		public List<POCOStore> Stores { get; private set; }  = new  List<POCOStore>();
+		public List<POCOAWBuildVersion> AWBuildVersions { get; private set; } = new List<POCOAWBuildVersion>();
+
+		public List<POCODatabaseLog> DatabaseLogs { get; private set; } = new List<POCODatabaseLog>();
+
+		public List<POCOErrorLog> ErrorLogs { get; private set; } = new List<POCOErrorLog>();
+
+		public List<POCODepartment> Departments { get; private set; } = new List<POCODepartment>();
+
+		public List<POCOEmployee> Employees { get; private set; } = new List<POCOEmployee>();
+
+		public List<POCOEmployeeDepartmentHistory> EmployeeDepartmentHistories { get; private set; } = new List<POCOEmployeeDepartmentHistory>();
+
+		public List<POCOEmployeePayHistory> EmployeePayHistories { get; private set; } = new List<POCOEmployeePayHistory>();
+
+		public List<POCOJobCandidate> JobCandidates { get; private set; } = new List<POCOJobCandidate>();
+
+		public List<POCOShift> Shifts { get; private set; } = new List<POCOShift>();
+
+		public List<POCOAddress> Addresses { get; private set; } = new List<POCOAddress>();
+
+		public List<POCOAddressType> AddressTypes { get; private set; } = new List<POCOAddressType>();
+
+		public List<POCOBusinessEntity> BusinessEntities { get; private set; } = new List<POCOBusinessEntity>();
+
+		public List<POCOBusinessEntityAddress> BusinessEntityAddresses { get; private set; } = new List<POCOBusinessEntityAddress>();
+
+		public List<POCOBusinessEntityContact> BusinessEntityContacts { get; private set; } = new List<POCOBusinessEntityContact>();
+
+		public List<POCOContactType> ContactTypes { get; private set; } = new List<POCOContactType>();
+
+		public List<POCOCountryRegion> CountryRegions { get; private set; } = new List<POCOCountryRegion>();
+
+		public List<POCOEmailAddress> EmailAddresses { get; private set; } = new List<POCOEmailAddress>();
+
+		public List<POCOPassword> Passwords { get; private set; } = new List<POCOPassword>();
+
+		public List<POCOPerson> People { get; private set; } = new List<POCOPerson>();
+
+		public List<POCOPersonPhone> PersonPhones { get; private set; } = new List<POCOPersonPhone>();
+
+		public List<POCOPhoneNumberType> PhoneNumberTypes { get; private set; } = new List<POCOPhoneNumberType>();
+
+		public List<POCOStateProvince> StateProvinces { get; private set; } = new List<POCOStateProvince>();
+
+		public List<POCOBillOfMaterials> BillOfMaterials { get; private set; } = new List<POCOBillOfMaterials>();
+
+		public List<POCOCulture> Cultures { get; private set; } = new List<POCOCulture>();
+
+		public List<POCODocument> Documents { get; private set; } = new List<POCODocument>();
+
+		public List<POCOIllustration> Illustrations { get; private set; } = new List<POCOIllustration>();
+
+		public List<POCOLocation> Locations { get; private set; } = new List<POCOLocation>();
+
+		public List<POCOProduct> Products { get; private set; } = new List<POCOProduct>();
+
+		public List<POCOProductCategory> ProductCategories { get; private set; } = new List<POCOProductCategory>();
+
+		public List<POCOProductCostHistory> ProductCostHistories { get; private set; } = new List<POCOProductCostHistory>();
+
+		public List<POCOProductDescription> ProductDescriptions { get; private set; } = new List<POCOProductDescription>();
+
+		public List<POCOProductDocument> ProductDocuments { get; private set; } = new List<POCOProductDocument>();
+
+		public List<POCOProductInventory> ProductInventories { get; private set; } = new List<POCOProductInventory>();
+
+		public List<POCOProductListPriceHistory> ProductListPriceHistories { get; private set; } = new List<POCOProductListPriceHistory>();
+
+		public List<POCOProductModel> ProductModels { get; private set; } = new List<POCOProductModel>();
+
+		public List<POCOProductModelIllustration> ProductModelIllustrations { get; private set; } = new List<POCOProductModelIllustration>();
+
+		public List<POCOProductModelProductDescriptionCulture> ProductModelProductDescriptionCultures { get; private set; } = new List<POCOProductModelProductDescriptionCulture>();
+
+		public List<POCOProductPhoto> ProductPhotoes { get; private set; } = new List<POCOProductPhoto>();
+
+		public List<POCOProductProductPhoto> ProductProductPhotoes { get; private set; } = new List<POCOProductProductPhoto>();
+
+		public List<POCOProductReview> ProductReviews { get; private set; } = new List<POCOProductReview>();
+
+		public List<POCOProductSubcategory> ProductSubcategories { get; private set; } = new List<POCOProductSubcategory>();
+
+		public List<POCOScrapReason> ScrapReasons { get; private set; } = new List<POCOScrapReason>();
+
+		public List<POCOTransactionHistory> TransactionHistories { get; private set; } = new List<POCOTransactionHistory>();
+
+		public List<POCOTransactionHistoryArchive> TransactionHistoryArchives { get; private set; } = new List<POCOTransactionHistoryArchive>();
+
+		public List<POCOUnitMeasure> UnitMeasures { get; private set; } = new List<POCOUnitMeasure>();
+
+		public List<POCOWorkOrder> WorkOrders { get; private set; } = new List<POCOWorkOrder>();
+
+		public List<POCOWorkOrderRouting> WorkOrderRoutings { get; private set; } = new List<POCOWorkOrderRouting>();
+
+		public List<POCOProductVendor> ProductVendors { get; private set; } = new List<POCOProductVendor>();
+
+		public List<POCOPurchaseOrderDetail> PurchaseOrderDetails { get; private set; } = new List<POCOPurchaseOrderDetail>();
+
+		public List<POCOPurchaseOrderHeader> PurchaseOrderHeaders { get; private set; } = new List<POCOPurchaseOrderHeader>();
+
+		public List<POCOShipMethod> ShipMethods { get; private set; } = new List<POCOShipMethod>();
+
+		public List<POCOVendor> Vendors { get; private set; } = new List<POCOVendor>();
+
+		public List<POCOCountryRegionCurrency> CountryRegionCurrencies { get; private set; } = new List<POCOCountryRegionCurrency>();
+
+		public List<POCOCreditCard> CreditCards { get; private set; } = new List<POCOCreditCard>();
+
+		public List<POCOCurrency> Currencies { get; private set; } = new List<POCOCurrency>();
+
+		public List<POCOCurrencyRate> CurrencyRates { get; private set; } = new List<POCOCurrencyRate>();
+
+		public List<POCOCustomer> Customers { get; private set; } = new List<POCOCustomer>();
+
+		public List<POCOPersonCreditCard> PersonCreditCards { get; private set; } = new List<POCOPersonCreditCard>();
+
+		public List<POCOSalesOrderDetail> SalesOrderDetails { get; private set; } = new List<POCOSalesOrderDetail>();
+
+		public List<POCOSalesOrderHeader> SalesOrderHeaders { get; private set; } = new List<POCOSalesOrderHeader>();
+
+		public List<POCOSalesOrderHeaderSalesReason> SalesOrderHeaderSalesReasons { get; private set; } = new List<POCOSalesOrderHeaderSalesReason>();
+
+		public List<POCOSalesPerson> SalesPersons { get; private set; } = new List<POCOSalesPerson>();
+
+		public List<POCOSalesPersonQuotaHistory> SalesPersonQuotaHistories { get; private set; } = new List<POCOSalesPersonQuotaHistory>();
+
+		public List<POCOSalesReason> SalesReasons { get; private set; } = new List<POCOSalesReason>();
+
+		public List<POCOSalesTaxRate> SalesTaxRates { get; private set; } = new List<POCOSalesTaxRate>();
+
+		public List<POCOSalesTerritory> SalesTerritories { get; private set; } = new List<POCOSalesTerritory>();
+
+		public List<POCOSalesTerritoryHistory> SalesTerritoryHistories { get; private set; } = new List<POCOSalesTerritoryHistory>();
+
+		public List<POCOShoppingCartItem> ShoppingCartItems { get; private set; } = new List<POCOShoppingCartItem>();
+
+		public List<POCOSpecialOffer> SpecialOffers { get; private set; } = new List<POCOSpecialOffer>();
+
+		public List<POCOSpecialOfferProduct> SpecialOfferProducts { get; private set; } = new List<POCOSpecialOfferProduct>();
+
+		public List<POCOStore> Stores { get; private set; } = new List<POCOStore>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeAWBuildVersionsValue {get; set;} = true;
+		public bool ShouldSerializeAWBuildVersionsValue { get; set; } = true;
 
 		public bool ShouldSerializeAWBuildVersions()
 		{
-			return ShouldSerializeAWBuildVersionsValue;
+			return this.ShouldSerializeAWBuildVersionsValue;
 		}
 
 		public void AddAWBuildVersion(POCOAWBuildVersion item)
@@ -116,11 +189,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDatabaseLogsValue {get; set;} = true;
+		public bool ShouldSerializeDatabaseLogsValue { get; set; } = true;
 
 		public bool ShouldSerializeDatabaseLogs()
 		{
-			return ShouldSerializeDatabaseLogsValue;
+			return this.ShouldSerializeDatabaseLogsValue;
 		}
 
 		public void AddDatabaseLog(POCODatabaseLog item)
@@ -132,11 +205,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorLogsValue {get; set;} = true;
+		public bool ShouldSerializeErrorLogsValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorLogs()
 		{
-			return ShouldSerializeErrorLogsValue;
+			return this.ShouldSerializeErrorLogsValue;
 		}
 
 		public void AddErrorLog(POCOErrorLog item)
@@ -148,11 +221,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDepartmentsValue {get; set;} = true;
+		public bool ShouldSerializeDepartmentsValue { get; set; } = true;
 
 		public bool ShouldSerializeDepartments()
 		{
-			return ShouldSerializeDepartmentsValue;
+			return this.ShouldSerializeDepartmentsValue;
 		}
 
 		public void AddDepartment(POCODepartment item)
@@ -164,11 +237,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeesValue {get; set;} = true;
+		public bool ShouldSerializeEmployeesValue { get; set; } = true;
 
 		public bool ShouldSerializeEmployees()
 		{
-			return ShouldSerializeEmployeesValue;
+			return this.ShouldSerializeEmployeesValue;
 		}
 
 		public void AddEmployee(POCOEmployee item)
@@ -180,11 +253,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeeDepartmentHistoriesValue {get; set;} = true;
+		public bool ShouldSerializeEmployeeDepartmentHistoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeEmployeeDepartmentHistories()
 		{
-			return ShouldSerializeEmployeeDepartmentHistoriesValue;
+			return this.ShouldSerializeEmployeeDepartmentHistoriesValue;
 		}
 
 		public void AddEmployeeDepartmentHistory(POCOEmployeeDepartmentHistory item)
@@ -196,11 +269,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeePayHistoriesValue {get; set;} = true;
+		public bool ShouldSerializeEmployeePayHistoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeEmployeePayHistories()
 		{
-			return ShouldSerializeEmployeePayHistoriesValue;
+			return this.ShouldSerializeEmployeePayHistoriesValue;
 		}
 
 		public void AddEmployeePayHistory(POCOEmployeePayHistory item)
@@ -212,11 +285,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeJobCandidatesValue {get; set;} = true;
+		public bool ShouldSerializeJobCandidatesValue { get; set; } = true;
 
 		public bool ShouldSerializeJobCandidates()
 		{
-			return ShouldSerializeJobCandidatesValue;
+			return this.ShouldSerializeJobCandidatesValue;
 		}
 
 		public void AddJobCandidate(POCOJobCandidate item)
@@ -228,11 +301,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShiftsValue {get; set;} = true;
+		public bool ShouldSerializeShiftsValue { get; set; } = true;
 
 		public bool ShouldSerializeShifts()
 		{
-			return ShouldSerializeShiftsValue;
+			return this.ShouldSerializeShiftsValue;
 		}
 
 		public void AddShift(POCOShift item)
@@ -244,11 +317,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressesValue {get; set;} = true;
+		public bool ShouldSerializeAddressesValue { get; set; } = true;
 
 		public bool ShouldSerializeAddresses()
 		{
-			return ShouldSerializeAddressesValue;
+			return this.ShouldSerializeAddressesValue;
 		}
 
 		public void AddAddress(POCOAddress item)
@@ -260,11 +333,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressTypesValue {get; set;} = true;
+		public bool ShouldSerializeAddressTypesValue { get; set; } = true;
 
 		public bool ShouldSerializeAddressTypes()
 		{
-			return ShouldSerializeAddressTypesValue;
+			return this.ShouldSerializeAddressTypesValue;
 		}
 
 		public void AddAddressType(POCOAddressType item)
@@ -276,11 +349,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntitiesValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntitiesValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntities()
 		{
-			return ShouldSerializeBusinessEntitiesValue;
+			return this.ShouldSerializeBusinessEntitiesValue;
 		}
 
 		public void AddBusinessEntity(POCOBusinessEntity item)
@@ -292,11 +365,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityAddressesValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityAddressesValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityAddresses()
 		{
-			return ShouldSerializeBusinessEntityAddressesValue;
+			return this.ShouldSerializeBusinessEntityAddressesValue;
 		}
 
 		public void AddBusinessEntityAddress(POCOBusinessEntityAddress item)
@@ -308,11 +381,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityContactsValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityContactsValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityContacts()
 		{
-			return ShouldSerializeBusinessEntityContactsValue;
+			return this.ShouldSerializeBusinessEntityContactsValue;
 		}
 
 		public void AddBusinessEntityContact(POCOBusinessEntityContact item)
@@ -324,11 +397,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeContactTypesValue {get; set;} = true;
+		public bool ShouldSerializeContactTypesValue { get; set; } = true;
 
 		public bool ShouldSerializeContactTypes()
 		{
-			return ShouldSerializeContactTypesValue;
+			return this.ShouldSerializeContactTypesValue;
 		}
 
 		public void AddContactType(POCOContactType item)
@@ -340,11 +413,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionsValue {get; set;} = true;
+		public bool ShouldSerializeCountryRegionsValue { get; set; } = true;
 
 		public bool ShouldSerializeCountryRegions()
 		{
-			return ShouldSerializeCountryRegionsValue;
+			return this.ShouldSerializeCountryRegionsValue;
 		}
 
 		public void AddCountryRegion(POCOCountryRegion item)
@@ -356,11 +429,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmailAddressesValue {get; set;} = true;
+		public bool ShouldSerializeEmailAddressesValue { get; set; } = true;
 
 		public bool ShouldSerializeEmailAddresses()
 		{
-			return ShouldSerializeEmailAddressesValue;
+			return this.ShouldSerializeEmailAddressesValue;
 		}
 
 		public void AddEmailAddress(POCOEmailAddress item)
@@ -372,11 +445,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePasswordsValue {get; set;} = true;
+		public bool ShouldSerializePasswordsValue { get; set; } = true;
 
 		public bool ShouldSerializePasswords()
 		{
-			return ShouldSerializePasswordsValue;
+			return this.ShouldSerializePasswordsValue;
 		}
 
 		public void AddPassword(POCOPassword item)
@@ -388,11 +461,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePeopleValue {get; set;} = true;
+		public bool ShouldSerializePeopleValue { get; set; } = true;
 
 		public bool ShouldSerializePeople()
 		{
-			return ShouldSerializePeopleValue;
+			return this.ShouldSerializePeopleValue;
 		}
 
 		public void AddPerson(POCOPerson item)
@@ -404,11 +477,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePersonPhonesValue {get; set;} = true;
+		public bool ShouldSerializePersonPhonesValue { get; set; } = true;
 
 		public bool ShouldSerializePersonPhones()
 		{
-			return ShouldSerializePersonPhonesValue;
+			return this.ShouldSerializePersonPhonesValue;
 		}
 
 		public void AddPersonPhone(POCOPersonPhone item)
@@ -420,11 +493,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePhoneNumberTypesValue {get; set;} = true;
+		public bool ShouldSerializePhoneNumberTypesValue { get; set; } = true;
 
 		public bool ShouldSerializePhoneNumberTypes()
 		{
-			return ShouldSerializePhoneNumberTypesValue;
+			return this.ShouldSerializePhoneNumberTypesValue;
 		}
 
 		public void AddPhoneNumberType(POCOPhoneNumberType item)
@@ -436,11 +509,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStateProvincesValue {get; set;} = true;
+		public bool ShouldSerializeStateProvincesValue { get; set; } = true;
 
 		public bool ShouldSerializeStateProvinces()
 		{
-			return ShouldSerializeStateProvincesValue;
+			return this.ShouldSerializeStateProvincesValue;
 		}
 
 		public void AddStateProvince(POCOStateProvince item)
@@ -452,11 +525,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBillOfMaterialsValue {get; set;} = true;
+		public bool ShouldSerializeBillOfMaterialsValue { get; set; } = true;
 
 		public bool ShouldSerializeBillOfMaterials()
 		{
-			return ShouldSerializeBillOfMaterialsValue;
+			return this.ShouldSerializeBillOfMaterialsValue;
 		}
 
 		public void AddBillOfMaterials(POCOBillOfMaterials item)
@@ -468,11 +541,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCulturesValue {get; set;} = true;
+		public bool ShouldSerializeCulturesValue { get; set; } = true;
 
 		public bool ShouldSerializeCultures()
 		{
-			return ShouldSerializeCulturesValue;
+			return this.ShouldSerializeCulturesValue;
 		}
 
 		public void AddCulture(POCOCulture item)
@@ -484,11 +557,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDocumentsValue {get; set;} = true;
+		public bool ShouldSerializeDocumentsValue { get; set; } = true;
 
 		public bool ShouldSerializeDocuments()
 		{
-			return ShouldSerializeDocumentsValue;
+			return this.ShouldSerializeDocumentsValue;
 		}
 
 		public void AddDocument(POCODocument item)
@@ -500,11 +573,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeIllustrationsValue {get; set;} = true;
+		public bool ShouldSerializeIllustrationsValue { get; set; } = true;
 
 		public bool ShouldSerializeIllustrations()
 		{
-			return ShouldSerializeIllustrationsValue;
+			return this.ShouldSerializeIllustrationsValue;
 		}
 
 		public void AddIllustration(POCOIllustration item)
@@ -516,11 +589,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLocationsValue {get; set;} = true;
+		public bool ShouldSerializeLocationsValue { get; set; } = true;
 
 		public bool ShouldSerializeLocations()
 		{
-			return ShouldSerializeLocationsValue;
+			return this.ShouldSerializeLocationsValue;
 		}
 
 		public void AddLocation(POCOLocation item)
@@ -532,11 +605,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductsValue {get; set;} = true;
+		public bool ShouldSerializeProductsValue { get; set; } = true;
 
 		public bool ShouldSerializeProducts()
 		{
-			return ShouldSerializeProductsValue;
+			return this.ShouldSerializeProductsValue;
 		}
 
 		public void AddProduct(POCOProduct item)
@@ -548,11 +621,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductCategoriesValue {get; set;} = true;
+		public bool ShouldSerializeProductCategoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductCategories()
 		{
-			return ShouldSerializeProductCategoriesValue;
+			return this.ShouldSerializeProductCategoriesValue;
 		}
 
 		public void AddProductCategory(POCOProductCategory item)
@@ -564,11 +637,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductCostHistoriesValue {get; set;} = true;
+		public bool ShouldSerializeProductCostHistoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductCostHistories()
 		{
-			return ShouldSerializeProductCostHistoriesValue;
+			return this.ShouldSerializeProductCostHistoriesValue;
 		}
 
 		public void AddProductCostHistory(POCOProductCostHistory item)
@@ -580,11 +653,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductDescriptionsValue {get; set;} = true;
+		public bool ShouldSerializeProductDescriptionsValue { get; set; } = true;
 
 		public bool ShouldSerializeProductDescriptions()
 		{
-			return ShouldSerializeProductDescriptionsValue;
+			return this.ShouldSerializeProductDescriptionsValue;
 		}
 
 		public void AddProductDescription(POCOProductDescription item)
@@ -596,11 +669,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductDocumentsValue {get; set;} = true;
+		public bool ShouldSerializeProductDocumentsValue { get; set; } = true;
 
 		public bool ShouldSerializeProductDocuments()
 		{
-			return ShouldSerializeProductDocumentsValue;
+			return this.ShouldSerializeProductDocumentsValue;
 		}
 
 		public void AddProductDocument(POCOProductDocument item)
@@ -612,11 +685,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductInventoriesValue {get; set;} = true;
+		public bool ShouldSerializeProductInventoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductInventories()
 		{
-			return ShouldSerializeProductInventoriesValue;
+			return this.ShouldSerializeProductInventoriesValue;
 		}
 
 		public void AddProductInventory(POCOProductInventory item)
@@ -628,11 +701,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductListPriceHistoriesValue {get; set;} = true;
+		public bool ShouldSerializeProductListPriceHistoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductListPriceHistories()
 		{
-			return ShouldSerializeProductListPriceHistoriesValue;
+			return this.ShouldSerializeProductListPriceHistoriesValue;
 		}
 
 		public void AddProductListPriceHistory(POCOProductListPriceHistory item)
@@ -644,11 +717,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelsValue {get; set;} = true;
+		public bool ShouldSerializeProductModelsValue { get; set; } = true;
 
 		public bool ShouldSerializeProductModels()
 		{
-			return ShouldSerializeProductModelsValue;
+			return this.ShouldSerializeProductModelsValue;
 		}
 
 		public void AddProductModel(POCOProductModel item)
@@ -660,11 +733,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelIllustrationsValue {get; set;} = true;
+		public bool ShouldSerializeProductModelIllustrationsValue { get; set; } = true;
 
 		public bool ShouldSerializeProductModelIllustrations()
 		{
-			return ShouldSerializeProductModelIllustrationsValue;
+			return this.ShouldSerializeProductModelIllustrationsValue;
 		}
 
 		public void AddProductModelIllustration(POCOProductModelIllustration item)
@@ -676,11 +749,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelProductDescriptionCulturesValue {get; set;} = true;
+		public bool ShouldSerializeProductModelProductDescriptionCulturesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductModelProductDescriptionCultures()
 		{
-			return ShouldSerializeProductModelProductDescriptionCulturesValue;
+			return this.ShouldSerializeProductModelProductDescriptionCulturesValue;
 		}
 
 		public void AddProductModelProductDescriptionCulture(POCOProductModelProductDescriptionCulture item)
@@ -692,11 +765,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductPhotoesValue {get; set;} = true;
+		public bool ShouldSerializeProductPhotoesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductPhotoes()
 		{
-			return ShouldSerializeProductPhotoesValue;
+			return this.ShouldSerializeProductPhotoesValue;
 		}
 
 		public void AddProductPhoto(POCOProductPhoto item)
@@ -708,11 +781,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductProductPhotoesValue {get; set;} = true;
+		public bool ShouldSerializeProductProductPhotoesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductProductPhotoes()
 		{
-			return ShouldSerializeProductProductPhotoesValue;
+			return this.ShouldSerializeProductProductPhotoesValue;
 		}
 
 		public void AddProductProductPhoto(POCOProductProductPhoto item)
@@ -724,11 +797,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductReviewsValue {get; set;} = true;
+		public bool ShouldSerializeProductReviewsValue { get; set; } = true;
 
 		public bool ShouldSerializeProductReviews()
 		{
-			return ShouldSerializeProductReviewsValue;
+			return this.ShouldSerializeProductReviewsValue;
 		}
 
 		public void AddProductReview(POCOProductReview item)
@@ -740,11 +813,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductSubcategoriesValue {get; set;} = true;
+		public bool ShouldSerializeProductSubcategoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeProductSubcategories()
 		{
-			return ShouldSerializeProductSubcategoriesValue;
+			return this.ShouldSerializeProductSubcategoriesValue;
 		}
 
 		public void AddProductSubcategory(POCOProductSubcategory item)
@@ -756,11 +829,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeScrapReasonsValue {get; set;} = true;
+		public bool ShouldSerializeScrapReasonsValue { get; set; } = true;
 
 		public bool ShouldSerializeScrapReasons()
 		{
-			return ShouldSerializeScrapReasonsValue;
+			return this.ShouldSerializeScrapReasonsValue;
 		}
 
 		public void AddScrapReason(POCOScrapReason item)
@@ -772,11 +845,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTransactionHistoriesValue {get; set;} = true;
+		public bool ShouldSerializeTransactionHistoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeTransactionHistories()
 		{
-			return ShouldSerializeTransactionHistoriesValue;
+			return this.ShouldSerializeTransactionHistoriesValue;
 		}
 
 		public void AddTransactionHistory(POCOTransactionHistory item)
@@ -788,11 +861,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTransactionHistoryArchivesValue {get; set;} = true;
+		public bool ShouldSerializeTransactionHistoryArchivesValue { get; set; } = true;
 
 		public bool ShouldSerializeTransactionHistoryArchives()
 		{
-			return ShouldSerializeTransactionHistoryArchivesValue;
+			return this.ShouldSerializeTransactionHistoryArchivesValue;
 		}
 
 		public void AddTransactionHistoryArchive(POCOTransactionHistoryArchive item)
@@ -804,11 +877,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeUnitMeasuresValue {get; set;} = true;
+		public bool ShouldSerializeUnitMeasuresValue { get; set; } = true;
 
 		public bool ShouldSerializeUnitMeasures()
 		{
-			return ShouldSerializeUnitMeasuresValue;
+			return this.ShouldSerializeUnitMeasuresValue;
 		}
 
 		public void AddUnitMeasure(POCOUnitMeasure item)
@@ -820,11 +893,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeWorkOrdersValue {get; set;} = true;
+		public bool ShouldSerializeWorkOrdersValue { get; set; } = true;
 
 		public bool ShouldSerializeWorkOrders()
 		{
-			return ShouldSerializeWorkOrdersValue;
+			return this.ShouldSerializeWorkOrdersValue;
 		}
 
 		public void AddWorkOrder(POCOWorkOrder item)
@@ -836,11 +909,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeWorkOrderRoutingsValue {get; set;} = true;
+		public bool ShouldSerializeWorkOrderRoutingsValue { get; set; } = true;
 
 		public bool ShouldSerializeWorkOrderRoutings()
 		{
-			return ShouldSerializeWorkOrderRoutingsValue;
+			return this.ShouldSerializeWorkOrderRoutingsValue;
 		}
 
 		public void AddWorkOrderRouting(POCOWorkOrderRouting item)
@@ -852,11 +925,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductVendorsValue {get; set;} = true;
+		public bool ShouldSerializeProductVendorsValue { get; set; } = true;
 
 		public bool ShouldSerializeProductVendors()
 		{
-			return ShouldSerializeProductVendorsValue;
+			return this.ShouldSerializeProductVendorsValue;
 		}
 
 		public void AddProductVendor(POCOProductVendor item)
@@ -868,11 +941,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderDetailsValue {get; set;} = true;
+		public bool ShouldSerializePurchaseOrderDetailsValue { get; set; } = true;
 
 		public bool ShouldSerializePurchaseOrderDetails()
 		{
-			return ShouldSerializePurchaseOrderDetailsValue;
+			return this.ShouldSerializePurchaseOrderDetailsValue;
 		}
 
 		public void AddPurchaseOrderDetail(POCOPurchaseOrderDetail item)
@@ -884,11 +957,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderHeadersValue {get; set;} = true;
+		public bool ShouldSerializePurchaseOrderHeadersValue { get; set; } = true;
 
 		public bool ShouldSerializePurchaseOrderHeaders()
 		{
-			return ShouldSerializePurchaseOrderHeadersValue;
+			return this.ShouldSerializePurchaseOrderHeadersValue;
 		}
 
 		public void AddPurchaseOrderHeader(POCOPurchaseOrderHeader item)
@@ -900,11 +973,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipMethodsValue {get; set;} = true;
+		public bool ShouldSerializeShipMethodsValue { get; set; } = true;
 
 		public bool ShouldSerializeShipMethods()
 		{
-			return ShouldSerializeShipMethodsValue;
+			return this.ShouldSerializeShipMethodsValue;
 		}
 
 		public void AddShipMethod(POCOShipMethod item)
@@ -916,11 +989,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVendorsValue {get; set;} = true;
+		public bool ShouldSerializeVendorsValue { get; set; } = true;
 
 		public bool ShouldSerializeVendors()
 		{
-			return ShouldSerializeVendorsValue;
+			return this.ShouldSerializeVendorsValue;
 		}
 
 		public void AddVendor(POCOVendor item)
@@ -932,11 +1005,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionCurrenciesValue {get; set;} = true;
+		public bool ShouldSerializeCountryRegionCurrenciesValue { get; set; } = true;
 
 		public bool ShouldSerializeCountryRegionCurrencies()
 		{
-			return ShouldSerializeCountryRegionCurrenciesValue;
+			return this.ShouldSerializeCountryRegionCurrenciesValue;
 		}
 
 		public void AddCountryRegionCurrency(POCOCountryRegionCurrency item)
@@ -948,11 +1021,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCreditCardsValue {get; set;} = true;
+		public bool ShouldSerializeCreditCardsValue { get; set; } = true;
 
 		public bool ShouldSerializeCreditCards()
 		{
-			return ShouldSerializeCreditCardsValue;
+			return this.ShouldSerializeCreditCardsValue;
 		}
 
 		public void AddCreditCard(POCOCreditCard item)
@@ -964,11 +1037,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrenciesValue {get; set;} = true;
+		public bool ShouldSerializeCurrenciesValue { get; set; } = true;
 
 		public bool ShouldSerializeCurrencies()
 		{
-			return ShouldSerializeCurrenciesValue;
+			return this.ShouldSerializeCurrenciesValue;
 		}
 
 		public void AddCurrency(POCOCurrency item)
@@ -980,11 +1053,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRatesValue {get; set;} = true;
+		public bool ShouldSerializeCurrencyRatesValue { get; set; } = true;
 
 		public bool ShouldSerializeCurrencyRates()
 		{
-			return ShouldSerializeCurrencyRatesValue;
+			return this.ShouldSerializeCurrencyRatesValue;
 		}
 
 		public void AddCurrencyRate(POCOCurrencyRate item)
@@ -996,11 +1069,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCustomersValue {get; set;} = true;
+		public bool ShouldSerializeCustomersValue { get; set; } = true;
 
 		public bool ShouldSerializeCustomers()
 		{
-			return ShouldSerializeCustomersValue;
+			return this.ShouldSerializeCustomersValue;
 		}
 
 		public void AddCustomer(POCOCustomer item)
@@ -1012,11 +1085,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePersonCreditCardsValue {get; set;} = true;
+		public bool ShouldSerializePersonCreditCardsValue { get; set; } = true;
 
 		public bool ShouldSerializePersonCreditCards()
 		{
-			return ShouldSerializePersonCreditCardsValue;
+			return this.ShouldSerializePersonCreditCardsValue;
 		}
 
 		public void AddPersonCreditCard(POCOPersonCreditCard item)
@@ -1028,11 +1101,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderDetailsValue {get; set;} = true;
+		public bool ShouldSerializeSalesOrderDetailsValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesOrderDetails()
 		{
-			return ShouldSerializeSalesOrderDetailsValue;
+			return this.ShouldSerializeSalesOrderDetailsValue;
 		}
 
 		public void AddSalesOrderDetail(POCOSalesOrderDetail item)
@@ -1044,11 +1117,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderHeadersValue {get; set;} = true;
+		public bool ShouldSerializeSalesOrderHeadersValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesOrderHeaders()
 		{
-			return ShouldSerializeSalesOrderHeadersValue;
+			return this.ShouldSerializeSalesOrderHeadersValue;
 		}
 
 		public void AddSalesOrderHeader(POCOSalesOrderHeader item)
@@ -1060,11 +1133,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderHeaderSalesReasonsValue {get; set;} = true;
+		public bool ShouldSerializeSalesOrderHeaderSalesReasonsValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesOrderHeaderSalesReasons()
 		{
-			return ShouldSerializeSalesOrderHeaderSalesReasonsValue;
+			return this.ShouldSerializeSalesOrderHeaderSalesReasonsValue;
 		}
 
 		public void AddSalesOrderHeaderSalesReason(POCOSalesOrderHeaderSalesReason item)
@@ -1076,11 +1149,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesPersonsValue {get; set;} = true;
+		public bool ShouldSerializeSalesPersonsValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesPersons()
 		{
-			return ShouldSerializeSalesPersonsValue;
+			return this.ShouldSerializeSalesPersonsValue;
 		}
 
 		public void AddSalesPerson(POCOSalesPerson item)
@@ -1092,11 +1165,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesPersonQuotaHistoriesValue {get; set;} = true;
+		public bool ShouldSerializeSalesPersonQuotaHistoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesPersonQuotaHistories()
 		{
-			return ShouldSerializeSalesPersonQuotaHistoriesValue;
+			return this.ShouldSerializeSalesPersonQuotaHistoriesValue;
 		}
 
 		public void AddSalesPersonQuotaHistory(POCOSalesPersonQuotaHistory item)
@@ -1108,11 +1181,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesReasonsValue {get; set;} = true;
+		public bool ShouldSerializeSalesReasonsValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesReasons()
 		{
-			return ShouldSerializeSalesReasonsValue;
+			return this.ShouldSerializeSalesReasonsValue;
 		}
 
 		public void AddSalesReason(POCOSalesReason item)
@@ -1124,11 +1197,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesTaxRatesValue {get; set;} = true;
+		public bool ShouldSerializeSalesTaxRatesValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesTaxRates()
 		{
-			return ShouldSerializeSalesTaxRatesValue;
+			return this.ShouldSerializeSalesTaxRatesValue;
 		}
 
 		public void AddSalesTaxRate(POCOSalesTaxRate item)
@@ -1140,11 +1213,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesTerritoriesValue {get; set;} = true;
+		public bool ShouldSerializeSalesTerritoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesTerritories()
 		{
-			return ShouldSerializeSalesTerritoriesValue;
+			return this.ShouldSerializeSalesTerritoriesValue;
 		}
 
 		public void AddSalesTerritory(POCOSalesTerritory item)
@@ -1156,11 +1229,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesTerritoryHistoriesValue {get; set;} = true;
+		public bool ShouldSerializeSalesTerritoryHistoriesValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesTerritoryHistories()
 		{
-			return ShouldSerializeSalesTerritoryHistoriesValue;
+			return this.ShouldSerializeSalesTerritoryHistoriesValue;
 		}
 
 		public void AddSalesTerritoryHistory(POCOSalesTerritoryHistory item)
@@ -1172,11 +1245,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShoppingCartItemsValue {get; set;} = true;
+		public bool ShouldSerializeShoppingCartItemsValue { get; set; } = true;
 
 		public bool ShouldSerializeShoppingCartItems()
 		{
-			return ShouldSerializeShoppingCartItemsValue;
+			return this.ShouldSerializeShoppingCartItemsValue;
 		}
 
 		public void AddShoppingCartItem(POCOShoppingCartItem item)
@@ -1188,11 +1261,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpecialOffersValue {get; set;} = true;
+		public bool ShouldSerializeSpecialOffersValue { get; set; } = true;
 
 		public bool ShouldSerializeSpecialOffers()
 		{
-			return ShouldSerializeSpecialOffersValue;
+			return this.ShouldSerializeSpecialOffersValue;
 		}
 
 		public void AddSpecialOffer(POCOSpecialOffer item)
@@ -1204,11 +1277,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpecialOfferProductsValue {get; set;} = true;
+		public bool ShouldSerializeSpecialOfferProductsValue { get; set; } = true;
 
 		public bool ShouldSerializeSpecialOfferProducts()
 		{
-			return ShouldSerializeSpecialOfferProductsValue;
+			return this.ShouldSerializeSpecialOfferProductsValue;
 		}
 
 		public void AddSpecialOfferProduct(POCOSpecialOfferProduct item)
@@ -1220,11 +1293,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStoresValue {get; set;} = true;
+		public bool ShouldSerializeStoresValue { get; set; } = true;
 
 		public bool ShouldSerializeStores()
 		{
-			return ShouldSerializeStoresValue;
+			return this.ShouldSerializeStoresValue;
 		}
 
 		public void AddStore(POCOStore item)
@@ -1237,292 +1310,357 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public void DisableSerializationOfEmptyFields()
 		{
-			if(this.AWBuildVersions.Count == 0)
+			if (this.AWBuildVersions.Count == 0)
 			{
 				this.ShouldSerializeAWBuildVersionsValue = false;
 			}
-			if(this.DatabaseLogs.Count == 0)
+
+			if (this.DatabaseLogs.Count == 0)
 			{
 				this.ShouldSerializeDatabaseLogsValue = false;
 			}
-			if(this.ErrorLogs.Count == 0)
+
+			if (this.ErrorLogs.Count == 0)
 			{
 				this.ShouldSerializeErrorLogsValue = false;
 			}
 
-			if(this.Departments.Count == 0)
+			if (this.Departments.Count == 0)
 			{
 				this.ShouldSerializeDepartmentsValue = false;
 			}
-			if(this.Employees.Count == 0)
+
+			if (this.Employees.Count == 0)
 			{
 				this.ShouldSerializeEmployeesValue = false;
 			}
-			if(this.EmployeeDepartmentHistories.Count == 0)
+
+			if (this.EmployeeDepartmentHistories.Count == 0)
 			{
 				this.ShouldSerializeEmployeeDepartmentHistoriesValue = false;
 			}
-			if(this.EmployeePayHistories.Count == 0)
+
+			if (this.EmployeePayHistories.Count == 0)
 			{
 				this.ShouldSerializeEmployeePayHistoriesValue = false;
 			}
-			if(this.JobCandidates.Count == 0)
+
+			if (this.JobCandidates.Count == 0)
 			{
 				this.ShouldSerializeJobCandidatesValue = false;
 			}
-			if(this.Shifts.Count == 0)
+
+			if (this.Shifts.Count == 0)
 			{
 				this.ShouldSerializeShiftsValue = false;
 			}
 
-			if(this.Addresses.Count == 0)
+			if (this.Addresses.Count == 0)
 			{
 				this.ShouldSerializeAddressesValue = false;
 			}
-			if(this.AddressTypes.Count == 0)
+
+			if (this.AddressTypes.Count == 0)
 			{
 				this.ShouldSerializeAddressTypesValue = false;
 			}
-			if(this.BusinessEntities.Count == 0)
+
+			if (this.BusinessEntities.Count == 0)
 			{
 				this.ShouldSerializeBusinessEntitiesValue = false;
 			}
-			if(this.BusinessEntityAddresses.Count == 0)
+
+			if (this.BusinessEntityAddresses.Count == 0)
 			{
 				this.ShouldSerializeBusinessEntityAddressesValue = false;
 			}
-			if(this.BusinessEntityContacts.Count == 0)
+
+			if (this.BusinessEntityContacts.Count == 0)
 			{
 				this.ShouldSerializeBusinessEntityContactsValue = false;
 			}
-			if(this.ContactTypes.Count == 0)
+
+			if (this.ContactTypes.Count == 0)
 			{
 				this.ShouldSerializeContactTypesValue = false;
 			}
-			if(this.CountryRegions.Count == 0)
+
+			if (this.CountryRegions.Count == 0)
 			{
 				this.ShouldSerializeCountryRegionsValue = false;
 			}
-			if(this.EmailAddresses.Count == 0)
+
+			if (this.EmailAddresses.Count == 0)
 			{
 				this.ShouldSerializeEmailAddressesValue = false;
 			}
-			if(this.Passwords.Count == 0)
+
+			if (this.Passwords.Count == 0)
 			{
 				this.ShouldSerializePasswordsValue = false;
 			}
-			if(this.People.Count == 0)
+
+			if (this.People.Count == 0)
 			{
 				this.ShouldSerializePeopleValue = false;
 			}
-			if(this.PersonPhones.Count == 0)
+
+			if (this.PersonPhones.Count == 0)
 			{
 				this.ShouldSerializePersonPhonesValue = false;
 			}
-			if(this.PhoneNumberTypes.Count == 0)
+
+			if (this.PhoneNumberTypes.Count == 0)
 			{
 				this.ShouldSerializePhoneNumberTypesValue = false;
 			}
-			if(this.StateProvinces.Count == 0)
+
+			if (this.StateProvinces.Count == 0)
 			{
 				this.ShouldSerializeStateProvincesValue = false;
 			}
 
-			if(this.BillOfMaterials.Count == 0)
+			if (this.BillOfMaterials.Count == 0)
 			{
 				this.ShouldSerializeBillOfMaterialsValue = false;
 			}
-			if(this.Cultures.Count == 0)
+
+			if (this.Cultures.Count == 0)
 			{
 				this.ShouldSerializeCulturesValue = false;
 			}
-			if(this.Documents.Count == 0)
+
+			if (this.Documents.Count == 0)
 			{
 				this.ShouldSerializeDocumentsValue = false;
 			}
-			if(this.Illustrations.Count == 0)
+
+			if (this.Illustrations.Count == 0)
 			{
 				this.ShouldSerializeIllustrationsValue = false;
 			}
-			if(this.Locations.Count == 0)
+
+			if (this.Locations.Count == 0)
 			{
 				this.ShouldSerializeLocationsValue = false;
 			}
-			if(this.Products.Count == 0)
+
+			if (this.Products.Count == 0)
 			{
 				this.ShouldSerializeProductsValue = false;
 			}
-			if(this.ProductCategories.Count == 0)
+
+			if (this.ProductCategories.Count == 0)
 			{
 				this.ShouldSerializeProductCategoriesValue = false;
 			}
-			if(this.ProductCostHistories.Count == 0)
+
+			if (this.ProductCostHistories.Count == 0)
 			{
 				this.ShouldSerializeProductCostHistoriesValue = false;
 			}
-			if(this.ProductDescriptions.Count == 0)
+
+			if (this.ProductDescriptions.Count == 0)
 			{
 				this.ShouldSerializeProductDescriptionsValue = false;
 			}
-			if(this.ProductDocuments.Count == 0)
+
+			if (this.ProductDocuments.Count == 0)
 			{
 				this.ShouldSerializeProductDocumentsValue = false;
 			}
-			if(this.ProductInventories.Count == 0)
+
+			if (this.ProductInventories.Count == 0)
 			{
 				this.ShouldSerializeProductInventoriesValue = false;
 			}
-			if(this.ProductListPriceHistories.Count == 0)
+
+			if (this.ProductListPriceHistories.Count == 0)
 			{
 				this.ShouldSerializeProductListPriceHistoriesValue = false;
 			}
-			if(this.ProductModels.Count == 0)
+
+			if (this.ProductModels.Count == 0)
 			{
 				this.ShouldSerializeProductModelsValue = false;
 			}
-			if(this.ProductModelIllustrations.Count == 0)
+
+			if (this.ProductModelIllustrations.Count == 0)
 			{
 				this.ShouldSerializeProductModelIllustrationsValue = false;
 			}
-			if(this.ProductModelProductDescriptionCultures.Count == 0)
+
+			if (this.ProductModelProductDescriptionCultures.Count == 0)
 			{
 				this.ShouldSerializeProductModelProductDescriptionCulturesValue = false;
 			}
-			if(this.ProductPhotoes.Count == 0)
+
+			if (this.ProductPhotoes.Count == 0)
 			{
 				this.ShouldSerializeProductPhotoesValue = false;
 			}
-			if(this.ProductProductPhotoes.Count == 0)
+
+			if (this.ProductProductPhotoes.Count == 0)
 			{
 				this.ShouldSerializeProductProductPhotoesValue = false;
 			}
-			if(this.ProductReviews.Count == 0)
+
+			if (this.ProductReviews.Count == 0)
 			{
 				this.ShouldSerializeProductReviewsValue = false;
 			}
-			if(this.ProductSubcategories.Count == 0)
+
+			if (this.ProductSubcategories.Count == 0)
 			{
 				this.ShouldSerializeProductSubcategoriesValue = false;
 			}
-			if(this.ScrapReasons.Count == 0)
+
+			if (this.ScrapReasons.Count == 0)
 			{
 				this.ShouldSerializeScrapReasonsValue = false;
 			}
-			if(this.TransactionHistories.Count == 0)
+
+			if (this.TransactionHistories.Count == 0)
 			{
 				this.ShouldSerializeTransactionHistoriesValue = false;
 			}
-			if(this.TransactionHistoryArchives.Count == 0)
+
+			if (this.TransactionHistoryArchives.Count == 0)
 			{
 				this.ShouldSerializeTransactionHistoryArchivesValue = false;
 			}
-			if(this.UnitMeasures.Count == 0)
+
+			if (this.UnitMeasures.Count == 0)
 			{
 				this.ShouldSerializeUnitMeasuresValue = false;
 			}
-			if(this.WorkOrders.Count == 0)
+
+			if (this.WorkOrders.Count == 0)
 			{
 				this.ShouldSerializeWorkOrdersValue = false;
 			}
-			if(this.WorkOrderRoutings.Count == 0)
+
+			if (this.WorkOrderRoutings.Count == 0)
 			{
 				this.ShouldSerializeWorkOrderRoutingsValue = false;
 			}
 
-			if(this.ProductVendors.Count == 0)
+			if (this.ProductVendors.Count == 0)
 			{
 				this.ShouldSerializeProductVendorsValue = false;
 			}
-			if(this.PurchaseOrderDetails.Count == 0)
+
+			if (this.PurchaseOrderDetails.Count == 0)
 			{
 				this.ShouldSerializePurchaseOrderDetailsValue = false;
 			}
-			if(this.PurchaseOrderHeaders.Count == 0)
+
+			if (this.PurchaseOrderHeaders.Count == 0)
 			{
 				this.ShouldSerializePurchaseOrderHeadersValue = false;
 			}
-			if(this.ShipMethods.Count == 0)
+
+			if (this.ShipMethods.Count == 0)
 			{
 				this.ShouldSerializeShipMethodsValue = false;
 			}
-			if(this.Vendors.Count == 0)
+
+			if (this.Vendors.Count == 0)
 			{
 				this.ShouldSerializeVendorsValue = false;
 			}
 
-			if(this.CountryRegionCurrencies.Count == 0)
+			if (this.CountryRegionCurrencies.Count == 0)
 			{
 				this.ShouldSerializeCountryRegionCurrenciesValue = false;
 			}
-			if(this.CreditCards.Count == 0)
+
+			if (this.CreditCards.Count == 0)
 			{
 				this.ShouldSerializeCreditCardsValue = false;
 			}
-			if(this.Currencies.Count == 0)
+
+			if (this.Currencies.Count == 0)
 			{
 				this.ShouldSerializeCurrenciesValue = false;
 			}
-			if(this.CurrencyRates.Count == 0)
+
+			if (this.CurrencyRates.Count == 0)
 			{
 				this.ShouldSerializeCurrencyRatesValue = false;
 			}
-			if(this.Customers.Count == 0)
+
+			if (this.Customers.Count == 0)
 			{
 				this.ShouldSerializeCustomersValue = false;
 			}
-			if(this.PersonCreditCards.Count == 0)
+
+			if (this.PersonCreditCards.Count == 0)
 			{
 				this.ShouldSerializePersonCreditCardsValue = false;
 			}
-			if(this.SalesOrderDetails.Count == 0)
+
+			if (this.SalesOrderDetails.Count == 0)
 			{
 				this.ShouldSerializeSalesOrderDetailsValue = false;
 			}
-			if(this.SalesOrderHeaders.Count == 0)
+
+			if (this.SalesOrderHeaders.Count == 0)
 			{
 				this.ShouldSerializeSalesOrderHeadersValue = false;
 			}
-			if(this.SalesOrderHeaderSalesReasons.Count == 0)
+
+			if (this.SalesOrderHeaderSalesReasons.Count == 0)
 			{
 				this.ShouldSerializeSalesOrderHeaderSalesReasonsValue = false;
 			}
-			if(this.SalesPersons.Count == 0)
+
+			if (this.SalesPersons.Count == 0)
 			{
 				this.ShouldSerializeSalesPersonsValue = false;
 			}
-			if(this.SalesPersonQuotaHistories.Count == 0)
+
+			if (this.SalesPersonQuotaHistories.Count == 0)
 			{
 				this.ShouldSerializeSalesPersonQuotaHistoriesValue = false;
 			}
-			if(this.SalesReasons.Count == 0)
+
+			if (this.SalesReasons.Count == 0)
 			{
 				this.ShouldSerializeSalesReasonsValue = false;
 			}
-			if(this.SalesTaxRates.Count == 0)
+
+			if (this.SalesTaxRates.Count == 0)
 			{
 				this.ShouldSerializeSalesTaxRatesValue = false;
 			}
-			if(this.SalesTerritories.Count == 0)
+
+			if (this.SalesTerritories.Count == 0)
 			{
 				this.ShouldSerializeSalesTerritoriesValue = false;
 			}
-			if(this.SalesTerritoryHistories.Count == 0)
+
+			if (this.SalesTerritoryHistories.Count == 0)
 			{
 				this.ShouldSerializeSalesTerritoryHistoriesValue = false;
 			}
-			if(this.ShoppingCartItems.Count == 0)
+
+			if (this.ShoppingCartItems.Count == 0)
 			{
 				this.ShouldSerializeShoppingCartItemsValue = false;
 			}
-			if(this.SpecialOffers.Count == 0)
+
+			if (this.SpecialOffers.Count == 0)
 			{
 				this.ShouldSerializeSpecialOffersValue = false;
 			}
-			if(this.SpecialOfferProducts.Count == 0)
+
+			if (this.SpecialOfferProducts.Count == 0)
 			{
 				this.ShouldSerializeSpecialOfferProductsValue = false;
 			}
-			if(this.Stores.Count == 0)
+
+			if (this.Stores.Count == 0)
 			{
 				this.ShouldSerializeStoresValue = false;
 			}
@@ -1531,5 +1669,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1cf6d4d790a17f84130972f0989db993</Hash>
+    <Hash>86585489b6349d7d705e510a23900c83</Hash>
 </Codenesium>*/

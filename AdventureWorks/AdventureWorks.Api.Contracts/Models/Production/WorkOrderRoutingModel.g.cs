@@ -9,17 +9,19 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public WorkOrderRoutingModel()
 		{}
-		public WorkOrderRoutingModel(int productID,
-		                             short operationSequence,
-		                             short locationID,
-		                             DateTime scheduledStartDate,
-		                             DateTime scheduledEndDate,
-		                             Nullable<DateTime> actualStartDate,
-		                             Nullable<DateTime> actualEndDate,
-		                             Nullable<decimal> actualResourceHrs,
-		                             decimal plannedCost,
-		                             Nullable<decimal> actualCost,
-		                             DateTime modifiedDate)
+
+		public WorkOrderRoutingModel(
+			int productID,
+			short operationSequence,
+			short locationID,
+			DateTime scheduledStartDate,
+			DateTime scheduledEndDate,
+			Nullable<DateTime> actualStartDate,
+			Nullable<DateTime> actualEndDate,
+			Nullable<decimal> actualResourceHrs,
+			decimal plannedCost,
+			Nullable<decimal> actualCost,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.OperationSequence = operationSequence;
@@ -34,158 +36,180 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private short _operationSequence;
+		private short operationSequence;
+
 		[Required]
 		public short OperationSequence
 		{
 			get
 			{
-				return _operationSequence;
+				return this.operationSequence;
 			}
+
 			set
 			{
-				this._operationSequence = value;
+				this.operationSequence = value;
 			}
 		}
 
-		private short _locationID;
+		private short locationID;
+
 		[Required]
 		public short LocationID
 		{
 			get
 			{
-				return _locationID;
+				return this.locationID;
 			}
+
 			set
 			{
-				this._locationID = value;
+				this.locationID = value;
 			}
 		}
 
-		private DateTime _scheduledStartDate;
+		private DateTime scheduledStartDate;
+
 		[Required]
 		public DateTime ScheduledStartDate
 		{
 			get
 			{
-				return _scheduledStartDate;
+				return this.scheduledStartDate;
 			}
+
 			set
 			{
-				this._scheduledStartDate = value;
+				this.scheduledStartDate = value;
 			}
 		}
 
-		private DateTime _scheduledEndDate;
+		private DateTime scheduledEndDate;
+
 		[Required]
 		public DateTime ScheduledEndDate
 		{
 			get
 			{
-				return _scheduledEndDate;
+				return this.scheduledEndDate;
 			}
+
 			set
 			{
-				this._scheduledEndDate = value;
+				this.scheduledEndDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _actualStartDate;
+		private Nullable<DateTime> actualStartDate;
+
 		public Nullable<DateTime> ActualStartDate
 		{
 			get
 			{
-				return _actualStartDate.IsEmptyOrZeroOrNull() ? null : _actualStartDate;
+				return this.actualStartDate.IsEmptyOrZeroOrNull() ? null : this.actualStartDate;
 			}
+
 			set
 			{
-				this._actualStartDate = value;
+				this.actualStartDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _actualEndDate;
+		private Nullable<DateTime> actualEndDate;
+
 		public Nullable<DateTime> ActualEndDate
 		{
 			get
 			{
-				return _actualEndDate.IsEmptyOrZeroOrNull() ? null : _actualEndDate;
+				return this.actualEndDate.IsEmptyOrZeroOrNull() ? null : this.actualEndDate;
 			}
+
 			set
 			{
-				this._actualEndDate = value;
+				this.actualEndDate = value;
 			}
 		}
 
-		private Nullable<decimal> _actualResourceHrs;
+		private Nullable<decimal> actualResourceHrs;
+
 		public Nullable<decimal> ActualResourceHrs
 		{
 			get
 			{
-				return _actualResourceHrs.IsEmptyOrZeroOrNull() ? null : _actualResourceHrs;
+				return this.actualResourceHrs.IsEmptyOrZeroOrNull() ? null : this.actualResourceHrs;
 			}
+
 			set
 			{
-				this._actualResourceHrs = value;
+				this.actualResourceHrs = value;
 			}
 		}
 
-		private decimal _plannedCost;
+		private decimal plannedCost;
+
 		[Required]
 		public decimal PlannedCost
 		{
 			get
 			{
-				return _plannedCost;
+				return this.plannedCost;
 			}
+
 			set
 			{
-				this._plannedCost = value;
+				this.plannedCost = value;
 			}
 		}
 
-		private Nullable<decimal> _actualCost;
+		private Nullable<decimal> actualCost;
+
 		public Nullable<decimal> ActualCost
 		{
 			get
 			{
-				return _actualCost.IsEmptyOrZeroOrNull() ? null : _actualCost;
+				return this.actualCost.IsEmptyOrZeroOrNull() ? null : this.actualCost;
 			}
+
 			set
 			{
-				this._actualCost = value;
+				this.actualCost = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>db0cc47339262a11c0ee733bdaea8112</Hash>
+    <Hash>6ad2efda52ebc8296708c91a5936c770</Hash>
 </Codenesium>*/

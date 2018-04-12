@@ -7,11 +7,13 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductProductPhotoRepository
 	{
-		int Create(int productPhotoID,
-		           bool primary,
-		           DateTime modifiedDate);
+		int Create(
+			int productPhotoID,
+			bool primary,
+			DateTime modifiedDate);
 
-		void Update(int productID, int productPhotoID,
+		void Update(int productID,
+		            int productPhotoID,
 		            bool primary,
 		            DateTime modifiedDate);
 
@@ -21,14 +23,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOProductProductPhoto GetByIdDirect(int productID);
 
-		Response GetWhere(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOProductProductPhoto> GetWhereDirect(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOProductProductPhoto> GetWhereDirect(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9076d836e95267a8588441f2af4a2e9c</Hash>
+    <Hash>c21483fa98c6b2ffb58dc85486406972</Hash>
 </Codenesium>*/

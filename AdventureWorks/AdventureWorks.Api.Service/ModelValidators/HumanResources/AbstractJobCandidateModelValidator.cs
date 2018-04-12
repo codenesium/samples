@@ -20,10 +20,10 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
+		public IEmployeeRepository EmployeeRepository { get; set; }
 		public virtual void BusinessEntityIDRules()
 		{
-			RuleFor(x => x.BusinessEntityID).Must(BeValidEmployee).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BusinessEntityID).Must(this.BeValidEmployee).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ResumeRules()
@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidEmployee(Nullable<int> id)
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9a2cfea6c0200854b70b0ef94276bc61</Hash>
+    <Hash>c2014cb1bcdff677d5916ac1d9f8da05</Hash>
 </Codenesium>*/

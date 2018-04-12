@@ -9,15 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOBillOfMaterials()
 		{}
 
-		public POCOBillOfMaterials(int billOfMaterialsID,
-		                           Nullable<int> productAssemblyID,
-		                           int componentID,
-		                           DateTime startDate,
-		                           Nullable<DateTime> endDate,
-		                           string unitMeasureCode,
-		                           short bOMLevel,
-		                           decimal perAssemblyQty,
-		                           DateTime modifiedDate)
+		public POCOBillOfMaterials(
+			int billOfMaterialsID,
+			Nullable<int> productAssemblyID,
+			int componentID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			string unitMeasureCode,
+			short bOMLevel,
+			decimal perAssemblyQty,
+			DateTime modifiedDate)
 		{
 			this.BillOfMaterialsID = billOfMaterialsID.ToInt();
 			this.StartDate = startDate.ToDateTime();
@@ -26,94 +27,94 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			ProductAssemblyID = new ReferenceEntity<Nullable<int>>(productAssemblyID,
-			                                                       "Product");
-			ComponentID = new ReferenceEntity<int>(componentID,
-			                                       "Product");
-			UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
-			                                              "UnitMeasure");
+			this.ProductAssemblyID = new ReferenceEntity<Nullable<int>>(productAssemblyID,
+			                                                            "Product");
+			this.ComponentID = new ReferenceEntity<int>(componentID,
+			                                            "Product");
+			this.UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
+			                                                   "UnitMeasure");
 		}
 
-		public int BillOfMaterialsID {get; set;}
-		public ReferenceEntity<Nullable<int>>ProductAssemblyID {get; set;}
-		public ReferenceEntity<int>ComponentID {get; set;}
-		public DateTime StartDate {get; set;}
-		public Nullable<DateTime> EndDate {get; set;}
-		public ReferenceEntity<string>UnitMeasureCode {get; set;}
-		public short BOMLevel {get; set;}
-		public decimal PerAssemblyQty {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int BillOfMaterialsID { get; set; }
+		public ReferenceEntity<Nullable<int>> ProductAssemblyID { get; set; }
+		public ReferenceEntity<int> ComponentID { get; set; }
+		public DateTime StartDate { get; set; }
+		public Nullable<DateTime> EndDate { get; set; }
+		public ReferenceEntity<string> UnitMeasureCode { get; set; }
+		public short BOMLevel { get; set; }
+		public decimal PerAssemblyQty { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBillOfMaterialsIDValue {get; set;} = true;
+		public bool ShouldSerializeBillOfMaterialsIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBillOfMaterialsID()
 		{
-			return ShouldSerializeBillOfMaterialsIDValue;
+			return this.ShouldSerializeBillOfMaterialsIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductAssemblyIDValue {get; set;} = true;
+		public bool ShouldSerializeProductAssemblyIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductAssemblyID()
 		{
-			return ShouldSerializeProductAssemblyIDValue;
+			return this.ShouldSerializeProductAssemblyIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeComponentIDValue {get; set;} = true;
+		public bool ShouldSerializeComponentIDValue { get; set; } = true;
 
 		public bool ShouldSerializeComponentID()
 		{
-			return ShouldSerializeComponentIDValue;
+			return this.ShouldSerializeComponentIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue {get; set;} = true;
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
 
 		public bool ShouldSerializeStartDate()
 		{
-			return ShouldSerializeStartDateValue;
+			return this.ShouldSerializeStartDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEndDateValue {get; set;} = true;
+		public bool ShouldSerializeEndDateValue { get; set; } = true;
 
 		public bool ShouldSerializeEndDate()
 		{
-			return ShouldSerializeEndDateValue;
+			return this.ShouldSerializeEndDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeUnitMeasureCodeValue {get; set;} = true;
+		public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeUnitMeasureCode()
 		{
-			return ShouldSerializeUnitMeasureCodeValue;
+			return this.ShouldSerializeUnitMeasureCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBOMLevelValue {get; set;} = true;
+		public bool ShouldSerializeBOMLevelValue { get; set; } = true;
 
 		public bool ShouldSerializeBOMLevel()
 		{
-			return ShouldSerializeBOMLevelValue;
+			return this.ShouldSerializeBOMLevelValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePerAssemblyQtyValue {get; set;} = true;
+		public bool ShouldSerializePerAssemblyQtyValue { get; set; } = true;
 
 		public bool ShouldSerializePerAssemblyQty()
 		{
-			return ShouldSerializePerAssemblyQtyValue;
+			return this.ShouldSerializePerAssemblyQtyValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -132,5 +133,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ffc9080dd97861e8294749913deff510</Hash>
+    <Hash>0f69627edcd0ae3d8439bc76850014d8</Hash>
 </Codenesium>*/

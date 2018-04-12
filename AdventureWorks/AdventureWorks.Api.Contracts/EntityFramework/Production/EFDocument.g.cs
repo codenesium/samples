@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Document", Schema="Production")]
@@ -10,20 +11,21 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFDocument()
 		{}
 
-		public void SetProperties(Guid documentNode,
-		                          Nullable<short> documentLevel,
-		                          string title,
-		                          int owner,
-		                          bool folderFlag,
-		                          string fileName,
-		                          string fileExtension,
-		                          string revision,
-		                          int changeNumber,
-		                          int status,
-		                          string documentSummary,
-		                          byte[] document1,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			Guid documentNode,
+			Nullable<short> documentLevel,
+			string title,
+			int owner,
+			bool folderFlag,
+			string fileName,
+			string fileExtension,
+			string revision,
+			int changeNumber,
+			int status,
+			string documentSummary,
+			byte[] document1,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.DocumentNode = documentNode;
 			this.DocumentLevel = documentLevel;
@@ -42,53 +44,53 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("DocumentNode", TypeName="hierarchyid(892)")]
-		public Guid DocumentNode {get; set;}
+		public Guid DocumentNode { get; set; }
 
 		[Column("DocumentLevel", TypeName="smallint")]
-		public Nullable<short> DocumentLevel {get; set;}
+		public Nullable<short> DocumentLevel { get; set; }
 
 		[Column("Title", TypeName="nvarchar(50)")]
-		public string Title {get; set;}
+		public string Title { get; set; }
 
 		[Column("Owner", TypeName="int")]
-		public int Owner {get; set;}
+		public int Owner { get; set; }
 
 		[Column("FolderFlag", TypeName="bit")]
-		public bool FolderFlag {get; set;}
+		public bool FolderFlag { get; set; }
 
 		[Column("FileName", TypeName="nvarchar(400)")]
-		public string FileName {get; set;}
+		public string FileName { get; set; }
 
 		[Column("FileExtension", TypeName="nvarchar(8)")]
-		public string FileExtension {get; set;}
+		public string FileExtension { get; set; }
 
 		[Column("Revision", TypeName="nchar(5)")]
-		public string Revision {get; set;}
+		public string Revision { get; set; }
 
 		[Column("ChangeNumber", TypeName="int")]
-		public int ChangeNumber {get; set;}
+		public int ChangeNumber { get; set; }
 
 		[Column("Status", TypeName="tinyint")]
-		public int Status {get; set;}
+		public int Status { get; set; }
 
 		[Column("DocumentSummary", TypeName="nvarchar(-1)")]
-		public string DocumentSummary {get; set;}
+		public string DocumentSummary { get; set; }
 
 		[Column("Document", TypeName="varbinary(-1)")]
-		public byte[] Document1 {get; set;}
+		public byte[] Document1 { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("Owner")]
 		public virtual EFEmployee Employee { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0fe1844ef6e5859e5e884e9ed27a3506</Hash>
+    <Hash>882f3dfb0b5f570e9007abc2b85c52a1</Hash>
 </Codenesium>*/

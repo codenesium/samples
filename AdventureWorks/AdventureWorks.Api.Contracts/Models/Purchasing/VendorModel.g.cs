@@ -9,13 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public VendorModel()
 		{}
-		public VendorModel(string accountNumber,
-		                   string name,
-		                   int creditRating,
-		                   bool preferredVendorStatus,
-		                   bool activeFlag,
-		                   string purchasingWebServiceURL,
-		                   DateTime modifiedDate)
+
+		public VendorModel(
+			string accountNumber,
+			string name,
+			int creditRating,
+			bool preferredVendorStatus,
+			bool activeFlag,
+			string purchasingWebServiceURL,
+			DateTime modifiedDate)
 		{
 			this.AccountNumber = accountNumber;
 			this.Name = name;
@@ -26,105 +28,119 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _accountNumber;
+		private string accountNumber;
+
 		[Required]
 		public string AccountNumber
 		{
 			get
 			{
-				return _accountNumber;
+				return this.accountNumber;
 			}
+
 			set
 			{
-				this._accountNumber = value;
+				this.accountNumber = value;
 			}
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private int _creditRating;
+		private int creditRating;
+
 		[Required]
 		public int CreditRating
 		{
 			get
 			{
-				return _creditRating;
+				return this.creditRating;
 			}
+
 			set
 			{
-				this._creditRating = value;
+				this.creditRating = value;
 			}
 		}
 
-		private bool _preferredVendorStatus;
+		private bool preferredVendorStatus;
+
 		[Required]
 		public bool PreferredVendorStatus
 		{
 			get
 			{
-				return _preferredVendorStatus;
+				return this.preferredVendorStatus;
 			}
+
 			set
 			{
-				this._preferredVendorStatus = value;
+				this.preferredVendorStatus = value;
 			}
 		}
 
-		private bool _activeFlag;
+		private bool activeFlag;
+
 		[Required]
 		public bool ActiveFlag
 		{
 			get
 			{
-				return _activeFlag;
+				return this.activeFlag;
 			}
+
 			set
 			{
-				this._activeFlag = value;
+				this.activeFlag = value;
 			}
 		}
 
-		private string _purchasingWebServiceURL;
+		private string purchasingWebServiceURL;
+
 		public string PurchasingWebServiceURL
 		{
 			get
 			{
-				return _purchasingWebServiceURL.IsEmptyOrZeroOrNull() ? null : _purchasingWebServiceURL;
+				return this.purchasingWebServiceURL.IsEmptyOrZeroOrNull() ? null : this.purchasingWebServiceURL;
 			}
+
 			set
 			{
-				this._purchasingWebServiceURL = value;
+				this.purchasingWebServiceURL = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>07e3d236a5b04d61407792fa1eb4fa4b</Hash>
+    <Hash>cf0bd4b154375dd5f0947d638d24f10a</Hash>
 </Codenesium>*/

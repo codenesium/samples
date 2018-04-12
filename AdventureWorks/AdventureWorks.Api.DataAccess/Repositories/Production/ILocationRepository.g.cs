@@ -7,12 +7,14 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ILocationRepository
 	{
-		short Create(string name,
-		             decimal costRate,
-		             decimal availability,
-		             DateTime modifiedDate);
+		short Create(
+			string name,
+			decimal costRate,
+			decimal availability,
+			DateTime modifiedDate);
 
-		void Update(short locationID, string name,
+		void Update(short locationID,
+		            string name,
 		            decimal costRate,
 		            decimal availability,
 		            DateTime modifiedDate);
@@ -23,14 +25,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOLocation GetByIdDirect(short locationID);
 
-		Response GetWhere(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOLocation> GetWhereDirect(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOLocation> GetWhereDirect(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f94c64f97738470dfa9c7607954fc85e</Hash>
+    <Hash>7bfe3bdd5464a52bd6e1f122e52fc310</Hash>
 </Codenesium>*/

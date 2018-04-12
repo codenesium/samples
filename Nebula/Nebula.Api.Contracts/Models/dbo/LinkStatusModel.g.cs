@@ -9,27 +9,31 @@ namespace NebulaNS.Api.Contracts
 	{
 		public LinkStatusModel()
 		{}
-		public LinkStatusModel(string name)
+
+		public LinkStatusModel(
+			string name)
 		{
 			this.Name = name;
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa868a10babf16bb0eabbffdd12ce61a</Hash>
+    <Hash>c5aa665398f1cd78a242bf2f784bbc20</Hash>
 </Codenesium>*/

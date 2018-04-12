@@ -9,18 +9,20 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PersonModel()
 		{}
-		public PersonModel(string personType,
-		                   bool nameStyle,
-		                   string title,
-		                   string firstName,
-		                   string middleName,
-		                   string lastName,
-		                   string suffix,
-		                   int emailPromotion,
-		                   string additionalContactInfo,
-		                   string demographics,
-		                   Guid rowguid,
-		                   DateTime modifiedDate)
+
+		public PersonModel(
+			string personType,
+			bool nameStyle,
+			string title,
+			string firstName,
+			string middleName,
+			string lastName,
+			string suffix,
+			int emailPromotion,
+			string additionalContactInfo,
+			string demographics,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.PersonType = personType;
 			this.NameStyle = nameStyle;
@@ -36,171 +38,195 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _personType;
+		private string personType;
+
 		[Required]
 		public string PersonType
 		{
 			get
 			{
-				return _personType;
+				return this.personType;
 			}
+
 			set
 			{
-				this._personType = value;
+				this.personType = value;
 			}
 		}
 
-		private bool _nameStyle;
+		private bool nameStyle;
+
 		[Required]
 		public bool NameStyle
 		{
 			get
 			{
-				return _nameStyle;
+				return this.nameStyle;
 			}
+
 			set
 			{
-				this._nameStyle = value;
+				this.nameStyle = value;
 			}
 		}
 
-		private string _title;
+		private string title;
+
 		public string Title
 		{
 			get
 			{
-				return _title.IsEmptyOrZeroOrNull() ? null : _title;
+				return this.title.IsEmptyOrZeroOrNull() ? null : this.title;
 			}
+
 			set
 			{
-				this._title = value;
+				this.title = value;
 			}
 		}
 
-		private string _firstName;
+		private string firstName;
+
 		[Required]
 		public string FirstName
 		{
 			get
 			{
-				return _firstName;
+				return this.firstName;
 			}
+
 			set
 			{
-				this._firstName = value;
+				this.firstName = value;
 			}
 		}
 
-		private string _middleName;
+		private string middleName;
+
 		public string MiddleName
 		{
 			get
 			{
-				return _middleName.IsEmptyOrZeroOrNull() ? null : _middleName;
+				return this.middleName.IsEmptyOrZeroOrNull() ? null : this.middleName;
 			}
+
 			set
 			{
-				this._middleName = value;
+				this.middleName = value;
 			}
 		}
 
-		private string _lastName;
+		private string lastName;
+
 		[Required]
 		public string LastName
 		{
 			get
 			{
-				return _lastName;
+				return this.lastName;
 			}
+
 			set
 			{
-				this._lastName = value;
+				this.lastName = value;
 			}
 		}
 
-		private string _suffix;
+		private string suffix;
+
 		public string Suffix
 		{
 			get
 			{
-				return _suffix.IsEmptyOrZeroOrNull() ? null : _suffix;
+				return this.suffix.IsEmptyOrZeroOrNull() ? null : this.suffix;
 			}
+
 			set
 			{
-				this._suffix = value;
+				this.suffix = value;
 			}
 		}
 
-		private int _emailPromotion;
+		private int emailPromotion;
+
 		[Required]
 		public int EmailPromotion
 		{
 			get
 			{
-				return _emailPromotion;
+				return this.emailPromotion;
 			}
+
 			set
 			{
-				this._emailPromotion = value;
+				this.emailPromotion = value;
 			}
 		}
 
-		private string _additionalContactInfo;
+		private string additionalContactInfo;
+
 		public string AdditionalContactInfo
 		{
 			get
 			{
-				return _additionalContactInfo.IsEmptyOrZeroOrNull() ? null : _additionalContactInfo;
+				return this.additionalContactInfo.IsEmptyOrZeroOrNull() ? null : this.additionalContactInfo;
 			}
+
 			set
 			{
-				this._additionalContactInfo = value;
+				this.additionalContactInfo = value;
 			}
 		}
 
-		private string _demographics;
+		private string demographics;
+
 		public string Demographics
 		{
 			get
 			{
-				return _demographics.IsEmptyOrZeroOrNull() ? null : _demographics;
+				return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
 			}
+
 			set
 			{
-				this._demographics = value;
+				this.demographics = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>617e50762681454d5523ae72741cebc3</Hash>
+    <Hash>74cac465f4d8f0b08efe9f694ec50bc3</Hash>
 </Codenesium>*/

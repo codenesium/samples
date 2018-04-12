@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/buckets")]
-	public class BucketsController: AbstractBucketsController
+	public class BucketController: AbstractBucketController
 	{
-		public BucketsController(
-			ILogger<BucketsController> logger,
+		public BucketController(
+			ILogger<BucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBucketRepository bucketRepository,
 			IBucketModelValidator bucketModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         bucketRepository,
-			         bucketModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       bucketRepository,
+			       bucketModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2c9a00304f6cdae51cf41705e2e3f8aa</Hash>
+    <Hash>be88925cf95a3fdcf88b896b231f8999</Hash>
 </Codenesium>*/

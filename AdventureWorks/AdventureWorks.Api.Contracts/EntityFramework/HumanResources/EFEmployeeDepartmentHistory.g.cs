@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("EmployeeDepartmentHistory", Schema="HumanResources")]
@@ -10,12 +11,13 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFEmployeeDepartmentHistory()
 		{}
 
-		public void SetProperties(int businessEntityID,
-		                          short departmentID,
-		                          int shiftID,
-		                          DateTime startDate,
-		                          Nullable<DateTime> endDate,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int businessEntityID,
+			short departmentID,
+			int shiftID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.DepartmentID = departmentID;
@@ -26,33 +28,35 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID {get; set;}
+		public int BusinessEntityID { get; set; }
 
 		[Column("DepartmentID", TypeName="smallint")]
-		public short DepartmentID {get; set;}
+		public short DepartmentID { get; set; }
 
 		[Column("ShiftID", TypeName="tinyint")]
-		public int ShiftID {get; set;}
+		public int ShiftID { get; set; }
 
 		[Column("StartDate", TypeName="date")]
-		public DateTime StartDate {get; set;}
+		public DateTime StartDate { get; set; }
 
 		[Column("EndDate", TypeName="date")]
-		public Nullable<DateTime> EndDate {get; set;}
+		public Nullable<DateTime> EndDate { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("BusinessEntityID")]
 		public virtual EFEmployee Employee { get; set; }
 
+		[ForeignKey("DepartmentID")]
 		public virtual EFDepartment Department { get; set; }
 
+		[ForeignKey("ShiftID")]
 		public virtual EFShift Shift { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b656293fad326e62b6131b79fe6a8abd</Hash>
+    <Hash>0579dbcd8cebacabe8287dcfad418ad4</Hash>
 </Codenesium>*/

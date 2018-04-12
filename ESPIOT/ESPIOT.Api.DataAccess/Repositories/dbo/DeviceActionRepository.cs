@@ -11,13 +11,15 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public class DeviceActionRepository: AbstractDeviceActionRepository, IDeviceActionRepository
 	{
-		public DeviceActionRepository(ILogger<DeviceActionRepository> logger,
-		                              ApplicationDbContext context) : base(logger,context)
+		public DeviceActionRepository(
+			ILogger<DeviceActionRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
@@ -27,9 +29,9 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFDeviceAction> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFDeviceAction> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFDeviceAction>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDeviceAction>();
 			}
@@ -42,5 +44,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51545da68474233d3c590bee2edf6316</Hash>
+    <Hash>48628698622c2f8e1c8b6c1d0a904b31</Hash>
 </Codenesium>*/

@@ -9,44 +9,45 @@ namespace NebulaNS.Api.Contracts
 		public POCOClasp()
 		{}
 
-		public POCOClasp(int id,
-		                 int previousChainId,
-		                 int nextChainId)
+		public POCOClasp(
+			int id,
+			int previousChainId,
+			int nextChainId)
 		{
 			this.Id = id.ToInt();
 
-			PreviousChainId = new ReferenceEntity<int>(previousChainId,
-			                                           "Chain");
-			NextChainId = new ReferenceEntity<int>(nextChainId,
-			                                       "Chain");
+			this.PreviousChainId = new ReferenceEntity<int>(previousChainId,
+			                                                "Chain");
+			this.NextChainId = new ReferenceEntity<int>(nextChainId,
+			                                            "Chain");
 		}
 
-		public int Id {get; set;}
-		public ReferenceEntity<int>PreviousChainId {get; set;}
-		public ReferenceEntity<int>NextChainId {get; set;}
+		public int Id { get; set; }
+		public ReferenceEntity<int> PreviousChainId { get; set; }
+		public ReferenceEntity<int> NextChainId { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePreviousChainIdValue {get; set;} = true;
+		public bool ShouldSerializePreviousChainIdValue { get; set; } = true;
 
 		public bool ShouldSerializePreviousChainId()
 		{
-			return ShouldSerializePreviousChainIdValue;
+			return this.ShouldSerializePreviousChainIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNextChainIdValue {get; set;} = true;
+		public bool ShouldSerializeNextChainIdValue { get; set; } = true;
 
 		public bool ShouldSerializeNextChainId()
 		{
-			return ShouldSerializeNextChainIdValue;
+			return this.ShouldSerializeNextChainIdValue;
 		}
 
 		public void DisableAllFields()
@@ -59,5 +60,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9c69c3ff9286b35d8adf0d6d253dc6c8</Hash>
+    <Hash>b4004dfb927f556e09671a40de464d40</Hash>
 </Codenesium>*/

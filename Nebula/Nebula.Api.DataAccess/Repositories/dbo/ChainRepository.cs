@@ -11,13 +11,15 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class ChainRepository: AbstractChainRepository, IChainRepository
 	{
-		public ChainRepository(ILogger<ChainRepository> logger,
-		                       ApplicationDbContext context) : base(logger,context)
+		public ChainRepository(
+			ILogger<ChainRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFChain> SearchLinqEF(Expression<Func<EFChain, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFChain> SearchLinqEF(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
 			}
@@ -27,9 +29,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFChain> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFChain> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
 			}
@@ -42,5 +44,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fff11ed909ea9d97214d2dff7cd12f80</Hash>
+    <Hash>0d58157d75a9ebc056bee5e02845cfe1</Hash>
 </Codenesium>*/

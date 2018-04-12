@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/transactionHistoryArchives")]
-	public class TransactionHistoryArchivesController: AbstractTransactionHistoryArchivesController
+	public class TransactionHistoryArchiveController: AbstractTransactionHistoryArchiveController
 	{
-		public TransactionHistoryArchivesController(
-			ILogger<TransactionHistoryArchivesController> logger,
+		public TransactionHistoryArchiveController(
+			ILogger<TransactionHistoryArchiveController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
 			ITransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         transactionHistoryArchiveRepository,
-			         transactionHistoryArchiveModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       transactionHistoryArchiveRepository,
+			       transactionHistoryArchiveModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b210e91f9e33b4aca215282ee2720417</Hash>
+    <Hash>fd378e439c0e665904142388bfcf3832</Hash>
 </Codenesium>*/

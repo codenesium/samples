@@ -7,13 +7,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmployeeDepartmentHistoryRepository
 	{
-		int Create(short departmentID,
-		           int shiftID,
-		           DateTime startDate,
-		           Nullable<DateTime> endDate,
-		           DateTime modifiedDate);
+		int Create(
+			short departmentID,
+			int shiftID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate);
 
-		void Update(int businessEntityID, short departmentID,
+		void Update(int businessEntityID,
+		            short departmentID,
 		            int shiftID,
 		            DateTime startDate,
 		            Nullable<DateTime> endDate,
@@ -25,14 +27,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOEmployeeDepartmentHistory GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOEmployeeDepartmentHistory> GetWhereDirect(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOEmployeeDepartmentHistory> GetWhereDirect(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0b9cde53652d7f66d9e0add7ae881b1</Hash>
+    <Hash>9654d3e2624a80217944936156264f22</Hash>
 </Codenesium>*/

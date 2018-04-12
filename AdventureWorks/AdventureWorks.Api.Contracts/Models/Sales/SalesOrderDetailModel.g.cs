@@ -9,16 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesOrderDetailModel()
 		{}
-		public SalesOrderDetailModel(int salesOrderDetailID,
-		                             string carrierTrackingNumber,
-		                             short orderQty,
-		                             int productID,
-		                             int specialOfferID,
-		                             decimal unitPrice,
-		                             decimal unitPriceDiscount,
-		                             decimal lineTotal,
-		                             Guid rowguid,
-		                             DateTime modifiedDate)
+
+		public SalesOrderDetailModel(
+			int salesOrderDetailID,
+			string carrierTrackingNumber,
+			short orderQty,
+			int productID,
+			int specialOfferID,
+			decimal unitPrice,
+			decimal unitPriceDiscount,
+			decimal lineTotal,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
 			this.CarrierTrackingNumber = carrierTrackingNumber;
@@ -32,147 +34,167 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _salesOrderDetailID;
+		private int salesOrderDetailID;
+
 		[Required]
 		public int SalesOrderDetailID
 		{
 			get
 			{
-				return _salesOrderDetailID;
+				return this.salesOrderDetailID;
 			}
+
 			set
 			{
-				this._salesOrderDetailID = value;
+				this.salesOrderDetailID = value;
 			}
 		}
 
-		private string _carrierTrackingNumber;
+		private string carrierTrackingNumber;
+
 		public string CarrierTrackingNumber
 		{
 			get
 			{
-				return _carrierTrackingNumber.IsEmptyOrZeroOrNull() ? null : _carrierTrackingNumber;
+				return this.carrierTrackingNumber.IsEmptyOrZeroOrNull() ? null : this.carrierTrackingNumber;
 			}
+
 			set
 			{
-				this._carrierTrackingNumber = value;
+				this.carrierTrackingNumber = value;
 			}
 		}
 
-		private short _orderQty;
+		private short orderQty;
+
 		[Required]
 		public short OrderQty
 		{
 			get
 			{
-				return _orderQty;
+				return this.orderQty;
 			}
+
 			set
 			{
-				this._orderQty = value;
+				this.orderQty = value;
 			}
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private int _specialOfferID;
+		private int specialOfferID;
+
 		[Required]
 		public int SpecialOfferID
 		{
 			get
 			{
-				return _specialOfferID;
+				return this.specialOfferID;
 			}
+
 			set
 			{
-				this._specialOfferID = value;
+				this.specialOfferID = value;
 			}
 		}
 
-		private decimal _unitPrice;
+		private decimal unitPrice;
+
 		[Required]
 		public decimal UnitPrice
 		{
 			get
 			{
-				return _unitPrice;
+				return this.unitPrice;
 			}
+
 			set
 			{
-				this._unitPrice = value;
+				this.unitPrice = value;
 			}
 		}
 
-		private decimal _unitPriceDiscount;
+		private decimal unitPriceDiscount;
+
 		[Required]
 		public decimal UnitPriceDiscount
 		{
 			get
 			{
-				return _unitPriceDiscount;
+				return this.unitPriceDiscount;
 			}
+
 			set
 			{
-				this._unitPriceDiscount = value;
+				this.unitPriceDiscount = value;
 			}
 		}
 
-		private decimal _lineTotal;
+		private decimal lineTotal;
+
 		[Required]
 		public decimal LineTotal
 		{
 			get
 			{
-				return _lineTotal;
+				return this.lineTotal;
 			}
+
 			set
 			{
-				this._lineTotal = value;
+				this.lineTotal = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3e9e7407c4ad0b9fb67e1da87cd8a790</Hash>
+    <Hash>1e52f2f7ea4188ad23225857b64192dd</Hash>
 </Codenesium>*/

@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class LocationModelValidator: AbstractLocationModelValidator,ILocationModelValidator
+	public class LocationModelValidator: AbstractLocationModelValidator, ILocationModelValidator
 	{
 		public LocationModelValidator()
 		{   }
@@ -29,5 +30,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>aad59b56c8498ad99e09b21569ea512c</Hash>
+    <Hash>94ba492c9a67acc95b5104c202f033c8</Hash>
 </Codenesium>*/

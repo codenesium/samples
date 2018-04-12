@@ -9,15 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOErrorLog()
 		{}
 
-		public POCOErrorLog(int errorLogID,
-		                    DateTime errorTime,
-		                    string userName,
-		                    int errorNumber,
-		                    Nullable<int> errorSeverity,
-		                    Nullable<int> errorState,
-		                    string errorProcedure,
-		                    Nullable<int> errorLine,
-		                    string errorMessage)
+		public POCOErrorLog(
+			int errorLogID,
+			DateTime errorTime,
+			string userName,
+			int errorNumber,
+			Nullable<int> errorSeverity,
+			Nullable<int> errorState,
+			string errorProcedure,
+			Nullable<int> errorLine,
+			string errorMessage)
 		{
 			this.ErrorLogID = errorLogID.ToInt();
 			this.ErrorTime = errorTime.ToDateTime();
@@ -30,86 +31,86 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ErrorMessage = errorMessage;
 		}
 
-		public int ErrorLogID {get; set;}
-		public DateTime ErrorTime {get; set;}
-		public string UserName {get; set;}
-		public int ErrorNumber {get; set;}
-		public Nullable<int> ErrorSeverity {get; set;}
-		public Nullable<int> ErrorState {get; set;}
-		public string ErrorProcedure {get; set;}
-		public Nullable<int> ErrorLine {get; set;}
-		public string ErrorMessage {get; set;}
+		public int ErrorLogID { get; set; }
+		public DateTime ErrorTime { get; set; }
+		public string UserName { get; set; }
+		public int ErrorNumber { get; set; }
+		public Nullable<int> ErrorSeverity { get; set; }
+		public Nullable<int> ErrorState { get; set; }
+		public string ErrorProcedure { get; set; }
+		public Nullable<int> ErrorLine { get; set; }
+		public string ErrorMessage { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorLogIDValue {get; set;} = true;
+		public bool ShouldSerializeErrorLogIDValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorLogID()
 		{
-			return ShouldSerializeErrorLogIDValue;
+			return this.ShouldSerializeErrorLogIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorTimeValue {get; set;} = true;
+		public bool ShouldSerializeErrorTimeValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorTime()
 		{
-			return ShouldSerializeErrorTimeValue;
+			return this.ShouldSerializeErrorTimeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeUserNameValue {get; set;} = true;
+		public bool ShouldSerializeUserNameValue { get; set; } = true;
 
 		public bool ShouldSerializeUserName()
 		{
-			return ShouldSerializeUserNameValue;
+			return this.ShouldSerializeUserNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorNumberValue {get; set;} = true;
+		public bool ShouldSerializeErrorNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorNumber()
 		{
-			return ShouldSerializeErrorNumberValue;
+			return this.ShouldSerializeErrorNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorSeverityValue {get; set;} = true;
+		public bool ShouldSerializeErrorSeverityValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorSeverity()
 		{
-			return ShouldSerializeErrorSeverityValue;
+			return this.ShouldSerializeErrorSeverityValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorStateValue {get; set;} = true;
+		public bool ShouldSerializeErrorStateValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorState()
 		{
-			return ShouldSerializeErrorStateValue;
+			return this.ShouldSerializeErrorStateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorProcedureValue {get; set;} = true;
+		public bool ShouldSerializeErrorProcedureValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorProcedure()
 		{
-			return ShouldSerializeErrorProcedureValue;
+			return this.ShouldSerializeErrorProcedureValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorLineValue {get; set;} = true;
+		public bool ShouldSerializeErrorLineValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorLine()
 		{
-			return ShouldSerializeErrorLineValue;
+			return this.ShouldSerializeErrorLineValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorMessageValue {get; set;} = true;
+		public bool ShouldSerializeErrorMessageValue { get; set; } = true;
 
 		public bool ShouldSerializeErrorMessage()
 		{
-			return ShouldSerializeErrorMessageValue;
+			return this.ShouldSerializeErrorMessageValue;
 		}
 
 		public void DisableAllFields()
@@ -128,5 +129,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>651ac0c6ae478a7a16d9b567bcb45b66</Hash>
+    <Hash>dea2038ee2a166d7c07b957b4105064e</Hash>
 </Codenesium>*/

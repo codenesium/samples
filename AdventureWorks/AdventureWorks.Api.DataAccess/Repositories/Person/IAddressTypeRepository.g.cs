@@ -7,11 +7,13 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAddressTypeRepository
 	{
-		int Create(string name,
-		           Guid rowguid,
-		           DateTime modifiedDate);
+		int Create(
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate);
 
-		void Update(int addressTypeID, string name,
+		void Update(int addressTypeID,
+		            string name,
 		            Guid rowguid,
 		            DateTime modifiedDate);
 
@@ -21,14 +23,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOAddressType GetByIdDirect(int addressTypeID);
 
-		Response GetWhere(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOAddressType> GetWhereDirect(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOAddressType> GetWhereDirect(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe3db53ff8e929fa80d6169918a19211</Hash>
+    <Hash>3b21e760babeee845819446576b27764</Hash>
 </Codenesium>*/

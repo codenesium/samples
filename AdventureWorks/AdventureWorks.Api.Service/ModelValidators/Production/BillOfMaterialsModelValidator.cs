@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class BillOfMaterialsModelValidator: AbstractBillOfMaterialsModelValidator,IBillOfMaterialsModelValidator
+	public class BillOfMaterialsModelValidator: AbstractBillOfMaterialsModelValidator, IBillOfMaterialsModelValidator
 	{
 		public BillOfMaterialsModelValidator()
 		{   }
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4b5830257fbc07b0b6647f779bf1943f</Hash>
+    <Hash>feeb552bbd76138acaba8e0a478e092c</Hash>
 </Codenesium>*/

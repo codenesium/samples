@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class ShoppingCartItemModelValidator: AbstractShoppingCartItemModelValidator,IShoppingCartItemModelValidator
+	public class ShoppingCartItemModelValidator: AbstractShoppingCartItemModelValidator, IShoppingCartItemModelValidator
 	{
 		public ShoppingCartItemModelValidator()
 		{   }
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9476f6236d0a8532fad3caa577fec6e9</Hash>
+    <Hash>cf1047dfe7e3244a93d50cd6b51f696a</Hash>
 </Codenesium>*/

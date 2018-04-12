@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace ESPIOTNS.Api.Contracts
 {
 	[Table("Device", Schema="dbo")]
@@ -10,9 +11,10 @@ namespace ESPIOTNS.Api.Contracts
 		public EFDevice()
 		{}
 
-		public void SetProperties(int id,
-		                          Guid publicId,
-		                          string name)
+		public void SetProperties(
+			int id,
+			Guid publicId,
+			string name)
 		{
 			this.Id = id.ToInt();
 			this.PublicId = publicId;
@@ -22,16 +24,16 @@ namespace ESPIOTNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
-		public int Id {get; set;}
+		public int Id { get; set; }
 
 		[Column("publicId", TypeName="uniqueidentifier")]
-		public Guid PublicId {get; set;}
+		public Guid PublicId { get; set; }
 
 		[Column("name", TypeName="varchar(90)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4781484c712540b69c95e0549c50a0c</Hash>
+    <Hash>7d0fbcbe2887c77d4c5ac487921b99b7</Hash>
 </Codenesium>*/

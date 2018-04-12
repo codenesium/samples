@@ -9,19 +9,21 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public DocumentModel()
 		{}
-		public DocumentModel(Nullable<short> documentLevel,
-		                     string title,
-		                     int owner,
-		                     bool folderFlag,
-		                     string fileName,
-		                     string fileExtension,
-		                     string revision,
-		                     int changeNumber,
-		                     int status,
-		                     string documentSummary,
-		                     byte[] document1,
-		                     Guid rowguid,
-		                     DateTime modifiedDate)
+
+		public DocumentModel(
+			Nullable<short> documentLevel,
+			string title,
+			int owner,
+			bool folderFlag,
+			string fileName,
+			string fileExtension,
+			string revision,
+			int changeNumber,
+			int status,
+			string documentSummary,
+			byte[] document1,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.DocumentLevel = documentLevel;
 			this.Title = title;
@@ -38,187 +40,213 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private Nullable<short> _documentLevel;
+		private Nullable<short> documentLevel;
+
 		public Nullable<short> DocumentLevel
 		{
 			get
 			{
-				return _documentLevel.IsEmptyOrZeroOrNull() ? null : _documentLevel;
+				return this.documentLevel.IsEmptyOrZeroOrNull() ? null : this.documentLevel;
 			}
+
 			set
 			{
-				this._documentLevel = value;
+				this.documentLevel = value;
 			}
 		}
 
-		private string _title;
+		private string title;
+
 		[Required]
 		public string Title
 		{
 			get
 			{
-				return _title;
+				return this.title;
 			}
+
 			set
 			{
-				this._title = value;
+				this.title = value;
 			}
 		}
 
-		private int _owner;
+		private int owner;
+
 		[Required]
 		public int Owner
 		{
 			get
 			{
-				return _owner;
+				return this.owner;
 			}
+
 			set
 			{
-				this._owner = value;
+				this.owner = value;
 			}
 		}
 
-		private bool _folderFlag;
+		private bool folderFlag;
+
 		[Required]
 		public bool FolderFlag
 		{
 			get
 			{
-				return _folderFlag;
+				return this.folderFlag;
 			}
+
 			set
 			{
-				this._folderFlag = value;
+				this.folderFlag = value;
 			}
 		}
 
-		private string _fileName;
+		private string fileName;
+
 		[Required]
 		public string FileName
 		{
 			get
 			{
-				return _fileName;
+				return this.fileName;
 			}
+
 			set
 			{
-				this._fileName = value;
+				this.fileName = value;
 			}
 		}
 
-		private string _fileExtension;
+		private string fileExtension;
+
 		[Required]
 		public string FileExtension
 		{
 			get
 			{
-				return _fileExtension;
+				return this.fileExtension;
 			}
+
 			set
 			{
-				this._fileExtension = value;
+				this.fileExtension = value;
 			}
 		}
 
-		private string _revision;
+		private string revision;
+
 		[Required]
 		public string Revision
 		{
 			get
 			{
-				return _revision;
+				return this.revision;
 			}
+
 			set
 			{
-				this._revision = value;
+				this.revision = value;
 			}
 		}
 
-		private int _changeNumber;
+		private int changeNumber;
+
 		[Required]
 		public int ChangeNumber
 		{
 			get
 			{
-				return _changeNumber;
+				return this.changeNumber;
 			}
+
 			set
 			{
-				this._changeNumber = value;
+				this.changeNumber = value;
 			}
 		}
 
-		private int _status;
+		private int status;
+
 		[Required]
 		public int Status
 		{
 			get
 			{
-				return _status;
+				return this.status;
 			}
+
 			set
 			{
-				this._status = value;
+				this.status = value;
 			}
 		}
 
-		private string _documentSummary;
+		private string documentSummary;
+
 		public string DocumentSummary
 		{
 			get
 			{
-				return _documentSummary.IsEmptyOrZeroOrNull() ? null : _documentSummary;
+				return this.documentSummary.IsEmptyOrZeroOrNull() ? null : this.documentSummary;
 			}
+
 			set
 			{
-				this._documentSummary = value;
+				this.documentSummary = value;
 			}
 		}
 
-		private byte[] _document1;
+		private byte[] document1;
+
 		public byte[] Document1
 		{
 			get
 			{
-				return _document1.IsEmptyOrZeroOrNull() ? null : _document1;
+				return this.document1.IsEmptyOrZeroOrNull() ? null : this.document1;
 			}
+
 			set
 			{
-				this._document1 = value;
+				this.document1 = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f791b24965822d40ebc1e23205277100</Hash>
+    <Hash>489a85fee4f6472a442020f56ff8620f</Hash>
 </Codenesium>*/

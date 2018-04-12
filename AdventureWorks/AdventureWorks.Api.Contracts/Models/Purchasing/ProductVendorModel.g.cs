@@ -9,16 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductVendorModel()
 		{}
-		public ProductVendorModel(int businessEntityID,
-		                          int averageLeadTime,
-		                          decimal standardPrice,
-		                          Nullable<decimal> lastReceiptCost,
-		                          Nullable<DateTime> lastReceiptDate,
-		                          int minOrderQty,
-		                          int maxOrderQty,
-		                          Nullable<int> onOrderQty,
-		                          string unitMeasureCode,
-		                          DateTime modifiedDate)
+
+		public ProductVendorModel(
+			int businessEntityID,
+			int averageLeadTime,
+			decimal standardPrice,
+			Nullable<decimal> lastReceiptCost,
+			Nullable<DateTime> lastReceiptDate,
+			int minOrderQty,
+			int maxOrderQty,
+			Nullable<int> onOrderQty,
+			string unitMeasureCode,
+			DateTime modifiedDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.AverageLeadTime = averageLeadTime.ToInt();
@@ -32,145 +34,165 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _businessEntityID;
+		private int businessEntityID;
+
 		[Required]
 		public int BusinessEntityID
 		{
 			get
 			{
-				return _businessEntityID;
+				return this.businessEntityID;
 			}
+
 			set
 			{
-				this._businessEntityID = value;
+				this.businessEntityID = value;
 			}
 		}
 
-		private int _averageLeadTime;
+		private int averageLeadTime;
+
 		[Required]
 		public int AverageLeadTime
 		{
 			get
 			{
-				return _averageLeadTime;
+				return this.averageLeadTime;
 			}
+
 			set
 			{
-				this._averageLeadTime = value;
+				this.averageLeadTime = value;
 			}
 		}
 
-		private decimal _standardPrice;
+		private decimal standardPrice;
+
 		[Required]
 		public decimal StandardPrice
 		{
 			get
 			{
-				return _standardPrice;
+				return this.standardPrice;
 			}
+
 			set
 			{
-				this._standardPrice = value;
+				this.standardPrice = value;
 			}
 		}
 
-		private Nullable<decimal> _lastReceiptCost;
+		private Nullable<decimal> lastReceiptCost;
+
 		public Nullable<decimal> LastReceiptCost
 		{
 			get
 			{
-				return _lastReceiptCost.IsEmptyOrZeroOrNull() ? null : _lastReceiptCost;
+				return this.lastReceiptCost.IsEmptyOrZeroOrNull() ? null : this.lastReceiptCost;
 			}
+
 			set
 			{
-				this._lastReceiptCost = value;
+				this.lastReceiptCost = value;
 			}
 		}
 
-		private Nullable<DateTime> _lastReceiptDate;
+		private Nullable<DateTime> lastReceiptDate;
+
 		public Nullable<DateTime> LastReceiptDate
 		{
 			get
 			{
-				return _lastReceiptDate.IsEmptyOrZeroOrNull() ? null : _lastReceiptDate;
+				return this.lastReceiptDate.IsEmptyOrZeroOrNull() ? null : this.lastReceiptDate;
 			}
+
 			set
 			{
-				this._lastReceiptDate = value;
+				this.lastReceiptDate = value;
 			}
 		}
 
-		private int _minOrderQty;
+		private int minOrderQty;
+
 		[Required]
 		public int MinOrderQty
 		{
 			get
 			{
-				return _minOrderQty;
+				return this.minOrderQty;
 			}
+
 			set
 			{
-				this._minOrderQty = value;
+				this.minOrderQty = value;
 			}
 		}
 
-		private int _maxOrderQty;
+		private int maxOrderQty;
+
 		[Required]
 		public int MaxOrderQty
 		{
 			get
 			{
-				return _maxOrderQty;
+				return this.maxOrderQty;
 			}
+
 			set
 			{
-				this._maxOrderQty = value;
+				this.maxOrderQty = value;
 			}
 		}
 
-		private Nullable<int> _onOrderQty;
+		private Nullable<int> onOrderQty;
+
 		public Nullable<int> OnOrderQty
 		{
 			get
 			{
-				return _onOrderQty.IsEmptyOrZeroOrNull() ? null : _onOrderQty;
+				return this.onOrderQty.IsEmptyOrZeroOrNull() ? null : this.onOrderQty;
 			}
+
 			set
 			{
-				this._onOrderQty = value;
+				this.onOrderQty = value;
 			}
 		}
 
-		private string _unitMeasureCode;
+		private string unitMeasureCode;
+
 		[Required]
 		public string UnitMeasureCode
 		{
 			get
 			{
-				return _unitMeasureCode;
+				return this.unitMeasureCode;
 			}
+
 			set
 			{
-				this._unitMeasureCode = value;
+				this.unitMeasureCode = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1feadd4012965a4b929c6cc835023bb</Hash>
+    <Hash>badb93078147513475ad5fb5b84c8dd6</Hash>
 </Codenesium>*/

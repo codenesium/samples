@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractSpecialOfferProductsController: AbstractApiController
+	public abstract class AbstractSpecialOfferProductController: AbstractApiController
 	{
 		protected ISpecialOfferProductRepository specialOfferProductRepository;
+
 		protected ISpecialOfferProductModelValidator specialOfferProductModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractSpecialOfferProductsController(
-			ILogger<AbstractSpecialOfferProductsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractSpecialOfferProductController(
+			ILogger<AbstractSpecialOfferProductController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISpecialOfferProductRepository specialOfferProductRepository,
 			ISpecialOfferProductModelValidator specialOfferProductModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.specialOfferProductRepository = specialOfferProductRepository;
 			this.specialOfferProductModelValidator = specialOfferProductModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.specialOfferProductRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.specialOfferProductRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.specialOfferProductRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,15 +81,16 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.specialOfferProductModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.specialOfferProductRepository.Create(model.ProductID,
-				                                                   model.Rowguid,
-				                                                   model.ModifiedDate);
-				return Ok(id);
+				var id = this.specialOfferProductRepository.Create(
+					model.ProductID,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -97,23 +104,25 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<SpecialOfferProductModel> models)
 		{
 			this.specialOfferProductModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.specialOfferProductModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.specialOfferProductRepository.Create(model.ProductID,
-				                                          model.Rowguid,
-				                                          model.ModifiedDate);
+				this.specialOfferProductRepository.Create(
+					model.ProductID,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -123,26 +132,28 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,SpecialOfferProductModel model)
+		public virtual IActionResult Update(int id, SpecialOfferProductModel model)
 		{
-			if(this.specialOfferProductRepository.GetByIdDirect(id) == null)
+			if (this.specialOfferProductRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.specialOfferProductModelValidator.UpdateMode();
 			var validationResult = this.specialOfferProductModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.specialOfferProductRepository.Update(id,  model.ProductID,
-				                                          model.Rowguid,
-				                                          model.ModifiedDate);
-				return Ok();
+				this.specialOfferProductRepository.Update(
+					id,
+					model.ProductID,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -155,7 +166,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.specialOfferProductRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -168,7 +179,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.specialOfferProductRepository.GetWhere(x => x.SpecialOfferID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -181,11 +192,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.specialOfferProductRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3693a9f7b588db991aa98f0658dc310</Hash>
+    <Hash>7cb26cec5e415102f1053742f71b0459</Hash>
 </Codenesium>*/

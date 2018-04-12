@@ -9,11 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CreditCardModel()
 		{}
-		public CreditCardModel(string cardType,
-		                       string cardNumber,
-		                       int expMonth,
-		                       short expYear,
-		                       DateTime modifiedDate)
+
+		public CreditCardModel(
+			string cardType,
+			string cardNumber,
+			int expMonth,
+			short expYear,
+			DateTime modifiedDate)
 		{
 			this.CardType = cardType;
 			this.CardNumber = cardNumber;
@@ -22,78 +24,88 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _cardType;
+		private string cardType;
+
 		[Required]
 		public string CardType
 		{
 			get
 			{
-				return _cardType;
+				return this.cardType;
 			}
+
 			set
 			{
-				this._cardType = value;
+				this.cardType = value;
 			}
 		}
 
-		private string _cardNumber;
+		private string cardNumber;
+
 		[Required]
 		public string CardNumber
 		{
 			get
 			{
-				return _cardNumber;
+				return this.cardNumber;
 			}
+
 			set
 			{
-				this._cardNumber = value;
+				this.cardNumber = value;
 			}
 		}
 
-		private int _expMonth;
+		private int expMonth;
+
 		[Required]
 		public int ExpMonth
 		{
 			get
 			{
-				return _expMonth;
+				return this.expMonth;
 			}
+
 			set
 			{
-				this._expMonth = value;
+				this.expMonth = value;
 			}
 		}
 
-		private short _expYear;
+		private short expYear;
+
 		[Required]
 		public short ExpYear
 		{
 			get
 			{
-				return _expYear;
+				return this.expYear;
 			}
+
 			set
 			{
-				this._expYear = value;
+				this.expYear = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a675bf707f8557195cf35272515f5409</Hash>
+    <Hash>e28d9e2eb2c7e222788b83c9d26160b8</Hash>
 </Codenesium>*/

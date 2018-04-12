@@ -9,59 +9,67 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductCategoryModel()
 		{}
-		public ProductCategoryModel(string name,
-		                            Guid rowguid,
-		                            DateTime modifiedDate)
+
+		public ProductCategoryModel(
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc58a8f6c05aa831e5fcc6ae561221c6</Hash>
+    <Hash>d76eccf3486c26f8b12b5077fec45d16</Hash>
 </Codenesium>*/

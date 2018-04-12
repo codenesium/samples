@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/creditCards")]
-	public class CreditCardsController: AbstractCreditCardsController
+	public class CreditCardController: AbstractCreditCardController
 	{
-		public CreditCardsController(
-			ILogger<CreditCardsController> logger,
+		public CreditCardController(
+			ILogger<CreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICreditCardRepository creditCardRepository,
 			ICreditCardModelValidator creditCardModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         creditCardRepository,
-			         creditCardModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       creditCardRepository,
+			       creditCardModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fe15d6bbac766624be819667262b9ef6</Hash>
+    <Hash>564303acf042feebc6ea0c7f746d995d</Hash>
 </Codenesium>*/

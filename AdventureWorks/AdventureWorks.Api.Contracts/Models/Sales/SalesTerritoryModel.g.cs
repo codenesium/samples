@@ -9,15 +9,17 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesTerritoryModel()
 		{}
-		public SalesTerritoryModel(string name,
-		                           string countryRegionCode,
-		                           string @group,
-		                           decimal salesYTD,
-		                           decimal salesLastYear,
-		                           decimal costYTD,
-		                           decimal costLastYear,
-		                           Guid rowguid,
-		                           DateTime modifiedDate)
+
+		public SalesTerritoryModel(
+			string name,
+			string countryRegionCode,
+			string @group,
+			decimal salesYTD,
+			decimal salesLastYear,
+			decimal costYTD,
+			decimal costLastYear,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.CountryRegionCode = countryRegionCode;
@@ -30,134 +32,152 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private string _countryRegionCode;
+		private string countryRegionCode;
+
 		[Required]
 		public string CountryRegionCode
 		{
 			get
 			{
-				return _countryRegionCode;
+				return this.countryRegionCode;
 			}
+
 			set
 			{
-				this._countryRegionCode = value;
+				this.countryRegionCode = value;
 			}
 		}
 
 		private string @group;
+
 		[Required]
 		public string @Group
 		{
 			get
 			{
-				return @group;
+				return this.@group;
 			}
+
 			set
 			{
 				this.@group = value;
 			}
 		}
 
-		private decimal _salesYTD;
+		private decimal salesYTD;
+
 		[Required]
 		public decimal SalesYTD
 		{
 			get
 			{
-				return _salesYTD;
+				return this.salesYTD;
 			}
+
 			set
 			{
-				this._salesYTD = value;
+				this.salesYTD = value;
 			}
 		}
 
-		private decimal _salesLastYear;
+		private decimal salesLastYear;
+
 		[Required]
 		public decimal SalesLastYear
 		{
 			get
 			{
-				return _salesLastYear;
+				return this.salesLastYear;
 			}
+
 			set
 			{
-				this._salesLastYear = value;
+				this.salesLastYear = value;
 			}
 		}
 
-		private decimal _costYTD;
+		private decimal costYTD;
+
 		[Required]
 		public decimal CostYTD
 		{
 			get
 			{
-				return _costYTD;
+				return this.costYTD;
 			}
+
 			set
 			{
-				this._costYTD = value;
+				this.costYTD = value;
 			}
 		}
 
-		private decimal _costLastYear;
+		private decimal costLastYear;
+
 		[Required]
 		public decimal CostLastYear
 		{
 			get
 			{
-				return _costLastYear;
+				return this.costLastYear;
 			}
+
 			set
 			{
-				this._costLastYear = value;
+				this.costLastYear = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e8dcaf62d95885e04a7ff56bba01f9ec</Hash>
+    <Hash>1c1c193f5f7445b55b04a55e307b632d</Hash>
 </Codenesium>*/

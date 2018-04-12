@@ -20,18 +20,18 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IMachineRepository MachineRepository {get; set;}
-		public ITeamRepository TeamRepository {get; set;}
+		public IMachineRepository MachineRepository { get; set; }
+		public ITeamRepository TeamRepository { get; set; }
 		public virtual void MachineIdRules()
 		{
-			RuleFor(x => x.MachineId).NotNull();
-			RuleFor(x => x.MachineId).Must(BeValidMachine).When(x => x ?.MachineId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.MachineId).NotNull();
+			this.RuleFor(x => x.MachineId).Must(this.BeValidMachine).When(x => x ?.MachineId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TeamIdRules()
 		{
-			RuleFor(x => x.TeamId).NotNull();
-			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TeamId).NotNull();
+			this.RuleFor(x => x.TeamId).Must(this.BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidMachine(int id)
@@ -47,5 +47,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c4d4cd326f53766f15deea9085fe953a</Hash>
+    <Hash>688f63c23914fab2c2e3e4ebade25667</Hash>
 </Codenesium>*/

@@ -15,43 +15,54 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractCultureRepository(ILogger logger,
-		                                 ApplicationDbContext context)
+		public AbstractCultureRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual string Create(string name,
-		                             DateTime modifiedDate)
+		public virtual string Create(
+			string name,
+			DateTime modifiedDate)
 		{
-			var record = new EFCulture ();
+			var record = new EFCulture();
 
-			MapPOCOToEF(String.Empty, name,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				string.Empty,
+				name,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFCulture>().Add(record);
 			this.context.SaveChanges();
 			return record.CultureID;
 		}
 
-		public virtual void Update(string cultureID, string name,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			string cultureID,
+			string name,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{cultureID}");
 			}
 			else
 			{
-				MapPOCOToEF(cultureID,  name,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					cultureID,
+					name,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(string cultureID)
+		public virtual void Delete(
+			string cultureID)
 		{
 			var record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
 
@@ -70,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.CultureID == cultureID,response);
+			this.SearchLinqPOCO(x => x.CultureID == cultureID, response);
 			return response;
 		}
 
@@ -78,11 +89,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.CultureID == cultureID,response);
+			this.SearchLinqPOCO(x => x.CultureID == cultureID, response);
 			return response.Cultures.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -90,7 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOCulture> GetWhereDirect(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOCulture> GetWhereDirect(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,45 +117,51 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.Cultures;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFCulture, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFCulture, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFCulture> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFCulture> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFCulture> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFCulture> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFCulture> SearchLinqEF(Expression<Func<EFCulture, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFCulture> SearchLinqEF(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFCulture> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFCulture> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(string cultureID, string name,
-		                               DateTime modifiedDate, EFCulture   efCulture)
+		public static void MapPOCOToEF(
+			string cultureID,
+			string name,
+			DateTime modifiedDate,
+			EFCulture efCulture)
 		{
-			efCulture.SetProperties(cultureID,name,modifiedDate.ToDateTime());
+			efCulture.SetProperties(cultureID, name, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFCulture efCulture,Response response)
+		public static void MapEFToPOCO(
+			EFCulture efCulture,
+			Response response)
 		{
-			if(efCulture == null)
+			if (efCulture == null)
 			{
 				return;
 			}
-			response.AddCulture(new POCOCulture(efCulture.CultureID,efCulture.Name,efCulture.ModifiedDate.ToDateTime()));
+
+			response.AddCulture(new POCOCulture(efCulture.CultureID, efCulture.Name, efCulture.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>337f263f51f3062aa286a2e5a2856e77</Hash>
+    <Hash>4affd61c10de48a002ee01b9b9e0bbb0</Hash>
 </Codenesium>*/

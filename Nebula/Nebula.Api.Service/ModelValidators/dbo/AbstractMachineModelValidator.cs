@@ -22,35 +22,35 @@ namespace NebulaNS.Api.Service
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,128);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
 		public virtual void MachineGuidRules()
 		{
-			RuleFor(x => x.MachineGuid).NotNull();
+			this.RuleFor(x => x.MachineGuid).NotNull();
 		}
 
 		public virtual void JwtKeyRules()
 		{
-			RuleFor(x => x.JwtKey).NotNull();
-			RuleFor(x => x.JwtKey).Length(0,128);
+			this.RuleFor(x => x.JwtKey).NotNull();
+			this.RuleFor(x => x.JwtKey).Length(0, 128);
 		}
 
 		public virtual void LastIpAddressRules()
 		{
-			RuleFor(x => x.LastIpAddress).NotNull();
-			RuleFor(x => x.LastIpAddress).Length(0,128);
+			this.RuleFor(x => x.LastIpAddress).NotNull();
+			this.RuleFor(x => x.LastIpAddress).Length(0, 128);
 		}
 
 		public virtual void DescriptionRules()
 		{
-			RuleFor(x => x.Description).NotNull();
-			RuleFor(x => x.Description).Length(0,2147483647);
+			this.RuleFor(x => x.Description).NotNull();
+			this.RuleFor(x => x.Description).Length(0, 2147483647);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ea098ca8333719167f0523c30d9f2ae</Hash>
+    <Hash>18753eb85bc96d6aecc68f5e84439b44</Hash>
 </Codenesium>*/

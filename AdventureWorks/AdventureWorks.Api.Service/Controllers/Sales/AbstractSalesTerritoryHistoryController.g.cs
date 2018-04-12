@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractSalesTerritoryHistoriesController: AbstractApiController
+	public abstract class AbstractSalesTerritoryHistoryController: AbstractApiController
 	{
 		protected ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
+
 		protected ISalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractSalesTerritoryHistoriesController(
-			ILogger<AbstractSalesTerritoryHistoriesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractSalesTerritoryHistoryController(
+			ILogger<AbstractSalesTerritoryHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
 			ISalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
 			this.salesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesTerritoryHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesTerritoryHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.salesTerritoryHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,17 +81,18 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesTerritoryHistoryRepository.Create(model.TerritoryID,
-				                                                     model.StartDate,
-				                                                     model.EndDate,
-				                                                     model.Rowguid,
-				                                                     model.ModifiedDate);
-				return Ok(id);
+				var id = this.salesTerritoryHistoryRepository.Create(
+					model.TerritoryID,
+					model.StartDate,
+					model.EndDate,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -99,25 +106,27 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<SalesTerritoryHistoryModel> models)
 		{
 			this.salesTerritoryHistoryModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.salesTerritoryHistoryRepository.Create(model.TerritoryID,
-				                                            model.StartDate,
-				                                            model.EndDate,
-				                                            model.Rowguid,
-				                                            model.ModifiedDate);
+				this.salesTerritoryHistoryRepository.Create(
+					model.TerritoryID,
+					model.StartDate,
+					model.EndDate,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -127,28 +136,30 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,SalesTerritoryHistoryModel model)
+		public virtual IActionResult Update(int id, SalesTerritoryHistoryModel model)
 		{
-			if(this.salesTerritoryHistoryRepository.GetByIdDirect(id) == null)
+			if (this.salesTerritoryHistoryRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.salesTerritoryHistoryModelValidator.UpdateMode();
 			var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesTerritoryHistoryRepository.Update(id,  model.TerritoryID,
-				                                            model.StartDate,
-				                                            model.EndDate,
-				                                            model.Rowguid,
-				                                            model.ModifiedDate);
-				return Ok();
+				this.salesTerritoryHistoryRepository.Update(
+					id,
+					model.TerritoryID,
+					model.StartDate,
+					model.EndDate,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -161,7 +172,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.salesTerritoryHistoryRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -174,7 +185,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesTerritoryHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -187,11 +198,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesTerritoryHistoryRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>323db181d1dc9f0da3253d11779a6d49</Hash>
+    <Hash>dce7e99d8df627692e58c82567d993a5</Hash>
 </Codenesium>*/

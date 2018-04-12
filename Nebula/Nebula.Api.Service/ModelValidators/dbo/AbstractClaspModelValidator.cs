@@ -20,17 +20,17 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IChainRepository ChainRepository {get; set;}
+		public IChainRepository ChainRepository { get; set; }
 		public virtual void PreviousChainIdRules()
 		{
-			RuleFor(x => x.PreviousChainId).NotNull();
-			RuleFor(x => x.PreviousChainId).Must(BeValidChain).When(x => x ?.PreviousChainId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PreviousChainId).NotNull();
+			this.RuleFor(x => x.PreviousChainId).Must(this.BeValidChain).When(x => x ?.PreviousChainId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NextChainIdRules()
 		{
-			RuleFor(x => x.NextChainId).NotNull();
-			RuleFor(x => x.NextChainId).Must(BeValidChain).When(x => x ?.NextChainId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.NextChainId).NotNull();
+			this.RuleFor(x => x.NextChainId).Must(this.BeValidChain).When(x => x ?.NextChainId != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidChain(int id)
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>880780dbb61cdece8acc1710db6256fe</Hash>
+    <Hash>95b692621cf96d6486e90a7398efdb77</Hash>
 </Codenesium>*/

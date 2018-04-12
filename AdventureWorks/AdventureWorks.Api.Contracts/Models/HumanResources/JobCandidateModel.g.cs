@@ -9,57 +9,65 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public JobCandidateModel()
 		{}
-		public JobCandidateModel(Nullable<int> businessEntityID,
-		                         string resume,
-		                         DateTime modifiedDate)
+
+		public JobCandidateModel(
+			Nullable<int> businessEntityID,
+			string resume,
+			DateTime modifiedDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToNullableInt();
 			this.Resume = resume;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private Nullable<int> _businessEntityID;
+		private Nullable<int> businessEntityID;
+
 		public Nullable<int> BusinessEntityID
 		{
 			get
 			{
-				return _businessEntityID.IsEmptyOrZeroOrNull() ? null : _businessEntityID;
+				return this.businessEntityID.IsEmptyOrZeroOrNull() ? null : this.businessEntityID;
 			}
+
 			set
 			{
-				this._businessEntityID = value;
+				this.businessEntityID = value;
 			}
 		}
 
-		private string _resume;
+		private string resume;
+
 		public string Resume
 		{
 			get
 			{
-				return _resume.IsEmptyOrZeroOrNull() ? null : _resume;
+				return this.resume.IsEmptyOrZeroOrNull() ? null : this.resume;
 			}
+
 			set
 			{
-				this._resume = value;
+				this.resume = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d18a48c0e6d59eaf33b169188dc6ea2a</Hash>
+    <Hash>73c9566d9a7c21ecee1b30918c5468b2</Hash>
 </Codenesium>*/

@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/cultures")]
-	public class CulturesController: AbstractCulturesController
+	public class CultureController: AbstractCultureController
 	{
-		public CulturesController(
-			ILogger<CulturesController> logger,
+		public CultureController(
+			ILogger<CultureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICultureRepository cultureRepository,
 			ICultureModelValidator cultureModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         cultureRepository,
-			         cultureModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       cultureRepository,
+			       cultureModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f2c41e05d8c11de60ab8a66a64c94a19</Hash>
+    <Hash>30714d8faa52a8f8709f226b8e364ca1</Hash>
 </Codenesium>*/

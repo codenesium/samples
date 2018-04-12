@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/countryRegionCurrencies")]
-	public class CountryRegionCurrenciesController: AbstractCountryRegionCurrenciesController
+	public class CountryRegionCurrencyController: AbstractCountryRegionCurrencyController
 	{
-		public CountryRegionCurrenciesController(
-			ILogger<CountryRegionCurrenciesController> logger,
+		public CountryRegionCurrencyController(
+			ILogger<CountryRegionCurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
 			ICountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         countryRegionCurrencyRepository,
-			         countryRegionCurrencyModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       countryRegionCurrencyRepository,
+			       countryRegionCurrencyModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>03bfc5b1cea4e2eb888215552029b767</Hash>
+    <Hash>821f51c4655ef7ae6b53676da5d5df24</Hash>
 </Codenesium>*/

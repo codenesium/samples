@@ -9,18 +9,19 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOWorkOrderRouting()
 		{}
 
-		public POCOWorkOrderRouting(int workOrderID,
-		                            int productID,
-		                            short operationSequence,
-		                            short locationID,
-		                            DateTime scheduledStartDate,
-		                            DateTime scheduledEndDate,
-		                            Nullable<DateTime> actualStartDate,
-		                            Nullable<DateTime> actualEndDate,
-		                            Nullable<decimal> actualResourceHrs,
-		                            decimal plannedCost,
-		                            Nullable<decimal> actualCost,
-		                            DateTime modifiedDate)
+		public POCOWorkOrderRouting(
+			int workOrderID,
+			int productID,
+			short operationSequence,
+			short locationID,
+			DateTime scheduledStartDate,
+			DateTime scheduledEndDate,
+			Nullable<DateTime> actualStartDate,
+			Nullable<DateTime> actualEndDate,
+			Nullable<decimal> actualResourceHrs,
+			decimal plannedCost,
+			Nullable<decimal> actualCost,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.OperationSequence = operationSequence;
@@ -33,119 +34,119 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ActualCost = actualCost;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			WorkOrderID = new ReferenceEntity<int>(workOrderID,
-			                                       "WorkOrder");
-			LocationID = new ReferenceEntity<short>(locationID,
-			                                        "Location");
+			this.WorkOrderID = new ReferenceEntity<int>(workOrderID,
+			                                            "WorkOrder");
+			this.LocationID = new ReferenceEntity<short>(locationID,
+			                                             "Location");
 		}
 
-		public ReferenceEntity<int>WorkOrderID {get; set;}
-		public int ProductID {get; set;}
-		public short OperationSequence {get; set;}
-		public ReferenceEntity<short>LocationID {get; set;}
-		public DateTime ScheduledStartDate {get; set;}
-		public DateTime ScheduledEndDate {get; set;}
-		public Nullable<DateTime> ActualStartDate {get; set;}
-		public Nullable<DateTime> ActualEndDate {get; set;}
-		public Nullable<decimal> ActualResourceHrs {get; set;}
-		public decimal PlannedCost {get; set;}
-		public Nullable<decimal> ActualCost {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> WorkOrderID { get; set; }
+		public int ProductID { get; set; }
+		public short OperationSequence { get; set; }
+		public ReferenceEntity<short> LocationID { get; set; }
+		public DateTime ScheduledStartDate { get; set; }
+		public DateTime ScheduledEndDate { get; set; }
+		public Nullable<DateTime> ActualStartDate { get; set; }
+		public Nullable<DateTime> ActualEndDate { get; set; }
+		public Nullable<decimal> ActualResourceHrs { get; set; }
+		public decimal PlannedCost { get; set; }
+		public Nullable<decimal> ActualCost { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeWorkOrderIDValue {get; set;} = true;
+		public bool ShouldSerializeWorkOrderIDValue { get; set; } = true;
 
 		public bool ShouldSerializeWorkOrderID()
 		{
-			return ShouldSerializeWorkOrderIDValue;
+			return this.ShouldSerializeWorkOrderIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue {get; set;} = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductID()
 		{
-			return ShouldSerializeProductIDValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOperationSequenceValue {get; set;} = true;
+		public bool ShouldSerializeOperationSequenceValue { get; set; } = true;
 
 		public bool ShouldSerializeOperationSequence()
 		{
-			return ShouldSerializeOperationSequenceValue;
+			return this.ShouldSerializeOperationSequenceValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLocationIDValue {get; set;} = true;
+		public bool ShouldSerializeLocationIDValue { get; set; } = true;
 
 		public bool ShouldSerializeLocationID()
 		{
-			return ShouldSerializeLocationIDValue;
+			return this.ShouldSerializeLocationIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeScheduledStartDateValue {get; set;} = true;
+		public bool ShouldSerializeScheduledStartDateValue { get; set; } = true;
 
 		public bool ShouldSerializeScheduledStartDate()
 		{
-			return ShouldSerializeScheduledStartDateValue;
+			return this.ShouldSerializeScheduledStartDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeScheduledEndDateValue {get; set;} = true;
+		public bool ShouldSerializeScheduledEndDateValue { get; set; } = true;
 
 		public bool ShouldSerializeScheduledEndDate()
 		{
-			return ShouldSerializeScheduledEndDateValue;
+			return this.ShouldSerializeScheduledEndDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeActualStartDateValue {get; set;} = true;
+		public bool ShouldSerializeActualStartDateValue { get; set; } = true;
 
 		public bool ShouldSerializeActualStartDate()
 		{
-			return ShouldSerializeActualStartDateValue;
+			return this.ShouldSerializeActualStartDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeActualEndDateValue {get; set;} = true;
+		public bool ShouldSerializeActualEndDateValue { get; set; } = true;
 
 		public bool ShouldSerializeActualEndDate()
 		{
-			return ShouldSerializeActualEndDateValue;
+			return this.ShouldSerializeActualEndDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeActualResourceHrsValue {get; set;} = true;
+		public bool ShouldSerializeActualResourceHrsValue { get; set; } = true;
 
 		public bool ShouldSerializeActualResourceHrs()
 		{
-			return ShouldSerializeActualResourceHrsValue;
+			return this.ShouldSerializeActualResourceHrsValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePlannedCostValue {get; set;} = true;
+		public bool ShouldSerializePlannedCostValue { get; set; } = true;
 
 		public bool ShouldSerializePlannedCost()
 		{
-			return ShouldSerializePlannedCostValue;
+			return this.ShouldSerializePlannedCostValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeActualCostValue {get; set;} = true;
+		public bool ShouldSerializeActualCostValue { get; set; } = true;
 
 		public bool ShouldSerializeActualCost()
 		{
-			return ShouldSerializeActualCostValue;
+			return this.ShouldSerializeActualCostValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -167,5 +168,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b7404bd2f70aee5fbdb098486ca26cfd</Hash>
+    <Hash>54c5476802b04c25d4d8698812301005</Hash>
 </Codenesium>*/

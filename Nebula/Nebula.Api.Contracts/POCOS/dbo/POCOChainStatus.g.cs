@@ -9,30 +9,31 @@ namespace NebulaNS.Api.Contracts
 		public POCOChainStatus()
 		{}
 
-		public POCOChainStatus(int id,
-		                       string name)
+		public POCOChainStatus(
+			int id,
+			string name)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
 		}
 
-		public int Id {get; set;}
-		public string Name {get; set;}
+		public int Id { get; set; }
+		public string Name { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		public void DisableAllFields()
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b25b3d2e862069150674e53f0a58e59a</Hash>
+    <Hash>8dd9ba4b97467ff88ae8c421da570c7f</Hash>
 </Codenesium>*/

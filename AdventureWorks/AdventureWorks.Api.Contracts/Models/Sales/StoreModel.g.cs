@@ -9,11 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public StoreModel()
 		{}
-		public StoreModel(string name,
-		                  Nullable<int> salesPersonID,
-		                  string demographics,
-		                  Guid rowguid,
-		                  DateTime modifiedDate)
+
+		public StoreModel(
+			string name,
+			Nullable<int> salesPersonID,
+			string demographics,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.SalesPersonID = salesPersonID.ToNullableInt();
@@ -22,76 +24,86 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private Nullable<int> _salesPersonID;
+		private Nullable<int> salesPersonID;
+
 		public Nullable<int> SalesPersonID
 		{
 			get
 			{
-				return _salesPersonID.IsEmptyOrZeroOrNull() ? null : _salesPersonID;
+				return this.salesPersonID.IsEmptyOrZeroOrNull() ? null : this.salesPersonID;
 			}
+
 			set
 			{
-				this._salesPersonID = value;
+				this.salesPersonID = value;
 			}
 		}
 
-		private string _demographics;
+		private string demographics;
+
 		public string Demographics
 		{
 			get
 			{
-				return _demographics.IsEmptyOrZeroOrNull() ? null : _demographics;
+				return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
 			}
+
 			set
 			{
-				this._demographics = value;
+				this.demographics = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c9a720a76d1e352ff0003604eaa4ad9</Hash>
+    <Hash>58e1eb0cd21ffa195de29e47e5f2d508</Hash>
 </Codenesium>*/

@@ -20,29 +20,29 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ITeamRepository TeamRepository {get; set;}
-		public IChainStatusRepository ChainStatusRepository {get; set;}
+		public ITeamRepository TeamRepository { get; set; }
+		public IChainStatusRepository ChainStatusRepository { get; set; }
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,128);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
 		public virtual void TeamIdRules()
 		{
-			RuleFor(x => x.TeamId).NotNull();
-			RuleFor(x => x.TeamId).Must(BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TeamId).NotNull();
+			this.RuleFor(x => x.TeamId).Must(this.BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ChainStatusIdRules()
 		{
-			RuleFor(x => x.ChainStatusId).NotNull();
-			RuleFor(x => x.ChainStatusId).Must(BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ChainStatusId).NotNull();
+			this.RuleFor(x => x.ChainStatusId).Must(this.BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ExternalIdRules()
 		{
-			RuleFor(x => x.ExternalId).NotNull();
+			this.RuleFor(x => x.ExternalId).NotNull();
 		}
 
 		private bool BeValidTeam(int id)
@@ -58,5 +58,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>49fcabbb22740270e7298d3cc87b8ae1</Hash>
+    <Hash>f05db7c368a3996438fed672deaaec14</Hash>
 </Codenesium>*/

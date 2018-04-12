@@ -9,44 +9,45 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOCountryRegionCurrency()
 		{}
 
-		public POCOCountryRegionCurrency(string countryRegionCode,
-		                                 string currencyCode,
-		                                 DateTime modifiedDate)
+		public POCOCountryRegionCurrency(
+			string countryRegionCode,
+			string currencyCode,
+			DateTime modifiedDate)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
-			                                                "CountryRegion");
-			CurrencyCode = new ReferenceEntity<string>(currencyCode,
-			                                           "Currency");
+			this.CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
+			                                                     "CountryRegion");
+			this.CurrencyCode = new ReferenceEntity<string>(currencyCode,
+			                                                "Currency");
 		}
 
-		public ReferenceEntity<string>CountryRegionCode {get; set;}
-		public ReferenceEntity<string>CurrencyCode {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<string> CountryRegionCode { get; set; }
+		public ReferenceEntity<string> CurrencyCode { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionCodeValue {get; set;} = true;
+		public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeCountryRegionCode()
 		{
-			return ShouldSerializeCountryRegionCodeValue;
+			return this.ShouldSerializeCountryRegionCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrencyCodeValue {get; set;} = true;
+		public bool ShouldSerializeCurrencyCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeCurrencyCode()
 		{
-			return ShouldSerializeCurrencyCodeValue;
+			return this.ShouldSerializeCurrencyCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -59,5 +60,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4a5593aaa24238feaae2182c351447b5</Hash>
+    <Hash>17e88d4ced6a224e2c347dfb888bceeb</Hash>
 </Codenesium>*/

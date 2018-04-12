@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/departments")]
-	public class DepartmentsController: AbstractDepartmentsController
+	public class DepartmentController: AbstractDepartmentController
 	{
-		public DepartmentsController(
-			ILogger<DepartmentsController> logger,
+		public DepartmentController(
+			ILogger<DepartmentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDepartmentRepository departmentRepository,
 			IDepartmentModelValidator departmentModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         departmentRepository,
-			         departmentModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       departmentRepository,
+			       departmentModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5f854cf98a18d3e56668634576a40d77</Hash>
+    <Hash>b43caed8744f67740af06dc2a38cbcf3</Hash>
 </Codenesium>*/

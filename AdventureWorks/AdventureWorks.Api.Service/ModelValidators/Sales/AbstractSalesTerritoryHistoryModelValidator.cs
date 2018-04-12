@@ -20,17 +20,17 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ISalesPersonRepository SalesPersonRepository {get; set;}
-		public ISalesTerritoryRepository SalesTerritoryRepository {get; set;}
+		public ISalesPersonRepository SalesPersonRepository { get; set; }
+		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void TerritoryIDRules()
 		{
-			RuleFor(x => x.TerritoryID).NotNull();
-			RuleFor(x => x.TerritoryID).Must(BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TerritoryID).NotNull();
+			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void StartDateRules()
 		{
-			RuleFor(x => x.StartDate).NotNull();
+			this.RuleFor(x => x.StartDate).NotNull();
 		}
 
 		public virtual void EndDateRules()
@@ -38,12 +38,12 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidSalesPerson(int id)
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ac53e8c80dedb1d110fbaeaf7afbe47c</Hash>
+    <Hash>b47e5a101bce6bb33ccd6183fa0706a5</Hash>
 </Codenesium>*/

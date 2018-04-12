@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EmployeePayHistoryModel()
 		{}
-		public EmployeePayHistoryModel(DateTime rateChangeDate,
-		                               decimal rate,
-		                               int payFrequency,
-		                               DateTime modifiedDate)
+
+		public EmployeePayHistoryModel(
+			DateTime rateChangeDate,
+			decimal rate,
+			int payFrequency,
+			DateTime modifiedDate)
 		{
 			this.RateChangeDate = rateChangeDate.ToDateTime();
 			this.Rate = rate;
@@ -20,64 +22,72 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private DateTime _rateChangeDate;
+		private DateTime rateChangeDate;
+
 		[Required]
 		public DateTime RateChangeDate
 		{
 			get
 			{
-				return _rateChangeDate;
+				return this.rateChangeDate;
 			}
+
 			set
 			{
-				this._rateChangeDate = value;
+				this.rateChangeDate = value;
 			}
 		}
 
-		private decimal _rate;
+		private decimal rate;
+
 		[Required]
 		public decimal Rate
 		{
 			get
 			{
-				return _rate;
+				return this.rate;
 			}
+
 			set
 			{
-				this._rate = value;
+				this.rate = value;
 			}
 		}
 
-		private int _payFrequency;
+		private int payFrequency;
+
 		[Required]
 		public int PayFrequency
 		{
 			get
 			{
-				return _payFrequency;
+				return this.payFrequency;
 			}
+
 			set
 			{
-				this._payFrequency = value;
+				this.payFrequency = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc9c2f701de23768e75aee5fcf71dedc</Hash>
+    <Hash>051920dda6b3e8341abf5a733def95b7</Hash>
 </Codenesium>*/

@@ -20,39 +20,39 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ICurrencyRepository CurrencyRepository {get; set;}
+		public ICurrencyRepository CurrencyRepository { get; set; }
 		public virtual void CurrencyRateDateRules()
 		{
-			RuleFor(x => x.CurrencyRateDate).NotNull();
+			this.RuleFor(x => x.CurrencyRateDate).NotNull();
 		}
 
 		public virtual void FromCurrencyCodeRules()
 		{
-			RuleFor(x => x.FromCurrencyCode).NotNull();
-			RuleFor(x => x.FromCurrencyCode).Must(BeValidCurrency).When(x => x ?.FromCurrencyCode != null).WithMessage("Invalid reference");
-			RuleFor(x => x.FromCurrencyCode).Length(0,3);
+			this.RuleFor(x => x.FromCurrencyCode).NotNull();
+			this.RuleFor(x => x.FromCurrencyCode).Must(this.BeValidCurrency).When(x => x ?.FromCurrencyCode != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.FromCurrencyCode).Length(0, 3);
 		}
 
 		public virtual void ToCurrencyCodeRules()
 		{
-			RuleFor(x => x.ToCurrencyCode).NotNull();
-			RuleFor(x => x.ToCurrencyCode).Must(BeValidCurrency).When(x => x ?.ToCurrencyCode != null).WithMessage("Invalid reference");
-			RuleFor(x => x.ToCurrencyCode).Length(0,3);
+			this.RuleFor(x => x.ToCurrencyCode).NotNull();
+			this.RuleFor(x => x.ToCurrencyCode).Must(this.BeValidCurrency).When(x => x ?.ToCurrencyCode != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ToCurrencyCode).Length(0, 3);
 		}
 
 		public virtual void AverageRateRules()
 		{
-			RuleFor(x => x.AverageRate).NotNull();
+			this.RuleFor(x => x.AverageRate).NotNull();
 		}
 
 		public virtual void EndOfDayRateRules()
 		{
-			RuleFor(x => x.EndOfDayRate).NotNull();
+			this.RuleFor(x => x.EndOfDayRate).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidCurrency(string id)
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9d84ecc92c39f567f4d3bdbd9bdbe480</Hash>
+    <Hash>a6eb4b15bd176d0afa57e875b543cba7</Hash>
 </Codenesium>*/

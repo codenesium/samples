@@ -15,6 +15,7 @@
 	<PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="2.2.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
   
   <ItemGroup>
@@ -30,6 +31,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+    
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>ESPIOT.Api.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>ESPIOT.Api.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 
 
 

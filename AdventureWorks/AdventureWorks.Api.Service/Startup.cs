@@ -45,16 +45,12 @@ namespace AdventureWorksNS.Api.Service
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext"));
-            });
-
 			services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "AdventureWorks", Version = "v1" });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-                //c.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert token", Name = "Authorization", Type = "apiKey" });
+
+				// c.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert token", Name = "Authorization", Type = "apiKey" });
             });
 
            services.AddCors(config =>
@@ -111,9 +107,12 @@ namespace AdventureWorksNS.Api.Service
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
 
-            // Register our application context as DbContext. This is 
-            //injected into the transaction coordinator
-            builder.RegisterType<ApplicationDbContext>().As<DbContext>();
+            // set up entity framework options
+			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+            options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
+            ApplicationDbContext context = new ApplicationDbContext(options.Options);
+            builder.RegisterInstance(context).As<ApplicationDbContext>();
+            builder.RegisterInstance(context).As<DbContext>();
 
             // Set up the transaction coordinator for Entity Framework
             builder.RegisterType<EntityFrameworkTransactionCoordinator>()
@@ -121,7 +120,7 @@ namespace AdventureWorksNS.Api.Service
                 .InstancePerLifetimeScope();
 
             // AutofacHack is a static empty class we reference to make it possible
-            // to get the assembly name in any project without having to look up an assembly 
+            // to get the assembly name in any project without having to look up an assembly
             // dynamically. This section registers repositories by convention.
             var dataAccessAssembly = typeof(AutofacHack).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
@@ -159,7 +158,7 @@ namespace AdventureWorksNS.Api.Service
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-			//app.UseAuthentication();
+			// app.UseAuthentication();
 
 			// Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -169,8 +168,8 @@ namespace AdventureWorksNS.Api.Service
             {
 				// remove .. from this line to make the swagger endpoint work from a console app
 				// we have this to make it work in IIS with a virtual directory
-				// c.SwaggerEndpoint("../swagger/v1/swagger.json", "ESPIOT");
-                c.SwaggerEndpoint("../swagger/v1/swagger.json", "ESPIOT");
+				// c.SwaggerEndpoint("../swagger/v1/swagger.json", "AdventureWorks");
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "AdventureWorks");
             });
 
             app.UseMvc();

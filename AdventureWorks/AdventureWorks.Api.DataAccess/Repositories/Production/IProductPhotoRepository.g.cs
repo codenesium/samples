@@ -7,13 +7,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductPhotoRepository
 	{
-		int Create(byte[] thumbNailPhoto,
-		           string thumbnailPhotoFileName,
-		           byte[] largePhoto,
-		           string largePhotoFileName,
-		           DateTime modifiedDate);
+		int Create(
+			byte[] thumbNailPhoto,
+			string thumbnailPhotoFileName,
+			byte[] largePhoto,
+			string largePhotoFileName,
+			DateTime modifiedDate);
 
-		void Update(int productPhotoID, byte[] thumbNailPhoto,
+		void Update(int productPhotoID,
+		            byte[] thumbNailPhoto,
 		            string thumbnailPhotoFileName,
 		            byte[] largePhoto,
 		            string largePhotoFileName,
@@ -25,14 +27,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOProductPhoto GetByIdDirect(int productPhotoID);
 
-		Response GetWhere(Expression<Func<EFProductPhoto, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOProductPhoto> GetWhereDirect(Expression<Func<EFProductPhoto, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOProductPhoto> GetWhereDirect(Expression<Func<EFProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b8c8f18d840f5670d42b2db6d271a631</Hash>
+    <Hash>c80c9ce21d0dbaa284aed04dc60e2dd6</Hash>
 </Codenesium>*/

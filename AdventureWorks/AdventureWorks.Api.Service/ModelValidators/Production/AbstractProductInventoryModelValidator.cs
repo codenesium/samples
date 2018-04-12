@@ -20,38 +20,38 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository {get; set;}
-		public ILocationRepository LocationRepository {get; set;}
+		public IProductRepository ProductRepository { get; set; }
+		public ILocationRepository LocationRepository { get; set; }
 		public virtual void LocationIDRules()
 		{
-			RuleFor(x => x.LocationID).NotNull();
-			RuleFor(x => x.LocationID).Must(BeValidLocation).When(x => x ?.LocationID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LocationID).NotNull();
+			this.RuleFor(x => x.LocationID).Must(this.BeValidLocation).When(x => x ?.LocationID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShelfRules()
 		{
-			RuleFor(x => x.Shelf).NotNull();
-			RuleFor(x => x.Shelf).Length(0,10);
+			this.RuleFor(x => x.Shelf).NotNull();
+			this.RuleFor(x => x.Shelf).Length(0, 10);
 		}
 
 		public virtual void BinRules()
 		{
-			RuleFor(x => x.Bin).NotNull();
+			this.RuleFor(x => x.Bin).NotNull();
 		}
 
 		public virtual void QuantityRules()
 		{
-			RuleFor(x => x.Quantity).NotNull();
+			this.RuleFor(x => x.Quantity).NotNull();
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProduct(int id)
@@ -67,5 +67,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>724257058f310eda9103272460e219f4</Hash>
+    <Hash>8ce418b36d66f0ad1b1455a2f159ec16</Hash>
 </Codenesium>*/

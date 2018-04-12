@@ -9,13 +9,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOCurrencyRate()
 		{}
 
-		public POCOCurrencyRate(int currencyRateID,
-		                        DateTime currencyRateDate,
-		                        string fromCurrencyCode,
-		                        string toCurrencyCode,
-		                        decimal averageRate,
-		                        decimal endOfDayRate,
-		                        DateTime modifiedDate)
+		public POCOCurrencyRate(
+			int currencyRateID,
+			DateTime currencyRateDate,
+			string fromCurrencyCode,
+			string toCurrencyCode,
+			decimal averageRate,
+			decimal endOfDayRate,
+			DateTime modifiedDate)
 		{
 			this.CurrencyRateID = currencyRateID.ToInt();
 			this.CurrencyRateDate = currencyRateDate.ToDateTime();
@@ -23,74 +24,74 @@ namespace AdventureWorksNS.Api.Contracts
 			this.EndOfDayRate = endOfDayRate;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			FromCurrencyCode = new ReferenceEntity<string>(fromCurrencyCode,
-			                                               "Currency");
-			ToCurrencyCode = new ReferenceEntity<string>(toCurrencyCode,
-			                                             "Currency");
+			this.FromCurrencyCode = new ReferenceEntity<string>(fromCurrencyCode,
+			                                                    "Currency");
+			this.ToCurrencyCode = new ReferenceEntity<string>(toCurrencyCode,
+			                                                  "Currency");
 		}
 
-		public int CurrencyRateID {get; set;}
-		public DateTime CurrencyRateDate {get; set;}
-		public ReferenceEntity<string>FromCurrencyCode {get; set;}
-		public ReferenceEntity<string>ToCurrencyCode {get; set;}
-		public decimal AverageRate {get; set;}
-		public decimal EndOfDayRate {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int CurrencyRateID { get; set; }
+		public DateTime CurrencyRateDate { get; set; }
+		public ReferenceEntity<string> FromCurrencyCode { get; set; }
+		public ReferenceEntity<string> ToCurrencyCode { get; set; }
+		public decimal AverageRate { get; set; }
+		public decimal EndOfDayRate { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRateIDValue {get; set;} = true;
+		public bool ShouldSerializeCurrencyRateIDValue { get; set; } = true;
 
 		public bool ShouldSerializeCurrencyRateID()
 		{
-			return ShouldSerializeCurrencyRateIDValue;
+			return this.ShouldSerializeCurrencyRateIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRateDateValue {get; set;} = true;
+		public bool ShouldSerializeCurrencyRateDateValue { get; set; } = true;
 
 		public bool ShouldSerializeCurrencyRateDate()
 		{
-			return ShouldSerializeCurrencyRateDateValue;
+			return this.ShouldSerializeCurrencyRateDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFromCurrencyCodeValue {get; set;} = true;
+		public bool ShouldSerializeFromCurrencyCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeFromCurrencyCode()
 		{
-			return ShouldSerializeFromCurrencyCodeValue;
+			return this.ShouldSerializeFromCurrencyCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeToCurrencyCodeValue {get; set;} = true;
+		public bool ShouldSerializeToCurrencyCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeToCurrencyCode()
 		{
-			return ShouldSerializeToCurrencyCodeValue;
+			return this.ShouldSerializeToCurrencyCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAverageRateValue {get; set;} = true;
+		public bool ShouldSerializeAverageRateValue { get; set; } = true;
 
 		public bool ShouldSerializeAverageRate()
 		{
-			return ShouldSerializeAverageRateValue;
+			return this.ShouldSerializeAverageRateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEndOfDayRateValue {get; set;} = true;
+		public bool ShouldSerializeEndOfDayRateValue { get; set; } = true;
 
 		public bool ShouldSerializeEndOfDayRate()
 		{
-			return ShouldSerializeEndOfDayRateValue;
+			return this.ShouldSerializeEndOfDayRateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -107,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c277ece6a2af5cb1530ac8fd97764217</Hash>
+    <Hash>117ee4ac9e9486398c4ab46bfc999b0c</Hash>
 </Codenesium>*/

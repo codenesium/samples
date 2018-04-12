@@ -9,43 +9,44 @@ namespace NebulaNS.Api.Contracts
 		public POCOTeam()
 		{}
 
-		public POCOTeam(int id,
-		                string name,
-		                int organizationId)
+		public POCOTeam(
+			int id,
+			string name,
+			int organizationId)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
 
-			OrganizationId = new ReferenceEntity<int>(organizationId,
-			                                          "Organization");
+			this.OrganizationId = new ReferenceEntity<int>(organizationId,
+			                                               "Organization");
 		}
 
-		public int Id {get; set;}
-		public string Name {get; set;}
-		public ReferenceEntity<int>OrganizationId {get; set;}
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public ReferenceEntity<int> OrganizationId { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrganizationIdValue {get; set;} = true;
+		public bool ShouldSerializeOrganizationIdValue { get; set; } = true;
 
 		public bool ShouldSerializeOrganizationId()
 		{
-			return ShouldSerializeOrganizationIdValue;
+			return this.ShouldSerializeOrganizationIdValue;
 		}
 
 		public void DisableAllFields()
@@ -58,5 +59,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9326126d4cd81526b658f2ba1a76ed63</Hash>
+    <Hash>abda02ef6be11e782735a795faf9e3e3</Hash>
 </Codenesium>*/

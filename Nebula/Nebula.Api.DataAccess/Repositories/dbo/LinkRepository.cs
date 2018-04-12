@@ -11,13 +11,15 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class LinkRepository: AbstractLinkRepository, ILinkRepository
 	{
-		public LinkRepository(ILogger<LinkRepository> logger,
-		                      ApplicationDbContext context) : base(logger,context)
+		public LinkRepository(
+			ILogger<LinkRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFLink> SearchLinqEF(Expression<Func<EFLink, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFLink> SearchLinqEF(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFLink>();
 			}
@@ -27,9 +29,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFLink> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFLink> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFLink>();
 			}
@@ -42,5 +44,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>db3fbd154429ed855ac294607cf77173</Hash>
+    <Hash>5edd2d1999a4c70ff3f7bb1764d43f79</Hash>
 </Codenesium>*/

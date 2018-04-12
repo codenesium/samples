@@ -9,43 +9,49 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PersonCreditCardModel()
 		{}
-		public PersonCreditCardModel(int creditCardID,
-		                             DateTime modifiedDate)
+
+		public PersonCreditCardModel(
+			int creditCardID,
+			DateTime modifiedDate)
 		{
 			this.CreditCardID = creditCardID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _creditCardID;
+		private int creditCardID;
+
 		[Required]
 		public int CreditCardID
 		{
 			get
 			{
-				return _creditCardID;
+				return this.creditCardID;
 			}
+
 			set
 			{
-				this._creditCardID = value;
+				this.creditCardID = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f6ade8e53ce308ec25dcb7b29d3d386</Hash>
+    <Hash>0c1b136b2bffbb5d002922426fe67f53</Hash>
 </Codenesium>*/

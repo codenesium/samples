@@ -20,27 +20,27 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductCategoryRepository ProductCategoryRepository {get; set;}
+		public IProductCategoryRepository ProductCategoryRepository { get; set; }
 		public virtual void ProductCategoryIDRules()
 		{
-			RuleFor(x => x.ProductCategoryID).NotNull();
-			RuleFor(x => x.ProductCategoryID).Must(BeValidProductCategory).When(x => x ?.ProductCategoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProductCategoryID).NotNull();
+			this.RuleFor(x => x.ProductCategoryID).Must(this.BeValidProductCategory).When(x => x ?.ProductCategoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,50);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProductCategory(int id)
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>562e5efec30fdd9d9615fa8015d9b8c4</Hash>
+    <Hash>683c7f6d8b3758f053823766adab27e8</Hash>
 </Codenesium>*/

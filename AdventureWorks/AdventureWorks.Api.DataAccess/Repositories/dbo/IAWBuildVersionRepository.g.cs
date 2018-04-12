@@ -7,11 +7,13 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAWBuildVersionRepository
 	{
-		int Create(string database_Version,
-		           DateTime versionDate,
-		           DateTime modifiedDate);
+		int Create(
+			string database_Version,
+			DateTime versionDate,
+			DateTime modifiedDate);
 
-		void Update(int systemInformationID, string database_Version,
+		void Update(int systemInformationID,
+		            string database_Version,
 		            DateTime versionDate,
 		            DateTime modifiedDate);
 
@@ -21,14 +23,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOAWBuildVersion GetByIdDirect(int systemInformationID);
 
-		Response GetWhere(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOAWBuildVersion> GetWhereDirect(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOAWBuildVersion> GetWhereDirect(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e50c782dcc4ed1c2ecdf3a167c56a46b</Hash>
+    <Hash>6db4a37d5e4eaa44263ebf6a1437ddd9</Hash>
 </Codenesium>*/

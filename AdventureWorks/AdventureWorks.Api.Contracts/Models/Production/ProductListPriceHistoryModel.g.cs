@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductListPriceHistoryModel()
 		{}
-		public ProductListPriceHistoryModel(DateTime startDate,
-		                                    Nullable<DateTime> endDate,
-		                                    decimal listPrice,
-		                                    DateTime modifiedDate)
+
+		public ProductListPriceHistoryModel(
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal listPrice,
+			DateTime modifiedDate)
 		{
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
@@ -20,63 +22,71 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private DateTime _startDate;
+		private DateTime startDate;
+
 		[Required]
 		public DateTime StartDate
 		{
 			get
 			{
-				return _startDate;
+				return this.startDate;
 			}
+
 			set
 			{
-				this._startDate = value;
+				this.startDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _endDate;
+		private Nullable<DateTime> endDate;
+
 		public Nullable<DateTime> EndDate
 		{
 			get
 			{
-				return _endDate.IsEmptyOrZeroOrNull() ? null : _endDate;
+				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
 			}
+
 			set
 			{
-				this._endDate = value;
+				this.endDate = value;
 			}
 		}
 
-		private decimal _listPrice;
+		private decimal listPrice;
+
 		[Required]
 		public decimal ListPrice
 		{
 			get
 			{
-				return _listPrice;
+				return this.listPrice;
 			}
+
 			set
 			{
-				this._listPrice = value;
+				this.listPrice = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e88d4fadf01ba9ab3395de78bd76b25</Hash>
+    <Hash>9de07bdb98c64226a795eed8bcd96fbc</Hash>
 </Codenesium>*/

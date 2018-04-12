@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Default": {
+    "Console": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "http://localhost:8000/swagger",

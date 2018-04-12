@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class DatabaseLogModelValidator: AbstractDatabaseLogModelValidator,IDatabaseLogModelValidator
+	public class DatabaseLogModelValidator: AbstractDatabaseLogModelValidator, IDatabaseLogModelValidator
 	{
 		public DatabaseLogModelValidator()
 		{   }
@@ -35,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c60b98353ffdf071ba5d7ce459975da9</Hash>
+    <Hash>7702196794e2b3b3c997eb6a4e673c69</Hash>
 </Codenesium>*/

@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractLocationsController: AbstractApiController
+	public abstract class AbstractLocationController: AbstractApiController
 	{
 		protected ILocationRepository locationRepository;
+
 		protected ILocationModelValidator locationModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractLocationsController(
-			ILogger<AbstractLocationsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractLocationController(
+			ILogger<AbstractLocationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILocationRepository locationRepository,
 			ILocationModelValidator locationModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.locationRepository = locationRepository;
 			this.locationModelValidator = locationModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.locationRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.locationRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.locationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.locationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.locationRepository.Create(model.Name,
-				                                        model.CostRate,
-				                                        model.Availability,
-				                                        model.ModifiedDate);
-				return Ok(id);
+				var id = this.locationRepository.Create(
+					model.Name,
+					model.CostRate,
+					model.Availability,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<LocationModel> models)
 		{
 			this.locationModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.locationModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.locationRepository.Create(model.Name,
-				                               model.CostRate,
-				                               model.Availability,
-				                               model.ModifiedDate);
+				this.locationRepository.Create(
+					model.Name,
+					model.CostRate,
+					model.Availability,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short id,LocationModel model)
+		public virtual IActionResult Update(short id, LocationModel model)
 		{
-			if(this.locationRepository.GetByIdDirect(id) == null)
+			if (this.locationRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.locationModelValidator.UpdateMode();
 			var validationResult = this.locationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.locationRepository.Update(id,  model.Name,
-				                               model.CostRate,
-				                               model.Availability,
-				                               model.ModifiedDate);
-				return Ok();
+				this.locationRepository.Update(
+					id,
+					model.Name,
+					model.CostRate,
+					model.Availability,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,11 +169,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(short id)
 		{
 			this.locationRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1bb18cec4bd4c2fffdcf8927183687f2</Hash>
+    <Hash>225ffc91ad437c2cdfba60fea93812e9</Hash>
 </Codenesium>*/

@@ -9,59 +9,67 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesReasonModel()
 		{}
-		public SalesReasonModel(string name,
-		                        string reasonType,
-		                        DateTime modifiedDate)
+
+		public SalesReasonModel(
+			string name,
+			string reasonType,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ReasonType = reasonType;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private string _reasonType;
+		private string reasonType;
+
 		[Required]
 		public string ReasonType
 		{
 			get
 			{
-				return _reasonType;
+				return this.reasonType;
 			}
+
 			set
 			{
-				this._reasonType = value;
+				this.reasonType = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e912f2095aed3d10483d1cc8269f6d59</Hash>
+    <Hash>af3a4a17988bad1daeee913251e3d505</Hash>
 </Codenesium>*/

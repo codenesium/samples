@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ThumbnailPhotoFileNameRules()
 		{
-			RuleFor(x => x.ThumbnailPhotoFileName).Length(0,50);
+			this.RuleFor(x => x.ThumbnailPhotoFileName).Length(0, 50);
 		}
 
 		public virtual void LargePhotoRules()
@@ -33,16 +33,16 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void LargePhotoFileNameRules()
 		{
-			RuleFor(x => x.LargePhotoFileName).Length(0,50);
+			this.RuleFor(x => x.LargePhotoFileName).Length(0, 50);
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2403d07079c575de23125e2db969078c</Hash>
+    <Hash>4ee792aa23dbe2bd86b5485161ef73f1</Hash>
 </Codenesium>*/

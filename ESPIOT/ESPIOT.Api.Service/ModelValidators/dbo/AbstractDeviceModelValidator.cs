@@ -22,17 +22,17 @@ namespace ESPIOTNS.Api.Service
 
 		public virtual void PublicIdRules()
 		{
-			RuleFor(x => x.PublicId).NotNull();
+			this.RuleFor(x => x.PublicId).NotNull();
 		}
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,90);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 90);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab8110314c4432eb475ba31249c84219</Hash>
+    <Hash>4c001efe6575922eea70c9f00989355c</Hash>
 </Codenesium>*/

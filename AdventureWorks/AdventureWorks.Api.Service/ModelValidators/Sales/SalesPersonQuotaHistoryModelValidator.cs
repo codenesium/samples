@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class SalesPersonQuotaHistoryModelValidator: AbstractSalesPersonQuotaHistoryModelValidator,ISalesPersonQuotaHistoryModelValidator
+	public class SalesPersonQuotaHistoryModelValidator: AbstractSalesPersonQuotaHistoryModelValidator, ISalesPersonQuotaHistoryModelValidator
 	{
 		public SalesPersonQuotaHistoryModelValidator()
 		{   }
@@ -29,5 +30,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9d915eb38162a769e973be234e2bf3b0</Hash>
+    <Hash>fa9a9a0e0457bc377b3d15f9a68b8644</Hash>
 </Codenesium>*/

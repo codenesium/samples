@@ -20,23 +20,23 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository {get; set;}
-		public IVendorRepository VendorRepository {get; set;}
-		public IUnitMeasureRepository UnitMeasureRepository {get; set;}
+		public IProductRepository ProductRepository { get; set; }
+		public IVendorRepository VendorRepository { get; set; }
+		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
 		public virtual void BusinessEntityIDRules()
 		{
-			RuleFor(x => x.BusinessEntityID).NotNull();
-			RuleFor(x => x.BusinessEntityID).Must(BeValidVendor).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BusinessEntityID).NotNull();
+			this.RuleFor(x => x.BusinessEntityID).Must(this.BeValidVendor).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void AverageLeadTimeRules()
 		{
-			RuleFor(x => x.AverageLeadTime).NotNull();
+			this.RuleFor(x => x.AverageLeadTime).NotNull();
 		}
 
 		public virtual void StandardPriceRules()
 		{
-			RuleFor(x => x.StandardPrice).NotNull();
+			this.RuleFor(x => x.StandardPrice).NotNull();
 		}
 
 		public virtual void LastReceiptCostRules()
@@ -47,12 +47,12 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void MinOrderQtyRules()
 		{
-			RuleFor(x => x.MinOrderQty).NotNull();
+			this.RuleFor(x => x.MinOrderQty).NotNull();
 		}
 
 		public virtual void MaxOrderQtyRules()
 		{
-			RuleFor(x => x.MaxOrderQty).NotNull();
+			this.RuleFor(x => x.MaxOrderQty).NotNull();
 		}
 
 		public virtual void OnOrderQtyRules()
@@ -60,14 +60,14 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void UnitMeasureCodeRules()
 		{
-			RuleFor(x => x.UnitMeasureCode).NotNull();
-			RuleFor(x => x.UnitMeasureCode).Must(BeValidUnitMeasure).When(x => x ?.UnitMeasureCode != null).WithMessage("Invalid reference");
-			RuleFor(x => x.UnitMeasureCode).Length(0,3);
+			this.RuleFor(x => x.UnitMeasureCode).NotNull();
+			this.RuleFor(x => x.UnitMeasureCode).Must(this.BeValidUnitMeasure).When(x => x ?.UnitMeasureCode != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProduct(int id)
@@ -88,5 +88,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>58d76f2fbafa8eb69d0c6a477752af89</Hash>
+    <Hash>cdfed8b8bf010b4bbea958379b2351c9</Hash>
 </Codenesium>*/

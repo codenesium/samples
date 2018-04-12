@@ -20,34 +20,34 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IStateProvinceRepository StateProvinceRepository {get; set;}
+		public IStateProvinceRepository StateProvinceRepository { get; set; }
 		public virtual void AddressLine1Rules()
 		{
-			RuleFor(x => x.AddressLine1).NotNull();
-			RuleFor(x => x.AddressLine1).Length(0,60);
+			this.RuleFor(x => x.AddressLine1).NotNull();
+			this.RuleFor(x => x.AddressLine1).Length(0, 60);
 		}
 
 		public virtual void AddressLine2Rules()
 		{
-			RuleFor(x => x.AddressLine2).Length(0,60);
+			this.RuleFor(x => x.AddressLine2).Length(0, 60);
 		}
 
 		public virtual void CityRules()
 		{
-			RuleFor(x => x.City).NotNull();
-			RuleFor(x => x.City).Length(0,30);
+			this.RuleFor(x => x.City).NotNull();
+			this.RuleFor(x => x.City).Length(0, 30);
 		}
 
 		public virtual void StateProvinceIDRules()
 		{
-			RuleFor(x => x.StateProvinceID).NotNull();
-			RuleFor(x => x.StateProvinceID).Must(BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.StateProvinceID).NotNull();
+			this.RuleFor(x => x.StateProvinceID).Must(this.BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void PostalCodeRules()
 		{
-			RuleFor(x => x.PostalCode).NotNull();
-			RuleFor(x => x.PostalCode).Length(0,15);
+			this.RuleFor(x => x.PostalCode).NotNull();
+			this.RuleFor(x => x.PostalCode).Length(0, 15);
 		}
 
 		public virtual void SpatialLocationRules()
@@ -55,12 +55,12 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidStateProvince(int id)
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>82ea1597cad2fd32d28be738603bb16d</Hash>
+    <Hash>e40223b07aaf5d88111402167e00a60f</Hash>
 </Codenesium>*/

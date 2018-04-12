@@ -9,17 +9,19 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public FileModel()
 		{}
-		public FileModel(Guid externalId,
-		                 string privateKey,
-		                 string publicKey,
-		                 string location,
-		                 DateTime expiration,
-		                 string extension,
-		                 DateTime dateCreated,
-		                 decimal fileSizeInBytes,
-		                 int fileTypeId,
-		                 Nullable<int> bucketId,
-		                 string description)
+
+		public FileModel(
+			Guid externalId,
+			string privateKey,
+			string publicKey,
+			string location,
+			DateTime expiration,
+			string extension,
+			DateTime dateCreated,
+			decimal fileSizeInBytes,
+			int fileTypeId,
+			Nullable<int> bucketId,
+			string description)
 		{
 			this.ExternalId = externalId;
 			this.PrivateKey = privateKey;
@@ -34,160 +36,182 @@ namespace FileServiceNS.Api.Contracts
 			this.Description = description;
 		}
 
-		private Guid _externalId;
+		private Guid externalId;
+
 		[Required]
 		public Guid ExternalId
 		{
 			get
 			{
-				return _externalId;
+				return this.externalId;
 			}
+
 			set
 			{
-				this._externalId = value;
+				this.externalId = value;
 			}
 		}
 
-		private string _privateKey;
+		private string privateKey;
+
 		[Required]
 		public string PrivateKey
 		{
 			get
 			{
-				return _privateKey;
+				return this.privateKey;
 			}
+
 			set
 			{
-				this._privateKey = value;
+				this.privateKey = value;
 			}
 		}
 
-		private string _publicKey;
+		private string publicKey;
+
 		[Required]
 		public string PublicKey
 		{
 			get
 			{
-				return _publicKey;
+				return this.publicKey;
 			}
+
 			set
 			{
-				this._publicKey = value;
+				this.publicKey = value;
 			}
 		}
 
-		private string _location;
+		private string location;
+
 		[Required]
 		public string Location
 		{
 			get
 			{
-				return _location;
+				return this.location;
 			}
+
 			set
 			{
-				this._location = value;
+				this.location = value;
 			}
 		}
 
-		private DateTime _expiration;
+		private DateTime expiration;
+
 		[Required]
 		public DateTime Expiration
 		{
 			get
 			{
-				return _expiration;
+				return this.expiration;
 			}
+
 			set
 			{
-				this._expiration = value;
+				this.expiration = value;
 			}
 		}
 
-		private string _extension;
+		private string extension;
+
 		[Required]
 		public string Extension
 		{
 			get
 			{
-				return _extension;
+				return this.extension;
 			}
+
 			set
 			{
-				this._extension = value;
+				this.extension = value;
 			}
 		}
 
-		private DateTime _dateCreated;
+		private DateTime dateCreated;
+
 		[Required]
 		public DateTime DateCreated
 		{
 			get
 			{
-				return _dateCreated;
+				return this.dateCreated;
 			}
+
 			set
 			{
-				this._dateCreated = value;
+				this.dateCreated = value;
 			}
 		}
 
-		private decimal _fileSizeInBytes;
+		private decimal fileSizeInBytes;
+
 		[Required]
 		public decimal FileSizeInBytes
 		{
 			get
 			{
-				return _fileSizeInBytes;
+				return this.fileSizeInBytes;
 			}
+
 			set
 			{
-				this._fileSizeInBytes = value;
+				this.fileSizeInBytes = value;
 			}
 		}
 
-		private int _fileTypeId;
+		private int fileTypeId;
+
 		[Required]
 		public int FileTypeId
 		{
 			get
 			{
-				return _fileTypeId;
+				return this.fileTypeId;
 			}
+
 			set
 			{
-				this._fileTypeId = value;
+				this.fileTypeId = value;
 			}
 		}
 
-		private Nullable<int> _bucketId;
+		private Nullable<int> bucketId;
+
 		public Nullable<int> BucketId
 		{
 			get
 			{
-				return _bucketId.IsEmptyOrZeroOrNull() ? null : _bucketId;
+				return this.bucketId.IsEmptyOrZeroOrNull() ? null : this.bucketId;
 			}
+
 			set
 			{
-				this._bucketId = value;
+				this.bucketId = value;
 			}
 		}
 
-		private string _description;
+		private string description;
+
 		public string Description
 		{
 			get
 			{
-				return _description.IsEmptyOrZeroOrNull() ? null : _description;
+				return this.description.IsEmptyOrZeroOrNull() ? null : this.description;
 			}
+
 			set
 			{
-				this._description = value;
+				this.description = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>efe4524ecd6ae298df87f79dad2174f1</Hash>
+    <Hash>f58f0c0dc6a9b1991a786f64c66c4974</Hash>
 </Codenesium>*/

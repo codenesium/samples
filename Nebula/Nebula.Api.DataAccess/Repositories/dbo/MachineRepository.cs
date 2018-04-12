@@ -11,13 +11,15 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class MachineRepository: AbstractMachineRepository, IMachineRepository
 	{
-		public MachineRepository(ILogger<MachineRepository> logger,
-		                         ApplicationDbContext context) : base(logger,context)
+		public MachineRepository(
+			ILogger<MachineRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
 			}
@@ -27,9 +29,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFMachine> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFMachine> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
 			}
@@ -42,5 +44,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a4c5ea0ef81f4103b5850a278757cfac</Hash>
+    <Hash>b8898efd0e6f2add05baddfe24a5323c</Hash>
 </Codenesium>*/

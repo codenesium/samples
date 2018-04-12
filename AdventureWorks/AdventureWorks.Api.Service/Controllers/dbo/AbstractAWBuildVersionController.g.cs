@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractAWBuildVersionsController: AbstractApiController
+	public abstract class AbstractAWBuildVersionController: AbstractApiController
 	{
 		protected IAWBuildVersionRepository aWBuildVersionRepository;
+
 		protected IAWBuildVersionModelValidator aWBuildVersionModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractAWBuildVersionsController(
-			ILogger<AbstractAWBuildVersionsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractAWBuildVersionController(
+			ILogger<AbstractAWBuildVersionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IAWBuildVersionRepository aWBuildVersionRepository,
 			IAWBuildVersionModelValidator aWBuildVersionModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.aWBuildVersionRepository = aWBuildVersionRepository;
 			this.aWBuildVersionModelValidator = aWBuildVersionModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.aWBuildVersionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.aWBuildVersionRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.aWBuildVersionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,15 +81,16 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.aWBuildVersionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.aWBuildVersionRepository.Create(model.Database_Version,
-				                                              model.VersionDate,
-				                                              model.ModifiedDate);
-				return Ok(id);
+				var id = this.aWBuildVersionRepository.Create(
+					model.Database_Version,
+					model.VersionDate,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -97,23 +104,25 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<AWBuildVersionModel> models)
 		{
 			this.aWBuildVersionModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.aWBuildVersionModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.aWBuildVersionRepository.Create(model.Database_Version,
-				                                     model.VersionDate,
-				                                     model.ModifiedDate);
+				this.aWBuildVersionRepository.Create(
+					model.Database_Version,
+					model.VersionDate,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -123,26 +132,28 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,AWBuildVersionModel model)
+		public virtual IActionResult Update(int id, AWBuildVersionModel model)
 		{
-			if(this.aWBuildVersionRepository.GetByIdDirect(id) == null)
+			if (this.aWBuildVersionRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.aWBuildVersionModelValidator.UpdateMode();
 			var validationResult = this.aWBuildVersionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.aWBuildVersionRepository.Update(id,  model.Database_Version,
-				                                     model.VersionDate,
-				                                     model.ModifiedDate);
-				return Ok();
+				this.aWBuildVersionRepository.Update(
+					id,
+					model.Database_Version,
+					model.VersionDate,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -155,11 +166,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.aWBuildVersionRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd1dcf85392569ba641f849aa05ea21d</Hash>
+    <Hash>8dfe87b7830a30d144b4dd065cbe82f2</Hash>
 </Codenesium>*/

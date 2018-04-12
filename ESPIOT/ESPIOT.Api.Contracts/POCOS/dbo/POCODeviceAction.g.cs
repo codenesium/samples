@@ -9,54 +9,55 @@ namespace ESPIOTNS.Api.Contracts
 		public POCODeviceAction()
 		{}
 
-		public POCODeviceAction(int id,
-		                        int deviceId,
-		                        string name,
-		                        string @value)
+		public POCODeviceAction(
+			int id,
+			int deviceId,
+			string name,
+			string @value)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
 			this.@Value = @value;
 
-			DeviceId = new ReferenceEntity<int>(deviceId,
-			                                    "Device");
+			this.DeviceId = new ReferenceEntity<int>(deviceId,
+			                                         "Device");
 		}
 
-		public int Id {get; set;}
-		public ReferenceEntity<int>DeviceId {get; set;}
-		public string Name {get; set;}
-		public string @Value {get; set;}
+		public int Id { get; set; }
+		public ReferenceEntity<int> DeviceId { get; set; }
+		public string Name { get; set; }
+		public string @Value { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDeviceIdValue {get; set;} = true;
+		public bool ShouldSerializeDeviceIdValue { get; set; } = true;
 
 		public bool ShouldSerializeDeviceId()
 		{
-			return ShouldSerializeDeviceIdValue;
+			return this.ShouldSerializeDeviceIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeValueValue {get; set;} = true;
+		public bool ShouldSerializeValueValue { get; set; } = true;
 
 		public bool ShouldSerializeValue()
 		{
-			return ShouldSerializeValueValue;
+			return this.ShouldSerializeValueValue;
 		}
 
 		public void DisableAllFields()
@@ -70,5 +71,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2bd3059bf46526632747ecb55831ef27</Hash>
+    <Hash>3f6810fa0bc9e61a833a8d6f7a5ebe18</Hash>
 </Codenesium>*/

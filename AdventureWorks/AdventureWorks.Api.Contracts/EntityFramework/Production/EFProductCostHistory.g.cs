@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ProductCostHistory", Schema="Production")]
@@ -10,11 +11,12 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFProductCostHistory()
 		{}
 
-		public void SetProperties(int productID,
-		                          DateTime startDate,
-		                          Nullable<DateTime> endDate,
-		                          decimal standardCost,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int productID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal standardCost,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.StartDate = startDate.ToDateTime();
@@ -24,26 +26,26 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ProductID", TypeName="int")]
-		public int ProductID {get; set;}
+		public int ProductID { get; set; }
 
 		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate {get; set;}
+		public DateTime StartDate { get; set; }
 
 		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate {get; set;}
+		public Nullable<DateTime> EndDate { get; set; }
 
 		[Column("StandardCost", TypeName="money")]
-		public decimal StandardCost {get; set;}
+		public decimal StandardCost { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>868c44dd614aa6525d344d6382d05d27</Hash>
+    <Hash>9a550d507db02dc92c51a62aeec3232d</Hash>
 </Codenesium>*/

@@ -15,83 +15,94 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractPersonRepository(ILogger logger,
-		                                ApplicationDbContext context)
+		public AbstractPersonRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(string personType,
-		                          bool nameStyle,
-		                          string title,
-		                          string firstName,
-		                          string middleName,
-		                          string lastName,
-		                          string suffix,
-		                          int emailPromotion,
-		                          string additionalContactInfo,
-		                          string demographics,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			string personType,
+			bool nameStyle,
+			string title,
+			string firstName,
+			string middleName,
+			string lastName,
+			string suffix,
+			int emailPromotion,
+			string additionalContactInfo,
+			string demographics,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record = new EFPerson ();
+			var record = new EFPerson();
 
-			MapPOCOToEF(0, personType,
-			            nameStyle,
-			            title,
-			            firstName,
-			            middleName,
-			            lastName,
-			            suffix,
-			            emailPromotion,
-			            additionalContactInfo,
-			            demographics,
-			            rowguid,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				personType,
+				nameStyle,
+				title,
+				firstName,
+				middleName,
+				lastName,
+				suffix,
+				emailPromotion,
+				additionalContactInfo,
+				demographics,
+				rowguid,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFPerson>().Add(record);
 			this.context.SaveChanges();
 			return record.BusinessEntityID;
 		}
 
-		public virtual void Update(int businessEntityID, string personType,
-		                           bool nameStyle,
-		                           string title,
-		                           string firstName,
-		                           string middleName,
-		                           string lastName,
-		                           string suffix,
-		                           int emailPromotion,
-		                           string additionalContactInfo,
-		                           string demographics,
-		                           Guid rowguid,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int businessEntityID,
+			string personType,
+			bool nameStyle,
+			string title,
+			string firstName,
+			string middleName,
+			string lastName,
+			string suffix,
+			int emailPromotion,
+			string additionalContactInfo,
+			string demographics,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
-				MapPOCOToEF(businessEntityID,  personType,
-				            nameStyle,
-				            title,
-				            firstName,
-				            middleName,
-				            lastName,
-				            suffix,
-				            emailPromotion,
-				            additionalContactInfo,
-				            demographics,
-				            rowguid,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					businessEntityID,
+					personType,
+					nameStyle,
+					title,
+					firstName,
+					middleName,
+					lastName,
+					suffix,
+					emailPromotion,
+					additionalContactInfo,
+					demographics,
+					rowguid,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int businessEntityID)
+		public virtual void Delete(
+			int businessEntityID)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
@@ -110,7 +121,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
 		}
 
@@ -118,11 +129,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.People.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -130,7 +141,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -138,7 +149,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOPerson> GetWhereDirect(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOPerson> GetWhereDirect(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -146,51 +157,57 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.People;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFPerson, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFPerson, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFPerson> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFPerson> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFPerson> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFPerson> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFPerson> SearchLinqEF(Expression<Func<EFPerson, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFPerson> SearchLinqEF(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFPerson> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFPerson> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int businessEntityID, string personType,
-		                               bool nameStyle,
-		                               string title,
-		                               string firstName,
-		                               string middleName,
-		                               string lastName,
-		                               string suffix,
-		                               int emailPromotion,
-		                               string additionalContactInfo,
-		                               string demographics,
-		                               Guid rowguid,
-		                               DateTime modifiedDate, EFPerson   efPerson)
+		public static void MapPOCOToEF(
+			int businessEntityID,
+			string personType,
+			bool nameStyle,
+			string title,
+			string firstName,
+			string middleName,
+			string lastName,
+			string suffix,
+			int emailPromotion,
+			string additionalContactInfo,
+			string demographics,
+			Guid rowguid,
+			DateTime modifiedDate,
+			EFPerson efPerson)
 		{
-			efPerson.SetProperties(businessEntityID.ToInt(),personType,nameStyle,title,firstName,middleName,lastName,suffix,emailPromotion.ToInt(),additionalContactInfo,demographics,rowguid,modifiedDate.ToDateTime());
+			efPerson.SetProperties(businessEntityID.ToInt(), personType, nameStyle, title, firstName, middleName, lastName, suffix, emailPromotion.ToInt(), additionalContactInfo, demographics, rowguid, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFPerson efPerson,Response response)
+		public static void MapEFToPOCO(
+			EFPerson efPerson,
+			Response response)
 		{
-			if(efPerson == null)
+			if (efPerson == null)
 			{
 				return;
 			}
-			response.AddPerson(new POCOPerson(efPerson.BusinessEntityID.ToInt(),efPerson.PersonType,efPerson.NameStyle,efPerson.Title,efPerson.FirstName,efPerson.MiddleName,efPerson.LastName,efPerson.Suffix,efPerson.EmailPromotion.ToInt(),efPerson.AdditionalContactInfo,efPerson.Demographics,efPerson.Rowguid,efPerson.ModifiedDate.ToDateTime()));
+
+			response.AddPerson(new POCOPerson(efPerson.BusinessEntityID.ToInt(), efPerson.PersonType, efPerson.NameStyle, efPerson.Title, efPerson.FirstName, efPerson.MiddleName, efPerson.LastName, efPerson.Suffix, efPerson.EmailPromotion.ToInt(), efPerson.AdditionalContactInfo, efPerson.Demographics, efPerson.Rowguid, efPerson.ModifiedDate.ToDateTime()));
 
 			BusinessEntityRepository.MapEFToPOCO(efPerson.BusinessEntity, response);
 		}
@@ -198,5 +215,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e475cccf8a6cbc0f1ca71673197b660</Hash>
+    <Hash>2d7d263c0672eb5d8e90ccec272a2a13</Hash>
 </Codenesium>*/

@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public abstract class AbstractLinkLogsController: AbstractApiController
+	public abstract class AbstractLinkLogController: AbstractApiController
 	{
 		protected ILinkLogRepository linkLogRepository;
+
 		protected ILinkLogModelValidator linkLogModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractLinkLogsController(
-			ILogger<AbstractLinkLogsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractLinkLogController(
+			ILogger<AbstractLinkLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkLogRepository linkLogRepository,
 			ILinkLogModelValidator linkLogModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.linkLogRepository = linkLogRepository;
 			this.linkLogModelValidator = linkLogModelValidator;
@@ -31,7 +37,7 @@ namespace NebulaNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.linkLogRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace NebulaNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.linkLogRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.linkLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,15 +81,16 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.linkLogRepository.Create(model.LinkId,
-				                                       model.Log,
-				                                       model.DateEntered);
-				return Ok(id);
+				var id = this.linkLogRepository.Create(
+					model.LinkId,
+					model.Log,
+					model.DateEntered);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -97,23 +104,25 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult BulkInsert(List<LinkLogModel> models)
 		{
 			this.linkLogModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.linkLogModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.linkLogRepository.Create(model.LinkId,
-				                              model.Log,
-				                              model.DateEntered);
+				this.linkLogRepository.Create(
+					model.LinkId,
+					model.Log,
+					model.DateEntered);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -123,26 +132,28 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,LinkLogModel model)
+		public virtual IActionResult Update(int id, LinkLogModel model)
 		{
-			if(this.linkLogRepository.GetByIdDirect(id) == null)
+			if (this.linkLogRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.linkLogModelValidator.UpdateMode();
 			var validationResult = this.linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkLogRepository.Update(id,  model.LinkId,
-				                              model.Log,
-				                              model.DateEntered);
-				return Ok();
+				this.linkLogRepository.Update(
+					id,
+					model.LinkId,
+					model.Log,
+					model.DateEntered);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -155,7 +166,7 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.linkLogRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -168,11 +179,11 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.linkLogRepository.GetWhere(x => x.LinkId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>af3aa1a34b7a764fc668e2b62e70f84e</Hash>
+    <Hash>f5042fd6fc1958dd0400f4739fc2a006</Hash>
 </Codenesium>*/

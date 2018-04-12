@@ -15,55 +15,66 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractShoppingCartItemRepository(ILogger logger,
-		                                          ApplicationDbContext context)
+		public AbstractShoppingCartItemRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(string shoppingCartID,
-		                          int quantity,
-		                          int productID,
-		                          DateTime dateCreated,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			string shoppingCartID,
+			int quantity,
+			int productID,
+			DateTime dateCreated,
+			DateTime modifiedDate)
 		{
-			var record = new EFShoppingCartItem ();
+			var record = new EFShoppingCartItem();
 
-			MapPOCOToEF(0, shoppingCartID,
-			            quantity,
-			            productID,
-			            dateCreated,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				shoppingCartID,
+				quantity,
+				productID,
+				dateCreated,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFShoppingCartItem>().Add(record);
 			this.context.SaveChanges();
 			return record.ShoppingCartItemID;
 		}
 
-		public virtual void Update(int shoppingCartItemID, string shoppingCartID,
-		                           int quantity,
-		                           int productID,
-		                           DateTime dateCreated,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int shoppingCartItemID,
+			string shoppingCartID,
+			int quantity,
+			int productID,
+			DateTime dateCreated,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{shoppingCartItemID}");
 			}
 			else
 			{
-				MapPOCOToEF(shoppingCartItemID,  shoppingCartID,
-				            quantity,
-				            productID,
-				            dateCreated,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					shoppingCartItemID,
+					shoppingCartID,
+					quantity,
+					productID,
+					dateCreated,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int shoppingCartItemID)
+		public virtual void Delete(
+			int shoppingCartItemID)
 		{
 			var record = this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
 
@@ -82,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID,response);
+			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID, response);
 			return response;
 		}
 
@@ -90,11 +101,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID,response);
+			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID, response);
 			return response.ShoppingCartItems.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -102,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -110,7 +121,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -118,44 +129,50 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.ShoppingCartItems;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFShoppingCartItem, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFShoppingCartItem, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFShoppingCartItem> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFShoppingCartItem> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFShoppingCartItem> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFShoppingCartItem> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFShoppingCartItem> SearchLinqEF(Expression<Func<EFShoppingCartItem, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFShoppingCartItem> SearchLinqEF(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFShoppingCartItem> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFShoppingCartItem> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int shoppingCartItemID, string shoppingCartID,
-		                               int quantity,
-		                               int productID,
-		                               DateTime dateCreated,
-		                               DateTime modifiedDate, EFShoppingCartItem   efShoppingCartItem)
+		public static void MapPOCOToEF(
+			int shoppingCartItemID,
+			string shoppingCartID,
+			int quantity,
+			int productID,
+			DateTime dateCreated,
+			DateTime modifiedDate,
+			EFShoppingCartItem efShoppingCartItem)
 		{
-			efShoppingCartItem.SetProperties(shoppingCartItemID.ToInt(),shoppingCartID,quantity.ToInt(),productID.ToInt(),dateCreated.ToDateTime(),modifiedDate.ToDateTime());
+			efShoppingCartItem.SetProperties(shoppingCartItemID.ToInt(), shoppingCartID, quantity.ToInt(), productID.ToInt(), dateCreated.ToDateTime(), modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFShoppingCartItem efShoppingCartItem,Response response)
+		public static void MapEFToPOCO(
+			EFShoppingCartItem efShoppingCartItem,
+			Response response)
 		{
-			if(efShoppingCartItem == null)
+			if (efShoppingCartItem == null)
 			{
 				return;
 			}
-			response.AddShoppingCartItem(new POCOShoppingCartItem(efShoppingCartItem.ShoppingCartItemID.ToInt(),efShoppingCartItem.ShoppingCartID,efShoppingCartItem.Quantity.ToInt(),efShoppingCartItem.ProductID.ToInt(),efShoppingCartItem.DateCreated.ToDateTime(),efShoppingCartItem.ModifiedDate.ToDateTime()));
+
+			response.AddShoppingCartItem(new POCOShoppingCartItem(efShoppingCartItem.ShoppingCartItemID.ToInt(), efShoppingCartItem.ShoppingCartID, efShoppingCartItem.Quantity.ToInt(), efShoppingCartItem.ProductID.ToInt(), efShoppingCartItem.DateCreated.ToDateTime(), efShoppingCartItem.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efShoppingCartItem.Product, response);
 		}
@@ -163,5 +180,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1bf03282e26d52784f5824988a635851</Hash>
+    <Hash>f037a065ebfa8ac695111d0ffd7b233f</Hash>
 </Codenesium>*/

@@ -20,32 +20,32 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IWorkOrderRepository WorkOrderRepository {get; set;}
-		public ILocationRepository LocationRepository {get; set;}
+		public IWorkOrderRepository WorkOrderRepository { get; set; }
+		public ILocationRepository LocationRepository { get; set; }
 		public virtual void ProductIDRules()
 		{
-			RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).NotNull();
 		}
 
 		public virtual void OperationSequenceRules()
 		{
-			RuleFor(x => x.OperationSequence).NotNull();
+			this.RuleFor(x => x.OperationSequence).NotNull();
 		}
 
 		public virtual void LocationIDRules()
 		{
-			RuleFor(x => x.LocationID).NotNull();
-			RuleFor(x => x.LocationID).Must(BeValidLocation).When(x => x ?.LocationID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LocationID).NotNull();
+			this.RuleFor(x => x.LocationID).Must(this.BeValidLocation).When(x => x ?.LocationID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ScheduledStartDateRules()
 		{
-			RuleFor(x => x.ScheduledStartDate).NotNull();
+			this.RuleFor(x => x.ScheduledStartDate).NotNull();
 		}
 
 		public virtual void ScheduledEndDateRules()
 		{
-			RuleFor(x => x.ScheduledEndDate).NotNull();
+			this.RuleFor(x => x.ScheduledEndDate).NotNull();
 		}
 
 		public virtual void ActualStartDateRules()
@@ -59,7 +59,7 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void PlannedCostRules()
 		{
-			RuleFor(x => x.PlannedCost).NotNull();
+			this.RuleFor(x => x.PlannedCost).NotNull();
 		}
 
 		public virtual void ActualCostRules()
@@ -67,7 +67,7 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidWorkOrder(int id)
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1b2c397bc86e15ac781423aaea53a9a0</Hash>
+    <Hash>1f803d04eac10345a73c924952bb575d</Hash>
 </Codenesium>*/

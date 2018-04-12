@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shipMethods")]
-	public class ShipMethodsController: AbstractShipMethodsController
+	public class ShipMethodController: AbstractShipMethodController
 	{
-		public ShipMethodsController(
-			ILogger<ShipMethodsController> logger,
+		public ShipMethodController(
+			ILogger<ShipMethodController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShipMethodRepository shipMethodRepository,
 			IShipMethodModelValidator shipMethodModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         shipMethodRepository,
-			         shipMethodModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       shipMethodRepository,
+			       shipMethodModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>739941660afb632d87836efa5efe514a</Hash>
+    <Hash>557269242558a053099feb7948bf944c</Hash>
 </Codenesium>*/

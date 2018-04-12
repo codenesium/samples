@@ -15,59 +15,70 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractSalesTaxRateRepository(ILogger logger,
-		                                      ApplicationDbContext context)
+		public AbstractSalesTaxRateRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(int stateProvinceID,
-		                          int taxType,
-		                          decimal taxRate,
-		                          string name,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			int stateProvinceID,
+			int taxType,
+			decimal taxRate,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record = new EFSalesTaxRate ();
+			var record = new EFSalesTaxRate();
 
-			MapPOCOToEF(0, stateProvinceID,
-			            taxType,
-			            taxRate,
-			            name,
-			            rowguid,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				stateProvinceID,
+				taxType,
+				taxRate,
+				name,
+				rowguid,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFSalesTaxRate>().Add(record);
 			this.context.SaveChanges();
 			return record.SalesTaxRateID;
 		}
 
-		public virtual void Update(int salesTaxRateID, int stateProvinceID,
-		                           int taxType,
-		                           decimal taxRate,
-		                           string name,
-		                           Guid rowguid,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int salesTaxRateID,
+			int stateProvinceID,
+			int taxType,
+			decimal taxRate,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{salesTaxRateID}");
 			}
 			else
 			{
-				MapPOCOToEF(salesTaxRateID,  stateProvinceID,
-				            taxType,
-				            taxRate,
-				            name,
-				            rowguid,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					salesTaxRateID,
+					stateProvinceID,
+					taxType,
+					taxRate,
+					name,
+					rowguid,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int salesTaxRateID)
+		public virtual void Delete(
+			int salesTaxRateID)
 		{
 			var record = this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
 
@@ -86,7 +97,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID,response);
+			this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID, response);
 			return response;
 		}
 
@@ -94,11 +105,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID,response);
+			this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID, response);
 			return response.SalesTaxRates.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,7 +117,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -114,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOSalesTaxRate> GetWhereDirect(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOSalesTaxRate> GetWhereDirect(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -122,45 +133,51 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.SalesTaxRates;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSalesTaxRate, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFSalesTaxRate, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFSalesTaxRate> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFSalesTaxRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFSalesTaxRate> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFSalesTaxRate> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFSalesTaxRate> SearchLinqEF(Expression<Func<EFSalesTaxRate, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFSalesTaxRate> SearchLinqEF(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFSalesTaxRate> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFSalesTaxRate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int salesTaxRateID, int stateProvinceID,
-		                               int taxType,
-		                               decimal taxRate,
-		                               string name,
-		                               Guid rowguid,
-		                               DateTime modifiedDate, EFSalesTaxRate   efSalesTaxRate)
+		public static void MapPOCOToEF(
+			int salesTaxRateID,
+			int stateProvinceID,
+			int taxType,
+			decimal taxRate,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate,
+			EFSalesTaxRate efSalesTaxRate)
 		{
-			efSalesTaxRate.SetProperties(salesTaxRateID.ToInt(),stateProvinceID.ToInt(),taxType,taxRate,name,rowguid,modifiedDate.ToDateTime());
+			efSalesTaxRate.SetProperties(salesTaxRateID.ToInt(), stateProvinceID.ToInt(), taxType, taxRate, name, rowguid, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFSalesTaxRate efSalesTaxRate,Response response)
+		public static void MapEFToPOCO(
+			EFSalesTaxRate efSalesTaxRate,
+			Response response)
 		{
-			if(efSalesTaxRate == null)
+			if (efSalesTaxRate == null)
 			{
 				return;
 			}
-			response.AddSalesTaxRate(new POCOSalesTaxRate(efSalesTaxRate.SalesTaxRateID.ToInt(),efSalesTaxRate.StateProvinceID.ToInt(),efSalesTaxRate.TaxType,efSalesTaxRate.TaxRate,efSalesTaxRate.Name,efSalesTaxRate.Rowguid,efSalesTaxRate.ModifiedDate.ToDateTime()));
+
+			response.AddSalesTaxRate(new POCOSalesTaxRate(efSalesTaxRate.SalesTaxRateID.ToInt(), efSalesTaxRate.StateProvinceID.ToInt(), efSalesTaxRate.TaxType, efSalesTaxRate.TaxRate, efSalesTaxRate.Name, efSalesTaxRate.Rowguid, efSalesTaxRate.ModifiedDate.ToDateTime()));
 
 			StateProvinceRepository.MapEFToPOCO(efSalesTaxRate.StateProvince, response);
 		}
@@ -168,5 +185,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f774d6af498712060b176899b65652fd</Hash>
+    <Hash>fb5fa47bf095c0351560c01e7159927e</Hash>
 </Codenesium>*/

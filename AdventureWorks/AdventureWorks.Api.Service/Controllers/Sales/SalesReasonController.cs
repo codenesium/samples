@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesReasons")]
-	public class SalesReasonsController: AbstractSalesReasonsController
+	public class SalesReasonController: AbstractSalesReasonController
 	{
-		public SalesReasonsController(
-			ILogger<SalesReasonsController> logger,
+		public SalesReasonController(
+			ILogger<SalesReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesReasonRepository salesReasonRepository,
 			ISalesReasonModelValidator salesReasonModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         salesReasonRepository,
-			         salesReasonModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       salesReasonRepository,
+			       salesReasonModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2f3cd423864eb0909b68492737e8d872</Hash>
+    <Hash>09918ccbbb18d20cecbbe837eccfb80e</Hash>
 </Codenesium>*/

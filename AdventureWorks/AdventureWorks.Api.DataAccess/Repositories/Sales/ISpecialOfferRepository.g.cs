@@ -7,18 +7,20 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISpecialOfferRepository
 	{
-		int Create(string description,
-		           decimal discountPct,
-		           string type,
-		           string category,
-		           DateTime startDate,
-		           DateTime endDate,
-		           int minQty,
-		           Nullable<int> maxQty,
-		           Guid rowguid,
-		           DateTime modifiedDate);
+		int Create(
+			string description,
+			decimal discountPct,
+			string type,
+			string category,
+			DateTime startDate,
+			DateTime endDate,
+			int minQty,
+			Nullable<int> maxQty,
+			Guid rowguid,
+			DateTime modifiedDate);
 
-		void Update(int specialOfferID, string description,
+		void Update(int specialOfferID,
+		            string description,
 		            decimal discountPct,
 		            string type,
 		            string category,
@@ -35,14 +37,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOSpecialOffer GetByIdDirect(int specialOfferID);
 
-		Response GetWhere(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOSpecialOffer> GetWhereDirect(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOSpecialOffer> GetWhereDirect(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5b29236813a73c91e1e538a02f7b4df</Hash>
+    <Hash>572badce232f5297d82ae9a557a797df</Hash>
 </Codenesium>*/

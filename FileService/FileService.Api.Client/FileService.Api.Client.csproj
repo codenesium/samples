@@ -12,6 +12,15 @@
     <PackageReference Include="Codenesium.DataConversionExtensions.AspNetCore" Version="2018.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
 	<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4" />
+	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
   
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>FileService.Api.Client.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>FileService.Api.Client.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
 </Project>

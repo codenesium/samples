@@ -9,55 +9,56 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOPersonPhone()
 		{}
 
-		public POCOPersonPhone(int businessEntityID,
-		                       string phoneNumber,
-		                       int phoneNumberTypeID,
-		                       DateTime modifiedDate)
+		public POCOPersonPhone(
+			int businessEntityID,
+			string phoneNumber,
+			int phoneNumberTypeID,
+			DateTime modifiedDate)
 		{
 			this.PhoneNumber = phoneNumber;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "Person");
-			PhoneNumberTypeID = new ReferenceEntity<int>(phoneNumberTypeID,
-			                                             "PhoneNumberType");
+			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                                 "Person");
+			this.PhoneNumberTypeID = new ReferenceEntity<int>(phoneNumberTypeID,
+			                                                  "PhoneNumberType");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public string PhoneNumber {get; set;}
-		public ReferenceEntity<int>PhoneNumberTypeID {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public string PhoneNumber { get; set; }
+		public ReferenceEntity<int> PhoneNumberTypeID { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityID()
 		{
-			return ShouldSerializeBusinessEntityIDValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePhoneNumberValue {get; set;} = true;
+		public bool ShouldSerializePhoneNumberValue { get; set; } = true;
 
 		public bool ShouldSerializePhoneNumber()
 		{
-			return ShouldSerializePhoneNumberValue;
+			return this.ShouldSerializePhoneNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePhoneNumberTypeIDValue {get; set;} = true;
+		public bool ShouldSerializePhoneNumberTypeIDValue { get; set; } = true;
 
 		public bool ShouldSerializePhoneNumberTypeID()
 		{
-			return ShouldSerializePhoneNumberTypeIDValue;
+			return this.ShouldSerializePhoneNumberTypeIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -71,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b074e7fe04268b3230e8865729718ab9</Hash>
+    <Hash>2f96b60f6e04f58c093c6a32777c9718</Hash>
 </Codenesium>*/

@@ -20,10 +20,10 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository {get; set;}
+		public IProductRepository ProductRepository { get; set; }
 		public virtual void StartDateRules()
 		{
-			RuleFor(x => x.StartDate).NotNull();
+			this.RuleFor(x => x.StartDate).NotNull();
 		}
 
 		public virtual void EndDateRules()
@@ -31,12 +31,12 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void StandardCostRules()
 		{
-			RuleFor(x => x.StandardCost).NotNull();
+			this.RuleFor(x => x.StandardCost).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProduct(int id)
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9f6bd07c30d484af1637b7169d5a0a25</Hash>
+    <Hash>9eb540ee34644bc23692c08cb2e2009f</Hash>
 </Codenesium>*/

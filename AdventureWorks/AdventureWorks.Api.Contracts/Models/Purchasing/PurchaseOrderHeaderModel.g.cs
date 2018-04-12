@@ -9,18 +9,20 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public PurchaseOrderHeaderModel()
 		{}
-		public PurchaseOrderHeaderModel(int revisionNumber,
-		                                int status,
-		                                int employeeID,
-		                                int vendorID,
-		                                int shipMethodID,
-		                                DateTime orderDate,
-		                                Nullable<DateTime> shipDate,
-		                                decimal subTotal,
-		                                decimal taxAmt,
-		                                decimal freight,
-		                                decimal totalDue,
-		                                DateTime modifiedDate)
+
+		public PurchaseOrderHeaderModel(
+			int revisionNumber,
+			int status,
+			int employeeID,
+			int vendorID,
+			int shipMethodID,
+			DateTime orderDate,
+			Nullable<DateTime> shipDate,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			DateTime modifiedDate)
 		{
 			this.RevisionNumber = revisionNumber;
 			this.Status = status;
@@ -36,175 +38,199 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _revisionNumber;
+		private int revisionNumber;
+
 		[Required]
 		public int RevisionNumber
 		{
 			get
 			{
-				return _revisionNumber;
+				return this.revisionNumber;
 			}
+
 			set
 			{
-				this._revisionNumber = value;
+				this.revisionNumber = value;
 			}
 		}
 
-		private int _status;
+		private int status;
+
 		[Required]
 		public int Status
 		{
 			get
 			{
-				return _status;
+				return this.status;
 			}
+
 			set
 			{
-				this._status = value;
+				this.status = value;
 			}
 		}
 
-		private int _employeeID;
+		private int employeeID;
+
 		[Required]
 		public int EmployeeID
 		{
 			get
 			{
-				return _employeeID;
+				return this.employeeID;
 			}
+
 			set
 			{
-				this._employeeID = value;
+				this.employeeID = value;
 			}
 		}
 
-		private int _vendorID;
+		private int vendorID;
+
 		[Required]
 		public int VendorID
 		{
 			get
 			{
-				return _vendorID;
+				return this.vendorID;
 			}
+
 			set
 			{
-				this._vendorID = value;
+				this.vendorID = value;
 			}
 		}
 
-		private int _shipMethodID;
+		private int shipMethodID;
+
 		[Required]
 		public int ShipMethodID
 		{
 			get
 			{
-				return _shipMethodID;
+				return this.shipMethodID;
 			}
+
 			set
 			{
-				this._shipMethodID = value;
+				this.shipMethodID = value;
 			}
 		}
 
-		private DateTime _orderDate;
+		private DateTime orderDate;
+
 		[Required]
 		public DateTime OrderDate
 		{
 			get
 			{
-				return _orderDate;
+				return this.orderDate;
 			}
+
 			set
 			{
-				this._orderDate = value;
+				this.orderDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _shipDate;
+		private Nullable<DateTime> shipDate;
+
 		public Nullable<DateTime> ShipDate
 		{
 			get
 			{
-				return _shipDate.IsEmptyOrZeroOrNull() ? null : _shipDate;
+				return this.shipDate.IsEmptyOrZeroOrNull() ? null : this.shipDate;
 			}
+
 			set
 			{
-				this._shipDate = value;
+				this.shipDate = value;
 			}
 		}
 
-		private decimal _subTotal;
+		private decimal subTotal;
+
 		[Required]
 		public decimal SubTotal
 		{
 			get
 			{
-				return _subTotal;
+				return this.subTotal;
 			}
+
 			set
 			{
-				this._subTotal = value;
+				this.subTotal = value;
 			}
 		}
 
-		private decimal _taxAmt;
+		private decimal taxAmt;
+
 		[Required]
 		public decimal TaxAmt
 		{
 			get
 			{
-				return _taxAmt;
+				return this.taxAmt;
 			}
+
 			set
 			{
-				this._taxAmt = value;
+				this.taxAmt = value;
 			}
 		}
 
-		private decimal _freight;
+		private decimal freight;
+
 		[Required]
 		public decimal Freight
 		{
 			get
 			{
-				return _freight;
+				return this.freight;
 			}
+
 			set
 			{
-				this._freight = value;
+				this.freight = value;
 			}
 		}
 
-		private decimal _totalDue;
+		private decimal totalDue;
+
 		[Required]
 		public decimal TotalDue
 		{
 			get
 			{
-				return _totalDue;
+				return this.totalDue;
 			}
+
 			set
 			{
-				this._totalDue = value;
+				this.totalDue = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ccc3cbff23006863d079d9ff6b4941fb</Hash>
+    <Hash>b31ba5fc4f88ea42b1135beef7d731a2</Hash>
 </Codenesium>*/

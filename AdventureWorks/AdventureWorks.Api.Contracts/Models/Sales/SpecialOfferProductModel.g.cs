@@ -9,59 +9,67 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SpecialOfferProductModel()
 		{}
-		public SpecialOfferProductModel(int productID,
-		                                Guid rowguid,
-		                                DateTime modifiedDate)
+
+		public SpecialOfferProductModel(
+			int productID,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3fcac1e1286aff604c3c56b5555c6eca</Hash>
+    <Hash>cd107aa8f1651d21338762455c9b4b0d</Hash>
 </Codenesium>*/

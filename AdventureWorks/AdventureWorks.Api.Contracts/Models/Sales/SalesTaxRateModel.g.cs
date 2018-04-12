@@ -9,12 +9,14 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesTaxRateModel()
 		{}
-		public SalesTaxRateModel(int stateProvinceID,
-		                         int taxType,
-		                         decimal taxRate,
-		                         string name,
-		                         Guid rowguid,
-		                         DateTime modifiedDate)
+
+		public SalesTaxRateModel(
+			int stateProvinceID,
+			int taxType,
+			decimal taxRate,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.StateProvinceID = stateProvinceID.ToInt();
 			this.TaxType = taxType;
@@ -24,92 +26,104 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _stateProvinceID;
+		private int stateProvinceID;
+
 		[Required]
 		public int StateProvinceID
 		{
 			get
 			{
-				return _stateProvinceID;
+				return this.stateProvinceID;
 			}
+
 			set
 			{
-				this._stateProvinceID = value;
+				this.stateProvinceID = value;
 			}
 		}
 
-		private int _taxType;
+		private int taxType;
+
 		[Required]
 		public int TaxType
 		{
 			get
 			{
-				return _taxType;
+				return this.taxType;
 			}
+
 			set
 			{
-				this._taxType = value;
+				this.taxType = value;
 			}
 		}
 
-		private decimal _taxRate;
+		private decimal taxRate;
+
 		[Required]
 		public decimal TaxRate
 		{
 			get
 			{
-				return _taxRate;
+				return this.taxRate;
 			}
+
 			set
 			{
-				this._taxRate = value;
+				this.taxRate = value;
 			}
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e371ad97c665ca20f33649ffa1abac97</Hash>
+    <Hash>65cec9e3e8b42330d6c0b1085297e705</Hash>
 </Codenesium>*/

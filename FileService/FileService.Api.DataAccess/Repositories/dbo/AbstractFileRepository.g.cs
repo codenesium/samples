@@ -15,79 +15,90 @@ namespace FileServiceNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractFileRepository(ILogger logger,
-		                              ApplicationDbContext context)
+		public AbstractFileRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(Guid externalId,
-		                          string privateKey,
-		                          string publicKey,
-		                          string location,
-		                          DateTime expiration,
-		                          string extension,
-		                          DateTime dateCreated,
-		                          decimal fileSizeInBytes,
-		                          int fileTypeId,
-		                          Nullable<int> bucketId,
-		                          string description)
+		public virtual int Create(
+			Guid externalId,
+			string privateKey,
+			string publicKey,
+			string location,
+			DateTime expiration,
+			string extension,
+			DateTime dateCreated,
+			decimal fileSizeInBytes,
+			int fileTypeId,
+			Nullable<int> bucketId,
+			string description)
 		{
-			var record = new EFFile ();
+			var record = new EFFile();
 
-			MapPOCOToEF(0, externalId,
-			            privateKey,
-			            publicKey,
-			            location,
-			            expiration,
-			            extension,
-			            dateCreated,
-			            fileSizeInBytes,
-			            fileTypeId,
-			            bucketId,
-			            description, record);
+			MapPOCOToEF(
+				0,
+				externalId,
+				privateKey,
+				publicKey,
+				location,
+				expiration,
+				extension,
+				dateCreated,
+				fileSizeInBytes,
+				fileTypeId,
+				bucketId,
+				description,
+				record);
 
 			this.context.Set<EFFile>().Add(record);
 			this.context.SaveChanges();
 			return record.Id;
 		}
 
-		public virtual void Update(int id, Guid externalId,
-		                           string privateKey,
-		                           string publicKey,
-		                           string location,
-		                           DateTime expiration,
-		                           string extension,
-		                           DateTime dateCreated,
-		                           decimal fileSizeInBytes,
-		                           int fileTypeId,
-		                           Nullable<int> bucketId,
-		                           string description)
+		public virtual void Update(
+			int id,
+			Guid externalId,
+			string privateKey,
+			string publicKey,
+			string location,
+			DateTime expiration,
+			string extension,
+			DateTime dateCreated,
+			decimal fileSizeInBytes,
+			int fileTypeId,
+			Nullable<int> bucketId,
+			string description)
 		{
-			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
-				MapPOCOToEF(id,  externalId,
-				            privateKey,
-				            publicKey,
-				            location,
-				            expiration,
-				            extension,
-				            dateCreated,
-				            fileSizeInBytes,
-				            fileTypeId,
-				            bucketId,
-				            description, record);
+				MapPOCOToEF(
+					id,
+					externalId,
+					privateKey,
+					publicKey,
+					location,
+					expiration,
+					extension,
+					dateCreated,
+					fileSizeInBytes,
+					fileTypeId,
+					bucketId,
+					description,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int id)
+		public virtual void Delete(
+			int id)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
@@ -106,7 +117,7 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
 		}
 
@@ -114,11 +125,11 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.Files.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -126,7 +137,7 @@ namespace FileServiceNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -134,7 +145,7 @@ namespace FileServiceNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOFile> GetWhereDirect(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOFile> GetWhereDirect(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -142,50 +153,56 @@ namespace FileServiceNS.Api.DataAccess
 			return response.Files;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFFile, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFFile, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFFile> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFFile> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFFile> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFFile> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFFile> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFFile> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int id, Guid externalId,
-		                               string privateKey,
-		                               string publicKey,
-		                               string location,
-		                               DateTime expiration,
-		                               string extension,
-		                               DateTime dateCreated,
-		                               decimal fileSizeInBytes,
-		                               int fileTypeId,
-		                               Nullable<int> bucketId,
-		                               string description, EFFile   efFile)
+		public static void MapPOCOToEF(
+			int id,
+			Guid externalId,
+			string privateKey,
+			string publicKey,
+			string location,
+			DateTime expiration,
+			string extension,
+			DateTime dateCreated,
+			decimal fileSizeInBytes,
+			int fileTypeId,
+			Nullable<int> bucketId,
+			string description,
+			EFFile efFile)
 		{
-			efFile.SetProperties(id.ToInt(),externalId,privateKey,publicKey,location,expiration.ToDateTime(),extension,dateCreated.ToDateTime(),fileSizeInBytes.ToDecimal(),fileTypeId.ToInt(),bucketId.ToNullableInt(),description);
+			efFile.SetProperties(id.ToInt(), externalId, privateKey, publicKey, location, expiration.ToDateTime(), extension, dateCreated.ToDateTime(), fileSizeInBytes.ToDecimal(), fileTypeId.ToInt(), bucketId.ToNullableInt(), description);
 		}
 
-		public static void MapEFToPOCO(EFFile efFile,Response response)
+		public static void MapEFToPOCO(
+			EFFile efFile,
+			Response response)
 		{
-			if(efFile == null)
+			if (efFile == null)
 			{
 				return;
 			}
-			response.AddFile(new POCOFile(efFile.Id.ToInt(),efFile.ExternalId,efFile.PrivateKey,efFile.PublicKey,efFile.Location,efFile.Expiration.ToDateTime(),efFile.Extension,efFile.DateCreated.ToDateTime(),efFile.FileSizeInBytes.ToDecimal(),efFile.FileTypeId.ToInt(),efFile.BucketId.ToNullableInt(),efFile.Description));
+
+			response.AddFile(new POCOFile(efFile.Id.ToInt(), efFile.ExternalId, efFile.PrivateKey, efFile.PublicKey, efFile.Location, efFile.Expiration.ToDateTime(), efFile.Extension, efFile.DateCreated.ToDateTime(), efFile.FileSizeInBytes.ToDecimal(), efFile.FileTypeId.ToInt(), efFile.BucketId.ToNullableInt(), efFile.Description));
 
 			FileTypeRepository.MapEFToPOCO(efFile.FileType, response);
 
@@ -195,5 +212,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c7a88bd26a48bf09cef3937d9f0aa3f</Hash>
+    <Hash>ab4e775b70f8b5f5e94f53299f9a505b</Hash>
 </Codenesium>*/

@@ -9,15 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOAddress()
 		{}
 
-		public POCOAddress(int addressID,
-		                   string addressLine1,
-		                   string addressLine2,
-		                   string city,
-		                   int stateProvinceID,
-		                   string postalCode,
-		                   object spatialLocation,
-		                   Guid rowguid,
-		                   DateTime modifiedDate)
+		public POCOAddress(
+			int addressID,
+			string addressLine1,
+			string addressLine2,
+			string city,
+			int stateProvinceID,
+			string postalCode,
+			object spatialLocation,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.AddressID = addressID.ToInt();
 			this.AddressLine1 = addressLine1;
@@ -28,90 +29,90 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
-			                                           "StateProvince");
+			this.StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
+			                                                "StateProvince");
 		}
 
-		public int AddressID {get; set;}
-		public string AddressLine1 {get; set;}
-		public string AddressLine2 {get; set;}
-		public string City {get; set;}
-		public ReferenceEntity<int>StateProvinceID {get; set;}
-		public string PostalCode {get; set;}
-		public object SpatialLocation {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int AddressID { get; set; }
+		public string AddressLine1 { get; set; }
+		public string AddressLine2 { get; set; }
+		public string City { get; set; }
+		public ReferenceEntity<int> StateProvinceID { get; set; }
+		public string PostalCode { get; set; }
+		public object SpatialLocation { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressIDValue {get; set;} = true;
+		public bool ShouldSerializeAddressIDValue { get; set; } = true;
 
 		public bool ShouldSerializeAddressID()
 		{
-			return ShouldSerializeAddressIDValue;
+			return this.ShouldSerializeAddressIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressLine1Value {get; set;} = true;
+		public bool ShouldSerializeAddressLine1Value { get; set; } = true;
 
 		public bool ShouldSerializeAddressLine1()
 		{
-			return ShouldSerializeAddressLine1Value;
+			return this.ShouldSerializeAddressLine1Value;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressLine2Value {get; set;} = true;
+		public bool ShouldSerializeAddressLine2Value { get; set; } = true;
 
 		public bool ShouldSerializeAddressLine2()
 		{
-			return ShouldSerializeAddressLine2Value;
+			return this.ShouldSerializeAddressLine2Value;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCityValue {get; set;} = true;
+		public bool ShouldSerializeCityValue { get; set; } = true;
 
 		public bool ShouldSerializeCity()
 		{
-			return ShouldSerializeCityValue;
+			return this.ShouldSerializeCityValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStateProvinceIDValue {get; set;} = true;
+		public bool ShouldSerializeStateProvinceIDValue { get; set; } = true;
 
 		public bool ShouldSerializeStateProvinceID()
 		{
-			return ShouldSerializeStateProvinceIDValue;
+			return this.ShouldSerializeStateProvinceIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePostalCodeValue {get; set;} = true;
+		public bool ShouldSerializePostalCodeValue { get; set; } = true;
 
 		public bool ShouldSerializePostalCode()
 		{
-			return ShouldSerializePostalCodeValue;
+			return this.ShouldSerializePostalCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpatialLocationValue {get; set;} = true;
+		public bool ShouldSerializeSpatialLocationValue { get; set; } = true;
 
 		public bool ShouldSerializeSpatialLocation()
 		{
-			return ShouldSerializeSpatialLocationValue;
+			return this.ShouldSerializeSpatialLocationValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -130,5 +131,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2d8c8c3f23d1928ac8587ace15d79d3a</Hash>
+    <Hash>3388e197e05ec1b73e00727ccf2e6a73</Hash>
 </Codenesium>*/

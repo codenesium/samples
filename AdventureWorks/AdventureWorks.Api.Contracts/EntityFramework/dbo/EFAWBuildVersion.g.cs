@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("AWBuildVersion", Schema="dbo")]
@@ -10,10 +11,11 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFAWBuildVersion()
 		{}
 
-		public void SetProperties(int systemInformationID,
-		                          string database_Version,
-		                          DateTime versionDate,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int systemInformationID,
+			string database_Version,
+			DateTime versionDate,
+			DateTime modifiedDate)
 		{
 			this.SystemInformationID = systemInformationID;
 			this.Database_Version = database_Version;
@@ -24,19 +26,19 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("SystemInformationID", TypeName="tinyint")]
-		public int SystemInformationID {get; set;}
+		public int SystemInformationID { get; set; }
 
 		[Column("Database Version", TypeName="nvarchar(25)")]
-		public string Database_Version {get; set;}
+		public string Database_Version { get; set; }
 
 		[Column("VersionDate", TypeName="datetime")]
-		public DateTime VersionDate {get; set;}
+		public DateTime VersionDate { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>44ca8be8f5616cf27b11f2bd06674b7b</Hash>
+    <Hash>9b7a51681d164245d8c3bd34a22331d5</Hash>
 </Codenesium>*/

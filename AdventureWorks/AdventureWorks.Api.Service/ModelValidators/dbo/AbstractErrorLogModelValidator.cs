@@ -22,18 +22,18 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ErrorTimeRules()
 		{
-			RuleFor(x => x.ErrorTime).NotNull();
+			this.RuleFor(x => x.ErrorTime).NotNull();
 		}
 
 		public virtual void UserNameRules()
 		{
-			RuleFor(x => x.UserName).NotNull();
-			RuleFor(x => x.UserName).Length(0,128);
+			this.RuleFor(x => x.UserName).NotNull();
+			this.RuleFor(x => x.UserName).Length(0, 128);
 		}
 
 		public virtual void ErrorNumberRules()
 		{
-			RuleFor(x => x.ErrorNumber).NotNull();
+			this.RuleFor(x => x.ErrorNumber).NotNull();
 		}
 
 		public virtual void ErrorSeverityRules()
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ErrorProcedureRules()
 		{
-			RuleFor(x => x.ErrorProcedure).Length(0,126);
+			this.RuleFor(x => x.ErrorProcedure).Length(0, 126);
 		}
 
 		public virtual void ErrorLineRules()
@@ -52,12 +52,12 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ErrorMessageRules()
 		{
-			RuleFor(x => x.ErrorMessage).NotNull();
-			RuleFor(x => x.ErrorMessage).Length(0,4000);
+			this.RuleFor(x => x.ErrorMessage).NotNull();
+			this.RuleFor(x => x.ErrorMessage).Length(0, 4000);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>772036628696a3a07056250e7d6121b2</Hash>
+    <Hash>30b0e594202847c081b8d51782de0f71</Hash>
 </Codenesium>*/

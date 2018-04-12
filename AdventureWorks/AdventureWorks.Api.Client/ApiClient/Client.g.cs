@@ -12,10 +12,12 @@ namespace AdventureWorksNS.Api.Client
 	public abstract partial class AbstractApiClient
 	{
 		private HttpClient client;
+
 		protected string ApiUrl { get; set; }
+
 		public AbstractApiClient(string apiUri)
 		{
-			if (String.IsNullOrWhiteSpace(apiUri))
+			if (string.IsNullOrWhiteSpace(apiUri))
 			{
 				throw new ArgumentException("apiUrl is not set");
 			}
@@ -33,17 +35,9 @@ namespace AdventureWorksNS.Api.Client
 			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		public virtual async Task<List<POCOAWBuildVersion>>AWBuildVersionSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOAWBuildVersion>> AWBuildVersionSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AWBuildVersions?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).AWBuildVersions;
-		}
-
-		public virtual async Task<List<POCOAWBuildVersion>> AWBuildVersionGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AWBuildVersions/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).AWBuildVersions;
@@ -57,7 +51,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).AWBuildVersions.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOAWBuildVersion>> AWBuildVersionGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOAWBuildVersion>> AWBuildVersionGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AWBuildVersions?offset={offset}&limit={limit}");
 
@@ -72,7 +66,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task AWBuildVersionUpdateAsync(int id,AWBuildVersionModel item)
+		public virtual async Task AWBuildVersionUpdateAsync(int id, AWBuildVersionModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/AWBuildVersions/{id}", item);
 
@@ -94,17 +88,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCODatabaseLog>>DatabaseLogSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCODatabaseLog>> DatabaseLogSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DatabaseLogs?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).DatabaseLogs;
-		}
-
-		public virtual async Task<List<POCODatabaseLog>> DatabaseLogGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DatabaseLogs/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).DatabaseLogs;
@@ -118,7 +104,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).DatabaseLogs.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCODatabaseLog>> DatabaseLogGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCODatabaseLog>> DatabaseLogGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DatabaseLogs?offset={offset}&limit={limit}");
 
@@ -133,7 +119,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task DatabaseLogUpdateAsync(int id,DatabaseLogModel item)
+		public virtual async Task DatabaseLogUpdateAsync(int id, DatabaseLogModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/DatabaseLogs/{id}", item);
 
@@ -155,17 +141,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOErrorLog>>ErrorLogSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOErrorLog>> ErrorLogSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ErrorLogs?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ErrorLogs;
-		}
-
-		public virtual async Task<List<POCOErrorLog>> ErrorLogGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ErrorLogs/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ErrorLogs;
@@ -179,7 +157,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ErrorLogs.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOErrorLog>> ErrorLogGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOErrorLog>> ErrorLogGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ErrorLogs?offset={offset}&limit={limit}");
 
@@ -194,7 +172,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ErrorLogUpdateAsync(int id,ErrorLogModel item)
+		public virtual async Task ErrorLogUpdateAsync(int id, ErrorLogModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ErrorLogs/{id}", item);
 
@@ -216,17 +194,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCODepartment>>DepartmentSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCODepartment>> DepartmentSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Departments?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Departments;
-		}
-
-		public virtual async Task<List<POCODepartment>> DepartmentGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Departments/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Departments;
@@ -240,7 +210,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Departments.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCODepartment>> DepartmentGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCODepartment>> DepartmentGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Departments?offset={offset}&limit={limit}");
 
@@ -255,7 +225,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task DepartmentUpdateAsync(int id,DepartmentModel item)
+		public virtual async Task DepartmentUpdateAsync(int id, DepartmentModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Departments/{id}", item);
 
@@ -277,17 +247,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOEmployee>>EmployeeSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmployee>> EmployeeSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Employees;
-		}
-
-		public virtual async Task<List<POCOEmployee>> EmployeeGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Employees;
@@ -301,7 +263,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Employees.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOEmployee>> EmployeeGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmployee>> EmployeeGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees?offset={offset}&limit={limit}");
 
@@ -316,7 +278,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task EmployeeUpdateAsync(int id,EmployeeModel item)
+		public virtual async Task EmployeeUpdateAsync(int id, EmployeeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Employees/{id}", item);
 
@@ -338,17 +300,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOEmployeeDepartmentHistory>>EmployeeDepartmentHistorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmployeeDepartmentHistory>> EmployeeDepartmentHistorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmployeeDepartmentHistories;
-		}
-
-		public virtual async Task<List<POCOEmployeeDepartmentHistory>> EmployeeDepartmentHistoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmployeeDepartmentHistories;
@@ -362,7 +316,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmployeeDepartmentHistories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOEmployeeDepartmentHistory>> EmployeeDepartmentHistoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmployeeDepartmentHistory>> EmployeeDepartmentHistoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories?offset={offset}&limit={limit}");
 
@@ -377,7 +331,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task EmployeeDepartmentHistoryUpdateAsync(int id,EmployeeDepartmentHistoryModel item)
+		public virtual async Task EmployeeDepartmentHistoryUpdateAsync(int id, EmployeeDepartmentHistoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/EmployeeDepartmentHistories/{id}", item);
 
@@ -399,17 +353,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOEmployeePayHistory>>EmployeePayHistorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmployeePayHistory>> EmployeePayHistorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeePayHistories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmployeePayHistories;
-		}
-
-		public virtual async Task<List<POCOEmployeePayHistory>> EmployeePayHistoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeePayHistories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmployeePayHistories;
@@ -423,7 +369,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmployeePayHistories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOEmployeePayHistory>> EmployeePayHistoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmployeePayHistory>> EmployeePayHistoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeePayHistories?offset={offset}&limit={limit}");
 
@@ -438,7 +384,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task EmployeePayHistoryUpdateAsync(int id,EmployeePayHistoryModel item)
+		public virtual async Task EmployeePayHistoryUpdateAsync(int id, EmployeePayHistoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/EmployeePayHistories/{id}", item);
 
@@ -460,17 +406,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOJobCandidate>>JobCandidateSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOJobCandidate>> JobCandidateSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).JobCandidates;
-		}
-
-		public virtual async Task<List<POCOJobCandidate>> JobCandidateGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).JobCandidates;
@@ -484,7 +422,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).JobCandidates.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOJobCandidate>> JobCandidateGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOJobCandidate>> JobCandidateGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates?offset={offset}&limit={limit}");
 
@@ -499,7 +437,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task JobCandidateUpdateAsync(int id,JobCandidateModel item)
+		public virtual async Task JobCandidateUpdateAsync(int id, JobCandidateModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/JobCandidates/{id}", item);
 
@@ -521,17 +459,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOShift>>ShiftSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOShift>> ShiftSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Shifts;
-		}
-
-		public virtual async Task<List<POCOShift>> ShiftGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Shifts;
@@ -545,7 +475,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Shifts.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOShift>> ShiftGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOShift>> ShiftGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts?offset={offset}&limit={limit}");
 
@@ -560,7 +490,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ShiftUpdateAsync(int id,ShiftModel item)
+		public virtual async Task ShiftUpdateAsync(int id, ShiftModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Shifts/{id}", item);
 
@@ -582,17 +512,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOAddress>>AddressSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOAddress>> AddressSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Addresses;
-		}
-
-		public virtual async Task<List<POCOAddress>> AddressGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Addresses;
@@ -606,7 +528,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Addresses.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOAddress>> AddressGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOAddress>> AddressGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses?offset={offset}&limit={limit}");
 
@@ -621,7 +543,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task AddressUpdateAsync(int id,AddressModel item)
+		public virtual async Task AddressUpdateAsync(int id, AddressModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Addresses/{id}", item);
 
@@ -643,17 +565,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOAddressType>>AddressTypeSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOAddressType>> AddressTypeSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AddressTypes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).AddressTypes;
-		}
-
-		public virtual async Task<List<POCOAddressType>> AddressTypeGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AddressTypes/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).AddressTypes;
@@ -667,7 +581,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).AddressTypes.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOAddressType>> AddressTypeGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOAddressType>> AddressTypeGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AddressTypes?offset={offset}&limit={limit}");
 
@@ -682,7 +596,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task AddressTypeUpdateAsync(int id,AddressTypeModel item)
+		public virtual async Task AddressTypeUpdateAsync(int id, AddressTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/AddressTypes/{id}", item);
 
@@ -704,17 +618,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOBusinessEntity>>BusinessEntitySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOBusinessEntity>> BusinessEntitySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntities?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntities;
-		}
-
-		public virtual async Task<List<POCOBusinessEntity>> BusinessEntityGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntities/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntities;
@@ -728,7 +634,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntities.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOBusinessEntity>> BusinessEntityGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOBusinessEntity>> BusinessEntityGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntities?offset={offset}&limit={limit}");
 
@@ -743,7 +649,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task BusinessEntityUpdateAsync(int id,BusinessEntityModel item)
+		public virtual async Task BusinessEntityUpdateAsync(int id, BusinessEntityModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/BusinessEntities/{id}", item);
 
@@ -765,17 +671,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOBusinessEntityAddress>>BusinessEntityAddressSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOBusinessEntityAddress>> BusinessEntityAddressSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntityAddresses;
-		}
-
-		public virtual async Task<List<POCOBusinessEntityAddress>> BusinessEntityAddressGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntityAddresses;
@@ -789,7 +687,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntityAddresses.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOBusinessEntityAddress>> BusinessEntityAddressGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOBusinessEntityAddress>> BusinessEntityAddressGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses?offset={offset}&limit={limit}");
 
@@ -804,7 +702,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task BusinessEntityAddressUpdateAsync(int id,BusinessEntityAddressModel item)
+		public virtual async Task BusinessEntityAddressUpdateAsync(int id, BusinessEntityAddressModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/BusinessEntityAddresses/{id}", item);
 
@@ -826,17 +724,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOBusinessEntityContact>>BusinessEntityContactSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOBusinessEntityContact>> BusinessEntityContactSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntityContacts;
-		}
-
-		public virtual async Task<List<POCOBusinessEntityContact>> BusinessEntityContactGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntityContacts;
@@ -850,7 +740,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BusinessEntityContacts.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOBusinessEntityContact>> BusinessEntityContactGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOBusinessEntityContact>> BusinessEntityContactGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts?offset={offset}&limit={limit}");
 
@@ -865,7 +755,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task BusinessEntityContactUpdateAsync(int id,BusinessEntityContactModel item)
+		public virtual async Task BusinessEntityContactUpdateAsync(int id, BusinessEntityContactModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/BusinessEntityContacts/{id}", item);
 
@@ -887,17 +777,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOContactType>>ContactTypeSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOContactType>> ContactTypeSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ContactTypes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ContactTypes;
-		}
-
-		public virtual async Task<List<POCOContactType>> ContactTypeGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ContactTypes/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ContactTypes;
@@ -911,7 +793,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ContactTypes.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOContactType>> ContactTypeGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOContactType>> ContactTypeGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ContactTypes?offset={offset}&limit={limit}");
 
@@ -926,7 +808,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ContactTypeUpdateAsync(int id,ContactTypeModel item)
+		public virtual async Task ContactTypeUpdateAsync(int id, ContactTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ContactTypes/{id}", item);
 
@@ -948,17 +830,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOCountryRegion>>CountryRegionSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOCountryRegion>> CountryRegionSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegions?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CountryRegions;
-		}
-
-		public virtual async Task<List<POCOCountryRegion>> CountryRegionGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegions/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CountryRegions;
@@ -972,7 +846,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CountryRegions.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOCountryRegion>> CountryRegionGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOCountryRegion>> CountryRegionGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegions?offset={offset}&limit={limit}");
 
@@ -987,7 +861,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task CountryRegionUpdateAsync(int id,CountryRegionModel item)
+		public virtual async Task CountryRegionUpdateAsync(int id, CountryRegionModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/CountryRegions/{id}", item);
 
@@ -1009,17 +883,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOEmailAddress>>EmailAddressSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmailAddress>> EmailAddressSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmailAddresses?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmailAddresses;
-		}
-
-		public virtual async Task<List<POCOEmailAddress>> EmailAddressGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmailAddresses/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmailAddresses;
@@ -1033,7 +899,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).EmailAddresses.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOEmailAddress>> EmailAddressGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOEmailAddress>> EmailAddressGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmailAddresses?offset={offset}&limit={limit}");
 
@@ -1048,7 +914,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task EmailAddressUpdateAsync(int id,EmailAddressModel item)
+		public virtual async Task EmailAddressUpdateAsync(int id, EmailAddressModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/EmailAddresses/{id}", item);
 
@@ -1070,17 +936,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPassword>>PasswordSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOPassword>> PasswordSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Passwords?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Passwords;
-		}
-
-		public virtual async Task<List<POCOPassword>> PasswordGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Passwords/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Passwords;
@@ -1094,7 +952,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Passwords.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOPassword>> PasswordGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOPassword>> PasswordGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Passwords?offset={offset}&limit={limit}");
 
@@ -1109,7 +967,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task PasswordUpdateAsync(int id,PasswordModel item)
+		public virtual async Task PasswordUpdateAsync(int id, PasswordModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Passwords/{id}", item);
 
@@ -1131,17 +989,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPerson>>PersonSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOPerson>> PersonSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).People;
-		}
-
-		public virtual async Task<List<POCOPerson>> PersonGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).People;
@@ -1155,7 +1005,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).People.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOPerson>> PersonGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOPerson>> PersonGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People?offset={offset}&limit={limit}");
 
@@ -1170,7 +1020,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task PersonUpdateAsync(int id,PersonModel item)
+		public virtual async Task PersonUpdateAsync(int id, PersonModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/People/{id}", item);
 
@@ -1192,17 +1042,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPersonPhone>>PersonPhoneSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOPersonPhone>> PersonPhoneSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonPhones?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PersonPhones;
-		}
-
-		public virtual async Task<List<POCOPersonPhone>> PersonPhoneGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonPhones/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PersonPhones;
@@ -1216,7 +1058,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PersonPhones.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOPersonPhone>> PersonPhoneGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOPersonPhone>> PersonPhoneGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonPhones?offset={offset}&limit={limit}");
 
@@ -1231,7 +1073,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task PersonPhoneUpdateAsync(int id,PersonPhoneModel item)
+		public virtual async Task PersonPhoneUpdateAsync(int id, PersonPhoneModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PersonPhones/{id}", item);
 
@@ -1253,17 +1095,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPhoneNumberType>>PhoneNumberTypeSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOPhoneNumberType>> PhoneNumberTypeSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PhoneNumberTypes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PhoneNumberTypes;
-		}
-
-		public virtual async Task<List<POCOPhoneNumberType>> PhoneNumberTypeGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PhoneNumberTypes/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PhoneNumberTypes;
@@ -1277,7 +1111,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PhoneNumberTypes.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOPhoneNumberType>> PhoneNumberTypeGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOPhoneNumberType>> PhoneNumberTypeGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PhoneNumberTypes?offset={offset}&limit={limit}");
 
@@ -1292,7 +1126,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task PhoneNumberTypeUpdateAsync(int id,PhoneNumberTypeModel item)
+		public virtual async Task PhoneNumberTypeUpdateAsync(int id, PhoneNumberTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PhoneNumberTypes/{id}", item);
 
@@ -1314,17 +1148,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOStateProvince>>StateProvinceSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOStateProvince>> StateProvinceSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).StateProvinces;
-		}
-
-		public virtual async Task<List<POCOStateProvince>> StateProvinceGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).StateProvinces;
@@ -1338,7 +1164,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).StateProvinces.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOStateProvince>> StateProvinceGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOStateProvince>> StateProvinceGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces?offset={offset}&limit={limit}");
 
@@ -1353,7 +1179,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task StateProvinceUpdateAsync(int id,StateProvinceModel item)
+		public virtual async Task StateProvinceUpdateAsync(int id, StateProvinceModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/StateProvinces/{id}", item);
 
@@ -1375,17 +1201,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOBillOfMaterials>>BillOfMaterialsSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOBillOfMaterials>> BillOfMaterialsSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BillOfMaterials;
-		}
-
-		public virtual async Task<List<POCOBillOfMaterials>> BillOfMaterialsGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BillOfMaterials;
@@ -1399,7 +1217,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).BillOfMaterials.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOBillOfMaterials>> BillOfMaterialsGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOBillOfMaterials>> BillOfMaterialsGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials?offset={offset}&limit={limit}");
 
@@ -1414,7 +1232,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task BillOfMaterialsUpdateAsync(int id,BillOfMaterialsModel item)
+		public virtual async Task BillOfMaterialsUpdateAsync(int id, BillOfMaterialsModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/BillOfMaterials/{id}", item);
 
@@ -1436,17 +1254,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOCulture>>CultureSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOCulture>> CultureSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cultures?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Cultures;
-		}
-
-		public virtual async Task<List<POCOCulture>> CultureGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cultures/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Cultures;
@@ -1460,7 +1270,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Cultures.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOCulture>> CultureGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOCulture>> CultureGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cultures?offset={offset}&limit={limit}");
 
@@ -1475,7 +1285,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task CultureUpdateAsync(int id,CultureModel item)
+		public virtual async Task CultureUpdateAsync(int id, CultureModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Cultures/{id}", item);
 
@@ -1497,17 +1307,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCODocument>>DocumentSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCODocument>> DocumentSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Documents;
-		}
-
-		public virtual async Task<List<POCODocument>> DocumentGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Documents;
@@ -1521,7 +1323,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Documents.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCODocument>> DocumentGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCODocument>> DocumentGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents?offset={offset}&limit={limit}");
 
@@ -1536,7 +1338,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task DocumentUpdateAsync(int id,DocumentModel item)
+		public virtual async Task DocumentUpdateAsync(int id, DocumentModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Documents/{id}", item);
 
@@ -1558,17 +1360,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOIllustration>>IllustrationSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOIllustration>> IllustrationSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Illustrations?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Illustrations;
-		}
-
-		public virtual async Task<List<POCOIllustration>> IllustrationGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Illustrations/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Illustrations;
@@ -1582,7 +1376,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Illustrations.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOIllustration>> IllustrationGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOIllustration>> IllustrationGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Illustrations?offset={offset}&limit={limit}");
 
@@ -1597,7 +1391,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task IllustrationUpdateAsync(int id,IllustrationModel item)
+		public virtual async Task IllustrationUpdateAsync(int id, IllustrationModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Illustrations/{id}", item);
 
@@ -1619,17 +1413,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOLocation>>LocationSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOLocation>> LocationSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Locations;
-		}
-
-		public virtual async Task<List<POCOLocation>> LocationGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Locations;
@@ -1643,7 +1429,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Locations.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOLocation>> LocationGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOLocation>> LocationGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations?offset={offset}&limit={limit}");
 
@@ -1658,7 +1444,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task LocationUpdateAsync(int id,LocationModel item)
+		public virtual async Task LocationUpdateAsync(int id, LocationModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Locations/{id}", item);
 
@@ -1680,17 +1466,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProduct>>ProductSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProduct>> ProductSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Products;
-		}
-
-		public virtual async Task<List<POCOProduct>> ProductGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Products;
@@ -1704,7 +1482,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Products.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProduct>> ProductGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProduct>> ProductGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products?offset={offset}&limit={limit}");
 
@@ -1719,7 +1497,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductUpdateAsync(int id,ProductModel item)
+		public virtual async Task ProductUpdateAsync(int id, ProductModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Products/{id}", item);
 
@@ -1741,17 +1519,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductCategory>>ProductCategorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductCategory>> ProductCategorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCategories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductCategories;
-		}
-
-		public virtual async Task<List<POCOProductCategory>> ProductCategoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCategories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductCategories;
@@ -1765,7 +1535,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductCategories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductCategory>> ProductCategoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductCategory>> ProductCategoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCategories?offset={offset}&limit={limit}");
 
@@ -1780,7 +1550,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductCategoryUpdateAsync(int id,ProductCategoryModel item)
+		public virtual async Task ProductCategoryUpdateAsync(int id, ProductCategoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductCategories/{id}", item);
 
@@ -1802,17 +1572,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductCostHistory>>ProductCostHistorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductCostHistory>> ProductCostHistorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCostHistories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductCostHistories;
-		}
-
-		public virtual async Task<List<POCOProductCostHistory>> ProductCostHistoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCostHistories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductCostHistories;
@@ -1826,7 +1588,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductCostHistories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductCostHistory>> ProductCostHistoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductCostHistory>> ProductCostHistoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCostHistories?offset={offset}&limit={limit}");
 
@@ -1841,7 +1603,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductCostHistoryUpdateAsync(int id,ProductCostHistoryModel item)
+		public virtual async Task ProductCostHistoryUpdateAsync(int id, ProductCostHistoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductCostHistories/{id}", item);
 
@@ -1863,17 +1625,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductDescription>>ProductDescriptionSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductDescription>> ProductDescriptionSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDescriptions?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductDescriptions;
-		}
-
-		public virtual async Task<List<POCOProductDescription>> ProductDescriptionGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDescriptions/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductDescriptions;
@@ -1887,7 +1641,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductDescriptions.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductDescription>> ProductDescriptionGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductDescription>> ProductDescriptionGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDescriptions?offset={offset}&limit={limit}");
 
@@ -1902,7 +1656,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductDescriptionUpdateAsync(int id,ProductDescriptionModel item)
+		public virtual async Task ProductDescriptionUpdateAsync(int id, ProductDescriptionModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductDescriptions/{id}", item);
 
@@ -1924,17 +1678,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductDocument>>ProductDocumentSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductDocument>> ProductDocumentSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDocuments?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductDocuments;
-		}
-
-		public virtual async Task<List<POCOProductDocument>> ProductDocumentGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDocuments/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductDocuments;
@@ -1948,7 +1694,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductDocuments.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductDocument>> ProductDocumentGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductDocument>> ProductDocumentGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDocuments?offset={offset}&limit={limit}");
 
@@ -1963,7 +1709,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductDocumentUpdateAsync(int id,ProductDocumentModel item)
+		public virtual async Task ProductDocumentUpdateAsync(int id, ProductDocumentModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductDocuments/{id}", item);
 
@@ -1985,17 +1731,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductInventory>>ProductInventorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductInventory>> ProductInventorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductInventories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductInventories;
-		}
-
-		public virtual async Task<List<POCOProductInventory>> ProductInventoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductInventories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductInventories;
@@ -2009,7 +1747,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductInventories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductInventory>> ProductInventoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductInventory>> ProductInventoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductInventories?offset={offset}&limit={limit}");
 
@@ -2024,7 +1762,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductInventoryUpdateAsync(int id,ProductInventoryModel item)
+		public virtual async Task ProductInventoryUpdateAsync(int id, ProductInventoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductInventories/{id}", item);
 
@@ -2046,17 +1784,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductListPriceHistory>>ProductListPriceHistorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductListPriceHistory>> ProductListPriceHistorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductListPriceHistories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductListPriceHistories;
-		}
-
-		public virtual async Task<List<POCOProductListPriceHistory>> ProductListPriceHistoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductListPriceHistories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductListPriceHistories;
@@ -2070,7 +1800,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductListPriceHistories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductListPriceHistory>> ProductListPriceHistoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductListPriceHistory>> ProductListPriceHistoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductListPriceHistories?offset={offset}&limit={limit}");
 
@@ -2085,7 +1815,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductListPriceHistoryUpdateAsync(int id,ProductListPriceHistoryModel item)
+		public virtual async Task ProductListPriceHistoryUpdateAsync(int id, ProductListPriceHistoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductListPriceHistories/{id}", item);
 
@@ -2107,17 +1837,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductModel>>ProductModelSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductModel>> ProductModelSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModels;
-		}
-
-		public virtual async Task<List<POCOProductModel>> ProductModelGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModels;
@@ -2131,7 +1853,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModels.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductModel>> ProductModelGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductModel>> ProductModelGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels?offset={offset}&limit={limit}");
 
@@ -2146,7 +1868,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductModelUpdateAsync(int id,ProductModelModel item)
+		public virtual async Task ProductModelUpdateAsync(int id, ProductModelModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductModels/{id}", item);
 
@@ -2168,17 +1890,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductModelIllustration>>ProductModelIllustrationSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductModelIllustration>> ProductModelIllustrationSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelIllustrations?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModelIllustrations;
-		}
-
-		public virtual async Task<List<POCOProductModelIllustration>> ProductModelIllustrationGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelIllustrations/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModelIllustrations;
@@ -2192,7 +1906,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModelIllustrations.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductModelIllustration>> ProductModelIllustrationGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductModelIllustration>> ProductModelIllustrationGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelIllustrations?offset={offset}&limit={limit}");
 
@@ -2207,7 +1921,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductModelIllustrationUpdateAsync(int id,ProductModelIllustrationModel item)
+		public virtual async Task ProductModelIllustrationUpdateAsync(int id, ProductModelIllustrationModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductModelIllustrations/{id}", item);
 
@@ -2229,17 +1943,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductModelProductDescriptionCulture>>ProductModelProductDescriptionCultureSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultureSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelProductDescriptionCultures?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModelProductDescriptionCultures;
-		}
-
-		public virtual async Task<List<POCOProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultureGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelProductDescriptionCultures/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModelProductDescriptionCultures;
@@ -2253,7 +1959,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductModelProductDescriptionCultures.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultureGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultureGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelProductDescriptionCultures?offset={offset}&limit={limit}");
 
@@ -2268,7 +1974,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductModelProductDescriptionCultureUpdateAsync(int id,ProductModelProductDescriptionCultureModel item)
+		public virtual async Task ProductModelProductDescriptionCultureUpdateAsync(int id, ProductModelProductDescriptionCultureModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductModelProductDescriptionCultures/{id}", item);
 
@@ -2290,17 +1996,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductPhoto>>ProductPhotoSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductPhoto>> ProductPhotoSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductPhotoes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductPhotoes;
-		}
-
-		public virtual async Task<List<POCOProductPhoto>> ProductPhotoGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductPhotoes/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductPhotoes;
@@ -2314,7 +2012,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductPhotoes.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductPhoto>> ProductPhotoGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductPhoto>> ProductPhotoGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductPhotoes?offset={offset}&limit={limit}");
 
@@ -2329,7 +2027,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductPhotoUpdateAsync(int id,ProductPhotoModel item)
+		public virtual async Task ProductPhotoUpdateAsync(int id, ProductPhotoModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductPhotoes/{id}", item);
 
@@ -2351,17 +2049,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductProductPhoto>>ProductProductPhotoSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductProductPhoto>> ProductProductPhotoSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductProductPhotoes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductProductPhotoes;
-		}
-
-		public virtual async Task<List<POCOProductProductPhoto>> ProductProductPhotoGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductProductPhotoes/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductProductPhotoes;
@@ -2375,7 +2065,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductProductPhotoes.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductProductPhoto>> ProductProductPhotoGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductProductPhoto>> ProductProductPhotoGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductProductPhotoes?offset={offset}&limit={limit}");
 
@@ -2390,7 +2080,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductProductPhotoUpdateAsync(int id,ProductProductPhotoModel item)
+		public virtual async Task ProductProductPhotoUpdateAsync(int id, ProductProductPhotoModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductProductPhotoes/{id}", item);
 
@@ -2412,17 +2102,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductReview>>ProductReviewSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductReview>> ProductReviewSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductReviews?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductReviews;
-		}
-
-		public virtual async Task<List<POCOProductReview>> ProductReviewGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductReviews/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductReviews;
@@ -2436,7 +2118,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductReviews.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductReview>> ProductReviewGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductReview>> ProductReviewGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductReviews?offset={offset}&limit={limit}");
 
@@ -2451,7 +2133,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductReviewUpdateAsync(int id,ProductReviewModel item)
+		public virtual async Task ProductReviewUpdateAsync(int id, ProductReviewModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductReviews/{id}", item);
 
@@ -2473,17 +2155,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductSubcategory>>ProductSubcategorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductSubcategory>> ProductSubcategorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductSubcategories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductSubcategories;
-		}
-
-		public virtual async Task<List<POCOProductSubcategory>> ProductSubcategoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductSubcategories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductSubcategories;
@@ -2497,7 +2171,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductSubcategories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductSubcategory>> ProductSubcategoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductSubcategory>> ProductSubcategoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductSubcategories?offset={offset}&limit={limit}");
 
@@ -2512,7 +2186,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductSubcategoryUpdateAsync(int id,ProductSubcategoryModel item)
+		public virtual async Task ProductSubcategoryUpdateAsync(int id, ProductSubcategoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductSubcategories/{id}", item);
 
@@ -2534,17 +2208,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOScrapReason>>ScrapReasonSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOScrapReason>> ScrapReasonSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ScrapReasons?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ScrapReasons;
-		}
-
-		public virtual async Task<List<POCOScrapReason>> ScrapReasonGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ScrapReasons/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ScrapReasons;
@@ -2558,7 +2224,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ScrapReasons.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOScrapReason>> ScrapReasonGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOScrapReason>> ScrapReasonGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ScrapReasons?offset={offset}&limit={limit}");
 
@@ -2573,7 +2239,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ScrapReasonUpdateAsync(int id,ScrapReasonModel item)
+		public virtual async Task ScrapReasonUpdateAsync(int id, ScrapReasonModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ScrapReasons/{id}", item);
 
@@ -2595,17 +2261,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOTransactionHistory>>TransactionHistorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOTransactionHistory>> TransactionHistorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TransactionHistories;
-		}
-
-		public virtual async Task<List<POCOTransactionHistory>> TransactionHistoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TransactionHistories;
@@ -2619,7 +2277,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TransactionHistories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOTransactionHistory>> TransactionHistoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOTransactionHistory>> TransactionHistoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories?offset={offset}&limit={limit}");
 
@@ -2634,7 +2292,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task TransactionHistoryUpdateAsync(int id,TransactionHistoryModel item)
+		public virtual async Task TransactionHistoryUpdateAsync(int id, TransactionHistoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/TransactionHistories/{id}", item);
 
@@ -2656,17 +2314,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOTransactionHistoryArchive>>TransactionHistoryArchiveSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOTransactionHistoryArchive>> TransactionHistoryArchiveSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TransactionHistoryArchives;
-		}
-
-		public virtual async Task<List<POCOTransactionHistoryArchive>> TransactionHistoryArchiveGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TransactionHistoryArchives;
@@ -2680,7 +2330,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TransactionHistoryArchives.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOTransactionHistoryArchive>> TransactionHistoryArchiveGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOTransactionHistoryArchive>> TransactionHistoryArchiveGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives?offset={offset}&limit={limit}");
 
@@ -2695,7 +2345,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task TransactionHistoryArchiveUpdateAsync(int id,TransactionHistoryArchiveModel item)
+		public virtual async Task TransactionHistoryArchiveUpdateAsync(int id, TransactionHistoryArchiveModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/TransactionHistoryArchives/{id}", item);
 
@@ -2717,17 +2367,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOUnitMeasure>>UnitMeasureSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOUnitMeasure>> UnitMeasureSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).UnitMeasures;
-		}
-
-		public virtual async Task<List<POCOUnitMeasure>> UnitMeasureGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).UnitMeasures;
@@ -2741,7 +2383,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).UnitMeasures.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOUnitMeasure>> UnitMeasureGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOUnitMeasure>> UnitMeasureGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures?offset={offset}&limit={limit}");
 
@@ -2756,7 +2398,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task UnitMeasureUpdateAsync(int id,UnitMeasureModel item)
+		public virtual async Task UnitMeasureUpdateAsync(int id, UnitMeasureModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/UnitMeasures/{id}", item);
 
@@ -2778,17 +2420,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOWorkOrder>>WorkOrderSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOWorkOrder>> WorkOrderSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).WorkOrders;
-		}
-
-		public virtual async Task<List<POCOWorkOrder>> WorkOrderGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).WorkOrders;
@@ -2802,7 +2436,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).WorkOrders.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOWorkOrder>> WorkOrderGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOWorkOrder>> WorkOrderGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders?offset={offset}&limit={limit}");
 
@@ -2817,7 +2451,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task WorkOrderUpdateAsync(int id,WorkOrderModel item)
+		public virtual async Task WorkOrderUpdateAsync(int id, WorkOrderModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/WorkOrders/{id}", item);
 
@@ -2839,17 +2473,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOWorkOrderRouting>>WorkOrderRoutingSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOWorkOrderRouting>> WorkOrderRoutingSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrderRoutings?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).WorkOrderRoutings;
-		}
-
-		public virtual async Task<List<POCOWorkOrderRouting>> WorkOrderRoutingGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrderRoutings/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).WorkOrderRoutings;
@@ -2863,7 +2489,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).WorkOrderRoutings.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOWorkOrderRouting>> WorkOrderRoutingGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOWorkOrderRouting>> WorkOrderRoutingGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrderRoutings?offset={offset}&limit={limit}");
 
@@ -2878,7 +2504,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task WorkOrderRoutingUpdateAsync(int id,WorkOrderRoutingModel item)
+		public virtual async Task WorkOrderRoutingUpdateAsync(int id, WorkOrderRoutingModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/WorkOrderRoutings/{id}", item);
 
@@ -2900,17 +2526,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOProductVendor>>ProductVendorSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductVendor>> ProductVendorSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductVendors;
-		}
-
-		public virtual async Task<List<POCOProductVendor>> ProductVendorGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductVendors;
@@ -2924,7 +2542,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ProductVendors.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOProductVendor>> ProductVendorGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOProductVendor>> ProductVendorGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors?offset={offset}&limit={limit}");
 
@@ -2939,7 +2557,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ProductVendorUpdateAsync(int id,ProductVendorModel item)
+		public virtual async Task ProductVendorUpdateAsync(int id, ProductVendorModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductVendors/{id}", item);
 
@@ -2961,17 +2579,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPurchaseOrderDetail>>PurchaseOrderDetailSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOPurchaseOrderDetail>> PurchaseOrderDetailSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderDetails?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PurchaseOrderDetails;
-		}
-
-		public virtual async Task<List<POCOPurchaseOrderDetail>> PurchaseOrderDetailGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderDetails/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PurchaseOrderDetails;
@@ -2985,7 +2595,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PurchaseOrderDetails.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOPurchaseOrderDetail>> PurchaseOrderDetailGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOPurchaseOrderDetail>> PurchaseOrderDetailGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderDetails?offset={offset}&limit={limit}");
 
@@ -3000,7 +2610,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task PurchaseOrderDetailUpdateAsync(int id,PurchaseOrderDetailModel item)
+		public virtual async Task PurchaseOrderDetailUpdateAsync(int id, PurchaseOrderDetailModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PurchaseOrderDetails/{id}", item);
 
@@ -3022,17 +2632,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPurchaseOrderHeader>>PurchaseOrderHeaderSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOPurchaseOrderHeader>> PurchaseOrderHeaderSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PurchaseOrderHeaders;
-		}
-
-		public virtual async Task<List<POCOPurchaseOrderHeader>> PurchaseOrderHeaderGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PurchaseOrderHeaders;
@@ -3046,7 +2648,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PurchaseOrderHeaders.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOPurchaseOrderHeader>> PurchaseOrderHeaderGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOPurchaseOrderHeader>> PurchaseOrderHeaderGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders?offset={offset}&limit={limit}");
 
@@ -3061,7 +2663,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task PurchaseOrderHeaderUpdateAsync(int id,PurchaseOrderHeaderModel item)
+		public virtual async Task PurchaseOrderHeaderUpdateAsync(int id, PurchaseOrderHeaderModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PurchaseOrderHeaders/{id}", item);
 
@@ -3083,17 +2685,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOShipMethod>>ShipMethodSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOShipMethod>> ShipMethodSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShipMethods?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ShipMethods;
-		}
-
-		public virtual async Task<List<POCOShipMethod>> ShipMethodGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShipMethods/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ShipMethods;
@@ -3107,7 +2701,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ShipMethods.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOShipMethod>> ShipMethodGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOShipMethod>> ShipMethodGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShipMethods?offset={offset}&limit={limit}");
 
@@ -3122,7 +2716,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ShipMethodUpdateAsync(int id,ShipMethodModel item)
+		public virtual async Task ShipMethodUpdateAsync(int id, ShipMethodModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ShipMethods/{id}", item);
 
@@ -3144,17 +2738,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOVendor>>VendorSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOVendor>> VendorSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Vendors?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Vendors;
-		}
-
-		public virtual async Task<List<POCOVendor>> VendorGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Vendors/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Vendors;
@@ -3168,7 +2754,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Vendors.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOVendor>> VendorGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOVendor>> VendorGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Vendors?offset={offset}&limit={limit}");
 
@@ -3183,7 +2769,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task VendorUpdateAsync(int id,VendorModel item)
+		public virtual async Task VendorUpdateAsync(int id, VendorModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Vendors/{id}", item);
 
@@ -3205,17 +2791,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOCountryRegionCurrency>>CountryRegionCurrencySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOCountryRegionCurrency>> CountryRegionCurrencySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegionCurrencies?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CountryRegionCurrencies;
-		}
-
-		public virtual async Task<List<POCOCountryRegionCurrency>> CountryRegionCurrencyGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegionCurrencies/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CountryRegionCurrencies;
@@ -3229,7 +2807,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CountryRegionCurrencies.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOCountryRegionCurrency>> CountryRegionCurrencyGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOCountryRegionCurrency>> CountryRegionCurrencyGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegionCurrencies?offset={offset}&limit={limit}");
 
@@ -3244,7 +2822,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task CountryRegionCurrencyUpdateAsync(int id,CountryRegionCurrencyModel item)
+		public virtual async Task CountryRegionCurrencyUpdateAsync(int id, CountryRegionCurrencyModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/CountryRegionCurrencies/{id}", item);
 
@@ -3266,17 +2844,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOCreditCard>>CreditCardSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOCreditCard>> CreditCardSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CreditCards?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CreditCards;
-		}
-
-		public virtual async Task<List<POCOCreditCard>> CreditCardGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CreditCards/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CreditCards;
@@ -3290,7 +2860,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CreditCards.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOCreditCard>> CreditCardGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOCreditCard>> CreditCardGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CreditCards?offset={offset}&limit={limit}");
 
@@ -3305,7 +2875,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task CreditCardUpdateAsync(int id,CreditCardModel item)
+		public virtual async Task CreditCardUpdateAsync(int id, CreditCardModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/CreditCards/{id}", item);
 
@@ -3327,17 +2897,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOCurrency>>CurrencySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOCurrency>> CurrencySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Currencies?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Currencies;
-		}
-
-		public virtual async Task<List<POCOCurrency>> CurrencyGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Currencies/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Currencies;
@@ -3351,7 +2913,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Currencies.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOCurrency>> CurrencyGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOCurrency>> CurrencyGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Currencies?offset={offset}&limit={limit}");
 
@@ -3366,7 +2928,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task CurrencyUpdateAsync(int id,CurrencyModel item)
+		public virtual async Task CurrencyUpdateAsync(int id, CurrencyModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Currencies/{id}", item);
 
@@ -3388,17 +2950,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOCurrencyRate>>CurrencyRateSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOCurrencyRate>> CurrencyRateSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CurrencyRates?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CurrencyRates;
-		}
-
-		public virtual async Task<List<POCOCurrencyRate>> CurrencyRateGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CurrencyRates/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CurrencyRates;
@@ -3412,7 +2966,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).CurrencyRates.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOCurrencyRate>> CurrencyRateGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOCurrencyRate>> CurrencyRateGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CurrencyRates?offset={offset}&limit={limit}");
 
@@ -3427,7 +2981,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task CurrencyRateUpdateAsync(int id,CurrencyRateModel item)
+		public virtual async Task CurrencyRateUpdateAsync(int id, CurrencyRateModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/CurrencyRates/{id}", item);
 
@@ -3449,17 +3003,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOCustomer>>CustomerSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOCustomer>> CustomerSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Customers;
-		}
-
-		public virtual async Task<List<POCOCustomer>> CustomerGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Customers;
@@ -3473,7 +3019,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Customers.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOCustomer>> CustomerGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOCustomer>> CustomerGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers?offset={offset}&limit={limit}");
 
@@ -3488,7 +3034,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task CustomerUpdateAsync(int id,CustomerModel item)
+		public virtual async Task CustomerUpdateAsync(int id, CustomerModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Customers/{id}", item);
 
@@ -3510,17 +3056,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPersonCreditCard>>PersonCreditCardSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOPersonCreditCard>> PersonCreditCardSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonCreditCards?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PersonCreditCards;
-		}
-
-		public virtual async Task<List<POCOPersonCreditCard>> PersonCreditCardGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonCreditCards/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PersonCreditCards;
@@ -3534,7 +3072,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).PersonCreditCards.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOPersonCreditCard>> PersonCreditCardGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOPersonCreditCard>> PersonCreditCardGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonCreditCards?offset={offset}&limit={limit}");
 
@@ -3549,7 +3087,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task PersonCreditCardUpdateAsync(int id,PersonCreditCardModel item)
+		public virtual async Task PersonCreditCardUpdateAsync(int id, PersonCreditCardModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PersonCreditCards/{id}", item);
 
@@ -3571,17 +3109,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesOrderDetail>>SalesOrderDetailSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesOrderDetail>> SalesOrderDetailSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderDetails?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderDetails;
-		}
-
-		public virtual async Task<List<POCOSalesOrderDetail>> SalesOrderDetailGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderDetails/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderDetails;
@@ -3595,7 +3125,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderDetails.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesOrderDetail>> SalesOrderDetailGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesOrderDetail>> SalesOrderDetailGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderDetails?offset={offset}&limit={limit}");
 
@@ -3610,7 +3140,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesOrderDetailUpdateAsync(int id,SalesOrderDetailModel item)
+		public virtual async Task SalesOrderDetailUpdateAsync(int id, SalesOrderDetailModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesOrderDetails/{id}", item);
 
@@ -3632,17 +3162,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesOrderHeader>>SalesOrderHeaderSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesOrderHeader>> SalesOrderHeaderSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderHeaders;
-		}
-
-		public virtual async Task<List<POCOSalesOrderHeader>> SalesOrderHeaderGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderHeaders;
@@ -3656,7 +3178,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderHeaders.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesOrderHeader>> SalesOrderHeaderGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesOrderHeader>> SalesOrderHeaderGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders?offset={offset}&limit={limit}");
 
@@ -3671,7 +3193,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesOrderHeaderUpdateAsync(int id,SalesOrderHeaderModel item)
+		public virtual async Task SalesOrderHeaderUpdateAsync(int id, SalesOrderHeaderModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesOrderHeaders/{id}", item);
 
@@ -3693,17 +3215,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesOrderHeaderSalesReason>>SalesOrderHeaderSalesReasonSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasonSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaderSalesReasons?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderHeaderSalesReasons;
-		}
-
-		public virtual async Task<List<POCOSalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasonGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaderSalesReasons/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderHeaderSalesReasons;
@@ -3717,7 +3231,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesOrderHeaderSalesReasons.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasonGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasonGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaderSalesReasons?offset={offset}&limit={limit}");
 
@@ -3732,7 +3246,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesOrderHeaderSalesReasonUpdateAsync(int id,SalesOrderHeaderSalesReasonModel item)
+		public virtual async Task SalesOrderHeaderSalesReasonUpdateAsync(int id, SalesOrderHeaderSalesReasonModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesOrderHeaderSalesReasons/{id}", item);
 
@@ -3754,17 +3268,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesPerson>>SalesPersonSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesPerson>> SalesPersonSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersons?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesPersons;
-		}
-
-		public virtual async Task<List<POCOSalesPerson>> SalesPersonGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersons/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesPersons;
@@ -3778,7 +3284,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesPersons.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesPerson>> SalesPersonGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesPerson>> SalesPersonGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersons?offset={offset}&limit={limit}");
 
@@ -3793,7 +3299,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesPersonUpdateAsync(int id,SalesPersonModel item)
+		public virtual async Task SalesPersonUpdateAsync(int id, SalesPersonModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesPersons/{id}", item);
 
@@ -3815,17 +3321,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesPersonQuotaHistory>>SalesPersonQuotaHistorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesPersonQuotaHistory>> SalesPersonQuotaHistorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersonQuotaHistories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesPersonQuotaHistories;
-		}
-
-		public virtual async Task<List<POCOSalesPersonQuotaHistory>> SalesPersonQuotaHistoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersonQuotaHistories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesPersonQuotaHistories;
@@ -3839,7 +3337,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesPersonQuotaHistories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesPersonQuotaHistory>> SalesPersonQuotaHistoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesPersonQuotaHistory>> SalesPersonQuotaHistoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersonQuotaHistories?offset={offset}&limit={limit}");
 
@@ -3854,7 +3352,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesPersonQuotaHistoryUpdateAsync(int id,SalesPersonQuotaHistoryModel item)
+		public virtual async Task SalesPersonQuotaHistoryUpdateAsync(int id, SalesPersonQuotaHistoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesPersonQuotaHistories/{id}", item);
 
@@ -3876,17 +3374,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesReason>>SalesReasonSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesReason>> SalesReasonSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesReasons?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesReasons;
-		}
-
-		public virtual async Task<List<POCOSalesReason>> SalesReasonGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesReasons/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesReasons;
@@ -3900,7 +3390,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesReasons.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesReason>> SalesReasonGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesReason>> SalesReasonGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesReasons?offset={offset}&limit={limit}");
 
@@ -3915,7 +3405,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesReasonUpdateAsync(int id,SalesReasonModel item)
+		public virtual async Task SalesReasonUpdateAsync(int id, SalesReasonModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesReasons/{id}", item);
 
@@ -3937,17 +3427,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesTaxRate>>SalesTaxRateSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesTaxRate>> SalesTaxRateSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTaxRates?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTaxRates;
-		}
-
-		public virtual async Task<List<POCOSalesTaxRate>> SalesTaxRateGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTaxRates/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTaxRates;
@@ -3961,7 +3443,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTaxRates.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesTaxRate>> SalesTaxRateGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesTaxRate>> SalesTaxRateGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTaxRates?offset={offset}&limit={limit}");
 
@@ -3976,7 +3458,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesTaxRateUpdateAsync(int id,SalesTaxRateModel item)
+		public virtual async Task SalesTaxRateUpdateAsync(int id, SalesTaxRateModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesTaxRates/{id}", item);
 
@@ -3998,17 +3480,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesTerritory>>SalesTerritorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesTerritory>> SalesTerritorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTerritories;
-		}
-
-		public virtual async Task<List<POCOSalesTerritory>> SalesTerritoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTerritories;
@@ -4022,7 +3496,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTerritories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesTerritory>> SalesTerritoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesTerritory>> SalesTerritoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritories?offset={offset}&limit={limit}");
 
@@ -4037,7 +3511,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesTerritoryUpdateAsync(int id,SalesTerritoryModel item)
+		public virtual async Task SalesTerritoryUpdateAsync(int id, SalesTerritoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesTerritories/{id}", item);
 
@@ -4059,17 +3533,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSalesTerritoryHistory>>SalesTerritoryHistorySearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesTerritoryHistory>> SalesTerritoryHistorySearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritoryHistories?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTerritoryHistories;
-		}
-
-		public virtual async Task<List<POCOSalesTerritoryHistory>> SalesTerritoryHistoryGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritoryHistories/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTerritoryHistories;
@@ -4083,7 +3549,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SalesTerritoryHistories.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSalesTerritoryHistory>> SalesTerritoryHistoryGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSalesTerritoryHistory>> SalesTerritoryHistoryGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritoryHistories?offset={offset}&limit={limit}");
 
@@ -4098,7 +3564,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SalesTerritoryHistoryUpdateAsync(int id,SalesTerritoryHistoryModel item)
+		public virtual async Task SalesTerritoryHistoryUpdateAsync(int id, SalesTerritoryHistoryModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SalesTerritoryHistories/{id}", item);
 
@@ -4120,17 +3586,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOShoppingCartItem>>ShoppingCartItemSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOShoppingCartItem>> ShoppingCartItemSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShoppingCartItems?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ShoppingCartItems;
-		}
-
-		public virtual async Task<List<POCOShoppingCartItem>> ShoppingCartItemGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShoppingCartItems/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ShoppingCartItems;
@@ -4144,7 +3602,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ShoppingCartItems.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOShoppingCartItem>> ShoppingCartItemGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOShoppingCartItem>> ShoppingCartItemGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShoppingCartItems?offset={offset}&limit={limit}");
 
@@ -4159,7 +3617,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ShoppingCartItemUpdateAsync(int id,ShoppingCartItemModel item)
+		public virtual async Task ShoppingCartItemUpdateAsync(int id, ShoppingCartItemModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ShoppingCartItems/{id}", item);
 
@@ -4181,17 +3639,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSpecialOffer>>SpecialOfferSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSpecialOffer>> SpecialOfferSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOffers?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpecialOffers;
-		}
-
-		public virtual async Task<List<POCOSpecialOffer>> SpecialOfferGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOffers/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpecialOffers;
@@ -4205,7 +3655,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpecialOffers.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSpecialOffer>> SpecialOfferGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSpecialOffer>> SpecialOfferGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOffers?offset={offset}&limit={limit}");
 
@@ -4220,7 +3670,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SpecialOfferUpdateAsync(int id,SpecialOfferModel item)
+		public virtual async Task SpecialOfferUpdateAsync(int id, SpecialOfferModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SpecialOffers/{id}", item);
 
@@ -4242,17 +3692,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSpecialOfferProduct>>SpecialOfferProductSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOSpecialOfferProduct>> SpecialOfferProductSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOfferProducts?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpecialOfferProducts;
-		}
-
-		public virtual async Task<List<POCOSpecialOfferProduct>> SpecialOfferProductGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOfferProducts/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpecialOfferProducts;
@@ -4266,7 +3708,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpecialOfferProducts.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOSpecialOfferProduct>> SpecialOfferProductGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOSpecialOfferProduct>> SpecialOfferProductGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOfferProducts?offset={offset}&limit={limit}");
 
@@ -4281,7 +3723,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task SpecialOfferProductUpdateAsync(int id,SpecialOfferProductModel item)
+		public virtual async Task SpecialOfferProductUpdateAsync(int id, SpecialOfferProductModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SpecialOfferProducts/{id}", item);
 
@@ -4303,17 +3745,9 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOStore>>StoreSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOStore>> StoreSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Stores;
-		}
-
-		public virtual async Task<List<POCOStore>> StoreGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Stores;
@@ -4327,7 +3761,7 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Stores.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOStore>> StoreGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOStore>> StoreGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores?offset={offset}&limit={limit}");
 
@@ -4342,7 +3776,7 @@ namespace AdventureWorksNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task StoreUpdateAsync(int id,StoreModel item)
+		public virtual async Task StoreUpdateAsync(int id, StoreModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Stores/{id}", item);
 
@@ -4367,5 +3801,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>24fda7b7e181d83aa9a6720125b65a97</Hash>
+    <Hash>f6933f13704fd502807558956579340c</Hash>
 </Codenesium>*/

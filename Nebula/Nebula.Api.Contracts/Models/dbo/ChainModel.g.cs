@@ -9,10 +9,12 @@ namespace NebulaNS.Api.Contracts
 	{
 		public ChainModel()
 		{}
-		public ChainModel(string name,
-		                  int teamId,
-		                  int chainStatusId,
-		                  Guid externalId)
+
+		public ChainModel(
+			string name,
+			int teamId,
+			int chainStatusId,
+			Guid externalId)
 		{
 			this.Name = name;
 			this.TeamId = teamId.ToInt();
@@ -20,64 +22,72 @@ namespace NebulaNS.Api.Contracts
 			this.ExternalId = externalId;
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private int _teamId;
+		private int teamId;
+
 		[Required]
 		public int TeamId
 		{
 			get
 			{
-				return _teamId;
+				return this.teamId;
 			}
+
 			set
 			{
-				this._teamId = value;
+				this.teamId = value;
 			}
 		}
 
-		private int _chainStatusId;
+		private int chainStatusId;
+
 		[Required]
 		public int ChainStatusId
 		{
 			get
 			{
-				return _chainStatusId;
+				return this.chainStatusId;
 			}
+
 			set
 			{
-				this._chainStatusId = value;
+				this.chainStatusId = value;
 			}
 		}
 
-		private Guid _externalId;
+		private Guid externalId;
+
 		[Required]
 		public Guid ExternalId
 		{
 			get
 			{
-				return _externalId;
+				return this.externalId;
 			}
+
 			set
 			{
-				this._externalId = value;
+				this.externalId = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb2753bffe819dfa788f8d4e34fd33de</Hash>
+    <Hash>9f1a2ef7b30d7fa3bf35d964f42e26aa</Hash>
 </Codenesium>*/

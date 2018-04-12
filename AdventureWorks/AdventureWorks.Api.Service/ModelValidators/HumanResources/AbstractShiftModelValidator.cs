@@ -22,27 +22,27 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,50);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void StartTimeRules()
 		{
-			RuleFor(x => x.StartTime).NotNull();
+			this.RuleFor(x => x.StartTime).NotNull();
 		}
 
 		public virtual void EndTimeRules()
 		{
-			RuleFor(x => x.EndTime).NotNull();
+			this.RuleFor(x => x.EndTime).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6d3455d76821d7b08e0228d0661c558</Hash>
+    <Hash>d2eda46992b0ffcb5dca2e34600b2827</Hash>
 </Codenesium>*/

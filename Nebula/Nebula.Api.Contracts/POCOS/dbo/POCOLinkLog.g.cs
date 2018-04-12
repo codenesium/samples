@@ -9,54 +9,55 @@ namespace NebulaNS.Api.Contracts
 		public POCOLinkLog()
 		{}
 
-		public POCOLinkLog(int id,
-		                   int linkId,
-		                   string log,
-		                   DateTime dateEntered)
+		public POCOLinkLog(
+			int id,
+			int linkId,
+			string log,
+			DateTime dateEntered)
 		{
 			this.Id = id.ToInt();
 			this.Log = log;
 			this.DateEntered = dateEntered.ToDateTime();
 
-			LinkId = new ReferenceEntity<int>(linkId,
-			                                  "Link");
+			this.LinkId = new ReferenceEntity<int>(linkId,
+			                                       "Link");
 		}
 
-		public int Id {get; set;}
-		public ReferenceEntity<int>LinkId {get; set;}
-		public string Log {get; set;}
-		public DateTime DateEntered {get; set;}
+		public int Id { get; set; }
+		public ReferenceEntity<int> LinkId { get; set; }
+		public string Log { get; set; }
+		public DateTime DateEntered { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinkIdValue {get; set;} = true;
+		public bool ShouldSerializeLinkIdValue { get; set; } = true;
 
 		public bool ShouldSerializeLinkId()
 		{
-			return ShouldSerializeLinkIdValue;
+			return this.ShouldSerializeLinkIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLogValue {get; set;} = true;
+		public bool ShouldSerializeLogValue { get; set; } = true;
 
 		public bool ShouldSerializeLog()
 		{
-			return ShouldSerializeLogValue;
+			return this.ShouldSerializeLogValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDateEnteredValue {get; set;} = true;
+		public bool ShouldSerializeDateEnteredValue { get; set; } = true;
 
 		public bool ShouldSerializeDateEntered()
 		{
-			return ShouldSerializeDateEnteredValue;
+			return this.ShouldSerializeDateEnteredValue;
 		}
 
 		public void DisableAllFields()
@@ -70,5 +71,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>58a278b1ff2609c90a39f5966897cf59</Hash>
+    <Hash>1f3829312e667c871a00d0c44ab82233</Hash>
 </Codenesium>*/

@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shoppingCartItems")]
-	public class ShoppingCartItemsController: AbstractShoppingCartItemsController
+	public class ShoppingCartItemController: AbstractShoppingCartItemController
 	{
-		public ShoppingCartItemsController(
-			ILogger<ShoppingCartItemsController> logger,
+		public ShoppingCartItemController(
+			ILogger<ShoppingCartItemController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IShoppingCartItemRepository shoppingCartItemRepository,
 			IShoppingCartItemModelValidator shoppingCartItemModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         shoppingCartItemRepository,
-			         shoppingCartItemModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       shoppingCartItemRepository,
+			       shoppingCartItemModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d12d96e7e7be89e68ed368b24ce5d738</Hash>
+    <Hash>37be1e496a66cbca8e8ee82111b181d1</Hash>
 </Codenesium>*/

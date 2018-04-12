@@ -15,43 +15,54 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractScrapReasonRepository(ILogger logger,
-		                                     ApplicationDbContext context)
+		public AbstractScrapReasonRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual short Create(string name,
-		                            DateTime modifiedDate)
+		public virtual short Create(
+			string name,
+			DateTime modifiedDate)
 		{
-			var record = new EFScrapReason ();
+			var record = new EFScrapReason();
 
-			MapPOCOToEF(0, name,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				name,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFScrapReason>().Add(record);
 			this.context.SaveChanges();
 			return record.ScrapReasonID;
 		}
 
-		public virtual void Update(short scrapReasonID, string name,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			short scrapReasonID,
+			string name,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{scrapReasonID}");
 			}
 			else
 			{
-				MapPOCOToEF(scrapReasonID,  name,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					scrapReasonID,
+					name,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(short scrapReasonID)
+		public virtual void Delete(
+			short scrapReasonID)
 		{
 			var record = this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
 
@@ -70,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID,response);
+			this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID, response);
 			return response;
 		}
 
@@ -78,11 +89,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID,response);
+			this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID, response);
 			return response.ScrapReasons.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -90,7 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,45 +117,51 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.ScrapReasons;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFScrapReason, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFScrapReason, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFScrapReason> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFScrapReason> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFScrapReason> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFScrapReason> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFScrapReason> SearchLinqEF(Expression<Func<EFScrapReason, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFScrapReason> SearchLinqEF(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFScrapReason> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFScrapReason> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(short scrapReasonID, string name,
-		                               DateTime modifiedDate, EFScrapReason   efScrapReason)
+		public static void MapPOCOToEF(
+			short scrapReasonID,
+			string name,
+			DateTime modifiedDate,
+			EFScrapReason efScrapReason)
 		{
-			efScrapReason.SetProperties(scrapReasonID,name,modifiedDate.ToDateTime());
+			efScrapReason.SetProperties(scrapReasonID, name, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFScrapReason efScrapReason,Response response)
+		public static void MapEFToPOCO(
+			EFScrapReason efScrapReason,
+			Response response)
 		{
-			if(efScrapReason == null)
+			if (efScrapReason == null)
 			{
 				return;
 			}
-			response.AddScrapReason(new POCOScrapReason(efScrapReason.ScrapReasonID,efScrapReason.Name,efScrapReason.ModifiedDate.ToDateTime()));
+
+			response.AddScrapReason(new POCOScrapReason(efScrapReason.ScrapReasonID, efScrapReason.Name, efScrapReason.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9667eabd20eaa358e8ef205af3375561</Hash>
+    <Hash>f72f4ee1f9c0a213f7669c33a6c9475a</Hash>
 </Codenesium>*/

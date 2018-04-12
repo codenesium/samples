@@ -11,13 +11,15 @@ namespace NebulaNS.Api.DataAccess
 {
 	public class MachineRefTeamRepository: AbstractMachineRefTeamRepository, IMachineRefTeamRepository
 	{
-		public MachineRefTeamRepository(ILogger<MachineRefTeamRepository> logger,
-		                                ApplicationDbContext context) : base(logger,context)
+		public MachineRefTeamRepository(
+			ILogger<MachineRefTeamRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFMachineRefTeam> SearchLinqEF(Expression<Func<EFMachineRefTeam, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFMachineRefTeam> SearchLinqEF(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFMachineRefTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachineRefTeam>();
 			}
@@ -27,9 +29,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFMachineRefTeam> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFMachineRefTeam> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFMachineRefTeam>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachineRefTeam>();
 			}
@@ -42,5 +44,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c883a2164e493f2f076eda600c541ed8</Hash>
+    <Hash>954980f806384f65e2ee88beaa41c44d</Hash>
 </Codenesium>*/

@@ -16,19 +16,25 @@ namespace Codenesium.Foundation.CommonMVC
     public interface ITransactionCoordinator
     {
         void BeginTransaction();
+
         void CommitTransaction();
+
         void RollbackTransaction();
+
         void EnableChangeTracking();
+
         void DisableChangeTracking();
     }
 
     public class EntityFrameworkTransactionCoordinator : ITransactionCoordinator
     {
         private DbContext context;
+
         public EntityFrameworkTransactionCoordinator(DbContext context)
         {
             this.context = context;
         }
+
         public void BeginTransaction()
         {
             this.context.Database.BeginTransaction();
@@ -68,14 +74,15 @@ namespace Codenesium.Foundation.CommonMVC
     public abstract class AbstractApiController : Controller
     {
         public ITransactionCoordinator TransactionCooordinator { get; private set; }
-        protected ILogger _logger { get; set; }
+
+        protected ILogger logger { get; set; }
 
         public AbstractApiController(
             ILogger logger,
             ITransactionCoordinator transactionCooordinator
             )
         {
-            this._logger = logger;
+            this.logger = logger;
             this.TransactionCooordinator = transactionCooordinator;
         }
     }
@@ -110,6 +117,11 @@ namespace Codenesium.Foundation.CommonMVC
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
+			if(!(actionContext.Controller is AbstractApiController))
+			{
+				throw new Exception("ReadOnlyFilter can only be applied to controllers that inherit from AbstractApiController");
+			}
+
             AbstractApiController controller = (AbstractApiController)actionContext.Controller;
             controller.TransactionCooordinator.DisableChangeTracking();
         }
@@ -121,16 +133,22 @@ namespace Codenesium.Foundation.CommonMVC
     }
 
 	/// <summary>
-    /// This attribute enabled transaction support on a rrequest by hooking in to the request pipeline
+    /// This attribute enabled transaction support on a request by hooking in to the request pipeline
 	/// and starting a transaction when a request begins and committing or rolling back the transaction if 
-	/// there is an exception during the request. 
+	/// there is an exception during the request.
     /// </summary>
     public class UnitOfWorkActionFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-            AbstractApiController controller = (AbstractApiController)actionContext.Controller;
-            controller.TransactionCooordinator.BeginTransaction();
+			if(!(actionContext.Controller is AbstractApiController))
+			{
+				throw new Exception("UnitOfWorkActionFilter can only be applied to controllers that inherit from AbstractApiController");
+			}
+
+			AbstractApiController controller = (AbstractApiController)actionContext.Controller;
+			controller.TransactionCooordinator.BeginTransaction();
+			
         }
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
@@ -142,6 +160,10 @@ namespace Codenesium.Foundation.CommonMVC
                 try
                 {
                     controller.TransactionCooordinator.CommitTransaction();
+                }
+			    catch (DbUpdateConcurrencyException)
+                {
+                    throw;
                 }
                 catch (Exception)
                 {
@@ -167,9 +189,12 @@ namespace Codenesium.Foundation.CommonMVC
     public class SearchQuery
     {
         public int Limit { get; private set; } = 0;
+
         public int Offset { get; private set; } = 0;
-        public string WhereClause { get; private set; } = "";
-        public string Error { get; private set; } = "";
+
+        public string WhereClause { get; private set; } = string.Empty;
+
+        public string Error { get; private set; } = string.Empty;
 
         public SearchQuery()
         {
@@ -202,7 +227,7 @@ namespace Codenesium.Foundation.CommonMVC
                     continue;
                 }
 
-                if (!String.IsNullOrEmpty(this.WhereClause))
+                if (!string.IsNullOrEmpty(this.WhereClause))
                 {
                     this.WhereClause += " && ";
                 }
@@ -220,7 +245,7 @@ namespace Codenesium.Foundation.CommonMVC
                     this.WhereClause += $"{parameter.Key}.Equals(\"{parameter.Value}\")";
                 }
             }
-            if (String.IsNullOrWhiteSpace(this.WhereClause))
+            if (string.IsNullOrWhiteSpace(this.WhereClause))
             {
                 this.WhereClause = "1=1";
             }

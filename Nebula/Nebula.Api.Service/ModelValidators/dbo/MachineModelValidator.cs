@@ -1,8 +1,9 @@
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public class MachineModelValidator: AbstractMachineModelValidator,IMachineModelValidator
+	public class MachineModelValidator: AbstractMachineModelValidator, IMachineModelValidator
 	{
 		public MachineModelValidator()
 		{   }
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>15a1affd152f50efcb2ea2edcf52b45d</Hash>
+    <Hash>04f591d1627adb393e489d2f0e9a8824</Hash>
 </Codenesium>*/

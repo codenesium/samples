@@ -22,12 +22,12 @@ namespace FileServiceNS.Api.Service
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,255);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 255);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>75953ddf91db7c02232c0503a015fcfe</Hash>
+    <Hash>fb998d67d66b0c344ec36c2440e3ac4a</Hash>
 </Codenesium>*/

@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractProductDocumentsController: AbstractApiController
+	public abstract class AbstractProductDocumentController: AbstractApiController
 	{
 		protected IProductDocumentRepository productDocumentRepository;
+
 		protected IProductDocumentModelValidator productDocumentModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractProductDocumentsController(
-			ILogger<AbstractProductDocumentsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractProductDocumentController(
+			ILogger<AbstractProductDocumentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductDocumentRepository productDocumentRepository,
 			IProductDocumentModelValidator productDocumentModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.productDocumentRepository = productDocumentRepository;
 			this.productDocumentModelValidator = productDocumentModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productDocumentRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productDocumentRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.productDocumentRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,14 +81,15 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productDocumentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productDocumentRepository.Create(model.DocumentNode,
-				                                               model.ModifiedDate);
-				return Ok(id);
+				var id = this.productDocumentRepository.Create(
+					model.DocumentNode,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -96,22 +103,24 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ProductDocumentModel> models)
 		{
 			this.productDocumentModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.productDocumentModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.productDocumentRepository.Create(model.DocumentNode,
-				                                      model.ModifiedDate);
+				this.productDocumentRepository.Create(
+					model.DocumentNode,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -121,25 +130,27 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ProductDocumentModel model)
+		public virtual IActionResult Update(int id, ProductDocumentModel model)
 		{
-			if(this.productDocumentRepository.GetByIdDirect(id) == null)
+			if (this.productDocumentRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.productDocumentModelValidator.UpdateMode();
 			var validationResult = this.productDocumentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productDocumentRepository.Update(id,  model.DocumentNode,
-				                                      model.ModifiedDate);
-				return Ok();
+				this.productDocumentRepository.Update(
+					id,
+					model.DocumentNode,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -152,7 +163,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.productDocumentRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -165,7 +176,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productDocumentRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -178,11 +189,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productDocumentRepository.GetWhere(x => x.DocumentNode == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>717b4a3c77067e3189746fd0b972b152</Hash>
+    <Hash>760d4278dd6e907e6f8f9cf0e6e7a239</Hash>
 </Codenesium>*/

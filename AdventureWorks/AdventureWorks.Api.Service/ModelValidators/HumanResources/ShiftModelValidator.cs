@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class ShiftModelValidator: AbstractShiftModelValidator,IShiftModelValidator
+	public class ShiftModelValidator: AbstractShiftModelValidator, IShiftModelValidator
 	{
 		public ShiftModelValidator()
 		{   }
@@ -29,5 +30,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>23e6f4319ce8f0221843db75c18ac005</Hash>
+    <Hash>06a3af9e954cfa7be0bc12a7c5d81f56</Hash>
 </Codenesium>*/

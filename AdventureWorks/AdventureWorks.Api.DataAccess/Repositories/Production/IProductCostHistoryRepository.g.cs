@@ -7,12 +7,14 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductCostHistoryRepository
 	{
-		int Create(DateTime startDate,
-		           Nullable<DateTime> endDate,
-		           decimal standardCost,
-		           DateTime modifiedDate);
+		int Create(
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal standardCost,
+			DateTime modifiedDate);
 
-		void Update(int productID, DateTime startDate,
+		void Update(int productID,
+		            DateTime startDate,
 		            Nullable<DateTime> endDate,
 		            decimal standardCost,
 		            DateTime modifiedDate);
@@ -23,14 +25,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOProductCostHistory GetByIdDirect(int productID);
 
-		Response GetWhere(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOProductCostHistory> GetWhereDirect(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOProductCostHistory> GetWhereDirect(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e12fae21516b0019f9cda09be8688930</Hash>
+    <Hash>96e2fd873760bd85780f6bcdc4b271eb</Hash>
 </Codenesium>*/

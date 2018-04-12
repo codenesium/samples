@@ -20,17 +20,17 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository {get; set;}
+		public IPersonRepository PersonRepository { get; set; }
 		public virtual void NationalIDNumberRules()
 		{
-			RuleFor(x => x.NationalIDNumber).NotNull();
-			RuleFor(x => x.NationalIDNumber).Length(0,15);
+			this.RuleFor(x => x.NationalIDNumber).NotNull();
+			this.RuleFor(x => x.NationalIDNumber).Length(0, 15);
 		}
 
 		public virtual void LoginIDRules()
 		{
-			RuleFor(x => x.LoginID).NotNull();
-			RuleFor(x => x.LoginID).Length(0,256);
+			this.RuleFor(x => x.LoginID).NotNull();
+			this.RuleFor(x => x.LoginID).Length(0, 256);
 		}
 
 		public virtual void OrganizationNodeRules()
@@ -41,60 +41,60 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void JobTitleRules()
 		{
-			RuleFor(x => x.JobTitle).NotNull();
-			RuleFor(x => x.JobTitle).Length(0,50);
+			this.RuleFor(x => x.JobTitle).NotNull();
+			this.RuleFor(x => x.JobTitle).Length(0, 50);
 		}
 
 		public virtual void BirthDateRules()
 		{
-			RuleFor(x => x.BirthDate).NotNull();
+			this.RuleFor(x => x.BirthDate).NotNull();
 		}
 
 		public virtual void MaritalStatusRules()
 		{
-			RuleFor(x => x.MaritalStatus).NotNull();
-			RuleFor(x => x.MaritalStatus).Length(0,1);
+			this.RuleFor(x => x.MaritalStatus).NotNull();
+			this.RuleFor(x => x.MaritalStatus).Length(0, 1);
 		}
 
 		public virtual void GenderRules()
 		{
-			RuleFor(x => x.Gender).NotNull();
-			RuleFor(x => x.Gender).Length(0,1);
+			this.RuleFor(x => x.Gender).NotNull();
+			this.RuleFor(x => x.Gender).Length(0, 1);
 		}
 
 		public virtual void HireDateRules()
 		{
-			RuleFor(x => x.HireDate).NotNull();
+			this.RuleFor(x => x.HireDate).NotNull();
 		}
 
 		public virtual void SalariedFlagRules()
 		{
-			RuleFor(x => x.SalariedFlag).NotNull();
+			this.RuleFor(x => x.SalariedFlag).NotNull();
 		}
 
 		public virtual void VacationHoursRules()
 		{
-			RuleFor(x => x.VacationHours).NotNull();
+			this.RuleFor(x => x.VacationHours).NotNull();
 		}
 
 		public virtual void SickLeaveHoursRules()
 		{
-			RuleFor(x => x.SickLeaveHours).NotNull();
+			this.RuleFor(x => x.SickLeaveHours).NotNull();
 		}
 
 		public virtual void CurrentFlagRules()
 		{
-			RuleFor(x => x.CurrentFlag).NotNull();
+			this.RuleFor(x => x.CurrentFlag).NotNull();
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidPerson(int id)
@@ -105,5 +105,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ba3409e4006e873ae07a203dd8b5f634</Hash>
+    <Hash>60d004ce5b0532845284ddc83630ef32</Hash>
 </Codenesium>*/

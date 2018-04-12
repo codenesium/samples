@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Organization", Schema="dbo")]
@@ -10,8 +11,9 @@ namespace NebulaNS.Api.Contracts
 		public EFOrganization()
 		{}
 
-		public void SetProperties(int id,
-		                          string name)
+		public void SetProperties(
+			int id,
+			string name)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
@@ -20,13 +22,13 @@ namespace NebulaNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
-		public int Id {get; set;}
+		public int Id { get; set; }
 
 		[Column("name", TypeName="varchar(128)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7081401e05846a94871193f710a6ce52</Hash>
+    <Hash>6f7cfe052cb0c9a13e0ab522e26aff5e</Hash>
 </Codenesium>*/

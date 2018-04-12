@@ -9,67 +9,68 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOBusinessEntityAddress()
 		{}
 
-		public POCOBusinessEntityAddress(int businessEntityID,
-		                                 int addressID,
-		                                 int addressTypeID,
-		                                 Guid rowguid,
-		                                 DateTime modifiedDate)
+		public POCOBusinessEntityAddress(
+			int businessEntityID,
+			int addressID,
+			int addressTypeID,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "BusinessEntity");
-			AddressID = new ReferenceEntity<int>(addressID,
-			                                     "Address");
-			AddressTypeID = new ReferenceEntity<int>(addressTypeID,
-			                                         "AddressType");
+			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                                 "BusinessEntity");
+			this.AddressID = new ReferenceEntity<int>(addressID,
+			                                          "Address");
+			this.AddressTypeID = new ReferenceEntity<int>(addressTypeID,
+			                                              "AddressType");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public ReferenceEntity<int>AddressID {get; set;}
-		public ReferenceEntity<int>AddressTypeID {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public ReferenceEntity<int> AddressID { get; set; }
+		public ReferenceEntity<int> AddressTypeID { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityID()
 		{
-			return ShouldSerializeBusinessEntityIDValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressIDValue {get; set;} = true;
+		public bool ShouldSerializeAddressIDValue { get; set; } = true;
 
 		public bool ShouldSerializeAddressID()
 		{
-			return ShouldSerializeAddressIDValue;
+			return this.ShouldSerializeAddressIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressTypeIDValue {get; set;} = true;
+		public bool ShouldSerializeAddressTypeIDValue { get; set; } = true;
 
 		public bool ShouldSerializeAddressTypeID()
 		{
-			return ShouldSerializeAddressTypeIDValue;
+			return this.ShouldSerializeAddressTypeIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -84,5 +85,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f31301bbca1cee50637e71e5cfcfb1fb</Hash>
+    <Hash>5c62cab26deccdf6e939c4ebd109fa8c</Hash>
 </Codenesium>*/

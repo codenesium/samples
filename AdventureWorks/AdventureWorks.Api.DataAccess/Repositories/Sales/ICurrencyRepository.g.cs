@@ -7,10 +7,12 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICurrencyRepository
 	{
-		string Create(string name,
-		              DateTime modifiedDate);
+		string Create(
+			string name,
+			DateTime modifiedDate);
 
-		void Update(string currencyCode, string name,
+		void Update(string currencyCode,
+		            string name,
 		            DateTime modifiedDate);
 
 		void Delete(string currencyCode);
@@ -19,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOCurrency GetByIdDirect(string currencyCode);
 
-		Response GetWhere(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOCurrency> GetWhereDirect(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOCurrency> GetWhereDirect(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c477f9e461c9b249b1244191f473ca4</Hash>
+    <Hash>bc2f67fefc2fb02acb68919f27b9a32d</Hash>
 </Codenesium>*/

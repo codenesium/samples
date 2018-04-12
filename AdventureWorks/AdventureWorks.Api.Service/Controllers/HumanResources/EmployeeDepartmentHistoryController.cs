@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employeeDepartmentHistories")]
-	public class EmployeeDepartmentHistoriesController: AbstractEmployeeDepartmentHistoriesController
+	public class EmployeeDepartmentHistoryController: AbstractEmployeeDepartmentHistoryController
 	{
-		public EmployeeDepartmentHistoriesController(
-			ILogger<EmployeeDepartmentHistoriesController> logger,
+		public EmployeeDepartmentHistoryController(
+			ILogger<EmployeeDepartmentHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
 			IEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         employeeDepartmentHistoryRepository,
-			         employeeDepartmentHistoryModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       employeeDepartmentHistoryRepository,
+			       employeeDepartmentHistoryModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7f4bfab2964e9896e0f605d56533b1c8</Hash>
+    <Hash>8c21b6246ed02f7546320cb51d6e9a45</Hash>
 </Codenesium>*/

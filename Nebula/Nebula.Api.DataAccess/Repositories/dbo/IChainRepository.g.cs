@@ -7,12 +7,14 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IChainRepository
 	{
-		int Create(string name,
-		           int teamId,
-		           int chainStatusId,
-		           Guid externalId);
+		int Create(
+			string name,
+			int teamId,
+			int chainStatusId,
+			Guid externalId);
 
-		void Update(int id, string name,
+		void Update(int id,
+		            string name,
 		            int teamId,
 		            int chainStatusId,
 		            Guid externalId);
@@ -23,14 +25,14 @@ namespace NebulaNS.Api.DataAccess
 
 		POCOChain GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOChain> GetWhereDirect(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOChain> GetWhereDirect(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd6b0454b21b59bd89115e86d63deeff</Hash>
+    <Hash>8724b95eaa17cc362d634f0fb6828ac9</Hash>
 </Codenesium>*/

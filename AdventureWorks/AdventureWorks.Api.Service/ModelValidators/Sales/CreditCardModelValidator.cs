@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class CreditCardModelValidator: AbstractCreditCardModelValidator,ICreditCardModelValidator
+	public class CreditCardModelValidator: AbstractCreditCardModelValidator, ICreditCardModelValidator
 	{
 		public CreditCardModelValidator()
 		{   }
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6bf73743022d1296ff5d0a9d1efff7f0</Hash>
+    <Hash>2f20e4a12d7560489a404e40cbcc7085</Hash>
 </Codenesium>*/

@@ -9,65 +9,66 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOEmployeePayHistory()
 		{}
 
-		public POCOEmployeePayHistory(int businessEntityID,
-		                              DateTime rateChangeDate,
-		                              decimal rate,
-		                              int payFrequency,
-		                              DateTime modifiedDate)
+		public POCOEmployeePayHistory(
+			int businessEntityID,
+			DateTime rateChangeDate,
+			decimal rate,
+			int payFrequency,
+			DateTime modifiedDate)
 		{
 			this.RateChangeDate = rateChangeDate.ToDateTime();
 			this.Rate = rate;
 			this.PayFrequency = payFrequency;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "Employee");
+			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                                 "Employee");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public DateTime RateChangeDate {get; set;}
-		public decimal Rate {get; set;}
-		public int PayFrequency {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public DateTime RateChangeDate { get; set; }
+		public decimal Rate { get; set; }
+		public int PayFrequency { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityID()
 		{
-			return ShouldSerializeBusinessEntityIDValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRateChangeDateValue {get; set;} = true;
+		public bool ShouldSerializeRateChangeDateValue { get; set; } = true;
 
 		public bool ShouldSerializeRateChangeDate()
 		{
-			return ShouldSerializeRateChangeDateValue;
+			return this.ShouldSerializeRateChangeDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRateValue {get; set;} = true;
+		public bool ShouldSerializeRateValue { get; set; } = true;
 
 		public bool ShouldSerializeRate()
 		{
-			return ShouldSerializeRateValue;
+			return this.ShouldSerializeRateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePayFrequencyValue {get; set;} = true;
+		public bool ShouldSerializePayFrequencyValue { get; set; } = true;
 
 		public bool ShouldSerializePayFrequency()
 		{
-			return ShouldSerializePayFrequencyValue;
+			return this.ShouldSerializePayFrequencyValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -82,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>19b45feaad94f3444b5f036f858328f9</Hash>
+    <Hash>15885a86e1ed0d3ee12882933af0314e</Hash>
 </Codenesium>*/

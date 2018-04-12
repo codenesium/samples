@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class PersonPhoneModelValidator: AbstractPersonPhoneModelValidator,IPersonPhoneModelValidator
+	public class PersonPhoneModelValidator: AbstractPersonPhoneModelValidator, IPersonPhoneModelValidator
 	{
 		public PersonPhoneModelValidator()
 		{   }
@@ -27,5 +28,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>54ddcc725a8389f16ceb58957bdadb9d</Hash>
+    <Hash>5f57c7806568574ee3cedf29a56cc491</Hash>
 </Codenesium>*/

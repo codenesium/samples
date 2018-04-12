@@ -9,43 +9,49 @@ namespace NebulaNS.Api.Contracts
 	{
 		public TeamModel()
 		{}
-		public TeamModel(string name,
-		                 int organizationId)
+
+		public TeamModel(
+			string name,
+			int organizationId)
 		{
 			this.Name = name;
 			this.OrganizationId = organizationId.ToInt();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private int _organizationId;
+		private int organizationId;
+
 		[Required]
 		public int OrganizationId
 		{
 			get
 			{
-				return _organizationId;
+				return this.organizationId;
 			}
+
 			set
 			{
-				this._organizationId = value;
+				this.organizationId = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd04af7def8fac8d6ff293e5c1a17faa</Hash>
+    <Hash>e1c8b621e26c2c01ed3f2b704adef0a0</Hash>
 </Codenesium>*/

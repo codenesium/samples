@@ -9,11 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductPhotoModel()
 		{}
-		public ProductPhotoModel(byte[] thumbNailPhoto,
-		                         string thumbnailPhotoFileName,
-		                         byte[] largePhoto,
-		                         string largePhotoFileName,
-		                         DateTime modifiedDate)
+
+		public ProductPhotoModel(
+			byte[] thumbNailPhoto,
+			string thumbnailPhotoFileName,
+			byte[] largePhoto,
+			string largePhotoFileName,
+			DateTime modifiedDate)
 		{
 			this.ThumbNailPhoto = thumbNailPhoto;
 			this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
@@ -22,74 +24,84 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private byte[] _thumbNailPhoto;
+		private byte[] thumbNailPhoto;
+
 		public byte[] ThumbNailPhoto
 		{
 			get
 			{
-				return _thumbNailPhoto.IsEmptyOrZeroOrNull() ? null : _thumbNailPhoto;
+				return this.thumbNailPhoto.IsEmptyOrZeroOrNull() ? null : this.thumbNailPhoto;
 			}
+
 			set
 			{
-				this._thumbNailPhoto = value;
+				this.thumbNailPhoto = value;
 			}
 		}
 
-		private string _thumbnailPhotoFileName;
+		private string thumbnailPhotoFileName;
+
 		public string ThumbnailPhotoFileName
 		{
 			get
 			{
-				return _thumbnailPhotoFileName.IsEmptyOrZeroOrNull() ? null : _thumbnailPhotoFileName;
+				return this.thumbnailPhotoFileName.IsEmptyOrZeroOrNull() ? null : this.thumbnailPhotoFileName;
 			}
+
 			set
 			{
-				this._thumbnailPhotoFileName = value;
+				this.thumbnailPhotoFileName = value;
 			}
 		}
 
-		private byte[] _largePhoto;
+		private byte[] largePhoto;
+
 		public byte[] LargePhoto
 		{
 			get
 			{
-				return _largePhoto.IsEmptyOrZeroOrNull() ? null : _largePhoto;
+				return this.largePhoto.IsEmptyOrZeroOrNull() ? null : this.largePhoto;
 			}
+
 			set
 			{
-				this._largePhoto = value;
+				this.largePhoto = value;
 			}
 		}
 
-		private string _largePhotoFileName;
+		private string largePhotoFileName;
+
 		public string LargePhotoFileName
 		{
 			get
 			{
-				return _largePhotoFileName.IsEmptyOrZeroOrNull() ? null : _largePhotoFileName;
+				return this.largePhotoFileName.IsEmptyOrZeroOrNull() ? null : this.largePhotoFileName;
 			}
+
 			set
 			{
-				this._largePhotoFileName = value;
+				this.largePhotoFileName = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>90fc86dc9049cc09c03ba2f19f975ab3</Hash>
+    <Hash>089669c944fe83f248104bdf17d19426</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("SalesTerritory", Schema="Sales")]
@@ -10,16 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFSalesTerritory()
 		{}
 
-		public void SetProperties(int territoryID,
-		                          string name,
-		                          string countryRegionCode,
-		                          string @group,
-		                          decimal salesYTD,
-		                          decimal salesLastYear,
-		                          decimal costYTD,
-		                          decimal costLastYear,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int territoryID,
+			string name,
+			string countryRegionCode,
+			string @group,
+			decimal salesYTD,
+			decimal salesLastYear,
+			decimal costYTD,
+			decimal costLastYear,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.TerritoryID = territoryID.ToInt();
 			this.Name = name;
@@ -36,39 +38,40 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("TerritoryID", TypeName="int")]
-		public int TerritoryID {get; set;}
+		public int TerritoryID { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("CountryRegionCode", TypeName="nvarchar(3)")]
-		public string CountryRegionCode {get; set;}
+		public string CountryRegionCode { get; set; }
 
 		[Column("Group", TypeName="nvarchar(50)")]
-		public string @Group {get; set;}
+		public string @Group { get; set; }
 
 		[Column("SalesYTD", TypeName="money")]
-		public decimal SalesYTD {get; set;}
+		public decimal SalesYTD { get; set; }
 
 		[Column("SalesLastYear", TypeName="money")]
-		public decimal SalesLastYear {get; set;}
+		public decimal SalesLastYear { get; set; }
 
 		[Column("CostYTD", TypeName="money")]
-		public decimal CostYTD {get; set;}
+		public decimal CostYTD { get; set; }
 
 		[Column("CostLastYear", TypeName="money")]
-		public decimal CostLastYear {get; set;}
+		public decimal CostLastYear { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("CountryRegionCode")]
 		public virtual EFCountryRegion CountryRegion { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9929cf9a86e0dff6d3f14ced5f13420d</Hash>
+    <Hash>7ee799e4fc68253c57ecdc9ee70fc7ae</Hash>
 </Codenesium>*/

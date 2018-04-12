@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class AWBuildVersionModelValidator: AbstractAWBuildVersionModelValidator,IAWBuildVersionModelValidator
+	public class AWBuildVersionModelValidator: AbstractAWBuildVersionModelValidator, IAWBuildVersionModelValidator
 	{
 		public AWBuildVersionModelValidator()
 		{   }
@@ -27,5 +28,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8e1fd49529323fac9b0161fddd3f5a7f</Hash>
+    <Hash>2abcfcabb976dffd206d628c6d37ff7a</Hash>
 </Codenesium>*/

@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/purchaseOrderHeaders")]
-	public class PurchaseOrderHeadersController: AbstractPurchaseOrderHeadersController
+	public class PurchaseOrderHeaderController: AbstractPurchaseOrderHeaderController
 	{
-		public PurchaseOrderHeadersController(
-			ILogger<PurchaseOrderHeadersController> logger,
+		public PurchaseOrderHeaderController(
+			ILogger<PurchaseOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
 			IPurchaseOrderHeaderModelValidator purchaseOrderHeaderModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         purchaseOrderHeaderRepository,
-			         purchaseOrderHeaderModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       purchaseOrderHeaderRepository,
+			       purchaseOrderHeaderModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>289d526d6233e21bbc4f2ba9115dec35</Hash>
+    <Hash>ee74f6bd1babd2d1f30ee41a0853f7d4</Hash>
 </Codenesium>*/

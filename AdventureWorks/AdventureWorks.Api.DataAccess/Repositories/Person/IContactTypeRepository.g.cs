@@ -7,10 +7,12 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IContactTypeRepository
 	{
-		int Create(string name,
-		           DateTime modifiedDate);
+		int Create(
+			string name,
+			DateTime modifiedDate);
 
-		void Update(int contactTypeID, string name,
+		void Update(int contactTypeID,
+		            string name,
 		            DateTime modifiedDate);
 
 		void Delete(int contactTypeID);
@@ -19,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOContactType GetByIdDirect(int contactTypeID);
 
-		Response GetWhere(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOContactType> GetWhereDirect(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOContactType> GetWhereDirect(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>4eb46f49616ba1ffb7d09ac5e2fbcc34</Hash>
+    <Hash>712d60466c96c1c60a18f0cd44c2712e</Hash>
 </Codenesium>*/

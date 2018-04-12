@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/unitMeasures")]
-	public class UnitMeasuresController: AbstractUnitMeasuresController
+	public class UnitMeasureController: AbstractUnitMeasureController
 	{
-		public UnitMeasuresController(
-			ILogger<UnitMeasuresController> logger,
+		public UnitMeasureController(
+			ILogger<UnitMeasureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IUnitMeasureRepository unitMeasureRepository,
 			IUnitMeasureModelValidator unitMeasureModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         unitMeasureRepository,
-			         unitMeasureModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       unitMeasureRepository,
+			       unitMeasureModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4bf2fc9c80825317889fdb1b41dea7dc</Hash>
+    <Hash>d1adcf9cdb84319583a7035f04f8a6c5</Hash>
 </Codenesium>*/

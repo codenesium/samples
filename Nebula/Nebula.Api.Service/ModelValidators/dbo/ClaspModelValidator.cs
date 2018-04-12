@@ -1,8 +1,9 @@
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public class ClaspModelValidator: AbstractClaspModelValidator,IClaspModelValidator
+	public class ClaspModelValidator: AbstractClaspModelValidator, IClaspModelValidator
 	{
 		public ClaspModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6eb834ae8bbbc14a2d915918a0b871ac</Hash>
+    <Hash>0e7644a15b98be3505f9138743311901</Hash>
 </Codenesium>*/

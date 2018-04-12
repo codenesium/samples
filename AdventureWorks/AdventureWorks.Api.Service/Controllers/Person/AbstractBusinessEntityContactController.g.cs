@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractBusinessEntityContactsController: AbstractApiController
+	public abstract class AbstractBusinessEntityContactController: AbstractApiController
 	{
 		protected IBusinessEntityContactRepository businessEntityContactRepository;
+
 		protected IBusinessEntityContactModelValidator businessEntityContactModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractBusinessEntityContactsController(
-			ILogger<AbstractBusinessEntityContactsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractBusinessEntityContactController(
+			ILogger<AbstractBusinessEntityContactController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBusinessEntityContactRepository businessEntityContactRepository,
 			IBusinessEntityContactModelValidator businessEntityContactModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.businessEntityContactRepository = businessEntityContactRepository;
 			this.businessEntityContactModelValidator = businessEntityContactModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.businessEntityContactRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.businessEntityContactRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.businessEntityContactRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.businessEntityContactModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.businessEntityContactRepository.Create(model.PersonID,
-				                                                     model.ContactTypeID,
-				                                                     model.Rowguid,
-				                                                     model.ModifiedDate);
-				return Ok(id);
+				var id = this.businessEntityContactRepository.Create(
+					model.PersonID,
+					model.ContactTypeID,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<BusinessEntityContactModel> models)
 		{
 			this.businessEntityContactModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.businessEntityContactModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.businessEntityContactRepository.Create(model.PersonID,
-				                                            model.ContactTypeID,
-				                                            model.Rowguid,
-				                                            model.ModifiedDate);
+				this.businessEntityContactRepository.Create(
+					model.PersonID,
+					model.ContactTypeID,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,BusinessEntityContactModel model)
+		public virtual IActionResult Update(int id, BusinessEntityContactModel model)
 		{
-			if(this.businessEntityContactRepository.GetByIdDirect(id) == null)
+			if (this.businessEntityContactRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.businessEntityContactModelValidator.UpdateMode();
 			var validationResult = this.businessEntityContactModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.businessEntityContactRepository.Update(id,  model.PersonID,
-				                                            model.ContactTypeID,
-				                                            model.Rowguid,
-				                                            model.ModifiedDate);
-				return Ok();
+				this.businessEntityContactRepository.Update(
+					id,
+					model.PersonID,
+					model.ContactTypeID,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.businessEntityContactRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -171,7 +182,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.businessEntityContactRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -184,7 +195,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.businessEntityContactRepository.GetWhere(x => x.PersonID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -197,11 +208,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.businessEntityContactRepository.GetWhere(x => x.ContactTypeID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9df83bae5141767ba1f598d10b4d0852</Hash>
+    <Hash>8bd7a89457e4bdd362025cb2ddd64cae</Hash>
 </Codenesium>*/

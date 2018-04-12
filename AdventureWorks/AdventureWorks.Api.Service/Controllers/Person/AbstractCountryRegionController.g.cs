@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractCountryRegionsController: AbstractApiController
+	public abstract class AbstractCountryRegionController: AbstractApiController
 	{
 		protected ICountryRegionRepository countryRegionRepository;
+
 		protected ICountryRegionModelValidator countryRegionModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractCountryRegionsController(
-			ILogger<AbstractCountryRegionsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractCountryRegionController(
+			ILogger<AbstractCountryRegionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryRegionRepository countryRegionRepository,
 			ICountryRegionModelValidator countryRegionModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.countryRegionRepository = countryRegionRepository;
 			this.countryRegionModelValidator = countryRegionModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.countryRegionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.countryRegionRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.countryRegionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,14 +81,15 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.countryRegionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.countryRegionRepository.Create(model.Name,
-				                                             model.ModifiedDate);
-				return Ok(id);
+				var id = this.countryRegionRepository.Create(
+					model.Name,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -96,22 +103,24 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<CountryRegionModel> models)
 		{
 			this.countryRegionModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.countryRegionModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.countryRegionRepository.Create(model.Name,
-				                                    model.ModifiedDate);
+				this.countryRegionRepository.Create(
+					model.Name,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -121,25 +130,27 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id,CountryRegionModel model)
+		public virtual IActionResult Update(string id, CountryRegionModel model)
 		{
-			if(this.countryRegionRepository.GetByIdDirect(id) == null)
+			if (this.countryRegionRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.countryRegionModelValidator.UpdateMode();
 			var validationResult = this.countryRegionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.countryRegionRepository.Update(id,  model.Name,
-				                                    model.ModifiedDate);
-				return Ok();
+				this.countryRegionRepository.Update(
+					id,
+					model.Name,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -152,11 +163,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(string id)
 		{
 			this.countryRegionRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df782c336e1e89a00fbeec15d2d4044d</Hash>
+    <Hash>d450b5ac987fb8a5d4daeecbe7714fc4</Hash>
 </Codenesium>*/

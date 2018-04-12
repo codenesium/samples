@@ -7,12 +7,14 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesPersonQuotaHistoryRepository
 	{
-		int Create(DateTime quotaDate,
-		           decimal salesQuota,
-		           Guid rowguid,
-		           DateTime modifiedDate);
+		int Create(
+			DateTime quotaDate,
+			decimal salesQuota,
+			Guid rowguid,
+			DateTime modifiedDate);
 
-		void Update(int businessEntityID, DateTime quotaDate,
+		void Update(int businessEntityID,
+		            DateTime quotaDate,
 		            decimal salesQuota,
 		            Guid rowguid,
 		            DateTime modifiedDate);
@@ -23,14 +25,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOSalesPersonQuotaHistory GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOSalesPersonQuotaHistory> GetWhereDirect(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOSalesPersonQuotaHistory> GetWhereDirect(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3db2dabf85bed3dddd30e3084e14ca55</Hash>
+    <Hash>ed71262f325c2d4d0ca5d58787e95ea7</Hash>
 </Codenesium>*/

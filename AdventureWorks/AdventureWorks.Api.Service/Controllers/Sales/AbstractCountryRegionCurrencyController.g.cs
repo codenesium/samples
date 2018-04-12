@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractCountryRegionCurrenciesController: AbstractApiController
+	public abstract class AbstractCountryRegionCurrencyController: AbstractApiController
 	{
 		protected ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
+
 		protected ICountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractCountryRegionCurrenciesController(
-			ILogger<AbstractCountryRegionCurrenciesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractCountryRegionCurrencyController(
+			ILogger<AbstractCountryRegionCurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
 			ICountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
 			this.countryRegionCurrencyModelValidator = countryRegionCurrencyModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.countryRegionCurrencyRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.countryRegionCurrencyRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.countryRegionCurrencyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,14 +81,15 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.countryRegionCurrencyRepository.Create(model.CurrencyCode,
-				                                                     model.ModifiedDate);
-				return Ok(id);
+				var id = this.countryRegionCurrencyRepository.Create(
+					model.CurrencyCode,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -96,22 +103,24 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<CountryRegionCurrencyModel> models)
 		{
 			this.countryRegionCurrencyModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.countryRegionCurrencyRepository.Create(model.CurrencyCode,
-				                                            model.ModifiedDate);
+				this.countryRegionCurrencyRepository.Create(
+					model.CurrencyCode,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -121,25 +130,27 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id,CountryRegionCurrencyModel model)
+		public virtual IActionResult Update(string id, CountryRegionCurrencyModel model)
 		{
-			if(this.countryRegionCurrencyRepository.GetByIdDirect(id) == null)
+			if (this.countryRegionCurrencyRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.countryRegionCurrencyModelValidator.UpdateMode();
 			var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.countryRegionCurrencyRepository.Update(id,  model.CurrencyCode,
-				                                            model.ModifiedDate);
-				return Ok();
+				this.countryRegionCurrencyRepository.Update(
+					id,
+					model.CurrencyCode,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -152,7 +163,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(string id)
 		{
 			this.countryRegionCurrencyRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -165,7 +176,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.countryRegionCurrencyRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -178,11 +189,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.countryRegionCurrencyRepository.GetWhere(x => x.CurrencyCode == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c3e0d2e5eec3ea3aafb27cc01e12621</Hash>
+    <Hash>037291eea90259445d5c867e4edcde2f</Hash>
 </Codenesium>*/

@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractSalesReasonsController: AbstractApiController
+	public abstract class AbstractSalesReasonController: AbstractApiController
 	{
 		protected ISalesReasonRepository salesReasonRepository;
+
 		protected ISalesReasonModelValidator salesReasonModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractSalesReasonsController(
-			ILogger<AbstractSalesReasonsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractSalesReasonController(
+			ILogger<AbstractSalesReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesReasonRepository salesReasonRepository,
 			ISalesReasonModelValidator salesReasonModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.salesReasonRepository = salesReasonRepository;
 			this.salesReasonModelValidator = salesReasonModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesReasonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesReasonRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.salesReasonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,15 +81,16 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesReasonRepository.Create(model.Name,
-				                                           model.ReasonType,
-				                                           model.ModifiedDate);
-				return Ok(id);
+				var id = this.salesReasonRepository.Create(
+					model.Name,
+					model.ReasonType,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -97,23 +104,25 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<SalesReasonModel> models)
 		{
 			this.salesReasonModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.salesReasonModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.salesReasonRepository.Create(model.Name,
-				                                  model.ReasonType,
-				                                  model.ModifiedDate);
+				this.salesReasonRepository.Create(
+					model.Name,
+					model.ReasonType,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -123,26 +132,28 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,SalesReasonModel model)
+		public virtual IActionResult Update(int id, SalesReasonModel model)
 		{
-			if(this.salesReasonRepository.GetByIdDirect(id) == null)
+			if (this.salesReasonRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.salesReasonModelValidator.UpdateMode();
 			var validationResult = this.salesReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesReasonRepository.Update(id,  model.Name,
-				                                  model.ReasonType,
-				                                  model.ModifiedDate);
-				return Ok();
+				this.salesReasonRepository.Update(
+					id,
+					model.Name,
+					model.ReasonType,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -155,11 +166,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.salesReasonRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>878a8678dac616c61afd5cad08a048f8</Hash>
+    <Hash>a380ce0baae7da5a2aafb0b869e75a6c</Hash>
 </Codenesium>*/

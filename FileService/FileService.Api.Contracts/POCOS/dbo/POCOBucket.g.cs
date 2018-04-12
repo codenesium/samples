@@ -9,41 +9,42 @@ namespace FileServiceNS.Api.Contracts
 		public POCOBucket()
 		{}
 
-		public POCOBucket(int id,
-		                  string name,
-		                  Guid externalId)
+		public POCOBucket(
+			int id,
+			string name,
+			Guid externalId)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
 			this.ExternalId = externalId;
 		}
 
-		public int Id {get; set;}
-		public string Name {get; set;}
-		public Guid ExternalId {get; set;}
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public Guid ExternalId { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeExternalIdValue {get; set;} = true;
+		public bool ShouldSerializeExternalIdValue { get; set; } = true;
 
 		public bool ShouldSerializeExternalId()
 		{
-			return ShouldSerializeExternalIdValue;
+			return this.ShouldSerializeExternalIdValue;
 		}
 
 		public void DisableAllFields()
@@ -56,5 +57,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c83b41c03260486995601678fdd482fd</Hash>
+    <Hash>ff8d9e78cd9d88b47e5b70d359a85718</Hash>
 </Codenesium>*/

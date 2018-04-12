@@ -9,55 +9,56 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOProductProductPhoto()
 		{}
 
-		public POCOProductProductPhoto(int productID,
-		                               int productPhotoID,
-		                               bool primary,
-		                               DateTime modifiedDate)
+		public POCOProductProductPhoto(
+			int productID,
+			int productPhotoID,
+			bool primary,
+			DateTime modifiedDate)
 		{
 			this.Primary = primary;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
-			ProductPhotoID = new ReferenceEntity<int>(productPhotoID,
-			                                          "ProductPhoto");
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          "Product");
+			this.ProductPhotoID = new ReferenceEntity<int>(productPhotoID,
+			                                               "ProductPhoto");
 		}
 
-		public ReferenceEntity<int>ProductID {get; set;}
-		public ReferenceEntity<int>ProductPhotoID {get; set;}
-		public bool Primary {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> ProductID { get; set; }
+		public ReferenceEntity<int> ProductPhotoID { get; set; }
+		public bool Primary { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue {get; set;} = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductID()
 		{
-			return ShouldSerializeProductIDValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductPhotoIDValue {get; set;} = true;
+		public bool ShouldSerializeProductPhotoIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductPhotoID()
 		{
-			return ShouldSerializeProductPhotoIDValue;
+			return this.ShouldSerializeProductPhotoIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePrimaryValue {get; set;} = true;
+		public bool ShouldSerializePrimaryValue { get; set; } = true;
 
 		public bool ShouldSerializePrimary()
 		{
-			return ShouldSerializePrimaryValue;
+			return this.ShouldSerializePrimaryValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -71,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>76547b717c3cc9203a2af03802c2f2bf</Hash>
+    <Hash>d6e2e22b145464876886bf3c4191fa25</Hash>
 </Codenesium>*/

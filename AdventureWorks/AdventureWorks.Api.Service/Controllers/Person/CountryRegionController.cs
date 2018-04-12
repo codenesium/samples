@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/countryRegions")]
-	public class CountryRegionsController: AbstractCountryRegionsController
+	public class CountryRegionController: AbstractCountryRegionController
 	{
-		public CountryRegionsController(
-			ILogger<CountryRegionsController> logger,
+		public CountryRegionController(
+			ILogger<CountryRegionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ICountryRegionRepository countryRegionRepository,
 			ICountryRegionModelValidator countryRegionModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         countryRegionRepository,
-			         countryRegionModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       countryRegionRepository,
+			       countryRegionModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8991f9818e1532750fe0bacd38967c24</Hash>
+    <Hash>a3ebcabdd0ab4722406f922976fb1698</Hash>
 </Codenesium>*/

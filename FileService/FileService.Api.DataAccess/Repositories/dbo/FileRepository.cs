@@ -11,13 +11,15 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public class FileRepository: AbstractFileRepository, IFileRepository
 	{
-		public FileRepository(ILogger<FileRepository> logger,
-		                      ApplicationDbContext context) : base(logger,context)
+		public FileRepository(
+			ILogger<FileRepository> logger,
+			ApplicationDbContext context)
+			: base(logger, context)
 		{}
 
-		protected override List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
@@ -27,9 +29,9 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		protected override List<EFFile> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected override List<EFFile> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if(String.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrEmpty(orderClause))
 			{
 				return this.context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
 			}
@@ -42,5 +44,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e2139726532d274d400226a93eab0521</Hash>
+    <Hash>4a3d2f28fc105e65ee8d8d22d45ca6d3</Hash>
 </Codenesium>*/

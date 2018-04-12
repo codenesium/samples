@@ -7,16 +7,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IBillOfMaterialsRepository
 	{
-		int Create(Nullable<int> productAssemblyID,
-		           int componentID,
-		           DateTime startDate,
-		           Nullable<DateTime> endDate,
-		           string unitMeasureCode,
-		           short bOMLevel,
-		           decimal perAssemblyQty,
-		           DateTime modifiedDate);
+		int Create(
+			Nullable<int> productAssemblyID,
+			int componentID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			string unitMeasureCode,
+			short bOMLevel,
+			decimal perAssemblyQty,
+			DateTime modifiedDate);
 
-		void Update(int billOfMaterialsID, Nullable<int> productAssemblyID,
+		void Update(int billOfMaterialsID,
+		            Nullable<int> productAssemblyID,
 		            int componentID,
 		            DateTime startDate,
 		            Nullable<DateTime> endDate,
@@ -31,14 +33,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOBillOfMaterials GetByIdDirect(int billOfMaterialsID);
 
-		Response GetWhere(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOBillOfMaterials> GetWhereDirect(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOBillOfMaterials> GetWhereDirect(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>33dbba043ede7b88b872a2213b5bf934</Hash>
+    <Hash>b4086dbcc029db05038652ec9d0f9c0a</Hash>
 </Codenesium>*/

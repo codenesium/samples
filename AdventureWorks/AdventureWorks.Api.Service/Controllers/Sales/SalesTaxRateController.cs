@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTaxRates")]
-	public class SalesTaxRatesController: AbstractSalesTaxRatesController
+	public class SalesTaxRateController: AbstractSalesTaxRateController
 	{
-		public SalesTaxRatesController(
-			ILogger<SalesTaxRatesController> logger,
+		public SalesTaxRateController(
+			ILogger<SalesTaxRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			ISalesTaxRateModelValidator salesTaxRateModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         salesTaxRateRepository,
-			         salesTaxRateModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       salesTaxRateRepository,
+			       salesTaxRateModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a4e62e01d50bbc954119539daf7ec273</Hash>
+    <Hash>ddc4e93b11db290b51ae39e0703b7de9</Hash>
 </Codenesium>*/

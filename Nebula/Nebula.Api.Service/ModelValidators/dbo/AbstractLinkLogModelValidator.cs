@@ -20,22 +20,22 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ILinkRepository LinkRepository {get; set;}
+		public ILinkRepository LinkRepository { get; set; }
 		public virtual void LinkIdRules()
 		{
-			RuleFor(x => x.LinkId).NotNull();
-			RuleFor(x => x.LinkId).Must(BeValidLink).When(x => x ?.LinkId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LinkId).NotNull();
+			this.RuleFor(x => x.LinkId).Must(this.BeValidLink).When(x => x ?.LinkId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LogRules()
 		{
-			RuleFor(x => x.Log).NotNull();
-			RuleFor(x => x.Log).Length(0,2147483647);
+			this.RuleFor(x => x.Log).NotNull();
+			this.RuleFor(x => x.Log).Length(0, 2147483647);
 		}
 
 		public virtual void DateEnteredRules()
 		{
-			RuleFor(x => x.DateEntered).NotNull();
+			this.RuleFor(x => x.DateEntered).NotNull();
 		}
 
 		private bool BeValidLink(int id)
@@ -46,5 +46,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>675626995b853478c6b0974fed6b5740</Hash>
+    <Hash>f0b449e40535217007c82ed8b4d36680</Hash>
 </Codenesium>*/

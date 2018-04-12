@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("Store", Schema="Sales")]
@@ -10,12 +11,13 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFStore()
 		{}
 
-		public void SetProperties(int businessEntityID,
-		                          string name,
-		                          Nullable<int> salesPersonID,
-		                          string demographics,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int businessEntityID,
+			string name,
+			Nullable<int> salesPersonID,
+			string demographics,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.Name = name;
@@ -26,31 +28,32 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID {get; set;}
+		public int BusinessEntityID { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("SalesPersonID", TypeName="int")]
-		public Nullable<int> SalesPersonID {get; set;}
+		public Nullable<int> SalesPersonID { get; set; }
 
 		[Column("Demographics", TypeName="xml(-1)")]
-		public string Demographics {get; set;}
+		public string Demographics { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("BusinessEntityID")]
 		public virtual EFBusinessEntity BusinessEntity { get; set; }
 
+		[ForeignKey("SalesPersonID")]
 		public virtual EFSalesPerson SalesPerson { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d78301190eb4349901287e5b7756ca54</Hash>
+    <Hash>be3af2749d55a16b9d7015f4f559e53b</Hash>
 </Codenesium>*/

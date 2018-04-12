@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class BusinessEntityAddressModelValidator: AbstractBusinessEntityAddressModelValidator,IBusinessEntityAddressModelValidator
+	public class BusinessEntityAddressModelValidator: AbstractBusinessEntityAddressModelValidator, IBusinessEntityAddressModelValidator
 	{
 		public BusinessEntityAddressModelValidator()
 		{   }
@@ -29,5 +30,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>446a5e033435433aa8713b5e135e21fb</Hash>
+    <Hash>b67e56e14085f0b5c025b5920b76e639</Hash>
 </Codenesium>*/

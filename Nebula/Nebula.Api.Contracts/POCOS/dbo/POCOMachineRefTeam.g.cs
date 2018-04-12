@@ -9,44 +9,45 @@ namespace NebulaNS.Api.Contracts
 		public POCOMachineRefTeam()
 		{}
 
-		public POCOMachineRefTeam(int id,
-		                          int machineId,
-		                          int teamId)
+		public POCOMachineRefTeam(
+			int id,
+			int machineId,
+			int teamId)
 		{
 			this.Id = id.ToInt();
 
-			MachineId = new ReferenceEntity<int>(machineId,
-			                                     "Machine");
-			TeamId = new ReferenceEntity<int>(teamId,
-			                                  "Team");
+			this.MachineId = new ReferenceEntity<int>(machineId,
+			                                          "Machine");
+			this.TeamId = new ReferenceEntity<int>(teamId,
+			                                       "Team");
 		}
 
-		public int Id {get; set;}
-		public ReferenceEntity<int>MachineId {get; set;}
-		public ReferenceEntity<int>TeamId {get; set;}
+		public int Id { get; set; }
+		public ReferenceEntity<int> MachineId { get; set; }
+		public ReferenceEntity<int> TeamId { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMachineIdValue {get; set;} = true;
+		public bool ShouldSerializeMachineIdValue { get; set; } = true;
 
 		public bool ShouldSerializeMachineId()
 		{
-			return ShouldSerializeMachineIdValue;
+			return this.ShouldSerializeMachineIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeamIdValue {get; set;} = true;
+		public bool ShouldSerializeTeamIdValue { get; set; } = true;
 
 		public bool ShouldSerializeTeamId()
 		{
-			return ShouldSerializeTeamIdValue;
+			return this.ShouldSerializeTeamIdValue;
 		}
 
 		public void DisableAllFields()
@@ -59,5 +60,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>17fbb604a36d63f2ebfa6ccfc402d65f</Hash>
+    <Hash>38262196b33c7eaa5d90594be3534660</Hash>
 </Codenesium>*/

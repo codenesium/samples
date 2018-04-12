@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+
 namespace FileServiceNS.Api.Service
 {
-	public abstract class AbstractBucketsController: AbstractApiController
+	public abstract class AbstractBucketController: AbstractApiController
 	{
 		protected IBucketRepository bucketRepository;
+
 		protected IBucketModelValidator bucketModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractBucketsController(
-			ILogger<AbstractBucketsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractBucketController(
+			ILogger<AbstractBucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBucketRepository bucketRepository,
 			IBucketModelValidator bucketModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.bucketRepository = bucketRepository;
 			this.bucketModelValidator = bucketModelValidator;
@@ -31,7 +37,7 @@ namespace FileServiceNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace FileServiceNS.Api.Service
 		{
 			Response response = this.bucketRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace FileServiceNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.bucketRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.bucketRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,14 +81,15 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.bucketRepository.Create(model.Name,
-				                                      model.ExternalId);
-				return Ok(id);
+				var id = this.bucketRepository.Create(
+					model.Name,
+					model.ExternalId);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -96,22 +103,24 @@ namespace FileServiceNS.Api.Service
 		public virtual IActionResult BulkInsert(List<BucketModel> models)
 		{
 			this.bucketModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.bucketModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.bucketRepository.Create(model.Name,
-				                             model.ExternalId);
+				this.bucketRepository.Create(
+					model.Name,
+					model.ExternalId);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -121,25 +130,27 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,BucketModel model)
+		public virtual IActionResult Update(int id, BucketModel model)
 		{
-			if(this.bucketRepository.GetByIdDirect(id) == null)
+			if (this.bucketRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.bucketModelValidator.UpdateMode();
 			var validationResult = this.bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.bucketRepository.Update(id,  model.Name,
-				                             model.ExternalId);
-				return Ok();
+				this.bucketRepository.Update(
+					id,
+					model.Name,
+					model.ExternalId);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -152,11 +163,11 @@ namespace FileServiceNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.bucketRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91861e15110953991f0c75122f780473</Hash>
+    <Hash>dd3011908760463e92f6cb4ee9d6d1f5</Hash>
 </Codenesium>*/

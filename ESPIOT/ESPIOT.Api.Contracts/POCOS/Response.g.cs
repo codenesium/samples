@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+
 namespace ESPIOTNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
 		public T Value { get; set; }
+
 		public string Href
 		{
 			get
@@ -14,6 +16,7 @@ namespace ESPIOTNS.Api.Contracts
 				return $"/{this.ReferenceObjectName}/{this.Value.ToString()}";
 			}
 		}
+
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -27,15 +30,16 @@ namespace ESPIOTNS.Api.Contracts
 	{
 		public Response()
 		{}
-		public List<POCODevice> Devices { get; private set; }  = new  List<POCODevice>();
-		public List<POCODeviceAction> DeviceActions { get; private set; }  = new  List<POCODeviceAction>();
+		public List<POCODevice> Devices { get; private set; } = new List<POCODevice>();
+
+		public List<POCODeviceAction> DeviceActions { get; private set; } = new List<POCODeviceAction>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeDevicesValue {get; set;} = true;
+		public bool ShouldSerializeDevicesValue { get; set; } = true;
 
 		public bool ShouldSerializeDevices()
 		{
-			return ShouldSerializeDevicesValue;
+			return this.ShouldSerializeDevicesValue;
 		}
 
 		public void AddDevice(POCODevice item)
@@ -47,11 +51,11 @@ namespace ESPIOTNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDeviceActionsValue {get; set;} = true;
+		public bool ShouldSerializeDeviceActionsValue { get; set; } = true;
 
 		public bool ShouldSerializeDeviceActions()
 		{
-			return ShouldSerializeDeviceActionsValue;
+			return this.ShouldSerializeDeviceActionsValue;
 		}
 
 		public void AddDeviceAction(POCODeviceAction item)
@@ -64,11 +68,12 @@ namespace ESPIOTNS.Api.Contracts
 
 		public void DisableSerializationOfEmptyFields()
 		{
-			if(this.Devices.Count == 0)
+			if (this.Devices.Count == 0)
 			{
 				this.ShouldSerializeDevicesValue = false;
 			}
-			if(this.DeviceActions.Count == 0)
+
+			if (this.DeviceActions.Count == 0)
 			{
 				this.ShouldSerializeDeviceActionsValue = false;
 			}
@@ -77,5 +82,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2359eb95b373442f1a4e6c7fd22d7756</Hash>
+    <Hash>57caea9e68d5472be0ea0675acc7603f</Hash>
 </Codenesium>*/

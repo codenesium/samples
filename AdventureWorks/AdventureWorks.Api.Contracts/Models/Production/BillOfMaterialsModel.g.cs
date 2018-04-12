@@ -9,14 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BillOfMaterialsModel()
 		{}
-		public BillOfMaterialsModel(Nullable<int> productAssemblyID,
-		                            int componentID,
-		                            DateTime startDate,
-		                            Nullable<DateTime> endDate,
-		                            string unitMeasureCode,
-		                            short bOMLevel,
-		                            decimal perAssemblyQty,
-		                            DateTime modifiedDate)
+
+		public BillOfMaterialsModel(
+			Nullable<int> productAssemblyID,
+			int componentID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			string unitMeasureCode,
+			short bOMLevel,
+			decimal perAssemblyQty,
+			DateTime modifiedDate)
 		{
 			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
 			this.ComponentID = componentID.ToInt();
@@ -28,118 +30,134 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private Nullable<int> _productAssemblyID;
+		private Nullable<int> productAssemblyID;
+
 		public Nullable<int> ProductAssemblyID
 		{
 			get
 			{
-				return _productAssemblyID.IsEmptyOrZeroOrNull() ? null : _productAssemblyID;
+				return this.productAssemblyID.IsEmptyOrZeroOrNull() ? null : this.productAssemblyID;
 			}
+
 			set
 			{
-				this._productAssemblyID = value;
+				this.productAssemblyID = value;
 			}
 		}
 
-		private int _componentID;
+		private int componentID;
+
 		[Required]
 		public int ComponentID
 		{
 			get
 			{
-				return _componentID;
+				return this.componentID;
 			}
+
 			set
 			{
-				this._componentID = value;
+				this.componentID = value;
 			}
 		}
 
-		private DateTime _startDate;
+		private DateTime startDate;
+
 		[Required]
 		public DateTime StartDate
 		{
 			get
 			{
-				return _startDate;
+				return this.startDate;
 			}
+
 			set
 			{
-				this._startDate = value;
+				this.startDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _endDate;
+		private Nullable<DateTime> endDate;
+
 		public Nullable<DateTime> EndDate
 		{
 			get
 			{
-				return _endDate.IsEmptyOrZeroOrNull() ? null : _endDate;
+				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
 			}
+
 			set
 			{
-				this._endDate = value;
+				this.endDate = value;
 			}
 		}
 
-		private string _unitMeasureCode;
+		private string unitMeasureCode;
+
 		[Required]
 		public string UnitMeasureCode
 		{
 			get
 			{
-				return _unitMeasureCode;
+				return this.unitMeasureCode;
 			}
+
 			set
 			{
-				this._unitMeasureCode = value;
+				this.unitMeasureCode = value;
 			}
 		}
 
-		private short _bOMLevel;
+		private short bOMLevel;
+
 		[Required]
 		public short BOMLevel
 		{
 			get
 			{
-				return _bOMLevel;
+				return this.bOMLevel;
 			}
+
 			set
 			{
-				this._bOMLevel = value;
+				this.bOMLevel = value;
 			}
 		}
 
-		private decimal _perAssemblyQty;
+		private decimal perAssemblyQty;
+
 		[Required]
 		public decimal PerAssemblyQty
 		{
 			get
 			{
-				return _perAssemblyQty;
+				return this.perAssemblyQty;
 			}
+
 			set
 			{
-				this._perAssemblyQty = value;
+				this.perAssemblyQty = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c12066cd0477991e9bc784ea625e49de</Hash>
+    <Hash>dba053e22f93ee049d3f45276ae2a45f</Hash>
 </Codenesium>*/

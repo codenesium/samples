@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractSalesOrderHeadersController: AbstractApiController
+	public abstract class AbstractSalesOrderHeaderController: AbstractApiController
 	{
 		protected ISalesOrderHeaderRepository salesOrderHeaderRepository;
+
 		protected ISalesOrderHeaderModelValidator salesOrderHeaderModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractSalesOrderHeadersController(
-			ILogger<AbstractSalesOrderHeadersController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractSalesOrderHeaderController(
+			ILogger<AbstractSalesOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesOrderHeaderRepository salesOrderHeaderRepository,
 			ISalesOrderHeaderModelValidator salesOrderHeaderModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.salesOrderHeaderRepository = salesOrderHeaderRepository;
 			this.salesOrderHeaderModelValidator = salesOrderHeaderModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesOrderHeaderRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.salesOrderHeaderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,37 +81,38 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesOrderHeaderRepository.Create(model.RevisionNumber,
-				                                                model.OrderDate,
-				                                                model.DueDate,
-				                                                model.ShipDate,
-				                                                model.Status,
-				                                                model.OnlineOrderFlag,
-				                                                model.SalesOrderNumber,
-				                                                model.PurchaseOrderNumber,
-				                                                model.AccountNumber,
-				                                                model.CustomerID,
-				                                                model.SalesPersonID,
-				                                                model.TerritoryID,
-				                                                model.BillToAddressID,
-				                                                model.ShipToAddressID,
-				                                                model.ShipMethodID,
-				                                                model.CreditCardID,
-				                                                model.CreditCardApprovalCode,
-				                                                model.CurrencyRateID,
-				                                                model.SubTotal,
-				                                                model.TaxAmt,
-				                                                model.Freight,
-				                                                model.TotalDue,
-				                                                model.Comment,
-				                                                model.Rowguid,
-				                                                model.ModifiedDate);
-				return Ok(id);
+				var id = this.salesOrderHeaderRepository.Create(
+					model.RevisionNumber,
+					model.OrderDate,
+					model.DueDate,
+					model.ShipDate,
+					model.Status,
+					model.OnlineOrderFlag,
+					model.SalesOrderNumber,
+					model.PurchaseOrderNumber,
+					model.AccountNumber,
+					model.CustomerID,
+					model.SalesPersonID,
+					model.TerritoryID,
+					model.BillToAddressID,
+					model.ShipToAddressID,
+					model.ShipMethodID,
+					model.CreditCardID,
+					model.CreditCardApprovalCode,
+					model.CurrencyRateID,
+					model.SubTotal,
+					model.TaxAmt,
+					model.Freight,
+					model.TotalDue,
+					model.Comment,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -119,45 +126,47 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<SalesOrderHeaderModel> models)
 		{
 			this.salesOrderHeaderModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.salesOrderHeaderRepository.Create(model.RevisionNumber,
-				                                       model.OrderDate,
-				                                       model.DueDate,
-				                                       model.ShipDate,
-				                                       model.Status,
-				                                       model.OnlineOrderFlag,
-				                                       model.SalesOrderNumber,
-				                                       model.PurchaseOrderNumber,
-				                                       model.AccountNumber,
-				                                       model.CustomerID,
-				                                       model.SalesPersonID,
-				                                       model.TerritoryID,
-				                                       model.BillToAddressID,
-				                                       model.ShipToAddressID,
-				                                       model.ShipMethodID,
-				                                       model.CreditCardID,
-				                                       model.CreditCardApprovalCode,
-				                                       model.CurrencyRateID,
-				                                       model.SubTotal,
-				                                       model.TaxAmt,
-				                                       model.Freight,
-				                                       model.TotalDue,
-				                                       model.Comment,
-				                                       model.Rowguid,
-				                                       model.ModifiedDate);
+				this.salesOrderHeaderRepository.Create(
+					model.RevisionNumber,
+					model.OrderDate,
+					model.DueDate,
+					model.ShipDate,
+					model.Status,
+					model.OnlineOrderFlag,
+					model.SalesOrderNumber,
+					model.PurchaseOrderNumber,
+					model.AccountNumber,
+					model.CustomerID,
+					model.SalesPersonID,
+					model.TerritoryID,
+					model.BillToAddressID,
+					model.ShipToAddressID,
+					model.ShipMethodID,
+					model.CreditCardID,
+					model.CreditCardApprovalCode,
+					model.CurrencyRateID,
+					model.SubTotal,
+					model.TaxAmt,
+					model.Freight,
+					model.TotalDue,
+					model.Comment,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -167,48 +176,50 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,SalesOrderHeaderModel model)
+		public virtual IActionResult Update(int id, SalesOrderHeaderModel model)
 		{
-			if(this.salesOrderHeaderRepository.GetByIdDirect(id) == null)
+			if (this.salesOrderHeaderRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.salesOrderHeaderModelValidator.UpdateMode();
 			var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesOrderHeaderRepository.Update(id,  model.RevisionNumber,
-				                                       model.OrderDate,
-				                                       model.DueDate,
-				                                       model.ShipDate,
-				                                       model.Status,
-				                                       model.OnlineOrderFlag,
-				                                       model.SalesOrderNumber,
-				                                       model.PurchaseOrderNumber,
-				                                       model.AccountNumber,
-				                                       model.CustomerID,
-				                                       model.SalesPersonID,
-				                                       model.TerritoryID,
-				                                       model.BillToAddressID,
-				                                       model.ShipToAddressID,
-				                                       model.ShipMethodID,
-				                                       model.CreditCardID,
-				                                       model.CreditCardApprovalCode,
-				                                       model.CurrencyRateID,
-				                                       model.SubTotal,
-				                                       model.TaxAmt,
-				                                       model.Freight,
-				                                       model.TotalDue,
-				                                       model.Comment,
-				                                       model.Rowguid,
-				                                       model.ModifiedDate);
-				return Ok();
+				this.salesOrderHeaderRepository.Update(
+					id,
+					model.RevisionNumber,
+					model.OrderDate,
+					model.DueDate,
+					model.ShipDate,
+					model.Status,
+					model.OnlineOrderFlag,
+					model.SalesOrderNumber,
+					model.PurchaseOrderNumber,
+					model.AccountNumber,
+					model.CustomerID,
+					model.SalesPersonID,
+					model.TerritoryID,
+					model.BillToAddressID,
+					model.ShipToAddressID,
+					model.ShipMethodID,
+					model.CreditCardID,
+					model.CreditCardApprovalCode,
+					model.CurrencyRateID,
+					model.SubTotal,
+					model.TaxAmt,
+					model.Freight,
+					model.TotalDue,
+					model.Comment,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -221,7 +232,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.salesOrderHeaderRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -234,7 +245,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.CustomerID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -247,7 +258,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.SalesPersonID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -260,7 +271,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -273,7 +284,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.BillToAddressID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -286,7 +297,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipToAddressID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -299,7 +310,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -312,7 +323,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.CreditCardID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -325,11 +336,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.CurrencyRateID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b63ae9fab6af1afc3f6afdf3accfe4cc</Hash>
+    <Hash>339738839ee22e3cf10b5ce2d5feee80</Hash>
 </Codenesium>*/

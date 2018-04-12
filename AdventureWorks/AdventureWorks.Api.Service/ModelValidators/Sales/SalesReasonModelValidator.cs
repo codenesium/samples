@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class SalesReasonModelValidator: AbstractSalesReasonModelValidator,ISalesReasonModelValidator
+	public class SalesReasonModelValidator: AbstractSalesReasonModelValidator, ISalesReasonModelValidator
 	{
 		public SalesReasonModelValidator()
 		{   }
@@ -27,5 +28,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4d7eb108c90e453ce1aa477648fb376b</Hash>
+    <Hash>e33e095668a1d75be4daf6d803cdc2da</Hash>
 </Codenesium>*/

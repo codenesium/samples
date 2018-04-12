@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractWorkOrdersController: AbstractApiController
+	public abstract class AbstractWorkOrderController: AbstractApiController
 	{
 		protected IWorkOrderRepository workOrderRepository;
+
 		protected IWorkOrderModelValidator workOrderModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractWorkOrdersController(
-			ILogger<AbstractWorkOrdersController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractWorkOrderController(
+			ILogger<AbstractWorkOrderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IWorkOrderRepository workOrderRepository,
 			IWorkOrderModelValidator workOrderModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.workOrderRepository = workOrderRepository;
 			this.workOrderModelValidator = workOrderModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.workOrderRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.workOrderRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.workOrderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,21 +81,22 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.workOrderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.workOrderRepository.Create(model.ProductID,
-				                                         model.OrderQty,
-				                                         model.StockedQty,
-				                                         model.ScrappedQty,
-				                                         model.StartDate,
-				                                         model.EndDate,
-				                                         model.DueDate,
-				                                         model.ScrapReasonID,
-				                                         model.ModifiedDate);
-				return Ok(id);
+				var id = this.workOrderRepository.Create(
+					model.ProductID,
+					model.OrderQty,
+					model.StockedQty,
+					model.ScrappedQty,
+					model.StartDate,
+					model.EndDate,
+					model.DueDate,
+					model.ScrapReasonID,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -103,29 +110,31 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<WorkOrderModel> models)
 		{
 			this.workOrderModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.workOrderModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.workOrderRepository.Create(model.ProductID,
-				                                model.OrderQty,
-				                                model.StockedQty,
-				                                model.ScrappedQty,
-				                                model.StartDate,
-				                                model.EndDate,
-				                                model.DueDate,
-				                                model.ScrapReasonID,
-				                                model.ModifiedDate);
+				this.workOrderRepository.Create(
+					model.ProductID,
+					model.OrderQty,
+					model.StockedQty,
+					model.ScrappedQty,
+					model.StartDate,
+					model.EndDate,
+					model.DueDate,
+					model.ScrapReasonID,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -135,32 +144,34 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,WorkOrderModel model)
+		public virtual IActionResult Update(int id, WorkOrderModel model)
 		{
-			if(this.workOrderRepository.GetByIdDirect(id) == null)
+			if (this.workOrderRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.workOrderModelValidator.UpdateMode();
 			var validationResult = this.workOrderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.workOrderRepository.Update(id,  model.ProductID,
-				                                model.OrderQty,
-				                                model.StockedQty,
-				                                model.ScrappedQty,
-				                                model.StartDate,
-				                                model.EndDate,
-				                                model.DueDate,
-				                                model.ScrapReasonID,
-				                                model.ModifiedDate);
-				return Ok();
+				this.workOrderRepository.Update(
+					id,
+					model.ProductID,
+					model.OrderQty,
+					model.StockedQty,
+					model.ScrappedQty,
+					model.StartDate,
+					model.EndDate,
+					model.DueDate,
+					model.ScrapReasonID,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -173,7 +184,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.workOrderRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -186,7 +197,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.workOrderRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -199,11 +210,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.workOrderRepository.GetWhere(x => x.ScrapReasonID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ff980f1ad25f30001e4db7c07d3d46a</Hash>
+    <Hash>11f6699428f8052b55236a9b85a4eb4e</Hash>
 </Codenesium>*/

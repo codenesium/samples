@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("PurchaseOrderDetail", Schema="Purchasing")]
@@ -10,17 +11,18 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFPurchaseOrderDetail()
 		{}
 
-		public void SetProperties(int purchaseOrderID,
-		                          int purchaseOrderDetailID,
-		                          DateTime dueDate,
-		                          short orderQty,
-		                          int productID,
-		                          decimal unitPrice,
-		                          decimal lineTotal,
-		                          decimal receivedQty,
-		                          decimal rejectedQty,
-		                          decimal stockedQty,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int purchaseOrderID,
+			int purchaseOrderDetailID,
+			DateTime dueDate,
+			short orderQty,
+			int productID,
+			decimal unitPrice,
+			decimal lineTotal,
+			decimal receivedQty,
+			decimal rejectedQty,
+			decimal stockedQty,
+			DateTime modifiedDate)
 		{
 			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
@@ -36,47 +38,48 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("PurchaseOrderID", TypeName="int")]
-		public int PurchaseOrderID {get; set;}
+		public int PurchaseOrderID { get; set; }
 
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("PurchaseOrderDetailID", TypeName="int")]
-		public int PurchaseOrderDetailID {get; set;}
+		public int PurchaseOrderDetailID { get; set; }
 
 		[Column("DueDate", TypeName="datetime")]
-		public DateTime DueDate {get; set;}
+		public DateTime DueDate { get; set; }
 
 		[Column("OrderQty", TypeName="smallint")]
-		public short OrderQty {get; set;}
+		public short OrderQty { get; set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID {get; set;}
+		public int ProductID { get; set; }
 
 		[Column("UnitPrice", TypeName="money")]
-		public decimal UnitPrice {get; set;}
+		public decimal UnitPrice { get; set; }
 
 		[Column("LineTotal", TypeName="money")]
-		public decimal LineTotal {get; set;}
+		public decimal LineTotal { get; set; }
 
 		[Column("ReceivedQty", TypeName="decimal")]
-		public decimal ReceivedQty {get; set;}
+		public decimal ReceivedQty { get; set; }
 
 		[Column("RejectedQty", TypeName="decimal")]
-		public decimal RejectedQty {get; set;}
+		public decimal RejectedQty { get; set; }
 
 		[Column("StockedQty", TypeName="decimal")]
-		public decimal StockedQty {get; set;}
+		public decimal StockedQty { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("PurchaseOrderID")]
 		public virtual EFPurchaseOrderHeader PurchaseOrderHeader { get; set; }
 
+		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f2a029516eeefb0933e3df0065a71943</Hash>
+    <Hash>f488e5d7cf70387f544593f7b335b55c</Hash>
 </Codenesium>*/

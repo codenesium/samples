@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractSalesTaxRatesController: AbstractApiController
+	public abstract class AbstractSalesTaxRateController: AbstractApiController
 	{
 		protected ISalesTaxRateRepository salesTaxRateRepository;
+
 		protected ISalesTaxRateModelValidator salesTaxRateModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractSalesTaxRatesController(
-			ILogger<AbstractSalesTaxRatesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractSalesTaxRateController(
+			ILogger<AbstractSalesTaxRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			ISalesTaxRateModelValidator salesTaxRateModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.salesTaxRateRepository = salesTaxRateRepository;
 			this.salesTaxRateModelValidator = salesTaxRateModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesTaxRateRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesTaxRateRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.salesTaxRateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,18 +81,19 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesTaxRateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesTaxRateRepository.Create(model.StateProvinceID,
-				                                            model.TaxType,
-				                                            model.TaxRate,
-				                                            model.Name,
-				                                            model.Rowguid,
-				                                            model.ModifiedDate);
-				return Ok(id);
+				var id = this.salesTaxRateRepository.Create(
+					model.StateProvinceID,
+					model.TaxType,
+					model.TaxRate,
+					model.Name,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -100,26 +107,28 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<SalesTaxRateModel> models)
 		{
 			this.salesTaxRateModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.salesTaxRateModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.salesTaxRateRepository.Create(model.StateProvinceID,
-				                                   model.TaxType,
-				                                   model.TaxRate,
-				                                   model.Name,
-				                                   model.Rowguid,
-				                                   model.ModifiedDate);
+				this.salesTaxRateRepository.Create(
+					model.StateProvinceID,
+					model.TaxType,
+					model.TaxRate,
+					model.Name,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -129,29 +138,31 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,SalesTaxRateModel model)
+		public virtual IActionResult Update(int id, SalesTaxRateModel model)
 		{
-			if(this.salesTaxRateRepository.GetByIdDirect(id) == null)
+			if (this.salesTaxRateRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.salesTaxRateModelValidator.UpdateMode();
 			var validationResult = this.salesTaxRateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesTaxRateRepository.Update(id,  model.StateProvinceID,
-				                                   model.TaxType,
-				                                   model.TaxRate,
-				                                   model.Name,
-				                                   model.Rowguid,
-				                                   model.ModifiedDate);
-				return Ok();
+				this.salesTaxRateRepository.Update(
+					id,
+					model.StateProvinceID,
+					model.TaxType,
+					model.TaxRate,
+					model.Name,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -164,7 +175,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.salesTaxRateRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -177,11 +188,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesTaxRateRepository.GetWhere(x => x.StateProvinceID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1456dc8210b603516939c8d8288a5a54</Hash>
+    <Hash>87419336acc3d445e72f4ee05a1a678b</Hash>
 </Codenesium>*/

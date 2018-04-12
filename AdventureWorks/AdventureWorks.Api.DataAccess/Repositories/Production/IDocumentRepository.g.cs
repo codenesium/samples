@@ -7,21 +7,23 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IDocumentRepository
 	{
-		Guid Create(Nullable<short> documentLevel,
-		            string title,
-		            int owner,
-		            bool folderFlag,
-		            string fileName,
-		            string fileExtension,
-		            string revision,
-		            int changeNumber,
-		            int status,
-		            string documentSummary,
-		            byte[] document1,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		Guid Create(
+			Nullable<short> documentLevel,
+			string title,
+			int owner,
+			bool folderFlag,
+			string fileName,
+			string fileExtension,
+			string revision,
+			int changeNumber,
+			int status,
+			string documentSummary,
+			byte[] document1,
+			Guid rowguid,
+			DateTime modifiedDate);
 
-		void Update(Guid documentNode, Nullable<short> documentLevel,
+		void Update(Guid documentNode,
+		            Nullable<short> documentLevel,
 		            string title,
 		            int owner,
 		            bool folderFlag,
@@ -41,14 +43,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCODocument GetByIdDirect(Guid documentNode);
 
-		Response GetWhere(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCODocument> GetWhereDirect(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCODocument> GetWhereDirect(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>24ef2f92987c680321234031c732284a</Hash>
+    <Hash>78b4cb10e225f92ac859af1a89182d1d</Hash>
 </Codenesium>*/

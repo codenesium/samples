@@ -7,11 +7,13 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesReasonRepository
 	{
-		int Create(string name,
-		           string reasonType,
-		           DateTime modifiedDate);
+		int Create(
+			string name,
+			string reasonType,
+			DateTime modifiedDate);
 
-		void Update(int salesReasonID, string name,
+		void Update(int salesReasonID,
+		            string name,
 		            string reasonType,
 		            DateTime modifiedDate);
 
@@ -21,14 +23,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOSalesReason GetByIdDirect(int salesReasonID);
 
-		Response GetWhere(Expression<Func<EFSalesReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFSalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOSalesReason> GetWhereDirect(Expression<Func<EFSalesReason, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOSalesReason> GetWhereDirect(Expression<Func<EFSalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0c8afae3e3f412c1e8b60be98231159</Hash>
+    <Hash>a159e9677047c431686870e329565eb5</Hash>
 </Codenesium>*/

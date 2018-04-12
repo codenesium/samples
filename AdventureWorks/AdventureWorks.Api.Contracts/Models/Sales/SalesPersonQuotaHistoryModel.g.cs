@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesPersonQuotaHistoryModel()
 		{}
-		public SalesPersonQuotaHistoryModel(DateTime quotaDate,
-		                                    decimal salesQuota,
-		                                    Guid rowguid,
-		                                    DateTime modifiedDate)
+
+		public SalesPersonQuotaHistoryModel(
+			DateTime quotaDate,
+			decimal salesQuota,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.QuotaDate = quotaDate.ToDateTime();
 			this.SalesQuota = salesQuota;
@@ -20,64 +22,72 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private DateTime _quotaDate;
+		private DateTime quotaDate;
+
 		[Required]
 		public DateTime QuotaDate
 		{
 			get
 			{
-				return _quotaDate;
+				return this.quotaDate;
 			}
+
 			set
 			{
-				this._quotaDate = value;
+				this.quotaDate = value;
 			}
 		}
 
-		private decimal _salesQuota;
+		private decimal salesQuota;
+
 		[Required]
 		public decimal SalesQuota
 		{
 			get
 			{
-				return _salesQuota;
+				return this.salesQuota;
 			}
+
 			set
 			{
-				this._salesQuota = value;
+				this.salesQuota = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>34f91da4c8d7f5e3b80c4339efa50ab8</Hash>
+    <Hash>d3007eeacb34eece87b3641e89d693c4</Hash>
 </Codenesium>*/

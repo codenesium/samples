@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class SalesTaxRateModelValidator: AbstractSalesTaxRateModelValidator,ISalesTaxRateModelValidator
+	public class SalesTaxRateModelValidator: AbstractSalesTaxRateModelValidator, ISalesTaxRateModelValidator
 	{
 		public SalesTaxRateModelValidator()
 		{   }
@@ -33,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5968216089698d36251ed8714fe6cff3</Hash>
+    <Hash>e424caefdf8d2c2b987cef8a9e2041ec</Hash>
 </Codenesium>*/

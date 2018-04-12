@@ -7,12 +7,14 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductSubcategoryRepository
 	{
-		int Create(int productCategoryID,
-		           string name,
-		           Guid rowguid,
-		           DateTime modifiedDate);
+		int Create(
+			int productCategoryID,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate);
 
-		void Update(int productSubcategoryID, int productCategoryID,
+		void Update(int productSubcategoryID,
+		            int productCategoryID,
 		            string name,
 		            Guid rowguid,
 		            DateTime modifiedDate);
@@ -23,14 +25,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOProductSubcategory GetByIdDirect(int productSubcategoryID);
 
-		Response GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOProductSubcategory> GetWhereDirect(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOProductSubcategory> GetWhereDirect(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>564207a210829351dfc5e5bbc57c6e88</Hash>
+    <Hash>9aed02bdb5b4c4d5252fdf1cd9735941</Hash>
 </Codenesium>*/

@@ -20,22 +20,22 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ISpecialOfferRepository SpecialOfferRepository {get; set;}
-		public IProductRepository ProductRepository {get; set;}
+		public ISpecialOfferRepository SpecialOfferRepository { get; set; }
+		public IProductRepository ProductRepository { get; set; }
 		public virtual void ProductIDRules()
 		{
-			RuleFor(x => x.ProductID).NotNull();
-			RuleFor(x => x.ProductID).Must(BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidSpecialOffer(int id)
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9edf932590100757f1dd08c366899903</Hash>
+    <Hash>8c65a78c92e1e43d6063313844ff8e2b</Hash>
 </Codenesium>*/

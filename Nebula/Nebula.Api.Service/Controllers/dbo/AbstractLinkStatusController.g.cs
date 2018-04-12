@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractLinkStatusController: AbstractApiController
 	{
 		protected ILinkStatusRepository linkStatusRepository;
+
 		protected ILinkStatusModelValidator linkStatusModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
 		public AbstractLinkStatusController(
 			ILogger<AbstractLinkStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkStatusRepository linkStatusRepository,
 			ILinkStatusModelValidator linkStatusModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.linkStatusRepository = linkStatusRepository;
 			this.linkStatusModelValidator = linkStatusModelValidator;
@@ -31,7 +37,7 @@ namespace NebulaNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.linkStatusRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace NebulaNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.linkStatusRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.linkStatusRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,13 +81,14 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.linkStatusRepository.Create(model.Name);
-				return Ok(id);
+				var id = this.linkStatusRepository.Create(
+					model.Name);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -95,21 +102,23 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult BulkInsert(List<LinkStatusModel> models)
 		{
 			this.linkStatusModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.linkStatusModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.linkStatusRepository.Create(model.Name);
+				this.linkStatusRepository.Create(
+					model.Name);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -119,24 +128,26 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,LinkStatusModel model)
+		public virtual IActionResult Update(int id, LinkStatusModel model)
 		{
-			if(this.linkStatusRepository.GetByIdDirect(id) == null)
+			if (this.linkStatusRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.linkStatusModelValidator.UpdateMode();
 			var validationResult = this.linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkStatusRepository.Update(id,  model.Name);
-				return Ok();
+				this.linkStatusRepository.Update(
+					id,
+					model.Name);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -149,11 +160,11 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.linkStatusRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc4af66a59c4b433e5681c6ffb81ce8e</Hash>
+    <Hash>9e51064faa677e4ab2c5128fced66bf6</Hash>
 </Codenesium>*/

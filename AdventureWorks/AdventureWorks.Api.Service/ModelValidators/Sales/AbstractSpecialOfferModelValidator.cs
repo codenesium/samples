@@ -22,40 +22,40 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void DescriptionRules()
 		{
-			RuleFor(x => x.Description).NotNull();
-			RuleFor(x => x.Description).Length(0,255);
+			this.RuleFor(x => x.Description).NotNull();
+			this.RuleFor(x => x.Description).Length(0, 255);
 		}
 
 		public virtual void DiscountPctRules()
 		{
-			RuleFor(x => x.DiscountPct).NotNull();
+			this.RuleFor(x => x.DiscountPct).NotNull();
 		}
 
 		public virtual void TypeRules()
 		{
-			RuleFor(x => x.Type).NotNull();
-			RuleFor(x => x.Type).Length(0,50);
+			this.RuleFor(x => x.Type).NotNull();
+			this.RuleFor(x => x.Type).Length(0, 50);
 		}
 
 		public virtual void CategoryRules()
 		{
-			RuleFor(x => x.Category).NotNull();
-			RuleFor(x => x.Category).Length(0,50);
+			this.RuleFor(x => x.Category).NotNull();
+			this.RuleFor(x => x.Category).Length(0, 50);
 		}
 
 		public virtual void StartDateRules()
 		{
-			RuleFor(x => x.StartDate).NotNull();
+			this.RuleFor(x => x.StartDate).NotNull();
 		}
 
 		public virtual void EndDateRules()
 		{
-			RuleFor(x => x.EndDate).NotNull();
+			this.RuleFor(x => x.EndDate).NotNull();
 		}
 
 		public virtual void MinQtyRules()
 		{
-			RuleFor(x => x.MinQty).NotNull();
+			this.RuleFor(x => x.MinQty).NotNull();
 		}
 
 		public virtual void MaxQtyRules()
@@ -63,16 +63,16 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>273b840f601a7f37b08ad35bbc500e34</Hash>
+    <Hash>d5f38b57b2f9abe2fd86a51ff4586450</Hash>
 </Codenesium>*/

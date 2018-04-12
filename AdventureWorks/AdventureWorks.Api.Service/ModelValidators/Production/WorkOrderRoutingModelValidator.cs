@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class WorkOrderRoutingModelValidator: AbstractWorkOrderRoutingModelValidator,IWorkOrderRoutingModelValidator
+	public class WorkOrderRoutingModelValidator: AbstractWorkOrderRoutingModelValidator, IWorkOrderRoutingModelValidator
 	{
 		public WorkOrderRoutingModelValidator()
 		{   }
@@ -43,5 +44,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>77be6cd52a81cafe928d3f790ceb0738</Hash>
+    <Hash>5e0441298a4d5d23ca6dd07487a6ae1d</Hash>
 </Codenesium>*/

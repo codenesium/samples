@@ -9,27 +9,31 @@ namespace FileServiceNS.Api.Contracts
 	{
 		public FileTypeModel()
 		{}
-		public FileTypeModel(string name)
+
+		public FileTypeModel(
+			string name)
 		{
 			this.Name = name;
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a7805644ce499458e3ded54ccad30d89</Hash>
+    <Hash>49a416838672ec4070a80c82f4d040a2</Hash>
 </Codenesium>*/

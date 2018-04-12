@@ -7,12 +7,14 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmployeePayHistoryRepository
 	{
-		int Create(DateTime rateChangeDate,
-		           decimal rate,
-		           int payFrequency,
-		           DateTime modifiedDate);
+		int Create(
+			DateTime rateChangeDate,
+			decimal rate,
+			int payFrequency,
+			DateTime modifiedDate);
 
-		void Update(int businessEntityID, DateTime rateChangeDate,
+		void Update(int businessEntityID,
+		            DateTime rateChangeDate,
 		            decimal rate,
 		            int payFrequency,
 		            DateTime modifiedDate);
@@ -23,14 +25,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOEmployeePayHistory GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOEmployeePayHistory> GetWhereDirect(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOEmployeePayHistory> GetWhereDirect(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb70dbf44100c34acb4fcc92aa7dc9af</Hash>
+    <Hash>e0b59637cedd59237f1233bcd2e01bff</Hash>
 </Codenesium>*/

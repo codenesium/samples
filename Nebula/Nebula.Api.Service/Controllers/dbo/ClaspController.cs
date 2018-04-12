@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
 	[Route("api/clasps")]
-	public class ClaspsController: AbstractClaspsController
+	public class ClaspController: AbstractClaspController
 	{
-		public ClaspsController(
-			ILogger<ClaspsController> logger,
+		public ClaspController(
+			ILogger<ClaspController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IClaspRepository claspRepository,
 			IClaspModelValidator claspModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         claspRepository,
-			         claspModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       claspRepository,
+			       claspModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8fb5045311f8570f5d1fdc61005fe918</Hash>
+    <Hash>3a0b803308a858ce3a5dd7389996a570</Hash>
 </Codenesium>*/

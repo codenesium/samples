@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractEmployeePayHistoriesController: AbstractApiController
+	public abstract class AbstractEmployeePayHistoryController: AbstractApiController
 	{
 		protected IEmployeePayHistoryRepository employeePayHistoryRepository;
+
 		protected IEmployeePayHistoryModelValidator employeePayHistoryModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractEmployeePayHistoriesController(
-			ILogger<AbstractEmployeePayHistoriesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractEmployeePayHistoryController(
+			ILogger<AbstractEmployeePayHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEmployeePayHistoryRepository employeePayHistoryRepository,
 			IEmployeePayHistoryModelValidator employeePayHistoryModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.employeePayHistoryRepository = employeePayHistoryRepository;
 			this.employeePayHistoryModelValidator = employeePayHistoryModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.employeePayHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.employeePayHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.employeePayHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.employeePayHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.employeePayHistoryRepository.Create(model.RateChangeDate,
-				                                                  model.Rate,
-				                                                  model.PayFrequency,
-				                                                  model.ModifiedDate);
-				return Ok(id);
+				var id = this.employeePayHistoryRepository.Create(
+					model.RateChangeDate,
+					model.Rate,
+					model.PayFrequency,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<EmployeePayHistoryModel> models)
 		{
 			this.employeePayHistoryModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.employeePayHistoryModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.employeePayHistoryRepository.Create(model.RateChangeDate,
-				                                         model.Rate,
-				                                         model.PayFrequency,
-				                                         model.ModifiedDate);
+				this.employeePayHistoryRepository.Create(
+					model.RateChangeDate,
+					model.Rate,
+					model.PayFrequency,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,EmployeePayHistoryModel model)
+		public virtual IActionResult Update(int id, EmployeePayHistoryModel model)
 		{
-			if(this.employeePayHistoryRepository.GetByIdDirect(id) == null)
+			if (this.employeePayHistoryRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.employeePayHistoryModelValidator.UpdateMode();
 			var validationResult = this.employeePayHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.employeePayHistoryRepository.Update(id,  model.RateChangeDate,
-				                                         model.Rate,
-				                                         model.PayFrequency,
-				                                         model.ModifiedDate);
-				return Ok();
+				this.employeePayHistoryRepository.Update(
+					id,
+					model.RateChangeDate,
+					model.Rate,
+					model.PayFrequency,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.employeePayHistoryRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -171,11 +182,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.employeePayHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c319965ba04890207ae5aa2bdae31f29</Hash>
+    <Hash>87612129bb6b7215968900691f5938a4</Hash>
 </Codenesium>*/

@@ -9,14 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ErrorLogModel()
 		{}
-		public ErrorLogModel(DateTime errorTime,
-		                     string userName,
-		                     int errorNumber,
-		                     Nullable<int> errorSeverity,
-		                     Nullable<int> errorState,
-		                     string errorProcedure,
-		                     Nullable<int> errorLine,
-		                     string errorMessage)
+
+		public ErrorLogModel(
+			DateTime errorTime,
+			string userName,
+			int errorNumber,
+			Nullable<int> errorSeverity,
+			Nullable<int> errorState,
+			string errorProcedure,
+			Nullable<int> errorLine,
+			string errorMessage)
 		{
 			this.ErrorTime = errorTime.ToDateTime();
 			this.UserName = userName;
@@ -28,116 +30,132 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ErrorMessage = errorMessage;
 		}
 
-		private DateTime _errorTime;
+		private DateTime errorTime;
+
 		[Required]
 		public DateTime ErrorTime
 		{
 			get
 			{
-				return _errorTime;
+				return this.errorTime;
 			}
+
 			set
 			{
-				this._errorTime = value;
+				this.errorTime = value;
 			}
 		}
 
-		private string _userName;
+		private string userName;
+
 		[Required]
 		public string UserName
 		{
 			get
 			{
-				return _userName;
+				return this.userName;
 			}
+
 			set
 			{
-				this._userName = value;
+				this.userName = value;
 			}
 		}
 
-		private int _errorNumber;
+		private int errorNumber;
+
 		[Required]
 		public int ErrorNumber
 		{
 			get
 			{
-				return _errorNumber;
+				return this.errorNumber;
 			}
+
 			set
 			{
-				this._errorNumber = value;
+				this.errorNumber = value;
 			}
 		}
 
-		private Nullable<int> _errorSeverity;
+		private Nullable<int> errorSeverity;
+
 		public Nullable<int> ErrorSeverity
 		{
 			get
 			{
-				return _errorSeverity.IsEmptyOrZeroOrNull() ? null : _errorSeverity;
+				return this.errorSeverity.IsEmptyOrZeroOrNull() ? null : this.errorSeverity;
 			}
+
 			set
 			{
-				this._errorSeverity = value;
+				this.errorSeverity = value;
 			}
 		}
 
-		private Nullable<int> _errorState;
+		private Nullable<int> errorState;
+
 		public Nullable<int> ErrorState
 		{
 			get
 			{
-				return _errorState.IsEmptyOrZeroOrNull() ? null : _errorState;
+				return this.errorState.IsEmptyOrZeroOrNull() ? null : this.errorState;
 			}
+
 			set
 			{
-				this._errorState = value;
+				this.errorState = value;
 			}
 		}
 
-		private string _errorProcedure;
+		private string errorProcedure;
+
 		public string ErrorProcedure
 		{
 			get
 			{
-				return _errorProcedure.IsEmptyOrZeroOrNull() ? null : _errorProcedure;
+				return this.errorProcedure.IsEmptyOrZeroOrNull() ? null : this.errorProcedure;
 			}
+
 			set
 			{
-				this._errorProcedure = value;
+				this.errorProcedure = value;
 			}
 		}
 
-		private Nullable<int> _errorLine;
+		private Nullable<int> errorLine;
+
 		public Nullable<int> ErrorLine
 		{
 			get
 			{
-				return _errorLine.IsEmptyOrZeroOrNull() ? null : _errorLine;
+				return this.errorLine.IsEmptyOrZeroOrNull() ? null : this.errorLine;
 			}
+
 			set
 			{
-				this._errorLine = value;
+				this.errorLine = value;
 			}
 		}
 
-		private string _errorMessage;
+		private string errorMessage;
+
 		[Required]
 		public string ErrorMessage
 		{
 			get
 			{
-				return _errorMessage;
+				return this.errorMessage;
 			}
+
 			set
 			{
-				this._errorMessage = value;
+				this.errorMessage = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>100490c9456ecd6713948480744f8932</Hash>
+    <Hash>4d6b5eee342aba4a2645287e17758b20</Hash>
 </Codenesium>*/

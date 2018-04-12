@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractTransactionHistoriesController: AbstractApiController
+	public abstract class AbstractTransactionHistoryController: AbstractApiController
 	{
 		protected ITransactionHistoryRepository transactionHistoryRepository;
+
 		protected ITransactionHistoryModelValidator transactionHistoryModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractTransactionHistoriesController(
-			ILogger<AbstractTransactionHistoriesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractTransactionHistoryController(
+			ILogger<AbstractTransactionHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ITransactionHistoryRepository transactionHistoryRepository,
 			ITransactionHistoryModelValidator transactionHistoryModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.transactionHistoryRepository = transactionHistoryRepository;
 			this.transactionHistoryModelValidator = transactionHistoryModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.transactionHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.transactionHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.transactionHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,20 +81,21 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.transactionHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.transactionHistoryRepository.Create(model.ProductID,
-				                                                  model.ReferenceOrderID,
-				                                                  model.ReferenceOrderLineID,
-				                                                  model.TransactionDate,
-				                                                  model.TransactionType,
-				                                                  model.Quantity,
-				                                                  model.ActualCost,
-				                                                  model.ModifiedDate);
-				return Ok(id);
+				var id = this.transactionHistoryRepository.Create(
+					model.ProductID,
+					model.ReferenceOrderID,
+					model.ReferenceOrderLineID,
+					model.TransactionDate,
+					model.TransactionType,
+					model.Quantity,
+					model.ActualCost,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -102,28 +109,30 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<TransactionHistoryModel> models)
 		{
 			this.transactionHistoryModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.transactionHistoryModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.transactionHistoryRepository.Create(model.ProductID,
-				                                         model.ReferenceOrderID,
-				                                         model.ReferenceOrderLineID,
-				                                         model.TransactionDate,
-				                                         model.TransactionType,
-				                                         model.Quantity,
-				                                         model.ActualCost,
-				                                         model.ModifiedDate);
+				this.transactionHistoryRepository.Create(
+					model.ProductID,
+					model.ReferenceOrderID,
+					model.ReferenceOrderLineID,
+					model.TransactionDate,
+					model.TransactionType,
+					model.Quantity,
+					model.ActualCost,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -133,31 +142,33 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,TransactionHistoryModel model)
+		public virtual IActionResult Update(int id, TransactionHistoryModel model)
 		{
-			if(this.transactionHistoryRepository.GetByIdDirect(id) == null)
+			if (this.transactionHistoryRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.transactionHistoryModelValidator.UpdateMode();
 			var validationResult = this.transactionHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.transactionHistoryRepository.Update(id,  model.ProductID,
-				                                         model.ReferenceOrderID,
-				                                         model.ReferenceOrderLineID,
-				                                         model.TransactionDate,
-				                                         model.TransactionType,
-				                                         model.Quantity,
-				                                         model.ActualCost,
-				                                         model.ModifiedDate);
-				return Ok();
+				this.transactionHistoryRepository.Update(
+					id,
+					model.ProductID,
+					model.ReferenceOrderID,
+					model.ReferenceOrderLineID,
+					model.TransactionDate,
+					model.TransactionType,
+					model.Quantity,
+					model.ActualCost,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -170,7 +181,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.transactionHistoryRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -183,11 +194,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.transactionHistoryRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f2aed867ca450b92815df37268bb1b90</Hash>
+    <Hash>8018da98ce86a429f1976af25fb98eab</Hash>
 </Codenesium>*/

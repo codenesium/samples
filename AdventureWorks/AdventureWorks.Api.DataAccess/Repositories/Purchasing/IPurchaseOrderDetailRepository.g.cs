@@ -7,18 +7,20 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPurchaseOrderDetailRepository
 	{
-		int Create(int purchaseOrderDetailID,
-		           DateTime dueDate,
-		           short orderQty,
-		           int productID,
-		           decimal unitPrice,
-		           decimal lineTotal,
-		           decimal receivedQty,
-		           decimal rejectedQty,
-		           decimal stockedQty,
-		           DateTime modifiedDate);
+		int Create(
+			int purchaseOrderDetailID,
+			DateTime dueDate,
+			short orderQty,
+			int productID,
+			decimal unitPrice,
+			decimal lineTotal,
+			decimal receivedQty,
+			decimal rejectedQty,
+			decimal stockedQty,
+			DateTime modifiedDate);
 
-		void Update(int purchaseOrderID, int purchaseOrderDetailID,
+		void Update(int purchaseOrderID,
+		            int purchaseOrderDetailID,
 		            DateTime dueDate,
 		            short orderQty,
 		            int productID,
@@ -35,14 +37,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOPurchaseOrderDetail GetByIdDirect(int purchaseOrderID);
 
-		Response GetWhere(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOPurchaseOrderDetail> GetWhereDirect(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOPurchaseOrderDetail> GetWhereDirect(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce6441c26fbe910fcf4424cfdb3d9b61</Hash>
+    <Hash>b18123675daafc379c98a6a8d7e4346f</Hash>
 </Codenesium>*/

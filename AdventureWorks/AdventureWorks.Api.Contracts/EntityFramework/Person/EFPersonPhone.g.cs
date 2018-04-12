@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("PersonPhone", Schema="Person")]
@@ -10,10 +11,11 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFPersonPhone()
 		{}
 
-		public void SetProperties(int businessEntityID,
-		                          string phoneNumber,
-		                          int phoneNumberTypeID,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int businessEntityID,
+			string phoneNumber,
+			int phoneNumberTypeID,
+			DateTime modifiedDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.PhoneNumber = phoneNumber;
@@ -22,25 +24,26 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID {get; set;}
+		public int BusinessEntityID { get; set; }
 
 		[Column("PhoneNumber", TypeName="nvarchar(25)")]
-		public string PhoneNumber {get; set;}
+		public string PhoneNumber { get; set; }
 
 		[Column("PhoneNumberTypeID", TypeName="int")]
-		public int PhoneNumberTypeID {get; set;}
+		public int PhoneNumberTypeID { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("BusinessEntityID")]
 		public virtual EFPerson Person { get; set; }
 
+		[ForeignKey("PhoneNumberTypeID")]
 		public virtual EFPhoneNumberType PhoneNumberType { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>3f6e990e307994b4669891bbf2f112ca</Hash>
+    <Hash>e9741bafe4d426c2c8db707624413066</Hash>
 </Codenesium>*/

@@ -7,10 +7,12 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPhoneNumberTypeRepository
 	{
-		int Create(string name,
-		           DateTime modifiedDate);
+		int Create(
+			string name,
+			DateTime modifiedDate);
 
-		void Update(int phoneNumberTypeID, string name,
+		void Update(int phoneNumberTypeID,
+		            string name,
 		            DateTime modifiedDate);
 
 		void Delete(int phoneNumberTypeID);
@@ -19,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOPhoneNumberType GetByIdDirect(int phoneNumberTypeID);
 
-		Response GetWhere(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOPhoneNumberType> GetWhereDirect(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOPhoneNumberType> GetWhereDirect(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>34964e94a319d6bab169887224e2c98c</Hash>
+    <Hash>3570ea49848077a14e35ce5b7a90d72f</Hash>
 </Codenesium>*/

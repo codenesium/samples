@@ -15,47 +15,58 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractProductProductPhotoRepository(ILogger logger,
-		                                             ApplicationDbContext context)
+		public AbstractProductProductPhotoRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(int productPhotoID,
-		                          bool primary,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			int productPhotoID,
+			bool primary,
+			DateTime modifiedDate)
 		{
-			var record = new EFProductProductPhoto ();
+			var record = new EFProductProductPhoto();
 
-			MapPOCOToEF(0, productPhotoID,
-			            primary,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				productPhotoID,
+				primary,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFProductProductPhoto>().Add(record);
 			this.context.SaveChanges();
 			return record.ProductID;
 		}
 
-		public virtual void Update(int productID, int productPhotoID,
-		                           bool primary,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int productID,
+			int productPhotoID,
+			bool primary,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
-				MapPOCOToEF(productID,  productPhotoID,
-				            primary,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					productID,
+					productPhotoID,
+					primary,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int productID)
+		public virtual void Delete(
+			int productID)
 		{
 			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 
@@ -74,7 +85,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response;
 		}
 
@@ -82,11 +93,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response.ProductProductPhotoes.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -94,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -102,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOProductProductPhoto> GetWhereDirect(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOProductProductPhoto> GetWhereDirect(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -110,42 +121,48 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.ProductProductPhotoes;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProductProductPhoto, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFProductProductPhoto, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFProductProductPhoto> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFProductProductPhoto> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFProductProductPhoto> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFProductProductPhoto> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFProductProductPhoto> SearchLinqEF(Expression<Func<EFProductProductPhoto, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFProductProductPhoto> SearchLinqEF(Expression<Func<EFProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFProductProductPhoto> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFProductProductPhoto> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int productID, int productPhotoID,
-		                               bool primary,
-		                               DateTime modifiedDate, EFProductProductPhoto   efProductProductPhoto)
+		public static void MapPOCOToEF(
+			int productID,
+			int productPhotoID,
+			bool primary,
+			DateTime modifiedDate,
+			EFProductProductPhoto efProductProductPhoto)
 		{
-			efProductProductPhoto.SetProperties(productID.ToInt(),productPhotoID.ToInt(),primary,modifiedDate.ToDateTime());
+			efProductProductPhoto.SetProperties(productID.ToInt(), productPhotoID.ToInt(), primary, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFProductProductPhoto efProductProductPhoto,Response response)
+		public static void MapEFToPOCO(
+			EFProductProductPhoto efProductProductPhoto,
+			Response response)
 		{
-			if(efProductProductPhoto == null)
+			if (efProductProductPhoto == null)
 			{
 				return;
 			}
-			response.AddProductProductPhoto(new POCOProductProductPhoto(efProductProductPhoto.ProductID.ToInt(),efProductProductPhoto.ProductPhotoID.ToInt(),efProductProductPhoto.Primary,efProductProductPhoto.ModifiedDate.ToDateTime()));
+
+			response.AddProductProductPhoto(new POCOProductProductPhoto(efProductProductPhoto.ProductID.ToInt(), efProductProductPhoto.ProductPhotoID.ToInt(), efProductProductPhoto.Primary, efProductProductPhoto.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductProductPhoto.Product, response);
 
@@ -155,5 +172,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>31d98719544afde07a740a03b9ad3f61</Hash>
+    <Hash>5e64cf65c65297882c1362c8bf1bd0e6</Hash>
 </Codenesium>*/

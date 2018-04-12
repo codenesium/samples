@@ -15,135 +15,146 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractSalesOrderHeaderRepository(ILogger logger,
-		                                          ApplicationDbContext context)
+		public AbstractSalesOrderHeaderRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(int revisionNumber,
-		                          DateTime orderDate,
-		                          DateTime dueDate,
-		                          Nullable<DateTime> shipDate,
-		                          int status,
-		                          bool onlineOrderFlag,
-		                          string salesOrderNumber,
-		                          string purchaseOrderNumber,
-		                          string accountNumber,
-		                          int customerID,
-		                          Nullable<int> salesPersonID,
-		                          Nullable<int> territoryID,
-		                          int billToAddressID,
-		                          int shipToAddressID,
-		                          int shipMethodID,
-		                          Nullable<int> creditCardID,
-		                          string creditCardApprovalCode,
-		                          Nullable<int> currencyRateID,
-		                          decimal subTotal,
-		                          decimal taxAmt,
-		                          decimal freight,
-		                          decimal totalDue,
-		                          string comment,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			int revisionNumber,
+			DateTime orderDate,
+			DateTime dueDate,
+			Nullable<DateTime> shipDate,
+			int status,
+			bool onlineOrderFlag,
+			string salesOrderNumber,
+			string purchaseOrderNumber,
+			string accountNumber,
+			int customerID,
+			Nullable<int> salesPersonID,
+			Nullable<int> territoryID,
+			int billToAddressID,
+			int shipToAddressID,
+			int shipMethodID,
+			Nullable<int> creditCardID,
+			string creditCardApprovalCode,
+			Nullable<int> currencyRateID,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			string comment,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record = new EFSalesOrderHeader ();
+			var record = new EFSalesOrderHeader();
 
-			MapPOCOToEF(0, revisionNumber,
-			            orderDate,
-			            dueDate,
-			            shipDate,
-			            status,
-			            onlineOrderFlag,
-			            salesOrderNumber,
-			            purchaseOrderNumber,
-			            accountNumber,
-			            customerID,
-			            salesPersonID,
-			            territoryID,
-			            billToAddressID,
-			            shipToAddressID,
-			            shipMethodID,
-			            creditCardID,
-			            creditCardApprovalCode,
-			            currencyRateID,
-			            subTotal,
-			            taxAmt,
-			            freight,
-			            totalDue,
-			            comment,
-			            rowguid,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				revisionNumber,
+				orderDate,
+				dueDate,
+				shipDate,
+				status,
+				onlineOrderFlag,
+				salesOrderNumber,
+				purchaseOrderNumber,
+				accountNumber,
+				customerID,
+				salesPersonID,
+				territoryID,
+				billToAddressID,
+				shipToAddressID,
+				shipMethodID,
+				creditCardID,
+				creditCardApprovalCode,
+				currencyRateID,
+				subTotal,
+				taxAmt,
+				freight,
+				totalDue,
+				comment,
+				rowguid,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFSalesOrderHeader>().Add(record);
 			this.context.SaveChanges();
 			return record.SalesOrderID;
 		}
 
-		public virtual void Update(int salesOrderID, int revisionNumber,
-		                           DateTime orderDate,
-		                           DateTime dueDate,
-		                           Nullable<DateTime> shipDate,
-		                           int status,
-		                           bool onlineOrderFlag,
-		                           string salesOrderNumber,
-		                           string purchaseOrderNumber,
-		                           string accountNumber,
-		                           int customerID,
-		                           Nullable<int> salesPersonID,
-		                           Nullable<int> territoryID,
-		                           int billToAddressID,
-		                           int shipToAddressID,
-		                           int shipMethodID,
-		                           Nullable<int> creditCardID,
-		                           string creditCardApprovalCode,
-		                           Nullable<int> currencyRateID,
-		                           decimal subTotal,
-		                           decimal taxAmt,
-		                           decimal freight,
-		                           decimal totalDue,
-		                           string comment,
-		                           Guid rowguid,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int salesOrderID,
+			int revisionNumber,
+			DateTime orderDate,
+			DateTime dueDate,
+			Nullable<DateTime> shipDate,
+			int status,
+			bool onlineOrderFlag,
+			string salesOrderNumber,
+			string purchaseOrderNumber,
+			string accountNumber,
+			int customerID,
+			Nullable<int> salesPersonID,
+			Nullable<int> territoryID,
+			int billToAddressID,
+			int shipToAddressID,
+			int shipMethodID,
+			Nullable<int> creditCardID,
+			string creditCardApprovalCode,
+			Nullable<int> currencyRateID,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			string comment,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{salesOrderID}");
 			}
 			else
 			{
-				MapPOCOToEF(salesOrderID,  revisionNumber,
-				            orderDate,
-				            dueDate,
-				            shipDate,
-				            status,
-				            onlineOrderFlag,
-				            salesOrderNumber,
-				            purchaseOrderNumber,
-				            accountNumber,
-				            customerID,
-				            salesPersonID,
-				            territoryID,
-				            billToAddressID,
-				            shipToAddressID,
-				            shipMethodID,
-				            creditCardID,
-				            creditCardApprovalCode,
-				            currencyRateID,
-				            subTotal,
-				            taxAmt,
-				            freight,
-				            totalDue,
-				            comment,
-				            rowguid,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					salesOrderID,
+					revisionNumber,
+					orderDate,
+					dueDate,
+					shipDate,
+					status,
+					onlineOrderFlag,
+					salesOrderNumber,
+					purchaseOrderNumber,
+					accountNumber,
+					customerID,
+					salesPersonID,
+					territoryID,
+					billToAddressID,
+					shipToAddressID,
+					shipMethodID,
+					creditCardID,
+					creditCardApprovalCode,
+					currencyRateID,
+					subTotal,
+					taxAmt,
+					freight,
+					totalDue,
+					comment,
+					rowguid,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int salesOrderID)
+		public virtual void Delete(
+			int salesOrderID)
 		{
 			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 
@@ -162,7 +173,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID,response);
+			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID, response);
 			return response;
 		}
 
@@ -170,11 +181,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID,response);
+			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID, response);
 			return response.SalesOrderHeaders.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -182,7 +193,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -190,7 +201,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOSalesOrderHeader> GetWhereDirect(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOSalesOrderHeader> GetWhereDirect(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -198,64 +209,70 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.SalesOrderHeaders;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSalesOrderHeader, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFSalesOrderHeader, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFSalesOrderHeader> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFSalesOrderHeader> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFSalesOrderHeader> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFSalesOrderHeader> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFSalesOrderHeader> SearchLinqEF(Expression<Func<EFSalesOrderHeader, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFSalesOrderHeader> SearchLinqEF(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFSalesOrderHeader> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFSalesOrderHeader> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int salesOrderID, int revisionNumber,
-		                               DateTime orderDate,
-		                               DateTime dueDate,
-		                               Nullable<DateTime> shipDate,
-		                               int status,
-		                               bool onlineOrderFlag,
-		                               string salesOrderNumber,
-		                               string purchaseOrderNumber,
-		                               string accountNumber,
-		                               int customerID,
-		                               Nullable<int> salesPersonID,
-		                               Nullable<int> territoryID,
-		                               int billToAddressID,
-		                               int shipToAddressID,
-		                               int shipMethodID,
-		                               Nullable<int> creditCardID,
-		                               string creditCardApprovalCode,
-		                               Nullable<int> currencyRateID,
-		                               decimal subTotal,
-		                               decimal taxAmt,
-		                               decimal freight,
-		                               decimal totalDue,
-		                               string comment,
-		                               Guid rowguid,
-		                               DateTime modifiedDate, EFSalesOrderHeader   efSalesOrderHeader)
+		public static void MapPOCOToEF(
+			int salesOrderID,
+			int revisionNumber,
+			DateTime orderDate,
+			DateTime dueDate,
+			Nullable<DateTime> shipDate,
+			int status,
+			bool onlineOrderFlag,
+			string salesOrderNumber,
+			string purchaseOrderNumber,
+			string accountNumber,
+			int customerID,
+			Nullable<int> salesPersonID,
+			Nullable<int> territoryID,
+			int billToAddressID,
+			int shipToAddressID,
+			int shipMethodID,
+			Nullable<int> creditCardID,
+			string creditCardApprovalCode,
+			Nullable<int> currencyRateID,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			string comment,
+			Guid rowguid,
+			DateTime modifiedDate,
+			EFSalesOrderHeader efSalesOrderHeader)
 		{
-			efSalesOrderHeader.SetProperties(salesOrderID.ToInt(),revisionNumber,orderDate.ToDateTime(),dueDate.ToDateTime(),shipDate.ToNullableDateTime(),status,onlineOrderFlag,salesOrderNumber,purchaseOrderNumber,accountNumber,customerID.ToInt(),salesPersonID.ToNullableInt(),territoryID.ToNullableInt(),billToAddressID.ToInt(),shipToAddressID.ToInt(),shipMethodID.ToInt(),creditCardID.ToNullableInt(),creditCardApprovalCode,currencyRateID.ToNullableInt(),subTotal,taxAmt,freight,totalDue,comment,rowguid,modifiedDate.ToDateTime());
+			efSalesOrderHeader.SetProperties(salesOrderID.ToInt(), revisionNumber, orderDate.ToDateTime(), dueDate.ToDateTime(), shipDate.ToNullableDateTime(), status, onlineOrderFlag, salesOrderNumber, purchaseOrderNumber, accountNumber, customerID.ToInt(), salesPersonID.ToNullableInt(), territoryID.ToNullableInt(), billToAddressID.ToInt(), shipToAddressID.ToInt(), shipMethodID.ToInt(), creditCardID.ToNullableInt(), creditCardApprovalCode, currencyRateID.ToNullableInt(), subTotal, taxAmt, freight, totalDue, comment, rowguid, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFSalesOrderHeader efSalesOrderHeader,Response response)
+		public static void MapEFToPOCO(
+			EFSalesOrderHeader efSalesOrderHeader,
+			Response response)
 		{
-			if(efSalesOrderHeader == null)
+			if (efSalesOrderHeader == null)
 			{
 				return;
 			}
-			response.AddSalesOrderHeader(new POCOSalesOrderHeader(efSalesOrderHeader.SalesOrderID.ToInt(),efSalesOrderHeader.RevisionNumber,efSalesOrderHeader.OrderDate.ToDateTime(),efSalesOrderHeader.DueDate.ToDateTime(),efSalesOrderHeader.ShipDate.ToNullableDateTime(),efSalesOrderHeader.Status,efSalesOrderHeader.OnlineOrderFlag,efSalesOrderHeader.SalesOrderNumber,efSalesOrderHeader.PurchaseOrderNumber,efSalesOrderHeader.AccountNumber,efSalesOrderHeader.CustomerID.ToInt(),efSalesOrderHeader.SalesPersonID.ToNullableInt(),efSalesOrderHeader.TerritoryID.ToNullableInt(),efSalesOrderHeader.BillToAddressID.ToInt(),efSalesOrderHeader.ShipToAddressID.ToInt(),efSalesOrderHeader.ShipMethodID.ToInt(),efSalesOrderHeader.CreditCardID.ToNullableInt(),efSalesOrderHeader.CreditCardApprovalCode,efSalesOrderHeader.CurrencyRateID.ToNullableInt(),efSalesOrderHeader.SubTotal,efSalesOrderHeader.TaxAmt,efSalesOrderHeader.Freight,efSalesOrderHeader.TotalDue,efSalesOrderHeader.Comment,efSalesOrderHeader.Rowguid,efSalesOrderHeader.ModifiedDate.ToDateTime()));
+
+			response.AddSalesOrderHeader(new POCOSalesOrderHeader(efSalesOrderHeader.SalesOrderID.ToInt(), efSalesOrderHeader.RevisionNumber, efSalesOrderHeader.OrderDate.ToDateTime(), efSalesOrderHeader.DueDate.ToDateTime(), efSalesOrderHeader.ShipDate.ToNullableDateTime(), efSalesOrderHeader.Status, efSalesOrderHeader.OnlineOrderFlag, efSalesOrderHeader.SalesOrderNumber, efSalesOrderHeader.PurchaseOrderNumber, efSalesOrderHeader.AccountNumber, efSalesOrderHeader.CustomerID.ToInt(), efSalesOrderHeader.SalesPersonID.ToNullableInt(), efSalesOrderHeader.TerritoryID.ToNullableInt(), efSalesOrderHeader.BillToAddressID.ToInt(), efSalesOrderHeader.ShipToAddressID.ToInt(), efSalesOrderHeader.ShipMethodID.ToInt(), efSalesOrderHeader.CreditCardID.ToNullableInt(), efSalesOrderHeader.CreditCardApprovalCode, efSalesOrderHeader.CurrencyRateID.ToNullableInt(), efSalesOrderHeader.SubTotal, efSalesOrderHeader.TaxAmt, efSalesOrderHeader.Freight, efSalesOrderHeader.TotalDue, efSalesOrderHeader.Comment, efSalesOrderHeader.Rowguid, efSalesOrderHeader.ModifiedDate.ToDateTime()));
 
 			CustomerRepository.MapEFToPOCO(efSalesOrderHeader.Customer, response);
 
@@ -277,5 +294,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>24d214a1abafbd0e23037e3d81823741</Hash>
+    <Hash>9dc2a65fa7b2b29b28215e649c05ee27</Hash>
 </Codenesium>*/

@@ -20,18 +20,18 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ICountryRegionRepository CountryRegionRepository {get; set;}
-		public ICurrencyRepository CurrencyRepository {get; set;}
+		public ICountryRegionRepository CountryRegionRepository { get; set; }
+		public ICurrencyRepository CurrencyRepository { get; set; }
 		public virtual void CurrencyCodeRules()
 		{
-			RuleFor(x => x.CurrencyCode).NotNull();
-			RuleFor(x => x.CurrencyCode).Must(BeValidCurrency).When(x => x ?.CurrencyCode != null).WithMessage("Invalid reference");
-			RuleFor(x => x.CurrencyCode).Length(0,3);
+			this.RuleFor(x => x.CurrencyCode).NotNull();
+			this.RuleFor(x => x.CurrencyCode).Must(this.BeValidCurrency).When(x => x ?.CurrencyCode != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CurrencyCode).Length(0, 3);
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidCountryRegion(string id)
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>72b23faa219866d4ef5aedf5d34d3176</Hash>
+    <Hash>e20931b6960675992556ca763e0e27eb</Hash>
 </Codenesium>*/

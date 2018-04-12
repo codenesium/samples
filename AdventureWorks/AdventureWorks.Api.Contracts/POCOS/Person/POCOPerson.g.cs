@@ -9,19 +9,20 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOPerson()
 		{}
 
-		public POCOPerson(int businessEntityID,
-		                  string personType,
-		                  bool nameStyle,
-		                  string title,
-		                  string firstName,
-		                  string middleName,
-		                  string lastName,
-		                  string suffix,
-		                  int emailPromotion,
-		                  string additionalContactInfo,
-		                  string demographics,
-		                  Guid rowguid,
-		                  DateTime modifiedDate)
+		public POCOPerson(
+			int businessEntityID,
+			string personType,
+			bool nameStyle,
+			string title,
+			string firstName,
+			string middleName,
+			string lastName,
+			string suffix,
+			int emailPromotion,
+			string additionalContactInfo,
+			string demographics,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.PersonType = personType;
 			this.NameStyle = nameStyle;
@@ -36,126 +37,126 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "BusinessEntity");
+			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                                 "BusinessEntity");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public string PersonType {get; set;}
-		public bool NameStyle {get; set;}
-		public string Title {get; set;}
-		public string FirstName {get; set;}
-		public string MiddleName {get; set;}
-		public string LastName {get; set;}
-		public string Suffix {get; set;}
-		public int EmailPromotion {get; set;}
-		public string AdditionalContactInfo {get; set;}
-		public string Demographics {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public string PersonType { get; set; }
+		public bool NameStyle { get; set; }
+		public string Title { get; set; }
+		public string FirstName { get; set; }
+		public string MiddleName { get; set; }
+		public string LastName { get; set; }
+		public string Suffix { get; set; }
+		public int EmailPromotion { get; set; }
+		public string AdditionalContactInfo { get; set; }
+		public string Demographics { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityID()
 		{
-			return ShouldSerializeBusinessEntityIDValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePersonTypeValue {get; set;} = true;
+		public bool ShouldSerializePersonTypeValue { get; set; } = true;
 
 		public bool ShouldSerializePersonType()
 		{
-			return ShouldSerializePersonTypeValue;
+			return this.ShouldSerializePersonTypeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameStyleValue {get; set;} = true;
+		public bool ShouldSerializeNameStyleValue { get; set; } = true;
 
 		public bool ShouldSerializeNameStyle()
 		{
-			return ShouldSerializeNameStyleValue;
+			return this.ShouldSerializeNameStyleValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTitleValue {get; set;} = true;
+		public bool ShouldSerializeTitleValue { get; set; } = true;
 
 		public bool ShouldSerializeTitle()
 		{
-			return ShouldSerializeTitleValue;
+			return this.ShouldSerializeTitleValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFirstNameValue {get; set;} = true;
+		public bool ShouldSerializeFirstNameValue { get; set; } = true;
 
 		public bool ShouldSerializeFirstName()
 		{
-			return ShouldSerializeFirstNameValue;
+			return this.ShouldSerializeFirstNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMiddleNameValue {get; set;} = true;
+		public bool ShouldSerializeMiddleNameValue { get; set; } = true;
 
 		public bool ShouldSerializeMiddleName()
 		{
-			return ShouldSerializeMiddleNameValue;
+			return this.ShouldSerializeMiddleNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLastNameValue {get; set;} = true;
+		public bool ShouldSerializeLastNameValue { get; set; } = true;
 
 		public bool ShouldSerializeLastName()
 		{
-			return ShouldSerializeLastNameValue;
+			return this.ShouldSerializeLastNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSuffixValue {get; set;} = true;
+		public bool ShouldSerializeSuffixValue { get; set; } = true;
 
 		public bool ShouldSerializeSuffix()
 		{
-			return ShouldSerializeSuffixValue;
+			return this.ShouldSerializeSuffixValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmailPromotionValue {get; set;} = true;
+		public bool ShouldSerializeEmailPromotionValue { get; set; } = true;
 
 		public bool ShouldSerializeEmailPromotion()
 		{
-			return ShouldSerializeEmailPromotionValue;
+			return this.ShouldSerializeEmailPromotionValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAdditionalContactInfoValue {get; set;} = true;
+		public bool ShouldSerializeAdditionalContactInfoValue { get; set; } = true;
 
 		public bool ShouldSerializeAdditionalContactInfo()
 		{
-			return ShouldSerializeAdditionalContactInfoValue;
+			return this.ShouldSerializeAdditionalContactInfoValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDemographicsValue {get; set;} = true;
+		public bool ShouldSerializeDemographicsValue { get; set; } = true;
 
 		public bool ShouldSerializeDemographics()
 		{
-			return ShouldSerializeDemographicsValue;
+			return this.ShouldSerializeDemographicsValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -178,5 +179,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>303d35b81b91373f03a7f41dd12305ab</Hash>
+    <Hash>d2ba69adad3be2f41cf828b3737c7f3a</Hash>
 </Codenesium>*/

@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractProductReviewsController: AbstractApiController
+	public abstract class AbstractProductReviewController: AbstractApiController
 	{
 		protected IProductReviewRepository productReviewRepository;
+
 		protected IProductReviewModelValidator productReviewModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractProductReviewsController(
-			ILogger<AbstractProductReviewsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractProductReviewController(
+			ILogger<AbstractProductReviewController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductReviewRepository productReviewRepository,
 			IProductReviewModelValidator productReviewModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.productReviewRepository = productReviewRepository;
 			this.productReviewModelValidator = productReviewModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productReviewRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productReviewRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.productReviewRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,19 +81,20 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productReviewModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productReviewRepository.Create(model.ProductID,
-				                                             model.ReviewerName,
-				                                             model.ReviewDate,
-				                                             model.EmailAddress,
-				                                             model.Rating,
-				                                             model.Comments,
-				                                             model.ModifiedDate);
-				return Ok(id);
+				var id = this.productReviewRepository.Create(
+					model.ProductID,
+					model.ReviewerName,
+					model.ReviewDate,
+					model.EmailAddress,
+					model.Rating,
+					model.Comments,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -101,27 +108,29 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ProductReviewModel> models)
 		{
 			this.productReviewModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.productReviewModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.productReviewRepository.Create(model.ProductID,
-				                                    model.ReviewerName,
-				                                    model.ReviewDate,
-				                                    model.EmailAddress,
-				                                    model.Rating,
-				                                    model.Comments,
-				                                    model.ModifiedDate);
+				this.productReviewRepository.Create(
+					model.ProductID,
+					model.ReviewerName,
+					model.ReviewDate,
+					model.EmailAddress,
+					model.Rating,
+					model.Comments,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -131,30 +140,32 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ProductReviewModel model)
+		public virtual IActionResult Update(int id, ProductReviewModel model)
 		{
-			if(this.productReviewRepository.GetByIdDirect(id) == null)
+			if (this.productReviewRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.productReviewModelValidator.UpdateMode();
 			var validationResult = this.productReviewModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productReviewRepository.Update(id,  model.ProductID,
-				                                    model.ReviewerName,
-				                                    model.ReviewDate,
-				                                    model.EmailAddress,
-				                                    model.Rating,
-				                                    model.Comments,
-				                                    model.ModifiedDate);
-				return Ok();
+				this.productReviewRepository.Update(
+					id,
+					model.ProductID,
+					model.ReviewerName,
+					model.ReviewDate,
+					model.EmailAddress,
+					model.Rating,
+					model.Comments,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -167,7 +178,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.productReviewRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -180,11 +191,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productReviewRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1954365e21da48b71abb57bbe1b46752</Hash>
+    <Hash>a398b1142e84a24b80e8e4b6c5f28877</Hash>
 </Codenesium>*/

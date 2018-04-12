@@ -9,43 +9,49 @@ namespace NebulaNS.Api.Contracts
 	{
 		public ClaspModel()
 		{}
-		public ClaspModel(int previousChainId,
-		                  int nextChainId)
+
+		public ClaspModel(
+			int previousChainId,
+			int nextChainId)
 		{
 			this.PreviousChainId = previousChainId.ToInt();
 			this.NextChainId = nextChainId.ToInt();
 		}
 
-		private int _previousChainId;
+		private int previousChainId;
+
 		[Required]
 		public int PreviousChainId
 		{
 			get
 			{
-				return _previousChainId;
+				return this.previousChainId;
 			}
+
 			set
 			{
-				this._previousChainId = value;
+				this.previousChainId = value;
 			}
 		}
 
-		private int _nextChainId;
+		private int nextChainId;
+
 		[Required]
 		public int NextChainId
 		{
 			get
 			{
-				return _nextChainId;
+				return this.nextChainId;
 			}
+
 			set
 			{
-				this._nextChainId = value;
+				this.nextChainId = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c753e4c1e1ffd2589cdb15226edd7899</Hash>
+    <Hash>fe6ba6e1d59668f9d74573dd74bdf1bc</Hash>
 </Codenesium>*/

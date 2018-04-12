@@ -9,31 +9,32 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOProduct()
 		{}
 
-		public POCOProduct(int productID,
-		                   string name,
-		                   string productNumber,
-		                   bool makeFlag,
-		                   bool finishedGoodsFlag,
-		                   string color,
-		                   short safetyStockLevel,
-		                   short reorderPoint,
-		                   decimal standardCost,
-		                   decimal listPrice,
-		                   string size,
-		                   string sizeUnitMeasureCode,
-		                   string weightUnitMeasureCode,
-		                   Nullable<decimal> weight,
-		                   int daysToManufacture,
-		                   string productLine,
-		                   string @class,
-		                   string style,
-		                   Nullable<int> productSubcategoryID,
-		                   Nullable<int> productModelID,
-		                   DateTime sellStartDate,
-		                   Nullable<DateTime> sellEndDate,
-		                   Nullable<DateTime> discontinuedDate,
-		                   Guid rowguid,
-		                   DateTime modifiedDate)
+		public POCOProduct(
+			int productID,
+			string name,
+			string productNumber,
+			bool makeFlag,
+			bool finishedGoodsFlag,
+			string color,
+			short safetyStockLevel,
+			short reorderPoint,
+			decimal standardCost,
+			decimal listPrice,
+			string size,
+			string sizeUnitMeasureCode,
+			string weightUnitMeasureCode,
+			Nullable<decimal> weight,
+			int daysToManufacture,
+			string productLine,
+			string @class,
+			string style,
+			Nullable<int> productSubcategoryID,
+			Nullable<int> productModelID,
+			DateTime sellStartDate,
+			Nullable<DateTime> sellEndDate,
+			Nullable<DateTime> discontinuedDate,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.Name = name;
@@ -57,240 +58,240 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			SizeUnitMeasureCode = new ReferenceEntity<string>(sizeUnitMeasureCode,
-			                                                  "UnitMeasure");
-			WeightUnitMeasureCode = new ReferenceEntity<string>(weightUnitMeasureCode,
-			                                                    "UnitMeasure");
-			ProductSubcategoryID = new ReferenceEntity<Nullable<int>>(productSubcategoryID,
-			                                                          "ProductSubcategory");
-			ProductModelID = new ReferenceEntity<Nullable<int>>(productModelID,
-			                                                    "ProductModel");
+			this.SizeUnitMeasureCode = new ReferenceEntity<string>(sizeUnitMeasureCode,
+			                                                       "UnitMeasure");
+			this.WeightUnitMeasureCode = new ReferenceEntity<string>(weightUnitMeasureCode,
+			                                                         "UnitMeasure");
+			this.ProductSubcategoryID = new ReferenceEntity<Nullable<int>>(productSubcategoryID,
+			                                                               "ProductSubcategory");
+			this.ProductModelID = new ReferenceEntity<Nullable<int>>(productModelID,
+			                                                         "ProductModel");
 		}
 
-		public int ProductID {get; set;}
-		public string Name {get; set;}
-		public string ProductNumber {get; set;}
-		public bool MakeFlag {get; set;}
-		public bool FinishedGoodsFlag {get; set;}
-		public string Color {get; set;}
-		public short SafetyStockLevel {get; set;}
-		public short ReorderPoint {get; set;}
-		public decimal StandardCost {get; set;}
-		public decimal ListPrice {get; set;}
-		public string Size {get; set;}
-		public ReferenceEntity<string>SizeUnitMeasureCode {get; set;}
-		public ReferenceEntity<string>WeightUnitMeasureCode {get; set;}
-		public Nullable<decimal> Weight {get; set;}
-		public int DaysToManufacture {get; set;}
-		public string ProductLine {get; set;}
-		public string @Class {get; set;}
-		public string Style {get; set;}
-		public ReferenceEntity<Nullable<int>>ProductSubcategoryID {get; set;}
-		public ReferenceEntity<Nullable<int>>ProductModelID {get; set;}
-		public DateTime SellStartDate {get; set;}
-		public Nullable<DateTime> SellEndDate {get; set;}
-		public Nullable<DateTime> DiscontinuedDate {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int ProductID { get; set; }
+		public string Name { get; set; }
+		public string ProductNumber { get; set; }
+		public bool MakeFlag { get; set; }
+		public bool FinishedGoodsFlag { get; set; }
+		public string Color { get; set; }
+		public short SafetyStockLevel { get; set; }
+		public short ReorderPoint { get; set; }
+		public decimal StandardCost { get; set; }
+		public decimal ListPrice { get; set; }
+		public string Size { get; set; }
+		public ReferenceEntity<string> SizeUnitMeasureCode { get; set; }
+		public ReferenceEntity<string> WeightUnitMeasureCode { get; set; }
+		public Nullable<decimal> Weight { get; set; }
+		public int DaysToManufacture { get; set; }
+		public string ProductLine { get; set; }
+		public string @Class { get; set; }
+		public string Style { get; set; }
+		public ReferenceEntity<Nullable<int>> ProductSubcategoryID { get; set; }
+		public ReferenceEntity<Nullable<int>> ProductModelID { get; set; }
+		public DateTime SellStartDate { get; set; }
+		public Nullable<DateTime> SellEndDate { get; set; }
+		public Nullable<DateTime> DiscontinuedDate { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue {get; set;} = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductID()
 		{
-			return ShouldSerializeProductIDValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductNumberValue {get; set;} = true;
+		public bool ShouldSerializeProductNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeProductNumber()
 		{
-			return ShouldSerializeProductNumberValue;
+			return this.ShouldSerializeProductNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMakeFlagValue {get; set;} = true;
+		public bool ShouldSerializeMakeFlagValue { get; set; } = true;
 
 		public bool ShouldSerializeMakeFlag()
 		{
-			return ShouldSerializeMakeFlagValue;
+			return this.ShouldSerializeMakeFlagValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFinishedGoodsFlagValue {get; set;} = true;
+		public bool ShouldSerializeFinishedGoodsFlagValue { get; set; } = true;
 
 		public bool ShouldSerializeFinishedGoodsFlag()
 		{
-			return ShouldSerializeFinishedGoodsFlagValue;
+			return this.ShouldSerializeFinishedGoodsFlagValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeColorValue {get; set;} = true;
+		public bool ShouldSerializeColorValue { get; set; } = true;
 
 		public bool ShouldSerializeColor()
 		{
-			return ShouldSerializeColorValue;
+			return this.ShouldSerializeColorValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSafetyStockLevelValue {get; set;} = true;
+		public bool ShouldSerializeSafetyStockLevelValue { get; set; } = true;
 
 		public bool ShouldSerializeSafetyStockLevel()
 		{
-			return ShouldSerializeSafetyStockLevelValue;
+			return this.ShouldSerializeSafetyStockLevelValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeReorderPointValue {get; set;} = true;
+		public bool ShouldSerializeReorderPointValue { get; set; } = true;
 
 		public bool ShouldSerializeReorderPoint()
 		{
-			return ShouldSerializeReorderPointValue;
+			return this.ShouldSerializeReorderPointValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStandardCostValue {get; set;} = true;
+		public bool ShouldSerializeStandardCostValue { get; set; } = true;
 
 		public bool ShouldSerializeStandardCost()
 		{
-			return ShouldSerializeStandardCostValue;
+			return this.ShouldSerializeStandardCostValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeListPriceValue {get; set;} = true;
+		public bool ShouldSerializeListPriceValue { get; set; } = true;
 
 		public bool ShouldSerializeListPrice()
 		{
-			return ShouldSerializeListPriceValue;
+			return this.ShouldSerializeListPriceValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSizeValue {get; set;} = true;
+		public bool ShouldSerializeSizeValue { get; set; } = true;
 
 		public bool ShouldSerializeSize()
 		{
-			return ShouldSerializeSizeValue;
+			return this.ShouldSerializeSizeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSizeUnitMeasureCodeValue {get; set;} = true;
+		public bool ShouldSerializeSizeUnitMeasureCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeSizeUnitMeasureCode()
 		{
-			return ShouldSerializeSizeUnitMeasureCodeValue;
+			return this.ShouldSerializeSizeUnitMeasureCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeWeightUnitMeasureCodeValue {get; set;} = true;
+		public bool ShouldSerializeWeightUnitMeasureCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeWeightUnitMeasureCode()
 		{
-			return ShouldSerializeWeightUnitMeasureCodeValue;
+			return this.ShouldSerializeWeightUnitMeasureCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeWeightValue {get; set;} = true;
+		public bool ShouldSerializeWeightValue { get; set; } = true;
 
 		public bool ShouldSerializeWeight()
 		{
-			return ShouldSerializeWeightValue;
+			return this.ShouldSerializeWeightValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDaysToManufactureValue {get; set;} = true;
+		public bool ShouldSerializeDaysToManufactureValue { get; set; } = true;
 
 		public bool ShouldSerializeDaysToManufacture()
 		{
-			return ShouldSerializeDaysToManufactureValue;
+			return this.ShouldSerializeDaysToManufactureValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductLineValue {get; set;} = true;
+		public bool ShouldSerializeProductLineValue { get; set; } = true;
 
 		public bool ShouldSerializeProductLine()
 		{
-			return ShouldSerializeProductLineValue;
+			return this.ShouldSerializeProductLineValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeClassValue {get; set;} = true;
+		public bool ShouldSerializeClassValue { get; set; } = true;
 
 		public bool ShouldSerializeClass()
 		{
-			return ShouldSerializeClassValue;
+			return this.ShouldSerializeClassValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStyleValue {get; set;} = true;
+		public bool ShouldSerializeStyleValue { get; set; } = true;
 
 		public bool ShouldSerializeStyle()
 		{
-			return ShouldSerializeStyleValue;
+			return this.ShouldSerializeStyleValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductSubcategoryIDValue {get; set;} = true;
+		public bool ShouldSerializeProductSubcategoryIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductSubcategoryID()
 		{
-			return ShouldSerializeProductSubcategoryIDValue;
+			return this.ShouldSerializeProductSubcategoryIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelIDValue {get; set;} = true;
+		public bool ShouldSerializeProductModelIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductModelID()
 		{
-			return ShouldSerializeProductModelIDValue;
+			return this.ShouldSerializeProductModelIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSellStartDateValue {get; set;} = true;
+		public bool ShouldSerializeSellStartDateValue { get; set; } = true;
 
 		public bool ShouldSerializeSellStartDate()
 		{
-			return ShouldSerializeSellStartDateValue;
+			return this.ShouldSerializeSellStartDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSellEndDateValue {get; set;} = true;
+		public bool ShouldSerializeSellEndDateValue { get; set; } = true;
 
 		public bool ShouldSerializeSellEndDate()
 		{
-			return ShouldSerializeSellEndDateValue;
+			return this.ShouldSerializeSellEndDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDiscontinuedDateValue {get; set;} = true;
+		public bool ShouldSerializeDiscontinuedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeDiscontinuedDate()
 		{
-			return ShouldSerializeDiscontinuedDateValue;
+			return this.ShouldSerializeDiscontinuedDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -325,5 +326,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>490c40e41e7ebcfe90fadc4cdf598225</Hash>
+    <Hash>537425479e6009208dfdc1d65b000752</Hash>
 </Codenesium>*/

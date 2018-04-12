@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("SalesReason", Schema="Sales")]
@@ -10,10 +11,11 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFSalesReason()
 		{}
 
-		public void SetProperties(int salesReasonID,
-		                          string name,
-		                          string reasonType,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int salesReasonID,
+			string name,
+			string reasonType,
+			DateTime modifiedDate)
 		{
 			this.SalesReasonID = salesReasonID.ToInt();
 			this.Name = name;
@@ -24,19 +26,19 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("SalesReasonID", TypeName="int")]
-		public int SalesReasonID {get; set;}
+		public int SalesReasonID { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("ReasonType", TypeName="nvarchar(50)")]
-		public string ReasonType {get; set;}
+		public string ReasonType { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>38cbc1c46f1ec16d6989aa1f26ca7148</Hash>
+    <Hash>7667a972c9556a28ff395ee950500e79</Hash>
 </Codenesium>*/

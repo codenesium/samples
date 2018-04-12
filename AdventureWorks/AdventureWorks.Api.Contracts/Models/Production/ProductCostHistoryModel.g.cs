@@ -9,10 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductCostHistoryModel()
 		{}
-		public ProductCostHistoryModel(DateTime startDate,
-		                               Nullable<DateTime> endDate,
-		                               decimal standardCost,
-		                               DateTime modifiedDate)
+
+		public ProductCostHistoryModel(
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal standardCost,
+			DateTime modifiedDate)
 		{
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
@@ -20,63 +22,71 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private DateTime _startDate;
+		private DateTime startDate;
+
 		[Required]
 		public DateTime StartDate
 		{
 			get
 			{
-				return _startDate;
+				return this.startDate;
 			}
+
 			set
 			{
-				this._startDate = value;
+				this.startDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _endDate;
+		private Nullable<DateTime> endDate;
+
 		public Nullable<DateTime> EndDate
 		{
 			get
 			{
-				return _endDate.IsEmptyOrZeroOrNull() ? null : _endDate;
+				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
 			}
+
 			set
 			{
-				this._endDate = value;
+				this.endDate = value;
 			}
 		}
 
-		private decimal _standardCost;
+		private decimal standardCost;
+
 		[Required]
 		public decimal StandardCost
 		{
 			get
 			{
-				return _standardCost;
+				return this.standardCost;
 			}
+
 			set
 			{
-				this._standardCost = value;
+				this.standardCost = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e190d9e436ada0d3a81b160669b60190</Hash>
+    <Hash>d497d9c39747c982ff2300425223c81f</Hash>
 </Codenesium>*/

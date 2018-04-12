@@ -9,14 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public TransactionHistoryModel()
 		{}
-		public TransactionHistoryModel(int productID,
-		                               int referenceOrderID,
-		                               int referenceOrderLineID,
-		                               DateTime transactionDate,
-		                               string transactionType,
-		                               int quantity,
-		                               decimal actualCost,
-		                               DateTime modifiedDate)
+
+		public TransactionHistoryModel(
+			int productID,
+			int referenceOrderID,
+			int referenceOrderLineID,
+			DateTime transactionDate,
+			string transactionType,
+			int quantity,
+			decimal actualCost,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.ReferenceOrderID = referenceOrderID.ToInt();
@@ -28,120 +30,136 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private int _referenceOrderID;
+		private int referenceOrderID;
+
 		[Required]
 		public int ReferenceOrderID
 		{
 			get
 			{
-				return _referenceOrderID;
+				return this.referenceOrderID;
 			}
+
 			set
 			{
-				this._referenceOrderID = value;
+				this.referenceOrderID = value;
 			}
 		}
 
-		private int _referenceOrderLineID;
+		private int referenceOrderLineID;
+
 		[Required]
 		public int ReferenceOrderLineID
 		{
 			get
 			{
-				return _referenceOrderLineID;
+				return this.referenceOrderLineID;
 			}
+
 			set
 			{
-				this._referenceOrderLineID = value;
+				this.referenceOrderLineID = value;
 			}
 		}
 
-		private DateTime _transactionDate;
+		private DateTime transactionDate;
+
 		[Required]
 		public DateTime TransactionDate
 		{
 			get
 			{
-				return _transactionDate;
+				return this.transactionDate;
 			}
+
 			set
 			{
-				this._transactionDate = value;
+				this.transactionDate = value;
 			}
 		}
 
-		private string _transactionType;
+		private string transactionType;
+
 		[Required]
 		public string TransactionType
 		{
 			get
 			{
-				return _transactionType;
+				return this.transactionType;
 			}
+
 			set
 			{
-				this._transactionType = value;
+				this.transactionType = value;
 			}
 		}
 
-		private int _quantity;
+		private int quantity;
+
 		[Required]
 		public int Quantity
 		{
 			get
 			{
-				return _quantity;
+				return this.quantity;
 			}
+
 			set
 			{
-				this._quantity = value;
+				this.quantity = value;
 			}
 		}
 
-		private decimal _actualCost;
+		private decimal actualCost;
+
 		[Required]
 		public decimal ActualCost
 		{
 			get
 			{
-				return _actualCost;
+				return this.actualCost;
 			}
+
 			set
 			{
-				this._actualCost = value;
+				this.actualCost = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>197ec1c7eafa12a2f0ac38ae4ac9ca6e</Hash>
+    <Hash>6093528c14170f4924d71365dbc3bdde</Hash>
 </Codenesium>*/

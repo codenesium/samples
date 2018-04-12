@@ -9,12 +9,14 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CustomerModel()
 		{}
-		public CustomerModel(Nullable<int> personID,
-		                     Nullable<int> storeID,
-		                     Nullable<int> territoryID,
-		                     string accountNumber,
-		                     Guid rowguid,
-		                     DateTime modifiedDate)
+
+		public CustomerModel(
+			Nullable<int> personID,
+			Nullable<int> storeID,
+			Nullable<int> territoryID,
+			string accountNumber,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.PersonID = personID.ToNullableInt();
 			this.StoreID = storeID.ToNullableInt();
@@ -24,89 +26,101 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private Nullable<int> _personID;
+		private Nullable<int> personID;
+
 		public Nullable<int> PersonID
 		{
 			get
 			{
-				return _personID.IsEmptyOrZeroOrNull() ? null : _personID;
+				return this.personID.IsEmptyOrZeroOrNull() ? null : this.personID;
 			}
+
 			set
 			{
-				this._personID = value;
+				this.personID = value;
 			}
 		}
 
-		private Nullable<int> _storeID;
+		private Nullable<int> storeID;
+
 		public Nullable<int> StoreID
 		{
 			get
 			{
-				return _storeID.IsEmptyOrZeroOrNull() ? null : _storeID;
+				return this.storeID.IsEmptyOrZeroOrNull() ? null : this.storeID;
 			}
+
 			set
 			{
-				this._storeID = value;
+				this.storeID = value;
 			}
 		}
 
-		private Nullable<int> _territoryID;
+		private Nullable<int> territoryID;
+
 		public Nullable<int> TerritoryID
 		{
 			get
 			{
-				return _territoryID.IsEmptyOrZeroOrNull() ? null : _territoryID;
+				return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
 			}
+
 			set
 			{
-				this._territoryID = value;
+				this.territoryID = value;
 			}
 		}
 
-		private string _accountNumber;
+		private string accountNumber;
+
 		[Required]
 		public string AccountNumber
 		{
 			get
 			{
-				return _accountNumber;
+				return this.accountNumber;
 			}
+
 			set
 			{
-				this._accountNumber = value;
+				this.accountNumber = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7afcb028bfd1a54fe5667b2775fbe8a6</Hash>
+    <Hash>66426ae985e34f3b091f4d52545f4c4e</Hash>
 </Codenesium>*/

@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractSalesTerritoriesController: AbstractApiController
+	public abstract class AbstractSalesTerritoryController: AbstractApiController
 	{
 		protected ISalesTerritoryRepository salesTerritoryRepository;
+
 		protected ISalesTerritoryModelValidator salesTerritoryModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractSalesTerritoriesController(
-			ILogger<AbstractSalesTerritoriesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractSalesTerritoryController(
+			ILogger<AbstractSalesTerritoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTerritoryRepository salesTerritoryRepository,
 			ISalesTerritoryModelValidator salesTerritoryModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.salesTerritoryRepository = salesTerritoryRepository;
 			this.salesTerritoryModelValidator = salesTerritoryModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesTerritoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesTerritoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.salesTerritoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,21 +81,22 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesTerritoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesTerritoryRepository.Create(model.Name,
-				                                              model.CountryRegionCode,
-				                                              model.@Group,
-				                                              model.SalesYTD,
-				                                              model.SalesLastYear,
-				                                              model.CostYTD,
-				                                              model.CostLastYear,
-				                                              model.Rowguid,
-				                                              model.ModifiedDate);
-				return Ok(id);
+				var id = this.salesTerritoryRepository.Create(
+					model.Name,
+					model.CountryRegionCode,
+					model.@Group,
+					model.SalesYTD,
+					model.SalesLastYear,
+					model.CostYTD,
+					model.CostLastYear,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -103,29 +110,31 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<SalesTerritoryModel> models)
 		{
 			this.salesTerritoryModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.salesTerritoryModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.salesTerritoryRepository.Create(model.Name,
-				                                     model.CountryRegionCode,
-				                                     model.@Group,
-				                                     model.SalesYTD,
-				                                     model.SalesLastYear,
-				                                     model.CostYTD,
-				                                     model.CostLastYear,
-				                                     model.Rowguid,
-				                                     model.ModifiedDate);
+				this.salesTerritoryRepository.Create(
+					model.Name,
+					model.CountryRegionCode,
+					model.@Group,
+					model.SalesYTD,
+					model.SalesLastYear,
+					model.CostYTD,
+					model.CostLastYear,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -135,32 +144,34 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,SalesTerritoryModel model)
+		public virtual IActionResult Update(int id, SalesTerritoryModel model)
 		{
-			if(this.salesTerritoryRepository.GetByIdDirect(id) == null)
+			if (this.salesTerritoryRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.salesTerritoryModelValidator.UpdateMode();
 			var validationResult = this.salesTerritoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesTerritoryRepository.Update(id,  model.Name,
-				                                     model.CountryRegionCode,
-				                                     model.@Group,
-				                                     model.SalesYTD,
-				                                     model.SalesLastYear,
-				                                     model.CostYTD,
-				                                     model.CostLastYear,
-				                                     model.Rowguid,
-				                                     model.ModifiedDate);
-				return Ok();
+				this.salesTerritoryRepository.Update(
+					id,
+					model.Name,
+					model.CountryRegionCode,
+					model.@Group,
+					model.SalesYTD,
+					model.SalesLastYear,
+					model.CostYTD,
+					model.CostLastYear,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -173,7 +184,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.salesTerritoryRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -186,11 +197,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.salesTerritoryRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>72196a1821cda5236579ec125f975fff</Hash>
+    <Hash>0a83d306823881676e9b59c36f682556</Hash>
 </Codenesium>*/

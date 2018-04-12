@@ -7,9 +7,11 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IFileTypeRepository
 	{
-		int Create(string name);
+		int Create(
+			string name);
 
-		void Update(int id, string name);
+		void Update(int id,
+		            string name);
 
 		void Delete(int id);
 
@@ -17,14 +19,14 @@ namespace FileServiceNS.Api.DataAccess
 
 		POCOFileType GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOFileType> GetWhereDirect(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOFileType> GetWhereDirect(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9887650651e30283413856cbd4e9e4ac</Hash>
+    <Hash>7f3eeb7f810eab260fbe78e2ae618abd</Hash>
 </Codenesium>*/

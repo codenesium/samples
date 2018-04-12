@@ -20,17 +20,17 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IOrganizationRepository OrganizationRepository {get; set;}
+		public IOrganizationRepository OrganizationRepository { get; set; }
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,128);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
 		public virtual void OrganizationIdRules()
 		{
-			RuleFor(x => x.OrganizationId).NotNull();
-			RuleFor(x => x.OrganizationId).Must(BeValidOrganization).When(x => x ?.OrganizationId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.OrganizationId).NotNull();
+			this.RuleFor(x => x.OrganizationId).Must(this.BeValidOrganization).When(x => x ?.OrganizationId != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidOrganization(int id)
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b567b9ae62973d858e0e5bea6fb0c434</Hash>
+    <Hash>07ce3a6f8b1a02b30e61a52dd7a0ed21</Hash>
 </Codenesium>*/

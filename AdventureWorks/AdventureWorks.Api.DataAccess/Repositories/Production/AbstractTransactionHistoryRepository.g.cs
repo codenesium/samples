@@ -15,67 +15,78 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractTransactionHistoryRepository(ILogger logger,
-		                                            ApplicationDbContext context)
+		public AbstractTransactionHistoryRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(int productID,
-		                          int referenceOrderID,
-		                          int referenceOrderLineID,
-		                          DateTime transactionDate,
-		                          string transactionType,
-		                          int quantity,
-		                          decimal actualCost,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			int productID,
+			int referenceOrderID,
+			int referenceOrderLineID,
+			DateTime transactionDate,
+			string transactionType,
+			int quantity,
+			decimal actualCost,
+			DateTime modifiedDate)
 		{
-			var record = new EFTransactionHistory ();
+			var record = new EFTransactionHistory();
 
-			MapPOCOToEF(0, productID,
-			            referenceOrderID,
-			            referenceOrderLineID,
-			            transactionDate,
-			            transactionType,
-			            quantity,
-			            actualCost,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				productID,
+				referenceOrderID,
+				referenceOrderLineID,
+				transactionDate,
+				transactionType,
+				quantity,
+				actualCost,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFTransactionHistory>().Add(record);
 			this.context.SaveChanges();
 			return record.TransactionID;
 		}
 
-		public virtual void Update(int transactionID, int productID,
-		                           int referenceOrderID,
-		                           int referenceOrderLineID,
-		                           DateTime transactionDate,
-		                           string transactionType,
-		                           int quantity,
-		                           decimal actualCost,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int transactionID,
+			int productID,
+			int referenceOrderID,
+			int referenceOrderLineID,
+			DateTime transactionDate,
+			string transactionType,
+			int quantity,
+			decimal actualCost,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{transactionID}");
 			}
 			else
 			{
-				MapPOCOToEF(transactionID,  productID,
-				            referenceOrderID,
-				            referenceOrderLineID,
-				            transactionDate,
-				            transactionType,
-				            quantity,
-				            actualCost,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					transactionID,
+					productID,
+					referenceOrderID,
+					referenceOrderLineID,
+					transactionDate,
+					transactionType,
+					quantity,
+					actualCost,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int transactionID)
+		public virtual void Delete(
+			int transactionID)
 		{
 			var record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
 
@@ -94,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.TransactionID == transactionID,response);
+			this.SearchLinqPOCO(x => x.TransactionID == transactionID, response);
 			return response;
 		}
 
@@ -102,11 +113,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.TransactionID == transactionID,response);
+			this.SearchLinqPOCO(x => x.TransactionID == transactionID, response);
 			return response.TransactionHistories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -114,7 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -122,7 +133,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOTransactionHistory> GetWhereDirect(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOTransactionHistory> GetWhereDirect(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -130,47 +141,53 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.TransactionHistories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFTransactionHistory, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFTransactionHistory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFTransactionHistory> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFTransactionHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFTransactionHistory> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFTransactionHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFTransactionHistory> SearchLinqEF(Expression<Func<EFTransactionHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFTransactionHistory> SearchLinqEF(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFTransactionHistory> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFTransactionHistory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int transactionID, int productID,
-		                               int referenceOrderID,
-		                               int referenceOrderLineID,
-		                               DateTime transactionDate,
-		                               string transactionType,
-		                               int quantity,
-		                               decimal actualCost,
-		                               DateTime modifiedDate, EFTransactionHistory   efTransactionHistory)
+		public static void MapPOCOToEF(
+			int transactionID,
+			int productID,
+			int referenceOrderID,
+			int referenceOrderLineID,
+			DateTime transactionDate,
+			string transactionType,
+			int quantity,
+			decimal actualCost,
+			DateTime modifiedDate,
+			EFTransactionHistory efTransactionHistory)
 		{
-			efTransactionHistory.SetProperties(transactionID.ToInt(),productID.ToInt(),referenceOrderID.ToInt(),referenceOrderLineID.ToInt(),transactionDate.ToDateTime(),transactionType,quantity.ToInt(),actualCost,modifiedDate.ToDateTime());
+			efTransactionHistory.SetProperties(transactionID.ToInt(), productID.ToInt(), referenceOrderID.ToInt(), referenceOrderLineID.ToInt(), transactionDate.ToDateTime(), transactionType, quantity.ToInt(), actualCost, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFTransactionHistory efTransactionHistory,Response response)
+		public static void MapEFToPOCO(
+			EFTransactionHistory efTransactionHistory,
+			Response response)
 		{
-			if(efTransactionHistory == null)
+			if (efTransactionHistory == null)
 			{
 				return;
 			}
-			response.AddTransactionHistory(new POCOTransactionHistory(efTransactionHistory.TransactionID.ToInt(),efTransactionHistory.ProductID.ToInt(),efTransactionHistory.ReferenceOrderID.ToInt(),efTransactionHistory.ReferenceOrderLineID.ToInt(),efTransactionHistory.TransactionDate.ToDateTime(),efTransactionHistory.TransactionType,efTransactionHistory.Quantity.ToInt(),efTransactionHistory.ActualCost,efTransactionHistory.ModifiedDate.ToDateTime()));
+
+			response.AddTransactionHistory(new POCOTransactionHistory(efTransactionHistory.TransactionID.ToInt(), efTransactionHistory.ProductID.ToInt(), efTransactionHistory.ReferenceOrderID.ToInt(), efTransactionHistory.ReferenceOrderLineID.ToInt(), efTransactionHistory.TransactionDate.ToDateTime(), efTransactionHistory.TransactionType, efTransactionHistory.Quantity.ToInt(), efTransactionHistory.ActualCost, efTransactionHistory.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efTransactionHistory.Product, response);
 		}
@@ -178,5 +195,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca6623a7d4b39e24c4ee192d8301184a</Hash>
+    <Hash>301f657a8c01dc1c2059aae8b86d99da</Hash>
 </Codenesium>*/

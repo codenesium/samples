@@ -22,43 +22,43 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void PostTimeRules()
 		{
-			RuleFor(x => x.PostTime).NotNull();
+			this.RuleFor(x => x.PostTime).NotNull();
 		}
 
 		public virtual void DatabaseUserRules()
 		{
-			RuleFor(x => x.DatabaseUser).NotNull();
-			RuleFor(x => x.DatabaseUser).Length(0,128);
+			this.RuleFor(x => x.DatabaseUser).NotNull();
+			this.RuleFor(x => x.DatabaseUser).Length(0, 128);
 		}
 
 		public virtual void @EventRules()
 		{
-			RuleFor(x => x.@Event).NotNull();
-			RuleFor(x => x.@Event).Length(0,128);
+			this.RuleFor(x => x.@Event).NotNull();
+			this.RuleFor(x => x.@Event).Length(0, 128);
 		}
 
 		public virtual void SchemaRules()
 		{
-			RuleFor(x => x.Schema).Length(0,128);
+			this.RuleFor(x => x.Schema).Length(0, 128);
 		}
 
 		public virtual void @ObjectRules()
 		{
-			RuleFor(x => x.@Object).Length(0,128);
+			this.RuleFor(x => x.@Object).Length(0, 128);
 		}
 
 		public virtual void TSQLRules()
 		{
-			RuleFor(x => x.TSQL).NotNull();
+			this.RuleFor(x => x.TSQL).NotNull();
 		}
 
 		public virtual void XmlEventRules()
 		{
-			RuleFor(x => x.XmlEvent).NotNull();
+			this.RuleFor(x => x.XmlEvent).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74dd5ee7061c4d279adc5bb58a58b3b0</Hash>
+    <Hash>79008a9445f3572ef1460dfd58f40d1c</Hash>
 </Codenesium>*/

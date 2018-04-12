@@ -9,14 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOVendor()
 		{}
 
-		public POCOVendor(int businessEntityID,
-		                  string accountNumber,
-		                  string name,
-		                  int creditRating,
-		                  bool preferredVendorStatus,
-		                  bool activeFlag,
-		                  string purchasingWebServiceURL,
-		                  DateTime modifiedDate)
+		public POCOVendor(
+			int businessEntityID,
+			string accountNumber,
+			string name,
+			int creditRating,
+			bool preferredVendorStatus,
+			bool activeFlag,
+			string purchasingWebServiceURL,
+			DateTime modifiedDate)
 		{
 			this.AccountNumber = accountNumber;
 			this.Name = name;
@@ -26,81 +27,81 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PurchasingWebServiceURL = purchasingWebServiceURL;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "BusinessEntity");
+			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                                 "BusinessEntity");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public string AccountNumber {get; set;}
-		public string Name {get; set;}
-		public int CreditRating {get; set;}
-		public bool PreferredVendorStatus {get; set;}
-		public bool ActiveFlag {get; set;}
-		public string PurchasingWebServiceURL {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public string AccountNumber { get; set; }
+		public string Name { get; set; }
+		public int CreditRating { get; set; }
+		public bool PreferredVendorStatus { get; set; }
+		public bool ActiveFlag { get; set; }
+		public string PurchasingWebServiceURL { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityID()
 		{
-			return ShouldSerializeBusinessEntityIDValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAccountNumberValue {get; set;} = true;
+		public bool ShouldSerializeAccountNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeAccountNumber()
 		{
-			return ShouldSerializeAccountNumberValue;
+			return this.ShouldSerializeAccountNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCreditRatingValue {get; set;} = true;
+		public bool ShouldSerializeCreditRatingValue { get; set; } = true;
 
 		public bool ShouldSerializeCreditRating()
 		{
-			return ShouldSerializeCreditRatingValue;
+			return this.ShouldSerializeCreditRatingValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePreferredVendorStatusValue {get; set;} = true;
+		public bool ShouldSerializePreferredVendorStatusValue { get; set; } = true;
 
 		public bool ShouldSerializePreferredVendorStatus()
 		{
-			return ShouldSerializePreferredVendorStatusValue;
+			return this.ShouldSerializePreferredVendorStatusValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeActiveFlagValue {get; set;} = true;
+		public bool ShouldSerializeActiveFlagValue { get; set; } = true;
 
 		public bool ShouldSerializeActiveFlag()
 		{
-			return ShouldSerializeActiveFlagValue;
+			return this.ShouldSerializeActiveFlagValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchasingWebServiceURLValue {get; set;} = true;
+		public bool ShouldSerializePurchasingWebServiceURLValue { get; set; } = true;
 
 		public bool ShouldSerializePurchasingWebServiceURL()
 		{
-			return ShouldSerializePurchasingWebServiceURLValue;
+			return this.ShouldSerializePurchasingWebServiceURLValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -118,5 +119,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>32915db413c41418412a234077aa6c6e</Hash>
+    <Hash>971feb0aa922e9fea35dacb797ccfa9c</Hash>
 </Codenesium>*/

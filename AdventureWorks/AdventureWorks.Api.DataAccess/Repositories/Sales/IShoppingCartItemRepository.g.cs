@@ -7,13 +7,15 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShoppingCartItemRepository
 	{
-		int Create(string shoppingCartID,
-		           int quantity,
-		           int productID,
-		           DateTime dateCreated,
-		           DateTime modifiedDate);
+		int Create(
+			string shoppingCartID,
+			int quantity,
+			int productID,
+			DateTime dateCreated,
+			DateTime modifiedDate);
 
-		void Update(int shoppingCartItemID, string shoppingCartID,
+		void Update(int shoppingCartItemID,
+		            string shoppingCartID,
 		            int quantity,
 		            int productID,
 		            DateTime dateCreated,
@@ -25,14 +27,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOShoppingCartItem GetByIdDirect(int shoppingCartItemID);
 
-		Response GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>eead94a1645a69c5d36942ef1e069d6f</Hash>
+    <Hash>72a1c350c70febbd873761a1d0ddd754</Hash>
 </Codenesium>*/

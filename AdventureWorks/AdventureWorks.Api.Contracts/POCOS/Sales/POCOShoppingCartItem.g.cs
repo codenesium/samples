@@ -9,12 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOShoppingCartItem()
 		{}
 
-		public POCOShoppingCartItem(int shoppingCartItemID,
-		                            string shoppingCartID,
-		                            int quantity,
-		                            int productID,
-		                            DateTime dateCreated,
-		                            DateTime modifiedDate)
+		public POCOShoppingCartItem(
+			int shoppingCartItemID,
+			string shoppingCartID,
+			int quantity,
+			int productID,
+			DateTime dateCreated,
+			DateTime modifiedDate)
 		{
 			this.ShoppingCartItemID = shoppingCartItemID.ToInt();
 			this.ShoppingCartID = shoppingCartID;
@@ -22,63 +23,63 @@ namespace AdventureWorksNS.Api.Contracts
 			this.DateCreated = dateCreated.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          "Product");
 		}
 
-		public int ShoppingCartItemID {get; set;}
-		public string ShoppingCartID {get; set;}
-		public int Quantity {get; set;}
-		public ReferenceEntity<int>ProductID {get; set;}
-		public DateTime DateCreated {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int ShoppingCartItemID { get; set; }
+		public string ShoppingCartID { get; set; }
+		public int Quantity { get; set; }
+		public ReferenceEntity<int> ProductID { get; set; }
+		public DateTime DateCreated { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeShoppingCartItemIDValue {get; set;} = true;
+		public bool ShouldSerializeShoppingCartItemIDValue { get; set; } = true;
 
 		public bool ShouldSerializeShoppingCartItemID()
 		{
-			return ShouldSerializeShoppingCartItemIDValue;
+			return this.ShouldSerializeShoppingCartItemIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShoppingCartIDValue {get; set;} = true;
+		public bool ShouldSerializeShoppingCartIDValue { get; set; } = true;
 
 		public bool ShouldSerializeShoppingCartID()
 		{
-			return ShouldSerializeShoppingCartIDValue;
+			return this.ShouldSerializeShoppingCartIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeQuantityValue {get; set;} = true;
+		public bool ShouldSerializeQuantityValue { get; set; } = true;
 
 		public bool ShouldSerializeQuantity()
 		{
-			return ShouldSerializeQuantityValue;
+			return this.ShouldSerializeQuantityValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue {get; set;} = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductID()
 		{
-			return ShouldSerializeProductIDValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDateCreatedValue {get; set;} = true;
+		public bool ShouldSerializeDateCreatedValue { get; set; } = true;
 
 		public bool ShouldSerializeDateCreated()
 		{
-			return ShouldSerializeDateCreatedValue;
+			return this.ShouldSerializeDateCreatedValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -94,5 +95,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>003c88855649d493664f2a35e1e034f7</Hash>
+    <Hash>66f8bdb73059f5ddba7b6edae40d3fbf</Hash>
 </Codenesium>*/

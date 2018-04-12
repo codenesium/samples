@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace NebulaNS.Api.Contracts
 {
 	[Table("Machine", Schema="dbo")]
@@ -10,12 +11,13 @@ namespace NebulaNS.Api.Contracts
 		public EFMachine()
 		{}
 
-		public void SetProperties(int id,
-		                          string name,
-		                          Guid machineGuid,
-		                          string jwtKey,
-		                          string lastIpAddress,
-		                          string description)
+		public void SetProperties(
+			int id,
+			string name,
+			Guid machineGuid,
+			string jwtKey,
+			string lastIpAddress,
+			string description)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
@@ -28,25 +30,25 @@ namespace NebulaNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
-		public int Id {get; set;}
+		public int Id { get; set; }
 
 		[Column("name", TypeName="varchar(128)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("machineGuid", TypeName="uniqueidentifier")]
-		public Guid MachineGuid {get; set;}
+		public Guid MachineGuid { get; set; }
 
 		[Column("jwtKey", TypeName="varchar(128)")]
-		public string JwtKey {get; set;}
+		public string JwtKey { get; set; }
 
 		[Column("lastIpAddress", TypeName="varchar(128)")]
-		public string LastIpAddress {get; set;}
+		public string LastIpAddress { get; set; }
 
 		[Column("description", TypeName="text(2147483647)")]
-		public string Description {get; set;}
+		public string Description { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0bd117e931450f545602489176ecd86f</Hash>
+    <Hash>0956193d666ab676ebd8e89397f4d29e</Hash>
 </Codenesium>*/

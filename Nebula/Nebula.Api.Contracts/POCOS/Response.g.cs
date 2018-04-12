@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+
 namespace NebulaNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
 		public T Value { get; set; }
+
 		public string Href
 		{
 			get
@@ -14,6 +16,7 @@ namespace NebulaNS.Api.Contracts
 				return $"/{this.ReferenceObjectName}/{this.Value.ToString()}";
 			}
 		}
+
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -27,23 +30,32 @@ namespace NebulaNS.Api.Contracts
 	{
 		public Response()
 		{}
-		public List<POCOChain> Chains { get; private set; }  = new  List<POCOChain>();
-		public List<POCOChainStatus> ChainStatus { get; private set; }  = new  List<POCOChainStatus>();
-		public List<POCOClasp> Clasps { get; private set; }  = new  List<POCOClasp>();
-		public List<POCOLink> Links { get; private set; }  = new  List<POCOLink>();
-		public List<POCOLinkLog> LinkLogs { get; private set; }  = new  List<POCOLinkLog>();
-		public List<POCOLinkStatus> LinkStatus { get; private set; }  = new  List<POCOLinkStatus>();
-		public List<POCOMachine> Machines { get; private set; }  = new  List<POCOMachine>();
-		public List<POCOMachineRefTeam> MachineRefTeams { get; private set; }  = new  List<POCOMachineRefTeam>();
-		public List<POCOOrganization> Organizations { get; private set; }  = new  List<POCOOrganization>();
-		public List<POCOTeam> Teams { get; private set; }  = new  List<POCOTeam>();
+		public List<POCOChain> Chains { get; private set; } = new List<POCOChain>();
+
+		public List<POCOChainStatus> ChainStatus { get; private set; } = new List<POCOChainStatus>();
+
+		public List<POCOClasp> Clasps { get; private set; } = new List<POCOClasp>();
+
+		public List<POCOLink> Links { get; private set; } = new List<POCOLink>();
+
+		public List<POCOLinkLog> LinkLogs { get; private set; } = new List<POCOLinkLog>();
+
+		public List<POCOLinkStatus> LinkStatus { get; private set; } = new List<POCOLinkStatus>();
+
+		public List<POCOMachine> Machines { get; private set; } = new List<POCOMachine>();
+
+		public List<POCOMachineRefTeam> MachineRefTeams { get; private set; } = new List<POCOMachineRefTeam>();
+
+		public List<POCOOrganization> Organizations { get; private set; } = new List<POCOOrganization>();
+
+		public List<POCOTeam> Teams { get; private set; } = new List<POCOTeam>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeChainsValue {get; set;} = true;
+		public bool ShouldSerializeChainsValue { get; set; } = true;
 
 		public bool ShouldSerializeChains()
 		{
-			return ShouldSerializeChainsValue;
+			return this.ShouldSerializeChainsValue;
 		}
 
 		public void AddChain(POCOChain item)
@@ -55,11 +67,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeChainStatusValue {get; set;} = true;
+		public bool ShouldSerializeChainStatusValue { get; set; } = true;
 
 		public bool ShouldSerializeChainStatus()
 		{
-			return ShouldSerializeChainStatusValue;
+			return this.ShouldSerializeChainStatusValue;
 		}
 
 		public void AddChainStatus(POCOChainStatus item)
@@ -71,11 +83,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeClaspsValue {get; set;} = true;
+		public bool ShouldSerializeClaspsValue { get; set; } = true;
 
 		public bool ShouldSerializeClasps()
 		{
-			return ShouldSerializeClaspsValue;
+			return this.ShouldSerializeClaspsValue;
 		}
 
 		public void AddClasp(POCOClasp item)
@@ -87,11 +99,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinksValue {get; set;} = true;
+		public bool ShouldSerializeLinksValue { get; set; } = true;
 
 		public bool ShouldSerializeLinks()
 		{
-			return ShouldSerializeLinksValue;
+			return this.ShouldSerializeLinksValue;
 		}
 
 		public void AddLink(POCOLink item)
@@ -103,11 +115,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinkLogsValue {get; set;} = true;
+		public bool ShouldSerializeLinkLogsValue { get; set; } = true;
 
 		public bool ShouldSerializeLinkLogs()
 		{
-			return ShouldSerializeLinkLogsValue;
+			return this.ShouldSerializeLinkLogsValue;
 		}
 
 		public void AddLinkLog(POCOLinkLog item)
@@ -119,11 +131,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinkStatusValue {get; set;} = true;
+		public bool ShouldSerializeLinkStatusValue { get; set; } = true;
 
 		public bool ShouldSerializeLinkStatus()
 		{
-			return ShouldSerializeLinkStatusValue;
+			return this.ShouldSerializeLinkStatusValue;
 		}
 
 		public void AddLinkStatus(POCOLinkStatus item)
@@ -135,11 +147,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMachinesValue {get; set;} = true;
+		public bool ShouldSerializeMachinesValue { get; set; } = true;
 
 		public bool ShouldSerializeMachines()
 		{
-			return ShouldSerializeMachinesValue;
+			return this.ShouldSerializeMachinesValue;
 		}
 
 		public void AddMachine(POCOMachine item)
@@ -151,11 +163,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMachineRefTeamsValue {get; set;} = true;
+		public bool ShouldSerializeMachineRefTeamsValue { get; set; } = true;
 
 		public bool ShouldSerializeMachineRefTeams()
 		{
-			return ShouldSerializeMachineRefTeamsValue;
+			return this.ShouldSerializeMachineRefTeamsValue;
 		}
 
 		public void AddMachineRefTeam(POCOMachineRefTeam item)
@@ -167,11 +179,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrganizationsValue {get; set;} = true;
+		public bool ShouldSerializeOrganizationsValue { get; set; } = true;
 
 		public bool ShouldSerializeOrganizations()
 		{
-			return ShouldSerializeOrganizationsValue;
+			return this.ShouldSerializeOrganizationsValue;
 		}
 
 		public void AddOrganization(POCOOrganization item)
@@ -183,11 +195,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeamsValue {get; set;} = true;
+		public bool ShouldSerializeTeamsValue { get; set; } = true;
 
 		public bool ShouldSerializeTeams()
 		{
-			return ShouldSerializeTeamsValue;
+			return this.ShouldSerializeTeamsValue;
 		}
 
 		public void AddTeam(POCOTeam item)
@@ -200,43 +212,52 @@ namespace NebulaNS.Api.Contracts
 
 		public void DisableSerializationOfEmptyFields()
 		{
-			if(this.Chains.Count == 0)
+			if (this.Chains.Count == 0)
 			{
 				this.ShouldSerializeChainsValue = false;
 			}
-			if(this.ChainStatus.Count == 0)
+
+			if (this.ChainStatus.Count == 0)
 			{
 				this.ShouldSerializeChainStatusValue = false;
 			}
-			if(this.Clasps.Count == 0)
+
+			if (this.Clasps.Count == 0)
 			{
 				this.ShouldSerializeClaspsValue = false;
 			}
-			if(this.Links.Count == 0)
+
+			if (this.Links.Count == 0)
 			{
 				this.ShouldSerializeLinksValue = false;
 			}
-			if(this.LinkLogs.Count == 0)
+
+			if (this.LinkLogs.Count == 0)
 			{
 				this.ShouldSerializeLinkLogsValue = false;
 			}
-			if(this.LinkStatus.Count == 0)
+
+			if (this.LinkStatus.Count == 0)
 			{
 				this.ShouldSerializeLinkStatusValue = false;
 			}
-			if(this.Machines.Count == 0)
+
+			if (this.Machines.Count == 0)
 			{
 				this.ShouldSerializeMachinesValue = false;
 			}
-			if(this.MachineRefTeams.Count == 0)
+
+			if (this.MachineRefTeams.Count == 0)
 			{
 				this.ShouldSerializeMachineRefTeamsValue = false;
 			}
-			if(this.Organizations.Count == 0)
+
+			if (this.Organizations.Count == 0)
 			{
 				this.ShouldSerializeOrganizationsValue = false;
 			}
-			if(this.Teams.Count == 0)
+
+			if (this.Teams.Count == 0)
 			{
 				this.ShouldSerializeTeamsValue = false;
 			}
@@ -245,5 +266,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cfb53833afd086e752268c752dfe7639</Hash>
+    <Hash>95e562a2a9c4d7937ff43fe8d501615c</Hash>
 </Codenesium>*/

@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractPasswordsController: AbstractApiController
+	public abstract class AbstractPasswordController: AbstractApiController
 	{
 		protected IPasswordRepository passwordRepository;
+
 		protected IPasswordModelValidator passwordModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractPasswordsController(
-			ILogger<AbstractPasswordsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractPasswordController(
+			ILogger<AbstractPasswordController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPasswordRepository passwordRepository,
 			IPasswordModelValidator passwordModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.passwordRepository = passwordRepository;
 			this.passwordModelValidator = passwordModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.passwordRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.passwordRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.passwordRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.passwordModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.passwordRepository.Create(model.PasswordHash,
-				                                        model.PasswordSalt,
-				                                        model.Rowguid,
-				                                        model.ModifiedDate);
-				return Ok(id);
+				var id = this.passwordRepository.Create(
+					model.PasswordHash,
+					model.PasswordSalt,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<PasswordModel> models)
 		{
 			this.passwordModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.passwordModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.passwordRepository.Create(model.PasswordHash,
-				                               model.PasswordSalt,
-				                               model.Rowguid,
-				                               model.ModifiedDate);
+				this.passwordRepository.Create(
+					model.PasswordHash,
+					model.PasswordSalt,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,PasswordModel model)
+		public virtual IActionResult Update(int id, PasswordModel model)
 		{
-			if(this.passwordRepository.GetByIdDirect(id) == null)
+			if (this.passwordRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.passwordModelValidator.UpdateMode();
 			var validationResult = this.passwordModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.passwordRepository.Update(id,  model.PasswordHash,
-				                               model.PasswordSalt,
-				                               model.Rowguid,
-				                               model.ModifiedDate);
-				return Ok();
+				this.passwordRepository.Update(
+					id,
+					model.PasswordHash,
+					model.PasswordSalt,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.passwordRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -171,11 +182,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.passwordRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9a4d2f2b0d7484d705d8a95bdd37428</Hash>
+    <Hash>5738c0a8ab30446a9d7cbc1da0a705c0</Hash>
 </Codenesium>*/

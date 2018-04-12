@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
 	[Route("api/chainStatus")]
@@ -17,10 +18,11 @@ namespace NebulaNS.Api.Service
 			ITransactionCoordinator transactionCoordinator,
 			IChainStatusRepository chainStatusRepository,
 			IChainStatusModelValidator chainStatusModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         chainStatusRepository,
-			         chainStatusModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       chainStatusRepository,
+			       chainStatusModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>931ab0ff3743aaf8c8497e4ccc4e727f</Hash>
+    <Hash>61af284c2e5a338e9fc3e9daac5b99ef</Hash>
 </Codenesium>*/

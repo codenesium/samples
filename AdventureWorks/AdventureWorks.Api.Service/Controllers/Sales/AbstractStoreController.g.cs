@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractStoresController: AbstractApiController
+	public abstract class AbstractStoreController: AbstractApiController
 	{
 		protected IStoreRepository storeRepository;
+
 		protected IStoreModelValidator storeModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractStoresController(
-			ILogger<AbstractStoresController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractStoreController(
+			ILogger<AbstractStoreController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStoreRepository storeRepository,
 			IStoreModelValidator storeModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.storeRepository = storeRepository;
 			this.storeModelValidator = storeModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.storeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.storeRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.storeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,17 +81,18 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.storeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.storeRepository.Create(model.Name,
-				                                     model.SalesPersonID,
-				                                     model.Demographics,
-				                                     model.Rowguid,
-				                                     model.ModifiedDate);
-				return Ok(id);
+				var id = this.storeRepository.Create(
+					model.Name,
+					model.SalesPersonID,
+					model.Demographics,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -99,25 +106,27 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<StoreModel> models)
 		{
 			this.storeModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.storeModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.storeRepository.Create(model.Name,
-				                            model.SalesPersonID,
-				                            model.Demographics,
-				                            model.Rowguid,
-				                            model.ModifiedDate);
+				this.storeRepository.Create(
+					model.Name,
+					model.SalesPersonID,
+					model.Demographics,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -127,28 +136,30 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,StoreModel model)
+		public virtual IActionResult Update(int id, StoreModel model)
 		{
-			if(this.storeRepository.GetByIdDirect(id) == null)
+			if (this.storeRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.storeModelValidator.UpdateMode();
 			var validationResult = this.storeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.storeRepository.Update(id,  model.Name,
-				                            model.SalesPersonID,
-				                            model.Demographics,
-				                            model.Rowguid,
-				                            model.ModifiedDate);
-				return Ok();
+				this.storeRepository.Update(
+					id,
+					model.Name,
+					model.SalesPersonID,
+					model.Demographics,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -161,7 +172,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.storeRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -174,7 +185,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.storeRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -187,11 +198,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.storeRepository.GetWhere(x => x.SalesPersonID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad66d3501e1a62a81f633b2e72b8002b</Hash>
+    <Hash>ff4bf360355cf8229ccba06d95f687e8</Hash>
 </Codenesium>*/

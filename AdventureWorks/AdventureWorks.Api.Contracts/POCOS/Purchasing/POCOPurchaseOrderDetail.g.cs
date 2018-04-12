@@ -9,17 +9,18 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOPurchaseOrderDetail()
 		{}
 
-		public POCOPurchaseOrderDetail(int purchaseOrderID,
-		                               int purchaseOrderDetailID,
-		                               DateTime dueDate,
-		                               short orderQty,
-		                               int productID,
-		                               decimal unitPrice,
-		                               decimal lineTotal,
-		                               decimal receivedQty,
-		                               decimal rejectedQty,
-		                               decimal stockedQty,
-		                               DateTime modifiedDate)
+		public POCOPurchaseOrderDetail(
+			int purchaseOrderID,
+			int purchaseOrderDetailID,
+			DateTime dueDate,
+			short orderQty,
+			int productID,
+			decimal unitPrice,
+			decimal lineTotal,
+			decimal receivedQty,
+			decimal rejectedQty,
+			decimal stockedQty,
+			DateTime modifiedDate)
 		{
 			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
 			this.DueDate = dueDate.ToDateTime();
@@ -31,110 +32,110 @@ namespace AdventureWorksNS.Api.Contracts
 			this.StockedQty = stockedQty.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			PurchaseOrderID = new ReferenceEntity<int>(purchaseOrderID,
-			                                           "PurchaseOrderHeader");
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
+			this.PurchaseOrderID = new ReferenceEntity<int>(purchaseOrderID,
+			                                                "PurchaseOrderHeader");
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          "Product");
 		}
 
-		public ReferenceEntity<int>PurchaseOrderID {get; set;}
-		public int PurchaseOrderDetailID {get; set;}
-		public DateTime DueDate {get; set;}
-		public short OrderQty {get; set;}
-		public ReferenceEntity<int>ProductID {get; set;}
-		public decimal UnitPrice {get; set;}
-		public decimal LineTotal {get; set;}
-		public decimal ReceivedQty {get; set;}
-		public decimal RejectedQty {get; set;}
-		public decimal StockedQty {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> PurchaseOrderID { get; set; }
+		public int PurchaseOrderDetailID { get; set; }
+		public DateTime DueDate { get; set; }
+		public short OrderQty { get; set; }
+		public ReferenceEntity<int> ProductID { get; set; }
+		public decimal UnitPrice { get; set; }
+		public decimal LineTotal { get; set; }
+		public decimal ReceivedQty { get; set; }
+		public decimal RejectedQty { get; set; }
+		public decimal StockedQty { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderIDValue {get; set;} = true;
+		public bool ShouldSerializePurchaseOrderIDValue { get; set; } = true;
 
 		public bool ShouldSerializePurchaseOrderID()
 		{
-			return ShouldSerializePurchaseOrderIDValue;
+			return this.ShouldSerializePurchaseOrderIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderDetailIDValue {get; set;} = true;
+		public bool ShouldSerializePurchaseOrderDetailIDValue { get; set; } = true;
 
 		public bool ShouldSerializePurchaseOrderDetailID()
 		{
-			return ShouldSerializePurchaseOrderDetailIDValue;
+			return this.ShouldSerializePurchaseOrderDetailIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDueDateValue {get; set;} = true;
+		public bool ShouldSerializeDueDateValue { get; set; } = true;
 
 		public bool ShouldSerializeDueDate()
 		{
-			return ShouldSerializeDueDateValue;
+			return this.ShouldSerializeDueDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrderQtyValue {get; set;} = true;
+		public bool ShouldSerializeOrderQtyValue { get; set; } = true;
 
 		public bool ShouldSerializeOrderQty()
 		{
-			return ShouldSerializeOrderQtyValue;
+			return this.ShouldSerializeOrderQtyValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue {get; set;} = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductID()
 		{
-			return ShouldSerializeProductIDValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeUnitPriceValue {get; set;} = true;
+		public bool ShouldSerializeUnitPriceValue { get; set; } = true;
 
 		public bool ShouldSerializeUnitPrice()
 		{
-			return ShouldSerializeUnitPriceValue;
+			return this.ShouldSerializeUnitPriceValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLineTotalValue {get; set;} = true;
+		public bool ShouldSerializeLineTotalValue { get; set; } = true;
 
 		public bool ShouldSerializeLineTotal()
 		{
-			return ShouldSerializeLineTotalValue;
+			return this.ShouldSerializeLineTotalValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeReceivedQtyValue {get; set;} = true;
+		public bool ShouldSerializeReceivedQtyValue { get; set; } = true;
 
 		public bool ShouldSerializeReceivedQty()
 		{
-			return ShouldSerializeReceivedQtyValue;
+			return this.ShouldSerializeReceivedQtyValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRejectedQtyValue {get; set;} = true;
+		public bool ShouldSerializeRejectedQtyValue { get; set; } = true;
 
 		public bool ShouldSerializeRejectedQty()
 		{
-			return ShouldSerializeRejectedQtyValue;
+			return this.ShouldSerializeRejectedQtyValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStockedQtyValue {get; set;} = true;
+		public bool ShouldSerializeStockedQtyValue { get; set; } = true;
 
 		public bool ShouldSerializeStockedQty()
 		{
-			return ShouldSerializeStockedQtyValue;
+			return this.ShouldSerializeStockedQtyValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -155,5 +156,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>11d3d488f1eb065f37a024213695a0a5</Hash>
+    <Hash>e94c7764b0dcb3490a420a8717d97ec0</Hash>
 </Codenesium>*/

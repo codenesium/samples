@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractEmailAddressesController: AbstractApiController
+	public abstract class AbstractEmailAddressController: AbstractApiController
 	{
 		protected IEmailAddressRepository emailAddressRepository;
+
 		protected IEmailAddressModelValidator emailAddressModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractEmailAddressesController(
-			ILogger<AbstractEmailAddressesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractEmailAddressController(
+			ILogger<AbstractEmailAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEmailAddressRepository emailAddressRepository,
 			IEmailAddressModelValidator emailAddressModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.emailAddressRepository = emailAddressRepository;
 			this.emailAddressModelValidator = emailAddressModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.emailAddressRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.emailAddressRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.emailAddressRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,16 +81,17 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.emailAddressModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.emailAddressRepository.Create(model.EmailAddressID,
-				                                            model.EmailAddress1,
-				                                            model.Rowguid,
-				                                            model.ModifiedDate);
-				return Ok(id);
+				var id = this.emailAddressRepository.Create(
+					model.EmailAddressID,
+					model.EmailAddress1,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -98,24 +105,26 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<EmailAddressModel> models)
 		{
 			this.emailAddressModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.emailAddressModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.emailAddressRepository.Create(model.EmailAddressID,
-				                                   model.EmailAddress1,
-				                                   model.Rowguid,
-				                                   model.ModifiedDate);
+				this.emailAddressRepository.Create(
+					model.EmailAddressID,
+					model.EmailAddress1,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -125,27 +134,29 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,EmailAddressModel model)
+		public virtual IActionResult Update(int id, EmailAddressModel model)
 		{
-			if(this.emailAddressRepository.GetByIdDirect(id) == null)
+			if (this.emailAddressRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.emailAddressModelValidator.UpdateMode();
 			var validationResult = this.emailAddressModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.emailAddressRepository.Update(id,  model.EmailAddressID,
-				                                   model.EmailAddress1,
-				                                   model.Rowguid,
-				                                   model.ModifiedDate);
-				return Ok();
+				this.emailAddressRepository.Update(
+					id,
+					model.EmailAddressID,
+					model.EmailAddress1,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.emailAddressRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -171,11 +182,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.emailAddressRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8eda65cbeadb46a4b97e537e58ba6c98</Hash>
+    <Hash>a63fcf855734a42214239ec0e05167cd</Hash>
 </Codenesium>*/

@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/people")]
-	public class PeopleController: AbstractPeopleController
+	public class PersonController: AbstractPersonController
 	{
-		public PeopleController(
-			ILogger<PeopleController> logger,
+		public PersonController(
+			ILogger<PersonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPersonRepository personRepository,
 			IPersonModelValidator personModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         personRepository,
-			         personModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       personRepository,
+			       personModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a39be87f2984f34f57a790a76390db42</Hash>
+    <Hash>9f063632ff28011a1366d5cf7ee75558</Hash>
 </Codenesium>*/

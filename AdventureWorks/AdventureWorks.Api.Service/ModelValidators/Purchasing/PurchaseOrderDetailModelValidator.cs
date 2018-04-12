@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class PurchaseOrderDetailModelValidator: AbstractPurchaseOrderDetailModelValidator,IPurchaseOrderDetailModelValidator
+	public class PurchaseOrderDetailModelValidator: AbstractPurchaseOrderDetailModelValidator, IPurchaseOrderDetailModelValidator
 	{
 		public PurchaseOrderDetailModelValidator()
 		{   }
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f3a9299abde65322f0e1eec5918b867b</Hash>
+    <Hash>7c120c480fe83ce9a93ef0a69d048f16</Hash>
 </Codenesium>*/

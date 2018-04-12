@@ -251,3 +251,6 @@ paket-files/
 .idea/
 *.sln.iml
 
+#generated stuff
+appSettings.json
+Readme.txt

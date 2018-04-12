@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public abstract class AbstractMachineRefTeamsController: AbstractApiController
+	public abstract class AbstractMachineRefTeamController: AbstractApiController
 	{
 		protected IMachineRefTeamRepository machineRefTeamRepository;
+
 		protected IMachineRefTeamModelValidator machineRefTeamModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractMachineRefTeamsController(
-			ILogger<AbstractMachineRefTeamsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractMachineRefTeamController(
+			ILogger<AbstractMachineRefTeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IMachineRefTeamRepository machineRefTeamRepository,
 			IMachineRefTeamModelValidator machineRefTeamModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.machineRefTeamRepository = machineRefTeamRepository;
 			this.machineRefTeamModelValidator = machineRefTeamModelValidator;
@@ -31,7 +37,7 @@ namespace NebulaNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.machineRefTeamRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace NebulaNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.machineRefTeamRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.machineRefTeamRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,14 +81,15 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.machineRefTeamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.machineRefTeamRepository.Create(model.MachineId,
-				                                              model.TeamId);
-				return Ok(id);
+				var id = this.machineRefTeamRepository.Create(
+					model.MachineId,
+					model.TeamId);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -96,22 +103,24 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult BulkInsert(List<MachineRefTeamModel> models)
 		{
 			this.machineRefTeamModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.machineRefTeamModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.machineRefTeamRepository.Create(model.MachineId,
-				                                     model.TeamId);
+				this.machineRefTeamRepository.Create(
+					model.MachineId,
+					model.TeamId);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -121,25 +130,27 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,MachineRefTeamModel model)
+		public virtual IActionResult Update(int id, MachineRefTeamModel model)
 		{
-			if(this.machineRefTeamRepository.GetByIdDirect(id) == null)
+			if (this.machineRefTeamRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.machineRefTeamModelValidator.UpdateMode();
 			var validationResult = this.machineRefTeamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.machineRefTeamRepository.Update(id,  model.MachineId,
-				                                     model.TeamId);
-				return Ok();
+				this.machineRefTeamRepository.Update(
+					id,
+					model.MachineId,
+					model.TeamId);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -152,7 +163,7 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.machineRefTeamRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -165,7 +176,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.machineRefTeamRepository.GetWhere(x => x.MachineId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -178,11 +189,11 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.machineRefTeamRepository.GetWhere(x => x.TeamId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>180d0b5779d0003fe2272627a839d8a5</Hash>
+    <Hash>d75fec04d3a4012f4585d0e89eafe75a</Hash>
 </Codenesium>*/

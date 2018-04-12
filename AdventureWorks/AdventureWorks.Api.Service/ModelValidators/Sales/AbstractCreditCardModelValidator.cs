@@ -22,33 +22,33 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void CardTypeRules()
 		{
-			RuleFor(x => x.CardType).NotNull();
-			RuleFor(x => x.CardType).Length(0,50);
+			this.RuleFor(x => x.CardType).NotNull();
+			this.RuleFor(x => x.CardType).Length(0, 50);
 		}
 
 		public virtual void CardNumberRules()
 		{
-			RuleFor(x => x.CardNumber).NotNull();
-			RuleFor(x => x.CardNumber).Length(0,25);
+			this.RuleFor(x => x.CardNumber).NotNull();
+			this.RuleFor(x => x.CardNumber).Length(0, 25);
 		}
 
 		public virtual void ExpMonthRules()
 		{
-			RuleFor(x => x.ExpMonth).NotNull();
+			this.RuleFor(x => x.ExpMonth).NotNull();
 		}
 
 		public virtual void ExpYearRules()
 		{
-			RuleFor(x => x.ExpYear).NotNull();
+			this.RuleFor(x => x.ExpYear).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3d4e1b6efe058fbae1db83b79529bc10</Hash>
+    <Hash>a5309fed1d175067803fef8dc14af170</Hash>
 </Codenesium>*/

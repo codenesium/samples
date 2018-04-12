@@ -20,23 +20,23 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository {get; set;}
-		public IPhoneNumberTypeRepository PhoneNumberTypeRepository {get; set;}
+		public IPersonRepository PersonRepository { get; set; }
+		public IPhoneNumberTypeRepository PhoneNumberTypeRepository { get; set; }
 		public virtual void PhoneNumberRules()
 		{
-			RuleFor(x => x.PhoneNumber).NotNull();
-			RuleFor(x => x.PhoneNumber).Length(0,25);
+			this.RuleFor(x => x.PhoneNumber).NotNull();
+			this.RuleFor(x => x.PhoneNumber).Length(0, 25);
 		}
 
 		public virtual void PhoneNumberTypeIDRules()
 		{
-			RuleFor(x => x.PhoneNumberTypeID).NotNull();
-			RuleFor(x => x.PhoneNumberTypeID).Must(BeValidPhoneNumberType).When(x => x ?.PhoneNumberTypeID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PhoneNumberTypeID).NotNull();
+			this.RuleFor(x => x.PhoneNumberTypeID).Must(this.BeValidPhoneNumberType).When(x => x ?.PhoneNumberTypeID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidPerson(int id)
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4ac5b42dc39dac18e551da15be346c0f</Hash>
+    <Hash>9fcdbedaf4d31fb922f2ba40e4aed130</Hash>
 </Codenesium>*/

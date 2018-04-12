@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class SalesTerritoryModelValidator: AbstractSalesTerritoryModelValidator,ISalesTerritoryModelValidator
+	public class SalesTerritoryModelValidator: AbstractSalesTerritoryModelValidator, ISalesTerritoryModelValidator
 	{
 		public SalesTerritoryModelValidator()
 		{   }
@@ -39,5 +40,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>779021968abb487a2871f6a622224842</Hash>
+    <Hash>8b2a14f9ec120165c47a15f9c930ccf0</Hash>
 </Codenesium>*/

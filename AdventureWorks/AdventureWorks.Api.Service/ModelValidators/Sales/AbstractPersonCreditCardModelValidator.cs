@@ -20,17 +20,17 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository {get; set;}
-		public ICreditCardRepository CreditCardRepository {get; set;}
+		public IPersonRepository PersonRepository { get; set; }
+		public ICreditCardRepository CreditCardRepository { get; set; }
 		public virtual void CreditCardIDRules()
 		{
-			RuleFor(x => x.CreditCardID).NotNull();
-			RuleFor(x => x.CreditCardID).Must(BeValidCreditCard).When(x => x ?.CreditCardID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CreditCardID).NotNull();
+			this.RuleFor(x => x.CreditCardID).Must(this.BeValidCreditCard).When(x => x ?.CreditCardID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidPerson(int id)
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>68d1d540a5eb9f997d16a42190a4830f</Hash>
+    <Hash>91e4b961710372553dafe284074766b2</Hash>
 </Codenesium>*/

@@ -9,10 +9,11 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOProductCategory()
 		{}
 
-		public POCOProductCategory(int productCategoryID,
-		                           string name,
-		                           Guid rowguid,
-		                           DateTime modifiedDate)
+		public POCOProductCategory(
+			int productCategoryID,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ProductCategoryID = productCategoryID.ToInt();
 			this.Name = name;
@@ -20,41 +21,41 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		public int ProductCategoryID {get; set;}
-		public string Name {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int ProductCategoryID { get; set; }
+		public string Name { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductCategoryIDValue {get; set;} = true;
+		public bool ShouldSerializeProductCategoryIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductCategoryID()
 		{
-			return ShouldSerializeProductCategoryIDValue;
+			return this.ShouldSerializeProductCategoryIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -68,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>de940b3e4643c872478bd9c75174ad93</Hash>
+    <Hash>d8b895a037d88925ac87a00d0578cd6e</Hash>
 </Codenesium>*/

@@ -20,25 +20,25 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductModelRepository ProductModelRepository {get; set;}
-		public IProductDescriptionRepository ProductDescriptionRepository {get; set;}
-		public ICultureRepository CultureRepository {get; set;}
+		public IProductModelRepository ProductModelRepository { get; set; }
+		public IProductDescriptionRepository ProductDescriptionRepository { get; set; }
+		public ICultureRepository CultureRepository { get; set; }
 		public virtual void ProductDescriptionIDRules()
 		{
-			RuleFor(x => x.ProductDescriptionID).NotNull();
-			RuleFor(x => x.ProductDescriptionID).Must(BeValidProductDescription).When(x => x ?.ProductDescriptionID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProductDescriptionID).NotNull();
+			this.RuleFor(x => x.ProductDescriptionID).Must(this.BeValidProductDescription).When(x => x ?.ProductDescriptionID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void CultureIDRules()
 		{
-			RuleFor(x => x.CultureID).NotNull();
-			RuleFor(x => x.CultureID).Must(BeValidCulture).When(x => x ?.CultureID != null).WithMessage("Invalid reference");
-			RuleFor(x => x.CultureID).Length(0,6);
+			this.RuleFor(x => x.CultureID).NotNull();
+			this.RuleFor(x => x.CultureID).Must(this.BeValidCulture).When(x => x ?.CultureID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CultureID).Length(0, 6);
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProductModel(int id)
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>369c988fdad360e95dffbf45095167ca</Hash>
+    <Hash>5e61a366096ef28097a7072f72f5c480</Hash>
 </Codenesium>*/

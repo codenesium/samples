@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class SalesOrderHeaderModelValidator: AbstractSalesOrderHeaderModelValidator,ISalesOrderHeaderModelValidator
+	public class SalesOrderHeaderModelValidator: AbstractSalesOrderHeaderModelValidator, ISalesOrderHeaderModelValidator
 	{
 		public SalesOrderHeaderModelValidator()
 		{   }
@@ -71,5 +72,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4d76c31bb9bbf7a16eacfd3d2b7749bc</Hash>
+    <Hash>a2dd5e5aff178614ea5a97c7a987b994</Hash>
 </Codenesium>*/

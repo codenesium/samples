@@ -7,10 +7,12 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductDocumentRepository
 	{
-		int Create(Guid documentNode,
-		           DateTime modifiedDate);
+		int Create(
+			Guid documentNode,
+			DateTime modifiedDate);
 
-		void Update(int productID, Guid documentNode,
+		void Update(int productID,
+		            Guid documentNode,
 		            DateTime modifiedDate);
 
 		void Delete(int productID);
@@ -19,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOProductDocument GetByIdDirect(int productID);
 
-		Response GetWhere(Expression<Func<EFProductDocument, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFProductDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOProductDocument> GetWhereDirect(Expression<Func<EFProductDocument, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOProductDocument> GetWhereDirect(Expression<Func<EFProductDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5547e2ead12ae2a318ca7edfbecd3cc3</Hash>
+    <Hash>0933c2701101e9cbdface32d5c508bf8</Hash>
 </Codenesium>*/

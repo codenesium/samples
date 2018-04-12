@@ -9,59 +9,67 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public DepartmentModel()
 		{}
-		public DepartmentModel(string name,
-		                       string groupName,
-		                       DateTime modifiedDate)
+
+		public DepartmentModel(
+			string name,
+			string groupName,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.GroupName = groupName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private string _groupName;
+		private string groupName;
+
 		[Required]
 		public string GroupName
 		{
 			get
 			{
-				return _groupName;
+				return this.groupName;
 			}
+
 			set
 			{
-				this._groupName = value;
+				this.groupName = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7341b31c0a58e77cb5a7b4fb0824479f</Hash>
+    <Hash>98766273a819f7e7bd6f58d57987b262</Hash>
 </Codenesium>*/

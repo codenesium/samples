@@ -9,30 +9,32 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductModel()
 		{}
-		public ProductModel(string name,
-		                    string productNumber,
-		                    bool makeFlag,
-		                    bool finishedGoodsFlag,
-		                    string color,
-		                    short safetyStockLevel,
-		                    short reorderPoint,
-		                    decimal standardCost,
-		                    decimal listPrice,
-		                    string size,
-		                    string sizeUnitMeasureCode,
-		                    string weightUnitMeasureCode,
-		                    Nullable<decimal> weight,
-		                    int daysToManufacture,
-		                    string productLine,
-		                    string @class,
-		                    string style,
-		                    Nullable<int> productSubcategoryID,
-		                    Nullable<int> productModelID,
-		                    DateTime sellStartDate,
-		                    Nullable<DateTime> sellEndDate,
-		                    Nullable<DateTime> discontinuedDate,
-		                    Guid rowguid,
-		                    DateTime modifiedDate)
+
+		public ProductModel(
+			string name,
+			string productNumber,
+			bool makeFlag,
+			bool finishedGoodsFlag,
+			string color,
+			short safetyStockLevel,
+			short reorderPoint,
+			decimal standardCost,
+			decimal listPrice,
+			string size,
+			string sizeUnitMeasureCode,
+			string weightUnitMeasureCode,
+			Nullable<decimal> weight,
+			int daysToManufacture,
+			string productLine,
+			string @class,
+			string style,
+			Nullable<int> productSubcategoryID,
+			Nullable<int> productModelID,
+			DateTime sellStartDate,
+			Nullable<DateTime> sellEndDate,
+			Nullable<DateTime> discontinuedDate,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.ProductNumber = productNumber;
@@ -60,332 +62,380 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private string _productNumber;
+		private string productNumber;
+
 		[Required]
 		public string ProductNumber
 		{
 			get
 			{
-				return _productNumber;
+				return this.productNumber;
 			}
+
 			set
 			{
-				this._productNumber = value;
+				this.productNumber = value;
 			}
 		}
 
-		private bool _makeFlag;
+		private bool makeFlag;
+
 		[Required]
 		public bool MakeFlag
 		{
 			get
 			{
-				return _makeFlag;
+				return this.makeFlag;
 			}
+
 			set
 			{
-				this._makeFlag = value;
+				this.makeFlag = value;
 			}
 		}
 
-		private bool _finishedGoodsFlag;
+		private bool finishedGoodsFlag;
+
 		[Required]
 		public bool FinishedGoodsFlag
 		{
 			get
 			{
-				return _finishedGoodsFlag;
+				return this.finishedGoodsFlag;
 			}
+
 			set
 			{
-				this._finishedGoodsFlag = value;
+				this.finishedGoodsFlag = value;
 			}
 		}
 
-		private string _color;
+		private string color;
+
 		public string Color
 		{
 			get
 			{
-				return _color.IsEmptyOrZeroOrNull() ? null : _color;
+				return this.color.IsEmptyOrZeroOrNull() ? null : this.color;
 			}
+
 			set
 			{
-				this._color = value;
+				this.color = value;
 			}
 		}
 
-		private short _safetyStockLevel;
+		private short safetyStockLevel;
+
 		[Required]
 		public short SafetyStockLevel
 		{
 			get
 			{
-				return _safetyStockLevel;
+				return this.safetyStockLevel;
 			}
+
 			set
 			{
-				this._safetyStockLevel = value;
+				this.safetyStockLevel = value;
 			}
 		}
 
-		private short _reorderPoint;
+		private short reorderPoint;
+
 		[Required]
 		public short ReorderPoint
 		{
 			get
 			{
-				return _reorderPoint;
+				return this.reorderPoint;
 			}
+
 			set
 			{
-				this._reorderPoint = value;
+				this.reorderPoint = value;
 			}
 		}
 
-		private decimal _standardCost;
+		private decimal standardCost;
+
 		[Required]
 		public decimal StandardCost
 		{
 			get
 			{
-				return _standardCost;
+				return this.standardCost;
 			}
+
 			set
 			{
-				this._standardCost = value;
+				this.standardCost = value;
 			}
 		}
 
-		private decimal _listPrice;
+		private decimal listPrice;
+
 		[Required]
 		public decimal ListPrice
 		{
 			get
 			{
-				return _listPrice;
+				return this.listPrice;
 			}
+
 			set
 			{
-				this._listPrice = value;
+				this.listPrice = value;
 			}
 		}
 
-		private string _size;
+		private string size;
+
 		public string Size
 		{
 			get
 			{
-				return _size.IsEmptyOrZeroOrNull() ? null : _size;
+				return this.size.IsEmptyOrZeroOrNull() ? null : this.size;
 			}
+
 			set
 			{
-				this._size = value;
+				this.size = value;
 			}
 		}
 
-		private string _sizeUnitMeasureCode;
+		private string sizeUnitMeasureCode;
+
 		public string SizeUnitMeasureCode
 		{
 			get
 			{
-				return _sizeUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : _sizeUnitMeasureCode;
+				return this.sizeUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : this.sizeUnitMeasureCode;
 			}
+
 			set
 			{
-				this._sizeUnitMeasureCode = value;
+				this.sizeUnitMeasureCode = value;
 			}
 		}
 
-		private string _weightUnitMeasureCode;
+		private string weightUnitMeasureCode;
+
 		public string WeightUnitMeasureCode
 		{
 			get
 			{
-				return _weightUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : _weightUnitMeasureCode;
+				return this.weightUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : this.weightUnitMeasureCode;
 			}
+
 			set
 			{
-				this._weightUnitMeasureCode = value;
+				this.weightUnitMeasureCode = value;
 			}
 		}
 
-		private Nullable<decimal> _weight;
+		private Nullable<decimal> weight;
+
 		public Nullable<decimal> Weight
 		{
 			get
 			{
-				return _weight.IsEmptyOrZeroOrNull() ? null : _weight;
+				return this.weight.IsEmptyOrZeroOrNull() ? null : this.weight;
 			}
+
 			set
 			{
-				this._weight = value;
+				this.weight = value;
 			}
 		}
 
-		private int _daysToManufacture;
+		private int daysToManufacture;
+
 		[Required]
 		public int DaysToManufacture
 		{
 			get
 			{
-				return _daysToManufacture;
+				return this.daysToManufacture;
 			}
+
 			set
 			{
-				this._daysToManufacture = value;
+				this.daysToManufacture = value;
 			}
 		}
 
-		private string _productLine;
+		private string productLine;
+
 		public string ProductLine
 		{
 			get
 			{
-				return _productLine.IsEmptyOrZeroOrNull() ? null : _productLine;
+				return this.productLine.IsEmptyOrZeroOrNull() ? null : this.productLine;
 			}
+
 			set
 			{
-				this._productLine = value;
+				this.productLine = value;
 			}
 		}
 
 		private string @class;
+
 		public string @Class
 		{
 			get
 			{
-				return @class.IsEmptyOrZeroOrNull() ? null : @class;
+				return this.@class.IsEmptyOrZeroOrNull() ? null : this.@class;
 			}
+
 			set
 			{
 				this.@class = value;
 			}
 		}
 
-		private string _style;
+		private string style;
+
 		public string Style
 		{
 			get
 			{
-				return _style.IsEmptyOrZeroOrNull() ? null : _style;
+				return this.style.IsEmptyOrZeroOrNull() ? null : this.style;
 			}
+
 			set
 			{
-				this._style = value;
+				this.style = value;
 			}
 		}
 
-		private Nullable<int> _productSubcategoryID;
+		private Nullable<int> productSubcategoryID;
+
 		public Nullable<int> ProductSubcategoryID
 		{
 			get
 			{
-				return _productSubcategoryID.IsEmptyOrZeroOrNull() ? null : _productSubcategoryID;
+				return this.productSubcategoryID.IsEmptyOrZeroOrNull() ? null : this.productSubcategoryID;
 			}
+
 			set
 			{
-				this._productSubcategoryID = value;
+				this.productSubcategoryID = value;
 			}
 		}
 
-		private Nullable<int> _productModelID;
+		private Nullable<int> productModelID;
+
 		public Nullable<int> ProductModelID
 		{
 			get
 			{
-				return _productModelID.IsEmptyOrZeroOrNull() ? null : _productModelID;
+				return this.productModelID.IsEmptyOrZeroOrNull() ? null : this.productModelID;
 			}
+
 			set
 			{
-				this._productModelID = value;
+				this.productModelID = value;
 			}
 		}
 
-		private DateTime _sellStartDate;
+		private DateTime sellStartDate;
+
 		[Required]
 		public DateTime SellStartDate
 		{
 			get
 			{
-				return _sellStartDate;
+				return this.sellStartDate;
 			}
+
 			set
 			{
-				this._sellStartDate = value;
+				this.sellStartDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _sellEndDate;
+		private Nullable<DateTime> sellEndDate;
+
 		public Nullable<DateTime> SellEndDate
 		{
 			get
 			{
-				return _sellEndDate.IsEmptyOrZeroOrNull() ? null : _sellEndDate;
+				return this.sellEndDate.IsEmptyOrZeroOrNull() ? null : this.sellEndDate;
 			}
+
 			set
 			{
-				this._sellEndDate = value;
+				this.sellEndDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _discontinuedDate;
+		private Nullable<DateTime> discontinuedDate;
+
 		public Nullable<DateTime> DiscontinuedDate
 		{
 			get
 			{
-				return _discontinuedDate.IsEmptyOrZeroOrNull() ? null : _discontinuedDate;
+				return this.discontinuedDate.IsEmptyOrZeroOrNull() ? null : this.discontinuedDate;
 			}
+
 			set
 			{
-				this._discontinuedDate = value;
+				this.discontinuedDate = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>baa7075ea8e2b643eb80418bf6e67ada</Hash>
+    <Hash>b0b2c5b50ef27cb4134d5f02197685bc</Hash>
 </Codenesium>*/

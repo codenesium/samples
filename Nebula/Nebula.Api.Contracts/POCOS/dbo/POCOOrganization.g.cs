@@ -9,30 +9,31 @@ namespace NebulaNS.Api.Contracts
 		public POCOOrganization()
 		{}
 
-		public POCOOrganization(int id,
-		                        string name)
+		public POCOOrganization(
+			int id,
+			string name)
 		{
 			this.Id = id.ToInt();
 			this.Name = name;
 		}
 
-		public int Id {get; set;}
-		public string Name {get; set;}
+		public int Id { get; set; }
+		public string Name { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue {get; set;} = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
 		public bool ShouldSerializeId()
 		{
-			return ShouldSerializeIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		public void DisableAllFields()
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9f5cb90e0131567ccd3c375ed7bba27b</Hash>
+    <Hash>9d1aafe9155bc52ea6f47ea04ec3a4b3</Hash>
 </Codenesium>*/

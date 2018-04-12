@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractEmployeeDepartmentHistoriesController: AbstractApiController
+	public abstract class AbstractEmployeeDepartmentHistoryController: AbstractApiController
 	{
 		protected IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
+
 		protected IEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractEmployeeDepartmentHistoriesController(
-			ILogger<AbstractEmployeeDepartmentHistoriesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractEmployeeDepartmentHistoryController(
+			ILogger<AbstractEmployeeDepartmentHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
 			IEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
 			this.employeeDepartmentHistoryModelValidator = employeeDepartmentHistoryModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.employeeDepartmentHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.employeeDepartmentHistoryRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.employeeDepartmentHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,17 +81,18 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.employeeDepartmentHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.employeeDepartmentHistoryRepository.Create(model.DepartmentID,
-				                                                         model.ShiftID,
-				                                                         model.StartDate,
-				                                                         model.EndDate,
-				                                                         model.ModifiedDate);
-				return Ok(id);
+				var id = this.employeeDepartmentHistoryRepository.Create(
+					model.DepartmentID,
+					model.ShiftID,
+					model.StartDate,
+					model.EndDate,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -99,25 +106,27 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<EmployeeDepartmentHistoryModel> models)
 		{
 			this.employeeDepartmentHistoryModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.employeeDepartmentHistoryModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.employeeDepartmentHistoryRepository.Create(model.DepartmentID,
-				                                                model.ShiftID,
-				                                                model.StartDate,
-				                                                model.EndDate,
-				                                                model.ModifiedDate);
+				this.employeeDepartmentHistoryRepository.Create(
+					model.DepartmentID,
+					model.ShiftID,
+					model.StartDate,
+					model.EndDate,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -127,28 +136,30 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,EmployeeDepartmentHistoryModel model)
+		public virtual IActionResult Update(int id, EmployeeDepartmentHistoryModel model)
 		{
-			if(this.employeeDepartmentHistoryRepository.GetByIdDirect(id) == null)
+			if (this.employeeDepartmentHistoryRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.employeeDepartmentHistoryModelValidator.UpdateMode();
 			var validationResult = this.employeeDepartmentHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.employeeDepartmentHistoryRepository.Update(id,  model.DepartmentID,
-				                                                model.ShiftID,
-				                                                model.StartDate,
-				                                                model.EndDate,
-				                                                model.ModifiedDate);
-				return Ok();
+				this.employeeDepartmentHistoryRepository.Update(
+					id,
+					model.DepartmentID,
+					model.ShiftID,
+					model.StartDate,
+					model.EndDate,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -161,7 +172,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.employeeDepartmentHistoryRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -174,7 +185,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.employeeDepartmentHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -187,7 +198,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.employeeDepartmentHistoryRepository.GetWhere(x => x.DepartmentID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -200,11 +211,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.employeeDepartmentHistoryRepository.GetWhere(x => x.ShiftID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b2a6cf00c3fe25a0fa0faa64b84c6ec</Hash>
+    <Hash>d896ebd26bf5329f729fc60203963794</Hash>
 </Codenesium>*/

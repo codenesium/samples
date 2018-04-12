@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ShipMethod", Schema="Purchasing")]
@@ -10,12 +11,13 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFShipMethod()
 		{}
 
-		public void SetProperties(int shipMethodID,
-		                          string name,
-		                          decimal shipBase,
-		                          decimal shipRate,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int shipMethodID,
+			string name,
+			decimal shipBase,
+			decimal shipRate,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ShipMethodID = shipMethodID.ToInt();
 			this.Name = name;
@@ -28,25 +30,25 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ShipMethodID", TypeName="int")]
-		public int ShipMethodID {get; set;}
+		public int ShipMethodID { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("ShipBase", TypeName="money")]
-		public decimal ShipBase {get; set;}
+		public decimal ShipBase { get; set; }
 
 		[Column("ShipRate", TypeName="money")]
-		public decimal ShipRate {get; set;}
+		public decimal ShipRate { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>16656a994ef5c550c1a78e04a578c502</Hash>
+    <Hash>e9b9d8edf5378dbd5d987bd30105a584</Hash>
 </Codenesium>*/

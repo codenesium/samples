@@ -9,41 +9,42 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOUnitMeasure()
 		{}
 
-		public POCOUnitMeasure(string unitMeasureCode,
-		                       string name,
-		                       DateTime modifiedDate)
+		public POCOUnitMeasure(
+			string unitMeasureCode,
+			string name,
+			DateTime modifiedDate)
 		{
 			this.UnitMeasureCode = unitMeasureCode;
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		public string UnitMeasureCode {get; set;}
-		public string Name {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public string UnitMeasureCode { get; set; }
+		public string Name { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeUnitMeasureCodeValue {get; set;} = true;
+		public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeUnitMeasureCode()
 		{
-			return ShouldSerializeUnitMeasureCodeValue;
+			return this.ShouldSerializeUnitMeasureCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -56,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cad6bc6bc36bc1aaeca314cb2054de7c</Hash>
+    <Hash>2d4e306d8bae55c2dcfe18967250fde3</Hash>
 </Codenesium>*/

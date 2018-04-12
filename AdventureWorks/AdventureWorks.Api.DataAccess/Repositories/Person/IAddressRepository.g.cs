@@ -7,16 +7,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAddressRepository
 	{
-		int Create(string addressLine1,
-		           string addressLine2,
-		           string city,
-		           int stateProvinceID,
-		           string postalCode,
-		           object spatialLocation,
-		           Guid rowguid,
-		           DateTime modifiedDate);
+		int Create(
+			string addressLine1,
+			string addressLine2,
+			string city,
+			int stateProvinceID,
+			string postalCode,
+			object spatialLocation,
+			Guid rowguid,
+			DateTime modifiedDate);
 
-		void Update(int addressID, string addressLine1,
+		void Update(int addressID,
+		            string addressLine1,
 		            string addressLine2,
 		            string city,
 		            int stateProvinceID,
@@ -31,14 +33,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOAddress GetByIdDirect(int addressID);
 
-		Response GetWhere(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOAddress> GetWhereDirect(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOAddress> GetWhereDirect(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>162c3fc435f1ae42de6c0f4546ca2790</Hash>
+    <Hash>61176128ab33b850732162062a443bac</Hash>
 </Codenesium>*/

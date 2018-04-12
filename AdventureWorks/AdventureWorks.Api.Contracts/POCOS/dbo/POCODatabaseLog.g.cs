@@ -9,14 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCODatabaseLog()
 		{}
 
-		public POCODatabaseLog(int databaseLogID,
-		                       DateTime postTime,
-		                       string databaseUser,
-		                       string @event,
-		                       string schema,
-		                       string @object,
-		                       string tSQL,
-		                       string xmlEvent)
+		public POCODatabaseLog(
+			int databaseLogID,
+			DateTime postTime,
+			string databaseUser,
+			string @event,
+			string schema,
+			string @object,
+			string tSQL,
+			string xmlEvent)
 		{
 			this.DatabaseLogID = databaseLogID.ToInt();
 			this.PostTime = postTime.ToDateTime();
@@ -28,77 +29,77 @@ namespace AdventureWorksNS.Api.Contracts
 			this.XmlEvent = xmlEvent;
 		}
 
-		public int DatabaseLogID {get; set;}
-		public DateTime PostTime {get; set;}
-		public string DatabaseUser {get; set;}
-		public string @Event {get; set;}
-		public string Schema {get; set;}
-		public string @Object {get; set;}
-		public string TSQL {get; set;}
-		public string XmlEvent {get; set;}
+		public int DatabaseLogID { get; set; }
+		public DateTime PostTime { get; set; }
+		public string DatabaseUser { get; set; }
+		public string @Event { get; set; }
+		public string Schema { get; set; }
+		public string @Object { get; set; }
+		public string TSQL { get; set; }
+		public string XmlEvent { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeDatabaseLogIDValue {get; set;} = true;
+		public bool ShouldSerializeDatabaseLogIDValue { get; set; } = true;
 
 		public bool ShouldSerializeDatabaseLogID()
 		{
-			return ShouldSerializeDatabaseLogIDValue;
+			return this.ShouldSerializeDatabaseLogIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePostTimeValue {get; set;} = true;
+		public bool ShouldSerializePostTimeValue { get; set; } = true;
 
 		public bool ShouldSerializePostTime()
 		{
-			return ShouldSerializePostTimeValue;
+			return this.ShouldSerializePostTimeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDatabaseUserValue {get; set;} = true;
+		public bool ShouldSerializeDatabaseUserValue { get; set; } = true;
 
 		public bool ShouldSerializeDatabaseUser()
 		{
-			return ShouldSerializeDatabaseUserValue;
+			return this.ShouldSerializeDatabaseUserValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEventValue {get; set;} = true;
+		public bool ShouldSerializeEventValue { get; set; } = true;
 
 		public bool ShouldSerializeEvent()
 		{
-			return ShouldSerializeEventValue;
+			return this.ShouldSerializeEventValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSchemaValue {get; set;} = true;
+		public bool ShouldSerializeSchemaValue { get; set; } = true;
 
 		public bool ShouldSerializeSchema()
 		{
-			return ShouldSerializeSchemaValue;
+			return this.ShouldSerializeSchemaValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeObjectValue {get; set;} = true;
+		public bool ShouldSerializeObjectValue { get; set; } = true;
 
 		public bool ShouldSerializeObject()
 		{
-			return ShouldSerializeObjectValue;
+			return this.ShouldSerializeObjectValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTSQLValue {get; set;} = true;
+		public bool ShouldSerializeTSQLValue { get; set; } = true;
 
 		public bool ShouldSerializeTSQL()
 		{
-			return ShouldSerializeTSQLValue;
+			return this.ShouldSerializeTSQLValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeXmlEventValue {get; set;} = true;
+		public bool ShouldSerializeXmlEventValue { get; set; } = true;
 
 		public bool ShouldSerializeXmlEvent()
 		{
-			return ShouldSerializeXmlEventValue;
+			return this.ShouldSerializeXmlEventValue;
 		}
 
 		public void DisableAllFields()
@@ -116,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d7e8c175d7763434e4ce09a2dd8ca9b2</Hash>
+    <Hash>2c08558822caf8326bab317bc1e881b0</Hash>
 </Codenesium>*/

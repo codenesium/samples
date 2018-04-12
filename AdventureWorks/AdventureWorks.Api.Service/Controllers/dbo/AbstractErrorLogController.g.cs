@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractErrorLogsController: AbstractApiController
+	public abstract class AbstractErrorLogController: AbstractApiController
 	{
 		protected IErrorLogRepository errorLogRepository;
+
 		protected IErrorLogModelValidator errorLogModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractErrorLogsController(
-			ILogger<AbstractErrorLogsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractErrorLogController(
+			ILogger<AbstractErrorLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IErrorLogRepository errorLogRepository,
 			IErrorLogModelValidator errorLogModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.errorLogRepository = errorLogRepository;
 			this.errorLogModelValidator = errorLogModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.errorLogRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.errorLogRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.errorLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,20 +81,21 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.errorLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.errorLogRepository.Create(model.ErrorTime,
-				                                        model.UserName,
-				                                        model.ErrorNumber,
-				                                        model.ErrorSeverity,
-				                                        model.ErrorState,
-				                                        model.ErrorProcedure,
-				                                        model.ErrorLine,
-				                                        model.ErrorMessage);
-				return Ok(id);
+				var id = this.errorLogRepository.Create(
+					model.ErrorTime,
+					model.UserName,
+					model.ErrorNumber,
+					model.ErrorSeverity,
+					model.ErrorState,
+					model.ErrorProcedure,
+					model.ErrorLine,
+					model.ErrorMessage);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -102,28 +109,30 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ErrorLogModel> models)
 		{
 			this.errorLogModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.errorLogModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.errorLogRepository.Create(model.ErrorTime,
-				                               model.UserName,
-				                               model.ErrorNumber,
-				                               model.ErrorSeverity,
-				                               model.ErrorState,
-				                               model.ErrorProcedure,
-				                               model.ErrorLine,
-				                               model.ErrorMessage);
+				this.errorLogRepository.Create(
+					model.ErrorTime,
+					model.UserName,
+					model.ErrorNumber,
+					model.ErrorSeverity,
+					model.ErrorState,
+					model.ErrorProcedure,
+					model.ErrorLine,
+					model.ErrorMessage);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -133,31 +142,33 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ErrorLogModel model)
+		public virtual IActionResult Update(int id, ErrorLogModel model)
 		{
-			if(this.errorLogRepository.GetByIdDirect(id) == null)
+			if (this.errorLogRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.errorLogModelValidator.UpdateMode();
 			var validationResult = this.errorLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.errorLogRepository.Update(id,  model.ErrorTime,
-				                               model.UserName,
-				                               model.ErrorNumber,
-				                               model.ErrorSeverity,
-				                               model.ErrorState,
-				                               model.ErrorProcedure,
-				                               model.ErrorLine,
-				                               model.ErrorMessage);
-				return Ok();
+				this.errorLogRepository.Update(
+					id,
+					model.ErrorTime,
+					model.UserName,
+					model.ErrorNumber,
+					model.ErrorSeverity,
+					model.ErrorState,
+					model.ErrorProcedure,
+					model.ErrorLine,
+					model.ErrorMessage);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -170,11 +181,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.errorLogRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cdab61d558d23162acc6772017f69ecb</Hash>
+    <Hash>12df1af80961ec2c0cbe8e4caf57274f</Hash>
 </Codenesium>*/

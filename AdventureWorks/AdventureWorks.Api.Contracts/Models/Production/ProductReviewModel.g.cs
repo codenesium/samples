@@ -9,13 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductReviewModel()
 		{}
-		public ProductReviewModel(int productID,
-		                          string reviewerName,
-		                          DateTime reviewDate,
-		                          string emailAddress,
-		                          int rating,
-		                          string comments,
-		                          DateTime modifiedDate)
+
+		public ProductReviewModel(
+			int productID,
+			string reviewerName,
+			DateTime reviewDate,
+			string emailAddress,
+			int rating,
+			string comments,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.ReviewerName = reviewerName;
@@ -26,105 +28,119 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private string _reviewerName;
+		private string reviewerName;
+
 		[Required]
 		public string ReviewerName
 		{
 			get
 			{
-				return _reviewerName;
+				return this.reviewerName;
 			}
+
 			set
 			{
-				this._reviewerName = value;
+				this.reviewerName = value;
 			}
 		}
 
-		private DateTime _reviewDate;
+		private DateTime reviewDate;
+
 		[Required]
 		public DateTime ReviewDate
 		{
 			get
 			{
-				return _reviewDate;
+				return this.reviewDate;
 			}
+
 			set
 			{
-				this._reviewDate = value;
+				this.reviewDate = value;
 			}
 		}
 
-		private string _emailAddress;
+		private string emailAddress;
+
 		[Required]
 		public string EmailAddress
 		{
 			get
 			{
-				return _emailAddress;
+				return this.emailAddress;
 			}
+
 			set
 			{
-				this._emailAddress = value;
+				this.emailAddress = value;
 			}
 		}
 
-		private int _rating;
+		private int rating;
+
 		[Required]
 		public int Rating
 		{
 			get
 			{
-				return _rating;
+				return this.rating;
 			}
+
 			set
 			{
-				this._rating = value;
+				this.rating = value;
 			}
 		}
 
-		private string _comments;
+		private string comments;
+
 		public string Comments
 		{
 			get
 			{
-				return _comments.IsEmptyOrZeroOrNull() ? null : _comments;
+				return this.comments.IsEmptyOrZeroOrNull() ? null : this.comments;
 			}
+
 			set
 			{
-				this._comments = value;
+				this.comments = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0f24ae4347b2b68ae915025199b7df8</Hash>
+    <Hash>bc523761b69e764cbd1954a862122e03</Hash>
 </Codenesium>*/

@@ -15,55 +15,66 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractSalesTerritoryHistoryRepository(ILogger logger,
-		                                               ApplicationDbContext context)
+		public AbstractSalesTerritoryHistoryRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(int territoryID,
-		                          DateTime startDate,
-		                          Nullable<DateTime> endDate,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			int territoryID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record = new EFSalesTerritoryHistory ();
+			var record = new EFSalesTerritoryHistory();
 
-			MapPOCOToEF(0, territoryID,
-			            startDate,
-			            endDate,
-			            rowguid,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				territoryID,
+				startDate,
+				endDate,
+				rowguid,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFSalesTerritoryHistory>().Add(record);
 			this.context.SaveChanges();
 			return record.BusinessEntityID;
 		}
 
-		public virtual void Update(int businessEntityID, int territoryID,
-		                           DateTime startDate,
-		                           Nullable<DateTime> endDate,
-		                           Guid rowguid,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int businessEntityID,
+			int territoryID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
-				MapPOCOToEF(businessEntityID,  territoryID,
-				            startDate,
-				            endDate,
-				            rowguid,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					businessEntityID,
+					territoryID,
+					startDate,
+					endDate,
+					rowguid,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int businessEntityID)
+		public virtual void Delete(
+			int businessEntityID)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
@@ -82,7 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
 		}
 
@@ -90,11 +101,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID,response);
+			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.SalesTerritoryHistories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -102,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -110,7 +121,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOSalesTerritoryHistory> GetWhereDirect(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOSalesTerritoryHistory> GetWhereDirect(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -118,44 +129,50 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.SalesTerritoryHistories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSalesTerritoryHistory, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFSalesTerritoryHistory> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFSalesTerritoryHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFSalesTerritoryHistory> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFSalesTerritoryHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFSalesTerritoryHistory> SearchLinqEF(Expression<Func<EFSalesTerritoryHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFSalesTerritoryHistory> SearchLinqEF(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFSalesTerritoryHistory> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFSalesTerritoryHistory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int businessEntityID, int territoryID,
-		                               DateTime startDate,
-		                               Nullable<DateTime> endDate,
-		                               Guid rowguid,
-		                               DateTime modifiedDate, EFSalesTerritoryHistory   efSalesTerritoryHistory)
+		public static void MapPOCOToEF(
+			int businessEntityID,
+			int territoryID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			Guid rowguid,
+			DateTime modifiedDate,
+			EFSalesTerritoryHistory efSalesTerritoryHistory)
 		{
-			efSalesTerritoryHistory.SetProperties(businessEntityID.ToInt(),territoryID.ToInt(),startDate.ToDateTime(),endDate.ToNullableDateTime(),rowguid,modifiedDate.ToDateTime());
+			efSalesTerritoryHistory.SetProperties(businessEntityID.ToInt(), territoryID.ToInt(), startDate.ToDateTime(), endDate.ToNullableDateTime(), rowguid, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFSalesTerritoryHistory efSalesTerritoryHistory,Response response)
+		public static void MapEFToPOCO(
+			EFSalesTerritoryHistory efSalesTerritoryHistory,
+			Response response)
 		{
-			if(efSalesTerritoryHistory == null)
+			if (efSalesTerritoryHistory == null)
 			{
 				return;
 			}
-			response.AddSalesTerritoryHistory(new POCOSalesTerritoryHistory(efSalesTerritoryHistory.BusinessEntityID.ToInt(),efSalesTerritoryHistory.TerritoryID.ToInt(),efSalesTerritoryHistory.StartDate.ToDateTime(),efSalesTerritoryHistory.EndDate.ToNullableDateTime(),efSalesTerritoryHistory.Rowguid,efSalesTerritoryHistory.ModifiedDate.ToDateTime()));
+
+			response.AddSalesTerritoryHistory(new POCOSalesTerritoryHistory(efSalesTerritoryHistory.BusinessEntityID.ToInt(), efSalesTerritoryHistory.TerritoryID.ToInt(), efSalesTerritoryHistory.StartDate.ToDateTime(), efSalesTerritoryHistory.EndDate.ToNullableDateTime(), efSalesTerritoryHistory.Rowguid, efSalesTerritoryHistory.ModifiedDate.ToDateTime()));
 
 			SalesPersonRepository.MapEFToPOCO(efSalesTerritoryHistory.SalesPerson, response);
 
@@ -165,5 +182,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>87f3d7e87aad4acaff380faa49adfed8</Hash>
+    <Hash>afa6ad4e2942feb0338859701110fb2e</Hash>
 </Codenesium>*/

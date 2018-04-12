@@ -15,63 +15,74 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractDatabaseLogRepository(ILogger logger,
-		                                     ApplicationDbContext context)
+		public AbstractDatabaseLogRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(DateTime postTime,
-		                          string databaseUser,
-		                          string @event,
-		                          string schema,
-		                          string @object,
-		                          string tSQL,
-		                          string xmlEvent)
+		public virtual int Create(
+			DateTime postTime,
+			string databaseUser,
+			string @event,
+			string schema,
+			string @object,
+			string tSQL,
+			string xmlEvent)
 		{
-			var record = new EFDatabaseLog ();
+			var record = new EFDatabaseLog();
 
-			MapPOCOToEF(0, postTime,
-			            databaseUser,
-			            @event,
-			            schema,
-			            @object,
-			            tSQL,
-			            xmlEvent, record);
+			MapPOCOToEF(
+				0,
+				postTime,
+				databaseUser,
+				@event,
+				schema,
+				@object,
+				tSQL,
+				xmlEvent,
+				record);
 
 			this.context.Set<EFDatabaseLog>().Add(record);
 			this.context.SaveChanges();
 			return record.DatabaseLogID;
 		}
 
-		public virtual void Update(int databaseLogID, DateTime postTime,
-		                           string databaseUser,
-		                           string @event,
-		                           string schema,
-		                           string @object,
-		                           string tSQL,
-		                           string xmlEvent)
+		public virtual void Update(
+			int databaseLogID,
+			DateTime postTime,
+			string databaseUser,
+			string @event,
+			string schema,
+			string @object,
+			string tSQL,
+			string xmlEvent)
 		{
-			var record =  this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{databaseLogID}");
 			}
 			else
 			{
-				MapPOCOToEF(databaseLogID,  postTime,
-				            databaseUser,
-				            @event,
-				            schema,
-				            @object,
-				            tSQL,
-				            xmlEvent, record);
+				MapPOCOToEF(
+					databaseLogID,
+					postTime,
+					databaseUser,
+					@event,
+					schema,
+					@object,
+					tSQL,
+					xmlEvent,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int databaseLogID)
+		public virtual void Delete(
+			int databaseLogID)
 		{
 			var record = this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID).FirstOrDefault();
 
@@ -90,7 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID,response);
+			this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID, response);
 			return response;
 		}
 
@@ -98,11 +109,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID,response);
+			this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID, response);
 			return response.DatabaseLogs.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -110,7 +121,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -118,7 +129,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCODatabaseLog> GetWhereDirect(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCODatabaseLog> GetWhereDirect(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -126,50 +137,56 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.DatabaseLogs;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFDatabaseLog, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFDatabaseLog, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFDatabaseLog> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFDatabaseLog> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFDatabaseLog> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFDatabaseLog> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFDatabaseLog> SearchLinqEF(Expression<Func<EFDatabaseLog, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFDatabaseLog> SearchLinqEF(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFDatabaseLog> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFDatabaseLog> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int databaseLogID, DateTime postTime,
-		                               string databaseUser,
-		                               string @event,
-		                               string schema,
-		                               string @object,
-		                               string tSQL,
-		                               string xmlEvent, EFDatabaseLog   efDatabaseLog)
+		public static void MapPOCOToEF(
+			int databaseLogID,
+			DateTime postTime,
+			string databaseUser,
+			string @event,
+			string schema,
+			string @object,
+			string tSQL,
+			string xmlEvent,
+			EFDatabaseLog efDatabaseLog)
 		{
-			efDatabaseLog.SetProperties(databaseLogID.ToInt(),postTime.ToDateTime(),databaseUser,@event,schema,@object,tSQL,xmlEvent);
+			efDatabaseLog.SetProperties(databaseLogID.ToInt(), postTime.ToDateTime(), databaseUser, @event, schema, @object, tSQL, xmlEvent);
 		}
 
-		public static void MapEFToPOCO(EFDatabaseLog efDatabaseLog,Response response)
+		public static void MapEFToPOCO(
+			EFDatabaseLog efDatabaseLog,
+			Response response)
 		{
-			if(efDatabaseLog == null)
+			if (efDatabaseLog == null)
 			{
 				return;
 			}
-			response.AddDatabaseLog(new POCODatabaseLog(efDatabaseLog.DatabaseLogID.ToInt(),efDatabaseLog.PostTime.ToDateTime(),efDatabaseLog.DatabaseUser,efDatabaseLog.@Event,efDatabaseLog.Schema,efDatabaseLog.@Object,efDatabaseLog.TSQL,efDatabaseLog.XmlEvent));
+
+			response.AddDatabaseLog(new POCODatabaseLog(efDatabaseLog.DatabaseLogID.ToInt(), efDatabaseLog.PostTime.ToDateTime(), efDatabaseLog.DatabaseUser, efDatabaseLog.@Event, efDatabaseLog.Schema, efDatabaseLog.@Object, efDatabaseLog.TSQL, efDatabaseLog.XmlEvent));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6ea951822b1ee744ae5e563ce53eaf78</Hash>
+    <Hash>285528053212a32b8a60a58bf78d6c41</Hash>
 </Codenesium>*/

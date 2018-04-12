@@ -9,59 +9,67 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductModelProductDescriptionCultureModel()
 		{}
-		public ProductModelProductDescriptionCultureModel(int productDescriptionID,
-		                                                  string cultureID,
-		                                                  DateTime modifiedDate)
+
+		public ProductModelProductDescriptionCultureModel(
+			int productDescriptionID,
+			string cultureID,
+			DateTime modifiedDate)
 		{
 			this.ProductDescriptionID = productDescriptionID.ToInt();
 			this.CultureID = cultureID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _productDescriptionID;
+		private int productDescriptionID;
+
 		[Required]
 		public int ProductDescriptionID
 		{
 			get
 			{
-				return _productDescriptionID;
+				return this.productDescriptionID;
 			}
+
 			set
 			{
-				this._productDescriptionID = value;
+				this.productDescriptionID = value;
 			}
 		}
 
-		private string _cultureID;
+		private string cultureID;
+
 		[Required]
 		public string CultureID
 		{
 			get
 			{
-				return _cultureID;
+				return this.cultureID;
 			}
+
 			set
 			{
-				this._cultureID = value;
+				this.cultureID = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>953145ec7b6b92db7f9d1708fcf46974</Hash>
+    <Hash>adb9f8ebd539115c4c8ca8e16d5ec525</Hash>
 </Codenesium>*/

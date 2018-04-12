@@ -15,47 +15,58 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractDepartmentRepository(ILogger logger,
-		                                    ApplicationDbContext context)
+		public AbstractDepartmentRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual short Create(string name,
-		                            string groupName,
-		                            DateTime modifiedDate)
+		public virtual short Create(
+			string name,
+			string groupName,
+			DateTime modifiedDate)
 		{
-			var record = new EFDepartment ();
+			var record = new EFDepartment();
 
-			MapPOCOToEF(0, name,
-			            groupName,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				name,
+				groupName,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFDepartment>().Add(record);
 			this.context.SaveChanges();
 			return record.DepartmentID;
 		}
 
-		public virtual void Update(short departmentID, string name,
-		                           string groupName,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			short departmentID,
+			string name,
+			string groupName,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{departmentID}");
 			}
 			else
 			{
-				MapPOCOToEF(departmentID,  name,
-				            groupName,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					departmentID,
+					name,
+					groupName,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(short departmentID)
+		public virtual void Delete(
+			short departmentID)
 		{
 			var record = this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
 
@@ -74,7 +85,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.DepartmentID == departmentID,response);
+			this.SearchLinqPOCO(x => x.DepartmentID == departmentID, response);
 			return response;
 		}
 
@@ -82,11 +93,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.DepartmentID == departmentID,response);
+			this.SearchLinqPOCO(x => x.DepartmentID == departmentID, response);
 			return response.Departments.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -94,7 +105,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -102,7 +113,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCODepartment> GetWhereDirect(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCODepartment> GetWhereDirect(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -110,46 +121,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.Departments;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFDepartment, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFDepartment, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFDepartment> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFDepartment> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFDepartment> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFDepartment> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFDepartment> SearchLinqEF(Expression<Func<EFDepartment, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFDepartment> SearchLinqEF(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFDepartment> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFDepartment> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(short departmentID, string name,
-		                               string groupName,
-		                               DateTime modifiedDate, EFDepartment   efDepartment)
+		public static void MapPOCOToEF(
+			short departmentID,
+			string name,
+			string groupName,
+			DateTime modifiedDate,
+			EFDepartment efDepartment)
 		{
-			efDepartment.SetProperties(departmentID,name,groupName,modifiedDate.ToDateTime());
+			efDepartment.SetProperties(departmentID, name, groupName, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFDepartment efDepartment,Response response)
+		public static void MapEFToPOCO(
+			EFDepartment efDepartment,
+			Response response)
 		{
-			if(efDepartment == null)
+			if (efDepartment == null)
 			{
 				return;
 			}
-			response.AddDepartment(new POCODepartment(efDepartment.DepartmentID,efDepartment.Name,efDepartment.GroupName,efDepartment.ModifiedDate.ToDateTime()));
+
+			response.AddDepartment(new POCODepartment(efDepartment.DepartmentID, efDepartment.Name, efDepartment.GroupName, efDepartment.ModifiedDate.ToDateTime()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0566c23252cc898b4c64bf45d955d9eb</Hash>
+    <Hash>c308ab192384e15f863a3442f5c2afb6</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("PurchaseOrderHeader", Schema="Purchasing")]
@@ -10,19 +11,20 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFPurchaseOrderHeader()
 		{}
 
-		public void SetProperties(int purchaseOrderID,
-		                          int revisionNumber,
-		                          int status,
-		                          int employeeID,
-		                          int vendorID,
-		                          int shipMethodID,
-		                          DateTime orderDate,
-		                          Nullable<DateTime> shipDate,
-		                          decimal subTotal,
-		                          decimal taxAmt,
-		                          decimal freight,
-		                          decimal totalDue,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int purchaseOrderID,
+			int revisionNumber,
+			int status,
+			int employeeID,
+			int vendorID,
+			int shipMethodID,
+			DateTime orderDate,
+			Nullable<DateTime> shipDate,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			DateTime modifiedDate)
 		{
 			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.RevisionNumber = revisionNumber;
@@ -42,52 +44,55 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("PurchaseOrderID", TypeName="int")]
-		public int PurchaseOrderID {get; set;}
+		public int PurchaseOrderID { get; set; }
 
 		[Column("RevisionNumber", TypeName="tinyint")]
-		public int RevisionNumber {get; set;}
+		public int RevisionNumber { get; set; }
 
 		[Column("Status", TypeName="tinyint")]
-		public int Status {get; set;}
+		public int Status { get; set; }
 
 		[Column("EmployeeID", TypeName="int")]
-		public int EmployeeID {get; set;}
+		public int EmployeeID { get; set; }
 
 		[Column("VendorID", TypeName="int")]
-		public int VendorID {get; set;}
+		public int VendorID { get; set; }
 
 		[Column("ShipMethodID", TypeName="int")]
-		public int ShipMethodID {get; set;}
+		public int ShipMethodID { get; set; }
 
 		[Column("OrderDate", TypeName="datetime")]
-		public DateTime OrderDate {get; set;}
+		public DateTime OrderDate { get; set; }
 
 		[Column("ShipDate", TypeName="datetime")]
-		public Nullable<DateTime> ShipDate {get; set;}
+		public Nullable<DateTime> ShipDate { get; set; }
 
 		[Column("SubTotal", TypeName="money")]
-		public decimal SubTotal {get; set;}
+		public decimal SubTotal { get; set; }
 
 		[Column("TaxAmt", TypeName="money")]
-		public decimal TaxAmt {get; set;}
+		public decimal TaxAmt { get; set; }
 
 		[Column("Freight", TypeName="money")]
-		public decimal Freight {get; set;}
+		public decimal Freight { get; set; }
 
 		[Column("TotalDue", TypeName="money")]
-		public decimal TotalDue {get; set;}
+		public decimal TotalDue { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("EmployeeID")]
 		public virtual EFEmployee Employee { get; set; }
 
+		[ForeignKey("VendorID")]
 		public virtual EFVendor Vendor { get; set; }
 
+		[ForeignKey("ShipMethodID")]
 		public virtual EFShipMethod ShipMethod { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc995278e83ba0c2389a5d73ff64748a</Hash>
+    <Hash>e153c48906fa15709644418b13135a36</Hash>
 </Codenesium>*/

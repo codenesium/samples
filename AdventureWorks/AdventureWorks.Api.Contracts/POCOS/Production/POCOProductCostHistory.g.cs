@@ -9,65 +9,66 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOProductCostHistory()
 		{}
 
-		public POCOProductCostHistory(int productID,
-		                              DateTime startDate,
-		                              Nullable<DateTime> endDate,
-		                              decimal standardCost,
-		                              DateTime modifiedDate)
+		public POCOProductCostHistory(
+			int productID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal standardCost,
+			DateTime modifiedDate)
 		{
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.StandardCost = standardCost;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          "Product");
 		}
 
-		public ReferenceEntity<int>ProductID {get; set;}
-		public DateTime StartDate {get; set;}
-		public Nullable<DateTime> EndDate {get; set;}
-		public decimal StandardCost {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> ProductID { get; set; }
+		public DateTime StartDate { get; set; }
+		public Nullable<DateTime> EndDate { get; set; }
+		public decimal StandardCost { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue {get; set;} = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductID()
 		{
-			return ShouldSerializeProductIDValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue {get; set;} = true;
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
 
 		public bool ShouldSerializeStartDate()
 		{
-			return ShouldSerializeStartDateValue;
+			return this.ShouldSerializeStartDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEndDateValue {get; set;} = true;
+		public bool ShouldSerializeEndDateValue { get; set; } = true;
 
 		public bool ShouldSerializeEndDate()
 		{
-			return ShouldSerializeEndDateValue;
+			return this.ShouldSerializeEndDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStandardCostValue {get; set;} = true;
+		public bool ShouldSerializeStandardCostValue { get; set; } = true;
 
 		public bool ShouldSerializeStandardCost()
 		{
-			return ShouldSerializeStandardCostValue;
+			return this.ShouldSerializeStandardCostValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -82,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>de209c6dc2c0cbf1f2b95b8b0c7e37ab</Hash>
+    <Hash>9d7836510f78868fd179e24acdee4893</Hash>
 </Codenesium>*/

@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class TransactionHistoryArchiveModelValidator: AbstractTransactionHistoryArchiveModelValidator,ITransactionHistoryArchiveModelValidator
+	public class TransactionHistoryArchiveModelValidator: AbstractTransactionHistoryArchiveModelValidator, ITransactionHistoryArchiveModelValidator
 	{
 		public TransactionHistoryArchiveModelValidator()
 		{   }
@@ -37,5 +38,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>50aabd154860112dbf36277960697048</Hash>
+    <Hash>2a16d4eb00dd3b02a62d81c905b392b8</Hash>
 </Codenesium>*/

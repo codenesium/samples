@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractBillOfMaterialsController: AbstractApiController
 	{
 		protected IBillOfMaterialsRepository billOfMaterialsRepository;
+
 		protected IBillOfMaterialsModelValidator billOfMaterialsModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
 		public AbstractBillOfMaterialsController(
 			ILogger<AbstractBillOfMaterialsController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBillOfMaterialsRepository billOfMaterialsRepository,
 			IBillOfMaterialsModelValidator billOfMaterialsModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.billOfMaterialsRepository = billOfMaterialsRepository;
 			this.billOfMaterialsModelValidator = billOfMaterialsModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.billOfMaterialsRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,20 +81,21 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.billOfMaterialsModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.billOfMaterialsRepository.Create(model.ProductAssemblyID,
-				                                               model.ComponentID,
-				                                               model.StartDate,
-				                                               model.EndDate,
-				                                               model.UnitMeasureCode,
-				                                               model.BOMLevel,
-				                                               model.PerAssemblyQty,
-				                                               model.ModifiedDate);
-				return Ok(id);
+				var id = this.billOfMaterialsRepository.Create(
+					model.ProductAssemblyID,
+					model.ComponentID,
+					model.StartDate,
+					model.EndDate,
+					model.UnitMeasureCode,
+					model.BOMLevel,
+					model.PerAssemblyQty,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -102,28 +109,30 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<BillOfMaterialsModel> models)
 		{
 			this.billOfMaterialsModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.billOfMaterialsModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.billOfMaterialsRepository.Create(model.ProductAssemblyID,
-				                                      model.ComponentID,
-				                                      model.StartDate,
-				                                      model.EndDate,
-				                                      model.UnitMeasureCode,
-				                                      model.BOMLevel,
-				                                      model.PerAssemblyQty,
-				                                      model.ModifiedDate);
+				this.billOfMaterialsRepository.Create(
+					model.ProductAssemblyID,
+					model.ComponentID,
+					model.StartDate,
+					model.EndDate,
+					model.UnitMeasureCode,
+					model.BOMLevel,
+					model.PerAssemblyQty,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -133,31 +142,33 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,BillOfMaterialsModel model)
+		public virtual IActionResult Update(int id, BillOfMaterialsModel model)
 		{
-			if(this.billOfMaterialsRepository.GetByIdDirect(id) == null)
+			if (this.billOfMaterialsRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.billOfMaterialsModelValidator.UpdateMode();
 			var validationResult = this.billOfMaterialsModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.billOfMaterialsRepository.Update(id,  model.ProductAssemblyID,
-				                                      model.ComponentID,
-				                                      model.StartDate,
-				                                      model.EndDate,
-				                                      model.UnitMeasureCode,
-				                                      model.BOMLevel,
-				                                      model.PerAssemblyQty,
-				                                      model.ModifiedDate);
-				return Ok();
+				this.billOfMaterialsRepository.Update(
+					id,
+					model.ProductAssemblyID,
+					model.ComponentID,
+					model.StartDate,
+					model.EndDate,
+					model.UnitMeasureCode,
+					model.BOMLevel,
+					model.PerAssemblyQty,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -170,7 +181,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.billOfMaterialsRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -183,7 +194,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -196,7 +207,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.billOfMaterialsRepository.GetWhere(x => x.ComponentID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -209,11 +220,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>25bc6556cb040edd2158fd6ff865b763</Hash>
+    <Hash>0f576685fc8f9f4312cd0b6bea62346c</Hash>
 </Codenesium>*/

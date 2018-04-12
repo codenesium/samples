@@ -9,59 +9,67 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductProductPhotoModel()
 		{}
-		public ProductProductPhotoModel(int productPhotoID,
-		                                bool primary,
-		                                DateTime modifiedDate)
+
+		public ProductProductPhotoModel(
+			int productPhotoID,
+			bool primary,
+			DateTime modifiedDate)
 		{
 			this.ProductPhotoID = productPhotoID.ToInt();
 			this.Primary = primary;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _productPhotoID;
+		private int productPhotoID;
+
 		[Required]
 		public int ProductPhotoID
 		{
 			get
 			{
-				return _productPhotoID;
+				return this.productPhotoID;
 			}
+
 			set
 			{
-				this._productPhotoID = value;
+				this.productPhotoID = value;
 			}
 		}
 
-		private bool _primary;
+		private bool primary;
+
 		[Required]
 		public bool Primary
 		{
 			get
 			{
-				return _primary;
+				return this.primary;
 			}
+
 			set
 			{
-				this._primary = value;
+				this.primary = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5af49c233459107e2118234a98237a2</Hash>
+    <Hash>73678955ed8140f6244bce85ceeb006a</Hash>
 </Codenesium>*/

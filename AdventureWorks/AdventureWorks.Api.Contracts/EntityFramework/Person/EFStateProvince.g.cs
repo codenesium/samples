@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("StateProvince", Schema="Person")]
@@ -10,14 +11,15 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFStateProvince()
 		{}
 
-		public void SetProperties(int stateProvinceID,
-		                          string stateProvinceCode,
-		                          string countryRegionCode,
-		                          bool isOnlyStateProvinceFlag,
-		                          string name,
-		                          int territoryID,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int stateProvinceID,
+			string stateProvinceCode,
+			string countryRegionCode,
+			bool isOnlyStateProvinceFlag,
+			string name,
+			int territoryID,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.StateProvinceID = stateProvinceID.ToInt();
 			this.StateProvinceCode = stateProvinceCode;
@@ -32,35 +34,37 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("StateProvinceID", TypeName="int")]
-		public int StateProvinceID {get; set;}
+		public int StateProvinceID { get; set; }
 
 		[Column("StateProvinceCode", TypeName="nchar(3)")]
-		public string StateProvinceCode {get; set;}
+		public string StateProvinceCode { get; set; }
 
 		[Column("CountryRegionCode", TypeName="nvarchar(3)")]
-		public string CountryRegionCode {get; set;}
+		public string CountryRegionCode { get; set; }
 
 		[Column("IsOnlyStateProvinceFlag", TypeName="bit")]
-		public bool IsOnlyStateProvinceFlag {get; set;}
+		public bool IsOnlyStateProvinceFlag { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("TerritoryID", TypeName="int")]
-		public int TerritoryID {get; set;}
+		public int TerritoryID { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("CountryRegionCode")]
 		public virtual EFCountryRegion CountryRegion { get; set; }
 
+		[ForeignKey("TerritoryID")]
 		public virtual EFSalesTerritory SalesTerritory { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>368e58cfefbac8f8c6620ce13a60cba0</Hash>
+    <Hash>8b3cc3f1d6fea5291ff9201f61109881</Hash>
 </Codenesium>*/

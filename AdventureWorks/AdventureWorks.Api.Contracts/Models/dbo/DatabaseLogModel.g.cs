@@ -9,13 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public DatabaseLogModel()
 		{}
-		public DatabaseLogModel(DateTime postTime,
-		                        string databaseUser,
-		                        string @event,
-		                        string schema,
-		                        string @object,
-		                        string tSQL,
-		                        string xmlEvent)
+
+		public DatabaseLogModel(
+			DateTime postTime,
+			string databaseUser,
+			string @event,
+			string schema,
+			string @object,
+			string tSQL,
+			string xmlEvent)
 		{
 			this.PostTime = postTime.ToDateTime();
 			this.DatabaseUser = databaseUser;
@@ -26,104 +28,118 @@ namespace AdventureWorksNS.Api.Contracts
 			this.XmlEvent = xmlEvent;
 		}
 
-		private DateTime _postTime;
+		private DateTime postTime;
+
 		[Required]
 		public DateTime PostTime
 		{
 			get
 			{
-				return _postTime;
+				return this.postTime;
 			}
+
 			set
 			{
-				this._postTime = value;
+				this.postTime = value;
 			}
 		}
 
-		private string _databaseUser;
+		private string databaseUser;
+
 		[Required]
 		public string DatabaseUser
 		{
 			get
 			{
-				return _databaseUser;
+				return this.databaseUser;
 			}
+
 			set
 			{
-				this._databaseUser = value;
+				this.databaseUser = value;
 			}
 		}
 
 		private string @event;
+
 		[Required]
 		public string @Event
 		{
 			get
 			{
-				return @event;
+				return this.@event;
 			}
+
 			set
 			{
 				this.@event = value;
 			}
 		}
 
-		private string _schema;
+		private string schema;
+
 		public string Schema
 		{
 			get
 			{
-				return _schema.IsEmptyOrZeroOrNull() ? null : _schema;
+				return this.schema.IsEmptyOrZeroOrNull() ? null : this.schema;
 			}
+
 			set
 			{
-				this._schema = value;
+				this.schema = value;
 			}
 		}
 
 		private string @object;
+
 		public string @Object
 		{
 			get
 			{
-				return @object.IsEmptyOrZeroOrNull() ? null : @object;
+				return this.@object.IsEmptyOrZeroOrNull() ? null : this.@object;
 			}
+
 			set
 			{
 				this.@object = value;
 			}
 		}
 
-		private string _tSQL;
+		private string tSQL;
+
 		[Required]
 		public string TSQL
 		{
 			get
 			{
-				return _tSQL;
+				return this.tSQL;
 			}
+
 			set
 			{
-				this._tSQL = value;
+				this.tSQL = value;
 			}
 		}
 
-		private string _xmlEvent;
+		private string xmlEvent;
+
 		[Required]
 		public string XmlEvent
 		{
 			get
 			{
-				return _xmlEvent;
+				return this.xmlEvent;
 			}
+
 			set
 			{
-				this._xmlEvent = value;
+				this.xmlEvent = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f6bc30319ec100820ff3ba06983dfb72</Hash>
+    <Hash>54e4ec91cfcaa1669ea069854e51880b</Hash>
 </Codenesium>*/

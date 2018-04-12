@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractPersonPhonesController: AbstractApiController
+	public abstract class AbstractPersonPhoneController: AbstractApiController
 	{
 		protected IPersonPhoneRepository personPhoneRepository;
+
 		protected IPersonPhoneModelValidator personPhoneModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractPersonPhonesController(
-			ILogger<AbstractPersonPhonesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractPersonPhoneController(
+			ILogger<AbstractPersonPhoneController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPersonPhoneRepository personPhoneRepository,
 			IPersonPhoneModelValidator personPhoneModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.personPhoneRepository = personPhoneRepository;
 			this.personPhoneModelValidator = personPhoneModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.personPhoneRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.personPhoneRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.personPhoneRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,15 +81,16 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.personPhoneModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.personPhoneRepository.Create(model.PhoneNumber,
-				                                           model.PhoneNumberTypeID,
-				                                           model.ModifiedDate);
-				return Ok(id);
+				var id = this.personPhoneRepository.Create(
+					model.PhoneNumber,
+					model.PhoneNumberTypeID,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -97,23 +104,25 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<PersonPhoneModel> models)
 		{
 			this.personPhoneModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.personPhoneModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.personPhoneRepository.Create(model.PhoneNumber,
-				                                  model.PhoneNumberTypeID,
-				                                  model.ModifiedDate);
+				this.personPhoneRepository.Create(
+					model.PhoneNumber,
+					model.PhoneNumberTypeID,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -123,26 +132,28 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,PersonPhoneModel model)
+		public virtual IActionResult Update(int id, PersonPhoneModel model)
 		{
-			if(this.personPhoneRepository.GetByIdDirect(id) == null)
+			if (this.personPhoneRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.personPhoneModelValidator.UpdateMode();
 			var validationResult = this.personPhoneModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.personPhoneRepository.Update(id,  model.PhoneNumber,
-				                                  model.PhoneNumberTypeID,
-				                                  model.ModifiedDate);
-				return Ok();
+				this.personPhoneRepository.Update(
+					id,
+					model.PhoneNumber,
+					model.PhoneNumberTypeID,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -155,7 +166,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.personPhoneRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -168,7 +179,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.personPhoneRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -181,11 +192,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.personPhoneRepository.GetWhere(x => x.PhoneNumberTypeID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>30225b75e6fd4d5ec84ac65305c84c3c</Hash>
+    <Hash>1cb10681cc724cb3eba19a4583e99002</Hash>
 </Codenesium>*/

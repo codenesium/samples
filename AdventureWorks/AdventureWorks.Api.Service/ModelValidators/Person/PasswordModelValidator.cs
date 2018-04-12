@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class PasswordModelValidator: AbstractPasswordModelValidator,IPasswordModelValidator
+	public class PasswordModelValidator: AbstractPasswordModelValidator, IPasswordModelValidator
 	{
 		public PasswordModelValidator()
 		{   }
@@ -29,5 +30,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0c738485a49d72b2f8c6a5553b26b668</Hash>
+    <Hash>3b2a8155c9a20f02e0bbe77922d796c0</Hash>
 </Codenesium>*/

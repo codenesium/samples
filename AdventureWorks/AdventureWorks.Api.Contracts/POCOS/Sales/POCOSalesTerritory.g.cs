@@ -9,16 +9,17 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOSalesTerritory()
 		{}
 
-		public POCOSalesTerritory(int territoryID,
-		                          string name,
-		                          string countryRegionCode,
-		                          string @group,
-		                          decimal salesYTD,
-		                          decimal salesLastYear,
-		                          decimal costYTD,
-		                          decimal costLastYear,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public POCOSalesTerritory(
+			int territoryID,
+			string name,
+			string countryRegionCode,
+			string @group,
+			decimal salesYTD,
+			decimal salesLastYear,
+			decimal costYTD,
+			decimal costLastYear,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.TerritoryID = territoryID.ToInt();
 			this.Name = name;
@@ -30,99 +31,99 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
-			                                                "CountryRegion");
+			this.CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
+			                                                     "CountryRegion");
 		}
 
-		public int TerritoryID {get; set;}
-		public string Name {get; set;}
-		public ReferenceEntity<string>CountryRegionCode {get; set;}
-		public string @Group {get; set;}
-		public decimal SalesYTD {get; set;}
-		public decimal SalesLastYear {get; set;}
-		public decimal CostYTD {get; set;}
-		public decimal CostLastYear {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int TerritoryID { get; set; }
+		public string Name { get; set; }
+		public ReferenceEntity<string> CountryRegionCode { get; set; }
+		public string @Group { get; set; }
+		public decimal SalesYTD { get; set; }
+		public decimal SalesLastYear { get; set; }
+		public decimal CostYTD { get; set; }
+		public decimal CostLastYear { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeTerritoryIDValue {get; set;} = true;
+		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
 
 		public bool ShouldSerializeTerritoryID()
 		{
-			return ShouldSerializeTerritoryIDValue;
+			return this.ShouldSerializeTerritoryIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionCodeValue {get; set;} = true;
+		public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeCountryRegionCode()
 		{
-			return ShouldSerializeCountryRegionCodeValue;
+			return this.ShouldSerializeCountryRegionCodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeGroupValue {get; set;} = true;
+		public bool ShouldSerializeGroupValue { get; set; } = true;
 
 		public bool ShouldSerializeGroup()
 		{
-			return ShouldSerializeGroupValue;
+			return this.ShouldSerializeGroupValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesYTDValue {get; set;} = true;
+		public bool ShouldSerializeSalesYTDValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesYTD()
 		{
-			return ShouldSerializeSalesYTDValue;
+			return this.ShouldSerializeSalesYTDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesLastYearValue {get; set;} = true;
+		public bool ShouldSerializeSalesLastYearValue { get; set; } = true;
 
 		public bool ShouldSerializeSalesLastYear()
 		{
-			return ShouldSerializeSalesLastYearValue;
+			return this.ShouldSerializeSalesLastYearValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCostYTDValue {get; set;} = true;
+		public bool ShouldSerializeCostYTDValue { get; set; } = true;
 
 		public bool ShouldSerializeCostYTD()
 		{
-			return ShouldSerializeCostYTDValue;
+			return this.ShouldSerializeCostYTDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCostLastYearValue {get; set;} = true;
+		public bool ShouldSerializeCostLastYearValue { get; set; } = true;
 
 		public bool ShouldSerializeCostLastYear()
 		{
-			return ShouldSerializeCostLastYearValue;
+			return this.ShouldSerializeCostLastYearValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -142,5 +143,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f850d41ed5f55156525a2fbd54db1ca8</Hash>
+    <Hash>f7023f45cca029c09696a2c9b8655790</Hash>
 </Codenesium>*/

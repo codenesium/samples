@@ -7,11 +7,13 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IDepartmentRepository
 	{
-		short Create(string name,
-		             string groupName,
-		             DateTime modifiedDate);
+		short Create(
+			string name,
+			string groupName,
+			DateTime modifiedDate);
 
-		void Update(short departmentID, string name,
+		void Update(short departmentID,
+		            string name,
 		            string groupName,
 		            DateTime modifiedDate);
 
@@ -21,14 +23,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCODepartment GetByIdDirect(short departmentID);
 
-		Response GetWhere(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCODepartment> GetWhereDirect(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCODepartment> GetWhereDirect(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>bde75b966f7eb755046a706e78860af4</Hash>
+    <Hash>7185dcfd25f8dfcb7643d0862508eb0a</Hash>
 </Codenesium>*/

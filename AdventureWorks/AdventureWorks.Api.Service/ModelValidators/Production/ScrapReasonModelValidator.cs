@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class ScrapReasonModelValidator: AbstractScrapReasonModelValidator,IScrapReasonModelValidator
+	public class ScrapReasonModelValidator: AbstractScrapReasonModelValidator, IScrapReasonModelValidator
 	{
 		public ScrapReasonModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7016fe50223c05ac68f3488f2034d463</Hash>
+    <Hash>3072cbdb652c83e6902a6d0c1f476c43</Hash>
 </Codenesium>*/

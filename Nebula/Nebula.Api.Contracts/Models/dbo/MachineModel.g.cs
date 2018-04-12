@@ -9,11 +9,13 @@ namespace NebulaNS.Api.Contracts
 	{
 		public MachineModel()
 		{}
-		public MachineModel(string name,
-		                    Guid machineGuid,
-		                    string jwtKey,
-		                    string lastIpAddress,
-		                    string description)
+
+		public MachineModel(
+			string name,
+			Guid machineGuid,
+			string jwtKey,
+			string lastIpAddress,
+			string description)
 		{
 			this.Name = name;
 			this.MachineGuid = machineGuid;
@@ -22,78 +24,88 @@ namespace NebulaNS.Api.Contracts
 			this.Description = description;
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private Guid _machineGuid;
+		private Guid machineGuid;
+
 		[Required]
 		public Guid MachineGuid
 		{
 			get
 			{
-				return _machineGuid;
+				return this.machineGuid;
 			}
+
 			set
 			{
-				this._machineGuid = value;
+				this.machineGuid = value;
 			}
 		}
 
-		private string _jwtKey;
+		private string jwtKey;
+
 		[Required]
 		public string JwtKey
 		{
 			get
 			{
-				return _jwtKey;
+				return this.jwtKey;
 			}
+
 			set
 			{
-				this._jwtKey = value;
+				this.jwtKey = value;
 			}
 		}
 
-		private string _lastIpAddress;
+		private string lastIpAddress;
+
 		[Required]
 		public string LastIpAddress
 		{
 			get
 			{
-				return _lastIpAddress;
+				return this.lastIpAddress;
 			}
+
 			set
 			{
-				this._lastIpAddress = value;
+				this.lastIpAddress = value;
 			}
 		}
 
-		private string _description;
+		private string description;
+
 		[Required]
 		public string Description
 		{
 			get
 			{
-				return _description;
+				return this.description;
 			}
+
 			set
 			{
-				this._description = value;
+				this.description = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>73e4ecd398df38fdb25d5549499799de</Hash>
+    <Hash>6476036825ba61c617c3075291f54875</Hash>
 </Codenesium>*/

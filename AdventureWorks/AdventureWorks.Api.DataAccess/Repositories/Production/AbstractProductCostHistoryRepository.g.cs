@@ -15,51 +15,62 @@ namespace AdventureWorksNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractProductCostHistoryRepository(ILogger logger,
-		                                            ApplicationDbContext context)
+		public AbstractProductCostHistoryRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(DateTime startDate,
-		                          Nullable<DateTime> endDate,
-		                          decimal standardCost,
-		                          DateTime modifiedDate)
+		public virtual int Create(
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal standardCost,
+			DateTime modifiedDate)
 		{
-			var record = new EFProductCostHistory ();
+			var record = new EFProductCostHistory();
 
-			MapPOCOToEF(0, startDate,
-			            endDate,
-			            standardCost,
-			            modifiedDate, record);
+			MapPOCOToEF(
+				0,
+				startDate,
+				endDate,
+				standardCost,
+				modifiedDate,
+				record);
 
 			this.context.Set<EFProductCostHistory>().Add(record);
 			this.context.SaveChanges();
 			return record.ProductID;
 		}
 
-		public virtual void Update(int productID, DateTime startDate,
-		                           Nullable<DateTime> endDate,
-		                           decimal standardCost,
-		                           DateTime modifiedDate)
+		public virtual void Update(
+			int productID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal standardCost,
+			DateTime modifiedDate)
 		{
-			var record =  this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{productID}");
 			}
 			else
 			{
-				MapPOCOToEF(productID,  startDate,
-				            endDate,
-				            standardCost,
-				            modifiedDate, record);
+				MapPOCOToEF(
+					productID,
+					startDate,
+					endDate,
+					standardCost,
+					modifiedDate,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int productID)
+		public virtual void Delete(
+			int productID)
 		{
 			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 
@@ -78,7 +89,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response;
 		}
 
@@ -86,11 +97,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.ProductID == productID,response);
+			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response.ProductCostHistories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,7 +117,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOProductCostHistory> GetWhereDirect(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOProductCostHistory> GetWhereDirect(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -114,43 +125,49 @@ namespace AdventureWorksNS.Api.DataAccess
 			return response.ProductCostHistories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProductCostHistory, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFProductCostHistory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFProductCostHistory> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFProductCostHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFProductCostHistory> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFProductCostHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFProductCostHistory> SearchLinqEF(Expression<Func<EFProductCostHistory, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFProductCostHistory> SearchLinqEF(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFProductCostHistory> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFProductCostHistory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int productID, DateTime startDate,
-		                               Nullable<DateTime> endDate,
-		                               decimal standardCost,
-		                               DateTime modifiedDate, EFProductCostHistory   efProductCostHistory)
+		public static void MapPOCOToEF(
+			int productID,
+			DateTime startDate,
+			Nullable<DateTime> endDate,
+			decimal standardCost,
+			DateTime modifiedDate,
+			EFProductCostHistory efProductCostHistory)
 		{
-			efProductCostHistory.SetProperties(productID.ToInt(),startDate.ToDateTime(),endDate.ToNullableDateTime(),standardCost,modifiedDate.ToDateTime());
+			efProductCostHistory.SetProperties(productID.ToInt(), startDate.ToDateTime(), endDate.ToNullableDateTime(), standardCost, modifiedDate.ToDateTime());
 		}
 
-		public static void MapEFToPOCO(EFProductCostHistory efProductCostHistory,Response response)
+		public static void MapEFToPOCO(
+			EFProductCostHistory efProductCostHistory,
+			Response response)
 		{
-			if(efProductCostHistory == null)
+			if (efProductCostHistory == null)
 			{
 				return;
 			}
-			response.AddProductCostHistory(new POCOProductCostHistory(efProductCostHistory.ProductID.ToInt(),efProductCostHistory.StartDate.ToDateTime(),efProductCostHistory.EndDate.ToNullableDateTime(),efProductCostHistory.StandardCost,efProductCostHistory.ModifiedDate.ToDateTime()));
+
+			response.AddProductCostHistory(new POCOProductCostHistory(efProductCostHistory.ProductID.ToInt(), efProductCostHistory.StartDate.ToDateTime(), efProductCostHistory.EndDate.ToNullableDateTime(), efProductCostHistory.StandardCost, efProductCostHistory.ModifiedDate.ToDateTime()));
 
 			ProductRepository.MapEFToPOCO(efProductCostHistory.Product, response);
 		}
@@ -158,5 +175,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c0ccc1409d4fb290dc1841032a50eb8</Hash>
+    <Hash>a5340c3ec30cdcf7b3199b625780feae</Hash>
 </Codenesium>*/

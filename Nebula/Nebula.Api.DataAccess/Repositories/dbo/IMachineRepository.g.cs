@@ -7,13 +7,15 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRepository
 	{
-		int Create(string name,
-		           Guid machineGuid,
-		           string jwtKey,
-		           string lastIpAddress,
-		           string description);
+		int Create(
+			string name,
+			Guid machineGuid,
+			string jwtKey,
+			string lastIpAddress,
+			string description);
 
-		void Update(int id, string name,
+		void Update(int id,
+		            string name,
 		            Guid machineGuid,
 		            string jwtKey,
 		            string lastIpAddress,
@@ -25,14 +27,14 @@ namespace NebulaNS.Api.DataAccess
 
 		POCOMachine GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOMachine> GetWhereDirect(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOMachine> GetWhereDirect(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>90f794899ad6c81ece8629faaa96a75e</Hash>
+    <Hash>3fc329f8ef8b174f48c89fe9f6d34147</Hash>
 </Codenesium>*/

@@ -9,43 +9,49 @@ namespace ESPIOTNS.Api.Contracts
 	{
 		public DeviceModel()
 		{}
-		public DeviceModel(Guid publicId,
-		                   string name)
+
+		public DeviceModel(
+			Guid publicId,
+			string name)
 		{
 			this.PublicId = publicId;
 			this.Name = name;
 		}
 
-		private Guid _publicId;
+		private Guid publicId;
+
 		[Required]
 		public Guid PublicId
 		{
 			get
 			{
-				return _publicId;
+				return this.publicId;
 			}
+
 			set
 			{
-				this._publicId = value;
+				this.publicId = value;
 			}
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>32929f6885bddb64ab213b5639896684</Hash>
+    <Hash>979d9045bb1986ba1ed1f89e5f3e8086</Hash>
 </Codenesium>*/

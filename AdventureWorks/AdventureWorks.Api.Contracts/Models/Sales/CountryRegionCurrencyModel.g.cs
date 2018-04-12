@@ -9,43 +9,49 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public CountryRegionCurrencyModel()
 		{}
-		public CountryRegionCurrencyModel(string currencyCode,
-		                                  DateTime modifiedDate)
+
+		public CountryRegionCurrencyModel(
+			string currencyCode,
+			DateTime modifiedDate)
 		{
 			this.CurrencyCode = currencyCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _currencyCode;
+		private string currencyCode;
+
 		[Required]
 		public string CurrencyCode
 		{
 			get
 			{
-				return _currencyCode;
+				return this.currencyCode;
 			}
+
 			set
 			{
-				this._currencyCode = value;
+				this.currencyCode = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>450513f463d1015041a97cc6db277f02</Hash>
+    <Hash>2bcd143d29b23086a3d83b140c87ae67</Hash>
 </Codenesium>*/

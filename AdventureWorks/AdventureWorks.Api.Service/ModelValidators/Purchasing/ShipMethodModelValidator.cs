@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class ShipMethodModelValidator: AbstractShipMethodModelValidator,IShipMethodModelValidator
+	public class ShipMethodModelValidator: AbstractShipMethodModelValidator, IShipMethodModelValidator
 	{
 		public ShipMethodModelValidator()
 		{   }
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fb55631d165bbfbb816692338068b034</Hash>
+    <Hash>f6b6068e52ef0d2ad4c4bafd47e19e02</Hash>
 </Codenesium>*/

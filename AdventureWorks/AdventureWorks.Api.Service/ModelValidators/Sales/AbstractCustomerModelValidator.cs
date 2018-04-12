@@ -20,38 +20,38 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository {get; set;}
-		public IStoreRepository StoreRepository {get; set;}
-		public ISalesTerritoryRepository SalesTerritoryRepository {get; set;}
+		public IPersonRepository PersonRepository { get; set; }
+		public IStoreRepository StoreRepository { get; set; }
+		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void PersonIDRules()
 		{
-			RuleFor(x => x.PersonID).Must(BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PersonID).Must(this.BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void StoreIDRules()
 		{
-			RuleFor(x => x.StoreID).Must(BeValidStore).When(x => x ?.StoreID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.StoreID).Must(this.BeValidStore).When(x => x ?.StoreID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TerritoryIDRules()
 		{
-			RuleFor(x => x.TerritoryID).Must(BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void AccountNumberRules()
 		{
-			RuleFor(x => x.AccountNumber).NotNull();
-			RuleFor(x => x.AccountNumber).Length(0,10);
+			this.RuleFor(x => x.AccountNumber).NotNull();
+			this.RuleFor(x => x.AccountNumber).Length(0, 10);
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidPerson(Nullable<int> id)
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c90f7d3a822b71cab60ff54ec88a8a7d</Hash>
+    <Hash>c93c0a104167947240badd35692b99b0</Hash>
 </Codenesium>*/

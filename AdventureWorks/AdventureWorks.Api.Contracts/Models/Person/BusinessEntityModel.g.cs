@@ -9,43 +9,49 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public BusinessEntityModel()
 		{}
-		public BusinessEntityModel(Guid rowguid,
-		                           DateTime modifiedDate)
+
+		public BusinessEntityModel(
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>248965f1d345f0e2811db5c189ffcf3e</Hash>
+    <Hash>133bd0e0eeb8a049c5c07890fd3be62e</Hash>
 </Codenesium>*/

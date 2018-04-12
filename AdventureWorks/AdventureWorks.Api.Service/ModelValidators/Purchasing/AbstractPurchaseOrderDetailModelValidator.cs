@@ -20,57 +20,57 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository {get; set;}
-		public IProductRepository ProductRepository {get; set;}
+		public IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; set; }
+		public IProductRepository ProductRepository { get; set; }
 		public virtual void PurchaseOrderDetailIDRules()
 		{
-			RuleFor(x => x.PurchaseOrderDetailID).NotNull();
+			this.RuleFor(x => x.PurchaseOrderDetailID).NotNull();
 		}
 
 		public virtual void DueDateRules()
 		{
-			RuleFor(x => x.DueDate).NotNull();
+			this.RuleFor(x => x.DueDate).NotNull();
 		}
 
 		public virtual void OrderQtyRules()
 		{
-			RuleFor(x => x.OrderQty).NotNull();
+			this.RuleFor(x => x.OrderQty).NotNull();
 		}
 
 		public virtual void ProductIDRules()
 		{
-			RuleFor(x => x.ProductID).NotNull();
-			RuleFor(x => x.ProductID).Must(BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void UnitPriceRules()
 		{
-			RuleFor(x => x.UnitPrice).NotNull();
+			this.RuleFor(x => x.UnitPrice).NotNull();
 		}
 
 		public virtual void LineTotalRules()
 		{
-			RuleFor(x => x.LineTotal).NotNull();
+			this.RuleFor(x => x.LineTotal).NotNull();
 		}
 
 		public virtual void ReceivedQtyRules()
 		{
-			RuleFor(x => x.ReceivedQty).NotNull();
+			this.RuleFor(x => x.ReceivedQty).NotNull();
 		}
 
 		public virtual void RejectedQtyRules()
 		{
-			RuleFor(x => x.RejectedQty).NotNull();
+			this.RuleFor(x => x.RejectedQty).NotNull();
 		}
 
 		public virtual void StockedQtyRules()
 		{
-			RuleFor(x => x.StockedQty).NotNull();
+			this.RuleFor(x => x.StockedQty).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidPurchaseOrderHeader(int id)
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>53074db3c8d60482f7c0722dd9c736a8</Hash>
+    <Hash>9beceb1ae80dcbdcf67e4d58aa3fd014</Hash>
 </Codenesium>*/

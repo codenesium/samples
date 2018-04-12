@@ -9,65 +9,66 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOEmailAddress()
 		{}
 
-		public POCOEmailAddress(int businessEntityID,
-		                        int emailAddressID,
-		                        string emailAddress1,
-		                        Guid rowguid,
-		                        DateTime modifiedDate)
+		public POCOEmailAddress(
+			int businessEntityID,
+			int emailAddressID,
+			string emailAddress1,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.EmailAddressID = emailAddressID.ToInt();
 			this.EmailAddress1 = emailAddress1;
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "Person");
+			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                                 "Person");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public int EmailAddressID {get; set;}
-		public string EmailAddress1 {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int EmailAddressID { get; set; }
+		public string EmailAddress1 { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityID()
 		{
-			return ShouldSerializeBusinessEntityIDValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmailAddressIDValue {get; set;} = true;
+		public bool ShouldSerializeEmailAddressIDValue { get; set; } = true;
 
 		public bool ShouldSerializeEmailAddressID()
 		{
-			return ShouldSerializeEmailAddressIDValue;
+			return this.ShouldSerializeEmailAddressIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmailAddress1Value {get; set;} = true;
+		public bool ShouldSerializeEmailAddress1Value { get; set; } = true;
 
 		public bool ShouldSerializeEmailAddress1()
 		{
-			return ShouldSerializeEmailAddress1Value;
+			return this.ShouldSerializeEmailAddress1Value;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -82,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7449245527dccae955639657b020ba8d</Hash>
+    <Hash>5f6b8a697eef69a5cc85352cf7a0243f</Hash>
 </Codenesium>*/

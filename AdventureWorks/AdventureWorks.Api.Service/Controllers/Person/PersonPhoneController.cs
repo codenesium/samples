@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personPhones")]
-	public class PersonPhonesController: AbstractPersonPhonesController
+	public class PersonPhoneController: AbstractPersonPhoneController
 	{
-		public PersonPhonesController(
-			ILogger<PersonPhonesController> logger,
+		public PersonPhoneController(
+			ILogger<PersonPhoneController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IPersonPhoneRepository personPhoneRepository,
 			IPersonPhoneModelValidator personPhoneModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         personPhoneRepository,
-			         personPhoneModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       personPhoneRepository,
+			       personPhoneModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fc7862110c2db41af161586ed1eca7e5</Hash>
+    <Hash>8a12b8365b3e08c56f0cfd3162934644</Hash>
 </Codenesium>*/

@@ -20,24 +20,24 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository {get; set;}
-		public IDepartmentRepository DepartmentRepository {get; set;}
-		public IShiftRepository ShiftRepository {get; set;}
+		public IEmployeeRepository EmployeeRepository { get; set; }
+		public IDepartmentRepository DepartmentRepository { get; set; }
+		public IShiftRepository ShiftRepository { get; set; }
 		public virtual void DepartmentIDRules()
 		{
-			RuleFor(x => x.DepartmentID).NotNull();
-			RuleFor(x => x.DepartmentID).Must(BeValidDepartment).When(x => x ?.DepartmentID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.DepartmentID).NotNull();
+			this.RuleFor(x => x.DepartmentID).Must(this.BeValidDepartment).When(x => x ?.DepartmentID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShiftIDRules()
 		{
-			RuleFor(x => x.ShiftID).NotNull();
-			RuleFor(x => x.ShiftID).Must(BeValidShift).When(x => x ?.ShiftID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ShiftID).NotNull();
+			this.RuleFor(x => x.ShiftID).Must(this.BeValidShift).When(x => x ?.ShiftID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void StartDateRules()
 		{
-			RuleFor(x => x.StartDate).NotNull();
+			this.RuleFor(x => x.StartDate).NotNull();
 		}
 
 		public virtual void EndDateRules()
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidEmployee(int id)
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dc72b5370ec39d5972b8fbc63bfef822</Hash>
+    <Hash>064fa91341842ede447d29400c38682e</Hash>
 </Codenesium>*/

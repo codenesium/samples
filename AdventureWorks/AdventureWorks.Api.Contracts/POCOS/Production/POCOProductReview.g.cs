@@ -9,14 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOProductReview()
 		{}
 
-		public POCOProductReview(int productReviewID,
-		                         int productID,
-		                         string reviewerName,
-		                         DateTime reviewDate,
-		                         string emailAddress,
-		                         int rating,
-		                         string comments,
-		                         DateTime modifiedDate)
+		public POCOProductReview(
+			int productReviewID,
+			int productID,
+			string reviewerName,
+			DateTime reviewDate,
+			string emailAddress,
+			int rating,
+			string comments,
+			DateTime modifiedDate)
 		{
 			this.ProductReviewID = productReviewID.ToInt();
 			this.ReviewerName = reviewerName;
@@ -26,81 +27,81 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Comments = comments;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			ProductID = new ReferenceEntity<int>(productID,
-			                                     "Product");
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          "Product");
 		}
 
-		public int ProductReviewID {get; set;}
-		public ReferenceEntity<int>ProductID {get; set;}
-		public string ReviewerName {get; set;}
-		public DateTime ReviewDate {get; set;}
-		public string EmailAddress {get; set;}
-		public int Rating {get; set;}
-		public string Comments {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int ProductReviewID { get; set; }
+		public ReferenceEntity<int> ProductID { get; set; }
+		public string ReviewerName { get; set; }
+		public DateTime ReviewDate { get; set; }
+		public string EmailAddress { get; set; }
+		public int Rating { get; set; }
+		public string Comments { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductReviewIDValue {get; set;} = true;
+		public bool ShouldSerializeProductReviewIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductReviewID()
 		{
-			return ShouldSerializeProductReviewIDValue;
+			return this.ShouldSerializeProductReviewIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue {get; set;} = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
 		public bool ShouldSerializeProductID()
 		{
-			return ShouldSerializeProductIDValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeReviewerNameValue {get; set;} = true;
+		public bool ShouldSerializeReviewerNameValue { get; set; } = true;
 
 		public bool ShouldSerializeReviewerName()
 		{
-			return ShouldSerializeReviewerNameValue;
+			return this.ShouldSerializeReviewerNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeReviewDateValue {get; set;} = true;
+		public bool ShouldSerializeReviewDateValue { get; set; } = true;
 
 		public bool ShouldSerializeReviewDate()
 		{
-			return ShouldSerializeReviewDateValue;
+			return this.ShouldSerializeReviewDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmailAddressValue {get; set;} = true;
+		public bool ShouldSerializeEmailAddressValue { get; set; } = true;
 
 		public bool ShouldSerializeEmailAddress()
 		{
-			return ShouldSerializeEmailAddressValue;
+			return this.ShouldSerializeEmailAddressValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRatingValue {get; set;} = true;
+		public bool ShouldSerializeRatingValue { get; set; } = true;
 
 		public bool ShouldSerializeRating()
 		{
-			return ShouldSerializeRatingValue;
+			return this.ShouldSerializeRatingValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCommentsValue {get; set;} = true;
+		public bool ShouldSerializeCommentsValue { get; set; } = true;
 
 		public bool ShouldSerializeComments()
 		{
-			return ShouldSerializeCommentsValue;
+			return this.ShouldSerializeCommentsValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -118,5 +119,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ba749af5c6878414c00d055bcba042f4</Hash>
+    <Hash>5a2e3826e90e8765be5e6081ed0fbb5b</Hash>
 </Codenesium>*/

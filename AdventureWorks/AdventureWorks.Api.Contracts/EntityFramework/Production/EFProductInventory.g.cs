@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ProductInventory", Schema="Production")]
@@ -10,13 +11,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFProductInventory()
 		{}
 
-		public void SetProperties(int productID,
-		                          short locationID,
-		                          string shelf,
-		                          int bin,
-		                          short quantity,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int productID,
+			short locationID,
+			string shelf,
+			int bin,
+			short quantity,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
 			this.LocationID = locationID;
@@ -28,34 +30,35 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ProductID", TypeName="int")]
-		public int ProductID {get; set;}
+		public int ProductID { get; set; }
 
 		[Column("LocationID", TypeName="smallint")]
-		public short LocationID {get; set;}
+		public short LocationID { get; set; }
 
 		[Column("Shelf", TypeName="nvarchar(10)")]
-		public string Shelf {get; set;}
+		public string Shelf { get; set; }
 
 		[Column("Bin", TypeName="tinyint")]
-		public int Bin {get; set;}
+		public int Bin { get; set; }
 
 		[Column("Quantity", TypeName="smallint")]
-		public short Quantity {get; set;}
+		public short Quantity { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
 
+		[ForeignKey("LocationID")]
 		public virtual EFLocation Location { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc3b0dfba5d760ac0c3d17dead63e81e</Hash>
+    <Hash>8396f2333746cf0fdb0616e24c4afba9</Hash>
 </Codenesium>*/

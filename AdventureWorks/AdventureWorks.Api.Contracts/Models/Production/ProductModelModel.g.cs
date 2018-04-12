@@ -9,11 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductModelModel()
 		{}
-		public ProductModelModel(string name,
-		                         string catalogDescription,
-		                         string instructions,
-		                         Guid rowguid,
-		                         DateTime modifiedDate)
+
+		public ProductModelModel(
+			string name,
+			string catalogDescription,
+			string instructions,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.Name = name;
 			this.CatalogDescription = catalogDescription;
@@ -22,76 +24,86 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private string _catalogDescription;
+		private string catalogDescription;
+
 		public string CatalogDescription
 		{
 			get
 			{
-				return _catalogDescription.IsEmptyOrZeroOrNull() ? null : _catalogDescription;
+				return this.catalogDescription.IsEmptyOrZeroOrNull() ? null : this.catalogDescription;
 			}
+
 			set
 			{
-				this._catalogDescription = value;
+				this.catalogDescription = value;
 			}
 		}
 
-		private string _instructions;
+		private string instructions;
+
 		public string Instructions
 		{
 			get
 			{
-				return _instructions.IsEmptyOrZeroOrNull() ? null : _instructions;
+				return this.instructions.IsEmptyOrZeroOrNull() ? null : this.instructions;
 			}
+
 			set
 			{
-				this._instructions = value;
+				this.instructions = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e1ce508be06f61e16b98920451885d0</Hash>
+    <Hash>f03cf53eea6bcd41161b60518f081383</Hash>
 </Codenesium>*/

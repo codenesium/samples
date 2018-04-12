@@ -20,32 +20,32 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository {get; set;}
-		public IScrapReasonRepository ScrapReasonRepository {get; set;}
+		public IProductRepository ProductRepository { get; set; }
+		public IScrapReasonRepository ScrapReasonRepository { get; set; }
 		public virtual void ProductIDRules()
 		{
-			RuleFor(x => x.ProductID).NotNull();
-			RuleFor(x => x.ProductID).Must(BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void OrderQtyRules()
 		{
-			RuleFor(x => x.OrderQty).NotNull();
+			this.RuleFor(x => x.OrderQty).NotNull();
 		}
 
 		public virtual void StockedQtyRules()
 		{
-			RuleFor(x => x.StockedQty).NotNull();
+			this.RuleFor(x => x.StockedQty).NotNull();
 		}
 
 		public virtual void ScrappedQtyRules()
 		{
-			RuleFor(x => x.ScrappedQty).NotNull();
+			this.RuleFor(x => x.ScrappedQty).NotNull();
 		}
 
 		public virtual void StartDateRules()
 		{
-			RuleFor(x => x.StartDate).NotNull();
+			this.RuleFor(x => x.StartDate).NotNull();
 		}
 
 		public virtual void EndDateRules()
@@ -53,17 +53,17 @@ namespace AdventureWorksNS.Api.Service
 
 		public virtual void DueDateRules()
 		{
-			RuleFor(x => x.DueDate).NotNull();
+			this.RuleFor(x => x.DueDate).NotNull();
 		}
 
 		public virtual void ScrapReasonIDRules()
 		{
-			RuleFor(x => x.ScrapReasonID).Must(BeValidScrapReason).When(x => x ?.ScrapReasonID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ScrapReasonID).Must(this.BeValidScrapReason).When(x => x ?.ScrapReasonID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProduct(int id)
@@ -79,5 +79,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>06f998f07f22561d48c2b817b87797be</Hash>
+    <Hash>f2c5f7b05a0452d5821df3c2cb86f327</Hash>
 </Codenesium>*/

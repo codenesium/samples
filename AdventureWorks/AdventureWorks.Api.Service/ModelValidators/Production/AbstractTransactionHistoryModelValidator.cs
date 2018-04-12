@@ -20,47 +20,47 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository {get; set;}
+		public IProductRepository ProductRepository { get; set; }
 		public virtual void ProductIDRules()
 		{
-			RuleFor(x => x.ProductID).NotNull();
-			RuleFor(x => x.ProductID).Must(BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ReferenceOrderIDRules()
 		{
-			RuleFor(x => x.ReferenceOrderID).NotNull();
+			this.RuleFor(x => x.ReferenceOrderID).NotNull();
 		}
 
 		public virtual void ReferenceOrderLineIDRules()
 		{
-			RuleFor(x => x.ReferenceOrderLineID).NotNull();
+			this.RuleFor(x => x.ReferenceOrderLineID).NotNull();
 		}
 
 		public virtual void TransactionDateRules()
 		{
-			RuleFor(x => x.TransactionDate).NotNull();
+			this.RuleFor(x => x.TransactionDate).NotNull();
 		}
 
 		public virtual void TransactionTypeRules()
 		{
-			RuleFor(x => x.TransactionType).NotNull();
-			RuleFor(x => x.TransactionType).Length(0,1);
+			this.RuleFor(x => x.TransactionType).NotNull();
+			this.RuleFor(x => x.TransactionType).Length(0, 1);
 		}
 
 		public virtual void QuantityRules()
 		{
-			RuleFor(x => x.Quantity).NotNull();
+			this.RuleFor(x => x.Quantity).NotNull();
 		}
 
 		public virtual void ActualCostRules()
 		{
-			RuleFor(x => x.ActualCost).NotNull();
+			this.RuleFor(x => x.ActualCost).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProduct(int id)
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e739e46da1aa14fde7c3912a8e05b175</Hash>
+    <Hash>c46924c0c7d4255f0153d49df03f68f2</Hash>
 </Codenesium>*/

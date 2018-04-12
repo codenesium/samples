@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public abstract class AbstractLinksController: AbstractApiController
+	public abstract class AbstractLinkController: AbstractApiController
 	{
 		protected ILinkRepository linkRepository;
+
 		protected ILinkModelValidator linkModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractLinksController(
-			ILogger<AbstractLinksController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractLinkController(
+			ILogger<AbstractLinkController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ILinkRepository linkRepository,
 			ILinkModelValidator linkModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.linkRepository = linkRepository;
 			this.linkModelValidator = linkModelValidator;
@@ -31,7 +37,7 @@ namespace NebulaNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.linkRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace NebulaNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.linkRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.linkRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,23 +81,24 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.linkRepository.Create(model.Name,
-				                                    model.DynamicParameters,
-				                                    model.StaticParameters,
-				                                    model.ChainId,
-				                                    model.AssignedMachineId,
-				                                    model.LinkStatusId,
-				                                    model.Order,
-				                                    model.DateStarted,
-				                                    model.DateCompleted,
-				                                    model.Response,
-				                                    model.ExternalId);
-				return Ok(id);
+				var id = this.linkRepository.Create(
+					model.Name,
+					model.DynamicParameters,
+					model.StaticParameters,
+					model.ChainId,
+					model.AssignedMachineId,
+					model.LinkStatusId,
+					model.Order,
+					model.DateStarted,
+					model.DateCompleted,
+					model.Response,
+					model.ExternalId);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -105,31 +112,33 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult BulkInsert(List<LinkModel> models)
 		{
 			this.linkModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.linkModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.linkRepository.Create(model.Name,
-				                           model.DynamicParameters,
-				                           model.StaticParameters,
-				                           model.ChainId,
-				                           model.AssignedMachineId,
-				                           model.LinkStatusId,
-				                           model.Order,
-				                           model.DateStarted,
-				                           model.DateCompleted,
-				                           model.Response,
-				                           model.ExternalId);
+				this.linkRepository.Create(
+					model.Name,
+					model.DynamicParameters,
+					model.StaticParameters,
+					model.ChainId,
+					model.AssignedMachineId,
+					model.LinkStatusId,
+					model.Order,
+					model.DateStarted,
+					model.DateCompleted,
+					model.Response,
+					model.ExternalId);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -139,34 +148,36 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,LinkModel model)
+		public virtual IActionResult Update(int id, LinkModel model)
 		{
-			if(this.linkRepository.GetByIdDirect(id) == null)
+			if (this.linkRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.linkModelValidator.UpdateMode();
 			var validationResult = this.linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkRepository.Update(id,  model.Name,
-				                           model.DynamicParameters,
-				                           model.StaticParameters,
-				                           model.ChainId,
-				                           model.AssignedMachineId,
-				                           model.LinkStatusId,
-				                           model.Order,
-				                           model.DateStarted,
-				                           model.DateCompleted,
-				                           model.Response,
-				                           model.ExternalId);
-				return Ok();
+				this.linkRepository.Update(
+					id,
+					model.Name,
+					model.DynamicParameters,
+					model.StaticParameters,
+					model.ChainId,
+					model.AssignedMachineId,
+					model.LinkStatusId,
+					model.Order,
+					model.DateStarted,
+					model.DateCompleted,
+					model.Response,
+					model.ExternalId);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -179,7 +190,7 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.linkRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -192,7 +203,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.linkRepository.GetWhere(x => x.ChainId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -205,7 +216,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.linkRepository.GetWhere(x => x.AssignedMachineId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -218,11 +229,11 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.linkRepository.GetWhere(x => x.LinkStatusId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d30ace32fe288b8601add57f28b2a411</Hash>
+    <Hash>339cc82b2b969a7d14f9ad11c5334780</Hash>
 </Codenesium>*/

@@ -1,8 +1,9 @@
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+
 namespace FileServiceNS.Api.Service
 {
-	public class BucketModelValidator: AbstractBucketModelValidator,IBucketModelValidator
+	public class BucketModelValidator: AbstractBucketModelValidator, IBucketModelValidator
 	{
 		public BucketModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>277a93d01323ae264e061b2565973182</Hash>
+    <Hash>a6cea888904670932d0b95da150197a6</Hash>
 </Codenesium>*/

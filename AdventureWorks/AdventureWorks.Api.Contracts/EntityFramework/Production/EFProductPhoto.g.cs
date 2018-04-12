@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ProductPhoto", Schema="Production")]
@@ -10,12 +11,13 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFProductPhoto()
 		{}
 
-		public void SetProperties(int productPhotoID,
-		                          byte[] thumbNailPhoto,
-		                          string thumbnailPhotoFileName,
-		                          byte[] largePhoto,
-		                          string largePhotoFileName,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int productPhotoID,
+			byte[] thumbNailPhoto,
+			string thumbnailPhotoFileName,
+			byte[] largePhoto,
+			string largePhotoFileName,
+			DateTime modifiedDate)
 		{
 			this.ProductPhotoID = productPhotoID.ToInt();
 			this.ThumbNailPhoto = thumbNailPhoto;
@@ -28,25 +30,25 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ProductPhotoID", TypeName="int")]
-		public int ProductPhotoID {get; set;}
+		public int ProductPhotoID { get; set; }
 
 		[Column("ThumbNailPhoto", TypeName="varbinary(-1)")]
-		public byte[] ThumbNailPhoto {get; set;}
+		public byte[] ThumbNailPhoto { get; set; }
 
 		[Column("ThumbnailPhotoFileName", TypeName="nvarchar(50)")]
-		public string ThumbnailPhotoFileName {get; set;}
+		public string ThumbnailPhotoFileName { get; set; }
 
 		[Column("LargePhoto", TypeName="varbinary(-1)")]
-		public byte[] LargePhoto {get; set;}
+		public byte[] LargePhoto { get; set; }
 
 		[Column("LargePhotoFileName", TypeName="nvarchar(50)")]
-		public string LargePhotoFileName {get; set;}
+		public string LargePhotoFileName { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>83fecd84b2d88fbf313d7921963ff176</Hash>
+    <Hash>4198719c7bfc40d957d8873384ab8e7d</Hash>
 </Codenesium>*/

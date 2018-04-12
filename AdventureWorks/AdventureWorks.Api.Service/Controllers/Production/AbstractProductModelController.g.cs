@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractProductModelsController: AbstractApiController
+	public abstract class AbstractProductModelController: AbstractApiController
 	{
 		protected IProductModelRepository productModelRepository;
+
 		protected IProductModelModelValidator productModelModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractProductModelsController(
-			ILogger<AbstractProductModelsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractProductModelController(
+			ILogger<AbstractProductModelController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductModelRepository productModelRepository,
 			IProductModelModelValidator productModelModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.productModelRepository = productModelRepository;
 			this.productModelModelValidator = productModelModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productModelRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productModelRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.productModelRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,17 +81,18 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productModelModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productModelRepository.Create(model.Name,
-				                                            model.CatalogDescription,
-				                                            model.Instructions,
-				                                            model.Rowguid,
-				                                            model.ModifiedDate);
-				return Ok(id);
+				var id = this.productModelRepository.Create(
+					model.Name,
+					model.CatalogDescription,
+					model.Instructions,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -99,25 +106,27 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ProductModelModel> models)
 		{
 			this.productModelModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.productModelModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.productModelRepository.Create(model.Name,
-				                                   model.CatalogDescription,
-				                                   model.Instructions,
-				                                   model.Rowguid,
-				                                   model.ModifiedDate);
+				this.productModelRepository.Create(
+					model.Name,
+					model.CatalogDescription,
+					model.Instructions,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -127,28 +136,30 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ProductModelModel model)
+		public virtual IActionResult Update(int id, ProductModelModel model)
 		{
-			if(this.productModelRepository.GetByIdDirect(id) == null)
+			if (this.productModelRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.productModelModelValidator.UpdateMode();
 			var validationResult = this.productModelModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productModelRepository.Update(id,  model.Name,
-				                                   model.CatalogDescription,
-				                                   model.Instructions,
-				                                   model.Rowguid,
-				                                   model.ModifiedDate);
-				return Ok();
+				this.productModelRepository.Update(
+					id,
+					model.Name,
+					model.CatalogDescription,
+					model.Instructions,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -161,11 +172,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.productModelRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d8bace4d5f03ecb5d76a945a04c05726</Hash>
+    <Hash>8ed74da9381f85d6db08227dabb72746</Hash>
 </Codenesium>*/

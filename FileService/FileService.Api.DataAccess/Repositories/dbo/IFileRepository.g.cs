@@ -7,19 +7,21 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IFileRepository
 	{
-		int Create(Guid externalId,
-		           string privateKey,
-		           string publicKey,
-		           string location,
-		           DateTime expiration,
-		           string extension,
-		           DateTime dateCreated,
-		           decimal fileSizeInBytes,
-		           int fileTypeId,
-		           Nullable<int> bucketId,
-		           string description);
+		int Create(
+			Guid externalId,
+			string privateKey,
+			string publicKey,
+			string location,
+			DateTime expiration,
+			string extension,
+			DateTime dateCreated,
+			decimal fileSizeInBytes,
+			int fileTypeId,
+			Nullable<int> bucketId,
+			string description);
 
-		void Update(int id, Guid externalId,
+		void Update(int id,
+		            Guid externalId,
 		            string privateKey,
 		            string publicKey,
 		            string location,
@@ -37,14 +39,14 @@ namespace FileServiceNS.Api.DataAccess
 
 		POCOFile GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOFile> GetWhereDirect(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOFile> GetWhereDirect(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>287bb85fdda29464213b14f8c6dcf232</Hash>
+    <Hash>f97cd73045cf67089d7a31cc6e1ad825</Hash>
 </Codenesium>*/

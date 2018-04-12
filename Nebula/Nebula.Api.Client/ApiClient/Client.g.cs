@@ -12,10 +12,12 @@ namespace NebulaNS.Api.Client
 	public abstract partial class AbstractApiClient
 	{
 		private HttpClient client;
+
 		protected string ApiUrl { get; set; }
+
 		public AbstractApiClient(string apiUri)
 		{
-			if (String.IsNullOrWhiteSpace(apiUri))
+			if (string.IsNullOrWhiteSpace(apiUri))
 			{
 				throw new ArgumentException("apiUrl is not set");
 			}
@@ -33,17 +35,9 @@ namespace NebulaNS.Api.Client
 			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		public virtual async Task<List<POCOChain>>ChainSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOChain>> ChainSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Chains;
-		}
-
-		public virtual async Task<List<POCOChain>> ChainGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Chains;
@@ -57,7 +51,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Chains.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOChain>> ChainGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOChain>> ChainGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains?offset={offset}&limit={limit}");
 
@@ -72,7 +66,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ChainUpdateAsync(int id,ChainModel item)
+		public virtual async Task ChainUpdateAsync(int id, ChainModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Chains/{id}", item);
 
@@ -94,17 +88,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOChainStatus>>ChainStatusSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOChainStatus>> ChainStatusSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ChainStatus;
-		}
-
-		public virtual async Task<List<POCOChainStatus>> ChainStatusGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ChainStatus;
@@ -118,7 +104,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).ChainStatus.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOChainStatus>> ChainStatusGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOChainStatus>> ChainStatusGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus?offset={offset}&limit={limit}");
 
@@ -133,7 +119,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ChainStatusUpdateAsync(int id,ChainStatusModel item)
+		public virtual async Task ChainStatusUpdateAsync(int id, ChainStatusModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ChainStatus/{id}", item);
 
@@ -155,17 +141,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOClasp>>ClaspSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOClasp>> ClaspSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Clasps?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Clasps;
-		}
-
-		public virtual async Task<List<POCOClasp>> ClaspGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Clasps/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Clasps;
@@ -179,7 +157,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Clasps.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOClasp>> ClaspGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOClasp>> ClaspGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Clasps?offset={offset}&limit={limit}");
 
@@ -194,7 +172,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task ClaspUpdateAsync(int id,ClaspModel item)
+		public virtual async Task ClaspUpdateAsync(int id, ClaspModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Clasps/{id}", item);
 
@@ -216,17 +194,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOLink>>LinkSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOLink>> LinkSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Links;
-		}
-
-		public virtual async Task<List<POCOLink>> LinkGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Links;
@@ -240,7 +210,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Links.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOLink>> LinkGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOLink>> LinkGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links?offset={offset}&limit={limit}");
 
@@ -255,7 +225,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task LinkUpdateAsync(int id,LinkModel item)
+		public virtual async Task LinkUpdateAsync(int id, LinkModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Links/{id}", item);
 
@@ -277,17 +247,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOLinkLog>>LinkLogSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOLinkLog>> LinkLogSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkLogs?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LinkLogs;
-		}
-
-		public virtual async Task<List<POCOLinkLog>> LinkLogGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkLogs/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LinkLogs;
@@ -301,7 +263,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LinkLogs.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOLinkLog>> LinkLogGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOLinkLog>> LinkLogGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkLogs?offset={offset}&limit={limit}");
 
@@ -316,7 +278,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task LinkLogUpdateAsync(int id,LinkLogModel item)
+		public virtual async Task LinkLogUpdateAsync(int id, LinkLogModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkLogs/{id}", item);
 
@@ -338,17 +300,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOLinkStatus>>LinkStatusSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOLinkStatus>> LinkStatusSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LinkStatus;
-		}
-
-		public virtual async Task<List<POCOLinkStatus>> LinkStatusGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LinkStatus;
@@ -362,7 +316,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LinkStatus.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOLinkStatus>> LinkStatusGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOLinkStatus>> LinkStatusGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus?offset={offset}&limit={limit}");
 
@@ -377,7 +331,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task LinkStatusUpdateAsync(int id,LinkStatusModel item)
+		public virtual async Task LinkStatusUpdateAsync(int id, LinkStatusModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkStatus/{id}", item);
 
@@ -399,17 +353,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOMachine>>MachineSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOMachine>> MachineSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Machines;
-		}
-
-		public virtual async Task<List<POCOMachine>> MachineGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Machines;
@@ -423,7 +369,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Machines.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOMachine>> MachineGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOMachine>> MachineGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines?offset={offset}&limit={limit}");
 
@@ -438,7 +384,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task MachineUpdateAsync(int id,MachineModel item)
+		public virtual async Task MachineUpdateAsync(int id, MachineModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Machines/{id}", item);
 
@@ -460,17 +406,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOMachineRefTeam>>MachineRefTeamSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOMachineRefTeam>> MachineRefTeamSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/MachineRefTeams?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).MachineRefTeams;
-		}
-
-		public virtual async Task<List<POCOMachineRefTeam>> MachineRefTeamGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/MachineRefTeams/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).MachineRefTeams;
@@ -484,7 +422,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).MachineRefTeams.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOMachineRefTeam>> MachineRefTeamGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOMachineRefTeam>> MachineRefTeamGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/MachineRefTeams?offset={offset}&limit={limit}");
 
@@ -499,7 +437,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task MachineRefTeamUpdateAsync(int id,MachineRefTeamModel item)
+		public virtual async Task MachineRefTeamUpdateAsync(int id, MachineRefTeamModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/MachineRefTeams/{id}", item);
 
@@ -521,17 +459,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOOrganization>>OrganizationSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOOrganization>> OrganizationSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Organizations;
-		}
-
-		public virtual async Task<List<POCOOrganization>> OrganizationGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Organizations;
@@ -545,7 +475,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Organizations.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOOrganization>> OrganizationGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOOrganization>> OrganizationGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations?offset={offset}&limit={limit}");
 
@@ -560,7 +490,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task OrganizationUpdateAsync(int id,OrganizationModel item)
+		public virtual async Task OrganizationUpdateAsync(int id, OrganizationModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Organizations/{id}", item);
 
@@ -582,17 +512,9 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOTeam>>TeamSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCOTeam>> TeamSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Teams;
-		}
-
-		public virtual async Task<List<POCOTeam>> TeamGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Teams;
@@ -606,7 +528,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Teams.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCOTeam>> TeamGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCOTeam>> TeamGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams?offset={offset}&limit={limit}");
 
@@ -621,7 +543,7 @@ namespace NebulaNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task TeamUpdateAsync(int id,TeamModel item)
+		public virtual async Task TeamUpdateAsync(int id, TeamModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Teams/{id}", item);
 
@@ -646,5 +568,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>1e3fd04fe4337fde30ebeb0855ce1e1a</Hash>
+    <Hash>4a0950f2efe25bfecedfb0deecab128b</Hash>
 </Codenesium>*/

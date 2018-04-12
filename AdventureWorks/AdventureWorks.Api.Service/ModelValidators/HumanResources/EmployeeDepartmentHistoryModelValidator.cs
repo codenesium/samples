@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class EmployeeDepartmentHistoryModelValidator: AbstractEmployeeDepartmentHistoryModelValidator,IEmployeeDepartmentHistoryModelValidator
+	public class EmployeeDepartmentHistoryModelValidator: AbstractEmployeeDepartmentHistoryModelValidator, IEmployeeDepartmentHistoryModelValidator
 	{
 		public EmployeeDepartmentHistoryModelValidator()
 		{   }
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2d8ad3c5cd7497b104e3ecff5331e0d7</Hash>
+    <Hash>1942cb83411106a79073488812cb37eb</Hash>
 </Codenesium>*/

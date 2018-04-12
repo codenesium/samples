@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class CountryRegionModelValidator: AbstractCountryRegionModelValidator,ICountryRegionModelValidator
+	public class CountryRegionModelValidator: AbstractCountryRegionModelValidator, ICountryRegionModelValidator
 	{
 		public CountryRegionModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>65c10e3e89a989d6ad28cb04d580bf2c</Hash>
+    <Hash>f352121888278300eb0db6c99dffcba3</Hash>
 </Codenesium>*/

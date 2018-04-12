@@ -9,11 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ShoppingCartItemModel()
 		{}
-		public ShoppingCartItemModel(string shoppingCartID,
-		                             int quantity,
-		                             int productID,
-		                             DateTime dateCreated,
-		                             DateTime modifiedDate)
+
+		public ShoppingCartItemModel(
+			string shoppingCartID,
+			int quantity,
+			int productID,
+			DateTime dateCreated,
+			DateTime modifiedDate)
 		{
 			this.ShoppingCartID = shoppingCartID;
 			this.Quantity = quantity.ToInt();
@@ -22,78 +24,88 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _shoppingCartID;
+		private string shoppingCartID;
+
 		[Required]
 		public string ShoppingCartID
 		{
 			get
 			{
-				return _shoppingCartID;
+				return this.shoppingCartID;
 			}
+
 			set
 			{
-				this._shoppingCartID = value;
+				this.shoppingCartID = value;
 			}
 		}
 
-		private int _quantity;
+		private int quantity;
+
 		[Required]
 		public int Quantity
 		{
 			get
 			{
-				return _quantity;
+				return this.quantity;
 			}
+
 			set
 			{
-				this._quantity = value;
+				this.quantity = value;
 			}
 		}
 
-		private int _productID;
+		private int productID;
+
 		[Required]
 		public int ProductID
 		{
 			get
 			{
-				return _productID;
+				return this.productID;
 			}
+
 			set
 			{
-				this._productID = value;
+				this.productID = value;
 			}
 		}
 
-		private DateTime _dateCreated;
+		private DateTime dateCreated;
+
 		[Required]
 		public DateTime DateCreated
 		{
 			get
 			{
-				return _dateCreated;
+				return this.dateCreated;
 			}
+
 			set
 			{
-				this._dateCreated = value;
+				this.dateCreated = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c082941b7a93a05d6db4e27225016d5</Hash>
+    <Hash>627beb0d2503e5e43ac0e08b69ba5894</Hash>
 </Codenesium>*/

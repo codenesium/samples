@@ -7,15 +7,17 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IVendorRepository
 	{
-		int Create(string accountNumber,
-		           string name,
-		           int creditRating,
-		           bool preferredVendorStatus,
-		           bool activeFlag,
-		           string purchasingWebServiceURL,
-		           DateTime modifiedDate);
+		int Create(
+			string accountNumber,
+			string name,
+			int creditRating,
+			bool preferredVendorStatus,
+			bool activeFlag,
+			string purchasingWebServiceURL,
+			DateTime modifiedDate);
 
-		void Update(int businessEntityID, string accountNumber,
+		void Update(int businessEntityID,
+		            string accountNumber,
 		            string name,
 		            int creditRating,
 		            bool preferredVendorStatus,
@@ -29,14 +31,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		POCOVendor GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOVendor> GetWhereDirect(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOVendor> GetWhereDirect(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e5bf3ec2c51368bfb2b7caed36e872b</Hash>
+    <Hash>d214fa94967af37215092c51f02292ee</Hash>
 </Codenesium>*/

@@ -9,14 +9,16 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesPersonModel()
 		{}
-		public SalesPersonModel(Nullable<int> territoryID,
-		                        Nullable<decimal> salesQuota,
-		                        decimal bonus,
-		                        decimal commissionPct,
-		                        decimal salesYTD,
-		                        decimal salesLastYear,
-		                        Guid rowguid,
-		                        DateTime modifiedDate)
+
+		public SalesPersonModel(
+			Nullable<int> territoryID,
+			Nullable<decimal> salesQuota,
+			decimal bonus,
+			decimal commissionPct,
+			decimal salesYTD,
+			decimal salesLastYear,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.TerritoryID = territoryID.ToNullableInt();
 			this.SalesQuota = salesQuota;
@@ -28,118 +30,134 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private Nullable<int> _territoryID;
+		private Nullable<int> territoryID;
+
 		public Nullable<int> TerritoryID
 		{
 			get
 			{
-				return _territoryID.IsEmptyOrZeroOrNull() ? null : _territoryID;
+				return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
 			}
+
 			set
 			{
-				this._territoryID = value;
+				this.territoryID = value;
 			}
 		}
 
-		private Nullable<decimal> _salesQuota;
+		private Nullable<decimal> salesQuota;
+
 		public Nullable<decimal> SalesQuota
 		{
 			get
 			{
-				return _salesQuota.IsEmptyOrZeroOrNull() ? null : _salesQuota;
+				return this.salesQuota.IsEmptyOrZeroOrNull() ? null : this.salesQuota;
 			}
+
 			set
 			{
-				this._salesQuota = value;
+				this.salesQuota = value;
 			}
 		}
 
-		private decimal _bonus;
+		private decimal bonus;
+
 		[Required]
 		public decimal Bonus
 		{
 			get
 			{
-				return _bonus;
+				return this.bonus;
 			}
+
 			set
 			{
-				this._bonus = value;
+				this.bonus = value;
 			}
 		}
 
-		private decimal _commissionPct;
+		private decimal commissionPct;
+
 		[Required]
 		public decimal CommissionPct
 		{
 			get
 			{
-				return _commissionPct;
+				return this.commissionPct;
 			}
+
 			set
 			{
-				this._commissionPct = value;
+				this.commissionPct = value;
 			}
 		}
 
-		private decimal _salesYTD;
+		private decimal salesYTD;
+
 		[Required]
 		public decimal SalesYTD
 		{
 			get
 			{
-				return _salesYTD;
+				return this.salesYTD;
 			}
+
 			set
 			{
-				this._salesYTD = value;
+				this.salesYTD = value;
 			}
 		}
 
-		private decimal _salesLastYear;
+		private decimal salesLastYear;
+
 		[Required]
 		public decimal SalesLastYear
 		{
 			get
 			{
-				return _salesLastYear;
+				return this.salesLastYear;
 			}
+
 			set
 			{
-				this._salesLastYear = value;
+				this.salesLastYear = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e64fde13cbf3e38a0fda547738b5ddc3</Hash>
+    <Hash>5bd5dd070b7aa82648844993a1ab7614</Hash>
 </Codenesium>*/

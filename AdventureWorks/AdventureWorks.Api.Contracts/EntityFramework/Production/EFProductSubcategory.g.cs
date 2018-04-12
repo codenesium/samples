@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("ProductSubcategory", Schema="Production")]
@@ -10,11 +11,12 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFProductSubcategory()
 		{}
 
-		public void SetProperties(int productSubcategoryID,
-		                          int productCategoryID,
-		                          string name,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int productSubcategoryID,
+			int productCategoryID,
+			string name,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ProductSubcategoryID = productSubcategoryID.ToInt();
 			this.ProductCategoryID = productCategoryID.ToInt();
@@ -26,24 +28,25 @@ namespace AdventureWorksNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ProductSubcategoryID", TypeName="int")]
-		public int ProductSubcategoryID {get; set;}
+		public int ProductSubcategoryID { get; set; }
 
 		[Column("ProductCategoryID", TypeName="int")]
-		public int ProductCategoryID {get; set;}
+		public int ProductCategoryID { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name {get; set;}
+		public string Name { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("ProductCategoryID")]
 		public virtual EFProductCategory ProductCategory { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c30c049884c9fa9cb6cd04bbd7efc1a</Hash>
+    <Hash>3ad2868f9fa773f10e654c45a7640023</Hash>
 </Codenesium>*/

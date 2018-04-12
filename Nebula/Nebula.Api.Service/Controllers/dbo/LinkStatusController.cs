@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
 	[Route("api/linkStatus")]
@@ -17,10 +18,11 @@ namespace NebulaNS.Api.Service
 			ITransactionCoordinator transactionCoordinator,
 			ILinkStatusRepository linkStatusRepository,
 			ILinkStatusModelValidator linkStatusModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         linkStatusRepository,
-			         linkStatusModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       linkStatusRepository,
+			       linkStatusModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>18f4c10ee3edbaac7bdd8d385d45769a</Hash>
+    <Hash>2c2e91b59742caf4fd9b81f5f11fd84c</Hash>
 </Codenesium>*/

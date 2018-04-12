@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractProductDescriptionsController: AbstractApiController
+	public abstract class AbstractProductDescriptionController: AbstractApiController
 	{
 		protected IProductDescriptionRepository productDescriptionRepository;
+
 		protected IProductDescriptionModelValidator productDescriptionModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractProductDescriptionsController(
-			ILogger<AbstractProductDescriptionsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractProductDescriptionController(
+			ILogger<AbstractProductDescriptionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IProductDescriptionRepository productDescriptionRepository,
 			IProductDescriptionModelValidator productDescriptionModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.productDescriptionRepository = productDescriptionRepository;
 			this.productDescriptionModelValidator = productDescriptionModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.productDescriptionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productDescriptionRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.productDescriptionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,15 +81,16 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productDescriptionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productDescriptionRepository.Create(model.Description,
-				                                                  model.Rowguid,
-				                                                  model.ModifiedDate);
-				return Ok(id);
+				var id = this.productDescriptionRepository.Create(
+					model.Description,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -97,23 +104,25 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ProductDescriptionModel> models)
 		{
 			this.productDescriptionModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.productDescriptionModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.productDescriptionRepository.Create(model.Description,
-				                                         model.Rowguid,
-				                                         model.ModifiedDate);
+				this.productDescriptionRepository.Create(
+					model.Description,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -123,26 +132,28 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ProductDescriptionModel model)
+		public virtual IActionResult Update(int id, ProductDescriptionModel model)
 		{
-			if(this.productDescriptionRepository.GetByIdDirect(id) == null)
+			if (this.productDescriptionRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.productDescriptionModelValidator.UpdateMode();
 			var validationResult = this.productDescriptionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productDescriptionRepository.Update(id,  model.Description,
-				                                         model.Rowguid,
-				                                         model.ModifiedDate);
-				return Ok();
+				this.productDescriptionRepository.Update(
+					id,
+					model.Description,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -155,11 +166,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.productDescriptionRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3e33f4b923404b5670b65fa00449c5b4</Hash>
+    <Hash>ad91b3588376b5c5f95e7ad46eb9fbc0</Hash>
 </Codenesium>*/

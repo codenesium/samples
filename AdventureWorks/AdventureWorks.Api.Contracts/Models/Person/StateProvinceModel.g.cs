@@ -9,13 +9,15 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public StateProvinceModel()
 		{}
-		public StateProvinceModel(string stateProvinceCode,
-		                          string countryRegionCode,
-		                          bool isOnlyStateProvinceFlag,
-		                          string name,
-		                          int territoryID,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+
+		public StateProvinceModel(
+			string stateProvinceCode,
+			string countryRegionCode,
+			bool isOnlyStateProvinceFlag,
+			string name,
+			int territoryID,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.StateProvinceCode = stateProvinceCode;
 			this.CountryRegionCode = countryRegionCode;
@@ -26,106 +28,120 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _stateProvinceCode;
+		private string stateProvinceCode;
+
 		[Required]
 		public string StateProvinceCode
 		{
 			get
 			{
-				return _stateProvinceCode;
+				return this.stateProvinceCode;
 			}
+
 			set
 			{
-				this._stateProvinceCode = value;
+				this.stateProvinceCode = value;
 			}
 		}
 
-		private string _countryRegionCode;
+		private string countryRegionCode;
+
 		[Required]
 		public string CountryRegionCode
 		{
 			get
 			{
-				return _countryRegionCode;
+				return this.countryRegionCode;
 			}
+
 			set
 			{
-				this._countryRegionCode = value;
+				this.countryRegionCode = value;
 			}
 		}
 
-		private bool _isOnlyStateProvinceFlag;
+		private bool isOnlyStateProvinceFlag;
+
 		[Required]
 		public bool IsOnlyStateProvinceFlag
 		{
 			get
 			{
-				return _isOnlyStateProvinceFlag;
+				return this.isOnlyStateProvinceFlag;
 			}
+
 			set
 			{
-				this._isOnlyStateProvinceFlag = value;
+				this.isOnlyStateProvinceFlag = value;
 			}
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 
-		private int _territoryID;
+		private int territoryID;
+
 		[Required]
 		public int TerritoryID
 		{
 			get
 			{
-				return _territoryID;
+				return this.territoryID;
 			}
+
 			set
 			{
-				this._territoryID = value;
+				this.territoryID = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>85cffc197cbda6bc0633133d507b011f</Hash>
+    <Hash>2696bbb1f498e2c7935e8d9d6e78247c</Hash>
 </Codenesium>*/

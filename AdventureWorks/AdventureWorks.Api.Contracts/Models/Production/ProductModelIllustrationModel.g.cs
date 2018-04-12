@@ -9,43 +9,49 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public ProductModelIllustrationModel()
 		{}
-		public ProductModelIllustrationModel(int illustrationID,
-		                                     DateTime modifiedDate)
+
+		public ProductModelIllustrationModel(
+			int illustrationID,
+			DateTime modifiedDate)
 		{
 			this.IllustrationID = illustrationID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _illustrationID;
+		private int illustrationID;
+
 		[Required]
 		public int IllustrationID
 		{
 			get
 			{
-				return _illustrationID;
+				return this.illustrationID;
 			}
+
 			set
 			{
-				this._illustrationID = value;
+				this.illustrationID = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>23a1b8b0b17ef8ea9a21de2be1359183</Hash>
+    <Hash>e1910109f2f92b4f1bf4d3d14505eaf9</Hash>
 </Codenesium>*/

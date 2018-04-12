@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/jobCandidates")]
-	public class JobCandidatesController: AbstractJobCandidatesController
+	public class JobCandidateController: AbstractJobCandidateController
 	{
-		public JobCandidatesController(
-			ILogger<JobCandidatesController> logger,
+		public JobCandidateController(
+			ILogger<JobCandidateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IJobCandidateRepository jobCandidateRepository,
 			IJobCandidateModelValidator jobCandidateModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         jobCandidateRepository,
-			         jobCandidateModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       jobCandidateRepository,
+			       jobCandidateModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9e6420f631cf81484e0e3d4ea6cb54fa</Hash>
+    <Hash>640deef859ff980fde8c9421f5eb9b1a</Hash>
 </Codenesium>*/

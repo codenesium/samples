@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public abstract class AbstractStateProvincesController: AbstractApiController
+	public abstract class AbstractStateProvinceController: AbstractApiController
 	{
 		protected IStateProvinceRepository stateProvinceRepository;
+
 		protected IStateProvinceModelValidator stateProvinceModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractStateProvincesController(
-			ILogger<AbstractStateProvincesController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractStateProvinceController(
+			ILogger<AbstractStateProvinceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IStateProvinceRepository stateProvinceRepository,
 			IStateProvinceModelValidator stateProvinceModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.stateProvinceRepository = stateProvinceRepository;
 			this.stateProvinceModelValidator = stateProvinceModelValidator;
@@ -31,7 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.stateProvinceRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace AdventureWorksNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.stateProvinceRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.stateProvinceRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,19 +81,20 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.stateProvinceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.stateProvinceRepository.Create(model.StateProvinceCode,
-				                                             model.CountryRegionCode,
-				                                             model.IsOnlyStateProvinceFlag,
-				                                             model.Name,
-				                                             model.TerritoryID,
-				                                             model.Rowguid,
-				                                             model.ModifiedDate);
-				return Ok(id);
+				var id = this.stateProvinceRepository.Create(
+					model.StateProvinceCode,
+					model.CountryRegionCode,
+					model.IsOnlyStateProvinceFlag,
+					model.Name,
+					model.TerritoryID,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -101,27 +108,29 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BulkInsert(List<StateProvinceModel> models)
 		{
 			this.stateProvinceModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.stateProvinceModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.stateProvinceRepository.Create(model.StateProvinceCode,
-				                                    model.CountryRegionCode,
-				                                    model.IsOnlyStateProvinceFlag,
-				                                    model.Name,
-				                                    model.TerritoryID,
-				                                    model.Rowguid,
-				                                    model.ModifiedDate);
+				this.stateProvinceRepository.Create(
+					model.StateProvinceCode,
+					model.CountryRegionCode,
+					model.IsOnlyStateProvinceFlag,
+					model.Name,
+					model.TerritoryID,
+					model.Rowguid,
+					model.ModifiedDate);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -131,30 +140,32 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,StateProvinceModel model)
+		public virtual IActionResult Update(int id, StateProvinceModel model)
 		{
-			if(this.stateProvinceRepository.GetByIdDirect(id) == null)
+			if (this.stateProvinceRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.stateProvinceModelValidator.UpdateMode();
 			var validationResult = this.stateProvinceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.stateProvinceRepository.Update(id,  model.StateProvinceCode,
-				                                    model.CountryRegionCode,
-				                                    model.IsOnlyStateProvinceFlag,
-				                                    model.Name,
-				                                    model.TerritoryID,
-				                                    model.Rowguid,
-				                                    model.ModifiedDate);
-				return Ok();
+				this.stateProvinceRepository.Update(
+					id,
+					model.StateProvinceCode,
+					model.CountryRegionCode,
+					model.IsOnlyStateProvinceFlag,
+					model.Name,
+					model.TerritoryID,
+					model.Rowguid,
+					model.ModifiedDate);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -167,7 +178,7 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.stateProvinceRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -180,7 +191,7 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.stateProvinceRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -193,11 +204,11 @@ namespace AdventureWorksNS.Api.Service
 		{
 			Response response = this.stateProvinceRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>490341d5d52e24790a83d445f3c51397</Hash>
+    <Hash>0625d1b5e6f07dc694622e3830255d9f</Hash>
 </Codenesium>*/

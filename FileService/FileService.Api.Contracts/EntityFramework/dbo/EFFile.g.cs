@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace FileServiceNS.Api.Contracts
 {
 	[Table("File", Schema="dbo")]
@@ -10,18 +11,19 @@ namespace FileServiceNS.Api.Contracts
 		public EFFile()
 		{}
 
-		public void SetProperties(int id,
-		                          Guid externalId,
-		                          string privateKey,
-		                          string publicKey,
-		                          string location,
-		                          DateTime expiration,
-		                          string extension,
-		                          DateTime dateCreated,
-		                          decimal fileSizeInBytes,
-		                          int fileTypeId,
-		                          Nullable<int> bucketId,
-		                          string description)
+		public void SetProperties(
+			int id,
+			Guid externalId,
+			string privateKey,
+			string publicKey,
+			string location,
+			DateTime expiration,
+			string extension,
+			DateTime dateCreated,
+			decimal fileSizeInBytes,
+			int fileTypeId,
+			Nullable<int> bucketId,
+			string description)
 		{
 			this.Id = id.ToInt();
 			this.ExternalId = externalId;
@@ -40,47 +42,49 @@ namespace FileServiceNS.Api.Contracts
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
-		public int Id {get; set;}
+		public int Id { get; set; }
 
 		[Column("externalId", TypeName="uniqueidentifier")]
-		public Guid ExternalId {get; set;}
+		public Guid ExternalId { get; set; }
 
 		[Column("privateKey", TypeName="varchar(64)")]
-		public string PrivateKey {get; set;}
+		public string PrivateKey { get; set; }
 
 		[Column("publicKey", TypeName="varchar(64)")]
-		public string PublicKey {get; set;}
+		public string PublicKey { get; set; }
 
 		[Column("location", TypeName="varchar(255)")]
-		public string Location {get; set;}
+		public string Location { get; set; }
 
 		[Column("expiration", TypeName="datetime")]
-		public DateTime Expiration {get; set;}
+		public DateTime Expiration { get; set; }
 
 		[Column("extension", TypeName="varchar(32)")]
-		public string Extension {get; set;}
+		public string Extension { get; set; }
 
 		[Column("dateCreated", TypeName="datetime")]
-		public DateTime DateCreated {get; set;}
+		public DateTime DateCreated { get; set; }
 
 		[Column("fileSizeInBytes", TypeName="decimal")]
-		public decimal FileSizeInBytes {get; set;}
+		public decimal FileSizeInBytes { get; set; }
 
 		[Column("fileTypeId", TypeName="int")]
-		public int FileTypeId {get; set;}
+		public int FileTypeId { get; set; }
 
 		[Column("bucketId", TypeName="int")]
-		public Nullable<int> BucketId {get; set;}
+		public Nullable<int> BucketId { get; set; }
 
 		[Column("description", TypeName="nvarchar(255)")]
-		public string Description {get; set;}
+		public string Description { get; set; }
 
+		[ForeignKey("FileTypeId")]
 		public virtual EFFileType FileType { get; set; }
 
+		[ForeignKey("BucketId")]
 		public virtual EFBucket Bucket { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ac9f5471fc98568e616527d9b5c3c5d2</Hash>
+    <Hash>fb84c497240669ed424b265a89166099</Hash>
 </Codenesium>*/

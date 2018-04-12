@@ -20,17 +20,17 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public ISalesOrderHeaderRepository SalesOrderHeaderRepository {get; set;}
-		public ISalesReasonRepository SalesReasonRepository {get; set;}
+		public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
+		public ISalesReasonRepository SalesReasonRepository { get; set; }
 		public virtual void SalesReasonIDRules()
 		{
-			RuleFor(x => x.SalesReasonID).NotNull();
-			RuleFor(x => x.SalesReasonID).Must(BeValidSalesReason).When(x => x ?.SalesReasonID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SalesReasonID).NotNull();
+			this.RuleFor(x => x.SalesReasonID).Must(this.BeValidSalesReason).When(x => x ?.SalesReasonID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidSalesOrderHeader(int id)
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>609d3080cbd8d0248cd7d1879f19a895</Hash>
+    <Hash>ad5f25624136f808276346f313aaf92b</Hash>
 </Codenesium>*/

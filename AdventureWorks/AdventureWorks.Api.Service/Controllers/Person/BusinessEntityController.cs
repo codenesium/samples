@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/businessEntities")]
-	public class BusinessEntitiesController: AbstractBusinessEntitiesController
+	public class BusinessEntityController: AbstractBusinessEntityController
 	{
-		public BusinessEntitiesController(
-			ILogger<BusinessEntitiesController> logger,
+		public BusinessEntityController(
+			ILogger<BusinessEntityController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBusinessEntityRepository businessEntityRepository,
 			IBusinessEntityModelValidator businessEntityModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         businessEntityRepository,
-			         businessEntityModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       businessEntityRepository,
+			       businessEntityModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6a6e597ee4007a6d1795435dd2721572</Hash>
+    <Hash>b64b18c7629541106ea328a6f35e95e1</Hash>
 </Codenesium>*/

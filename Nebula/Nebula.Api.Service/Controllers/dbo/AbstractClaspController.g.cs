@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public abstract class AbstractClaspsController: AbstractApiController
+	public abstract class AbstractClaspController: AbstractApiController
 	{
 		protected IClaspRepository claspRepository;
+
 		protected IClaspModelValidator claspModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractClaspsController(
-			ILogger<AbstractClaspsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractClaspController(
+			ILogger<AbstractClaspController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IClaspRepository claspRepository,
 			IClaspModelValidator claspModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.claspRepository = claspRepository;
 			this.claspModelValidator = claspModelValidator;
@@ -31,7 +37,7 @@ namespace NebulaNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.claspRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace NebulaNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.claspRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.claspRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,14 +81,15 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.claspRepository.Create(model.PreviousChainId,
-				                                     model.NextChainId);
-				return Ok(id);
+				var id = this.claspRepository.Create(
+					model.PreviousChainId,
+					model.NextChainId);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -96,22 +103,24 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult BulkInsert(List<ClaspModel> models)
 		{
 			this.claspModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.claspModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.claspRepository.Create(model.PreviousChainId,
-				                            model.NextChainId);
+				this.claspRepository.Create(
+					model.PreviousChainId,
+					model.NextChainId);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -121,25 +130,27 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,ClaspModel model)
+		public virtual IActionResult Update(int id, ClaspModel model)
 		{
-			if(this.claspRepository.GetByIdDirect(id) == null)
+			if (this.claspRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.claspModelValidator.UpdateMode();
 			var validationResult = this.claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.claspRepository.Update(id,  model.PreviousChainId,
-				                            model.NextChainId);
-				return Ok();
+				this.claspRepository.Update(
+					id,
+					model.PreviousChainId,
+					model.NextChainId);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -152,7 +163,7 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.claspRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -165,7 +176,7 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.claspRepository.GetWhere(x => x.PreviousChainId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -178,11 +189,11 @@ namespace NebulaNS.Api.Service
 		{
 			Response response = this.claspRepository.GetWhere(x => x.NextChainId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3338dfeefccd58649d330b1d5f9b69b6</Hash>
+    <Hash>6ca914252547cd0c4e1eccdfd2e706f8</Hash>
 </Codenesium>*/

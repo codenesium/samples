@@ -12,10 +12,12 @@ namespace ESPIOTNS.Api.Client
 	public abstract partial class AbstractApiClient
 	{
 		private HttpClient client;
+
 		protected string ApiUrl { get; set; }
+
 		public AbstractApiClient(string apiUri)
 		{
-			if (String.IsNullOrWhiteSpace(apiUri))
+			if (string.IsNullOrWhiteSpace(apiUri))
 			{
 				throw new ArgumentException("apiUrl is not set");
 			}
@@ -33,17 +35,9 @@ namespace ESPIOTNS.Api.Client
 			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		public virtual async Task<List<POCODevice>>DeviceSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCODevice>> DeviceSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Devices;
-		}
-
-		public virtual async Task<List<POCODevice>> DeviceGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Devices;
@@ -57,7 +51,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Devices.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCODevice>> DeviceGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCODevice>> DeviceGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices?offset={offset}&limit={limit}");
 
@@ -72,7 +66,7 @@ namespace ESPIOTNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task DeviceUpdateAsync(int id,DeviceModel item)
+		public virtual async Task DeviceUpdateAsync(int id, DeviceModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Devices/{id}", item);
 
@@ -94,17 +88,9 @@ namespace ESPIOTNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCODeviceAction>>DeviceActionSearchAsync(string query, int offset=0, int limit=250)
+		public virtual async Task<List<POCODeviceAction>> DeviceActionSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).DeviceActions;
-		}
-
-		public virtual async Task<List<POCODeviceAction>> DeviceActionGetMultipleAsync(string csvOfIds)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/mulitple/{csvOfIds}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).DeviceActions;
@@ -118,7 +104,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).DeviceActions.FirstOrDefault();
 		}
 
-		public virtual async Task<List<POCODeviceAction>> DeviceActionGetAllAsync(int offset=0, int limit=250)
+		public virtual async Task<List<POCODeviceAction>> DeviceActionGetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions?offset={offset}&limit={limit}");
 
@@ -133,7 +119,7 @@ namespace ESPIOTNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task DeviceActionUpdateAsync(int id,DeviceActionModel item)
+		public virtual async Task DeviceActionUpdateAsync(int id, DeviceActionModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/DeviceActions/{id}", item);
 
@@ -158,5 +144,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>267065aec494e5774b4a6b386dad44a5</Hash>
+    <Hash>983dc8f498ead4285f57fbbcff51e379</Hash>
 </Codenesium>*/

@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/workOrderRoutings")]
-	public class WorkOrderRoutingsController: AbstractWorkOrderRoutingsController
+	public class WorkOrderRoutingController: AbstractWorkOrderRoutingController
 	{
-		public WorkOrderRoutingsController(
-			ILogger<WorkOrderRoutingsController> logger,
+		public WorkOrderRoutingController(
+			ILogger<WorkOrderRoutingController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IWorkOrderRoutingRepository workOrderRoutingRepository,
 			IWorkOrderRoutingModelValidator workOrderRoutingModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         workOrderRoutingRepository,
-			         workOrderRoutingModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       workOrderRoutingRepository,
+			       workOrderRoutingModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7ace8c16e64522030fbc16931f005f07</Hash>
+    <Hash>8563cf2979cb6ba1f967bf0c94ddf29a</Hash>
 </Codenesium>*/

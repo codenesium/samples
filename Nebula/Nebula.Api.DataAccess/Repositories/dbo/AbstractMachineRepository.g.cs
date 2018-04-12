@@ -15,55 +15,66 @@ namespace NebulaNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractMachineRepository(ILogger logger,
-		                                 ApplicationDbContext context)
+		public AbstractMachineRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(string name,
-		                          Guid machineGuid,
-		                          string jwtKey,
-		                          string lastIpAddress,
-		                          string description)
+		public virtual int Create(
+			string name,
+			Guid machineGuid,
+			string jwtKey,
+			string lastIpAddress,
+			string description)
 		{
-			var record = new EFMachine ();
+			var record = new EFMachine();
 
-			MapPOCOToEF(0, name,
-			            machineGuid,
-			            jwtKey,
-			            lastIpAddress,
-			            description, record);
+			MapPOCOToEF(
+				0,
+				name,
+				machineGuid,
+				jwtKey,
+				lastIpAddress,
+				description,
+				record);
 
 			this.context.Set<EFMachine>().Add(record);
 			this.context.SaveChanges();
 			return record.Id;
 		}
 
-		public virtual void Update(int id, string name,
-		                           Guid machineGuid,
-		                           string jwtKey,
-		                           string lastIpAddress,
-		                           string description)
+		public virtual void Update(
+			int id,
+			string name,
+			Guid machineGuid,
+			string jwtKey,
+			string lastIpAddress,
+			string description)
 		{
-			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
-				MapPOCOToEF(id,  name,
-				            machineGuid,
-				            jwtKey,
-				            lastIpAddress,
-				            description, record);
+				MapPOCOToEF(
+					id,
+					name,
+					machineGuid,
+					jwtKey,
+					lastIpAddress,
+					description,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int id)
+		public virtual void Delete(
+			int id)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
@@ -82,7 +93,7 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
 		}
 
@@ -90,11 +101,11 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.Machines.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -102,7 +113,7 @@ namespace NebulaNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -110,7 +121,7 @@ namespace NebulaNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOMachine> GetWhereDirect(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOMachine> GetWhereDirect(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -118,48 +129,54 @@ namespace NebulaNS.Api.DataAccess
 			return response.Machines;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFMachine, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFMachine, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFMachine> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFMachine> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFMachine> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFMachine> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFMachine> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFMachine> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int id, string name,
-		                               Guid machineGuid,
-		                               string jwtKey,
-		                               string lastIpAddress,
-		                               string description, EFMachine   efMachine)
+		public static void MapPOCOToEF(
+			int id,
+			string name,
+			Guid machineGuid,
+			string jwtKey,
+			string lastIpAddress,
+			string description,
+			EFMachine efMachine)
 		{
-			efMachine.SetProperties(id.ToInt(),name,machineGuid,jwtKey,lastIpAddress,description);
+			efMachine.SetProperties(id.ToInt(), name, machineGuid, jwtKey, lastIpAddress, description);
 		}
 
-		public static void MapEFToPOCO(EFMachine efMachine,Response response)
+		public static void MapEFToPOCO(
+			EFMachine efMachine,
+			Response response)
 		{
-			if(efMachine == null)
+			if (efMachine == null)
 			{
 				return;
 			}
-			response.AddMachine(new POCOMachine(efMachine.Id.ToInt(),efMachine.Name,efMachine.MachineGuid,efMachine.JwtKey,efMachine.LastIpAddress,efMachine.Description));
+
+			response.AddMachine(new POCOMachine(efMachine.Id.ToInt(), efMachine.Name, efMachine.MachineGuid, efMachine.JwtKey, efMachine.LastIpAddress, efMachine.Description));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f7a8229288fad9f09520badbe3af3f61</Hash>
+    <Hash>807dbc05ad472411a96b6ebc5479b5b0</Hash>
 </Codenesium>*/

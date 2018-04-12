@@ -9,21 +9,23 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public EmployeeModel()
 		{}
-		public EmployeeModel(string nationalIDNumber,
-		                     string loginID,
-		                     Nullable<Guid> organizationNode,
-		                     Nullable<short> organizationLevel,
-		                     string jobTitle,
-		                     DateTime birthDate,
-		                     string maritalStatus,
-		                     string gender,
-		                     DateTime hireDate,
-		                     bool salariedFlag,
-		                     short vacationHours,
-		                     short sickLeaveHours,
-		                     bool currentFlag,
-		                     Guid rowguid,
-		                     DateTime modifiedDate)
+
+		public EmployeeModel(
+			string nationalIDNumber,
+			string loginID,
+			Nullable<Guid> organizationNode,
+			Nullable<short> organizationLevel,
+			string jobTitle,
+			DateTime birthDate,
+			string maritalStatus,
+			string gender,
+			DateTime hireDate,
+			bool salariedFlag,
+			short vacationHours,
+			short sickLeaveHours,
+			bool currentFlag,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.NationalIDNumber = nationalIDNumber;
 			this.LoginID = loginID;
@@ -42,216 +44,246 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private string _nationalIDNumber;
+		private string nationalIDNumber;
+
 		[Required]
 		public string NationalIDNumber
 		{
 			get
 			{
-				return _nationalIDNumber;
+				return this.nationalIDNumber;
 			}
+
 			set
 			{
-				this._nationalIDNumber = value;
+				this.nationalIDNumber = value;
 			}
 		}
 
-		private string _loginID;
+		private string loginID;
+
 		[Required]
 		public string LoginID
 		{
 			get
 			{
-				return _loginID;
+				return this.loginID;
 			}
+
 			set
 			{
-				this._loginID = value;
+				this.loginID = value;
 			}
 		}
 
-		private Nullable<Guid> _organizationNode;
+		private Nullable<Guid> organizationNode;
+
 		public Nullable<Guid> OrganizationNode
 		{
 			get
 			{
-				return _organizationNode.IsEmptyOrZeroOrNull() ? null : _organizationNode;
+				return this.organizationNode.IsEmptyOrZeroOrNull() ? null : this.organizationNode;
 			}
+
 			set
 			{
-				this._organizationNode = value;
+				this.organizationNode = value;
 			}
 		}
 
-		private Nullable<short> _organizationLevel;
+		private Nullable<short> organizationLevel;
+
 		public Nullable<short> OrganizationLevel
 		{
 			get
 			{
-				return _organizationLevel.IsEmptyOrZeroOrNull() ? null : _organizationLevel;
+				return this.organizationLevel.IsEmptyOrZeroOrNull() ? null : this.organizationLevel;
 			}
+
 			set
 			{
-				this._organizationLevel = value;
+				this.organizationLevel = value;
 			}
 		}
 
-		private string _jobTitle;
+		private string jobTitle;
+
 		[Required]
 		public string JobTitle
 		{
 			get
 			{
-				return _jobTitle;
+				return this.jobTitle;
 			}
+
 			set
 			{
-				this._jobTitle = value;
+				this.jobTitle = value;
 			}
 		}
 
-		private DateTime _birthDate;
+		private DateTime birthDate;
+
 		[Required]
 		public DateTime BirthDate
 		{
 			get
 			{
-				return _birthDate;
+				return this.birthDate;
 			}
+
 			set
 			{
-				this._birthDate = value;
+				this.birthDate = value;
 			}
 		}
 
-		private string _maritalStatus;
+		private string maritalStatus;
+
 		[Required]
 		public string MaritalStatus
 		{
 			get
 			{
-				return _maritalStatus;
+				return this.maritalStatus;
 			}
+
 			set
 			{
-				this._maritalStatus = value;
+				this.maritalStatus = value;
 			}
 		}
 
-		private string _gender;
+		private string gender;
+
 		[Required]
 		public string Gender
 		{
 			get
 			{
-				return _gender;
+				return this.gender;
 			}
+
 			set
 			{
-				this._gender = value;
+				this.gender = value;
 			}
 		}
 
-		private DateTime _hireDate;
+		private DateTime hireDate;
+
 		[Required]
 		public DateTime HireDate
 		{
 			get
 			{
-				return _hireDate;
+				return this.hireDate;
 			}
+
 			set
 			{
-				this._hireDate = value;
+				this.hireDate = value;
 			}
 		}
 
-		private bool _salariedFlag;
+		private bool salariedFlag;
+
 		[Required]
 		public bool SalariedFlag
 		{
 			get
 			{
-				return _salariedFlag;
+				return this.salariedFlag;
 			}
+
 			set
 			{
-				this._salariedFlag = value;
+				this.salariedFlag = value;
 			}
 		}
 
-		private short _vacationHours;
+		private short vacationHours;
+
 		[Required]
 		public short VacationHours
 		{
 			get
 			{
-				return _vacationHours;
+				return this.vacationHours;
 			}
+
 			set
 			{
-				this._vacationHours = value;
+				this.vacationHours = value;
 			}
 		}
 
-		private short _sickLeaveHours;
+		private short sickLeaveHours;
+
 		[Required]
 		public short SickLeaveHours
 		{
 			get
 			{
-				return _sickLeaveHours;
+				return this.sickLeaveHours;
 			}
+
 			set
 			{
-				this._sickLeaveHours = value;
+				this.sickLeaveHours = value;
 			}
 		}
 
-		private bool _currentFlag;
+		private bool currentFlag;
+
 		[Required]
 		public bool CurrentFlag
 		{
 			get
 			{
-				return _currentFlag;
+				return this.currentFlag;
 			}
+
 			set
 			{
-				this._currentFlag = value;
+				this.currentFlag = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>54d0abd1aae2cf8bb67603f248a7edb3</Hash>
+    <Hash>02dacbf4277438d3c7b488b8bb257eda</Hash>
 </Codenesium>*/

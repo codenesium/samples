@@ -1,8 +1,9 @@
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Service
 {
-	public class TeamModelValidator: AbstractTeamModelValidator,ITeamModelValidator
+	public class TeamModelValidator: AbstractTeamModelValidator, ITeamModelValidator
 	{
 		public TeamModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9b17df627fdee3bd4c467cb2a11b9907</Hash>
+    <Hash>5863d3a091b836ca3fcd393b0ea6fe1a</Hash>
 </Codenesium>*/

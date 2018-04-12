@@ -1,8 +1,9 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
-	public class ContactTypeModelValidator: AbstractContactTypeModelValidator,IContactTypeModelValidator
+	public class ContactTypeModelValidator: AbstractContactTypeModelValidator, IContactTypeModelValidator
 	{
 		public ContactTypeModelValidator()
 		{   }
@@ -25,5 +26,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9a1e93fc7f5691d87add1caeb2827952</Hash>
+    <Hash>b95590325b58d2d2028e4241c50c4823</Hash>
 </Codenesium>*/

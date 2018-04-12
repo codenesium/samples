@@ -9,19 +9,20 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOPurchaseOrderHeader()
 		{}
 
-		public POCOPurchaseOrderHeader(int purchaseOrderID,
-		                               int revisionNumber,
-		                               int status,
-		                               int employeeID,
-		                               int vendorID,
-		                               int shipMethodID,
-		                               DateTime orderDate,
-		                               Nullable<DateTime> shipDate,
-		                               decimal subTotal,
-		                               decimal taxAmt,
-		                               decimal freight,
-		                               decimal totalDue,
-		                               DateTime modifiedDate)
+		public POCOPurchaseOrderHeader(
+			int purchaseOrderID,
+			int revisionNumber,
+			int status,
+			int employeeID,
+			int vendorID,
+			int shipMethodID,
+			DateTime orderDate,
+			Nullable<DateTime> shipDate,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			DateTime modifiedDate)
 		{
 			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.RevisionNumber = revisionNumber;
@@ -34,130 +35,130 @@ namespace AdventureWorksNS.Api.Contracts
 			this.TotalDue = totalDue;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			EmployeeID = new ReferenceEntity<int>(employeeID,
-			                                      "Employee");
-			VendorID = new ReferenceEntity<int>(vendorID,
-			                                    "Vendor");
-			ShipMethodID = new ReferenceEntity<int>(shipMethodID,
-			                                        "ShipMethod");
+			this.EmployeeID = new ReferenceEntity<int>(employeeID,
+			                                           "Employee");
+			this.VendorID = new ReferenceEntity<int>(vendorID,
+			                                         "Vendor");
+			this.ShipMethodID = new ReferenceEntity<int>(shipMethodID,
+			                                             "ShipMethod");
 		}
 
-		public int PurchaseOrderID {get; set;}
-		public int RevisionNumber {get; set;}
-		public int Status {get; set;}
-		public ReferenceEntity<int>EmployeeID {get; set;}
-		public ReferenceEntity<int>VendorID {get; set;}
-		public ReferenceEntity<int>ShipMethodID {get; set;}
-		public DateTime OrderDate {get; set;}
-		public Nullable<DateTime> ShipDate {get; set;}
-		public decimal SubTotal {get; set;}
-		public decimal TaxAmt {get; set;}
-		public decimal Freight {get; set;}
-		public decimal TotalDue {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int PurchaseOrderID { get; set; }
+		public int RevisionNumber { get; set; }
+		public int Status { get; set; }
+		public ReferenceEntity<int> EmployeeID { get; set; }
+		public ReferenceEntity<int> VendorID { get; set; }
+		public ReferenceEntity<int> ShipMethodID { get; set; }
+		public DateTime OrderDate { get; set; }
+		public Nullable<DateTime> ShipDate { get; set; }
+		public decimal SubTotal { get; set; }
+		public decimal TaxAmt { get; set; }
+		public decimal Freight { get; set; }
+		public decimal TotalDue { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderIDValue {get; set;} = true;
+		public bool ShouldSerializePurchaseOrderIDValue { get; set; } = true;
 
 		public bool ShouldSerializePurchaseOrderID()
 		{
-			return ShouldSerializePurchaseOrderIDValue;
+			return this.ShouldSerializePurchaseOrderIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRevisionNumberValue {get; set;} = true;
+		public bool ShouldSerializeRevisionNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeRevisionNumber()
 		{
-			return ShouldSerializeRevisionNumberValue;
+			return this.ShouldSerializeRevisionNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStatusValue {get; set;} = true;
+		public bool ShouldSerializeStatusValue { get; set; } = true;
 
 		public bool ShouldSerializeStatus()
 		{
-			return ShouldSerializeStatusValue;
+			return this.ShouldSerializeStatusValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeeIDValue {get; set;} = true;
+		public bool ShouldSerializeEmployeeIDValue { get; set; } = true;
 
 		public bool ShouldSerializeEmployeeID()
 		{
-			return ShouldSerializeEmployeeIDValue;
+			return this.ShouldSerializeEmployeeIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVendorIDValue {get; set;} = true;
+		public bool ShouldSerializeVendorIDValue { get; set; } = true;
 
 		public bool ShouldSerializeVendorID()
 		{
-			return ShouldSerializeVendorIDValue;
+			return this.ShouldSerializeVendorIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipMethodIDValue {get; set;} = true;
+		public bool ShouldSerializeShipMethodIDValue { get; set; } = true;
 
 		public bool ShouldSerializeShipMethodID()
 		{
-			return ShouldSerializeShipMethodIDValue;
+			return this.ShouldSerializeShipMethodIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrderDateValue {get; set;} = true;
+		public bool ShouldSerializeOrderDateValue { get; set; } = true;
 
 		public bool ShouldSerializeOrderDate()
 		{
-			return ShouldSerializeOrderDateValue;
+			return this.ShouldSerializeOrderDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipDateValue {get; set;} = true;
+		public bool ShouldSerializeShipDateValue { get; set; } = true;
 
 		public bool ShouldSerializeShipDate()
 		{
-			return ShouldSerializeShipDateValue;
+			return this.ShouldSerializeShipDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSubTotalValue {get; set;} = true;
+		public bool ShouldSerializeSubTotalValue { get; set; } = true;
 
 		public bool ShouldSerializeSubTotal()
 		{
-			return ShouldSerializeSubTotalValue;
+			return this.ShouldSerializeSubTotalValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTaxAmtValue {get; set;} = true;
+		public bool ShouldSerializeTaxAmtValue { get; set; } = true;
 
 		public bool ShouldSerializeTaxAmt()
 		{
-			return ShouldSerializeTaxAmtValue;
+			return this.ShouldSerializeTaxAmtValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFreightValue {get; set;} = true;
+		public bool ShouldSerializeFreightValue { get; set; } = true;
 
 		public bool ShouldSerializeFreight()
 		{
-			return ShouldSerializeFreightValue;
+			return this.ShouldSerializeFreightValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTotalDueValue {get; set;} = true;
+		public bool ShouldSerializeTotalDueValue { get; set; } = true;
 
 		public bool ShouldSerializeTotalDue()
 		{
-			return ShouldSerializeTotalDueValue;
+			return this.ShouldSerializeTotalDueValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -180,5 +181,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dfee2a816887c2d138c499468926d38b</Hash>
+    <Hash>ba78eb6dc22168f548ec5f0e4d7dd853</Hash>
 </Codenesium>*/

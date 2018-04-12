@@ -9,11 +9,12 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOLocation()
 		{}
 
-		public POCOLocation(short locationID,
-		                    string name,
-		                    decimal costRate,
-		                    decimal availability,
-		                    DateTime modifiedDate)
+		public POCOLocation(
+			short locationID,
+			string name,
+			decimal costRate,
+			decimal availability,
+			DateTime modifiedDate)
 		{
 			this.LocationID = locationID;
 			this.Name = name;
@@ -22,50 +23,50 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		public short LocationID {get; set;}
-		public string Name {get; set;}
-		public decimal CostRate {get; set;}
-		public decimal Availability {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public short LocationID { get; set; }
+		public string Name { get; set; }
+		public decimal CostRate { get; set; }
+		public decimal Availability { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeLocationIDValue {get; set;} = true;
+		public bool ShouldSerializeLocationIDValue { get; set; } = true;
 
 		public bool ShouldSerializeLocationID()
 		{
-			return ShouldSerializeLocationIDValue;
+			return this.ShouldSerializeLocationIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCostRateValue {get; set;} = true;
+		public bool ShouldSerializeCostRateValue { get; set; } = true;
 
 		public bool ShouldSerializeCostRate()
 		{
-			return ShouldSerializeCostRateValue;
+			return this.ShouldSerializeCostRateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAvailabilityValue {get; set;} = true;
+		public bool ShouldSerializeAvailabilityValue { get; set; } = true;
 
 		public bool ShouldSerializeAvailability()
 		{
-			return ShouldSerializeAvailabilityValue;
+			return this.ShouldSerializeAvailabilityValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -80,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>38a185c3d7a4396523ca4bb093f35ee1</Hash>
+    <Hash>920696d35edf95157c560f756d1ea74e</Hash>
 </Codenesium>*/

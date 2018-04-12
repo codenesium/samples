@@ -9,27 +9,31 @@ namespace NebulaNS.Api.Contracts
 	{
 		public OrganizationModel()
 		{}
-		public OrganizationModel(string name)
+
+		public OrganizationModel(
+			string name)
 		{
 			this.Name = name;
 		}
 
-		private string _name;
+		private string name;
+
 		[Required]
 		public string Name
 		{
 			get
 			{
-				return _name;
+				return this.name;
 			}
+
 			set
 			{
-				this._name = value;
+				this.name = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7fd226ae097a2051d3c6af32c1df5b92</Hash>
+    <Hash>880025a756123e0aeb24075c24ec762c</Hash>
 </Codenesium>*/

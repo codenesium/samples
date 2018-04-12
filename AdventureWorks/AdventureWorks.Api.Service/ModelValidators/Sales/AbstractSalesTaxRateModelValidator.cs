@@ -20,37 +20,37 @@ namespace AdventureWorksNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IStateProvinceRepository StateProvinceRepository {get; set;}
+		public IStateProvinceRepository StateProvinceRepository { get; set; }
 		public virtual void StateProvinceIDRules()
 		{
-			RuleFor(x => x.StateProvinceID).NotNull();
-			RuleFor(x => x.StateProvinceID).Must(BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.StateProvinceID).NotNull();
+			this.RuleFor(x => x.StateProvinceID).Must(this.BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TaxTypeRules()
 		{
-			RuleFor(x => x.TaxType).NotNull();
+			this.RuleFor(x => x.TaxType).NotNull();
 		}
 
 		public virtual void TaxRateRules()
 		{
-			RuleFor(x => x.TaxRate).NotNull();
+			this.RuleFor(x => x.TaxRate).NotNull();
 		}
 
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,50);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void RowguidRules()
 		{
-			RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
 		{
-			RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidStateProvince(int id)
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>062262960ab29567869256db48eae168</Hash>
+    <Hash>0cea75fbf601a89f642e0a6c784fbbe0</Hash>
 </Codenesium>*/

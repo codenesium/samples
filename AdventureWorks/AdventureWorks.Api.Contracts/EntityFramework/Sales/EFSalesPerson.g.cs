@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Codenesium.DataConversionExtensions.AspNetCore;
+
 namespace AdventureWorksNS.Api.Contracts
 {
 	[Table("SalesPerson", Schema="Sales")]
@@ -10,15 +11,16 @@ namespace AdventureWorksNS.Api.Contracts
 		public EFSalesPerson()
 		{}
 
-		public void SetProperties(int businessEntityID,
-		                          Nullable<int> territoryID,
-		                          Nullable<decimal> salesQuota,
-		                          decimal bonus,
-		                          decimal commissionPct,
-		                          decimal salesYTD,
-		                          decimal salesLastYear,
-		                          Guid rowguid,
-		                          DateTime modifiedDate)
+		public void SetProperties(
+			int businessEntityID,
+			Nullable<int> territoryID,
+			Nullable<decimal> salesQuota,
+			decimal bonus,
+			decimal commissionPct,
+			decimal salesYTD,
+			decimal salesLastYear,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.TerritoryID = territoryID.ToNullableInt();
@@ -32,40 +34,41 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID {get; set;}
+		public int BusinessEntityID { get; set; }
 
 		[Column("TerritoryID", TypeName="int")]
-		public Nullable<int> TerritoryID {get; set;}
+		public Nullable<int> TerritoryID { get; set; }
 
 		[Column("SalesQuota", TypeName="money")]
-		public Nullable<decimal> SalesQuota {get; set;}
+		public Nullable<decimal> SalesQuota { get; set; }
 
 		[Column("Bonus", TypeName="money")]
-		public decimal Bonus {get; set;}
+		public decimal Bonus { get; set; }
 
 		[Column("CommissionPct", TypeName="smallmoney")]
-		public decimal CommissionPct {get; set;}
+		public decimal CommissionPct { get; set; }
 
 		[Column("SalesYTD", TypeName="money")]
-		public decimal SalesYTD {get; set;}
+		public decimal SalesYTD { get; set; }
 
 		[Column("SalesLastYear", TypeName="money")]
-		public decimal SalesLastYear {get; set;}
+		public decimal SalesLastYear { get; set; }
 
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid {get; set;}
+		public Guid Rowguid { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate {get; set;}
+		public DateTime ModifiedDate { get; set; }
 
+		[ForeignKey("BusinessEntityID")]
 		public virtual EFEmployee Employee { get; set; }
 
+		[ForeignKey("TerritoryID")]
 		public virtual EFSalesTerritory SalesTerritory { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7278a813ec108a87e591be5c7151e984</Hash>
+    <Hash>3629ece4e8aad8ae6800953b0388d918</Hash>
 </Codenesium>*/

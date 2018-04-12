@@ -15,43 +15,54 @@ namespace FileServiceNS.Api.DataAccess
 		protected ApplicationDbContext context;
 		protected ILogger logger;
 
-		public AbstractBucketRepository(ILogger logger,
-		                                ApplicationDbContext context)
+		public AbstractBucketRepository(
+			ILogger logger,
+			ApplicationDbContext context)
 		{
 			this.logger = logger;
 			this.context = context;
 		}
 
-		public virtual int Create(string name,
-		                          Guid externalId)
+		public virtual int Create(
+			string name,
+			Guid externalId)
 		{
-			var record = new EFBucket ();
+			var record = new EFBucket();
 
-			MapPOCOToEF(0, name,
-			            externalId, record);
+			MapPOCOToEF(
+				0,
+				name,
+				externalId,
+				record);
 
 			this.context.Set<EFBucket>().Add(record);
 			this.context.SaveChanges();
 			return record.Id;
 		}
 
-		public virtual void Update(int id, string name,
-		                           Guid externalId)
+		public virtual void Update(
+			int id,
+			string name,
+			Guid externalId)
 		{
-			var record =  this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				this.logger.LogError($"Unable to find id:{id}");
 			}
 			else
 			{
-				MapPOCOToEF(id,  name,
-				            externalId, record);
+				MapPOCOToEF(
+					id,
+					name,
+					externalId,
+					record);
 				this.context.SaveChanges();
 			}
 		}
 
-		public virtual void Delete(int id)
+		public virtual void Delete(
+			int id)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
@@ -70,7 +81,7 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
 		}
 
@@ -78,11 +89,11 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			var response = new Response();
 
-			this.SearchLinqPOCO(x => x.Id == id,response);
+			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.Buckets.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -90,7 +101,7 @@ namespace FileServiceNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -98,7 +109,7 @@ namespace FileServiceNS.Api.DataAccess
 			return response;
 		}
 
-		public virtual List<POCOBucket> GetWhereDirect(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "")
+		public virtual List<POCOBucket> GetWhereDirect(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			var response = new Response();
 
@@ -106,45 +117,51 @@ namespace FileServiceNS.Api.DataAccess
 			return response.Buckets;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFBucket, bool>> predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCO(Expression<Func<EFBucket, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFBucket> records = this.SearchLinqEF(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFBucket> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate,Response response,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<EFBucket> records = this.SearchLinqEFDynamic(predicate,skip,take,orderClause);
-			records.ForEach(x => MapEFToPOCO(x,response));
+			List<EFBucket> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
+			records.ForEach(x => MapEFToPOCO(x, response));
 		}
 
-		protected virtual List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		protected virtual List<EFBucket> SearchLinqEFDynamic(string predicate,int skip=0,int take=Int32.MaxValue,string orderClause="")
+		protected virtual List<EFBucket> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
 
-		public static void MapPOCOToEF(int id, string name,
-		                               Guid externalId, EFBucket   efBucket)
+		public static void MapPOCOToEF(
+			int id,
+			string name,
+			Guid externalId,
+			EFBucket efBucket)
 		{
-			efBucket.SetProperties(id.ToInt(),name,externalId);
+			efBucket.SetProperties(id.ToInt(), name, externalId);
 		}
 
-		public static void MapEFToPOCO(EFBucket efBucket,Response response)
+		public static void MapEFToPOCO(
+			EFBucket efBucket,
+			Response response)
 		{
-			if(efBucket == null)
+			if (efBucket == null)
 			{
 				return;
 			}
-			response.AddBucket(new POCOBucket(efBucket.Id.ToInt(),efBucket.Name,efBucket.ExternalId));
+
+			response.AddBucket(new POCOBucket(efBucket.Id.ToInt(), efBucket.Name, efBucket.ExternalId));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0a5b660ad5533c0545cd9c9b7f459aa</Hash>
+    <Hash>c6259bff28e5183f19115daf8c0e71b6</Hash>
 </Codenesium>*/

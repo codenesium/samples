@@ -9,41 +9,42 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOPhoneNumberType()
 		{}
 
-		public POCOPhoneNumberType(int phoneNumberTypeID,
-		                           string name,
-		                           DateTime modifiedDate)
+		public POCOPhoneNumberType(
+			int phoneNumberTypeID,
+			string name,
+			DateTime modifiedDate)
 		{
 			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
 			this.Name = name;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		public int PhoneNumberTypeID {get; set;}
-		public string Name {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int PhoneNumberTypeID { get; set; }
+		public string Name { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializePhoneNumberTypeIDValue {get; set;} = true;
+		public bool ShouldSerializePhoneNumberTypeIDValue { get; set; } = true;
 
 		public bool ShouldSerializePhoneNumberTypeID()
 		{
-			return ShouldSerializePhoneNumberTypeIDValue;
+			return this.ShouldSerializePhoneNumberTypeIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -56,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8e7b8889e800994d94eaae7342a62108</Hash>
+    <Hash>ceb4a331ac579fae8d56fd6ac3ceb60c</Hash>
 </Codenesium>*/

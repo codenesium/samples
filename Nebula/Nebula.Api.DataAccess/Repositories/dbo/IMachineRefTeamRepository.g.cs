@@ -7,10 +7,12 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRefTeamRepository
 	{
-		int Create(int machineId,
-		           int teamId);
+		int Create(
+			int machineId,
+			int teamId);
 
-		void Update(int id, int machineId,
+		void Update(int id,
+		            int machineId,
 		            int teamId);
 
 		void Delete(int id);
@@ -19,14 +21,14 @@ namespace NebulaNS.Api.DataAccess
 
 		POCOMachineRefTeam GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhere(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOMachineRefTeam> GetWhereDirect(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		List<POCOMachineRefTeam> GetWhereDirect(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = Int32.MaxValue, string orderClause = "");
+		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>77c23e033dde699e7703d46f15462a66</Hash>
+    <Hash>3974a9fce10c06cd9c83610f7d75d519</Hash>
 </Codenesium>*/

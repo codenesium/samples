@@ -9,31 +9,33 @@ namespace AdventureWorksNS.Api.Contracts
 	{
 		public SalesOrderHeaderModel()
 		{}
-		public SalesOrderHeaderModel(int revisionNumber,
-		                             DateTime orderDate,
-		                             DateTime dueDate,
-		                             Nullable<DateTime> shipDate,
-		                             int status,
-		                             bool onlineOrderFlag,
-		                             string salesOrderNumber,
-		                             string purchaseOrderNumber,
-		                             string accountNumber,
-		                             int customerID,
-		                             Nullable<int> salesPersonID,
-		                             Nullable<int> territoryID,
-		                             int billToAddressID,
-		                             int shipToAddressID,
-		                             int shipMethodID,
-		                             Nullable<int> creditCardID,
-		                             string creditCardApprovalCode,
-		                             Nullable<int> currencyRateID,
-		                             decimal subTotal,
-		                             decimal taxAmt,
-		                             decimal freight,
-		                             decimal totalDue,
-		                             string comment,
-		                             Guid rowguid,
-		                             DateTime modifiedDate)
+
+		public SalesOrderHeaderModel(
+			int revisionNumber,
+			DateTime orderDate,
+			DateTime dueDate,
+			Nullable<DateTime> shipDate,
+			int status,
+			bool onlineOrderFlag,
+			string salesOrderNumber,
+			string purchaseOrderNumber,
+			string accountNumber,
+			int customerID,
+			Nullable<int> salesPersonID,
+			Nullable<int> territoryID,
+			int billToAddressID,
+			int shipToAddressID,
+			int shipMethodID,
+			Nullable<int> creditCardID,
+			string creditCardApprovalCode,
+			Nullable<int> currencyRateID,
+			decimal subTotal,
+			decimal taxAmt,
+			decimal freight,
+			decimal totalDue,
+			string comment,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.RevisionNumber = revisionNumber;
 			this.OrderDate = orderDate.ToDateTime();
@@ -62,349 +64,399 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		private int _revisionNumber;
+		private int revisionNumber;
+
 		[Required]
 		public int RevisionNumber
 		{
 			get
 			{
-				return _revisionNumber;
+				return this.revisionNumber;
 			}
+
 			set
 			{
-				this._revisionNumber = value;
+				this.revisionNumber = value;
 			}
 		}
 
-		private DateTime _orderDate;
+		private DateTime orderDate;
+
 		[Required]
 		public DateTime OrderDate
 		{
 			get
 			{
-				return _orderDate;
+				return this.orderDate;
 			}
+
 			set
 			{
-				this._orderDate = value;
+				this.orderDate = value;
 			}
 		}
 
-		private DateTime _dueDate;
+		private DateTime dueDate;
+
 		[Required]
 		public DateTime DueDate
 		{
 			get
 			{
-				return _dueDate;
+				return this.dueDate;
 			}
+
 			set
 			{
-				this._dueDate = value;
+				this.dueDate = value;
 			}
 		}
 
-		private Nullable<DateTime> _shipDate;
+		private Nullable<DateTime> shipDate;
+
 		public Nullable<DateTime> ShipDate
 		{
 			get
 			{
-				return _shipDate.IsEmptyOrZeroOrNull() ? null : _shipDate;
+				return this.shipDate.IsEmptyOrZeroOrNull() ? null : this.shipDate;
 			}
+
 			set
 			{
-				this._shipDate = value;
+				this.shipDate = value;
 			}
 		}
 
-		private int _status;
+		private int status;
+
 		[Required]
 		public int Status
 		{
 			get
 			{
-				return _status;
+				return this.status;
 			}
+
 			set
 			{
-				this._status = value;
+				this.status = value;
 			}
 		}
 
-		private bool _onlineOrderFlag;
+		private bool onlineOrderFlag;
+
 		[Required]
 		public bool OnlineOrderFlag
 		{
 			get
 			{
-				return _onlineOrderFlag;
+				return this.onlineOrderFlag;
 			}
+
 			set
 			{
-				this._onlineOrderFlag = value;
+				this.onlineOrderFlag = value;
 			}
 		}
 
-		private string _salesOrderNumber;
+		private string salesOrderNumber;
+
 		[Required]
 		public string SalesOrderNumber
 		{
 			get
 			{
-				return _salesOrderNumber;
+				return this.salesOrderNumber;
 			}
+
 			set
 			{
-				this._salesOrderNumber = value;
+				this.salesOrderNumber = value;
 			}
 		}
 
-		private string _purchaseOrderNumber;
+		private string purchaseOrderNumber;
+
 		public string PurchaseOrderNumber
 		{
 			get
 			{
-				return _purchaseOrderNumber.IsEmptyOrZeroOrNull() ? null : _purchaseOrderNumber;
+				return this.purchaseOrderNumber.IsEmptyOrZeroOrNull() ? null : this.purchaseOrderNumber;
 			}
+
 			set
 			{
-				this._purchaseOrderNumber = value;
+				this.purchaseOrderNumber = value;
 			}
 		}
 
-		private string _accountNumber;
+		private string accountNumber;
+
 		public string AccountNumber
 		{
 			get
 			{
-				return _accountNumber.IsEmptyOrZeroOrNull() ? null : _accountNumber;
+				return this.accountNumber.IsEmptyOrZeroOrNull() ? null : this.accountNumber;
 			}
+
 			set
 			{
-				this._accountNumber = value;
+				this.accountNumber = value;
 			}
 		}
 
-		private int _customerID;
+		private int customerID;
+
 		[Required]
 		public int CustomerID
 		{
 			get
 			{
-				return _customerID;
+				return this.customerID;
 			}
+
 			set
 			{
-				this._customerID = value;
+				this.customerID = value;
 			}
 		}
 
-		private Nullable<int> _salesPersonID;
+		private Nullable<int> salesPersonID;
+
 		public Nullable<int> SalesPersonID
 		{
 			get
 			{
-				return _salesPersonID.IsEmptyOrZeroOrNull() ? null : _salesPersonID;
+				return this.salesPersonID.IsEmptyOrZeroOrNull() ? null : this.salesPersonID;
 			}
+
 			set
 			{
-				this._salesPersonID = value;
+				this.salesPersonID = value;
 			}
 		}
 
-		private Nullable<int> _territoryID;
+		private Nullable<int> territoryID;
+
 		public Nullable<int> TerritoryID
 		{
 			get
 			{
-				return _territoryID.IsEmptyOrZeroOrNull() ? null : _territoryID;
+				return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
 			}
+
 			set
 			{
-				this._territoryID = value;
+				this.territoryID = value;
 			}
 		}
 
-		private int _billToAddressID;
+		private int billToAddressID;
+
 		[Required]
 		public int BillToAddressID
 		{
 			get
 			{
-				return _billToAddressID;
+				return this.billToAddressID;
 			}
+
 			set
 			{
-				this._billToAddressID = value;
+				this.billToAddressID = value;
 			}
 		}
 
-		private int _shipToAddressID;
+		private int shipToAddressID;
+
 		[Required]
 		public int ShipToAddressID
 		{
 			get
 			{
-				return _shipToAddressID;
+				return this.shipToAddressID;
 			}
+
 			set
 			{
-				this._shipToAddressID = value;
+				this.shipToAddressID = value;
 			}
 		}
 
-		private int _shipMethodID;
+		private int shipMethodID;
+
 		[Required]
 		public int ShipMethodID
 		{
 			get
 			{
-				return _shipMethodID;
+				return this.shipMethodID;
 			}
+
 			set
 			{
-				this._shipMethodID = value;
+				this.shipMethodID = value;
 			}
 		}
 
-		private Nullable<int> _creditCardID;
+		private Nullable<int> creditCardID;
+
 		public Nullable<int> CreditCardID
 		{
 			get
 			{
-				return _creditCardID.IsEmptyOrZeroOrNull() ? null : _creditCardID;
+				return this.creditCardID.IsEmptyOrZeroOrNull() ? null : this.creditCardID;
 			}
+
 			set
 			{
-				this._creditCardID = value;
+				this.creditCardID = value;
 			}
 		}
 
-		private string _creditCardApprovalCode;
+		private string creditCardApprovalCode;
+
 		public string CreditCardApprovalCode
 		{
 			get
 			{
-				return _creditCardApprovalCode.IsEmptyOrZeroOrNull() ? null : _creditCardApprovalCode;
+				return this.creditCardApprovalCode.IsEmptyOrZeroOrNull() ? null : this.creditCardApprovalCode;
 			}
+
 			set
 			{
-				this._creditCardApprovalCode = value;
+				this.creditCardApprovalCode = value;
 			}
 		}
 
-		private Nullable<int> _currencyRateID;
+		private Nullable<int> currencyRateID;
+
 		public Nullable<int> CurrencyRateID
 		{
 			get
 			{
-				return _currencyRateID.IsEmptyOrZeroOrNull() ? null : _currencyRateID;
+				return this.currencyRateID.IsEmptyOrZeroOrNull() ? null : this.currencyRateID;
 			}
+
 			set
 			{
-				this._currencyRateID = value;
+				this.currencyRateID = value;
 			}
 		}
 
-		private decimal _subTotal;
+		private decimal subTotal;
+
 		[Required]
 		public decimal SubTotal
 		{
 			get
 			{
-				return _subTotal;
+				return this.subTotal;
 			}
+
 			set
 			{
-				this._subTotal = value;
+				this.subTotal = value;
 			}
 		}
 
-		private decimal _taxAmt;
+		private decimal taxAmt;
+
 		[Required]
 		public decimal TaxAmt
 		{
 			get
 			{
-				return _taxAmt;
+				return this.taxAmt;
 			}
+
 			set
 			{
-				this._taxAmt = value;
+				this.taxAmt = value;
 			}
 		}
 
-		private decimal _freight;
+		private decimal freight;
+
 		[Required]
 		public decimal Freight
 		{
 			get
 			{
-				return _freight;
+				return this.freight;
 			}
+
 			set
 			{
-				this._freight = value;
+				this.freight = value;
 			}
 		}
 
-		private decimal _totalDue;
+		private decimal totalDue;
+
 		[Required]
 		public decimal TotalDue
 		{
 			get
 			{
-				return _totalDue;
+				return this.totalDue;
 			}
+
 			set
 			{
-				this._totalDue = value;
+				this.totalDue = value;
 			}
 		}
 
-		private string _comment;
+		private string comment;
+
 		public string Comment
 		{
 			get
 			{
-				return _comment.IsEmptyOrZeroOrNull() ? null : _comment;
+				return this.comment.IsEmptyOrZeroOrNull() ? null : this.comment;
 			}
+
 			set
 			{
-				this._comment = value;
+				this.comment = value;
 			}
 		}
 
-		private Guid _rowguid;
+		private Guid rowguid;
+
 		[Required]
 		public Guid Rowguid
 		{
 			get
 			{
-				return _rowguid;
+				return this.rowguid;
 			}
+
 			set
 			{
-				this._rowguid = value;
+				this.rowguid = value;
 			}
 		}
 
-		private DateTime _modifiedDate;
+		private DateTime modifiedDate;
+
 		[Required]
 		public DateTime ModifiedDate
 		{
 			get
 			{
-				return _modifiedDate;
+				return this.modifiedDate;
 			}
+
 			set
 			{
-				this._modifiedDate = value;
+				this.modifiedDate = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3e681d5b64fa708fd865bf49bf5e182</Hash>
+    <Hash>3e8360c13cace57b95a91ddc129f524a</Hash>
 </Codenesium>*/

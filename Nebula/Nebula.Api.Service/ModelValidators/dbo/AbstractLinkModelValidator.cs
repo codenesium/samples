@@ -20,45 +20,45 @@ namespace NebulaNS.Api.Service
 			return await base.ValidateAsync(model);
 		}
 
-		public IChainRepository ChainRepository {get; set;}
-		public IMachineRepository MachineRepository {get; set;}
-		public ILinkStatusRepository LinkStatusRepository {get; set;}
+		public IChainRepository ChainRepository { get; set; }
+		public IMachineRepository MachineRepository { get; set; }
+		public ILinkStatusRepository LinkStatusRepository { get; set; }
 		public virtual void NameRules()
 		{
-			RuleFor(x => x.Name).NotNull();
-			RuleFor(x => x.Name).Length(0,128);
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
 		public virtual void DynamicParametersRules()
 		{
-			RuleFor(x => x.DynamicParameters).Length(0,2147483647);
+			this.RuleFor(x => x.DynamicParameters).Length(0, 2147483647);
 		}
 
 		public virtual void StaticParametersRules()
 		{
-			RuleFor(x => x.StaticParameters).Length(0,2147483647);
+			this.RuleFor(x => x.StaticParameters).Length(0, 2147483647);
 		}
 
 		public virtual void ChainIdRules()
 		{
-			RuleFor(x => x.ChainId).NotNull();
-			RuleFor(x => x.ChainId).Must(BeValidChain).When(x => x ?.ChainId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ChainId).NotNull();
+			this.RuleFor(x => x.ChainId).Must(this.BeValidChain).When(x => x ?.ChainId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void AssignedMachineIdRules()
 		{
-			RuleFor(x => x.AssignedMachineId).Must(BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.AssignedMachineId).Must(this.BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LinkStatusIdRules()
 		{
-			RuleFor(x => x.LinkStatusId).NotNull();
-			RuleFor(x => x.LinkStatusId).Must(BeValidLinkStatus).When(x => x ?.LinkStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LinkStatusId).NotNull();
+			this.RuleFor(x => x.LinkStatusId).Must(this.BeValidLinkStatus).When(x => x ?.LinkStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void OrderRules()
 		{
-			RuleFor(x => x.Order).NotNull();
+			this.RuleFor(x => x.Order).NotNull();
 		}
 
 		public virtual void DateStartedRules()
@@ -69,12 +69,12 @@ namespace NebulaNS.Api.Service
 
 		public virtual void ResponseRules()
 		{
-			RuleFor(x => x.Response).Length(0,2147483647);
+			this.RuleFor(x => x.Response).Length(0, 2147483647);
 		}
 
 		public virtual void ExternalIdRules()
 		{
-			RuleFor(x => x.ExternalId).NotNull();
+			this.RuleFor(x => x.ExternalId).NotNull();
 		}
 
 		private bool BeValidChain(int id)
@@ -95,5 +95,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0ccaa1698cee3f2a465821172495a384</Hash>
+    <Hash>052a6b74eed1b06833bee3adcb632ba2</Hash>
 </Codenesium>*/

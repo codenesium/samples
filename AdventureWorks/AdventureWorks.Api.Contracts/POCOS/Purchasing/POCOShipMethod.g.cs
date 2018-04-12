@@ -9,12 +9,13 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOShipMethod()
 		{}
 
-		public POCOShipMethod(int shipMethodID,
-		                      string name,
-		                      decimal shipBase,
-		                      decimal shipRate,
-		                      Guid rowguid,
-		                      DateTime modifiedDate)
+		public POCOShipMethod(
+			int shipMethodID,
+			string name,
+			decimal shipBase,
+			decimal shipRate,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.ShipMethodID = shipMethodID.ToInt();
 			this.Name = name;
@@ -24,59 +25,59 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		public int ShipMethodID {get; set;}
-		public string Name {get; set;}
-		public decimal ShipBase {get; set;}
-		public decimal ShipRate {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public int ShipMethodID { get; set; }
+		public string Name { get; set; }
+		public decimal ShipBase { get; set; }
+		public decimal ShipRate { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipMethodIDValue {get; set;} = true;
+		public bool ShouldSerializeShipMethodIDValue { get; set; } = true;
 
 		public bool ShouldSerializeShipMethodID()
 		{
-			return ShouldSerializeShipMethodIDValue;
+			return this.ShouldSerializeShipMethodIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue {get; set;} = true;
+		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
-			return ShouldSerializeNameValue;
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipBaseValue {get; set;} = true;
+		public bool ShouldSerializeShipBaseValue { get; set; } = true;
 
 		public bool ShouldSerializeShipBase()
 		{
-			return ShouldSerializeShipBaseValue;
+			return this.ShouldSerializeShipBaseValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipRateValue {get; set;} = true;
+		public bool ShouldSerializeShipRateValue { get; set; } = true;
 
 		public bool ShouldSerializeShipRate()
 		{
-			return ShouldSerializeShipRateValue;
+			return this.ShouldSerializeShipRateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -92,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>643584fda3eb4ddf085cfb40786ada86</Hash>
+    <Hash>4d95088bf1fc946b542c545d7794c58b</Hash>
 </Codenesium>*/

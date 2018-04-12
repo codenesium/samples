@@ -7,20 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTerritories")]
-	public class SalesTerritoriesController: AbstractSalesTerritoriesController
+	public class SalesTerritoryController: AbstractSalesTerritoryController
 	{
-		public SalesTerritoriesController(
-			ILogger<SalesTerritoriesController> logger,
+		public SalesTerritoryController(
+			ILogger<SalesTerritoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			ISalesTerritoryRepository salesTerritoryRepository,
 			ISalesTerritoryModelValidator salesTerritoryModelValidator
-			) : base(logger,
-			         transactionCoordinator,
-			         salesTerritoryRepository,
-			         salesTerritoryModelValidator)
+			)
+			: base(logger,
+			       transactionCoordinator,
+			       salesTerritoryRepository,
+			       salesTerritoryModelValidator)
 		{
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
@@ -29,5 +31,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0948cb76f4f40516ec305093b3d4c6d8</Hash>
+    <Hash>329fd249149e3a20d635c9fdba332464</Hash>
 </Codenesium>*/

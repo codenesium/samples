@@ -8,20 +8,26 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+
 namespace ESPIOTNS.Api.Service
 {
-	public abstract class AbstractDeviceActionsController: AbstractApiController
+	public abstract class AbstractDeviceActionController: AbstractApiController
 	{
 		protected IDeviceActionRepository deviceActionRepository;
+
 		protected IDeviceActionModelValidator deviceActionModelValidator;
-		protected int SearchRecordLimit {get; set;}
-		protected int SearchRecordDefault {get; set;}
-		public AbstractDeviceActionsController(
-			ILogger<AbstractDeviceActionsController> logger,
+
+		protected int SearchRecordLimit { get; set; }
+
+		protected int SearchRecordDefault { get; set; }
+
+		public AbstractDeviceActionController(
+			ILogger<AbstractDeviceActionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IDeviceActionRepository deviceActionRepository,
 			IDeviceActionModelValidator deviceActionModelValidator
-			) : base(logger,transactionCoordinator)
+			)
+			: base(logger, transactionCoordinator)
 		{
 			this.deviceActionRepository = deviceActionRepository;
 			this.deviceActionModelValidator = deviceActionModelValidator;
@@ -31,7 +37,7 @@ namespace ESPIOTNS.Api.Service
 		{
 			foreach (var error in result.Errors)
 			{
-				ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
 			}
 		}
 
@@ -44,7 +50,7 @@ namespace ESPIOTNS.Api.Service
 		{
 			Response response = this.deviceActionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -56,10 +62,10 @@ namespace ESPIOTNS.Api.Service
 		{
 			var query = new SearchQuery();
 
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.deviceActionRepository.GetWhereDynamic(query.WhereClause,query.Offset,query.Limit);
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			Response response = this.deviceActionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -75,15 +81,16 @@ namespace ESPIOTNS.Api.Service
 			var validationResult = this.deviceActionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.deviceActionRepository.Create(model.DeviceId,
-				                                            model.Name,
-				                                            model.@Value);
-				return Ok(id);
+				var id = this.deviceActionRepository.Create(
+					model.DeviceId,
+					model.Name,
+					model.@Value);
+				return this.Ok(id);
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -97,23 +104,25 @@ namespace ESPIOTNS.Api.Service
 		public virtual IActionResult BulkInsert(List<DeviceActionModel> models)
 		{
 			this.deviceActionModelValidator.CreateMode();
-			foreach(var model in models)
+			foreach (var model in models)
 			{
 				var validationResult = this.deviceActionModelValidator.Validate(model);
-				if(!validationResult.IsValid)
+				if (!validationResult.IsValid)
 				{
-					AddErrors(validationResult);
-					return BadRequest(this.ModelState);
+					this.AddErrors(validationResult);
+					return this.BadRequest(this.ModelState);
 				}
 			}
 
-			foreach(var model in models)
+			foreach (var model in models)
 			{
-				this.deviceActionRepository.Create(model.DeviceId,
-				                                   model.Name,
-				                                   model.@Value);
+				this.deviceActionRepository.Create(
+					model.DeviceId,
+					model.Name,
+					model.@Value);
 			}
-			return Ok();
+
+			return this.Ok();
 		}
 
 		[HttpPut]
@@ -123,26 +132,28 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id,DeviceActionModel model)
+		public virtual IActionResult Update(int id, DeviceActionModel model)
 		{
-			if(this.deviceActionRepository.GetByIdDirect(id) == null)
+			if (this.deviceActionRepository.GetByIdDirect(id) == null)
 			{
-				return BadRequest(this.ModelState);
+				return this.BadRequest(this.ModelState);
 			}
 
 			this.deviceActionModelValidator.UpdateMode();
 			var validationResult = this.deviceActionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.deviceActionRepository.Update(id,  model.DeviceId,
-				                                   model.Name,
-				                                   model.@Value);
-				return Ok();
+				this.deviceActionRepository.Update(
+					id,
+					model.DeviceId,
+					model.Name,
+					model.@Value);
+				return this.Ok();
 			}
 			else
 			{
-				AddErrors(validationResult);
-				return BadRequest(this.ModelState);
+				this.AddErrors(validationResult);
+				return this.BadRequest(this.ModelState);
 			}
 		}
 
@@ -155,7 +166,7 @@ namespace ESPIOTNS.Api.Service
 		public virtual IActionResult Delete(int id)
 		{
 			this.deviceActionRepository.Delete(id);
-			return Ok();
+			return this.Ok();
 		}
 
 		[HttpGet]
@@ -168,11 +179,11 @@ namespace ESPIOTNS.Api.Service
 		{
 			Response response = this.deviceActionRepository.GetWhere(x => x.DeviceId == id);
 			response.DisableSerializationOfEmptyFields();
-			return Ok(response);
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4b0e6201f493d474fb80992b71c63d2</Hash>
+    <Hash>0a9be4fdbb8f124f46f28f068ac2fa2f</Hash>
 </Codenesium>*/

@@ -9,22 +9,23 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOEmployee()
 		{}
 
-		public POCOEmployee(int businessEntityID,
-		                    string nationalIDNumber,
-		                    string loginID,
-		                    Nullable<Guid> organizationNode,
-		                    Nullable<short> organizationLevel,
-		                    string jobTitle,
-		                    DateTime birthDate,
-		                    string maritalStatus,
-		                    string gender,
-		                    DateTime hireDate,
-		                    bool salariedFlag,
-		                    short vacationHours,
-		                    short sickLeaveHours,
-		                    bool currentFlag,
-		                    Guid rowguid,
-		                    DateTime modifiedDate)
+		public POCOEmployee(
+			int businessEntityID,
+			string nationalIDNumber,
+			string loginID,
+			Nullable<Guid> organizationNode,
+			Nullable<short> organizationLevel,
+			string jobTitle,
+			DateTime birthDate,
+			string maritalStatus,
+			string gender,
+			DateTime hireDate,
+			bool salariedFlag,
+			short vacationHours,
+			short sickLeaveHours,
+			bool currentFlag,
+			Guid rowguid,
+			DateTime modifiedDate)
 		{
 			this.NationalIDNumber = nationalIDNumber;
 			this.LoginID = loginID;
@@ -42,153 +43,153 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                            "Person");
+			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
+			                                                 "Person");
 		}
 
-		public ReferenceEntity<int>BusinessEntityID {get; set;}
-		public string NationalIDNumber {get; set;}
-		public string LoginID {get; set;}
-		public Nullable<Guid> OrganizationNode {get; set;}
-		public Nullable<short> OrganizationLevel {get; set;}
-		public string JobTitle {get; set;}
-		public DateTime BirthDate {get; set;}
-		public string MaritalStatus {get; set;}
-		public string Gender {get; set;}
-		public DateTime HireDate {get; set;}
-		public bool SalariedFlag {get; set;}
-		public short VacationHours {get; set;}
-		public short SickLeaveHours {get; set;}
-		public bool CurrentFlag {get; set;}
-		public Guid Rowguid {get; set;}
-		public DateTime ModifiedDate {get; set;}
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public string NationalIDNumber { get; set; }
+		public string LoginID { get; set; }
+		public Nullable<Guid> OrganizationNode { get; set; }
+		public Nullable<short> OrganizationLevel { get; set; }
+		public string JobTitle { get; set; }
+		public DateTime BirthDate { get; set; }
+		public string MaritalStatus { get; set; }
+		public string Gender { get; set; }
+		public DateTime HireDate { get; set; }
+		public bool SalariedFlag { get; set; }
+		public short VacationHours { get; set; }
+		public short SickLeaveHours { get; set; }
+		public bool CurrentFlag { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue {get; set;} = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
 		public bool ShouldSerializeBusinessEntityID()
 		{
-			return ShouldSerializeBusinessEntityIDValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNationalIDNumberValue {get; set;} = true;
+		public bool ShouldSerializeNationalIDNumberValue { get; set; } = true;
 
 		public bool ShouldSerializeNationalIDNumber()
 		{
-			return ShouldSerializeNationalIDNumberValue;
+			return this.ShouldSerializeNationalIDNumberValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLoginIDValue {get; set;} = true;
+		public bool ShouldSerializeLoginIDValue { get; set; } = true;
 
 		public bool ShouldSerializeLoginID()
 		{
-			return ShouldSerializeLoginIDValue;
+			return this.ShouldSerializeLoginIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrganizationNodeValue {get; set;} = true;
+		public bool ShouldSerializeOrganizationNodeValue { get; set; } = true;
 
 		public bool ShouldSerializeOrganizationNode()
 		{
-			return ShouldSerializeOrganizationNodeValue;
+			return this.ShouldSerializeOrganizationNodeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrganizationLevelValue {get; set;} = true;
+		public bool ShouldSerializeOrganizationLevelValue { get; set; } = true;
 
 		public bool ShouldSerializeOrganizationLevel()
 		{
-			return ShouldSerializeOrganizationLevelValue;
+			return this.ShouldSerializeOrganizationLevelValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeJobTitleValue {get; set;} = true;
+		public bool ShouldSerializeJobTitleValue { get; set; } = true;
 
 		public bool ShouldSerializeJobTitle()
 		{
-			return ShouldSerializeJobTitleValue;
+			return this.ShouldSerializeJobTitleValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBirthDateValue {get; set;} = true;
+		public bool ShouldSerializeBirthDateValue { get; set; } = true;
 
 		public bool ShouldSerializeBirthDate()
 		{
-			return ShouldSerializeBirthDateValue;
+			return this.ShouldSerializeBirthDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMaritalStatusValue {get; set;} = true;
+		public bool ShouldSerializeMaritalStatusValue { get; set; } = true;
 
 		public bool ShouldSerializeMaritalStatus()
 		{
-			return ShouldSerializeMaritalStatusValue;
+			return this.ShouldSerializeMaritalStatusValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeGenderValue {get; set;} = true;
+		public bool ShouldSerializeGenderValue { get; set; } = true;
 
 		public bool ShouldSerializeGender()
 		{
-			return ShouldSerializeGenderValue;
+			return this.ShouldSerializeGenderValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeHireDateValue {get; set;} = true;
+		public bool ShouldSerializeHireDateValue { get; set; } = true;
 
 		public bool ShouldSerializeHireDate()
 		{
-			return ShouldSerializeHireDateValue;
+			return this.ShouldSerializeHireDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalariedFlagValue {get; set;} = true;
+		public bool ShouldSerializeSalariedFlagValue { get; set; } = true;
 
 		public bool ShouldSerializeSalariedFlag()
 		{
-			return ShouldSerializeSalariedFlagValue;
+			return this.ShouldSerializeSalariedFlagValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVacationHoursValue {get; set;} = true;
+		public bool ShouldSerializeVacationHoursValue { get; set; } = true;
 
 		public bool ShouldSerializeVacationHours()
 		{
-			return ShouldSerializeVacationHoursValue;
+			return this.ShouldSerializeVacationHoursValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSickLeaveHoursValue {get; set;} = true;
+		public bool ShouldSerializeSickLeaveHoursValue { get; set; } = true;
 
 		public bool ShouldSerializeSickLeaveHours()
 		{
-			return ShouldSerializeSickLeaveHoursValue;
+			return this.ShouldSerializeSickLeaveHoursValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrentFlagValue {get; set;} = true;
+		public bool ShouldSerializeCurrentFlagValue { get; set; } = true;
 
 		public bool ShouldSerializeCurrentFlag()
 		{
-			return ShouldSerializeCurrentFlagValue;
+			return this.ShouldSerializeCurrentFlagValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue {get; set;} = true;
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
 		{
-			return ShouldSerializeRowguidValue;
+			return this.ShouldSerializeRowguidValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue {get; set;} = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
 		{
-			return ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		public void DisableAllFields()
@@ -214,5 +215,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fd80d4304372ba20cafddbb213ab5930</Hash>
+    <Hash>cc6aa3488ae797120ada770cee5e9d6b</Hash>
 </Codenesium>*/
