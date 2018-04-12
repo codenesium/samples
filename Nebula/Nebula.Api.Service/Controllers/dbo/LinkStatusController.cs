@@ -24,6 +24,7 @@ namespace NebulaNS.Api.Service
 			       linkStatusRepository,
 			       linkStatusModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2c2e91b59742caf4fd9b81f5f11fd84c</Hash>
+    <Hash>ba2b0769f90d1dcb6f0e46b729aa0626</Hash>
 </Codenesium>*/

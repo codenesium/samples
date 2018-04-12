@@ -17,6 +17,8 @@ namespace NebulaNS.Api.Service
 
 		protected IMachineModelValidator machineModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(MachineModel model)
+		public virtual IActionResult Create([FromBody] MachineModel model)
 		{
 			this.machineModelValidator.CreateMode();
 			var validationResult = this.machineModelValidator.Validate(model);
@@ -103,9 +105,15 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<MachineModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<MachineModel> models)
 		{
 			this.machineModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.machineModelValidator.Validate(model);
@@ -136,7 +144,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, MachineModel model)
+		public virtual IActionResult Update(int id, [FromBody] MachineModel model)
 		{
 			if (this.machineRepository.GetByIdDirect(id) == null)
 			{
@@ -178,5 +186,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>74153bcb3be29b769fcde53e90cd279f</Hash>
+    <Hash>16defc022257893599125f5d172130a2</Hash>
 </Codenesium>*/

@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       phoneNumberTypeRepository,
 			       phoneNumberTypeModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d8099310cbdbe797a67ae0d2de7e17ce</Hash>
+    <Hash>61fd394b5bf9065779144346d9e78524</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ISalesReasonModelValidator salesReasonModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(SalesReasonModel model)
+		public virtual IActionResult Create([FromBody] SalesReasonModel model)
 		{
 			this.salesReasonModelValidator.CreateMode();
 			var validationResult = this.salesReasonModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<SalesReasonModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<SalesReasonModel> models)
 		{
 			this.salesReasonModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.salesReasonModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, SalesReasonModel model)
+		public virtual IActionResult Update(int id, [FromBody] SalesReasonModel model)
 		{
 			if (this.salesReasonRepository.GetByIdDirect(id) == null)
 			{
@@ -172,5 +180,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a380ce0baae7da5a2aafb0b869e75a6c</Hash>
+    <Hash>9b971359162141e2b3bc7b1319a43fa0</Hash>
 </Codenesium>*/

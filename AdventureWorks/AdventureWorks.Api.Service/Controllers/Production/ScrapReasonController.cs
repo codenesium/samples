@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       scrapReasonRepository,
 			       scrapReasonModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>91fbcaaaebf0072cbfa41d134aebf459</Hash>
+    <Hash>992f1898327ba0d3c94cacdabd496343</Hash>
 </Codenesium>*/

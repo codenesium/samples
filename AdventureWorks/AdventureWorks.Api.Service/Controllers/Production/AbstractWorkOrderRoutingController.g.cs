@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IWorkOrderRoutingModelValidator workOrderRoutingModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(WorkOrderRoutingModel model)
+		public virtual IActionResult Create([FromBody] WorkOrderRoutingModel model)
 		{
 			this.workOrderRoutingModelValidator.CreateMode();
 			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
@@ -109,9 +111,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<WorkOrderRoutingModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<WorkOrderRoutingModel> models)
 		{
 			this.workOrderRoutingModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.workOrderRoutingModelValidator.Validate(model);
@@ -148,7 +156,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, WorkOrderRoutingModel model)
+		public virtual IActionResult Update(int id, [FromBody] WorkOrderRoutingModel model)
 		{
 			if (this.workOrderRoutingRepository.GetByIdDirect(id) == null)
 			{
@@ -222,5 +230,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>656fbc0b3f9ff3a28748bb0634bf19cf</Hash>
+    <Hash>4a75693f1d8dec21792783b5705c440d</Hash>
 </Codenesium>*/

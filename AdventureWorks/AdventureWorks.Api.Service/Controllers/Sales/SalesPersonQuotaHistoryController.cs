@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       salesPersonQuotaHistoryRepository,
 			       salesPersonQuotaHistoryModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>87d7557a67a89fb1acc048de60b45ba3</Hash>
+    <Hash>88683ae179e624554d8f41602d3d75a9</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ICountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(CountryRegionCurrencyModel model)
+		public virtual IActionResult Create([FromBody] CountryRegionCurrencyModel model)
 		{
 			this.countryRegionCurrencyModelValidator.CreateMode();
 			var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<CountryRegionCurrencyModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<CountryRegionCurrencyModel> models)
 		{
 			this.countryRegionCurrencyModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id, CountryRegionCurrencyModel model)
+		public virtual IActionResult Update(string id, [FromBody] CountryRegionCurrencyModel model)
 		{
 			if (this.countryRegionCurrencyRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>037291eea90259445d5c867e4edcde2f</Hash>
+    <Hash>1ee2a7088821f6111b727cce62dc8e36</Hash>
 </Codenesium>*/

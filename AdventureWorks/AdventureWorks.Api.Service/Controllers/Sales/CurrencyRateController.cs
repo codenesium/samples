@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       currencyRateRepository,
 			       currencyRateModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>23d5dd0638549268876a0fb103ebd211</Hash>
+    <Hash>a3dc62d32e41a6240901e4008de89400</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.Service
 
 		protected IAdminModelValidator adminModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(AdminModel model)
+		public virtual IActionResult Create([FromBody] AdminModel model)
 		{
 			this.adminModelValidator.CreateMode();
 			var validationResult = this.adminModelValidator.Validate(model);
@@ -104,9 +106,15 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<AdminModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<AdminModel> models)
 		{
 			this.adminModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.adminModelValidator.Validate(model);
@@ -138,7 +146,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, AdminModel model)
+		public virtual IActionResult Update(int id, [FromBody] AdminModel model)
 		{
 			if (this.adminRepository.GetByIdDirect(id) == null)
 			{
@@ -194,5 +202,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>614cf5dd5a77ad63678e454d5eea71c4</Hash>
+    <Hash>d1d569119f51a7bc21e755505f707f7f</Hash>
 </Codenesium>*/

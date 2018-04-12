@@ -24,6 +24,7 @@ namespace NebulaNS.Api.Service
 			       machineRepository,
 			       machineModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c655b39c79c7bff6f4d5536771772d1c</Hash>
+    <Hash>dbf840ba32a2b63baed2c1e95f1b3715</Hash>
 </Codenesium>*/

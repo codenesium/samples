@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ICurrencyModelValidator currencyModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(CurrencyModel model)
+		public virtual IActionResult Create([FromBody] CurrencyModel model)
 		{
 			this.currencyModelValidator.CreateMode();
 			var validationResult = this.currencyModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<CurrencyModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<CurrencyModel> models)
 		{
 			this.currencyModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.currencyModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id, CurrencyModel model)
+		public virtual IActionResult Update(string id, [FromBody] CurrencyModel model)
 		{
 			if (this.currencyRepository.GetByIdDirect(id) == null)
 			{
@@ -169,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3b5013111e1cf6ca0b48c707d8e42abf</Hash>
+    <Hash>97b76108326197d9b85d7408312e3b71</Hash>
 </Codenesium>*/

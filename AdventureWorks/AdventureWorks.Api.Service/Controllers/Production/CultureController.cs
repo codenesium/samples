@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       cultureRepository,
 			       cultureModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>30714d8faa52a8f8709f226b8e364ca1</Hash>
+    <Hash>dd70e3b703c6a5918970b29e20f3329c</Hash>
 </Codenesium>*/

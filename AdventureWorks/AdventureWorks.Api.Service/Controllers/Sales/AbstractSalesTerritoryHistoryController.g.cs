@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ISalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(SalesTerritoryHistoryModel model)
+		public virtual IActionResult Create([FromBody] SalesTerritoryHistoryModel model)
 		{
 			this.salesTerritoryHistoryModelValidator.CreateMode();
 			var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
@@ -103,9 +105,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<SalesTerritoryHistoryModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<SalesTerritoryHistoryModel> models)
 		{
 			this.salesTerritoryHistoryModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
@@ -136,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, SalesTerritoryHistoryModel model)
+		public virtual IActionResult Update(int id, [FromBody] SalesTerritoryHistoryModel model)
 		{
 			if (this.salesTerritoryHistoryRepository.GetByIdDirect(id) == null)
 			{
@@ -204,5 +212,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dce7e99d8df627692e58c82567d993a5</Hash>
+    <Hash>86edbcb23040356aa869b240810a6b17</Hash>
 </Codenesium>*/

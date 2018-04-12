@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IScrapReasonModelValidator scrapReasonModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ScrapReasonModel model)
+		public virtual IActionResult Create([FromBody] ScrapReasonModel model)
 		{
 			this.scrapReasonModelValidator.CreateMode();
 			var validationResult = this.scrapReasonModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ScrapReasonModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ScrapReasonModel> models)
 		{
 			this.scrapReasonModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.scrapReasonModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short id, ScrapReasonModel model)
+		public virtual IActionResult Update(short id, [FromBody] ScrapReasonModel model)
 		{
 			if (this.scrapReasonRepository.GetByIdDirect(id) == null)
 			{
@@ -169,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ac3f517bc2d7a81f1af031dde19ee624</Hash>
+    <Hash>61fd704cb17b5f90c05f6e0558f9ee09</Hash>
 </Codenesium>*/

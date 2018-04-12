@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.Service
 
 		protected ISpaceModelValidator spaceModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(SpaceModel model)
+		public virtual IActionResult Create([FromBody] SpaceModel model)
 		{
 			this.spaceModelValidator.CreateMode();
 			var validationResult = this.spaceModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<SpaceModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<SpaceModel> models)
 		{
 			this.spaceModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.spaceModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, SpaceModel model)
+		public virtual IActionResult Update(int id, [FromBody] SpaceModel model)
 		{
 			if (this.spaceRepository.GetByIdDirect(id) == null)
 			{
@@ -185,5 +193,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>283e3583f2158be189bc61aaa2fbb391</Hash>
+    <Hash>19d15ba6a8f1e0814a5e89d91b6b2e3d</Hash>
 </Codenesium>*/

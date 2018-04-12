@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ISalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(SalesOrderHeaderSalesReasonModel model)
+		public virtual IActionResult Create([FromBody] SalesOrderHeaderSalesReasonModel model)
 		{
 			this.salesOrderHeaderSalesReasonModelValidator.CreateMode();
 			var validationResult = this.salesOrderHeaderSalesReasonModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<SalesOrderHeaderSalesReasonModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<SalesOrderHeaderSalesReasonModel> models)
 		{
 			this.salesOrderHeaderSalesReasonModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.salesOrderHeaderSalesReasonModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, SalesOrderHeaderSalesReasonModel model)
+		public virtual IActionResult Update(int id, [FromBody] SalesOrderHeaderSalesReasonModel model)
 		{
 			if (this.salesOrderHeaderSalesReasonRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b4b79acbc47497c26c3b9e9e68886748</Hash>
+    <Hash>0efd4f123e506e2d1567707e853672ba</Hash>
 </Codenesium>*/

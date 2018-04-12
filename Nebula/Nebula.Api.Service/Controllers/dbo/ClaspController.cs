@@ -24,6 +24,7 @@ namespace NebulaNS.Api.Service
 			       claspRepository,
 			       claspModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3a0b803308a858ce3a5dd7389996a570</Hash>
+    <Hash>a96c4d951815e0bbc41e00bdfae3cdd1</Hash>
 </Codenesium>*/

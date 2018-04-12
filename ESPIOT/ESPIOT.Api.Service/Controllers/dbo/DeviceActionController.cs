@@ -24,6 +24,7 @@ namespace ESPIOTNS.Api.Service
 			       deviceActionRepository,
 			       deviceActionModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f80d3bcc4051a0453059bc1501d18fd5</Hash>
+    <Hash>b4b187b2707352dd4d77578c2724b128</Hash>
 </Codenesium>*/

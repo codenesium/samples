@@ -24,6 +24,7 @@ namespace FermataFishNS.Api.Service
 			       teacherXTeacherSkillRepository,
 			       teacherXTeacherSkillModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b03daa1ca9acddcc0f4a1d49373f05a6</Hash>
+    <Hash>58da93b5de6e022a529205af16c5b76a</Hash>
 </Codenesium>*/

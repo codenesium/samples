@@ -17,6 +17,8 @@ namespace NebulaNS.Api.Service
 
 		protected IMachineRefTeamModelValidator machineRefTeamModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(MachineRefTeamModel model)
+		public virtual IActionResult Create([FromBody] MachineRefTeamModel model)
 		{
 			this.machineRefTeamModelValidator.CreateMode();
 			var validationResult = this.machineRefTeamModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<MachineRefTeamModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<MachineRefTeamModel> models)
 		{
 			this.machineRefTeamModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.machineRefTeamModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, MachineRefTeamModel model)
+		public virtual IActionResult Update(int id, [FromBody] MachineRefTeamModel model)
 		{
 			if (this.machineRefTeamRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d75fec04d3a4012f4585d0e89eafe75a</Hash>
+    <Hash>51bfd5a37d78144b4023b78908fd373d</Hash>
 </Codenesium>*/

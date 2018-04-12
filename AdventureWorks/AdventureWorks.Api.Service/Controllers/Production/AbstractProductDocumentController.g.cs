@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IProductDocumentModelValidator productDocumentModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ProductDocumentModel model)
+		public virtual IActionResult Create([FromBody] ProductDocumentModel model)
 		{
 			this.productDocumentModelValidator.CreateMode();
 			var validationResult = this.productDocumentModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ProductDocumentModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ProductDocumentModel> models)
 		{
 			this.productDocumentModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.productDocumentModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ProductDocumentModel model)
+		public virtual IActionResult Update(int id, [FromBody] ProductDocumentModel model)
 		{
 			if (this.productDocumentRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>760d4278dd6e907e6f8f9cf0e6e7a239</Hash>
+    <Hash>18a5d2c6cc2703c455227a312087f5a9</Hash>
 </Codenesium>*/

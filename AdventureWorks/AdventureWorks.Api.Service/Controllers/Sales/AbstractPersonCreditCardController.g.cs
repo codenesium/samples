@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IPersonCreditCardModelValidator personCreditCardModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(PersonCreditCardModel model)
+		public virtual IActionResult Create([FromBody] PersonCreditCardModel model)
 		{
 			this.personCreditCardModelValidator.CreateMode();
 			var validationResult = this.personCreditCardModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<PersonCreditCardModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<PersonCreditCardModel> models)
 		{
 			this.personCreditCardModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.personCreditCardModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, PersonCreditCardModel model)
+		public virtual IActionResult Update(int id, [FromBody] PersonCreditCardModel model)
 		{
 			if (this.personCreditCardRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b60e215939604941e2e021716eba9b90</Hash>
+    <Hash>0a0ea46ed7189b3dafa56797c5917fad</Hash>
 </Codenesium>*/

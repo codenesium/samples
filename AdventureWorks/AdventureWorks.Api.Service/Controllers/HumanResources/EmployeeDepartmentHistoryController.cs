@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       employeeDepartmentHistoryRepository,
 			       employeeDepartmentHistoryModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8c21b6246ed02f7546320cb51d6e9a45</Hash>
+    <Hash>d30ca2b7bfe2a83f26360ed899a2d434</Hash>
 </Codenesium>*/

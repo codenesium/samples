@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       jobCandidateRepository,
 			       jobCandidateModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>640deef859ff980fde8c9421f5eb9b1a</Hash>
+    <Hash>4ea45807e8b6840c3fbb4b37c2413b2a</Hash>
 </Codenesium>*/

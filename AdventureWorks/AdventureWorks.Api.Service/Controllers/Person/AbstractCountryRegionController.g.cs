@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ICountryRegionModelValidator countryRegionModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(CountryRegionModel model)
+		public virtual IActionResult Create([FromBody] CountryRegionModel model)
 		{
 			this.countryRegionModelValidator.CreateMode();
 			var validationResult = this.countryRegionModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<CountryRegionModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<CountryRegionModel> models)
 		{
 			this.countryRegionModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.countryRegionModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id, CountryRegionModel model)
+		public virtual IActionResult Update(string id, [FromBody] CountryRegionModel model)
 		{
 			if (this.countryRegionRepository.GetByIdDirect(id) == null)
 			{
@@ -169,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d450b5ac987fb8a5d4daeecbe7714fc4</Hash>
+    <Hash>ac3cf013a7c260525cc4c8377af03ab7</Hash>
 </Codenesium>*/

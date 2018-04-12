@@ -24,6 +24,7 @@ namespace NebulaNS.Api.Service
 			       organizationRepository,
 			       organizationModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>555a7a660f26844323c82c40428d9ff3</Hash>
+    <Hash>178cd40c377c906e56032c87c6244d6f</Hash>
 </Codenesium>*/

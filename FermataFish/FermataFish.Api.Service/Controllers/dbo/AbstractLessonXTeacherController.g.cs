@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.Service
 
 		protected ILessonXTeacherModelValidator lessonXTeacherModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(LessonXTeacherModel model)
+		public virtual IActionResult Create([FromBody] LessonXTeacherModel model)
 		{
 			this.lessonXTeacherModelValidator.CreateMode();
 			var validationResult = this.lessonXTeacherModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<LessonXTeacherModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<LessonXTeacherModel> models)
 		{
 			this.lessonXTeacherModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.lessonXTeacherModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, LessonXTeacherModel model)
+		public virtual IActionResult Update(int id, [FromBody] LessonXTeacherModel model)
 		{
 			if (this.lessonXTeacherRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>869c19ba989409c6c2ff7dbaaa3a289b</Hash>
+    <Hash>1c8b7cfb77d4f5f8370466f599e16c59</Hash>
 </Codenesium>*/

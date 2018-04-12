@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       workOrderRepository,
 			       workOrderModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a3fadfcf124b47079a2c553d3c626c96</Hash>
+    <Hash>6a6de38408e88cc80e32d9734de62cf8</Hash>
 </Codenesium>*/

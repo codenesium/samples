@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ProductModelProductDescriptionCultureModel model)
+		public virtual IActionResult Create([FromBody] ProductModelProductDescriptionCultureModel model)
 		{
 			this.productModelProductDescriptionCultureModelValidator.CreateMode();
 			var validationResult = this.productModelProductDescriptionCultureModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ProductModelProductDescriptionCultureModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ProductModelProductDescriptionCultureModel> models)
 		{
 			this.productModelProductDescriptionCultureModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.productModelProductDescriptionCultureModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ProductModelProductDescriptionCultureModel model)
+		public virtual IActionResult Update(int id, [FromBody] ProductModelProductDescriptionCultureModel model)
 		{
 			if (this.productModelProductDescriptionCultureRepository.GetByIdDirect(id) == null)
 			{
@@ -211,5 +219,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d706491cdd3c32d54b7e70ee5d05092a</Hash>
+    <Hash>61d318d9b7c60482467665075e442c2c</Hash>
 </Codenesium>*/

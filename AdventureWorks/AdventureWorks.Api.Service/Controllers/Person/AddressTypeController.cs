@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       addressTypeRepository,
 			       addressTypeModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6d678b567c701cc5dd938e2dca9a509d</Hash>
+    <Hash>69c39ca72fd462e6565c532a029cac37</Hash>
 </Codenesium>*/

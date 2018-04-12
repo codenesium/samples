@@ -7,16 +7,10 @@ namespace NebulaNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
+		[JsonProperty(PropertyName = "V")]
 		public T Value { get; set; }
 
-		public string Href
-		{
-			get
-			{
-				return $"/{this.ReferenceObjectName}/{this.Value.ToString()}";
-			}
-		}
-
+		[JsonProperty(PropertyName = "O")]
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -266,5 +260,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>95e562a2a9c4d7937ff43fe8d501615c</Hash>
+    <Hash>d57fd11038d3480b06b4aaec5cc8e82e</Hash>
 </Codenesium>*/

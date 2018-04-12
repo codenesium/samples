@@ -7,16 +7,10 @@ namespace FermataFishNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
+		[JsonProperty(PropertyName = "V")]
 		public T Value { get; set; }
 
-		public string Href
-		{
-			get
-			{
-				return $"/{this.ReferenceObjectName}/{this.Value.ToString()}";
-			}
-		}
-
+		[JsonProperty(PropertyName = "O")]
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -427,5 +421,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>531ee21f8784ced1f3ab2e96a59c4d23</Hash>
+    <Hash>19aaa96753e6c4abdb0032c5117ebef6</Hash>
 </Codenesium>*/

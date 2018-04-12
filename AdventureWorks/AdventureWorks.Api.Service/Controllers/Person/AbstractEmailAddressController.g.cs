@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IEmailAddressModelValidator emailAddressModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(EmailAddressModel model)
+		public virtual IActionResult Create([FromBody] EmailAddressModel model)
 		{
 			this.emailAddressModelValidator.CreateMode();
 			var validationResult = this.emailAddressModelValidator.Validate(model);
@@ -102,9 +104,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<EmailAddressModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<EmailAddressModel> models)
 		{
 			this.emailAddressModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.emailAddressModelValidator.Validate(model);
@@ -134,7 +142,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, EmailAddressModel model)
+		public virtual IActionResult Update(int id, [FromBody] EmailAddressModel model)
 		{
 			if (this.emailAddressRepository.GetByIdDirect(id) == null)
 			{
@@ -188,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a63fcf855734a42214239ec0e05167cd</Hash>
+    <Hash>22a61570bbd7a67c23a98995d80a3cde</Hash>
 </Codenesium>*/

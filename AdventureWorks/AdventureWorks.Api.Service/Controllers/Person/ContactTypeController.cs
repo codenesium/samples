@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       contactTypeRepository,
 			       contactTypeModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d2a3c764bf4a5797e7d7b3061f3302e2</Hash>
+    <Hash>c49440644b411e1b13a3a69316cca294</Hash>
 </Codenesium>*/

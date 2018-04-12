@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IShiftModelValidator shiftModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ShiftModel model)
+		public virtual IActionResult Create([FromBody] ShiftModel model)
 		{
 			this.shiftModelValidator.CreateMode();
 			var validationResult = this.shiftModelValidator.Validate(model);
@@ -102,9 +104,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ShiftModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ShiftModel> models)
 		{
 			this.shiftModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.shiftModelValidator.Validate(model);
@@ -134,7 +142,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ShiftModel model)
+		public virtual IActionResult Update(int id, [FromBody] ShiftModel model)
 		{
 			if (this.shiftRepository.GetByIdDirect(id) == null)
 			{
@@ -175,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>94d1aaefe5a61d3425fac81ca207764a</Hash>
+    <Hash>2ad2c9b1262e7737cce04fadaf434e21</Hash>
 </Codenesium>*/

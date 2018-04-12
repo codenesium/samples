@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IProductCategoryModelValidator productCategoryModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ProductCategoryModel model)
+		public virtual IActionResult Create([FromBody] ProductCategoryModel model)
 		{
 			this.productCategoryModelValidator.CreateMode();
 			var validationResult = this.productCategoryModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ProductCategoryModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ProductCategoryModel> models)
 		{
 			this.productCategoryModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.productCategoryModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ProductCategoryModel model)
+		public virtual IActionResult Update(int id, [FromBody] ProductCategoryModel model)
 		{
 			if (this.productCategoryRepository.GetByIdDirect(id) == null)
 			{
@@ -172,5 +180,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>46a9b078426a5869d432b1babe12e843</Hash>
+    <Hash>f0e8f7647bde83c384b2f2324e9058ba</Hash>
 </Codenesium>*/

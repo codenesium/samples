@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       salesTaxRateRepository,
 			       salesTaxRateModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ddc4e93b11db290b51ae39e0703b7de9</Hash>
+    <Hash>802e354a95154e63ad85f306e2911456</Hash>
 </Codenesium>*/

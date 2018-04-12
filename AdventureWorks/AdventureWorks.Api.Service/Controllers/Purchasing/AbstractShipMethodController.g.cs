@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IShipMethodModelValidator shipMethodModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ShipMethodModel model)
+		public virtual IActionResult Create([FromBody] ShipMethodModel model)
 		{
 			this.shipMethodModelValidator.CreateMode();
 			var validationResult = this.shipMethodModelValidator.Validate(model);
@@ -103,9 +105,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ShipMethodModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ShipMethodModel> models)
 		{
 			this.shipMethodModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.shipMethodModelValidator.Validate(model);
@@ -136,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ShipMethodModel model)
+		public virtual IActionResult Update(int id, [FromBody] ShipMethodModel model)
 		{
 			if (this.shipMethodRepository.GetByIdDirect(id) == null)
 			{
@@ -178,5 +186,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>288cb8f065fd06b5e791807757760928</Hash>
+    <Hash>f7d22d23e53df8ed74dc615ace2e1bb5</Hash>
 </Codenesium>*/

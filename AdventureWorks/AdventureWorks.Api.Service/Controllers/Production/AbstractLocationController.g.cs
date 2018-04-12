@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ILocationModelValidator locationModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(LocationModel model)
+		public virtual IActionResult Create([FromBody] LocationModel model)
 		{
 			this.locationModelValidator.CreateMode();
 			var validationResult = this.locationModelValidator.Validate(model);
@@ -102,9 +104,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<LocationModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<LocationModel> models)
 		{
 			this.locationModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.locationModelValidator.Validate(model);
@@ -134,7 +142,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(short id, LocationModel model)
+		public virtual IActionResult Update(short id, [FromBody] LocationModel model)
 		{
 			if (this.locationRepository.GetByIdDirect(id) == null)
 			{
@@ -175,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>225ffc91ad437c2cdfba60fea93812e9</Hash>
+    <Hash>8e1271491932cbfdffd7c8e94e9c9163</Hash>
 </Codenesium>*/

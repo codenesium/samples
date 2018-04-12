@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       documentRepository,
 			       documentModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c63fba6df6d993fea51b4526b89d80c5</Hash>
+    <Hash>c52c3592a7a292bc56402ac168049cc6</Hash>
 </Codenesium>*/

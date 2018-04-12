@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IJobCandidateModelValidator jobCandidateModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(JobCandidateModel model)
+		public virtual IActionResult Create([FromBody] JobCandidateModel model)
 		{
 			this.jobCandidateModelValidator.CreateMode();
 			var validationResult = this.jobCandidateModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<JobCandidateModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<JobCandidateModel> models)
 		{
 			this.jobCandidateModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.jobCandidateModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, JobCandidateModel model)
+		public virtual IActionResult Update(int id, [FromBody] JobCandidateModel model)
 		{
 			if (this.jobCandidateRepository.GetByIdDirect(id) == null)
 			{
@@ -185,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0d91c37acea61bf204c78a9eb112c09c</Hash>
+    <Hash>b84ac3707792cf6ea97c776b8427968a</Hash>
 </Codenesium>*/

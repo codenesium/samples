@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ICustomerModelValidator customerModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(CustomerModel model)
+		public virtual IActionResult Create([FromBody] CustomerModel model)
 		{
 			this.customerModelValidator.CreateMode();
 			var validationResult = this.customerModelValidator.Validate(model);
@@ -104,9 +106,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<CustomerModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<CustomerModel> models)
 		{
 			this.customerModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.customerModelValidator.Validate(model);
@@ -138,7 +146,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, CustomerModel model)
+		public virtual IActionResult Update(int id, [FromBody] CustomerModel model)
 		{
 			if (this.customerRepository.GetByIdDirect(id) == null)
 			{
@@ -220,5 +228,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>407796b50cb4261ad4adda7e88a280bb</Hash>
+    <Hash>a8b756daafa84e8290eb7cd7fca1290d</Hash>
 </Codenesium>*/

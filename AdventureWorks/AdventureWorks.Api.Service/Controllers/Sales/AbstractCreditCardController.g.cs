@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ICreditCardModelValidator creditCardModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(CreditCardModel model)
+		public virtual IActionResult Create([FromBody] CreditCardModel model)
 		{
 			this.creditCardModelValidator.CreateMode();
 			var validationResult = this.creditCardModelValidator.Validate(model);
@@ -103,9 +105,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<CreditCardModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<CreditCardModel> models)
 		{
 			this.creditCardModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.creditCardModelValidator.Validate(model);
@@ -136,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, CreditCardModel model)
+		public virtual IActionResult Update(int id, [FromBody] CreditCardModel model)
 		{
 			if (this.creditCardRepository.GetByIdDirect(id) == null)
 			{
@@ -178,5 +186,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f2fa3e03124181cd1b5a54c5453d414e</Hash>
+    <Hash>96cc11c69b402ce7216c16146f97f552</Hash>
 </Codenesium>*/

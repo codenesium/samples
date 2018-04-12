@@ -24,6 +24,7 @@ namespace FermataFishNS.Api.Service
 			       spaceRepository,
 			       spaceModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b10e5f16f09813eda345f4bbaa93da12</Hash>
+    <Hash>bd34e6170700803960a7f4a80a64f59c</Hash>
 </Codenesium>*/

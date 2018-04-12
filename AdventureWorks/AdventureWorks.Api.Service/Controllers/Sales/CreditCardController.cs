@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       creditCardRepository,
 			       creditCardModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>564303acf042feebc6ea0c7f746d995d</Hash>
+    <Hash>ed33b2676412a1431d8c543493f0b467</Hash>
 </Codenesium>*/

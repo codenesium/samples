@@ -17,6 +17,8 @@ namespace NebulaNS.Api.Service
 
 		protected ILinkLogModelValidator linkLogModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(LinkLogModel model)
+		public virtual IActionResult Create([FromBody] LinkLogModel model)
 		{
 			this.linkLogModelValidator.CreateMode();
 			var validationResult = this.linkLogModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<LinkLogModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<LinkLogModel> models)
 		{
 			this.linkLogModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.linkLogModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, LinkLogModel model)
+		public virtual IActionResult Update(int id, [FromBody] LinkLogModel model)
 		{
 			if (this.linkLogRepository.GetByIdDirect(id) == null)
 			{
@@ -185,5 +193,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f5042fd6fc1958dd0400f4739fc2a006</Hash>
+    <Hash>e8a698b958e8e0e68110e3269fced570</Hash>
 </Codenesium>*/

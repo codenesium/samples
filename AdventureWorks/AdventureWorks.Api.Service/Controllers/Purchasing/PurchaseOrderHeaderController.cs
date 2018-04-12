@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       purchaseOrderHeaderRepository,
 			       purchaseOrderHeaderModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ee74f6bd1babd2d1f30ee41a0853f7d4</Hash>
+    <Hash>93c3c08878e510492d8ccc3bf884c004</Hash>
 </Codenesium>*/

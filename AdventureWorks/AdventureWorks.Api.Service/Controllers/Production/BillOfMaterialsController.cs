@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       billOfMaterialsRepository,
 			       billOfMaterialsModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d53b750aff2f206a90ccfed07e7dfd31</Hash>
+    <Hash>d0cfb561fe5220e51e81106a9c1b2924</Hash>
 </Codenesium>*/

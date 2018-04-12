@@ -17,6 +17,8 @@ namespace FileServiceNS.Api.Service
 
 		protected IFileModelValidator fileModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(FileModel model)
+		public virtual IActionResult Create([FromBody] FileModel model)
 		{
 			this.fileModelValidator.CreateMode();
 			var validationResult = this.fileModelValidator.Validate(model);
@@ -109,9 +111,15 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<FileModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<FileModel> models)
 		{
 			this.fileModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.fileModelValidator.Validate(model);
@@ -148,7 +156,7 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, FileModel model)
+		public virtual IActionResult Update(int id, [FromBody] FileModel model)
 		{
 			if (this.fileRepository.GetByIdDirect(id) == null)
 			{
@@ -222,5 +230,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>60ed47df1eba60e38f62c9e9d0ff5b8e</Hash>
+    <Hash>4a4fc36420d391678f5b9daf2fc4400e</Hash>
 </Codenesium>*/

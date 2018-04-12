@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IPasswordModelValidator passwordModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(PasswordModel model)
+		public virtual IActionResult Create([FromBody] PasswordModel model)
 		{
 			this.passwordModelValidator.CreateMode();
 			var validationResult = this.passwordModelValidator.Validate(model);
@@ -102,9 +104,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<PasswordModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<PasswordModel> models)
 		{
 			this.passwordModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.passwordModelValidator.Validate(model);
@@ -134,7 +142,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, PasswordModel model)
+		public virtual IActionResult Update(int id, [FromBody] PasswordModel model)
 		{
 			if (this.passwordRepository.GetByIdDirect(id) == null)
 			{
@@ -188,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5738c0a8ab30446a9d7cbc1da0a705c0</Hash>
+    <Hash>e2841cd2e5fd144b6b3a1008cf6af925</Hash>
 </Codenesium>*/

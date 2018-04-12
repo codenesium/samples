@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ITransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(TransactionHistoryArchiveModel model)
+		public virtual IActionResult Create([FromBody] TransactionHistoryArchiveModel model)
 		{
 			this.transactionHistoryArchiveModelValidator.CreateMode();
 			var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
@@ -106,9 +108,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<TransactionHistoryArchiveModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<TransactionHistoryArchiveModel> models)
 		{
 			this.transactionHistoryArchiveModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
@@ -142,7 +150,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, TransactionHistoryArchiveModel model)
+		public virtual IActionResult Update(int id, [FromBody] TransactionHistoryArchiveModel model)
 		{
 			if (this.transactionHistoryArchiveRepository.GetByIdDirect(id) == null)
 			{
@@ -187,5 +195,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>335f0c8f1bfec9ec2e705725bd4bfb64</Hash>
+    <Hash>22d93073e5e1094405465827fe678ab3</Hash>
 </Codenesium>*/

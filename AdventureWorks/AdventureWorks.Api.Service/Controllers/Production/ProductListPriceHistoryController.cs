@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       productListPriceHistoryRepository,
 			       productListPriceHistoryModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4b3e377e63582a18c7e1964254047c0e</Hash>
+    <Hash>2927fd79bb9873ce93678dd0591e6691</Hash>
 </Codenesium>*/

@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       databaseLogRepository,
 			       databaseLogModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>57f00b32b7f7ae6943aa30f022b6d526</Hash>
+    <Hash>e3eee6e8801bb03bdaf8593588bae11a</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace NebulaNS.Api.Service
 
 		protected IOrganizationModelValidator organizationModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(OrganizationModel model)
+		public virtual IActionResult Create([FromBody] OrganizationModel model)
 		{
 			this.organizationModelValidator.CreateMode();
 			var validationResult = this.organizationModelValidator.Validate(model);
@@ -99,9 +101,15 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<OrganizationModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<OrganizationModel> models)
 		{
 			this.organizationModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.organizationModelValidator.Validate(model);
@@ -128,7 +136,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, OrganizationModel model)
+		public virtual IActionResult Update(int id, [FromBody] OrganizationModel model)
 		{
 			if (this.organizationRepository.GetByIdDirect(id) == null)
 			{
@@ -166,5 +174,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>86f3d636528e3784960a62cf4735ae59</Hash>
+    <Hash>bb30d822cac5cd8dccf0b84c2b6dced6</Hash>
 </Codenesium>*/

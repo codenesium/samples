@@ -24,6 +24,7 @@ namespace NebulaNS.Api.Service
 			       teamRepository,
 			       teamModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0bffc810596f9cce3b2f9395ff1f252d</Hash>
+    <Hash>ad2e04fab5ba7bca0e14d19389668d61</Hash>
 </Codenesium>*/

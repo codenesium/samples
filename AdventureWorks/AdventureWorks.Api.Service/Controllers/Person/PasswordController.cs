@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       passwordRepository,
 			       passwordModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d5a7e02783e5cb40ffc33af458c6f8af</Hash>
+    <Hash>229e464c3d51add79569783bbbab4f59</Hash>
 </Codenesium>*/

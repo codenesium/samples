@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       aWBuildVersionRepository,
 			       aWBuildVersionModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d48ab0b31a033fc5c13172cd91a1eb93</Hash>
+    <Hash>ac1f1214c7ae9c26f70f86625f417ddd</Hash>
 </Codenesium>*/

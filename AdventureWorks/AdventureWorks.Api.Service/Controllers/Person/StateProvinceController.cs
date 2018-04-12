@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       stateProvinceRepository,
 			       stateProvinceModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8cdeed4b7b2f8d1ec89e5bd090788c27</Hash>
+    <Hash>4c096a9bd4e26841e6a910b0bc41fe48</Hash>
 </Codenesium>*/

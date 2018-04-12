@@ -17,6 +17,8 @@ namespace ESPIOTNS.Api.Service
 
 		protected IDeviceActionModelValidator deviceActionModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(DeviceActionModel model)
+		public virtual IActionResult Create([FromBody] DeviceActionModel model)
 		{
 			this.deviceActionModelValidator.CreateMode();
 			var validationResult = this.deviceActionModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<DeviceActionModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<DeviceActionModel> models)
 		{
 			this.deviceActionModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.deviceActionModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, DeviceActionModel model)
+		public virtual IActionResult Update(int id, [FromBody] DeviceActionModel model)
 		{
 			if (this.deviceActionRepository.GetByIdDirect(id) == null)
 			{
@@ -185,5 +193,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0a9be4fdbb8f124f46f28f068ac2fa2f</Hash>
+    <Hash>193f235bd28c587f63c9827b0a7745e7</Hash>
 </Codenesium>*/

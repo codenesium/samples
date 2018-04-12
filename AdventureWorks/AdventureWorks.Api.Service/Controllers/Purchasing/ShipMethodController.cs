@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       shipMethodRepository,
 			       shipMethodModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>557269242558a053099feb7948bf944c</Hash>
+    <Hash>15edd83cf8853f219996c0901130beb3</Hash>
 </Codenesium>*/

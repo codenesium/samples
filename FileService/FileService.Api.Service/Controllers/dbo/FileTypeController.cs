@@ -24,6 +24,7 @@ namespace FileServiceNS.Api.Service
 			       fileTypeRepository,
 			       fileTypeModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0fb2ba5458346c2541ad4f653baed6e1</Hash>
+    <Hash>66e2fc28177e7dbb3ebb94d1c42e4c15</Hash>
 </Codenesium>*/

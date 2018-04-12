@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ISalesTerritoryModelValidator salesTerritoryModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(SalesTerritoryModel model)
+		public virtual IActionResult Create([FromBody] SalesTerritoryModel model)
 		{
 			this.salesTerritoryModelValidator.CreateMode();
 			var validationResult = this.salesTerritoryModelValidator.Validate(model);
@@ -107,9 +109,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<SalesTerritoryModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<SalesTerritoryModel> models)
 		{
 			this.salesTerritoryModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.salesTerritoryModelValidator.Validate(model);
@@ -144,7 +152,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, SalesTerritoryModel model)
+		public virtual IActionResult Update(int id, [FromBody] SalesTerritoryModel model)
 		{
 			if (this.salesTerritoryRepository.GetByIdDirect(id) == null)
 			{
@@ -203,5 +211,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0a83d306823881676e9b59c36f682556</Hash>
+    <Hash>fd8405de84f1feed85862c43bee10294</Hash>
 </Codenesium>*/

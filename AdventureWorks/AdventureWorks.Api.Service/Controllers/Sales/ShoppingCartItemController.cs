@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       shoppingCartItemRepository,
 			       shoppingCartItemModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>37be1e496a66cbca8e8ee82111b181d1</Hash>
+    <Hash>53803c8a4e439120cf5c597d8f421790</Hash>
 </Codenesium>*/

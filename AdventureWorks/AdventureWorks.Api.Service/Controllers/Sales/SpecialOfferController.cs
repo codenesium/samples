@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       specialOfferRepository,
 			       specialOfferModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e413116a8d11ff8b048863e0be85df1c</Hash>
+    <Hash>7154f4adfb2c7bf9ecc3d1427e666945</Hash>
 </Codenesium>*/

@@ -24,6 +24,7 @@ namespace FermataFishNS.Api.Service
 			       lessonXTeacherRepository,
 			       lessonXTeacherModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3ee7ba7c0cf618fddef1c087f3e1f453</Hash>
+    <Hash>a41406889a092617de2a67fc34116877</Hash>
 </Codenesium>*/

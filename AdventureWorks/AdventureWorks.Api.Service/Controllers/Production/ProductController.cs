@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       productRepository,
 			       productModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f0e449c12f9839edfe381611fd0f777a</Hash>
+    <Hash>d557dbc750ab0279847b7c7d459c40ca</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.Service
 
 		protected IStudioModelValidator studioModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(StudioModel model)
+		public virtual IActionResult Create([FromBody] StudioModel model)
 		{
 			this.studioModelValidator.CreateMode();
 			var validationResult = this.studioModelValidator.Validate(model);
@@ -105,9 +107,15 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<StudioModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<StudioModel> models)
 		{
 			this.studioModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.studioModelValidator.Validate(model);
@@ -140,7 +148,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, StudioModel model)
+		public virtual IActionResult Update(int id, [FromBody] StudioModel model)
 		{
 			if (this.studioRepository.GetByIdDirect(id) == null)
 			{
@@ -197,5 +205,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ec026be0f1fe189e5b9979602d8431b5</Hash>
+    <Hash>e1c63de1e73b72157c0a6cbf833ead06</Hash>
 </Codenesium>*/

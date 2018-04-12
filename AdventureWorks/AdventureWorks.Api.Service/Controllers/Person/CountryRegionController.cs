@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       countryRegionRepository,
 			       countryRegionModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a3ebcabdd0ab4722406f922976fb1698</Hash>
+    <Hash>48f6458ac475069d3dca637b3431e9f3</Hash>
 </Codenesium>*/

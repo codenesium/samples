@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ISalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(SalesPersonQuotaHistoryModel model)
+		public virtual IActionResult Create([FromBody] SalesPersonQuotaHistoryModel model)
 		{
 			this.salesPersonQuotaHistoryModelValidator.CreateMode();
 			var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
@@ -102,9 +104,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<SalesPersonQuotaHistoryModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<SalesPersonQuotaHistoryModel> models)
 		{
 			this.salesPersonQuotaHistoryModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
@@ -134,7 +142,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, SalesPersonQuotaHistoryModel model)
+		public virtual IActionResult Update(int id, [FromBody] SalesPersonQuotaHistoryModel model)
 		{
 			if (this.salesPersonQuotaHistoryRepository.GetByIdDirect(id) == null)
 			{
@@ -188,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2c568bc566a7b2de10c9a9d2212719b9</Hash>
+    <Hash>edc1d29731340114c7a9c01f60ce5819</Hash>
 </Codenesium>*/

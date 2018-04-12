@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IPersonPhoneModelValidator personPhoneModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(PersonPhoneModel model)
+		public virtual IActionResult Create([FromBody] PersonPhoneModel model)
 		{
 			this.personPhoneModelValidator.CreateMode();
 			var validationResult = this.personPhoneModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<PersonPhoneModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<PersonPhoneModel> models)
 		{
 			this.personPhoneModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.personPhoneModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, PersonPhoneModel model)
+		public virtual IActionResult Update(int id, [FromBody] PersonPhoneModel model)
 		{
 			if (this.personPhoneRepository.GetByIdDirect(id) == null)
 			{
@@ -198,5 +206,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1cb10681cc724cb3eba19a4583e99002</Hash>
+    <Hash>4b664abe0a1a5fbf318fcb1406b433eb</Hash>
 </Codenesium>*/

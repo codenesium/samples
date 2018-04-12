@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IAddressTypeModelValidator addressTypeModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(AddressTypeModel model)
+		public virtual IActionResult Create([FromBody] AddressTypeModel model)
 		{
 			this.addressTypeModelValidator.CreateMode();
 			var validationResult = this.addressTypeModelValidator.Validate(model);
@@ -101,9 +103,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<AddressTypeModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<AddressTypeModel> models)
 		{
 			this.addressTypeModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.addressTypeModelValidator.Validate(model);
@@ -132,7 +140,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, AddressTypeModel model)
+		public virtual IActionResult Update(int id, [FromBody] AddressTypeModel model)
 		{
 			if (this.addressTypeRepository.GetByIdDirect(id) == null)
 			{
@@ -172,5 +180,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7940cfa7c90dcd920e61d8e015b71f8e</Hash>
+    <Hash>1faba54adb5cca274538bed1641ed580</Hash>
 </Codenesium>*/

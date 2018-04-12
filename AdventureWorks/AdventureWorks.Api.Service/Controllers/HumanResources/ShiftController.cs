@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       shiftRepository,
 			       shiftModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7c5ba02c464668b9ec839a1748d9e93f</Hash>
+    <Hash>412539f4ace9c4bd42acbeb5c2940da9</Hash>
 </Codenesium>*/

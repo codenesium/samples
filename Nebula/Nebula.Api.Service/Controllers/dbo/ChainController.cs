@@ -24,6 +24,7 @@ namespace NebulaNS.Api.Service
 			       chainRepository,
 			       chainModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0c89230bee952d7317cb1cf35b14beb0</Hash>
+    <Hash>e304cfa862bf4c36392f14268d827a86</Hash>
 </Codenesium>*/

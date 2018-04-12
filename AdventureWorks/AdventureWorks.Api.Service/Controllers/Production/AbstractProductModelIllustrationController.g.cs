@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IProductModelIllustrationModelValidator productModelIllustrationModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ProductModelIllustrationModel model)
+		public virtual IActionResult Create([FromBody] ProductModelIllustrationModel model)
 		{
 			this.productModelIllustrationModelValidator.CreateMode();
 			var validationResult = this.productModelIllustrationModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ProductModelIllustrationModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ProductModelIllustrationModel> models)
 		{
 			this.productModelIllustrationModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.productModelIllustrationModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ProductModelIllustrationModel model)
+		public virtual IActionResult Update(int id, [FromBody] ProductModelIllustrationModel model)
 		{
 			if (this.productModelIllustrationRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e36f5ca04eb39eb65efd157e336dbce0</Hash>
+    <Hash>f098529a62da0706c23130d77d8f4dfb</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace NebulaNS.Api.Service
 
 		protected IChainStatusModelValidator chainStatusModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ChainStatusModel model)
+		public virtual IActionResult Create([FromBody] ChainStatusModel model)
 		{
 			this.chainStatusModelValidator.CreateMode();
 			var validationResult = this.chainStatusModelValidator.Validate(model);
@@ -99,9 +101,15 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ChainStatusModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ChainStatusModel> models)
 		{
 			this.chainStatusModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.chainStatusModelValidator.Validate(model);
@@ -128,7 +136,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ChainStatusModel model)
+		public virtual IActionResult Update(int id, [FromBody] ChainStatusModel model)
 		{
 			if (this.chainStatusRepository.GetByIdDirect(id) == null)
 			{
@@ -166,5 +174,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2da74edf779dbe6792e2e273df0219e5</Hash>
+    <Hash>2dad529cd3ceee850a0cd98ba1a0f548</Hash>
 </Codenesium>*/

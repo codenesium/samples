@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IProductPhotoModelValidator productPhotoModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ProductPhotoModel model)
+		public virtual IActionResult Create([FromBody] ProductPhotoModel model)
 		{
 			this.productPhotoModelValidator.CreateMode();
 			var validationResult = this.productPhotoModelValidator.Validate(model);
@@ -103,9 +105,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ProductPhotoModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ProductPhotoModel> models)
 		{
 			this.productPhotoModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.productPhotoModelValidator.Validate(model);
@@ -136,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ProductPhotoModel model)
+		public virtual IActionResult Update(int id, [FromBody] ProductPhotoModel model)
 		{
 			if (this.productPhotoRepository.GetByIdDirect(id) == null)
 			{
@@ -178,5 +186,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0dcb9f9ede5e022a79e365ce09384611</Hash>
+    <Hash>dffd3b54e3e3b5daae8467e7a23a276d</Hash>
 </Codenesium>*/

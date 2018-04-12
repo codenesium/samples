@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected ICultureModelValidator cultureModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(CultureModel model)
+		public virtual IActionResult Create([FromBody] CultureModel model)
 		{
 			this.cultureModelValidator.CreateMode();
 			var validationResult = this.cultureModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<CultureModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<CultureModel> models)
 		{
 			this.cultureModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.cultureModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id, CultureModel model)
+		public virtual IActionResult Update(string id, [FromBody] CultureModel model)
 		{
 			if (this.cultureRepository.GetByIdDirect(id) == null)
 			{
@@ -169,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f1634c78d3408b355794d83ec0c6030e</Hash>
+    <Hash>540c50f8834eaf8780bc2b61e0bbfd87</Hash>
 </Codenesium>*/

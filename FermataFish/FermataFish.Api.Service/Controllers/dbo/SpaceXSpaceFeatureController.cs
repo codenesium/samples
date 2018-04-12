@@ -24,6 +24,7 @@ namespace FermataFishNS.Api.Service
 			       spaceXSpaceFeatureRepository,
 			       spaceXSpaceFeatureModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>afcada12bf52838cc04ebe9914e8c50a</Hash>
+    <Hash>3d648afef859518edc6c1459083ba1a9</Hash>
 </Codenesium>*/

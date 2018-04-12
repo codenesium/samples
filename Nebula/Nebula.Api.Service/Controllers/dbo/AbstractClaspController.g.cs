@@ -17,6 +17,8 @@ namespace NebulaNS.Api.Service
 
 		protected IClaspModelValidator claspModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(ClaspModel model)
+		public virtual IActionResult Create([FromBody] ClaspModel model)
 		{
 			this.claspModelValidator.CreateMode();
 			var validationResult = this.claspModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<ClaspModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<ClaspModel> models)
 		{
 			this.claspModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.claspModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, ClaspModel model)
+		public virtual IActionResult Update(int id, [FromBody] ClaspModel model)
 		{
 			if (this.claspRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6ca914252547cd0c4e1eccdfd2e706f8</Hash>
+    <Hash>e616afd3fbf882f4fc2b4b96fb422755</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace NebulaNS.Api.Service
 
 		protected ITeamModelValidator teamModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(TeamModel model)
+		public virtual IActionResult Create([FromBody] TeamModel model)
 		{
 			this.teamModelValidator.CreateMode();
 			var validationResult = this.teamModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<TeamModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<TeamModel> models)
 		{
 			this.teamModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.teamModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, TeamModel model)
+		public virtual IActionResult Update(int id, [FromBody] TeamModel model)
 		{
 			if (this.teamRepository.GetByIdDirect(id) == null)
 			{
@@ -182,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ce6e24098ad656243e5bbbc27e510205</Hash>
+    <Hash>e01407f6d04c30a818d68c9080b3a8d9</Hash>
 </Codenesium>*/

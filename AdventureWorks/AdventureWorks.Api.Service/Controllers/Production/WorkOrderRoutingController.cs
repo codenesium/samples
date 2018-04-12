@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       workOrderRoutingRepository,
 			       workOrderRoutingModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8563cf2979cb6ba1f967bf0c94ddf29a</Hash>
+    <Hash>f899d6339ed6cbde615028be3ef6d289</Hash>
 </Codenesium>*/

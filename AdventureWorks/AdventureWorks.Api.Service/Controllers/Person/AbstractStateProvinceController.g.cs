@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IStateProvinceModelValidator stateProvinceModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(StateProvinceModel model)
+		public virtual IActionResult Create([FromBody] StateProvinceModel model)
 		{
 			this.stateProvinceModelValidator.CreateMode();
 			var validationResult = this.stateProvinceModelValidator.Validate(model);
@@ -105,9 +107,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<StateProvinceModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<StateProvinceModel> models)
 		{
 			this.stateProvinceModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.stateProvinceModelValidator.Validate(model);
@@ -140,7 +148,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, StateProvinceModel model)
+		public virtual IActionResult Update(int id, [FromBody] StateProvinceModel model)
 		{
 			if (this.stateProvinceRepository.GetByIdDirect(id) == null)
 			{
@@ -210,5 +218,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0625d1b5e6f07dc694622e3830255d9f</Hash>
+    <Hash>e764073e30d26c4b41bc5b7a605ffdaa</Hash>
 </Codenesium>*/

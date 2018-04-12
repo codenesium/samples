@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IDatabaseLogModelValidator databaseLogModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(DatabaseLogModel model)
+		public virtual IActionResult Create([FromBody] DatabaseLogModel model)
 		{
 			this.databaseLogModelValidator.CreateMode();
 			var validationResult = this.databaseLogModelValidator.Validate(model);
@@ -105,9 +107,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<DatabaseLogModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<DatabaseLogModel> models)
 		{
 			this.databaseLogModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.databaseLogModelValidator.Validate(model);
@@ -140,7 +148,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, DatabaseLogModel model)
+		public virtual IActionResult Update(int id, [FromBody] DatabaseLogModel model)
 		{
 			if (this.databaseLogRepository.GetByIdDirect(id) == null)
 			{
@@ -184,5 +192,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b204e59049545a75589fb28dcffae5a8</Hash>
+    <Hash>30912079b5af4c762c0c366af4e07d49</Hash>
 </Codenesium>*/

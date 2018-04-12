@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.Service
 
 		protected ISpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(SpaceXSpaceFeatureModel model)
+		public virtual IActionResult Create([FromBody] SpaceXSpaceFeatureModel model)
 		{
 			this.spaceXSpaceFeatureModelValidator.CreateMode();
 			var validationResult = this.spaceXSpaceFeatureModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<SpaceXSpaceFeatureModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<SpaceXSpaceFeatureModel> models)
 		{
 			this.spaceXSpaceFeatureModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.spaceXSpaceFeatureModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, SpaceXSpaceFeatureModel model)
+		public virtual IActionResult Update(int id, [FromBody] SpaceXSpaceFeatureModel model)
 		{
 			if (this.spaceXSpaceFeatureRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>715cb2677e112524324dd31c6bce9267</Hash>
+    <Hash>7c58a56599f5cc33fb584dfbdf6caf0a</Hash>
 </Codenesium>*/

@@ -17,6 +17,8 @@ namespace AdventureWorksNS.Api.Service
 
 		protected IPhoneNumberTypeModelValidator phoneNumberTypeModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(PhoneNumberTypeModel model)
+		public virtual IActionResult Create([FromBody] PhoneNumberTypeModel model)
 		{
 			this.phoneNumberTypeModelValidator.CreateMode();
 			var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<PhoneNumberTypeModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<PhoneNumberTypeModel> models)
 		{
 			this.phoneNumberTypeModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace AdventureWorksNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, PhoneNumberTypeModel model)
+		public virtual IActionResult Update(int id, [FromBody] PhoneNumberTypeModel model)
 		{
 			if (this.phoneNumberTypeRepository.GetByIdDirect(id) == null)
 			{
@@ -169,5 +177,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>521fe42241ff8292065db6a4d4b1686f</Hash>
+    <Hash>5b1c287a8fc0b9b795edba7f2825afba</Hash>
 </Codenesium>*/

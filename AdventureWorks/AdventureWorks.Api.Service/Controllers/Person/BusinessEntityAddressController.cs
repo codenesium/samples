@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Service
 			       businessEntityAddressRepository,
 			       businessEntityAddressModelValidator)
 		{
+			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
 			this.SearchRecordDefault = 250;
 		}
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>71c3146080c94c23ecf3e23edfefd78b</Hash>
+    <Hash>3ac109281e4ddb779c2b4549f95a7c3c</Hash>
 </Codenesium>*/

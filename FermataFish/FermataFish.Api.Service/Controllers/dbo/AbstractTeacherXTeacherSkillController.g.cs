@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.Service
 
 		protected ITeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator;
 
+		protected int BulkInsertLimit { get; set; }
+
 		protected int SearchRecordLimit { get; set; }
 
 		protected int SearchRecordDefault { get; set; }
@@ -75,7 +77,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create(TeacherXTeacherSkillModel model)
+		public virtual IActionResult Create([FromBody] TeacherXTeacherSkillModel model)
 		{
 			this.teacherXTeacherSkillModelValidator.CreateMode();
 			var validationResult = this.teacherXTeacherSkillModelValidator.Validate(model);
@@ -100,9 +102,15 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert(List<TeacherXTeacherSkillModel> models)
+		public virtual IActionResult BulkInsert([FromBody] List<TeacherXTeacherSkillModel> models)
 		{
 			this.teacherXTeacherSkillModelValidator.CreateMode();
+
+			if (models.Count > this.BulkInsertLimit)
+			{
+				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+			}
+
 			foreach (var model in models)
 			{
 				var validationResult = this.teacherXTeacherSkillModelValidator.Validate(model);
@@ -130,7 +138,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, TeacherXTeacherSkillModel model)
+		public virtual IActionResult Update(int id, [FromBody] TeacherXTeacherSkillModel model)
 		{
 			if (this.teacherXTeacherSkillRepository.GetByIdDirect(id) == null)
 			{
@@ -195,5 +203,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0424eae0099924e062dd7f280fe8c042</Hash>
+    <Hash>fdeadfa44ea2266abd0f7cb5bc02c8e8</Hash>
 </Codenesium>*/
