@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ContactTypeRepository: AbstractContactTypeRepository, IContactTypeRepository
 	{
 		public ContactTypeRepository(
+			IObjectMapper mapper,
 			ILogger<ContactTypeRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFContactType> SearchLinqEF(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d69f2b02776c51ec02ea9d271d57781c</Hash>
+    <Hash>f27755255c03fb5de5376af0cd8521ae</Hash>
 </Codenesium>*/

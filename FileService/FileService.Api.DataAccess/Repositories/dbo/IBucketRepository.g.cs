@@ -7,28 +7,25 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IBucketRepository
 	{
-		int Create(
-			string name,
-			Guid externalId);
+		int Create(BucketModel model);
 
 		void Update(int id,
-		            string name,
-		            Guid externalId);
+		            BucketModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOBucket GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOBucket> GetWhereDirect(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>dac049db3b0cd4d3b0389cfff444e64b</Hash>
+    <Hash>27433b3a20efc563b19bcd67bc819adf</Hash>
 </Codenesium>*/

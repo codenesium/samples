@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,10 @@ namespace Codenesium.Foundation.CommonMVC
         void DisableChangeTracking();
     }
 
+	/// <summary>
+    /// EntityFrameworkTransactionCoordinator is the transaction coordinator when using
+	//  Entity Framework
+    /// </summary>
     public class EntityFrameworkTransactionCoordinator : ITransactionCoordinator
     {
         private DbContext context;
@@ -64,6 +70,38 @@ namespace Codenesium.Foundation.CommonMVC
             {
                 this.context.Database.RollbackTransaction();
             }
+        }
+    }
+
+    /// <summary>
+    /// InMemoryTransactionCoordinator is the transaction coordinator when using
+	//  the in memory database. This is used when running integration tests
+    /// </summary>
+	public class InMemoryTransactionCoordinator : ITransactionCoordinator
+    {
+        public void BeginTransaction()
+        {
+         
+        }
+
+        public void CommitTransaction()
+        {
+        
+        }
+
+        public void DisableChangeTracking()
+        {
+           
+        }
+
+        public void EnableChangeTracking()
+        {
+           
+        }
+
+        public void RollbackTransaction()
+        {
+           
         }
     }
 
@@ -186,6 +224,45 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
   
+    /// <summary>
+    /// This filter helps api versioning work with swagger
+    /// https://github.com/Microsoft/aspnet-api-versioning/wiki/Swashbuckle-Integration
+    /// </summary>
+    public class SwaggerDefaultValues : IOperationFilter
+    {
+        public void Apply(Operation operation, OperationFilterContext context)
+        {
+            if (operation.Parameters == null)
+            {
+                return;
+            }
+
+            foreach (var parameter in operation.Parameters.OfType<NonBodyParameter>())
+            {
+                var description = context.ApiDescription
+                                         .ParameterDescriptions
+                                         .First(p => p.Name == parameter.Name);
+                var routeInfo = description.RouteInfo;
+
+                if (parameter.Description == null)
+                {
+                    parameter.Description = description.ModelMetadata?.Description;
+                }
+
+                if (routeInfo == null)
+                {
+                    continue;
+                }
+
+                if (parameter.Default == null)
+                {
+                    parameter.Default = routeInfo.DefaultValue;
+                }
+
+                parameter.Required |= !routeInfo.IsOptional;
+            }
+        }
+    }
     public class SearchQuery
     {
         public int Limit { get; private set; } = 0;

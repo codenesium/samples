@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[TeamFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.teamRepository.GetById(id);
+			ApiResponse response = this.teamRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[TeamFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.teamRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.teamRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.teamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.teamRepository.Create(
-					model.Name,
-					model.OrganizationId);
+				var id = this.teamRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.teamRepository.Create(
-					model.Name,
-					model.OrganizationId);
+				this.teamRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.teamModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.teamRepository.Update(
-					id,
-					model.Name,
-					model.OrganizationId);
+				this.teamRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -179,10 +172,10 @@ namespace NebulaNS.Api.Service
 		[TeamFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Organizations/{id}/Teams")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByOrganizationId(int id)
 		{
-			Response response = this.teamRepository.GetWhere(x => x.OrganizationId == id);
+			ApiResponse response = this.teamRepository.GetWhere(x => x.OrganizationId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -190,5 +183,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e01407f6d04c30a818d68c9080b3a8d9</Hash>
+    <Hash>a1423759ca3632abca77d014390c1faa</Hash>
 </Codenesium>*/

@@ -7,44 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISpecialOfferRepository
 	{
-		int Create(
-			string description,
-			decimal discountPct,
-			string type,
-			string category,
-			DateTime startDate,
-			DateTime endDate,
-			int minQty,
-			Nullable<int> maxQty,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(SpecialOfferModel model);
 
 		void Update(int specialOfferID,
-		            string description,
-		            decimal discountPct,
-		            string type,
-		            string category,
-		            DateTime startDate,
-		            DateTime endDate,
-		            int minQty,
-		            Nullable<int> maxQty,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            SpecialOfferModel model);
 
 		void Delete(int specialOfferID);
 
-		Response GetById(int specialOfferID);
+		ApiResponse GetById(int specialOfferID);
 
 		POCOSpecialOffer GetByIdDirect(int specialOfferID);
 
-		Response GetWhere(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOSpecialOffer> GetWhereDirect(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>572badce232f5297d82ae9a557a797df</Hash>
+    <Hash>f5c04d3d4a589a56438d502779cfef15</Hash>
 </Codenesium>*/

@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class TeacherXTeacherSkillRepository: AbstractTeacherXTeacherSkillRepository, ITeacherXTeacherSkillRepository
 	{
 		public TeacherXTeacherSkillRepository(
+			IObjectMapper mapper,
 			ILogger<TeacherXTeacherSkillRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFTeacherXTeacherSkill> SearchLinqEF(Expression<Func<EFTeacherXTeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fd1fe102351202fe7c445fa362dd65e1</Hash>
+    <Hash>eefdae91bfd8dfaa485c9e5c8b8c8e5d</Hash>
 </Codenesium>*/

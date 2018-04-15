@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetById(id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesOrderHeaderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,32 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesOrderHeaderRepository.Create(
-					model.RevisionNumber,
-					model.OrderDate,
-					model.DueDate,
-					model.ShipDate,
-					model.Status,
-					model.OnlineOrderFlag,
-					model.SalesOrderNumber,
-					model.PurchaseOrderNumber,
-					model.AccountNumber,
-					model.CustomerID,
-					model.SalesPersonID,
-					model.TerritoryID,
-					model.BillToAddressID,
-					model.ShipToAddressID,
-					model.ShipMethodID,
-					model.CreditCardID,
-					model.CreditCardApprovalCode,
-					model.CurrencyRateID,
-					model.SubTotal,
-					model.TaxAmt,
-					model.Freight,
-					model.TotalDue,
-					model.Comment,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.salesOrderHeaderRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -146,32 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.salesOrderHeaderRepository.Create(
-					model.RevisionNumber,
-					model.OrderDate,
-					model.DueDate,
-					model.ShipDate,
-					model.Status,
-					model.OnlineOrderFlag,
-					model.SalesOrderNumber,
-					model.PurchaseOrderNumber,
-					model.AccountNumber,
-					model.CustomerID,
-					model.SalesPersonID,
-					model.TerritoryID,
-					model.BillToAddressID,
-					model.ShipToAddressID,
-					model.ShipMethodID,
-					model.CreditCardID,
-					model.CreditCardApprovalCode,
-					model.CurrencyRateID,
-					model.SubTotal,
-					model.TaxAmt,
-					model.Freight,
-					model.TotalDue,
-					model.Comment,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.salesOrderHeaderRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -195,33 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesOrderHeaderRepository.Update(
-					id,
-					model.RevisionNumber,
-					model.OrderDate,
-					model.DueDate,
-					model.ShipDate,
-					model.Status,
-					model.OnlineOrderFlag,
-					model.SalesOrderNumber,
-					model.PurchaseOrderNumber,
-					model.AccountNumber,
-					model.CustomerID,
-					model.SalesPersonID,
-					model.TerritoryID,
-					model.BillToAddressID,
-					model.ShipToAddressID,
-					model.ShipMethodID,
-					model.CreditCardID,
-					model.CreditCardApprovalCode,
-					model.CurrencyRateID,
-					model.SubTotal,
-					model.TaxAmt,
-					model.Freight,
-					model.TotalDue,
-					model.Comment,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.salesOrderHeaderRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -248,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Customers/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCustomerID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.CustomerID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CustomerID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -261,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesPersons/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySalesPersonID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.SalesPersonID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.SalesPersonID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -274,10 +198,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesTerritories/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.TerritoryID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -287,10 +211,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBillToAddressID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.BillToAddressID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.BillToAddressID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -300,10 +224,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByShipToAddressID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipToAddressID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipToAddressID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -313,10 +237,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ShipMethods/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByShipMethodID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -326,10 +250,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CreditCards/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCreditCardID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.CreditCardID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CreditCardID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -339,10 +263,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CurrencyRates/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCurrencyRateID(int id)
 		{
-			Response response = this.salesOrderHeaderRepository.GetWhere(x => x.CurrencyRateID == id);
+			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CurrencyRateID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -350,5 +274,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ceeaea50f0683f683b9cae76b4dcf516</Hash>
+    <Hash>fa3d071d9d9126237e95eafc95465d2a</Hash>
 </Codenesium>*/

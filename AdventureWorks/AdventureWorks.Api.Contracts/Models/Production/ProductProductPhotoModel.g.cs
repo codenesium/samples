@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.ProductPhotoID = productPhotoID.ToInt();
-			this.Primary = primary;
+			this.Primary = primary.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>73678955ed8140f6244bce85ceeb006a</Hash>
+    <Hash>2b57bb4ab5ab41465795cb44a0503615</Hash>
 </Codenesium>*/

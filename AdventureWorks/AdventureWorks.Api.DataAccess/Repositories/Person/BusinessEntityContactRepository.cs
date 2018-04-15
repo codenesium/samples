@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class BusinessEntityContactRepository: AbstractBusinessEntityContactRepository, IBusinessEntityContactRepository
 	{
 		public BusinessEntityContactRepository(
+			IObjectMapper mapper,
 			ILogger<BusinessEntityContactRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFBusinessEntityContact> SearchLinqEF(Expression<Func<EFBusinessEntityContact, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>20a478de58cf60ed31525c5461a5e857</Hash>
+    <Hash>33fafb4963f04f5383c6904a904ae060</Hash>
 </Codenesium>*/

@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[DatabaseLogFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.databaseLogRepository.GetById(id);
+			ApiResponse response = this.databaseLogRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[DatabaseLogFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.databaseLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.databaseLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,14 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.databaseLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.databaseLogRepository.Create(
-					model.PostTime,
-					model.DatabaseUser,
-					model.@Event,
-					model.Schema,
-					model.@Object,
-					model.TSQL,
-					model.XmlEvent);
+				var id = this.databaseLogRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -128,14 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.databaseLogRepository.Create(
-					model.PostTime,
-					model.DatabaseUser,
-					model.@Event,
-					model.Schema,
-					model.@Object,
-					model.TSQL,
-					model.XmlEvent);
+				this.databaseLogRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -159,15 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.databaseLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.databaseLogRepository.Update(
-					id,
-					model.PostTime,
-					model.DatabaseUser,
-					model.@Event,
-					model.Schema,
-					model.@Object,
-					model.TSQL,
-					model.XmlEvent);
+				this.databaseLogRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -192,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>30912079b5af4c762c0c366af4e07d49</Hash>
+    <Hash>6be2530c61c7faeab5991dc96718efbc</Hash>
 </Codenesium>*/

@@ -14,69 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractProductRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			string productNumber,
-			bool makeFlag,
-			bool finishedGoodsFlag,
-			string color,
-			short safetyStockLevel,
-			short reorderPoint,
-			decimal standardCost,
-			decimal listPrice,
-			string size,
-			string sizeUnitMeasureCode,
-			string weightUnitMeasureCode,
-			Nullable<decimal> weight,
-			int daysToManufacture,
-			string productLine,
-			string @class,
-			string style,
-			Nullable<int> productSubcategoryID,
-			Nullable<int> productModelID,
-			DateTime sellStartDate,
-			Nullable<DateTime> sellEndDate,
-			Nullable<DateTime> discontinuedDate,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ProductModel model)
 		{
 			var record = new EFProduct();
 
-			MapPOCOToEF(
-				0,
-				name,
-				productNumber,
-				makeFlag,
-				finishedGoodsFlag,
-				color,
-				safetyStockLevel,
-				reorderPoint,
-				standardCost,
-				listPrice,
-				size,
-				sizeUnitMeasureCode,
-				weightUnitMeasureCode,
-				weight,
-				daysToManufacture,
-				productLine,
-				@class,
-				style,
-				productSubcategoryID,
-				productModelID,
-				sellStartDate,
-				sellEndDate,
-				discontinuedDate,
-				rowguid,
-				modifiedDate,
+			this.mapper.ProductMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFProduct>().Add(record);
@@ -86,30 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int productID,
-			string name,
-			string productNumber,
-			bool makeFlag,
-			bool finishedGoodsFlag,
-			string color,
-			short safetyStockLevel,
-			short reorderPoint,
-			decimal standardCost,
-			decimal listPrice,
-			string size,
-			string sizeUnitMeasureCode,
-			string weightUnitMeasureCode,
-			Nullable<decimal> weight,
-			int daysToManufacture,
-			string productLine,
-			string @class,
-			string style,
-			Nullable<int> productSubcategoryID,
-			Nullable<int> productModelID,
-			DateTime sellStartDate,
-			Nullable<DateTime> sellEndDate,
-			Nullable<DateTime> discontinuedDate,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ProductModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
@@ -118,32 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ProductMapModelToEF(
 					productID,
-					name,
-					productNumber,
-					makeFlag,
-					finishedGoodsFlag,
-					color,
-					safetyStockLevel,
-					reorderPoint,
-					standardCost,
-					listPrice,
-					size,
-					sizeUnitMeasureCode,
-					weightUnitMeasureCode,
-					weight,
-					daysToManufacture,
-					productLine,
-					@class,
-					style,
-					productSubcategoryID,
-					productModelID,
-					sellStartDate,
-					sellEndDate,
-					discontinuedDate,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -165,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int productID)
+		public virtual ApiResponse GetById(int productID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response;
@@ -175,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOProduct GetByIdDirect(int productID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductID == productID, response);
 			return response.Products.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -199,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOProduct> GetWhereDirect(Expression<Func<EFProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Products;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProduct, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFProduct, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProduct> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProduct> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFProduct> SearchLinqEF(Expression<Func<EFProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -226,60 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int productID,
-			string name,
-			string productNumber,
-			bool makeFlag,
-			bool finishedGoodsFlag,
-			string color,
-			short safetyStockLevel,
-			short reorderPoint,
-			decimal standardCost,
-			decimal listPrice,
-			string size,
-			string sizeUnitMeasureCode,
-			string weightUnitMeasureCode,
-			Nullable<decimal> weight,
-			int daysToManufacture,
-			string productLine,
-			string @class,
-			string style,
-			Nullable<int> productSubcategoryID,
-			Nullable<int> productModelID,
-			DateTime sellStartDate,
-			Nullable<DateTime> sellEndDate,
-			Nullable<DateTime> discontinuedDate,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFProduct efProduct)
-		{
-			efProduct.SetProperties(productID.ToInt(), name, productNumber, makeFlag, finishedGoodsFlag, color, safetyStockLevel, reorderPoint, standardCost, listPrice, size, sizeUnitMeasureCode, weightUnitMeasureCode, weight.ToNullableDecimal(), daysToManufacture.ToInt(), productLine, @class, style, productSubcategoryID.ToNullableInt(), productModelID.ToNullableInt(), sellStartDate.ToDateTime(), sellEndDate.ToNullableDateTime(), discontinuedDate.ToNullableDateTime(), rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFProduct efProduct,
-			Response response)
-		{
-			if (efProduct == null)
-			{
-				return;
-			}
-
-			response.AddProduct(new POCOProduct(efProduct.ProductID.ToInt(), efProduct.Name, efProduct.ProductNumber, efProduct.MakeFlag, efProduct.FinishedGoodsFlag, efProduct.Color, efProduct.SafetyStockLevel, efProduct.ReorderPoint, efProduct.StandardCost, efProduct.ListPrice, efProduct.Size, efProduct.SizeUnitMeasureCode, efProduct.WeightUnitMeasureCode, efProduct.Weight.ToNullableDecimal(), efProduct.DaysToManufacture.ToInt(), efProduct.ProductLine, efProduct.@Class, efProduct.Style, efProduct.ProductSubcategoryID.ToNullableInt(), efProduct.ProductModelID.ToNullableInt(), efProduct.SellStartDate.ToDateTime(), efProduct.SellEndDate.ToNullableDateTime(), efProduct.DiscontinuedDate.ToNullableDateTime(), efProduct.Rowguid, efProduct.ModifiedDate.ToDateTime()));
-
-			UnitMeasureRepository.MapEFToPOCO(efProduct.UnitMeasure, response);
-
-			UnitMeasureRepository.MapEFToPOCO(efProduct.UnitMeasure1, response);
-
-			ProductSubcategoryRepository.MapEFToPOCO(efProduct.ProductSubcategory, response);
-
-			ProductModelRepository.MapEFToPOCO(efProduct.ProductModel, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bdca59d66bcdec03356543ee78c22f2d</Hash>
+    <Hash>cffbe4dd9c55dd1c78b33cdb0db5a1cf</Hash>
 </Codenesium>*/

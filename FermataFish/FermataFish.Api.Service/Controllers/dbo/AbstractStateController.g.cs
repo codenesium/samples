@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[StateFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.stateRepository.GetById(id);
+			ApiResponse response = this.stateRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[StateFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.stateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.stateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,8 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.stateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.stateRepository.Create(
-					model.Name);
+				var id = this.stateRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -122,8 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.stateRepository.Create(
-					model.Name);
+				this.stateRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -147,9 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.stateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.stateRepository.Update(
-					id,
-					model.Name);
+				this.stateRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -174,5 +170,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c4e46794b788b853fd212423a6d7317e</Hash>
+    <Hash>0f209423914f0fcdc8d97dd8680f69a1</Hash>
 </Codenesium>*/

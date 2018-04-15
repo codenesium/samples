@@ -14,7 +14,7 @@ namespace AdventureWorksNS.Api.Contracts
 			string currencyCode,
 			DateTime modifiedDate)
 		{
-			this.CurrencyCode = currencyCode;
+			this.CurrencyCode = currencyCode.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2bcd143d29b23086a3d83b140c87ae67</Hash>
+    <Hash>f5584d0826df845800b6667fda5d3ca8</Hash>
 </Codenesium>*/

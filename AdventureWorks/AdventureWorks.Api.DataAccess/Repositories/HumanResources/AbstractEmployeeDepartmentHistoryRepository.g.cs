@@ -14,31 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractEmployeeDepartmentHistoryRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			short departmentID,
-			int shiftID,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			DateTime modifiedDate)
+			EmployeeDepartmentHistoryModel model)
 		{
 			var record = new EFEmployeeDepartmentHistory();
 
-			MapPOCOToEF(
-				0,
-				departmentID,
-				shiftID,
-				startDate,
-				endDate,
-				modifiedDate,
+			this.mapper.EmployeeDepartmentHistoryMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFEmployeeDepartmentHistory>().Add(record);
@@ -48,11 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int businessEntityID,
-			short departmentID,
-			int shiftID,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			DateTime modifiedDate)
+			EmployeeDepartmentHistoryModel model)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
@@ -61,13 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.EmployeeDepartmentHistoryMapModelToEF(
 					businessEntityID,
-					departmentID,
-					shiftID,
-					startDate,
-					endDate,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -89,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int businessEntityID)
+		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
@@ -99,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOEmployeeDepartmentHistory GetByIdDirect(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.EmployeeDepartmentHistories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -123,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOEmployeeDepartmentHistory> GetWhereDirect(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.EmployeeDepartmentHistories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFEmployeeDepartmentHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.EmployeeDepartmentHistoryMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFEmployeeDepartmentHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.EmployeeDepartmentHistoryMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFEmployeeDepartmentHistory> SearchLinqEF(Expression<Func<EFEmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -150,39 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int businessEntityID,
-			short departmentID,
-			int shiftID,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			DateTime modifiedDate,
-			EFEmployeeDepartmentHistory efEmployeeDepartmentHistory)
-		{
-			efEmployeeDepartmentHistory.SetProperties(businessEntityID.ToInt(), departmentID, shiftID, startDate, endDate, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFEmployeeDepartmentHistory efEmployeeDepartmentHistory,
-			Response response)
-		{
-			if (efEmployeeDepartmentHistory == null)
-			{
-				return;
-			}
-
-			response.AddEmployeeDepartmentHistory(new POCOEmployeeDepartmentHistory(efEmployeeDepartmentHistory.BusinessEntityID.ToInt(), efEmployeeDepartmentHistory.DepartmentID, efEmployeeDepartmentHistory.ShiftID, efEmployeeDepartmentHistory.StartDate, efEmployeeDepartmentHistory.EndDate, efEmployeeDepartmentHistory.ModifiedDate.ToDateTime()));
-
-			EmployeeRepository.MapEFToPOCO(efEmployeeDepartmentHistory.Employee, response);
-
-			DepartmentRepository.MapEFToPOCO(efEmployeeDepartmentHistory.Department, response);
-
-			ShiftRepository.MapEFToPOCO(efEmployeeDepartmentHistory.Shift, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a7e54c6bdcd93aa235ae453e44540818</Hash>
+    <Hash>412ba977925913f35dc3ddf7efb1e33f</Hash>
 </Codenesium>*/

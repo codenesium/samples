@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<Nullable<int>>(businessEntityID,
-			                                                           "Employee");
+			                                                           nameof(ApiResponse.Employees));
 		}
 
 		public int JobCandidateID { get; set; }
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b0f9eff06c1d43df3fd6dfef0f897040</Hash>
+    <Hash>5415230081104d6e77c31f72caef02eb</Hash>
 </Codenesium>*/

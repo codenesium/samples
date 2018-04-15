@@ -7,36 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductInventoryRepository
 	{
-		int Create(
-			short locationID,
-			string shelf,
-			int bin,
-			short quantity,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(ProductInventoryModel model);
 
 		void Update(int productID,
-		            short locationID,
-		            string shelf,
-		            int bin,
-		            short quantity,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            ProductInventoryModel model);
 
 		void Delete(int productID);
 
-		Response GetById(int productID);
+		ApiResponse GetById(int productID);
 
 		POCOProductInventory GetByIdDirect(int productID);
 
-		Response GetWhere(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOProductInventory> GetWhereDirect(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0c08da2a8bffa7ee0ef24aaede7be6d</Hash>
+    <Hash>3bd6efabc0923207a450225d018358a1</Hash>
 </Codenesium>*/

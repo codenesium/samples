@@ -23,12 +23,12 @@ namespace FermataFishNS.Api.Contracts
 		{
 			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
 			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
-			this.ActualStartDate = actualStartDate;
+			this.ActualStartDate = actualStartDate.ToNullableDateTime();
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
 			this.LessonStatusId = lessonStatusId.ToInt();
-			this.TeacherNotes = teacherNotes;
-			this.StudentNotes = studentNotes;
-			this.BillAmount = billAmount;
+			this.TeacherNotes = teacherNotes.ToString();
+			this.StudentNotes = studentNotes.ToString();
+			this.BillAmount = billAmount.ToNullableDecimal();
 			this.StudioId = studioId.ToInt();
 		}
 
@@ -172,5 +172,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ab15bbd05246892b61ef3393df7230cc</Hash>
+    <Hash>8efeea9cf17c7346fd2bc773e05eda59</Hash>
 </Codenesium>*/

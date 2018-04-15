@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/billOfMaterials")]
+	[ApiVersion("1.0")]
 	public class BillOfMaterialsController: AbstractBillOfMaterialsController
 	{
 		public BillOfMaterialsController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d0cfb561fe5220e51e81106a9c1b2924</Hash>
+    <Hash>4adc67c81fdffb5436fde33705ff7407</Hash>
 </Codenesium>*/

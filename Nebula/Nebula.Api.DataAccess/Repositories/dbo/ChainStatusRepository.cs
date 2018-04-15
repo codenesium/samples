@@ -12,9 +12,10 @@ namespace NebulaNS.Api.DataAccess
 	public class ChainStatusRepository: AbstractChainStatusRepository, IChainStatusRepository
 	{
 		public ChainStatusRepository(
+			IObjectMapper mapper,
 			ILogger<ChainStatusRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFChainStatus> SearchLinqEF(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9c7e722258e989b06eabfc4a62e97541</Hash>
+    <Hash>f948d217631fa86c905dde545ee25c6b</Hash>
 </Codenesium>*/

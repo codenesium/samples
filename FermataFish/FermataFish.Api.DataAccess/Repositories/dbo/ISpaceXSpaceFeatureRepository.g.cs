@@ -7,28 +7,25 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ISpaceXSpaceFeatureRepository
 	{
-		int Create(
-			int spaceId,
-			int spaceFeatureId);
+		int Create(SpaceXSpaceFeatureModel model);
 
 		void Update(int id,
-		            int spaceId,
-		            int spaceFeatureId);
+		            SpaceXSpaceFeatureModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOSpaceXSpaceFeature GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOSpaceXSpaceFeature> GetWhereDirect(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d2146edfa87a6c9f36c5780efae5fed</Hash>
+    <Hash>9a68eda67bee4272d7075226c66056b1</Hash>
 </Codenesium>*/

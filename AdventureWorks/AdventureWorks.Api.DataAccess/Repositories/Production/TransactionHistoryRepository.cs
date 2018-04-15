@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class TransactionHistoryRepository: AbstractTransactionHistoryRepository, ITransactionHistoryRepository
 	{
 		public TransactionHistoryRepository(
+			IObjectMapper mapper,
 			ILogger<TransactionHistoryRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFTransactionHistory> SearchLinqEF(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bf9cfc70b11edd168cb4daa16e2a1b43</Hash>
+    <Hash>ad0e91f3933d609b4850ecbd608946a4</Hash>
 </Codenesium>*/

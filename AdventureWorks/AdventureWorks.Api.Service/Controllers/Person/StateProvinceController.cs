@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/stateProvinces")]
+	[ApiVersion("1.0")]
 	public class StateProvinceController: AbstractStateProvinceController
 	{
 		public StateProvinceController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4c096a9bd4e26841e6a910b0bc41fe48</Hash>
+    <Hash>05f352129c99efc79f2ab4d0437c3dea</Hash>
 </Codenesium>*/

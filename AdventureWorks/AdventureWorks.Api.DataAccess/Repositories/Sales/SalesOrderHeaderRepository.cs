@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesOrderHeaderRepository: AbstractSalesOrderHeaderRepository, ISalesOrderHeaderRepository
 	{
 		public SalesOrderHeaderRepository(
+			IObjectMapper mapper,
 			ILogger<SalesOrderHeaderRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFSalesOrderHeader> SearchLinqEF(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>78a11ff156402a8f23870ce3c8472628</Hash>
+    <Hash>cb1a0ed421a59cd1814d65cf04fffb59</Hash>
 </Codenesium>*/

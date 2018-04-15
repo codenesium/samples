@@ -21,11 +21,11 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.DatabaseLogID = databaseLogID.ToInt();
 			this.PostTime = postTime.ToDateTime();
-			this.DatabaseUser = databaseUser;
-			this.@Event = @event;
-			this.Schema = schema;
-			this.@Object = @object;
-			this.TSQL = tSQL;
+			this.DatabaseUser = databaseUser.ToString();
+			this.@Event = @event.ToString();
+			this.Schema = schema.ToString();
+			this.@Object = @object.ToString();
+			this.TSQL = tSQL.ToString();
 			this.XmlEvent = xmlEvent;
 		}
 
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2c08558822caf8326bab317bc1e881b0</Hash>
+    <Hash>3bc5af430081451cd3ec9349d7d32d2d</Hash>
 </Codenesium>*/

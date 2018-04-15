@@ -7,46 +7,25 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IFileRepository
 	{
-		int Create(
-			Guid externalId,
-			string privateKey,
-			string publicKey,
-			string location,
-			DateTime expiration,
-			string extension,
-			DateTime dateCreated,
-			decimal fileSizeInBytes,
-			int fileTypeId,
-			Nullable<int> bucketId,
-			string description);
+		int Create(FileModel model);
 
 		void Update(int id,
-		            Guid externalId,
-		            string privateKey,
-		            string publicKey,
-		            string location,
-		            DateTime expiration,
-		            string extension,
-		            DateTime dateCreated,
-		            decimal fileSizeInBytes,
-		            int fileTypeId,
-		            Nullable<int> bucketId,
-		            string description);
+		            FileModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOFile GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOFile> GetWhereDirect(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f97cd73045cf67089d7a31cc6e1ad825</Hash>
+    <Hash>b58f1f3a5f3bb824e62a6780d8bf9a47</Hash>
 </Codenesium>*/

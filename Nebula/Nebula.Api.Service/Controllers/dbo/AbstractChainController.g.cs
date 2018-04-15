@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[ChainFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.chainRepository.GetById(id);
+			ApiResponse response = this.chainRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ChainFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.chainRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.chainRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.chainRepository.Create(
-					model.Name,
-					model.TeamId,
-					model.ChainStatusId,
-					model.ExternalId);
+				var id = this.chainRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.chainRepository.Create(
-					model.Name,
-					model.TeamId,
-					model.ChainStatusId,
-					model.ExternalId);
+				this.chainRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.chainModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.chainRepository.Update(
-					id,
-					model.Name,
-					model.TeamId,
-					model.ChainStatusId,
-					model.ExternalId);
+				this.chainRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -185,10 +172,10 @@ namespace NebulaNS.Api.Service
 		[ChainFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Teams/{id}/Chains")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeamId(int id)
 		{
-			Response response = this.chainRepository.GetWhere(x => x.TeamId == id);
+			ApiResponse response = this.chainRepository.GetWhere(x => x.TeamId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -198,10 +185,10 @@ namespace NebulaNS.Api.Service
 		[ChainFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ChainStatus/{id}/Chains")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByChainStatusId(int id)
 		{
-			Response response = this.chainRepository.GetWhere(x => x.ChainStatusId == id);
+			ApiResponse response = this.chainRepository.GetWhere(x => x.ChainStatusId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -209,5 +196,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ba82e87419fd8c1776afcf92f2acb1ed</Hash>
+    <Hash>e62ae190645e50742aefc054a4a74770</Hash>
 </Codenesium>*/

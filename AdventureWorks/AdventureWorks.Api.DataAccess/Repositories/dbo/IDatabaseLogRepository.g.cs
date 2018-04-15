@@ -7,38 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IDatabaseLogRepository
 	{
-		int Create(
-			DateTime postTime,
-			string databaseUser,
-			string @event,
-			string schema,
-			string @object,
-			string tSQL,
-			string xmlEvent);
+		int Create(DatabaseLogModel model);
 
 		void Update(int databaseLogID,
-		            DateTime postTime,
-		            string databaseUser,
-		            string @event,
-		            string schema,
-		            string @object,
-		            string tSQL,
-		            string xmlEvent);
+		            DatabaseLogModel model);
 
 		void Delete(int databaseLogID);
 
-		Response GetById(int databaseLogID);
+		ApiResponse GetById(int databaseLogID);
 
 		POCODatabaseLog GetByIdDirect(int databaseLogID);
 
-		Response GetWhere(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCODatabaseLog> GetWhereDirect(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>be6d1f72dddf2bad3afa32e31cd2ebfd</Hash>
+    <Hash>a2490ab81976cb3c06f4d002e96e3385</Hash>
 </Codenesium>*/

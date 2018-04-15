@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[StudioFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.studioRepository.GetById(id);
+			ApiResponse response = this.studioRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[StudioFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.studioRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.studioRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,14 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.studioModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.studioRepository.Create(
-					model.Name,
-					model.Website,
-					model.Address1,
-					model.Address2,
-					model.City,
-					model.StateId,
-					model.Zip);
+				var id = this.studioRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -128,14 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.studioRepository.Create(
-					model.Name,
-					model.Website,
-					model.Address1,
-					model.Address2,
-					model.City,
-					model.StateId,
-					model.Zip);
+				this.studioRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -159,15 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.studioModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.studioRepository.Update(
-					id,
-					model.Name,
-					model.Website,
-					model.Address1,
-					model.Address2,
-					model.City,
-					model.StateId,
-					model.Zip);
+				this.studioRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -194,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[StudioFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/States/{id}/Studios")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStateId(int id)
 		{
-			Response response = this.studioRepository.GetWhere(x => x.StateId == id);
+			ApiResponse response = this.studioRepository.GetWhere(x => x.StateId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -205,5 +183,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e1c63de1e73b72157c0a6cbf833ead06</Hash>
+    <Hash>b4d86da2add9bd22e414ccd49bc4c900</Hash>
 </Codenesium>*/

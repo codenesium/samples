@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.Name = name;
-			this.ShipBase = shipBase;
-			this.ShipRate = shipRate;
-			this.Rowguid = rowguid;
+			this.Name = name.ToString();
+			this.ShipBase = shipBase.ToDecimal();
+			this.ShipRate = shipRate.ToDecimal();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -107,5 +107,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>db53b92efb97754552dbf897241ada38</Hash>
+    <Hash>f3e7d031f48f751781c1e6055828427d</Hash>
 </Codenesium>*/

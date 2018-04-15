@@ -20,14 +20,14 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.CurrencyRateID = currencyRateID.ToInt();
 			this.CurrencyRateDate = currencyRateDate.ToDateTime();
-			this.AverageRate = averageRate;
-			this.EndOfDayRate = endOfDayRate;
+			this.AverageRate = averageRate.ToDecimal();
+			this.EndOfDayRate = endOfDayRate.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.FromCurrencyCode = new ReferenceEntity<string>(fromCurrencyCode,
-			                                                    "Currency");
+			                                                    nameof(ApiResponse.Currencies));
 			this.ToCurrencyCode = new ReferenceEntity<string>(toCurrencyCode,
-			                                                  "Currency");
+			                                                  nameof(ApiResponse.Currencies));
 		}
 
 		public int CurrencyRateID { get; set; }
@@ -108,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>117ee4ac9e9486398c4ab46bfc999b0c</Hash>
+    <Hash>171e68d965f9e78ffa43c8d0b8a4deb9</Hash>
 </Codenesium>*/

@@ -14,43 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractWorkOrderRoutingRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int productID,
-			short operationSequence,
-			short locationID,
-			DateTime scheduledStartDate,
-			DateTime scheduledEndDate,
-			Nullable<DateTime> actualStartDate,
-			Nullable<DateTime> actualEndDate,
-			Nullable<decimal> actualResourceHrs,
-			decimal plannedCost,
-			Nullable<decimal> actualCost,
-			DateTime modifiedDate)
+			WorkOrderRoutingModel model)
 		{
 			var record = new EFWorkOrderRouting();
 
-			MapPOCOToEF(
-				0,
-				productID,
-				operationSequence,
-				locationID,
-				scheduledStartDate,
-				scheduledEndDate,
-				actualStartDate,
-				actualEndDate,
-				actualResourceHrs,
-				plannedCost,
-				actualCost,
-				modifiedDate,
+			this.mapper.WorkOrderRoutingMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFWorkOrderRouting>().Add(record);
@@ -60,17 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int workOrderID,
-			int productID,
-			short operationSequence,
-			short locationID,
-			DateTime scheduledStartDate,
-			DateTime scheduledEndDate,
-			Nullable<DateTime> actualStartDate,
-			Nullable<DateTime> actualEndDate,
-			Nullable<decimal> actualResourceHrs,
-			decimal plannedCost,
-			Nullable<decimal> actualCost,
-			DateTime modifiedDate)
+			WorkOrderRoutingModel model)
 		{
 			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
@@ -79,19 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.WorkOrderRoutingMapModelToEF(
 					workOrderID,
-					productID,
-					operationSequence,
-					locationID,
-					scheduledStartDate,
-					scheduledEndDate,
-					actualStartDate,
-					actualEndDate,
-					actualResourceHrs,
-					plannedCost,
-					actualCost,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -113,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int workOrderID)
+		public virtual ApiResponse GetById(int workOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID, response);
 			return response;
@@ -123,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOWorkOrderRouting GetByIdDirect(int workOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID, response);
 			return response.WorkOrderRoutings.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -147,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOWorkOrderRouting> GetWhereDirect(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.WorkOrderRoutings;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFWorkOrderRouting, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFWorkOrderRouting, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFWorkOrderRouting> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.WorkOrderRoutingMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFWorkOrderRouting> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.WorkOrderRoutingMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFWorkOrderRouting> SearchLinqEF(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -174,43 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int workOrderID,
-			int productID,
-			short operationSequence,
-			short locationID,
-			DateTime scheduledStartDate,
-			DateTime scheduledEndDate,
-			Nullable<DateTime> actualStartDate,
-			Nullable<DateTime> actualEndDate,
-			Nullable<decimal> actualResourceHrs,
-			decimal plannedCost,
-			Nullable<decimal> actualCost,
-			DateTime modifiedDate,
-			EFWorkOrderRouting efWorkOrderRouting)
-		{
-			efWorkOrderRouting.SetProperties(workOrderID.ToInt(), productID.ToInt(), operationSequence, locationID, scheduledStartDate.ToDateTime(), scheduledEndDate.ToDateTime(), actualStartDate.ToNullableDateTime(), actualEndDate.ToNullableDateTime(), actualResourceHrs.ToNullableDecimal(), plannedCost, actualCost, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFWorkOrderRouting efWorkOrderRouting,
-			Response response)
-		{
-			if (efWorkOrderRouting == null)
-			{
-				return;
-			}
-
-			response.AddWorkOrderRouting(new POCOWorkOrderRouting(efWorkOrderRouting.WorkOrderID.ToInt(), efWorkOrderRouting.ProductID.ToInt(), efWorkOrderRouting.OperationSequence, efWorkOrderRouting.LocationID, efWorkOrderRouting.ScheduledStartDate.ToDateTime(), efWorkOrderRouting.ScheduledEndDate.ToDateTime(), efWorkOrderRouting.ActualStartDate.ToNullableDateTime(), efWorkOrderRouting.ActualEndDate.ToNullableDateTime(), efWorkOrderRouting.ActualResourceHrs.ToNullableDecimal(), efWorkOrderRouting.PlannedCost, efWorkOrderRouting.ActualCost, efWorkOrderRouting.ModifiedDate.ToDateTime()));
-
-			WorkOrderRepository.MapEFToPOCO(efWorkOrderRouting.WorkOrder, response);
-
-			LocationRepository.MapEFToPOCO(efWorkOrderRouting.Location, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c41006bb64d122b4d16635dea93dc98</Hash>
+    <Hash>e3a8e3810f904761d85fcce3e187d408</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FermataFishNS.Api.DataAccess;
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/families")]
+	[ApiVersion("1.0")]
 	public class FamilyController: AbstractFamilyController
 	{
 		public FamilyController(
@@ -32,5 +34,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fedb6673fdfbfc658aa5b5525123f41c</Hash>
+    <Hash>2718fe02e0cd77c6594ac0bcc525eaaf</Hash>
 </Codenesium>*/

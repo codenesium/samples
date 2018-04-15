@@ -16,7 +16,7 @@ namespace NebulaNS.Api.Contracts
 			DateTime dateEntered)
 		{
 			this.LinkId = linkId.ToInt();
-			this.Log = log;
+			this.Log = log.ToString();
 			this.DateEntered = dateEntered.ToDateTime();
 		}
 
@@ -71,5 +71,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d1e26ccba4842a036ae0f0f6faabd0bb</Hash>
+    <Hash>d393ad427dee9dca586f3843c58089bd</Hash>
 </Codenesium>*/

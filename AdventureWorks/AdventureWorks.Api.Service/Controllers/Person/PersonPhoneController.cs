@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personPhones")]
+	[ApiVersion("1.0")]
 	public class PersonPhoneController: AbstractPersonPhoneController
 	{
 		public PersonPhoneController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bf9d58be2fef75371455c5f9903f129c</Hash>
+    <Hash>b976ec49c2f3c4712d95b1b62ca8b34c</Hash>
 </Codenesium>*/

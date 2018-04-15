@@ -7,72 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductRepository
 	{
-		int Create(
-			string name,
-			string productNumber,
-			bool makeFlag,
-			bool finishedGoodsFlag,
-			string color,
-			short safetyStockLevel,
-			short reorderPoint,
-			decimal standardCost,
-			decimal listPrice,
-			string size,
-			string sizeUnitMeasureCode,
-			string weightUnitMeasureCode,
-			Nullable<decimal> weight,
-			int daysToManufacture,
-			string productLine,
-			string @class,
-			string style,
-			Nullable<int> productSubcategoryID,
-			Nullable<int> productModelID,
-			DateTime sellStartDate,
-			Nullable<DateTime> sellEndDate,
-			Nullable<DateTime> discontinuedDate,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(ProductModel model);
 
 		void Update(int productID,
-		            string name,
-		            string productNumber,
-		            bool makeFlag,
-		            bool finishedGoodsFlag,
-		            string color,
-		            short safetyStockLevel,
-		            short reorderPoint,
-		            decimal standardCost,
-		            decimal listPrice,
-		            string size,
-		            string sizeUnitMeasureCode,
-		            string weightUnitMeasureCode,
-		            Nullable<decimal> weight,
-		            int daysToManufacture,
-		            string productLine,
-		            string @class,
-		            string style,
-		            Nullable<int> productSubcategoryID,
-		            Nullable<int> productModelID,
-		            DateTime sellStartDate,
-		            Nullable<DateTime> sellEndDate,
-		            Nullable<DateTime> discontinuedDate,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            ProductModel model);
 
 		void Delete(int productID);
 
-		Response GetById(int productID);
+		ApiResponse GetById(int productID);
 
 		POCOProduct GetByIdDirect(int productID);
 
-		Response GetWhere(Expression<Func<EFProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOProduct> GetWhereDirect(Expression<Func<EFProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>2c844b3b731f24392a3e4954c40e3303</Hash>
+    <Hash>1839b82749d7543b968f7bea9720a9f2</Hash>
 </Codenesium>*/

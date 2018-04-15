@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CultureRepository: AbstractCultureRepository, ICultureRepository
 	{
 		public CultureRepository(
+			IObjectMapper mapper,
 			ILogger<CultureRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFCulture> SearchLinqEF(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3508fc5012c43c62afb0da947a7896a7</Hash>
+    <Hash>338dabaeacc126f372f559a2fd54b641</Hash>
 </Codenesium>*/

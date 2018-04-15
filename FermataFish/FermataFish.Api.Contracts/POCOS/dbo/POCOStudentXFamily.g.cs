@@ -17,9 +17,9 @@ namespace FermataFishNS.Api.Contracts
 			this.Id = id.ToInt();
 
 			this.StudentId = new ReferenceEntity<int>(studentId,
-			                                          "Student");
+			                                          nameof(ApiResponse.Students));
 			this.FamilyId = new ReferenceEntity<int>(familyId,
-			                                         "Family");
+			                                         nameof(ApiResponse.Families));
 		}
 
 		public int Id { get; set; }
@@ -60,5 +60,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>58be3d2f60a6d175f5670db0a88b15b2</Hash>
+    <Hash>9a6d3f4cc29808fdd18c1e4b1419b400</Hash>
 </Codenesium>*/

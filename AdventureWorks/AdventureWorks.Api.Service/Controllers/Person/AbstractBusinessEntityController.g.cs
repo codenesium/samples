@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[BusinessEntityFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.businessEntityRepository.GetById(id);
+			ApiResponse response = this.businessEntityRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[BusinessEntityFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.businessEntityRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.businessEntityRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.businessEntityModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.businessEntityRepository.Create(
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.businessEntityRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.businessEntityRepository.Create(
-					model.Rowguid,
-					model.ModifiedDate);
+				this.businessEntityRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.businessEntityModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.businessEntityRepository.Update(
-					id,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.businessEntityRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>65b0b75c9bc78b215280b3716ec6d7a9</Hash>
+    <Hash>f5f640ec960b90c1e5c63400c9b7d453</Hash>
 </Codenesium>*/

@@ -14,29 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractPasswordRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string passwordHash,
-			string passwordSalt,
-			Guid rowguid,
-			DateTime modifiedDate)
+			PasswordModel model)
 		{
 			var record = new EFPassword();
 
-			MapPOCOToEF(
-				0,
-				passwordHash,
-				passwordSalt,
-				rowguid,
-				modifiedDate,
+			this.mapper.PasswordMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFPassword>().Add(record);
@@ -46,10 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int businessEntityID,
-			string passwordHash,
-			string passwordSalt,
-			Guid rowguid,
-			DateTime modifiedDate)
+			PasswordModel model)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
@@ -58,12 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.PasswordMapModelToEF(
 					businessEntityID,
-					passwordHash,
-					passwordSalt,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -85,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int businessEntityID)
+		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
@@ -95,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOPassword GetByIdDirect(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.Passwords.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -119,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOPassword> GetWhereDirect(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Passwords;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFPassword, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFPassword, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFPassword> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.PasswordMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFPassword> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.PasswordMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFPassword> SearchLinqEF(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -146,34 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int businessEntityID,
-			string passwordHash,
-			string passwordSalt,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFPassword efPassword)
-		{
-			efPassword.SetProperties(businessEntityID.ToInt(), passwordHash, passwordSalt, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFPassword efPassword,
-			Response response)
-		{
-			if (efPassword == null)
-			{
-				return;
-			}
-
-			response.AddPassword(new POCOPassword(efPassword.BusinessEntityID.ToInt(), efPassword.PasswordHash, efPassword.PasswordSalt, efPassword.Rowguid, efPassword.ModifiedDate.ToDateTime()));
-
-			PersonRepository.MapEFToPOCO(efPassword.Person, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b7d57751875fd38a2485cb486744dd41</Hash>
+    <Hash>1d028a6e95feba6204e2028dd31695ee</Hash>
 </Codenesium>*/

@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class LessonStatusRepository: AbstractLessonStatusRepository, ILessonStatusRepository
 	{
 		public LessonStatusRepository(
+			IObjectMapper mapper,
 			ILogger<LessonStatusRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFLessonStatus> SearchLinqEF(Expression<Func<EFLessonStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7bfa156b6ad798a043b201d5931109f5</Hash>
+    <Hash>5d95092b5481a7f492f05dc53360c4ef</Hash>
 </Codenesium>*/

@@ -47,10 +47,10 @@ namespace FileServiceNS.Api.Service
 		[Route("{id}")]
 		[FileTypeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.fileTypeRepository.GetById(id);
+			ApiResponse response = this.fileTypeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[FileTypeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.fileTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.fileTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,8 +83,7 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.fileTypeRepository.Create(
-					model.Name);
+				var id = this.fileTypeRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -122,8 +121,7 @@ namespace FileServiceNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.fileTypeRepository.Create(
-					model.Name);
+				this.fileTypeRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -147,9 +145,7 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.fileTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.fileTypeRepository.Update(
-					id,
-					model.Name);
+				this.fileTypeRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -174,5 +170,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ffd3e1f3c0a51a3d6f56572ebae6a799</Hash>
+    <Hash>f9651e51c1acb9be6ef7309852f18fef</Hash>
 </Codenesium>*/

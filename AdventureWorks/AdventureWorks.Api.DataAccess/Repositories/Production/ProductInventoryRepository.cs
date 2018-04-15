@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductInventoryRepository: AbstractProductInventoryRepository, IProductInventoryRepository
 	{
 		public ProductInventoryRepository(
+			IObjectMapper mapper,
 			ILogger<ProductInventoryRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFProductInventory> SearchLinqEF(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fbb248829651a78ed4a018a279d4d429</Hash>
+    <Hash>1b317b69d4114ac13e09467b2e24e5ee</Hash>
 </Codenesium>*/

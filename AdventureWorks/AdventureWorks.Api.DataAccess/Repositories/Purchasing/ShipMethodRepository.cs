@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ShipMethodRepository: AbstractShipMethodRepository, IShipMethodRepository
 	{
 		public ShipMethodRepository(
+			IObjectMapper mapper,
 			ILogger<ShipMethodRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFShipMethod> SearchLinqEF(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>80338d257690544cfa05119e5550d781</Hash>
+    <Hash>59cc19ad4b7c67afaf84059fba4e222f</Hash>
 </Codenesium>*/

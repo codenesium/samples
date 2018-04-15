@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class AWBuildVersionRepository: AbstractAWBuildVersionRepository, IAWBuildVersionRepository
 	{
 		public AWBuildVersionRepository(
+			IObjectMapper mapper,
 			ILogger<AWBuildVersionRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFAWBuildVersion> SearchLinqEF(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>85945210c734bada83de0ff975606e0c</Hash>
+    <Hash>d0801f02fe58efc41afca9a8ec2e45a0</Hash>
 </Codenesium>*/

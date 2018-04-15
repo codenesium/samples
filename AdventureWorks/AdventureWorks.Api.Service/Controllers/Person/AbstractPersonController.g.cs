@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[PersonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.personRepository.GetById(id);
+			ApiResponse response = this.personRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[PersonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.personRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.personRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,19 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.personModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.personRepository.Create(
-					model.PersonType,
-					model.NameStyle,
-					model.Title,
-					model.FirstName,
-					model.MiddleName,
-					model.LastName,
-					model.Suffix,
-					model.EmailPromotion,
-					model.AdditionalContactInfo,
-					model.Demographics,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.personRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -133,19 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.personRepository.Create(
-					model.PersonType,
-					model.NameStyle,
-					model.Title,
-					model.FirstName,
-					model.MiddleName,
-					model.LastName,
-					model.Suffix,
-					model.EmailPromotion,
-					model.AdditionalContactInfo,
-					model.Demographics,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.personRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -169,20 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.personModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.personRepository.Update(
-					id,
-					model.PersonType,
-					model.NameStyle,
-					model.Title,
-					model.FirstName,
-					model.MiddleName,
-					model.LastName,
-					model.Suffix,
-					model.EmailPromotion,
-					model.AdditionalContactInfo,
-					model.Demographics,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.personRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -209,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[PersonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/BusinessEntities/{id}/People")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.personRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.personRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -220,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>131f92d90302aaaf9052457029b78da5</Hash>
+    <Hash>0be2f76a2e33b62616117f7fe6a9e04e</Hash>
 </Codenesium>*/

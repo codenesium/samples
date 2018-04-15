@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class StateProvinceRepository: AbstractStateProvinceRepository, IStateProvinceRepository
 	{
 		public StateProvinceRepository(
+			IObjectMapper mapper,
 			ILogger<StateProvinceRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFStateProvince> SearchLinqEF(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b2a817ca179237bf602eb25a28c1e672</Hash>
+    <Hash>0e1a7727a5f19e8d9af362a752d17f0f</Hash>
 </Codenesium>*/

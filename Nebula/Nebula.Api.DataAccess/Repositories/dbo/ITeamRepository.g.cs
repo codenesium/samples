@@ -7,28 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ITeamRepository
 	{
-		int Create(
-			string name,
-			int organizationId);
+		int Create(TeamModel model);
 
 		void Update(int id,
-		            string name,
-		            int organizationId);
+		            TeamModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOTeam GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOTeam> GetWhereDirect(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3e096d8b67309d591f89ade2f6b8eee4</Hash>
+    <Hash>f39a59cc80ee0ac89d1992f8c1a6a7f3</Hash>
 </Codenesium>*/

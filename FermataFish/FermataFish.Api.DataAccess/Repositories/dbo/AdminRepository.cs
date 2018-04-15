@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class AdminRepository: AbstractAdminRepository, IAdminRepository
 	{
 		public AdminRepository(
+			IObjectMapper mapper,
 			ILogger<AdminRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFAdmin> SearchLinqEF(Expression<Func<EFAdmin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0ab1b681c41b330f69d14732b660a70f</Hash>
+    <Hash>c7b261ab0935e732f6a3c76853adc7e5</Hash>
 </Codenesium>*/

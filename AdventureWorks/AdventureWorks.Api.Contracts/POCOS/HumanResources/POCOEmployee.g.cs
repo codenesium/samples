@@ -27,24 +27,24 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.NationalIDNumber = nationalIDNumber;
-			this.LoginID = loginID;
+			this.NationalIDNumber = nationalIDNumber.ToString();
+			this.LoginID = loginID.ToString();
 			this.OrganizationNode = organizationNode;
 			this.OrganizationLevel = organizationLevel;
-			this.JobTitle = jobTitle;
-			this.BirthDate = birthDate;
-			this.MaritalStatus = maritalStatus;
-			this.Gender = gender;
-			this.HireDate = hireDate;
-			this.SalariedFlag = salariedFlag;
+			this.JobTitle = jobTitle.ToString();
+			this.BirthDate = birthDate.ToDateTime();
+			this.MaritalStatus = maritalStatus.ToString();
+			this.Gender = gender.ToString();
+			this.HireDate = hireDate.ToDateTime();
+			this.SalariedFlag = salariedFlag.ToBoolean();
 			this.VacationHours = vacationHours;
 			this.SickLeaveHours = sickLeaveHours;
-			this.CurrentFlag = currentFlag;
-			this.Rowguid = rowguid;
+			this.CurrentFlag = currentFlag.ToBoolean();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 "Person");
+			                                                 nameof(ApiResponse.People));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
@@ -215,5 +215,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cc6aa3488ae797120ada770cee5e9d6b</Hash>
+    <Hash>9c206908110c0d1f6f03985807e151d0</Hash>
 </Codenesium>*/

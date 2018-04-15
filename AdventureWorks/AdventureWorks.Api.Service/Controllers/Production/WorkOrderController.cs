@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/workOrders")]
+	[ApiVersion("1.0")]
 	public class WorkOrderController: AbstractWorkOrderController
 	{
 		public WorkOrderController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6a6de38408e88cc80e32d9734de62cf8</Hash>
+    <Hash>096d973b4808af21290f68cc0396aec4</Hash>
 </Codenesium>*/

@@ -14,33 +14,26 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractFamilyRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string pcFirstName,
-			string pcLastName,
-			string pcPhone,
-			string pcEmail,
-			string notes,
-			int studioId)
+			FamilyModel model)
 		{
 			var record = new EFFamily();
 
-			MapPOCOToEF(
-				0,
-				pcFirstName,
-				pcLastName,
-				pcPhone,
-				pcEmail,
-				notes,
-				studioId,
+			this.mapper.FamilyMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFFamily>().Add(record);
@@ -50,12 +43,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			string pcFirstName,
-			string pcLastName,
-			string pcPhone,
-			string pcEmail,
-			string notes,
-			int studioId)
+			FamilyModel model)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -64,14 +52,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.FamilyMapModelToEF(
 					id,
-					pcFirstName,
-					pcLastName,
-					pcPhone,
-					pcEmail,
-					notes,
-					studioId,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -93,9 +76,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int id)
+		public virtual ApiResponse GetById(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
@@ -103,23 +86,23 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual POCOFamily GetByIdDirect(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.Families.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -127,22 +110,22 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual List<POCOFamily> GetWhereDirect(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Families;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFFamily, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFFamily, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFFamily> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.FamilyMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFFamily> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.FamilyMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFFamily> SearchLinqEF(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -154,38 +137,9 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int id,
-			string pcFirstName,
-			string pcLastName,
-			string pcPhone,
-			string pcEmail,
-			string notes,
-			int studioId,
-			EFFamily efFamily)
-		{
-			efFamily.SetProperties(id.ToInt(), pcFirstName, pcLastName, pcPhone, pcEmail, notes, studioId.ToInt());
-		}
-
-		public static void MapEFToPOCO(
-			EFFamily efFamily,
-			Response response)
-		{
-			if (efFamily == null)
-			{
-				return;
-			}
-
-			response.AddFamily(new POCOFamily(efFamily.Id.ToInt(), efFamily.PcFirstName, efFamily.PcLastName, efFamily.PcPhone, efFamily.PcEmail, efFamily.Notes, efFamily.StudioId.ToInt()));
-
-			StudioRepository.MapEFToPOCO(efFamily.Studio, response);
-
-			StudioRepository.MapEFToPOCO(efFamily.Studio1, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>551ffbb3e8680fae901c96beb928aa5e</Hash>
+    <Hash>f917ed0227b337ef4f8739a355c6141c</Hash>
 </Codenesium>*/

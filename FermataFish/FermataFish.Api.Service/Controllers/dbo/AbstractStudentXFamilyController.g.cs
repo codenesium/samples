@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[StudentXFamilyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.studentXFamilyRepository.GetById(id);
+			ApiResponse response = this.studentXFamilyRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[StudentXFamilyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.studentXFamilyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.studentXFamilyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.studentXFamilyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.studentXFamilyRepository.Create(
-					model.StudentId,
-					model.FamilyId);
+				var id = this.studentXFamilyRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.studentXFamilyRepository.Create(
-					model.StudentId,
-					model.FamilyId);
+				this.studentXFamilyRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.studentXFamilyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.studentXFamilyRepository.Update(
-					id,
-					model.StudentId,
-					model.FamilyId);
+				this.studentXFamilyRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -179,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[StudentXFamilyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Students/{id}/StudentXFamilies")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudentId(int id)
 		{
-			Response response = this.studentXFamilyRepository.GetWhere(x => x.StudentId == id);
+			ApiResponse response = this.studentXFamilyRepository.GetWhere(x => x.StudentId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -192,10 +185,10 @@ namespace FermataFishNS.Api.Service
 		[StudentXFamilyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Families/{id}/StudentXFamilies")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByFamilyId(int id)
 		{
-			Response response = this.studentXFamilyRepository.GetWhere(x => x.FamilyId == id);
+			ApiResponse response = this.studentXFamilyRepository.GetWhere(x => x.FamilyId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -203,5 +196,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b001ba9501a4044dd4153cba7b6aaeed</Hash>
+    <Hash>9d845f28e68dc35d0c723808f88e8f97</Hash>
 </Codenesium>*/

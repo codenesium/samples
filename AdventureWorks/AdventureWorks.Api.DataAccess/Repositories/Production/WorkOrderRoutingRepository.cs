@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class WorkOrderRoutingRepository: AbstractWorkOrderRoutingRepository, IWorkOrderRoutingRepository
 	{
 		public WorkOrderRoutingRepository(
+			IObjectMapper mapper,
 			ILogger<WorkOrderRoutingRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFWorkOrderRouting> SearchLinqEF(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9dff408d8b64aea57955fff646222eb9</Hash>
+    <Hash>1d8598544a52ff63584ef6fc4817c5f6</Hash>
 </Codenesium>*/

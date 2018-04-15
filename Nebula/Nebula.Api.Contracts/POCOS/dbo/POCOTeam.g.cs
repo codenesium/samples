@@ -15,10 +15,10 @@ namespace NebulaNS.Api.Contracts
 			int organizationId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name;
+			this.Name = name.ToString();
 
 			this.OrganizationId = new ReferenceEntity<int>(organizationId,
-			                                               "Organization");
+			                                               nameof(ApiResponse.Organizations));
 		}
 
 		public int Id { get; set; }
@@ -59,5 +59,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>abda02ef6be11e782735a795faf9e3e3</Hash>
+    <Hash>9973013471bb4a13356fb4dfc56107a4</Hash>
 </Codenesium>*/

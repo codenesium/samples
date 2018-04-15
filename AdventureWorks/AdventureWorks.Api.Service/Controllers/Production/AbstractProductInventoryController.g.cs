@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductInventoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productInventoryRepository.GetById(id);
+			ApiResponse response = this.productInventoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductInventoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productInventoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productInventoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,13 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productInventoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productInventoryRepository.Create(
-					model.LocationID,
-					model.Shelf,
-					model.Bin,
-					model.Quantity,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.productInventoryRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -127,13 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productInventoryRepository.Create(
-					model.LocationID,
-					model.Shelf,
-					model.Bin,
-					model.Quantity,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productInventoryRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -157,14 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productInventoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productInventoryRepository.Update(
-					id,
-					model.LocationID,
-					model.Shelf,
-					model.Bin,
-					model.Quantity,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productInventoryRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -191,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductInventoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/ProductInventories")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			Response response = this.productInventoryRepository.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.productInventoryRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -204,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductInventoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Locations/{id}/ProductInventories")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLocationID(short id)
 		{
-			Response response = this.productInventoryRepository.GetWhere(x => x.LocationID == id);
+			ApiResponse response = this.productInventoryRepository.GetWhere(x => x.LocationID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -215,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>96aeb53de889bba5c1fec2dac83614b3</Hash>
+    <Hash>e7d06399f879353704b3494963308b43</Hash>
 </Codenesium>*/

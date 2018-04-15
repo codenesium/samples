@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[LinkStatusFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.linkStatusRepository.GetById(id);
+			ApiResponse response = this.linkStatusRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[LinkStatusFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.linkStatusRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.linkStatusRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,8 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.linkStatusRepository.Create(
-					model.Name);
+				var id = this.linkStatusRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -122,8 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.linkStatusRepository.Create(
-					model.Name);
+				this.linkStatusRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -147,9 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkStatusRepository.Update(
-					id,
-					model.Name);
+				this.linkStatusRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -174,5 +170,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0babf5ad25dbed4112a7b22d2677b996</Hash>
+    <Hash>4520a3c369f05538405f5de0dd2d116a</Hash>
 </Codenesium>*/

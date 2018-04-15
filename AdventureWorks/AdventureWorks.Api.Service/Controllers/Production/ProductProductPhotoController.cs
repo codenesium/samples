@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productProductPhotoes")]
+	[ApiVersion("1.0")]
 	public class ProductProductPhotoController: AbstractProductProductPhotoController
 	{
 		public ProductProductPhotoController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>27d6ce31c50454658a8a43dc7ae78f20</Hash>
+    <Hash>9886902cb4467814329bd9a092a55cfa</Hash>
 </Codenesium>*/

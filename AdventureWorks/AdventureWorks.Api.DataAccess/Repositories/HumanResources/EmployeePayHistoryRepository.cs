@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class EmployeePayHistoryRepository: AbstractEmployeePayHistoryRepository, IEmployeePayHistoryRepository
 	{
 		public EmployeePayHistoryRepository(
+			IObjectMapper mapper,
 			ILogger<EmployeePayHistoryRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFEmployeePayHistory> SearchLinqEF(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed3622b904efce29c51197b305bf3e09</Hash>
+    <Hash>20ba6385a71eb877851f9ae81e0b315c</Hash>
 </Codenesium>*/

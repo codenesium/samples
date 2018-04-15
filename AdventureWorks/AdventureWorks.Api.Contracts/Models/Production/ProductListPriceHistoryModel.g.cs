@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.ListPrice = listPrice;
+			this.ListPrice = listPrice.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -88,5 +88,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9de07bdb98c64226a795eed8bcd96fbc</Hash>
+    <Hash>0b04ef900040db032dbb238e2b008371</Hash>
 </Codenesium>*/

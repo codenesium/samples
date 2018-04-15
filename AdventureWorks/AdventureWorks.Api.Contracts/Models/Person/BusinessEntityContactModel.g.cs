@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.PersonID = personID.ToInt();
 			this.ContactTypeID = contactTypeID.ToInt();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cd0ba05a18f0ac08929f09b8f1e7ab3c</Hash>
+    <Hash>aa9509092917f6f003c51f8d5a88f9de</Hash>
 </Codenesium>*/

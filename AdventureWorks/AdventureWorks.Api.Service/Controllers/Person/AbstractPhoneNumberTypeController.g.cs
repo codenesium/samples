@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[PhoneNumberTypeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.phoneNumberTypeRepository.GetById(id);
+			ApiResponse response = this.phoneNumberTypeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[PhoneNumberTypeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.phoneNumberTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.phoneNumberTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.phoneNumberTypeRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				var id = this.phoneNumberTypeRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.phoneNumberTypeRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				this.phoneNumberTypeRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.phoneNumberTypeRepository.Update(
-					id,
-					model.Name,
-					model.ModifiedDate);
+				this.phoneNumberTypeRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5b1c287a8fc0b9b795edba7f2825afba</Hash>
+    <Hash>a943245b0f3756bc8e82b5f5d93e744d</Hash>
 </Codenesium>*/

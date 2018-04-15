@@ -12,9 +12,10 @@ namespace NebulaNS.Api.DataAccess
 	public class LinkRepository: AbstractLinkRepository, ILinkRepository
 	{
 		public LinkRepository(
+			IObjectMapper mapper,
 			ILogger<LinkRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFLink> SearchLinqEF(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5edd2d1999a4c70ff3f7bb1764d43f79</Hash>
+    <Hash>7b0f5b3162701034dbfacf441d04885e</Hash>
 </Codenesium>*/

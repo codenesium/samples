@@ -7,28 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IUnitMeasureRepository
 	{
-		string Create(
-			string name,
-			DateTime modifiedDate);
+		string Create(UnitMeasureModel model);
 
 		void Update(string unitMeasureCode,
-		            string name,
-		            DateTime modifiedDate);
+		            UnitMeasureModel model);
 
 		void Delete(string unitMeasureCode);
 
-		Response GetById(string unitMeasureCode);
+		ApiResponse GetById(string unitMeasureCode);
 
 		POCOUnitMeasure GetByIdDirect(string unitMeasureCode);
 
-		Response GetWhere(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOUnitMeasure> GetWhereDirect(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>52d1e90a370b8a7a06479c854dc11820</Hash>
+    <Hash>c3e410cca02c69504ff6dce8865c54ad</Hash>
 </Codenesium>*/

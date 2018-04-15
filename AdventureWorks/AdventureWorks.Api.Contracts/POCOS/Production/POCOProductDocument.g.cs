@@ -17,9 +17,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          "Product");
+			                                          nameof(ApiResponse.Products));
 			this.DocumentNode = new ReferenceEntity<Guid>(documentNode,
-			                                              "Document");
+			                                              nameof(ApiResponse.Documents));
 		}
 
 		public ReferenceEntity<int> ProductID { get; set; }
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7c8f5d72ef888d3e04ff7117586d0528</Hash>
+    <Hash>98526e76c99c30da377d18d1fdddbc77</Hash>
 </Codenesium>*/

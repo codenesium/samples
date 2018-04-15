@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/chainStatus")]
+	[ApiVersion("1.0")]
 	public class ChainStatusController: AbstractChainStatusController
 	{
 		public ChainStatusController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>546987838844860252625000c053dd22</Hash>
+    <Hash>9da010edd1abcedd906addb33f7d5a23</Hash>
 </Codenesium>*/

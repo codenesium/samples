@@ -14,33 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractCurrencyRateRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			DateTime currencyRateDate,
-			string fromCurrencyCode,
-			string toCurrencyCode,
-			decimal averageRate,
-			decimal endOfDayRate,
-			DateTime modifiedDate)
+			CurrencyRateModel model)
 		{
 			var record = new EFCurrencyRate();
 
-			MapPOCOToEF(
-				0,
-				currencyRateDate,
-				fromCurrencyCode,
-				toCurrencyCode,
-				averageRate,
-				endOfDayRate,
-				modifiedDate,
+			this.mapper.CurrencyRateMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFCurrencyRate>().Add(record);
@@ -50,12 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int currencyRateID,
-			DateTime currencyRateDate,
-			string fromCurrencyCode,
-			string toCurrencyCode,
-			decimal averageRate,
-			decimal endOfDayRate,
-			DateTime modifiedDate)
+			CurrencyRateModel model)
 		{
 			var record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
 			if (record == null)
@@ -64,14 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.CurrencyRateMapModelToEF(
 					currencyRateID,
-					currencyRateDate,
-					fromCurrencyCode,
-					toCurrencyCode,
-					averageRate,
-					endOfDayRate,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -93,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int currencyRateID)
+		public virtual ApiResponse GetById(int currencyRateID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID, response);
 			return response;
@@ -103,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOCurrencyRate GetByIdDirect(int currencyRateID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID, response);
 			return response.CurrencyRates.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -127,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOCurrencyRate> GetWhereDirect(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.CurrencyRates;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFCurrencyRate, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFCurrencyRate, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCurrencyRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CurrencyRateMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCurrencyRate> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CurrencyRateMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFCurrencyRate> SearchLinqEF(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -154,38 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int currencyRateID,
-			DateTime currencyRateDate,
-			string fromCurrencyCode,
-			string toCurrencyCode,
-			decimal averageRate,
-			decimal endOfDayRate,
-			DateTime modifiedDate,
-			EFCurrencyRate efCurrencyRate)
-		{
-			efCurrencyRate.SetProperties(currencyRateID.ToInt(), currencyRateDate.ToDateTime(), fromCurrencyCode, toCurrencyCode, averageRate, endOfDayRate, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFCurrencyRate efCurrencyRate,
-			Response response)
-		{
-			if (efCurrencyRate == null)
-			{
-				return;
-			}
-
-			response.AddCurrencyRate(new POCOCurrencyRate(efCurrencyRate.CurrencyRateID.ToInt(), efCurrencyRate.CurrencyRateDate.ToDateTime(), efCurrencyRate.FromCurrencyCode, efCurrencyRate.ToCurrencyCode, efCurrencyRate.AverageRate, efCurrencyRate.EndOfDayRate, efCurrencyRate.ModifiedDate.ToDateTime()));
-
-			CurrencyRepository.MapEFToPOCO(efCurrencyRate.Currency, response);
-
-			CurrencyRepository.MapEFToPOCO(efCurrencyRate.Currency1, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a6bdf356482c266788dc4c9bfd5410a2</Hash>
+    <Hash>836d1dc29d158afbe19134ba43a18902</Hash>
 </Codenesium>*/

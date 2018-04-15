@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[AddressTypeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.addressTypeRepository.GetById(id);
+			ApiResponse response = this.addressTypeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[AddressTypeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.addressTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.addressTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.addressTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.addressTypeRepository.Create(
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.addressTypeRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.addressTypeRepository.Create(
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.addressTypeRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.addressTypeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.addressTypeRepository.Update(
-					id,
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.addressTypeRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -180,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1faba54adb5cca274538bed1641ed580</Hash>
+    <Hash>23c71bcf84e19b3678859ce265697f99</Hash>
 </Codenesium>*/

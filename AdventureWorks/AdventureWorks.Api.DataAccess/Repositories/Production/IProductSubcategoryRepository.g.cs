@@ -7,32 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductSubcategoryRepository
 	{
-		int Create(
-			int productCategoryID,
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(ProductSubcategoryModel model);
 
 		void Update(int productSubcategoryID,
-		            int productCategoryID,
-		            string name,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            ProductSubcategoryModel model);
 
 		void Delete(int productSubcategoryID);
 
-		Response GetById(int productSubcategoryID);
+		ApiResponse GetById(int productSubcategoryID);
 
 		POCOProductSubcategory GetByIdDirect(int productSubcategoryID);
 
-		Response GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOProductSubcategory> GetWhereDirect(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9aed02bdb5b4c4d5252fdf1cd9735941</Hash>
+    <Hash>3d07e71ca5ae09e79aa98dbe09c0cac5</Hash>
 </Codenesium>*/

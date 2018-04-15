@@ -7,30 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAWBuildVersionRepository
 	{
-		int Create(
-			string database_Version,
-			DateTime versionDate,
-			DateTime modifiedDate);
+		int Create(AWBuildVersionModel model);
 
 		void Update(int systemInformationID,
-		            string database_Version,
-		            DateTime versionDate,
-		            DateTime modifiedDate);
+		            AWBuildVersionModel model);
 
 		void Delete(int systemInformationID);
 
-		Response GetById(int systemInformationID);
+		ApiResponse GetById(int systemInformationID);
 
 		POCOAWBuildVersion GetByIdDirect(int systemInformationID);
 
-		Response GetWhere(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOAWBuildVersion> GetWhereDirect(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>6db4a37d5e4eaa44263ebf6a1437ddd9</Hash>
+    <Hash>499b079285b814edccaeb6b38ff73e96</Hash>
 </Codenesium>*/

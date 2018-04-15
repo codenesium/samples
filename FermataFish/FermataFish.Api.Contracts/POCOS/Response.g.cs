@@ -20,9 +20,9 @@ namespace FermataFishNS.Api.Contracts
 		}
 	}
 
-	public partial class Response
+	public partial class ApiResponse
 	{
-		public Response()
+		public ApiResponse()
 		{}
 		public List<POCOAdmin> Admins { get; private set; } = new List<POCOAdmin>();
 
@@ -421,5 +421,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>19aaa96753e6c4abdb0032c5117ebef6</Hash>
+    <Hash>df6cd4b0e9dec61bbf9abe91cf104472</Hash>
 </Codenesium>*/

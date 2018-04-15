@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/files")]
+	[ApiVersion("1.0")]
 	public class FileController: AbstractFileController
 	{
 		public FileController(
@@ -32,5 +34,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d00c938382b6df4a7356d25185312e9c</Hash>
+    <Hash>9e1555ae181359c0b92a36e9825dbbf6</Hash>
 </Codenesium>*/

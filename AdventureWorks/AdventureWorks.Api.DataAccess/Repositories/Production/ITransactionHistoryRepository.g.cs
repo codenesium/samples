@@ -7,40 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ITransactionHistoryRepository
 	{
-		int Create(
-			int productID,
-			int referenceOrderID,
-			int referenceOrderLineID,
-			DateTime transactionDate,
-			string transactionType,
-			int quantity,
-			decimal actualCost,
-			DateTime modifiedDate);
+		int Create(TransactionHistoryModel model);
 
 		void Update(int transactionID,
-		            int productID,
-		            int referenceOrderID,
-		            int referenceOrderLineID,
-		            DateTime transactionDate,
-		            string transactionType,
-		            int quantity,
-		            decimal actualCost,
-		            DateTime modifiedDate);
+		            TransactionHistoryModel model);
 
 		void Delete(int transactionID);
 
-		Response GetById(int transactionID);
+		ApiResponse GetById(int transactionID);
 
 		POCOTransactionHistory GetByIdDirect(int transactionID);
 
-		Response GetWhere(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOTransactionHistory> GetWhereDirect(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>38242ccbafa4b2123111fbc1e314369d</Hash>
+    <Hash>c95db97137edcac54a426c768bd68a18</Hash>
 </Codenesium>*/

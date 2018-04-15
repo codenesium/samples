@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class DocumentRepository: AbstractDocumentRepository, IDocumentRepository
 	{
 		public DocumentRepository(
+			IObjectMapper mapper,
 			ILogger<DocumentRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFDocument> SearchLinqEF(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6a4c1757cdefd683e75dd387296ad3e2</Hash>
+    <Hash>36c59c99f92b98758461220b2f33a297</Hash>
 </Codenesium>*/

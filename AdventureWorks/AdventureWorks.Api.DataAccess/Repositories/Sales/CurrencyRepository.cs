@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CurrencyRepository: AbstractCurrencyRepository, ICurrencyRepository
 	{
 		public CurrencyRepository(
+			IObjectMapper mapper,
 			ILogger<CurrencyRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFCurrency> SearchLinqEF(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1fd720eb33166e75e78cedadfb80f122</Hash>
+    <Hash>5ff72a38aa1cc6b6714ca4501cf303cb</Hash>
 </Codenesium>*/

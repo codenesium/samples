@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductPhotoRepository: AbstractProductPhotoRepository, IProductPhotoRepository
 	{
 		public ProductPhotoRepository(
+			IObjectMapper mapper,
 			ILogger<ProductPhotoRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFProductPhoto> SearchLinqEF(Expression<Func<EFProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>885db12736b91d429328629577ab6ca4</Hash>
+    <Hash>e9a3a79440ba0f8918fcfbcdde3b897c</Hash>
 </Codenesium>*/

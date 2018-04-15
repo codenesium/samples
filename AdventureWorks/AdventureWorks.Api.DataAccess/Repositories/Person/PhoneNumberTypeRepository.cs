@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PhoneNumberTypeRepository: AbstractPhoneNumberTypeRepository, IPhoneNumberTypeRepository
 	{
 		public PhoneNumberTypeRepository(
+			IObjectMapper mapper,
 			ILogger<PhoneNumberTypeRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFPhoneNumberType> SearchLinqEF(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>46ce0ed812eaaec827b78778a6ac4beb</Hash>
+    <Hash>cdb68425e62ce028be3954e493bf56c3</Hash>
 </Codenesium>*/

@@ -12,9 +12,10 @@ namespace NebulaNS.Api.DataAccess
 	public class TeamRepository: AbstractTeamRepository, ITeamRepository
 	{
 		public TeamRepository(
+			IObjectMapper mapper,
 			ILogger<TeamRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFTeam> SearchLinqEF(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a0d426f18e463f5e6bb03d4a653388b</Hash>
+    <Hash>8f03a02a05666a9c1dd486f846acb41c</Hash>
 </Codenesium>*/

@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class StoreRepository: AbstractStoreRepository, IStoreRepository
 	{
 		public StoreRepository(
+			IObjectMapper mapper,
 			ILogger<StoreRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFStore> SearchLinqEF(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51f7d30a89b285930d4945b03d63b006</Hash>
+    <Hash>3f19b6b442396fc5807fd197b2a843bf</Hash>
 </Codenesium>*/

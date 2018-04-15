@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[CurrencyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			Response response = this.currencyRepository.GetById(id);
+			ApiResponse response = this.currencyRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[CurrencyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.currencyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.currencyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.currencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.currencyRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				var id = this.currencyRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.currencyRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				this.currencyRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.currencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.currencyRepository.Update(
-					id,
-					model.Name,
-					model.ModifiedDate);
+				this.currencyRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>97b76108326197d9b85d7408312e3b71</Hash>
+    <Hash>a9be2ff5e3cc3707744d93893b75b49f</Hash>
 </Codenesium>*/

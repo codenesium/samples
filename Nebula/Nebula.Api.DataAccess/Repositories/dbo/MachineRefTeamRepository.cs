@@ -12,9 +12,10 @@ namespace NebulaNS.Api.DataAccess
 	public class MachineRefTeamRepository: AbstractMachineRefTeamRepository, IMachineRefTeamRepository
 	{
 		public MachineRefTeamRepository(
+			IObjectMapper mapper,
 			ILogger<MachineRefTeamRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFMachineRefTeam> SearchLinqEF(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>954980f806384f65e2ee88beaa41c44d</Hash>
+    <Hash>6e4c1b71a1b24ec5d4586f0ca1f09157</Hash>
 </Codenesium>*/

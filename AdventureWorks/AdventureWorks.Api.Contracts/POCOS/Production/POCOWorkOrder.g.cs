@@ -31,9 +31,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          "Product");
+			                                          nameof(ApiResponse.Products));
 			this.ScrapReasonID = new ReferenceEntity<Nullable<short>>(scrapReasonID,
-			                                                          "ScrapReason");
+			                                                          nameof(ApiResponse.ScrapReasons));
 		}
 
 		public int WorkOrderID { get; set; }
@@ -144,5 +144,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>810972307ad53d3cb4ac20403416f6ac</Hash>
+    <Hash>e7d545371d354d2c25a7760e201d7829</Hash>
 </Codenesium>*/

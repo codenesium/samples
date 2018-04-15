@@ -7,28 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IClaspRepository
 	{
-		int Create(
-			int previousChainId,
-			int nextChainId);
+		int Create(ClaspModel model);
 
 		void Update(int id,
-		            int previousChainId,
-		            int nextChainId);
+		            ClaspModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOClasp GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOClasp> GetWhereDirect(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d52b38029d27a8414b2feb1fb45794b</Hash>
+    <Hash>d352f23a4160928e2e1364fb7fedb42a</Hash>
 </Codenesium>*/

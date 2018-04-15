@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[WorkOrderFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.workOrderRepository.GetById(id);
+			ApiResponse response = this.workOrderRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[WorkOrderFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.workOrderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.workOrderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,16 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.workOrderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.workOrderRepository.Create(
-					model.ProductID,
-					model.OrderQty,
-					model.StockedQty,
-					model.ScrappedQty,
-					model.StartDate,
-					model.EndDate,
-					model.DueDate,
-					model.ScrapReasonID,
-					model.ModifiedDate);
+				var id = this.workOrderRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -130,16 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.workOrderRepository.Create(
-					model.ProductID,
-					model.OrderQty,
-					model.StockedQty,
-					model.ScrappedQty,
-					model.StartDate,
-					model.EndDate,
-					model.DueDate,
-					model.ScrapReasonID,
-					model.ModifiedDate);
+				this.workOrderRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -163,17 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.workOrderModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.workOrderRepository.Update(
-					id,
-					model.ProductID,
-					model.OrderQty,
-					model.StockedQty,
-					model.ScrappedQty,
-					model.StartDate,
-					model.EndDate,
-					model.DueDate,
-					model.ScrapReasonID,
-					model.ModifiedDate);
+				this.workOrderRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -200,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[WorkOrderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/WorkOrders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			Response response = this.workOrderRepository.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.workOrderRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -213,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[WorkOrderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ScrapReasons/{id}/WorkOrders")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByScrapReasonID(short id)
 		{
-			Response response = this.workOrderRepository.GetWhere(x => x.ScrapReasonID == id);
+			ApiResponse response = this.workOrderRepository.GetWhere(x => x.ScrapReasonID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -224,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5c6a015b55a52b1f60c59f7dfb4e5201</Hash>
+    <Hash>b28f1b0307c83a52cc25b845b28e9144</Hash>
 </Codenesium>*/

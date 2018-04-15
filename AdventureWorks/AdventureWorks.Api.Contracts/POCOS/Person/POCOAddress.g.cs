@@ -21,16 +21,16 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.AddressID = addressID.ToInt();
-			this.AddressLine1 = addressLine1;
-			this.AddressLine2 = addressLine2;
-			this.City = city;
-			this.PostalCode = postalCode;
+			this.AddressLine1 = addressLine1.ToString();
+			this.AddressLine2 = addressLine2.ToString();
+			this.City = city.ToString();
+			this.PostalCode = postalCode.ToString();
 			this.SpatialLocation = spatialLocation;
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
-			                                                "StateProvince");
+			                                                nameof(ApiResponse.StateProvinces));
 		}
 
 		public int AddressID { get; set; }
@@ -131,5 +131,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3388e197e05ec1b73e00727ccf2e6a73</Hash>
+    <Hash>04d0719206bb34576dbb217b707b2008</Hash>
 </Codenesium>*/

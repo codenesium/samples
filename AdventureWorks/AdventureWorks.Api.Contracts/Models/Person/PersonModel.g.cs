@@ -24,17 +24,17 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.PersonType = personType;
-			this.NameStyle = nameStyle;
-			this.Title = title;
-			this.FirstName = firstName;
-			this.MiddleName = middleName;
-			this.LastName = lastName;
-			this.Suffix = suffix;
+			this.PersonType = personType.ToString();
+			this.NameStyle = nameStyle.ToBoolean();
+			this.Title = title.ToString();
+			this.FirstName = firstName.ToString();
+			this.MiddleName = middleName.ToString();
+			this.LastName = lastName.ToString();
+			this.Suffix = suffix.ToString();
 			this.EmailPromotion = emailPromotion.ToInt();
 			this.AdditionalContactInfo = additionalContactInfo;
 			this.Demographics = demographics;
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -228,5 +228,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>74cac465f4d8f0b08efe9f694ec50bc3</Hash>
+    <Hash>cf1c54902d8914d2cb449100b35ceaef</Hash>
 </Codenesium>*/

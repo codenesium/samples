@@ -14,25 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractCountryRegionCurrencyRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual string Create(
-			string currencyCode,
-			DateTime modifiedDate)
+			CountryRegionCurrencyModel model)
 		{
 			var record = new EFCountryRegionCurrency();
 
-			MapPOCOToEF(
-				string.Empty,
-				currencyCode,
-				modifiedDate,
+			this.mapper.CountryRegionCurrencyMapModelToEF(
+				default (string),
+				model,
 				record);
 
 			this.context.Set<EFCountryRegionCurrency>().Add(record);
@@ -42,8 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			string countryRegionCode,
-			string currencyCode,
-			DateTime modifiedDate)
+			CountryRegionCurrencyModel model)
 		{
 			var record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 			if (record == null)
@@ -52,10 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.CountryRegionCurrencyMapModelToEF(
 					countryRegionCode,
-					currencyCode,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -77,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(string countryRegionCode)
+		public virtual ApiResponse GetById(string countryRegionCode)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CountryRegionCode == countryRegionCode, response);
 			return response;
@@ -87,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOCountryRegionCurrency GetByIdDirect(string countryRegionCode)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CountryRegionCode == countryRegionCode, response);
 			return response.CountryRegionCurrencies.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -111,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOCountryRegionCurrency> GetWhereDirect(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.CountryRegionCurrencies;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFCountryRegionCurrency, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFCountryRegionCurrency, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCountryRegionCurrency> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CountryRegionCurrencyMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCountryRegionCurrency> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CountryRegionCurrencyMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFCountryRegionCurrency> SearchLinqEF(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,34 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			string countryRegionCode,
-			string currencyCode,
-			DateTime modifiedDate,
-			EFCountryRegionCurrency efCountryRegionCurrency)
-		{
-			efCountryRegionCurrency.SetProperties(countryRegionCode, currencyCode, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFCountryRegionCurrency efCountryRegionCurrency,
-			Response response)
-		{
-			if (efCountryRegionCurrency == null)
-			{
-				return;
-			}
-
-			response.AddCountryRegionCurrency(new POCOCountryRegionCurrency(efCountryRegionCurrency.CountryRegionCode, efCountryRegionCurrency.CurrencyCode, efCountryRegionCurrency.ModifiedDate.ToDateTime()));
-
-			CountryRegionRepository.MapEFToPOCO(efCountryRegionCurrency.CountryRegion, response);
-
-			CurrencyRepository.MapEFToPOCO(efCountryRegionCurrency.Currency, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a47540856571e1da2215ac4432440b11</Hash>
+    <Hash>134407f2ef47ac99081a4ea6d8f176da</Hash>
 </Codenesium>*/

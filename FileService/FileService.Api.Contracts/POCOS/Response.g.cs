@@ -20,9 +20,9 @@ namespace FileServiceNS.Api.Contracts
 		}
 	}
 
-	public partial class Response
+	public partial class ApiResponse
 	{
-		public Response()
+		public ApiResponse()
 		{}
 		public List<POCOBucket> Buckets { get; private set; } = new List<POCOBucket>();
 
@@ -99,5 +99,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>84462edc26df568dad2040b97f573dc3</Hash>
+    <Hash>694a9708a88b5760813f27aaec9f7045</Hash>
 </Codenesium>*/

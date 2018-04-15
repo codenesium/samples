@@ -7,40 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IErrorLogRepository
 	{
-		int Create(
-			DateTime errorTime,
-			string userName,
-			int errorNumber,
-			Nullable<int> errorSeverity,
-			Nullable<int> errorState,
-			string errorProcedure,
-			Nullable<int> errorLine,
-			string errorMessage);
+		int Create(ErrorLogModel model);
 
 		void Update(int errorLogID,
-		            DateTime errorTime,
-		            string userName,
-		            int errorNumber,
-		            Nullable<int> errorSeverity,
-		            Nullable<int> errorState,
-		            string errorProcedure,
-		            Nullable<int> errorLine,
-		            string errorMessage);
+		            ErrorLogModel model);
 
 		void Delete(int errorLogID);
 
-		Response GetById(int errorLogID);
+		ApiResponse GetById(int errorLogID);
 
 		POCOErrorLog GetByIdDirect(int errorLogID);
 
-		Response GetWhere(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOErrorLog> GetWhereDirect(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f1ce6efed894d77d48b987bd4fff2f79</Hash>
+    <Hash>359b45c6e6a38115948270092570baed</Hash>
 </Codenesium>*/

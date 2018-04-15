@@ -20,18 +20,18 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.SalesQuota = salesQuota;
-			this.Bonus = bonus;
-			this.CommissionPct = commissionPct;
-			this.SalesYTD = salesYTD;
-			this.SalesLastYear = salesLastYear;
-			this.Rowguid = rowguid;
+			this.SalesQuota = salesQuota.ToNullableDecimal();
+			this.Bonus = bonus.ToDecimal();
+			this.CommissionPct = commissionPct.ToDecimal();
+			this.SalesYTD = salesYTD.ToDecimal();
+			this.SalesLastYear = salesLastYear.ToDecimal();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 "Employee");
+			                                                 nameof(ApiResponse.Employees));
 			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
-			                                                      "SalesTerritory");
+			                                                      nameof(ApiResponse.SalesTerritories));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>98189265da6a8816c5f8b1b4826cbeb0</Hash>
+    <Hash>966b597e9ce3ca173db8aea5862d2b3a</Hash>
 </Codenesium>*/

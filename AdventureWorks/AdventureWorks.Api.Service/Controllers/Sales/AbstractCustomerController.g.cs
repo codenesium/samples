@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[CustomerFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.customerRepository.GetById(id);
+			ApiResponse response = this.customerRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[CustomerFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.customerRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.customerRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,13 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.customerModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.customerRepository.Create(
-					model.PersonID,
-					model.StoreID,
-					model.TerritoryID,
-					model.AccountNumber,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.customerRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -127,13 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.customerRepository.Create(
-					model.PersonID,
-					model.StoreID,
-					model.TerritoryID,
-					model.AccountNumber,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.customerRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -157,14 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.customerModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.customerRepository.Update(
-					id,
-					model.PersonID,
-					model.StoreID,
-					model.TerritoryID,
-					model.AccountNumber,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.customerRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -191,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[CustomerFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/People/{id}/Customers")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByPersonID(int id)
 		{
-			Response response = this.customerRepository.GetWhere(x => x.PersonID == id);
+			ApiResponse response = this.customerRepository.GetWhere(x => x.PersonID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -204,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[CustomerFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Stores/{id}/Customers")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStoreID(int id)
 		{
-			Response response = this.customerRepository.GetWhere(x => x.StoreID == id);
+			ApiResponse response = this.customerRepository.GetWhere(x => x.StoreID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -217,10 +198,10 @@ namespace AdventureWorksNS.Api.Service
 		[CustomerFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesTerritories/{id}/Customers")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			Response response = this.customerRepository.GetWhere(x => x.TerritoryID == id);
+			ApiResponse response = this.customerRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -228,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a8b756daafa84e8290eb7cd7fca1290d</Hash>
+    <Hash>42f72d611d46cc36ac4e84fe7fee2cff</Hash>
 </Codenesium>*/

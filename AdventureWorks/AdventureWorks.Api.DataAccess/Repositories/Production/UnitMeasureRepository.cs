@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class UnitMeasureRepository: AbstractUnitMeasureRepository, IUnitMeasureRepository
 	{
 		public UnitMeasureRepository(
+			IObjectMapper mapper,
 			ILogger<UnitMeasureRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFUnitMeasure> SearchLinqEF(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>55f8a20e066336371e132d8f082f9b37</Hash>
+    <Hash>cf392609a8f70f4237b8d8b8624285b3</Hash>
 </Codenesium>*/

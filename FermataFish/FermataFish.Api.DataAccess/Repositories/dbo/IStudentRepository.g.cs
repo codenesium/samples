@@ -7,44 +7,25 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStudentRepository
 	{
-		int Create(
-			string email,
-			string firstName,
-			string lastName,
-			string phone,
-			bool isAdult,
-			DateTime birthday,
-			int familyId,
-			int studioId,
-			bool smsRemindersEnabled,
-			bool emailRemindersEnabled);
+		int Create(StudentModel model);
 
 		void Update(int id,
-		            string email,
-		            string firstName,
-		            string lastName,
-		            string phone,
-		            bool isAdult,
-		            DateTime birthday,
-		            int familyId,
-		            int studioId,
-		            bool smsRemindersEnabled,
-		            bool emailRemindersEnabled);
+		            StudentModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOStudent GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOStudent> GetWhereDirect(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>857597fb7e37896b61623f47721ff9dc</Hash>
+    <Hash>b74bd5cf3869b40485662e8de1b2feb9</Hash>
 </Codenesium>*/

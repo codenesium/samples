@@ -7,28 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRefTeamRepository
 	{
-		int Create(
-			int machineId,
-			int teamId);
+		int Create(MachineRefTeamModel model);
 
 		void Update(int id,
-		            int machineId,
-		            int teamId);
+		            MachineRefTeamModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOMachineRefTeam GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOMachineRefTeam> GetWhereDirect(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3974a9fce10c06cd9c83610f7d75d519</Hash>
+    <Hash>efaeb024873765845c9750d16a2accc8</Hash>
 </Codenesium>*/

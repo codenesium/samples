@@ -17,13 +17,13 @@ namespace NebulaNS.Api.Contracts
 			Guid externalId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name;
-			this.ExternalId = externalId;
+			this.Name = name.ToString();
+			this.ExternalId = externalId.ToGuid();
 
 			this.TeamId = new ReferenceEntity<int>(teamId,
-			                                       "Team");
+			                                       nameof(ApiResponse.Teams));
 			this.ChainStatusId = new ReferenceEntity<int>(chainStatusId,
-			                                              "ChainStatus");
+			                                              nameof(ApiResponse.ChainStatus));
 		}
 
 		public int Id { get; set; }
@@ -84,5 +84,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4ad4ddbad487ab01ef2a17b4d3e4567c</Hash>
+    <Hash>c3079044dd8ef1051dd5e1deb394f93c</Hash>
 </Codenesium>*/

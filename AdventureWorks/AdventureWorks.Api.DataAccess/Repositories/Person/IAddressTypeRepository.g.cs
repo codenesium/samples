@@ -7,30 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAddressTypeRepository
 	{
-		int Create(
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(AddressTypeModel model);
 
 		void Update(int addressTypeID,
-		            string name,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            AddressTypeModel model);
 
 		void Delete(int addressTypeID);
 
-		Response GetById(int addressTypeID);
+		ApiResponse GetById(int addressTypeID);
 
 		POCOAddressType GetByIdDirect(int addressTypeID);
 
-		Response GetWhere(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOAddressType> GetWhereDirect(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b21e760babeee845819446576b27764</Hash>
+    <Hash>cf44570c03c4240f6127115af8705499</Hash>
 </Codenesium>*/

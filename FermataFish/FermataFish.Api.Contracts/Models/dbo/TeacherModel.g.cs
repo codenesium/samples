@@ -18,11 +18,11 @@ namespace FermataFishNS.Api.Contracts
 			DateTime birthday,
 			int studioId)
 		{
-			this.FirstName = firstName;
-			this.LastName = lastName;
-			this.Email = email;
-			this.Phone = phone;
-			this.Birthday = birthday;
+			this.FirstName = firstName.ToString();
+			this.LastName = lastName.ToString();
+			this.Email = email.ToString();
+			this.Phone = phone.ToString();
+			this.Birthday = birthday.ToDateTime();
 			this.StudioId = studioId.ToInt();
 		}
 
@@ -125,5 +125,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6d1dd9999860f2976f7d02aaf2399087</Hash>
+    <Hash>cfb1da7fc6088a6dfc36e34b1b61f363</Hash>
 </Codenesium>*/

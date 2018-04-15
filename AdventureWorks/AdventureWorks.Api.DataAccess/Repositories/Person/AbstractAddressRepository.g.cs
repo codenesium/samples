@@ -14,37 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractAddressRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string addressLine1,
-			string addressLine2,
-			string city,
-			int stateProvinceID,
-			string postalCode,
-			object spatialLocation,
-			Guid rowguid,
-			DateTime modifiedDate)
+			AddressModel model)
 		{
 			var record = new EFAddress();
 
-			MapPOCOToEF(
-				0,
-				addressLine1,
-				addressLine2,
-				city,
-				stateProvinceID,
-				postalCode,
-				spatialLocation,
-				rowguid,
-				modifiedDate,
+			this.mapper.AddressMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFAddress>().Add(record);
@@ -54,14 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int addressID,
-			string addressLine1,
-			string addressLine2,
-			string city,
-			int stateProvinceID,
-			string postalCode,
-			object spatialLocation,
-			Guid rowguid,
-			DateTime modifiedDate)
+			AddressModel model)
 		{
 			var record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
 			if (record == null)
@@ -70,16 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.AddressMapModelToEF(
 					addressID,
-					addressLine1,
-					addressLine2,
-					city,
-					stateProvinceID,
-					postalCode,
-					spatialLocation,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -101,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int addressID)
+		public virtual ApiResponse GetById(int addressID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.AddressID == addressID, response);
 			return response;
@@ -111,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOAddress GetByIdDirect(int addressID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.AddressID == addressID, response);
 			return response.Addresses.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -135,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOAddress> GetWhereDirect(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Addresses;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFAddress, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFAddress, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFAddress> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.AddressMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFAddress> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.AddressMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFAddress> SearchLinqEF(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -162,38 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int addressID,
-			string addressLine1,
-			string addressLine2,
-			string city,
-			int stateProvinceID,
-			string postalCode,
-			object spatialLocation,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFAddress efAddress)
-		{
-			efAddress.SetProperties(addressID.ToInt(), addressLine1, addressLine2, city, stateProvinceID.ToInt(), postalCode, spatialLocation, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFAddress efAddress,
-			Response response)
-		{
-			if (efAddress == null)
-			{
-				return;
-			}
-
-			response.AddAddress(new POCOAddress(efAddress.AddressID.ToInt(), efAddress.AddressLine1, efAddress.AddressLine2, efAddress.City, efAddress.StateProvinceID.ToInt(), efAddress.PostalCode, efAddress.SpatialLocation, efAddress.Rowguid, efAddress.ModifiedDate.ToDateTime()));
-
-			StateProvinceRepository.MapEFToPOCO(efAddress.StateProvince, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>652c65939a1e5b35106e9458246b9c03</Hash>
+    <Hash>71c3e186a1713b3d656c2d18efc50afc</Hash>
 </Codenesium>*/

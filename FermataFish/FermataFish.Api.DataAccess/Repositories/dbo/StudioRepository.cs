@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class StudioRepository: AbstractStudioRepository, IStudioRepository
 	{
 		public StudioRepository(
+			IObjectMapper mapper,
 			ILogger<StudioRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFStudio> SearchLinqEF(Expression<Func<EFStudio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e8ad45bd2e0ba074e835369c7ac8338</Hash>
+    <Hash>44bea4d825c2cea14189dc710db77078</Hash>
 </Codenesium>*/

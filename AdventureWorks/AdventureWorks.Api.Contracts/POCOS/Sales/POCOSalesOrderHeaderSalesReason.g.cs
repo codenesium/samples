@@ -17,9 +17,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.SalesOrderID = new ReferenceEntity<int>(salesOrderID,
-			                                             "SalesOrderHeader");
+			                                             nameof(ApiResponse.SalesOrderHeaders));
 			this.SalesReasonID = new ReferenceEntity<int>(salesReasonID,
-			                                              "SalesReason");
+			                                              nameof(ApiResponse.SalesReasons));
 		}
 
 		public ReferenceEntity<int> SalesOrderID { get; set; }
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>73a901ca828da21056e0841e31418b28</Hash>
+    <Hash>ee9cccdef64c3900de234e6597ff7683</Hash>
 </Codenesium>*/

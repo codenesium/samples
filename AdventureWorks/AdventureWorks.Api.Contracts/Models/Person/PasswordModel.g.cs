@@ -16,9 +16,9 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.PasswordHash = passwordHash;
-			this.PasswordSalt = passwordSalt;
-			this.Rowguid = rowguid;
+			this.PasswordHash = passwordHash.ToString();
+			this.PasswordSalt = passwordSalt.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>717a7be61a3d33418d0b8a68739d76c3</Hash>
+    <Hash>7362d628a630fb2f2b7244b10a4bdaea</Hash>
 </Codenesium>*/

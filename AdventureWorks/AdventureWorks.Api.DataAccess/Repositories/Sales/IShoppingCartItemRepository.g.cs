@@ -7,34 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShoppingCartItemRepository
 	{
-		int Create(
-			string shoppingCartID,
-			int quantity,
-			int productID,
-			DateTime dateCreated,
-			DateTime modifiedDate);
+		int Create(ShoppingCartItemModel model);
 
 		void Update(int shoppingCartItemID,
-		            string shoppingCartID,
-		            int quantity,
-		            int productID,
-		            DateTime dateCreated,
-		            DateTime modifiedDate);
+		            ShoppingCartItemModel model);
 
 		void Delete(int shoppingCartItemID);
 
-		Response GetById(int shoppingCartItemID);
+		ApiResponse GetById(int shoppingCartItemID);
 
 		POCOShoppingCartItem GetByIdDirect(int shoppingCartItemID);
 
-		Response GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>72a1c350c70febbd873761a1d0ddd754</Hash>
+    <Hash>8e604ec10b203599e1437f925fe13d72</Hash>
 </Codenesium>*/

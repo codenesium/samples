@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class DepartmentRepository: AbstractDepartmentRepository, IDepartmentRepository
 	{
 		public DepartmentRepository(
+			IObjectMapper mapper,
 			ILogger<DepartmentRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFDepartment> SearchLinqEF(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6da885f890c86e4c1f52046450803cd1</Hash>
+    <Hash>26969768732bb37f52ba4686c0cefa23</Hash>
 </Codenesium>*/

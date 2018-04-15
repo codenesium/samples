@@ -27,20 +27,20 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.DocumentNode = documentNode;
 			this.DocumentLevel = documentLevel;
-			this.Title = title;
-			this.FolderFlag = folderFlag;
-			this.FileName = fileName;
-			this.FileExtension = fileExtension;
-			this.Revision = revision;
+			this.Title = title.ToString();
+			this.FolderFlag = folderFlag.ToBoolean();
+			this.FileName = fileName.ToString();
+			this.FileExtension = fileExtension.ToString();
+			this.Revision = revision.ToString();
 			this.ChangeNumber = changeNumber.ToInt();
-			this.Status = status;
-			this.DocumentSummary = documentSummary;
+			this.Status = status.ToInt();
+			this.DocumentSummary = documentSummary.ToString();
 			this.Document1 = document1;
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.Owner = new ReferenceEntity<int>(owner,
-			                                      "Employee");
+			                                      nameof(ApiResponse.Employees));
 		}
 
 		public Guid DocumentNode { get; set; }
@@ -191,5 +191,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>51f1349b49923496720ef62d5a8727db</Hash>
+    <Hash>72a52ed5d26c8a0cdeaecb75148cb82c</Hash>
 </Codenesium>*/

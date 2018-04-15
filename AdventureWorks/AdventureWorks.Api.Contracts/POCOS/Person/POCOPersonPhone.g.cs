@@ -15,13 +15,13 @@ namespace AdventureWorksNS.Api.Contracts
 			int phoneNumberTypeID,
 			DateTime modifiedDate)
 		{
-			this.PhoneNumber = phoneNumber;
+			this.PhoneNumber = phoneNumber.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 "Person");
+			                                                 nameof(ApiResponse.People));
 			this.PhoneNumberTypeID = new ReferenceEntity<int>(phoneNumberTypeID,
-			                                                  "PhoneNumberType");
+			                                                  nameof(ApiResponse.PhoneNumberTypes));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2f96b60f6e04f58c093c6a32777c9718</Hash>
+    <Hash>1fe7ba9057be40106028721db91c3b90</Hash>
 </Codenesium>*/

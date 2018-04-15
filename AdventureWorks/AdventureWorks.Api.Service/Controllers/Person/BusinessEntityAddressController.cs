@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/businessEntityAddresses")]
+	[ApiVersion("1.0")]
 	public class BusinessEntityAddressController: AbstractBusinessEntityAddressController
 	{
 		public BusinessEntityAddressController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3ac109281e4ddb779c2b4549f95a7c3c</Hash>
+    <Hash>973bb409e6f58db4441193958ef6eaf3</Hash>
 </Codenesium>*/

@@ -12,9 +12,10 @@ namespace FileServiceNS.Api.DataAccess
 	public class BucketRepository: AbstractBucketRepository, IBucketRepository
 	{
 		public BucketRepository(
+			IObjectMapper mapper,
 			ILogger<BucketRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>598a4f0aff99e3762a2f112b3851cab3</Hash>
+    <Hash>544af4ba6514ecb91aca43e46e776314</Hash>
 </Codenesium>*/

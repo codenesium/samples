@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesOrderHeaderSalesReasons")]
+	[ApiVersion("1.0")]
 	public class SalesOrderHeaderSalesReasonController: AbstractSalesOrderHeaderSalesReasonController
 	{
 		public SalesOrderHeaderSalesReasonController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>829d2f49026125632e1defef11b19c90</Hash>
+    <Hash>bf6d6c4c1fcfce2aa0f30fd7f8e89a1f</Hash>
 </Codenesium>*/

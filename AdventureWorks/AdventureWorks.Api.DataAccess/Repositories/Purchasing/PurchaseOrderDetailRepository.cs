@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PurchaseOrderDetailRepository: AbstractPurchaseOrderDetailRepository, IPurchaseOrderDetailRepository
 	{
 		public PurchaseOrderDetailRepository(
+			IObjectMapper mapper,
 			ILogger<PurchaseOrderDetailRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFPurchaseOrderDetail> SearchLinqEF(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f2de6bb88ec3c6a9b4c368b46e0f5110</Hash>
+    <Hash>2c90964597ba8d9a39c2eb6608f40bc7</Hash>
 </Codenesium>*/

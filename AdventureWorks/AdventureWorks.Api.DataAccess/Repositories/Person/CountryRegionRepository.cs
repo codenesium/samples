@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CountryRegionRepository: AbstractCountryRegionRepository, ICountryRegionRepository
 	{
 		public CountryRegionRepository(
+			IObjectMapper mapper,
 			ILogger<CountryRegionRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFCountryRegion> SearchLinqEF(Expression<Func<EFCountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7afa1f479d74185cb0b4d04cebfc37a7</Hash>
+    <Hash>e3b33592829494a5561f7117290bee14</Hash>
 </Codenesium>*/

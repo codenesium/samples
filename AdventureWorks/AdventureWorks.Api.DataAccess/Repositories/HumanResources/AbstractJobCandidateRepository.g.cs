@@ -14,27 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractJobCandidateRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			Nullable<int> businessEntityID,
-			string resume,
-			DateTime modifiedDate)
+			JobCandidateModel model)
 		{
 			var record = new EFJobCandidate();
 
-			MapPOCOToEF(
-				0,
-				businessEntityID,
-				resume,
-				modifiedDate,
+			this.mapper.JobCandidateMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFJobCandidate>().Add(record);
@@ -44,9 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int jobCandidateID,
-			Nullable<int> businessEntityID,
-			string resume,
-			DateTime modifiedDate)
+			JobCandidateModel model)
 		{
 			var record = this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
 			if (record == null)
@@ -55,11 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.JobCandidateMapModelToEF(
 					jobCandidateID,
-					businessEntityID,
-					resume,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -81,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int jobCandidateID)
+		public virtual ApiResponse GetById(int jobCandidateID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID, response);
 			return response;
@@ -91,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOJobCandidate GetByIdDirect(int jobCandidateID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID, response);
 			return response.JobCandidates.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -115,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOJobCandidate> GetWhereDirect(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.JobCandidates;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFJobCandidate, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFJobCandidate, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFJobCandidate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.JobCandidateMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFJobCandidate> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.JobCandidateMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFJobCandidate> SearchLinqEF(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -142,33 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int jobCandidateID,
-			Nullable<int> businessEntityID,
-			string resume,
-			DateTime modifiedDate,
-			EFJobCandidate efJobCandidate)
-		{
-			efJobCandidate.SetProperties(jobCandidateID.ToInt(), businessEntityID.ToNullableInt(), resume, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFJobCandidate efJobCandidate,
-			Response response)
-		{
-			if (efJobCandidate == null)
-			{
-				return;
-			}
-
-			response.AddJobCandidate(new POCOJobCandidate(efJobCandidate.JobCandidateID.ToInt(), efJobCandidate.BusinessEntityID.ToNullableInt(), efJobCandidate.Resume, efJobCandidate.ModifiedDate.ToDateTime()));
-
-			EmployeeRepository.MapEFToPOCO(efJobCandidate.Employee, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fde77b3b7125f990f2d9e9c430d4cc09</Hash>
+    <Hash>b35e9c25c1af4683096442fa85bc39b0</Hash>
 </Codenesium>*/

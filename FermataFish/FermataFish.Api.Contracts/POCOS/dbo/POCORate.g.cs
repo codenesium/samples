@@ -16,12 +16,12 @@ namespace FermataFishNS.Api.Contracts
 			int teacherId)
 		{
 			this.Id = id.ToInt();
-			this.AmountPerMinute = amountPerMinute;
+			this.AmountPerMinute = amountPerMinute.ToDecimal();
 
 			this.TeacherSkillId = new ReferenceEntity<int>(teacherSkillId,
-			                                               "TeacherSkill");
+			                                               nameof(ApiResponse.TeacherSkills));
 			this.TeacherId = new ReferenceEntity<int>(teacherId,
-			                                          "Teacher");
+			                                          nameof(ApiResponse.Teachers));
 		}
 
 		public int Id { get; set; }
@@ -72,5 +72,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>87a8b41f03435fbc32d8a8de9704e398</Hash>
+    <Hash>a12929495d407ec8687c52f7337ee29e</Hash>
 </Codenesium>*/

@@ -16,13 +16,13 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.PasswordHash = passwordHash;
-			this.PasswordSalt = passwordSalt;
-			this.Rowguid = rowguid;
+			this.PasswordHash = passwordHash.ToString();
+			this.PasswordSalt = passwordSalt.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 "Person");
+			                                                 nameof(ApiResponse.People));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5217b5ace10fe58527d399df0d1fc9b9</Hash>
+    <Hash>5e6bec0abbf77820ac72f22a19f44bbe</Hash>
 </Codenesium>*/

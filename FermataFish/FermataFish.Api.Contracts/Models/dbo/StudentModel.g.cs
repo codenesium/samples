@@ -22,16 +22,16 @@ namespace FermataFishNS.Api.Contracts
 			bool smsRemindersEnabled,
 			bool emailRemindersEnabled)
 		{
-			this.Email = email;
-			this.FirstName = firstName;
-			this.LastName = lastName;
-			this.Phone = phone;
-			this.IsAdult = isAdult;
-			this.Birthday = birthday;
+			this.Email = email.ToString();
+			this.FirstName = firstName.ToString();
+			this.LastName = lastName.ToString();
+			this.Phone = phone.ToString();
+			this.IsAdult = isAdult.ToBoolean();
+			this.Birthday = birthday.ToDateTime();
 			this.FamilyId = familyId.ToInt();
 			this.StudioId = studioId.ToInt();
-			this.SmsRemindersEnabled = smsRemindersEnabled;
-			this.EmailRemindersEnabled = emailRemindersEnabled;
+			this.SmsRemindersEnabled = smsRemindersEnabled.ToBoolean();
+			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
 		}
 
 		private string email;
@@ -197,5 +197,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8cc6e71262aeb30be67b71c2157dddee</Hash>
+    <Hash>ee4fcd3dccd0570beb43b65d8fb5223f</Hash>
 </Codenesium>*/

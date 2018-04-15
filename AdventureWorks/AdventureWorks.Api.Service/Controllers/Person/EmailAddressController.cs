@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/emailAddresses")]
+	[ApiVersion("1.0")]
 	public class EmailAddressController: AbstractEmailAddressController
 	{
 		public EmailAddressController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b6c662cbe2961ea0de1edde33d58ea8f</Hash>
+    <Hash>7f78162e4881d5694f540a7b9a33e56f</Hash>
 </Codenesium>*/

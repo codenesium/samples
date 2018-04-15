@@ -12,9 +12,10 @@ namespace NebulaNS.Api.DataAccess
 	public class MachineRepository: AbstractMachineRepository, IMachineRepository
 	{
 		public MachineRepository(
+			IObjectMapper mapper,
 			ILogger<MachineRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b8898efd0e6f2add05baddfe24a5323c</Hash>
+    <Hash>e72813f2582684c5eaa3f6fc814ab25b</Hash>
 </Codenesium>*/

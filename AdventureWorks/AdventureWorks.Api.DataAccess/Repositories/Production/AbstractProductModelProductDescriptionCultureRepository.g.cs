@@ -14,27 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractProductModelProductDescriptionCultureRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int productDescriptionID,
-			string cultureID,
-			DateTime modifiedDate)
+			ProductModelProductDescriptionCultureModel model)
 		{
 			var record = new EFProductModelProductDescriptionCulture();
 
-			MapPOCOToEF(
-				0,
-				productDescriptionID,
-				cultureID,
-				modifiedDate,
+			this.mapper.ProductModelProductDescriptionCultureMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFProductModelProductDescriptionCulture>().Add(record);
@@ -44,9 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int productModelID,
-			int productDescriptionID,
-			string cultureID,
-			DateTime modifiedDate)
+			ProductModelProductDescriptionCultureModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 			if (record == null)
@@ -55,11 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ProductModelProductDescriptionCultureMapModelToEF(
 					productModelID,
-					productDescriptionID,
-					cultureID,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -81,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int productModelID)
+		public virtual ApiResponse GetById(int productModelID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductModelID == productModelID, response);
 			return response;
@@ -91,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOProductModelProductDescriptionCulture GetByIdDirect(int productModelID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductModelID == productModelID, response);
 			return response.ProductModelProductDescriptionCultures.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -115,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOProductModelProductDescriptionCulture> GetWhereDirect(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ProductModelProductDescriptionCultures;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductModelProductDescriptionCulture> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductModelProductDescriptionCultureMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductModelProductDescriptionCulture> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductModelProductDescriptionCultureMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFProductModelProductDescriptionCulture> SearchLinqEF(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -142,37 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int productModelID,
-			int productDescriptionID,
-			string cultureID,
-			DateTime modifiedDate,
-			EFProductModelProductDescriptionCulture efProductModelProductDescriptionCulture)
-		{
-			efProductModelProductDescriptionCulture.SetProperties(productModelID.ToInt(), productDescriptionID.ToInt(), cultureID, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFProductModelProductDescriptionCulture efProductModelProductDescriptionCulture,
-			Response response)
-		{
-			if (efProductModelProductDescriptionCulture == null)
-			{
-				return;
-			}
-
-			response.AddProductModelProductDescriptionCulture(new POCOProductModelProductDescriptionCulture(efProductModelProductDescriptionCulture.ProductModelID.ToInt(), efProductModelProductDescriptionCulture.ProductDescriptionID.ToInt(), efProductModelProductDescriptionCulture.CultureID, efProductModelProductDescriptionCulture.ModifiedDate.ToDateTime()));
-
-			ProductModelRepository.MapEFToPOCO(efProductModelProductDescriptionCulture.ProductModel, response);
-
-			ProductDescriptionRepository.MapEFToPOCO(efProductModelProductDescriptionCulture.ProductDescription, response);
-
-			CultureRepository.MapEFToPOCO(efProductModelProductDescriptionCulture.Culture, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ff505223a7bcabf7fdcc374e0339d41</Hash>
+    <Hash>794c446a95449c4d33d97d5a672fa411</Hash>
 </Codenesium>*/

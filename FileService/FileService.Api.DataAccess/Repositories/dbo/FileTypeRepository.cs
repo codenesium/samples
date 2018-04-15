@@ -12,9 +12,10 @@ namespace FileServiceNS.Api.DataAccess
 	public class FileTypeRepository: AbstractFileTypeRepository, IFileTypeRepository
 	{
 		public FileTypeRepository(
+			IObjectMapper mapper,
 			ILogger<FileTypeRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFFileType> SearchLinqEF(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9e0295cfa72684fd5a88f4826e90cae8</Hash>
+    <Hash>09d8c4541109e22ee6724e0b6b454ff4</Hash>
 </Codenesium>*/

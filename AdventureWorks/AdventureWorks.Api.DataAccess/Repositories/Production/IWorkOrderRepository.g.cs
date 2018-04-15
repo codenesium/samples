@@ -7,42 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IWorkOrderRepository
 	{
-		int Create(
-			int productID,
-			int orderQty,
-			int stockedQty,
-			short scrappedQty,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			DateTime dueDate,
-			Nullable<short> scrapReasonID,
-			DateTime modifiedDate);
+		int Create(WorkOrderModel model);
 
 		void Update(int workOrderID,
-		            int productID,
-		            int orderQty,
-		            int stockedQty,
-		            short scrappedQty,
-		            DateTime startDate,
-		            Nullable<DateTime> endDate,
-		            DateTime dueDate,
-		            Nullable<short> scrapReasonID,
-		            DateTime modifiedDate);
+		            WorkOrderModel model);
 
 		void Delete(int workOrderID);
 
-		Response GetById(int workOrderID);
+		ApiResponse GetById(int workOrderID);
 
 		POCOWorkOrder GetByIdDirect(int workOrderID);
 
-		Response GetWhere(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOWorkOrder> GetWhereDirect(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf7676175f060cacf67e2279e5f0035d</Hash>
+    <Hash>fde467961917930e7b148a16af928998</Hash>
 </Codenesium>*/

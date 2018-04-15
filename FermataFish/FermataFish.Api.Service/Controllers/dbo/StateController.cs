@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FermataFishNS.Api.DataAccess;
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/states")]
+	[ApiVersion("1.0")]
 	public class StateController: AbstractStateController
 	{
 		public StateController(
@@ -32,5 +34,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>de905aacb5ef387700bec4bd8de4bce7</Hash>
+    <Hash>080fb74b564ae792a2131830d84ae454</Hash>
 </Codenesium>*/

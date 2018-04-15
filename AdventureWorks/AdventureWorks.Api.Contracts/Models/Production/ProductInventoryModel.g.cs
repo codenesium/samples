@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.LocationID = locationID;
-			this.Shelf = shelf;
-			this.Bin = bin;
+			this.Shelf = shelf.ToString();
+			this.Bin = bin.ToInt();
 			this.Quantity = quantity;
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0d38347b61b6a7a4bf8950842fb07bf6</Hash>
+    <Hash>8ca43495d3e3f62be44875285ac2041a</Hash>
 </Codenesium>*/

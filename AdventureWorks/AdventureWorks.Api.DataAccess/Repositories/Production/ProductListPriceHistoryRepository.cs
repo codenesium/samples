@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductListPriceHistoryRepository: AbstractProductListPriceHistoryRepository, IProductListPriceHistoryRepository
 	{
 		public ProductListPriceHistoryRepository(
+			IObjectMapper mapper,
 			ILogger<ProductListPriceHistoryRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFProductListPriceHistory> SearchLinqEF(Expression<Func<EFProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6359f0839d915978ee55db5ee48ab7dc</Hash>
+    <Hash>0f4d1dac966d980c82b7f0868d32513e</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productReviews")]
+	[ApiVersion("1.0")]
 	public class ProductReviewController: AbstractProductReviewController
 	{
 		public ProductReviewController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6680d386c07c5b2c419b63c80d5640ee</Hash>
+    <Hash>0ab8564c7758909f668c6d156f631624</Hash>
 </Codenesium>*/

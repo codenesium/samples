@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[SalesTerritoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.salesTerritoryRepository.GetById(id);
+			ApiResponse response = this.salesTerritoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[SalesTerritoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesTerritoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.salesTerritoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,16 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesTerritoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesTerritoryRepository.Create(
-					model.Name,
-					model.CountryRegionCode,
-					model.@Group,
-					model.SalesYTD,
-					model.SalesLastYear,
-					model.CostYTD,
-					model.CostLastYear,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.salesTerritoryRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -130,16 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.salesTerritoryRepository.Create(
-					model.Name,
-					model.CountryRegionCode,
-					model.@Group,
-					model.SalesYTD,
-					model.SalesLastYear,
-					model.CostYTD,
-					model.CostLastYear,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.salesTerritoryRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -163,17 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesTerritoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesTerritoryRepository.Update(
-					id,
-					model.Name,
-					model.CountryRegionCode,
-					model.@Group,
-					model.SalesYTD,
-					model.SalesLastYear,
-					model.CostYTD,
-					model.CostLastYear,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.salesTerritoryRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -200,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesTerritoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CountryRegions/{id}/SalesTerritories")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCountryRegionCode(string id)
 		{
-			Response response = this.salesTerritoryRepository.GetWhere(x => x.CountryRegionCode == id);
+			ApiResponse response = this.salesTerritoryRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -211,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fd8405de84f1feed85862c43bee10294</Hash>
+    <Hash>d2f488d7d00350478cda14d6fb11a9af</Hash>
 </Codenesium>*/

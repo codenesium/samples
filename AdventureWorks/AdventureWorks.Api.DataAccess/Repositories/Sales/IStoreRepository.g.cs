@@ -7,34 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IStoreRepository
 	{
-		int Create(
-			string name,
-			Nullable<int> salesPersonID,
-			string demographics,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(StoreModel model);
 
 		void Update(int businessEntityID,
-		            string name,
-		            Nullable<int> salesPersonID,
-		            string demographics,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            StoreModel model);
 
 		void Delete(int businessEntityID);
 
-		Response GetById(int businessEntityID);
+		ApiResponse GetById(int businessEntityID);
 
 		POCOStore GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOStore> GetWhereDirect(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f117ef220e72cf880579798f18c5b17</Hash>
+    <Hash>624ddee250e4e473887c6ad2140e3424</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FermataFishNS.Api.DataAccess;
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/lessons")]
+	[ApiVersion("1.0")]
 	public class LessonController: AbstractLessonController
 	{
 		public LessonController(
@@ -32,5 +34,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f9bef80eebe0c418ef048bf0b3b41602</Hash>
+    <Hash>628e58f2c98d8ed8bac8b4de1c428509</Hash>
 </Codenesium>*/

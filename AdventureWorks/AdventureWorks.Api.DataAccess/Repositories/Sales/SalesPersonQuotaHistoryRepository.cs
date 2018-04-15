@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesPersonQuotaHistoryRepository: AbstractSalesPersonQuotaHistoryRepository, ISalesPersonQuotaHistoryRepository
 	{
 		public SalesPersonQuotaHistoryRepository(
+			IObjectMapper mapper,
 			ILogger<SalesPersonQuotaHistoryRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFSalesPersonQuotaHistory> SearchLinqEF(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ce0d6e786362615bdf2bda815e4c56e</Hash>
+    <Hash>51a1934715f5cb13e734c662a7832eca</Hash>
 </Codenesium>*/

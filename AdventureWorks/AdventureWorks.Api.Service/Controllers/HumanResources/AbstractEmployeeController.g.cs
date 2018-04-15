@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[EmployeeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.employeeRepository.GetById(id);
+			ApiResponse response = this.employeeRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[EmployeeFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.employeeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.employeeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,22 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.employeeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.employeeRepository.Create(
-					model.NationalIDNumber,
-					model.LoginID,
-					model.OrganizationNode,
-					model.OrganizationLevel,
-					model.JobTitle,
-					model.BirthDate,
-					model.MaritalStatus,
-					model.Gender,
-					model.HireDate,
-					model.SalariedFlag,
-					model.VacationHours,
-					model.SickLeaveHours,
-					model.CurrentFlag,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.employeeRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -136,22 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.employeeRepository.Create(
-					model.NationalIDNumber,
-					model.LoginID,
-					model.OrganizationNode,
-					model.OrganizationLevel,
-					model.JobTitle,
-					model.BirthDate,
-					model.MaritalStatus,
-					model.Gender,
-					model.HireDate,
-					model.SalariedFlag,
-					model.VacationHours,
-					model.SickLeaveHours,
-					model.CurrentFlag,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.employeeRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -175,23 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.employeeModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.employeeRepository.Update(
-					id,
-					model.NationalIDNumber,
-					model.LoginID,
-					model.OrganizationNode,
-					model.OrganizationLevel,
-					model.JobTitle,
-					model.BirthDate,
-					model.MaritalStatus,
-					model.Gender,
-					model.HireDate,
-					model.SalariedFlag,
-					model.VacationHours,
-					model.SickLeaveHours,
-					model.CurrentFlag,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.employeeRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -218,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[EmployeeFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/People/{id}/Employees")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.employeeRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.employeeRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -229,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1ff847d271f029de2f07a80ba93e0640</Hash>
+    <Hash>77d117fb0544a5f0f3ebc701d6bfc417</Hash>
 </Codenesium>*/

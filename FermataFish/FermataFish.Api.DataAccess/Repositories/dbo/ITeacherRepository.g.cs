@@ -7,36 +7,25 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ITeacherRepository
 	{
-		int Create(
-			string firstName,
-			string lastName,
-			string email,
-			string phone,
-			DateTime birthday,
-			int studioId);
+		int Create(TeacherModel model);
 
 		void Update(int id,
-		            string firstName,
-		            string lastName,
-		            string email,
-		            string phone,
-		            DateTime birthday,
-		            int studioId);
+		            TeacherModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOTeacher GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOTeacher> GetWhereDirect(Expression<Func<EFTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f577a0704f3106a514c3c5f178e8008</Hash>
+    <Hash>ee9013842a05fc2623f855fa118bf484</Hash>
 </Codenesium>*/

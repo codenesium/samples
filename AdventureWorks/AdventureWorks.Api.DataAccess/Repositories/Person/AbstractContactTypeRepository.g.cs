@@ -14,25 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractContactTypeRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			DateTime modifiedDate)
+			ContactTypeModel model)
 		{
 			var record = new EFContactType();
 
-			MapPOCOToEF(
-				0,
-				name,
-				modifiedDate,
+			this.mapper.ContactTypeMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFContactType>().Add(record);
@@ -42,8 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int contactTypeID,
-			string name,
-			DateTime modifiedDate)
+			ContactTypeModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ContactTypeID == contactTypeID).FirstOrDefault();
 			if (record == null)
@@ -52,10 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ContactTypeMapModelToEF(
 					contactTypeID,
-					name,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -77,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int contactTypeID)
+		public virtual ApiResponse GetById(int contactTypeID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ContactTypeID == contactTypeID, response);
 			return response;
@@ -87,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOContactType GetByIdDirect(int contactTypeID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ContactTypeID == contactTypeID, response);
 			return response.ContactTypes.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -111,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOContactType> GetWhereDirect(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ContactTypes;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFContactType, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFContactType, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFContactType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ContactTypeMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFContactType> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ContactTypeMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFContactType> SearchLinqEF(Expression<Func<EFContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,30 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int contactTypeID,
-			string name,
-			DateTime modifiedDate,
-			EFContactType efContactType)
-		{
-			efContactType.SetProperties(contactTypeID.ToInt(), name, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFContactType efContactType,
-			Response response)
-		{
-			if (efContactType == null)
-			{
-				return;
-			}
-
-			response.AddContactType(new POCOContactType(efContactType.ContactTypeID.ToInt(), efContactType.Name, efContactType.ModifiedDate.ToDateTime()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>63ea52ff45f8abb7873f76ad33af98d1</Hash>
+    <Hash>44604d80e131e44a812601e46808498c</Hash>
 </Codenesium>*/

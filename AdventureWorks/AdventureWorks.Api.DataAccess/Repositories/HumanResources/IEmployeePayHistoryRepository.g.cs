@@ -7,32 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmployeePayHistoryRepository
 	{
-		int Create(
-			DateTime rateChangeDate,
-			decimal rate,
-			int payFrequency,
-			DateTime modifiedDate);
+		int Create(EmployeePayHistoryModel model);
 
 		void Update(int businessEntityID,
-		            DateTime rateChangeDate,
-		            decimal rate,
-		            int payFrequency,
-		            DateTime modifiedDate);
+		            EmployeePayHistoryModel model);
 
 		void Delete(int businessEntityID);
 
-		Response GetById(int businessEntityID);
+		ApiResponse GetById(int businessEntityID);
 
 		POCOEmployeePayHistory GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOEmployeePayHistory> GetWhereDirect(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e0b59637cedd59237f1233bcd2e01bff</Hash>
+    <Hash>c5b6f58aa4a3036ca2b48de04434657f</Hash>
 </Codenesium>*/

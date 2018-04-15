@@ -14,23 +14,26 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractLinkStatusRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name)
+			LinkStatusModel model)
 		{
 			var record = new EFLinkStatus();
 
-			MapPOCOToEF(
-				0,
-				name,
+			this.mapper.LinkStatusMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFLinkStatus>().Add(record);
@@ -40,7 +43,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			string name)
+			LinkStatusModel model)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -49,9 +52,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.LinkStatusMapModelToEF(
 					id,
-					name,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -73,9 +76,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int id)
+		public virtual ApiResponse GetById(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
@@ -83,23 +86,23 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual POCOLinkStatus GetByIdDirect(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.LinkStatus.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFLinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFLinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -107,22 +110,22 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual List<POCOLinkStatus> GetWhereDirect(Expression<Func<EFLinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.LinkStatus;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFLinkStatus, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFLinkStatus, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFLinkStatus> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.LinkStatusMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFLinkStatus> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.LinkStatusMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFLinkStatus> SearchLinqEF(Expression<Func<EFLinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -134,29 +137,9 @@ namespace NebulaNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int id,
-			string name,
-			EFLinkStatus efLinkStatus)
-		{
-			efLinkStatus.SetProperties(id.ToInt(), name);
-		}
-
-		public static void MapEFToPOCO(
-			EFLinkStatus efLinkStatus,
-			Response response)
-		{
-			if (efLinkStatus == null)
-			{
-				return;
-			}
-
-			response.AddLinkStatus(new POCOLinkStatus(efLinkStatus.Id.ToInt(), efLinkStatus.Name));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6aeae887bd1b2e294b061762e15723c2</Hash>
+    <Hash>a14ee8d69219b8e5e6cca5b9a16f5c46</Hash>
 </Codenesium>*/

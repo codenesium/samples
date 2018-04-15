@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/machineRefTeams")]
+	[ApiVersion("1.0")]
 	public class MachineRefTeamController: AbstractMachineRefTeamController
 	{
 		public MachineRefTeamController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>438253e1dfbf1cd40ae882f956d8c616</Hash>
+    <Hash>18f73c109c60ce7aa387b8f4ef7f2a3e</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTerritoryHistories")]
+	[ApiVersion("1.0")]
 	public class SalesTerritoryHistoryController: AbstractSalesTerritoryHistoryController
 	{
 		public SalesTerritoryHistoryController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cb218c915e366f8b829cad98f4ea234c</Hash>
+    <Hash>4dd94f942c088897f487842268d56862</Hash>
 </Codenesium>*/

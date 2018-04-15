@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shoppingCartItems")]
+	[ApiVersion("1.0")]
 	public class ShoppingCartItemController: AbstractShoppingCartItemController
 	{
 		public ShoppingCartItemController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>53803c8a4e439120cf5c597d8f421790</Hash>
+    <Hash>58a67071520d6cacea7310b9ae7d1546</Hash>
 </Codenesium>*/

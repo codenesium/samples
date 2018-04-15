@@ -17,9 +17,9 @@ namespace NebulaNS.Api.Contracts
 			this.Id = id.ToInt();
 
 			this.PreviousChainId = new ReferenceEntity<int>(previousChainId,
-			                                                "Chain");
+			                                                nameof(ApiResponse.Chains));
 			this.NextChainId = new ReferenceEntity<int>(nextChainId,
-			                                            "Chain");
+			                                            nameof(ApiResponse.Chains));
 		}
 
 		public int Id { get; set; }
@@ -60,5 +60,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b4004dfb927f556e09671a40de464d40</Hash>
+    <Hash>6d919eec645870e512acb3a0c2358145</Hash>
 </Codenesium>*/

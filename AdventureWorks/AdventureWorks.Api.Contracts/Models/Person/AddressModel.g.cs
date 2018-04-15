@@ -20,13 +20,13 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.AddressLine1 = addressLine1;
-			this.AddressLine2 = addressLine2;
-			this.City = city;
+			this.AddressLine1 = addressLine1.ToString();
+			this.AddressLine2 = addressLine2.ToString();
+			this.City = city.ToString();
 			this.StateProvinceID = stateProvinceID.ToInt();
-			this.PostalCode = postalCode;
+			this.PostalCode = postalCode.ToString();
 			this.SpatialLocation = spatialLocation;
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -159,5 +159,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>27216540d7033f3c33a02e58d782ddb6</Hash>
+    <Hash>5e90647f51a4495b410ba585a258c1ba</Hash>
 </Codenesium>*/

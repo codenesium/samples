@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class RateRepository: AbstractRateRepository, IRateRepository
 	{
 		public RateRepository(
+			IObjectMapper mapper,
 			ILogger<RateRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFRate> SearchLinqEF(Expression<Func<EFRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e05d6db8a2a8c8b9638ffcfb83c5e441</Hash>
+    <Hash>10177db82ad825a6b72741d35d666336</Hash>
 </Codenesium>*/

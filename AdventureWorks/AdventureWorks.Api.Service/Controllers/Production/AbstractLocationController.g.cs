@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[LocationFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(short id)
 		{
-			Response response = this.locationRepository.GetById(id);
+			ApiResponse response = this.locationRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[LocationFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.locationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.locationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.locationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.locationRepository.Create(
-					model.Name,
-					model.CostRate,
-					model.Availability,
-					model.ModifiedDate);
+				var id = this.locationRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.locationRepository.Create(
-					model.Name,
-					model.CostRate,
-					model.Availability,
-					model.ModifiedDate);
+				this.locationRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.locationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.locationRepository.Update(
-					id,
-					model.Name,
-					model.CostRate,
-					model.Availability,
-					model.ModifiedDate);
+				this.locationRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -183,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8e1271491932cbfdffd7c8e94e9c9163</Hash>
+    <Hash>317864c5b00c3443c3cb68b432a364b8</Hash>
 </Codenesium>*/

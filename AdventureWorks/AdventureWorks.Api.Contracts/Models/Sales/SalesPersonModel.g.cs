@@ -21,12 +21,12 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.TerritoryID = territoryID.ToNullableInt();
-			this.SalesQuota = salesQuota;
-			this.Bonus = bonus;
-			this.CommissionPct = commissionPct;
-			this.SalesYTD = salesYTD;
-			this.SalesLastYear = salesLastYear;
-			this.Rowguid = rowguid;
+			this.SalesQuota = salesQuota.ToNullableDecimal();
+			this.Bonus = bonus.ToDecimal();
+			this.CommissionPct = commissionPct.ToDecimal();
+			this.SalesYTD = salesYTD.ToDecimal();
+			this.SalesLastYear = salesLastYear.ToDecimal();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -159,5 +159,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5bd5dd070b7aa82648844993a1ab7614</Hash>
+    <Hash>cd2b03bbf4878bb3482ec72264a05958</Hash>
 </Codenesium>*/

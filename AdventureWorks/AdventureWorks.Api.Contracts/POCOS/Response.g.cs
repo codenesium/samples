@@ -20,9 +20,9 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 	}
 
-	public partial class Response
+	public partial class ApiResponse
 	{
-		public Response()
+		public ApiResponse()
 		{}
 		public List<POCOAWBuildVersion> AWBuildVersions { get; private set; } = new List<POCOAWBuildVersion>();
 
@@ -1663,5 +1663,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dc3ed7ac373db573b4c91c51aba930e9</Hash>
+    <Hash>7b345cbf5dc1deaebe07af86d2c263b7</Hash>
 </Codenesium>*/

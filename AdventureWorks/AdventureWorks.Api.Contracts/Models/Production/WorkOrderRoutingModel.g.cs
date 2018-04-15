@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ActualStartDate = actualStartDate.ToNullableDateTime();
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
 			this.ActualResourceHrs = actualResourceHrs.ToNullableDecimal();
-			this.PlannedCost = plannedCost;
-			this.ActualCost = actualCost;
+			this.PlannedCost = plannedCost.ToDecimal();
+			this.ActualCost = actualCost.ToNullableDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -211,5 +211,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6ad2efda52ebc8296708c91a5936c770</Hash>
+    <Hash>fe4aba0f2d2af2d0cb65d8499834d975</Hash>
 </Codenesium>*/

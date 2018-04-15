@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[EmployeePayHistoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.employeePayHistoryRepository.GetById(id);
+			ApiResponse response = this.employeePayHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[EmployeePayHistoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.employeePayHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.employeePayHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.employeePayHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.employeePayHistoryRepository.Create(
-					model.RateChangeDate,
-					model.Rate,
-					model.PayFrequency,
-					model.ModifiedDate);
+				var id = this.employeePayHistoryRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.employeePayHistoryRepository.Create(
-					model.RateChangeDate,
-					model.Rate,
-					model.PayFrequency,
-					model.ModifiedDate);
+				this.employeePayHistoryRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.employeePayHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.employeePayHistoryRepository.Update(
-					id,
-					model.RateChangeDate,
-					model.Rate,
-					model.PayFrequency,
-					model.ModifiedDate);
+				this.employeePayHistoryRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -185,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[EmployeePayHistoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Employees/{id}/EmployeePayHistories")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.employeePayHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.employeePayHistoryRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -196,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4c3864efee467b7b0933212c250c6797</Hash>
+    <Hash>3087b349c77799080bf0ac31acbb4d5d</Hash>
 </Codenesium>*/

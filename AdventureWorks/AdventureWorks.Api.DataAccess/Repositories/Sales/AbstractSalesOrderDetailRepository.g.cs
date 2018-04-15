@@ -14,41 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractSalesOrderDetailRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int salesOrderDetailID,
-			string carrierTrackingNumber,
-			short orderQty,
-			int productID,
-			int specialOfferID,
-			decimal unitPrice,
-			decimal unitPriceDiscount,
-			decimal lineTotal,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesOrderDetailModel model)
 		{
 			var record = new EFSalesOrderDetail();
 
-			MapPOCOToEF(
-				0,
-				salesOrderDetailID,
-				carrierTrackingNumber,
-				orderQty,
-				productID,
-				specialOfferID,
-				unitPrice,
-				unitPriceDiscount,
-				lineTotal,
-				rowguid,
-				modifiedDate,
+			this.mapper.SalesOrderDetailMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFSalesOrderDetail>().Add(record);
@@ -58,16 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int salesOrderID,
-			int salesOrderDetailID,
-			string carrierTrackingNumber,
-			short orderQty,
-			int productID,
-			int specialOfferID,
-			decimal unitPrice,
-			decimal unitPriceDiscount,
-			decimal lineTotal,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesOrderDetailModel model)
 		{
 			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
@@ -76,18 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.SalesOrderDetailMapModelToEF(
 					salesOrderID,
-					salesOrderDetailID,
-					carrierTrackingNumber,
-					orderQty,
-					productID,
-					specialOfferID,
-					unitPrice,
-					unitPriceDiscount,
-					lineTotal,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -109,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int salesOrderID)
+		public virtual ApiResponse GetById(int salesOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID, response);
 			return response;
@@ -119,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOSalesOrderDetail GetByIdDirect(int salesOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID, response);
 			return response.SalesOrderDetails.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFSalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -143,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOSalesOrderDetail> GetWhereDirect(Expression<Func<EFSalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.SalesOrderDetails;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSalesOrderDetail, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFSalesOrderDetail, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesOrderDetail> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesOrderDetailMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesOrderDetail> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesOrderDetailMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFSalesOrderDetail> SearchLinqEF(Expression<Func<EFSalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -170,42 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int salesOrderID,
-			int salesOrderDetailID,
-			string carrierTrackingNumber,
-			short orderQty,
-			int productID,
-			int specialOfferID,
-			decimal unitPrice,
-			decimal unitPriceDiscount,
-			decimal lineTotal,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFSalesOrderDetail efSalesOrderDetail)
-		{
-			efSalesOrderDetail.SetProperties(salesOrderID.ToInt(), salesOrderDetailID.ToInt(), carrierTrackingNumber, orderQty, productID.ToInt(), specialOfferID.ToInt(), unitPrice, unitPriceDiscount, lineTotal.ToDecimal(), rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFSalesOrderDetail efSalesOrderDetail,
-			Response response)
-		{
-			if (efSalesOrderDetail == null)
-			{
-				return;
-			}
-
-			response.AddSalesOrderDetail(new POCOSalesOrderDetail(efSalesOrderDetail.SalesOrderID.ToInt(), efSalesOrderDetail.SalesOrderDetailID.ToInt(), efSalesOrderDetail.CarrierTrackingNumber, efSalesOrderDetail.OrderQty, efSalesOrderDetail.ProductID.ToInt(), efSalesOrderDetail.SpecialOfferID.ToInt(), efSalesOrderDetail.UnitPrice, efSalesOrderDetail.UnitPriceDiscount, efSalesOrderDetail.LineTotal.ToDecimal(), efSalesOrderDetail.Rowguid, efSalesOrderDetail.ModifiedDate.ToDateTime()));
-
-			SalesOrderHeaderRepository.MapEFToPOCO(efSalesOrderDetail.SalesOrderHeader, response);
-
-			SpecialOfferProductRepository.MapEFToPOCO(efSalesOrderDetail.SpecialOfferProduct, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e5fd4d8966afb424eac1d30c2c51aee7</Hash>
+    <Hash>98260f35f5e43320d06236083abf2013</Hash>
 </Codenesium>*/

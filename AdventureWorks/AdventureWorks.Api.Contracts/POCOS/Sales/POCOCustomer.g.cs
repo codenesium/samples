@@ -19,16 +19,16 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.CustomerID = customerID.ToInt();
-			this.AccountNumber = accountNumber;
-			this.Rowguid = rowguid;
+			this.AccountNumber = accountNumber.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.PersonID = new ReferenceEntity<Nullable<int>>(personID,
-			                                                   "Person");
+			                                                   nameof(ApiResponse.People));
 			this.StoreID = new ReferenceEntity<Nullable<int>>(storeID,
-			                                                  "Store");
+			                                                  nameof(ApiResponse.Stores));
 			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
-			                                                      "SalesTerritory");
+			                                                      nameof(ApiResponse.SalesTerritories));
 		}
 
 		public int CustomerID { get; set; }
@@ -109,5 +109,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>afeffe08e9bfe97f197adb9487dba59e</Hash>
+    <Hash>50b2782f92609d987c1ff6fdf5f53a4d</Hash>
 </Codenesium>*/

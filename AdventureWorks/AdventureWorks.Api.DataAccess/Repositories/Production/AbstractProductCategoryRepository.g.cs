@@ -14,27 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractProductCategoryRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ProductCategoryModel model)
 		{
 			var record = new EFProductCategory();
 
-			MapPOCOToEF(
-				0,
-				name,
-				rowguid,
-				modifiedDate,
+			this.mapper.ProductCategoryMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFProductCategory>().Add(record);
@@ -44,9 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int productCategoryID,
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ProductCategoryModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
 			if (record == null)
@@ -55,11 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ProductCategoryMapModelToEF(
 					productCategoryID,
-					name,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -81,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int productCategoryID)
+		public virtual ApiResponse GetById(int productCategoryID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductCategoryID == productCategoryID, response);
 			return response;
@@ -91,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOProductCategory GetByIdDirect(int productCategoryID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductCategoryID == productCategoryID, response);
 			return response.ProductCategories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -115,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOProductCategory> GetWhereDirect(Expression<Func<EFProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ProductCategories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProductCategory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFProductCategory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductCategory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductCategoryMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductCategory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductCategoryMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFProductCategory> SearchLinqEF(Expression<Func<EFProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -142,31 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int productCategoryID,
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFProductCategory efProductCategory)
-		{
-			efProductCategory.SetProperties(productCategoryID.ToInt(), name, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFProductCategory efProductCategory,
-			Response response)
-		{
-			if (efProductCategory == null)
-			{
-				return;
-			}
-
-			response.AddProductCategory(new POCOProductCategory(efProductCategory.ProductCategoryID.ToInt(), efProductCategory.Name, efProductCategory.Rowguid, efProductCategory.ModifiedDate.ToDateTime()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e97d31ffce38983c7dc3acb05123c40</Hash>
+    <Hash>9f15e79adead6f55d936f69671a6826e</Hash>
 </Codenesium>*/

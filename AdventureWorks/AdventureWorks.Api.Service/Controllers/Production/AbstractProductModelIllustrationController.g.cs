@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productModelIllustrationRepository.GetById(id);
+			ApiResponse response = this.productModelIllustrationRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productModelIllustrationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productModelIllustrationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productModelIllustrationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productModelIllustrationRepository.Create(
-					model.IllustrationID,
-					model.ModifiedDate);
+				var id = this.productModelIllustrationRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productModelIllustrationRepository.Create(
-					model.IllustrationID,
-					model.ModifiedDate);
+				this.productModelIllustrationRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productModelIllustrationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productModelIllustrationRepository.Update(
-					id,
-					model.IllustrationID,
-					model.ModifiedDate);
+				this.productModelIllustrationRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -179,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductModels/{id}/ProductModelIllustrations")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductModelID(int id)
 		{
-			Response response = this.productModelIllustrationRepository.GetWhere(x => x.ProductModelID == id);
+			ApiResponse response = this.productModelIllustrationRepository.GetWhere(x => x.ProductModelID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -192,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Illustrations/{id}/ProductModelIllustrations")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByIllustrationID(int id)
 		{
-			Response response = this.productModelIllustrationRepository.GetWhere(x => x.IllustrationID == id);
+			ApiResponse response = this.productModelIllustrationRepository.GetWhere(x => x.IllustrationID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -203,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f098529a62da0706c23130d77d8f4dfb</Hash>
+    <Hash>823ff38370215fffb4f5b2191aa4dd63</Hash>
 </Codenesium>*/

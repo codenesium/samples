@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class VendorRepository: AbstractVendorRepository, IVendorRepository
 	{
 		public VendorRepository(
+			IObjectMapper mapper,
 			ILogger<VendorRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFVendor> SearchLinqEF(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4a8bdf433f3b1fe7c77f5c437f28290c</Hash>
+    <Hash>510dcb20622b5844d46a826ec8fbb1f9</Hash>
 </Codenesium>*/

@@ -14,25 +14,26 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractSpaceFeatureRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			int studioId)
+			SpaceFeatureModel model)
 		{
 			var record = new EFSpaceFeature();
 
-			MapPOCOToEF(
-				0,
-				name,
-				studioId,
+			this.mapper.SpaceFeatureMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFSpaceFeature>().Add(record);
@@ -42,8 +43,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			string name,
-			int studioId)
+			SpaceFeatureModel model)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -52,10 +52,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.SpaceFeatureMapModelToEF(
 					id,
-					name,
-					studioId,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -77,9 +76,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int id)
+		public virtual ApiResponse GetById(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
@@ -87,23 +86,23 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual POCOSpaceFeature GetByIdDirect(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.SpaceFeatures.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -111,22 +110,22 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual List<POCOSpaceFeature> GetWhereDirect(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.SpaceFeatures;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSpaceFeature, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFSpaceFeature, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSpaceFeature> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SpaceFeatureMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSpaceFeature> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SpaceFeatureMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFSpaceFeature> SearchLinqEF(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,32 +137,9 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int id,
-			string name,
-			int studioId,
-			EFSpaceFeature efSpaceFeature)
-		{
-			efSpaceFeature.SetProperties(id.ToInt(), name, studioId.ToInt());
-		}
-
-		public static void MapEFToPOCO(
-			EFSpaceFeature efSpaceFeature,
-			Response response)
-		{
-			if (efSpaceFeature == null)
-			{
-				return;
-			}
-
-			response.AddSpaceFeature(new POCOSpaceFeature(efSpaceFeature.Id.ToInt(), efSpaceFeature.Name, efSpaceFeature.StudioId.ToInt()));
-
-			StudioRepository.MapEFToPOCO(efSpaceFeature.Studio, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f2e3fdbd3dcee940ee3a62ff952cd37</Hash>
+    <Hash>79f1c7d0bd2296c0b2a9f8c80255b516</Hash>
 </Codenesium>*/

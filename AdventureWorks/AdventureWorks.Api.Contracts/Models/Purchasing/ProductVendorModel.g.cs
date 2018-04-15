@@ -24,13 +24,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.AverageLeadTime = averageLeadTime.ToInt();
-			this.StandardPrice = standardPrice;
-			this.LastReceiptCost = lastReceiptCost;
+			this.StandardPrice = standardPrice.ToDecimal();
+			this.LastReceiptCost = lastReceiptCost.ToNullableDecimal();
 			this.LastReceiptDate = lastReceiptDate.ToNullableDateTime();
 			this.MinOrderQty = minOrderQty.ToInt();
 			this.MaxOrderQty = maxOrderQty.ToInt();
 			this.OnOrderQty = onOrderQty.ToNullableInt();
-			this.UnitMeasureCode = unitMeasureCode;
+			this.UnitMeasureCode = unitMeasureCode.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -194,5 +194,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>badb93078147513475ad5fb5b84c8dd6</Hash>
+    <Hash>11ddf45b25def02ab55a5fbcc776c326</Hash>
 </Codenesium>*/

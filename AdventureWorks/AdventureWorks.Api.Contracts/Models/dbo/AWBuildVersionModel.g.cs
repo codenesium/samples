@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime versionDate,
 			DateTime modifiedDate)
 		{
-			this.Database_Version = database_Version;
+			this.Database_Version = database_Version.ToString();
 			this.VersionDate = versionDate.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2417c5013055e6810635405d54c3863f</Hash>
+    <Hash>c4c4dbeea12b094847fb80fa4056f56b</Hash>
 </Codenesium>*/

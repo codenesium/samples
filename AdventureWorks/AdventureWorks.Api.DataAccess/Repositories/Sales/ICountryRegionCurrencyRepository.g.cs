@@ -7,28 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICountryRegionCurrencyRepository
 	{
-		string Create(
-			string currencyCode,
-			DateTime modifiedDate);
+		string Create(CountryRegionCurrencyModel model);
 
 		void Update(string countryRegionCode,
-		            string currencyCode,
-		            DateTime modifiedDate);
+		            CountryRegionCurrencyModel model);
 
 		void Delete(string countryRegionCode);
 
-		Response GetById(string countryRegionCode);
+		ApiResponse GetById(string countryRegionCode);
 
 		POCOCountryRegionCurrency GetByIdDirect(string countryRegionCode);
 
-		Response GetWhere(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOCountryRegionCurrency> GetWhereDirect(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>25d570760ee39ec56bd4b19be928bb35</Hash>
+    <Hash>81c6fb6d3332866a71228a2cb50a4cc5</Hash>
 </Codenesium>*/

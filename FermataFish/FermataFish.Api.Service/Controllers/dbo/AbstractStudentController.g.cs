@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[StudentFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.studentRepository.GetById(id);
+			ApiResponse response = this.studentRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[StudentFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.studentRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.studentRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,17 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.studentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.studentRepository.Create(
-					model.Email,
-					model.FirstName,
-					model.LastName,
-					model.Phone,
-					model.IsAdult,
-					model.Birthday,
-					model.FamilyId,
-					model.StudioId,
-					model.SmsRemindersEnabled,
-					model.EmailRemindersEnabled);
+				var id = this.studentRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -131,17 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.studentRepository.Create(
-					model.Email,
-					model.FirstName,
-					model.LastName,
-					model.Phone,
-					model.IsAdult,
-					model.Birthday,
-					model.FamilyId,
-					model.StudioId,
-					model.SmsRemindersEnabled,
-					model.EmailRemindersEnabled);
+				this.studentRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -165,18 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.studentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.studentRepository.Update(
-					id,
-					model.Email,
-					model.FirstName,
-					model.LastName,
-					model.Phone,
-					model.IsAdult,
-					model.Birthday,
-					model.FamilyId,
-					model.StudioId,
-					model.SmsRemindersEnabled,
-					model.EmailRemindersEnabled);
+				this.studentRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -203,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[StudentFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Families/{id}/Students")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByFamilyId(int id)
 		{
-			Response response = this.studentRepository.GetWhere(x => x.FamilyId == id);
+			ApiResponse response = this.studentRepository.GetWhere(x => x.FamilyId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -216,10 +185,10 @@ namespace FermataFishNS.Api.Service
 		[StudentFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Studios/{id}/Students")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudioId(int id)
 		{
-			Response response = this.studentRepository.GetWhere(x => x.StudioId == id);
+			ApiResponse response = this.studentRepository.GetWhere(x => x.StudioId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -227,5 +196,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ed79e3bd1e40559a411745e76f566d5b</Hash>
+    <Hash>0a2520a47b34a8ed302797a6f2d9fd98</Hash>
 </Codenesium>*/

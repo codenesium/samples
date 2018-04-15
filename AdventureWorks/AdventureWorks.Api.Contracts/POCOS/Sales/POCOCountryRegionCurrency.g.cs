@@ -17,9 +17,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
-			                                                     "CountryRegion");
+			                                                     nameof(ApiResponse.CountryRegions));
 			this.CurrencyCode = new ReferenceEntity<string>(currencyCode,
-			                                                "Currency");
+			                                                nameof(ApiResponse.Currencies));
 		}
 
 		public ReferenceEntity<string> CountryRegionCode { get; set; }
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>17e88d4ced6a224e2c347dfb888bceeb</Hash>
+    <Hash>d2d1fdf4197b950f5ec176805bd7dc5d</Hash>
 </Codenesium>*/

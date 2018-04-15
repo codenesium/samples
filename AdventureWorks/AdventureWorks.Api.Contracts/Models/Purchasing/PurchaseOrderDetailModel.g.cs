@@ -26,8 +26,8 @@ namespace AdventureWorksNS.Api.Contracts
 			this.DueDate = dueDate.ToDateTime();
 			this.OrderQty = orderQty;
 			this.ProductID = productID.ToInt();
-			this.UnitPrice = unitPrice;
-			this.LineTotal = lineTotal;
+			this.UnitPrice = unitPrice.ToDecimal();
+			this.LineTotal = lineTotal.ToDecimal();
 			this.ReceivedQty = receivedQty.ToDecimal();
 			this.RejectedQty = rejectedQty.ToDecimal();
 			this.StockedQty = stockedQty.ToDecimal();
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a73ecfc43c6cad93361457e60fe533a7</Hash>
+    <Hash>59ded216510bfd455675b741b95a123a</Hash>
 </Codenesium>*/

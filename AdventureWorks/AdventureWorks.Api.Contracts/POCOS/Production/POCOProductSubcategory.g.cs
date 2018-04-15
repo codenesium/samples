@@ -17,12 +17,12 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.ProductSubcategoryID = productSubcategoryID.ToInt();
-			this.Name = name;
-			this.Rowguid = rowguid;
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.ProductCategoryID = new ReferenceEntity<int>(productCategoryID,
-			                                                  "ProductCategory");
+			                                                  nameof(ApiResponse.ProductCategories));
 		}
 
 		public int ProductSubcategoryID { get; set; }
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>73e09d1ed700395efdb349232566a1ec</Hash>
+    <Hash>7d0ddd758ab0ad8fbabfffa75656ba0d</Hash>
 </Codenesium>*/

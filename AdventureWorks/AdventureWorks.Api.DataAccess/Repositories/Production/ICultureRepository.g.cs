@@ -7,28 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICultureRepository
 	{
-		string Create(
-			string name,
-			DateTime modifiedDate);
+		string Create(CultureModel model);
 
 		void Update(string cultureID,
-		            string name,
-		            DateTime modifiedDate);
+		            CultureModel model);
 
 		void Delete(string cultureID);
 
-		Response GetById(string cultureID);
+		ApiResponse GetById(string cultureID);
 
 		POCOCulture GetByIdDirect(string cultureID);
 
-		Response GetWhere(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOCulture> GetWhereDirect(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e44f795ffd3c3103c54ebbec23d3882</Hash>
+    <Hash>87f60383681764708b652e11d71c508a</Hash>
 </Codenesium>*/

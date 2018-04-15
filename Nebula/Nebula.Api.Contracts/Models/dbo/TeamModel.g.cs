@@ -14,7 +14,7 @@ namespace NebulaNS.Api.Contracts
 			string name,
 			int organizationId)
 		{
-			this.Name = name;
+			this.Name = name.ToString();
 			this.OrganizationId = organizationId.ToInt();
 		}
 
@@ -53,5 +53,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e1c8b621e26c2c01ed3f2b704adef0a0</Hash>
+    <Hash>61abd5a56c22209e326f2cc7ab8d677e</Hash>
 </Codenesium>*/

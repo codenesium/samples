@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FermataFishNS.Api.DataAccess;
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/admins")]
+	[ApiVersion("1.0")]
 	public class AdminController: AbstractAdminController
 	{
 		public AdminController(
@@ -32,5 +34,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f5afff080eeeca3caf4e17c95548138f</Hash>
+    <Hash>f9b2841fa6ac29eea365b364c3643cc9</Hash>
 </Codenesium>*/

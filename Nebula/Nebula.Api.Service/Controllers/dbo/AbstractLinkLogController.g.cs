@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[LinkLogFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.linkLogRepository.GetById(id);
+			ApiResponse response = this.linkLogRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[LinkLogFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.linkLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.linkLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.linkLogRepository.Create(
-					model.LinkId,
-					model.Log,
-					model.DateEntered);
+				var id = this.linkLogRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.linkLogRepository.Create(
-					model.LinkId,
-					model.Log,
-					model.DateEntered);
+				this.linkLogRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkLogRepository.Update(
-					id,
-					model.LinkId,
-					model.Log,
-					model.DateEntered);
+				this.linkLogRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -182,10 +172,10 @@ namespace NebulaNS.Api.Service
 		[LinkLogFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Links/{id}/LinkLogs")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLinkId(int id)
 		{
-			Response response = this.linkLogRepository.GetWhere(x => x.LinkId == id);
+			ApiResponse response = this.linkLogRepository.GetWhere(x => x.LinkId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -193,5 +183,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e8a698b958e8e0e68110e3269fced570</Hash>
+    <Hash>9153296548089b3fa6d23202b9933d1b</Hash>
 </Codenesium>*/

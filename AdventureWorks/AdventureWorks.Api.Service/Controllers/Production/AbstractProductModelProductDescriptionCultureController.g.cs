@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productModelProductDescriptionCultureRepository.GetById(id);
+			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productModelProductDescriptionCultureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productModelProductDescriptionCultureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productModelProductDescriptionCultureRepository.Create(
-					model.ProductDescriptionID,
-					model.CultureID,
-					model.ModifiedDate);
+				var id = this.productModelProductDescriptionCultureRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productModelProductDescriptionCultureRepository.Create(
-					model.ProductDescriptionID,
-					model.CultureID,
-					model.ModifiedDate);
+				this.productModelProductDescriptionCultureRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productModelProductDescriptionCultureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productModelProductDescriptionCultureRepository.Update(
-					id,
-					model.ProductDescriptionID,
-					model.CultureID,
-					model.ModifiedDate);
+				this.productModelProductDescriptionCultureRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -182,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductModels/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductModelID(int id)
 		{
-			Response response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductModelID == id);
+			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductModelID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -195,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductDescriptions/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductDescriptionID(int id)
 		{
-			Response response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductDescriptionID == id);
+			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductDescriptionID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -208,10 +198,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Cultures/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCultureID(string id)
 		{
-			Response response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.CultureID == id);
+			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.CultureID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -219,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>61d318d9b7c60482467665075e442c2c</Hash>
+    <Hash>be4b0468cb03fc5243f2eb1df35a8617</Hash>
 </Codenesium>*/

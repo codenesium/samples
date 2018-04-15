@@ -17,8 +17,8 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.RateChangeDate = rateChangeDate.ToDateTime();
-			this.Rate = rate;
-			this.PayFrequency = payFrequency;
+			this.Rate = rate.ToDecimal();
+			this.PayFrequency = payFrequency.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>051920dda6b3e8341abf5a733def95b7</Hash>
+    <Hash>e1bf811cbca14b2811f47e55af775bcf</Hash>
 </Codenesium>*/

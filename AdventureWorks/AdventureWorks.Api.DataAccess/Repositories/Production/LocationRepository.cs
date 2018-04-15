@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class LocationRepository: AbstractLocationRepository, ILocationRepository
 	{
 		public LocationRepository(
+			IObjectMapper mapper,
 			ILogger<LocationRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFLocation> SearchLinqEF(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2b9d0786f336e760d31499c0160646f3</Hash>
+    <Hash>993ffa8a17843a23413b56253c54eeff</Hash>
 </Codenesium>*/

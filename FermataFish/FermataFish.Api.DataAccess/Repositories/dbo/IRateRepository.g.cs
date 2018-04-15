@@ -7,30 +7,25 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IRateRepository
 	{
-		int Create(
-			decimal amountPerMinute,
-			int teacherSkillId,
-			int teacherId);
+		int Create(RateModel model);
 
 		void Update(int id,
-		            decimal amountPerMinute,
-		            int teacherSkillId,
-		            int teacherId);
+		            RateModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCORate GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCORate> GetWhereDirect(Expression<Func<EFRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>0fd3cecf0df6e1ad0098b3e7a5c39e08</Hash>
+    <Hash>6b81447ff9c1c3a1b5d722d1f4889bfc</Hash>
 </Codenesium>*/

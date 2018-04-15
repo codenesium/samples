@@ -7,34 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICreditCardRepository
 	{
-		int Create(
-			string cardType,
-			string cardNumber,
-			int expMonth,
-			short expYear,
-			DateTime modifiedDate);
+		int Create(CreditCardModel model);
 
 		void Update(int creditCardID,
-		            string cardType,
-		            string cardNumber,
-		            int expMonth,
-		            short expYear,
-		            DateTime modifiedDate);
+		            CreditCardModel model);
 
 		void Delete(int creditCardID);
 
-		Response GetById(int creditCardID);
+		ApiResponse GetById(int creditCardID);
 
 		POCOCreditCard GetByIdDirect(int creditCardID);
 
-		Response GetWhere(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOCreditCard> GetWhereDirect(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>883c2d2b96dfc3efebf652a515b0da18</Hash>
+    <Hash>ab106c2a702824250109b701e8dff354</Hash>
 </Codenesium>*/

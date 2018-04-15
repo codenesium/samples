@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PasswordRepository: AbstractPasswordRepository, IPasswordRepository
 	{
 		public PasswordRepository(
+			IObjectMapper mapper,
 			ILogger<PasswordRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFPassword> SearchLinqEF(Expression<Func<EFPassword, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>183c46e0966704e80fe24571567d6316</Hash>
+    <Hash>3b51753a7078fd96c8f0fc5f7efc1ba0</Hash>
 </Codenesium>*/

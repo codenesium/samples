@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ShiftFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.shiftRepository.GetById(id);
+			ApiResponse response = this.shiftRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ShiftFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.shiftRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.shiftRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.shiftModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.shiftRepository.Create(
-					model.Name,
-					model.StartTime,
-					model.EndTime,
-					model.ModifiedDate);
+				var id = this.shiftRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.shiftRepository.Create(
-					model.Name,
-					model.StartTime,
-					model.EndTime,
-					model.ModifiedDate);
+				this.shiftRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.shiftModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.shiftRepository.Update(
-					id,
-					model.Name,
-					model.StartTime,
-					model.EndTime,
-					model.ModifiedDate);
+				this.shiftRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -183,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2ad2c9b1262e7737cce04fadaf434e21</Hash>
+    <Hash>5f643ffcec129e8d52f605410284f88b</Hash>
 </Codenesium>*/

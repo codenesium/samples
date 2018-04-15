@@ -14,71 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractSalesOrderHeaderRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int revisionNumber,
-			DateTime orderDate,
-			DateTime dueDate,
-			Nullable<DateTime> shipDate,
-			int status,
-			bool onlineOrderFlag,
-			string salesOrderNumber,
-			string purchaseOrderNumber,
-			string accountNumber,
-			int customerID,
-			Nullable<int> salesPersonID,
-			Nullable<int> territoryID,
-			int billToAddressID,
-			int shipToAddressID,
-			int shipMethodID,
-			Nullable<int> creditCardID,
-			string creditCardApprovalCode,
-			Nullable<int> currencyRateID,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal freight,
-			decimal totalDue,
-			string comment,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesOrderHeaderModel model)
 		{
 			var record = new EFSalesOrderHeader();
 
-			MapPOCOToEF(
-				0,
-				revisionNumber,
-				orderDate,
-				dueDate,
-				shipDate,
-				status,
-				onlineOrderFlag,
-				salesOrderNumber,
-				purchaseOrderNumber,
-				accountNumber,
-				customerID,
-				salesPersonID,
-				territoryID,
-				billToAddressID,
-				shipToAddressID,
-				shipMethodID,
-				creditCardID,
-				creditCardApprovalCode,
-				currencyRateID,
-				subTotal,
-				taxAmt,
-				freight,
-				totalDue,
-				comment,
-				rowguid,
-				modifiedDate,
+			this.mapper.SalesOrderHeaderMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFSalesOrderHeader>().Add(record);
@@ -88,31 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int salesOrderID,
-			int revisionNumber,
-			DateTime orderDate,
-			DateTime dueDate,
-			Nullable<DateTime> shipDate,
-			int status,
-			bool onlineOrderFlag,
-			string salesOrderNumber,
-			string purchaseOrderNumber,
-			string accountNumber,
-			int customerID,
-			Nullable<int> salesPersonID,
-			Nullable<int> territoryID,
-			int billToAddressID,
-			int shipToAddressID,
-			int shipMethodID,
-			Nullable<int> creditCardID,
-			string creditCardApprovalCode,
-			Nullable<int> currencyRateID,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal freight,
-			decimal totalDue,
-			string comment,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesOrderHeaderModel model)
 		{
 			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
@@ -121,33 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.SalesOrderHeaderMapModelToEF(
 					salesOrderID,
-					revisionNumber,
-					orderDate,
-					dueDate,
-					shipDate,
-					status,
-					onlineOrderFlag,
-					salesOrderNumber,
-					purchaseOrderNumber,
-					accountNumber,
-					customerID,
-					salesPersonID,
-					territoryID,
-					billToAddressID,
-					shipToAddressID,
-					shipMethodID,
-					creditCardID,
-					creditCardApprovalCode,
-					currencyRateID,
-					subTotal,
-					taxAmt,
-					freight,
-					totalDue,
-					comment,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -169,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int salesOrderID)
+		public virtual ApiResponse GetById(int salesOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID, response);
 			return response;
@@ -179,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOSalesOrderHeader GetByIdDirect(int salesOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID, response);
 			return response.SalesOrderHeaders.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -203,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOSalesOrderHeader> GetWhereDirect(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.SalesOrderHeaders;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSalesOrderHeader, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFSalesOrderHeader, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesOrderHeader> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesOrderHeaderMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesOrderHeader> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesOrderHeaderMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFSalesOrderHeader> SearchLinqEF(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -230,69 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int salesOrderID,
-			int revisionNumber,
-			DateTime orderDate,
-			DateTime dueDate,
-			Nullable<DateTime> shipDate,
-			int status,
-			bool onlineOrderFlag,
-			string salesOrderNumber,
-			string purchaseOrderNumber,
-			string accountNumber,
-			int customerID,
-			Nullable<int> salesPersonID,
-			Nullable<int> territoryID,
-			int billToAddressID,
-			int shipToAddressID,
-			int shipMethodID,
-			Nullable<int> creditCardID,
-			string creditCardApprovalCode,
-			Nullable<int> currencyRateID,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal freight,
-			decimal totalDue,
-			string comment,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFSalesOrderHeader efSalesOrderHeader)
-		{
-			efSalesOrderHeader.SetProperties(salesOrderID.ToInt(), revisionNumber, orderDate.ToDateTime(), dueDate.ToDateTime(), shipDate.ToNullableDateTime(), status, onlineOrderFlag, salesOrderNumber, purchaseOrderNumber, accountNumber, customerID.ToInt(), salesPersonID.ToNullableInt(), territoryID.ToNullableInt(), billToAddressID.ToInt(), shipToAddressID.ToInt(), shipMethodID.ToInt(), creditCardID.ToNullableInt(), creditCardApprovalCode, currencyRateID.ToNullableInt(), subTotal, taxAmt, freight, totalDue, comment, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFSalesOrderHeader efSalesOrderHeader,
-			Response response)
-		{
-			if (efSalesOrderHeader == null)
-			{
-				return;
-			}
-
-			response.AddSalesOrderHeader(new POCOSalesOrderHeader(efSalesOrderHeader.SalesOrderID.ToInt(), efSalesOrderHeader.RevisionNumber, efSalesOrderHeader.OrderDate.ToDateTime(), efSalesOrderHeader.DueDate.ToDateTime(), efSalesOrderHeader.ShipDate.ToNullableDateTime(), efSalesOrderHeader.Status, efSalesOrderHeader.OnlineOrderFlag, efSalesOrderHeader.SalesOrderNumber, efSalesOrderHeader.PurchaseOrderNumber, efSalesOrderHeader.AccountNumber, efSalesOrderHeader.CustomerID.ToInt(), efSalesOrderHeader.SalesPersonID.ToNullableInt(), efSalesOrderHeader.TerritoryID.ToNullableInt(), efSalesOrderHeader.BillToAddressID.ToInt(), efSalesOrderHeader.ShipToAddressID.ToInt(), efSalesOrderHeader.ShipMethodID.ToInt(), efSalesOrderHeader.CreditCardID.ToNullableInt(), efSalesOrderHeader.CreditCardApprovalCode, efSalesOrderHeader.CurrencyRateID.ToNullableInt(), efSalesOrderHeader.SubTotal, efSalesOrderHeader.TaxAmt, efSalesOrderHeader.Freight, efSalesOrderHeader.TotalDue, efSalesOrderHeader.Comment, efSalesOrderHeader.Rowguid, efSalesOrderHeader.ModifiedDate.ToDateTime()));
-
-			CustomerRepository.MapEFToPOCO(efSalesOrderHeader.Customer, response);
-
-			SalesPersonRepository.MapEFToPOCO(efSalesOrderHeader.SalesPerson, response);
-
-			SalesTerritoryRepository.MapEFToPOCO(efSalesOrderHeader.SalesTerritory, response);
-
-			AddressRepository.MapEFToPOCO(efSalesOrderHeader.Address, response);
-
-			AddressRepository.MapEFToPOCO(efSalesOrderHeader.Address1, response);
-
-			ShipMethodRepository.MapEFToPOCO(efSalesOrderHeader.ShipMethod, response);
-
-			CreditCardRepository.MapEFToPOCO(efSalesOrderHeader.CreditCard, response);
-
-			CurrencyRateRepository.MapEFToPOCO(efSalesOrderHeader.CurrencyRate, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9dc2a65fa7b2b29b28215e649c05ee27</Hash>
+    <Hash>284e9b6d938020afaf5bbdd65b6bcc35</Hash>
 </Codenesium>*/

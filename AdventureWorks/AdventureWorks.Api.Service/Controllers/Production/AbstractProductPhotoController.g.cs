@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductPhotoFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productPhotoRepository.GetById(id);
+			ApiResponse response = this.productPhotoRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductPhotoFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productPhotoRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productPhotoRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,12 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productPhotoModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productPhotoRepository.Create(
-					model.ThumbNailPhoto,
-					model.ThumbnailPhotoFileName,
-					model.LargePhoto,
-					model.LargePhotoFileName,
-					model.ModifiedDate);
+				var id = this.productPhotoRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -126,12 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productPhotoRepository.Create(
-					model.ThumbNailPhoto,
-					model.ThumbnailPhotoFileName,
-					model.LargePhoto,
-					model.LargePhotoFileName,
-					model.ModifiedDate);
+				this.productPhotoRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -155,13 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productPhotoModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productPhotoRepository.Update(
-					id,
-					model.ThumbNailPhoto,
-					model.ThumbnailPhotoFileName,
-					model.LargePhoto,
-					model.LargePhotoFileName,
-					model.ModifiedDate);
+				this.productPhotoRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -186,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dffd3b54e3e3b5daae8467e7a23a276d</Hash>
+    <Hash>fb3f723da7633db00025fd81a28a638b</Hash>
 </Codenesium>*/

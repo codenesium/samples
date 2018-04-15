@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class DatabaseLogRepository: AbstractDatabaseLogRepository, IDatabaseLogRepository
 	{
 		public DatabaseLogRepository(
+			IObjectMapper mapper,
 			ILogger<DatabaseLogRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFDatabaseLog> SearchLinqEF(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e253adc4c9f955d91c3ab29aaf79a33</Hash>
+    <Hash>cf9e4dd4484457290ac1624e65c15f81</Hash>
 </Codenesium>*/

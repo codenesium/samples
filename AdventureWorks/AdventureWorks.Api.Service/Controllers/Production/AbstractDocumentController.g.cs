@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[DocumentFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(Guid id)
 		{
-			Response response = this.documentRepository.GetById(id);
+			ApiResponse response = this.documentRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[DocumentFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.documentRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.documentRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,20 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.documentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.documentRepository.Create(
-					model.DocumentLevel,
-					model.Title,
-					model.Owner,
-					model.FolderFlag,
-					model.FileName,
-					model.FileExtension,
-					model.Revision,
-					model.ChangeNumber,
-					model.Status,
-					model.DocumentSummary,
-					model.Document1,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.documentRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -134,20 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.documentRepository.Create(
-					model.DocumentLevel,
-					model.Title,
-					model.Owner,
-					model.FolderFlag,
-					model.FileName,
-					model.FileExtension,
-					model.Revision,
-					model.ChangeNumber,
-					model.Status,
-					model.DocumentSummary,
-					model.Document1,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.documentRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -171,21 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.documentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.documentRepository.Update(
-					id,
-					model.DocumentLevel,
-					model.Title,
-					model.Owner,
-					model.FolderFlag,
-					model.FileName,
-					model.FileExtension,
-					model.Revision,
-					model.ChangeNumber,
-					model.Status,
-					model.DocumentSummary,
-					model.Document1,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.documentRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -212,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[DocumentFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Employees/{id}/Documents")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByOwner(int id)
 		{
-			Response response = this.documentRepository.GetWhere(x => x.Owner == id);
+			ApiResponse response = this.documentRepository.GetWhere(x => x.Owner == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -223,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>15178e3c7c728c5867e00ef29229af67</Hash>
+    <Hash>0f2b3e59cd0cf396044660bcd1da595b</Hash>
 </Codenesium>*/

@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[SpaceFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.spaceRepository.GetById(id);
+			ApiResponse response = this.spaceRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[SpaceFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.spaceRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.spaceRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.spaceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.spaceRepository.Create(
-					model.Name,
-					model.Description,
-					model.StudioId);
+				var id = this.spaceRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.spaceRepository.Create(
-					model.Name,
-					model.Description,
-					model.StudioId);
+				this.spaceRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.spaceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.spaceRepository.Update(
-					id,
-					model.Name,
-					model.Description,
-					model.StudioId);
+				this.spaceRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -182,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[SpaceFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Studios/{id}/Spaces")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudioId(int id)
 		{
-			Response response = this.spaceRepository.GetWhere(x => x.StudioId == id);
+			ApiResponse response = this.spaceRepository.GetWhere(x => x.StudioId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -193,5 +183,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>19d15ba6a8f1e0814a5e89d91b6b2e3d</Hash>
+    <Hash>566de663140f08462831a844cf8e5004</Hash>
 </Codenesium>*/

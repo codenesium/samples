@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Contracts
 			string purchasingWebServiceURL,
 			DateTime modifiedDate)
 		{
-			this.AccountNumber = accountNumber;
-			this.Name = name;
-			this.CreditRating = creditRating;
-			this.PreferredVendorStatus = preferredVendorStatus;
-			this.ActiveFlag = activeFlag;
-			this.PurchasingWebServiceURL = purchasingWebServiceURL;
+			this.AccountNumber = accountNumber.ToString();
+			this.Name = name.ToString();
+			this.CreditRating = creditRating.ToInt();
+			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
+			this.ActiveFlag = activeFlag.ToBoolean();
+			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -142,5 +142,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cf0bd4b154375dd5f0947d638d24f10a</Hash>
+    <Hash>c19b6bb0d1371ca36bbc4157c7676376</Hash>
 </Codenesium>*/

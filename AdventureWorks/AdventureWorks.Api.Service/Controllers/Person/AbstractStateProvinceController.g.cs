@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[StateProvinceFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.stateProvinceRepository.GetById(id);
+			ApiResponse response = this.stateProvinceRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[StateProvinceFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.stateProvinceRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.stateProvinceRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,14 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.stateProvinceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.stateProvinceRepository.Create(
-					model.StateProvinceCode,
-					model.CountryRegionCode,
-					model.IsOnlyStateProvinceFlag,
-					model.Name,
-					model.TerritoryID,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.stateProvinceRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -128,14 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.stateProvinceRepository.Create(
-					model.StateProvinceCode,
-					model.CountryRegionCode,
-					model.IsOnlyStateProvinceFlag,
-					model.Name,
-					model.TerritoryID,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.stateProvinceRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -159,15 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.stateProvinceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.stateProvinceRepository.Update(
-					id,
-					model.StateProvinceCode,
-					model.CountryRegionCode,
-					model.IsOnlyStateProvinceFlag,
-					model.Name,
-					model.TerritoryID,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.stateProvinceRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -194,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[StateProvinceFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CountryRegions/{id}/StateProvinces")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCountryRegionCode(string id)
 		{
-			Response response = this.stateProvinceRepository.GetWhere(x => x.CountryRegionCode == id);
+			ApiResponse response = this.stateProvinceRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -207,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[StateProvinceFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesTerritories/{id}/StateProvinces")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			Response response = this.stateProvinceRepository.GetWhere(x => x.TerritoryID == id);
+			ApiResponse response = this.stateProvinceRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -218,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e764073e30d26c4b41bc5b7a605ffdaa</Hash>
+    <Hash>39b1099dfb6dd9ede3c634d410c10405</Hash>
 </Codenesium>*/

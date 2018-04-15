@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.CurrencyRateDate = currencyRateDate.ToDateTime();
-			this.FromCurrencyCode = fromCurrencyCode;
-			this.ToCurrencyCode = toCurrencyCode;
-			this.AverageRate = averageRate;
-			this.EndOfDayRate = endOfDayRate;
+			this.FromCurrencyCode = fromCurrencyCode.ToString();
+			this.ToCurrencyCode = toCurrencyCode.ToString();
+			this.AverageRate = averageRate.ToDecimal();
+			this.EndOfDayRate = endOfDayRate.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>80d5e258b401ca42fbaa0cc02c3f9bda</Hash>
+    <Hash>17da897ce2ae7fd921f26ac0a40b1f9a</Hash>
 </Codenesium>*/

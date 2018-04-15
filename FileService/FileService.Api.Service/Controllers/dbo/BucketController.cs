@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/buckets")]
+	[ApiVersion("1.0")]
 	public class BucketController: AbstractBucketController
 	{
 		public BucketController(
@@ -32,5 +34,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cec6bea0e17e04734d4f1c74c1c17669</Hash>
+    <Hash>61b8de53319c2d9af58b85b0c8df24c1</Hash>
 </Codenesium>*/

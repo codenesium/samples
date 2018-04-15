@@ -24,21 +24,21 @@ namespace NebulaNS.Api.Contracts
 			Guid externalId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name;
-			this.DynamicParameters = dynamicParameters;
-			this.StaticParameters = staticParameters;
+			this.Name = name.ToString();
+			this.DynamicParameters = dynamicParameters.ToString();
+			this.StaticParameters = staticParameters.ToString();
 			this.Order = order.ToInt();
 			this.DateStarted = dateStarted.ToNullableDateTime();
 			this.DateCompleted = dateCompleted.ToNullableDateTime();
-			this.Response = response;
-			this.ExternalId = externalId;
+			this.Response = response.ToString();
+			this.ExternalId = externalId.ToGuid();
 
 			this.ChainId = new ReferenceEntity<int>(chainId,
-			                                        "Chain");
+			                                        nameof(ApiResponse.Chains));
 			this.AssignedMachineId = new ReferenceEntity<Nullable<int>>(assignedMachineId,
-			                                                            "Machine");
+			                                                            nameof(ApiResponse.Machines));
 			this.LinkStatusId = new ReferenceEntity<int>(linkStatusId,
-			                                             "LinkStatus");
+			                                             nameof(ApiResponse.LinkStatus));
 		}
 
 		public int Id { get; set; }
@@ -169,5 +169,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b69c00d6704e3e0f2a0717c4e753dbe5</Hash>
+    <Hash>9b1019eef9ac921289af689a80808f17</Hash>
 </Codenesium>*/

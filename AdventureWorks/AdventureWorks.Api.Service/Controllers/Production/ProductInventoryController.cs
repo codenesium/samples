@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productInventories")]
+	[ApiVersion("1.0")]
 	public class ProductInventoryController: AbstractProductInventoryController
 	{
 		public ProductInventoryController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9b5b18f0249d8010e7bf98e015ddc23b</Hash>
+    <Hash>8f25807eb6df0340b35f414004acd8c2</Hash>
 </Codenesium>*/

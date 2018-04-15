@@ -13,7 +13,7 @@ namespace FileServiceNS.Api.Contracts
 		public FileTypeModel(
 			string name)
 		{
-			this.Name = name;
+			this.Name = name.ToString();
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>49a416838672ec4070a80c82f4d040a2</Hash>
+    <Hash>d59b024136bef1449b19317009dbb11f</Hash>
 </Codenesium>*/

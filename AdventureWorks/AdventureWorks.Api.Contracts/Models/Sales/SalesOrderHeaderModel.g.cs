@@ -37,15 +37,15 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.RevisionNumber = revisionNumber;
+			this.RevisionNumber = revisionNumber.ToInt();
 			this.OrderDate = orderDate.ToDateTime();
 			this.DueDate = dueDate.ToDateTime();
 			this.ShipDate = shipDate.ToNullableDateTime();
-			this.Status = status;
-			this.OnlineOrderFlag = onlineOrderFlag;
-			this.SalesOrderNumber = salesOrderNumber;
-			this.PurchaseOrderNumber = purchaseOrderNumber;
-			this.AccountNumber = accountNumber;
+			this.Status = status.ToInt();
+			this.OnlineOrderFlag = onlineOrderFlag.ToBoolean();
+			this.SalesOrderNumber = salesOrderNumber.ToString();
+			this.PurchaseOrderNumber = purchaseOrderNumber.ToString();
+			this.AccountNumber = accountNumber.ToString();
 			this.CustomerID = customerID.ToInt();
 			this.SalesPersonID = salesPersonID.ToNullableInt();
 			this.TerritoryID = territoryID.ToNullableInt();
@@ -53,14 +53,14 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ShipToAddressID = shipToAddressID.ToInt();
 			this.ShipMethodID = shipMethodID.ToInt();
 			this.CreditCardID = creditCardID.ToNullableInt();
-			this.CreditCardApprovalCode = creditCardApprovalCode;
+			this.CreditCardApprovalCode = creditCardApprovalCode.ToString();
 			this.CurrencyRateID = currencyRateID.ToNullableInt();
-			this.SubTotal = subTotal;
-			this.TaxAmt = taxAmt;
-			this.Freight = freight;
-			this.TotalDue = totalDue;
-			this.Comment = comment;
-			this.Rowguid = rowguid;
+			this.SubTotal = subTotal.ToDecimal();
+			this.TaxAmt = taxAmt.ToDecimal();
+			this.Freight = freight.ToDecimal();
+			this.TotalDue = totalDue.ToDecimal();
+			this.Comment = comment.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -458,5 +458,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3e8360c13cace57b95a91ddc129f524a</Hash>
+    <Hash>e2603df1e7023c7edff19fd48f38ff82</Hash>
 </Codenesium>*/

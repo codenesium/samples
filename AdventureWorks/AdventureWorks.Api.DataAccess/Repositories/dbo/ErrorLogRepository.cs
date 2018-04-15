@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ErrorLogRepository: AbstractErrorLogRepository, IErrorLogRepository
 	{
 		public ErrorLogRepository(
+			IObjectMapper mapper,
 			ILogger<ErrorLogRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFErrorLog> SearchLinqEF(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6c9aa0d200de9ce02e6bc0b5f7c707ed</Hash>
+    <Hash>5154423b0f3da75ef4e11e8c2bb1142b</Hash>
 </Codenesium>*/

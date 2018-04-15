@@ -14,25 +14,26 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractTeamRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			int organizationId)
+			TeamModel model)
 		{
 			var record = new EFTeam();
 
-			MapPOCOToEF(
-				0,
-				name,
-				organizationId,
+			this.mapper.TeamMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFTeam>().Add(record);
@@ -42,8 +43,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			string name,
-			int organizationId)
+			TeamModel model)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -52,10 +52,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.TeamMapModelToEF(
 					id,
-					name,
-					organizationId,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -77,9 +76,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int id)
+		public virtual ApiResponse GetById(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
@@ -87,23 +86,23 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual POCOTeam GetByIdDirect(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.Teams.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -111,22 +110,22 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual List<POCOTeam> GetWhereDirect(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Teams;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFTeam, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFTeam, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFTeam> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.TeamMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFTeam> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.TeamMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFTeam> SearchLinqEF(Expression<Func<EFTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,32 +137,9 @@ namespace NebulaNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int id,
-			string name,
-			int organizationId,
-			EFTeam efTeam)
-		{
-			efTeam.SetProperties(id.ToInt(), name, organizationId.ToInt());
-		}
-
-		public static void MapEFToPOCO(
-			EFTeam efTeam,
-			Response response)
-		{
-			if (efTeam == null)
-			{
-				return;
-			}
-
-			response.AddTeam(new POCOTeam(efTeam.Id.ToInt(), efTeam.Name, efTeam.OrganizationId.ToInt()));
-
-			OrganizationRepository.MapEFToPOCO(efTeam.Organization, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d3544a3be99c175a96011004b7238bb6</Hash>
+    <Hash>3ac7735e6087cff0dc13707723a1597d</Hash>
 </Codenesium>*/

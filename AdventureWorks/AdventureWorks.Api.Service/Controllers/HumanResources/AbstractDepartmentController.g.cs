@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[DepartmentFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(short id)
 		{
-			Response response = this.departmentRepository.GetById(id);
+			ApiResponse response = this.departmentRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[DepartmentFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.departmentRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.departmentRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.departmentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.departmentRepository.Create(
-					model.Name,
-					model.GroupName,
-					model.ModifiedDate);
+				var id = this.departmentRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.departmentRepository.Create(
-					model.Name,
-					model.GroupName,
-					model.ModifiedDate);
+				this.departmentRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.departmentModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.departmentRepository.Update(
-					id,
-					model.Name,
-					model.GroupName,
-					model.ModifiedDate);
+				this.departmentRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -180,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>df762c665dc6268f74db04933cb4d68e</Hash>
+    <Hash>260ce1a98433d2e1f0ff23c7dbb0ea97</Hash>
 </Codenesium>*/

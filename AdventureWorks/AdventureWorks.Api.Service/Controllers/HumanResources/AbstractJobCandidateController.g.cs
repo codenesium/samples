@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[JobCandidateFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.jobCandidateRepository.GetById(id);
+			ApiResponse response = this.jobCandidateRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[JobCandidateFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.jobCandidateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.jobCandidateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.jobCandidateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.jobCandidateRepository.Create(
-					model.BusinessEntityID,
-					model.Resume,
-					model.ModifiedDate);
+				var id = this.jobCandidateRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.jobCandidateRepository.Create(
-					model.BusinessEntityID,
-					model.Resume,
-					model.ModifiedDate);
+				this.jobCandidateRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.jobCandidateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.jobCandidateRepository.Update(
-					id,
-					model.BusinessEntityID,
-					model.Resume,
-					model.ModifiedDate);
+				this.jobCandidateRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -182,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[JobCandidateFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Employees/{id}/JobCandidates")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.jobCandidateRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.jobCandidateRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -193,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b84ac3707792cf6ea97c776b8427968a</Hash>
+    <Hash>0824239545374ead595f85e035051183</Hash>
 </Codenesium>*/

@@ -14,23 +14,26 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractFileTypeRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name)
+			FileTypeModel model)
 		{
 			var record = new EFFileType();
 
-			MapPOCOToEF(
-				0,
-				name,
+			this.mapper.FileTypeMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFFileType>().Add(record);
@@ -40,7 +43,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			string name)
+			FileTypeModel model)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -49,9 +52,9 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.FileTypeMapModelToEF(
 					id,
-					name,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -73,9 +76,9 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int id)
+		public virtual ApiResponse GetById(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
@@ -83,23 +86,23 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual POCOFileType GetByIdDirect(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.FileTypes.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -107,22 +110,22 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual List<POCOFileType> GetWhereDirect(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.FileTypes;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFFileType, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFFileType, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFFileType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.FileTypeMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFFileType> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.FileTypeMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFFileType> SearchLinqEF(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -134,29 +137,9 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int id,
-			string name,
-			EFFileType efFileType)
-		{
-			efFileType.SetProperties(id.ToInt(), name);
-		}
-
-		public static void MapEFToPOCO(
-			EFFileType efFileType,
-			Response response)
-		{
-			if (efFileType == null)
-			{
-				return;
-			}
-
-			response.AddFileType(new POCOFileType(efFileType.Id.ToInt(), efFileType.Name));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>590ae2334a3f88bb17d3b77446f7305c</Hash>
+    <Hash>c86e1f2cad5fa63bc60ea45ad661f7c2</Hash>
 </Codenesium>*/

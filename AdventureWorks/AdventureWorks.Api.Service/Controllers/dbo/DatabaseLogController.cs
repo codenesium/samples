@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/databaseLogs")]
+	[ApiVersion("1.0")]
 	public class DatabaseLogController: AbstractDatabaseLogController
 	{
 		public DatabaseLogController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e3eee6e8801bb03bdaf8593588bae11a</Hash>
+    <Hash>680a0f71c0f44ac18ecba9dac795d685</Hash>
 </Codenesium>*/

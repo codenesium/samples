@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shipMethods")]
+	[ApiVersion("1.0")]
 	public class ShipMethodController: AbstractShipMethodController
 	{
 		public ShipMethodController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>15edd83cf8853f219996c0901130beb3</Hash>
+    <Hash>78896730e03db8c7e29fb4c7f2a467e6</Hash>
 </Codenesium>*/

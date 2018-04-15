@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ErrorLogFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.errorLogRepository.GetById(id);
+			ApiResponse response = this.errorLogRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ErrorLogFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.errorLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.errorLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,15 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.errorLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.errorLogRepository.Create(
-					model.ErrorTime,
-					model.UserName,
-					model.ErrorNumber,
-					model.ErrorSeverity,
-					model.ErrorState,
-					model.ErrorProcedure,
-					model.ErrorLine,
-					model.ErrorMessage);
+				var id = this.errorLogRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -129,15 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.errorLogRepository.Create(
-					model.ErrorTime,
-					model.UserName,
-					model.ErrorNumber,
-					model.ErrorSeverity,
-					model.ErrorState,
-					model.ErrorProcedure,
-					model.ErrorLine,
-					model.ErrorMessage);
+				this.errorLogRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -161,16 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.errorLogModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.errorLogRepository.Update(
-					id,
-					model.ErrorTime,
-					model.UserName,
-					model.ErrorNumber,
-					model.ErrorSeverity,
-					model.ErrorState,
-					model.ErrorProcedure,
-					model.ErrorLine,
-					model.ErrorMessage);
+				this.errorLogRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -195,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8c275a18d506018287e1c02f7dd895ca</Hash>
+    <Hash>3dba00b29768d1de6ce67372cd3c3e88</Hash>
 </Codenesium>*/

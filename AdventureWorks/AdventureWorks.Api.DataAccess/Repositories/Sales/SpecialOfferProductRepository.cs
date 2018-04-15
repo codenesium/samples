@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SpecialOfferProductRepository: AbstractSpecialOfferProductRepository, ISpecialOfferProductRepository
 	{
 		public SpecialOfferProductRepository(
+			IObjectMapper mapper,
 			ILogger<SpecialOfferProductRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFSpecialOfferProduct> SearchLinqEF(Expression<Func<EFSpecialOfferProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d49678f84523c23a5bd1b023d5f3deb1</Hash>
+    <Hash>526009abfd93b93b8066ab4a4ce408e1</Hash>
 </Codenesium>*/

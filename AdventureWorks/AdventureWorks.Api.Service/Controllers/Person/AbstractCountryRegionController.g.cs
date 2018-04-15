@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[CountryRegionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			Response response = this.countryRegionRepository.GetById(id);
+			ApiResponse response = this.countryRegionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[CountryRegionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.countryRegionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.countryRegionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.countryRegionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.countryRegionRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				var id = this.countryRegionRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.countryRegionRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				this.countryRegionRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.countryRegionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.countryRegionRepository.Update(
-					id,
-					model.Name,
-					model.ModifiedDate);
+				this.countryRegionRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ac3cf013a7c260525cc4c8377af03ab7</Hash>
+    <Hash>9ddc0cc8305ac67d3613428bf902e469</Hash>
 </Codenesium>*/

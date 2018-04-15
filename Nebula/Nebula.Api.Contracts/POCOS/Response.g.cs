@@ -20,9 +20,9 @@ namespace NebulaNS.Api.Contracts
 		}
 	}
 
-	public partial class Response
+	public partial class ApiResponse
 	{
-		public Response()
+		public ApiResponse()
 		{}
 		public List<POCOChain> Chains { get; private set; } = new List<POCOChain>();
 
@@ -260,5 +260,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d57fd11038d3480b06b4aaec5cc8e82e</Hash>
+    <Hash>d33139c9ab094b8f80699591eb038a36</Hash>
 </Codenesium>*/

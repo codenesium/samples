@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ShoppingCartItemRepository: AbstractShoppingCartItemRepository, IShoppingCartItemRepository
 	{
 		public ShoppingCartItemRepository(
+			IObjectMapper mapper,
 			ILogger<ShoppingCartItemRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFShoppingCartItem> SearchLinqEF(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>53dd960172194f1f3d5b0a5c2975ecd4</Hash>
+    <Hash>f4c7ab2eb5b8f3e216b712c5be30f000</Hash>
 </Codenesium>*/

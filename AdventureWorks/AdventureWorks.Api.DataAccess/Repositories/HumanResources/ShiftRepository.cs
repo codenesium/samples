@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ShiftRepository: AbstractShiftRepository, IShiftRepository
 	{
 		public ShiftRepository(
+			IObjectMapper mapper,
 			ILogger<ShiftRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFShift> SearchLinqEF(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>795470ef645fff6d2d4a3db3161159c1</Hash>
+    <Hash>b3513cf67cf25c714f90f7894af938dd</Hash>
 </Codenesium>*/

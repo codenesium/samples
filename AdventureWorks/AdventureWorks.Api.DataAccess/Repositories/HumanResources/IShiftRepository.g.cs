@@ -7,32 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShiftRepository
 	{
-		int Create(
-			string name,
-			TimeSpan startTime,
-			TimeSpan endTime,
-			DateTime modifiedDate);
+		int Create(ShiftModel model);
 
 		void Update(int shiftID,
-		            string name,
-		            TimeSpan startTime,
-		            TimeSpan endTime,
-		            DateTime modifiedDate);
+		            ShiftModel model);
 
 		void Delete(int shiftID);
 
-		Response GetById(int shiftID);
+		ApiResponse GetById(int shiftID);
 
 		POCOShift GetByIdDirect(int shiftID);
 
-		Response GetWhere(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOShift> GetWhereDirect(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f7f23452eed877da8ec4fa87de368fcf</Hash>
+    <Hash>11ad9a9561f3131259e6d54fe2cb5ca6</Hash>
 </Codenesium>*/

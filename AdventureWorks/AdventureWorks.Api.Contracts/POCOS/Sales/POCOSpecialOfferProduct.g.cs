@@ -15,13 +15,13 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.SpecialOfferID = new ReferenceEntity<int>(specialOfferID,
-			                                               "SpecialOffer");
+			                                               nameof(ApiResponse.SpecialOffers));
 			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          "Product");
+			                                          nameof(ApiResponse.Products));
 		}
 
 		public ReferenceEntity<int> SpecialOfferID { get; set; }
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>32f8c680024c717df6d65a5743e24901</Hash>
+    <Hash>7a3a0d003067c10ef48abd6076805dd8</Hash>
 </Codenesium>*/

@@ -14,39 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractSalesTerritoryRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			string countryRegionCode,
-			string @group,
-			decimal salesYTD,
-			decimal salesLastYear,
-			decimal costYTD,
-			decimal costLastYear,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesTerritoryModel model)
 		{
 			var record = new EFSalesTerritory();
 
-			MapPOCOToEF(
-				0,
-				name,
-				countryRegionCode,
-				@group,
-				salesYTD,
-				salesLastYear,
-				costYTD,
-				costLastYear,
-				rowguid,
-				modifiedDate,
+			this.mapper.SalesTerritoryMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFSalesTerritory>().Add(record);
@@ -56,15 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int territoryID,
-			string name,
-			string countryRegionCode,
-			string @group,
-			decimal salesYTD,
-			decimal salesLastYear,
-			decimal costYTD,
-			decimal costLastYear,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesTerritoryModel model)
 		{
 			var record = this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
 			if (record == null)
@@ -73,17 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.SalesTerritoryMapModelToEF(
 					territoryID,
-					name,
-					countryRegionCode,
-					@group,
-					salesYTD,
-					salesLastYear,
-					costYTD,
-					costLastYear,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -105,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int territoryID)
+		public virtual ApiResponse GetById(int territoryID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.TerritoryID == territoryID, response);
 			return response;
@@ -115,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOSalesTerritory GetByIdDirect(int territoryID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.TerritoryID == territoryID, response);
 			return response.SalesTerritories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -139,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOSalesTerritory> GetWhereDirect(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.SalesTerritories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSalesTerritory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFSalesTerritory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesTerritory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesTerritoryMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesTerritory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesTerritoryMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFSalesTerritory> SearchLinqEF(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -166,39 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int territoryID,
-			string name,
-			string countryRegionCode,
-			string @group,
-			decimal salesYTD,
-			decimal salesLastYear,
-			decimal costYTD,
-			decimal costLastYear,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFSalesTerritory efSalesTerritory)
-		{
-			efSalesTerritory.SetProperties(territoryID.ToInt(), name, countryRegionCode, @group, salesYTD, salesLastYear, costYTD, costLastYear, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFSalesTerritory efSalesTerritory,
-			Response response)
-		{
-			if (efSalesTerritory == null)
-			{
-				return;
-			}
-
-			response.AddSalesTerritory(new POCOSalesTerritory(efSalesTerritory.TerritoryID.ToInt(), efSalesTerritory.Name, efSalesTerritory.CountryRegionCode, efSalesTerritory.@Group, efSalesTerritory.SalesYTD, efSalesTerritory.SalesLastYear, efSalesTerritory.CostYTD, efSalesTerritory.CostLastYear, efSalesTerritory.Rowguid, efSalesTerritory.ModifiedDate.ToDateTime()));
-
-			CountryRegionRepository.MapEFToPOCO(efSalesTerritory.CountryRegion, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd6c104ed417051e9c0fcf511b5efd32</Hash>
+    <Hash>66ed51db78d1ff2ca2e5e20e5b46b235</Hash>
 </Codenesium>*/

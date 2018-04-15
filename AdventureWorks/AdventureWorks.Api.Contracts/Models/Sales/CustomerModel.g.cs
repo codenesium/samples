@@ -21,8 +21,8 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PersonID = personID.ToNullableInt();
 			this.StoreID = storeID.ToNullableInt();
 			this.TerritoryID = territoryID.ToNullableInt();
-			this.AccountNumber = accountNumber;
-			this.Rowguid = rowguid;
+			this.AccountNumber = accountNumber.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -122,5 +122,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>66426ae985e34f3b091f4d52545f4c4e</Hash>
+    <Hash>426456a30294e37269ccfc36c685c6f4</Hash>
 </Codenesium>*/

@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.salesOrderHeaderSalesReasonRepository.GetById(id);
+			ApiResponse response = this.salesOrderHeaderSalesReasonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesOrderHeaderSalesReasonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.salesOrderHeaderSalesReasonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesOrderHeaderSalesReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesOrderHeaderSalesReasonRepository.Create(
-					model.SalesReasonID,
-					model.ModifiedDate);
+				var id = this.salesOrderHeaderSalesReasonRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.salesOrderHeaderSalesReasonRepository.Create(
-					model.SalesReasonID,
-					model.ModifiedDate);
+				this.salesOrderHeaderSalesReasonRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesOrderHeaderSalesReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesOrderHeaderSalesReasonRepository.Update(
-					id,
-					model.SalesReasonID,
-					model.ModifiedDate);
+				this.salesOrderHeaderSalesReasonRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -179,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesOrderHeaders/{id}/SalesOrderHeaderSalesReasons")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySalesOrderID(int id)
 		{
-			Response response = this.salesOrderHeaderSalesReasonRepository.GetWhere(x => x.SalesOrderID == id);
+			ApiResponse response = this.salesOrderHeaderSalesReasonRepository.GetWhere(x => x.SalesOrderID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -192,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesReasons/{id}/SalesOrderHeaderSalesReasons")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySalesReasonID(int id)
 		{
-			Response response = this.salesOrderHeaderSalesReasonRepository.GetWhere(x => x.SalesReasonID == id);
+			ApiResponse response = this.salesOrderHeaderSalesReasonRepository.GetWhere(x => x.SalesReasonID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -203,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0efd4f123e506e2d1567707e853672ba</Hash>
+    <Hash>5c7ebb5a35063f08a32f291c71b5227c</Hash>
 </Codenesium>*/

@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class IllustrationRepository: AbstractIllustrationRepository, IIllustrationRepository
 	{
 		public IllustrationRepository(
+			IObjectMapper mapper,
 			ILogger<IllustrationRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFIllustration> SearchLinqEF(Expression<Func<EFIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e1d759fc336214bf69d46e34aef918e0</Hash>
+    <Hash>112e3fada0c04af89acf2a4f52b596cb</Hash>
 </Codenesium>*/

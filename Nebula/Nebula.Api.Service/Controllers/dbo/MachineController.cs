@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/machines")]
+	[ApiVersion("1.0")]
 	public class MachineController: AbstractMachineController
 	{
 		public MachineController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dbf840ba32a2b63baed2c1e95f1b3715</Hash>
+    <Hash>3693d7b2143d609d7fc7f82e61874930</Hash>
 </Codenesium>*/

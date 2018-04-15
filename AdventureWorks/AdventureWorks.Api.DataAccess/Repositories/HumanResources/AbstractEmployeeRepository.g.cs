@@ -14,51 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractEmployeeRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string nationalIDNumber,
-			string loginID,
-			Nullable<Guid> organizationNode,
-			Nullable<short> organizationLevel,
-			string jobTitle,
-			DateTime birthDate,
-			string maritalStatus,
-			string gender,
-			DateTime hireDate,
-			bool salariedFlag,
-			short vacationHours,
-			short sickLeaveHours,
-			bool currentFlag,
-			Guid rowguid,
-			DateTime modifiedDate)
+			EmployeeModel model)
 		{
 			var record = new EFEmployee();
 
-			MapPOCOToEF(
-				0,
-				nationalIDNumber,
-				loginID,
-				organizationNode,
-				organizationLevel,
-				jobTitle,
-				birthDate,
-				maritalStatus,
-				gender,
-				hireDate,
-				salariedFlag,
-				vacationHours,
-				sickLeaveHours,
-				currentFlag,
-				rowguid,
-				modifiedDate,
+			this.mapper.EmployeeMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFEmployee>().Add(record);
@@ -68,21 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int businessEntityID,
-			string nationalIDNumber,
-			string loginID,
-			Nullable<Guid> organizationNode,
-			Nullable<short> organizationLevel,
-			string jobTitle,
-			DateTime birthDate,
-			string maritalStatus,
-			string gender,
-			DateTime hireDate,
-			bool salariedFlag,
-			short vacationHours,
-			short sickLeaveHours,
-			bool currentFlag,
-			Guid rowguid,
-			DateTime modifiedDate)
+			EmployeeModel model)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
@@ -91,23 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.EmployeeMapModelToEF(
 					businessEntityID,
-					nationalIDNumber,
-					loginID,
-					organizationNode,
-					organizationLevel,
-					jobTitle,
-					birthDate,
-					maritalStatus,
-					gender,
-					hireDate,
-					salariedFlag,
-					vacationHours,
-					sickLeaveHours,
-					currentFlag,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -129,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int businessEntityID)
+		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
@@ -139,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOEmployee GetByIdDirect(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.Employees.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFEmployee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFEmployee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -163,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOEmployee> GetWhereDirect(Expression<Func<EFEmployee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Employees;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFEmployee, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFEmployee, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFEmployee> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.EmployeeMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFEmployee> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.EmployeeMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFEmployee> SearchLinqEF(Expression<Func<EFEmployee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -190,45 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int businessEntityID,
-			string nationalIDNumber,
-			string loginID,
-			Nullable<Guid> organizationNode,
-			Nullable<short> organizationLevel,
-			string jobTitle,
-			DateTime birthDate,
-			string maritalStatus,
-			string gender,
-			DateTime hireDate,
-			bool salariedFlag,
-			short vacationHours,
-			short sickLeaveHours,
-			bool currentFlag,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFEmployee efEmployee)
-		{
-			efEmployee.SetProperties(businessEntityID.ToInt(), nationalIDNumber, loginID, organizationNode, organizationLevel, jobTitle, birthDate, maritalStatus, gender, hireDate, salariedFlag, vacationHours, sickLeaveHours, currentFlag, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFEmployee efEmployee,
-			Response response)
-		{
-			if (efEmployee == null)
-			{
-				return;
-			}
-
-			response.AddEmployee(new POCOEmployee(efEmployee.BusinessEntityID.ToInt(), efEmployee.NationalIDNumber, efEmployee.LoginID, efEmployee.OrganizationNode, efEmployee.OrganizationLevel, efEmployee.JobTitle, efEmployee.BirthDate, efEmployee.MaritalStatus, efEmployee.Gender, efEmployee.HireDate, efEmployee.SalariedFlag, efEmployee.VacationHours, efEmployee.SickLeaveHours, efEmployee.CurrentFlag, efEmployee.Rowguid, efEmployee.ModifiedDate.ToDateTime()));
-
-			PersonRepository.MapEFToPOCO(efEmployee.Person, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a9c963bb4f11bf4ad044a20244d6070a</Hash>
+    <Hash>4890e89b9257ff1a08d8d40bbe5098a4</Hash>
 </Codenesium>*/

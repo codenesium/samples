@@ -14,47 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractDocumentRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual Guid Create(
-			Nullable<short> documentLevel,
-			string title,
-			int owner,
-			bool folderFlag,
-			string fileName,
-			string fileExtension,
-			string revision,
-			int changeNumber,
-			int status,
-			string documentSummary,
-			byte[] document1,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DocumentModel model)
 		{
 			var record = new EFDocument();
 
-			MapPOCOToEF(
-				Guid.Empty,
-				documentLevel,
-				title,
-				owner,
-				folderFlag,
-				fileName,
-				fileExtension,
-				revision,
-				changeNumber,
-				status,
-				documentSummary,
-				document1,
-				rowguid,
-				modifiedDate,
+			this.mapper.DocumentMapModelToEF(
+				default (Guid),
+				model,
 				record);
 
 			this.context.Set<EFDocument>().Add(record);
@@ -64,19 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			Guid documentNode,
-			Nullable<short> documentLevel,
-			string title,
-			int owner,
-			bool folderFlag,
-			string fileName,
-			string fileExtension,
-			string revision,
-			int changeNumber,
-			int status,
-			string documentSummary,
-			byte[] document1,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DocumentModel model)
 		{
 			var record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
 			if (record == null)
@@ -85,21 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.DocumentMapModelToEF(
 					documentNode,
-					documentLevel,
-					title,
-					owner,
-					folderFlag,
-					fileName,
-					fileExtension,
-					revision,
-					changeNumber,
-					status,
-					documentSummary,
-					document1,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -121,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(Guid documentNode)
+		public virtual ApiResponse GetById(Guid documentNode)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.DocumentNode == documentNode, response);
 			return response;
@@ -131,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCODocument GetByIdDirect(Guid documentNode)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.DocumentNode == documentNode, response);
 			return response.Documents.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -155,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCODocument> GetWhereDirect(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Documents;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFDocument, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFDocument, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFDocument> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.DocumentMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFDocument> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.DocumentMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFDocument> SearchLinqEF(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -182,43 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			Guid documentNode,
-			Nullable<short> documentLevel,
-			string title,
-			int owner,
-			bool folderFlag,
-			string fileName,
-			string fileExtension,
-			string revision,
-			int changeNumber,
-			int status,
-			string documentSummary,
-			byte[] document1,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFDocument efDocument)
-		{
-			efDocument.SetProperties(documentNode, documentLevel, title, owner.ToInt(), folderFlag, fileName, fileExtension, revision, changeNumber.ToInt(), status, documentSummary, document1, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFDocument efDocument,
-			Response response)
-		{
-			if (efDocument == null)
-			{
-				return;
-			}
-
-			response.AddDocument(new POCODocument(efDocument.DocumentNode, efDocument.DocumentLevel, efDocument.Title, efDocument.Owner.ToInt(), efDocument.FolderFlag, efDocument.FileName, efDocument.FileExtension, efDocument.Revision, efDocument.ChangeNumber.ToInt(), efDocument.Status, efDocument.DocumentSummary, efDocument.Document1, efDocument.Rowguid, efDocument.ModifiedDate.ToDateTime()));
-
-			EmployeeRepository.MapEFToPOCO(efDocument.Employee, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7886753b85053bfa22711455a4c234b9</Hash>
+    <Hash>6b717752bac0e7768f7ce96fd582dc91</Hash>
 </Codenesium>*/

@@ -7,34 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesTerritoryHistoryRepository
 	{
-		int Create(
-			int territoryID,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(SalesTerritoryHistoryModel model);
 
 		void Update(int businessEntityID,
-		            int territoryID,
-		            DateTime startDate,
-		            Nullable<DateTime> endDate,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            SalesTerritoryHistoryModel model);
 
 		void Delete(int businessEntityID);
 
-		Response GetById(int businessEntityID);
+		ApiResponse GetById(int businessEntityID);
 
 		POCOSalesTerritoryHistory GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOSalesTerritoryHistory> GetWhereDirect(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a1db78f71f8e63041efb064ef4570f6</Hash>
+    <Hash>8da747abdf5c4a082f8fb94c43256e46</Hash>
 </Codenesium>*/

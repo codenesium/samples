@@ -36,29 +36,29 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.Name = name;
-			this.ProductNumber = productNumber;
-			this.MakeFlag = makeFlag;
-			this.FinishedGoodsFlag = finishedGoodsFlag;
-			this.Color = color;
+			this.Name = name.ToString();
+			this.ProductNumber = productNumber.ToString();
+			this.MakeFlag = makeFlag.ToBoolean();
+			this.FinishedGoodsFlag = finishedGoodsFlag.ToBoolean();
+			this.Color = color.ToString();
 			this.SafetyStockLevel = safetyStockLevel;
 			this.ReorderPoint = reorderPoint;
-			this.StandardCost = standardCost;
-			this.ListPrice = listPrice;
-			this.Size = size;
-			this.SizeUnitMeasureCode = sizeUnitMeasureCode;
-			this.WeightUnitMeasureCode = weightUnitMeasureCode;
+			this.StandardCost = standardCost.ToDecimal();
+			this.ListPrice = listPrice.ToDecimal();
+			this.Size = size.ToString();
+			this.SizeUnitMeasureCode = sizeUnitMeasureCode.ToString();
+			this.WeightUnitMeasureCode = weightUnitMeasureCode.ToString();
 			this.Weight = weight.ToNullableDecimal();
 			this.DaysToManufacture = daysToManufacture.ToInt();
-			this.ProductLine = productLine;
-			this.@Class = @class;
-			this.Style = style;
+			this.ProductLine = productLine.ToString();
+			this.@Class = @class.ToString();
+			this.Style = style.ToString();
 			this.ProductSubcategoryID = productSubcategoryID.ToNullableInt();
 			this.ProductModelID = productModelID.ToNullableInt();
 			this.SellStartDate = sellStartDate.ToDateTime();
 			this.SellEndDate = sellEndDate.ToNullableDateTime();
 			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -437,5 +437,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b0b2c5b50ef27cb4134d5f02197685bc</Hash>
+    <Hash>ec4e12e5f50928a0f1ef0ae6fe00434b</Hash>
 </Codenesium>*/

@@ -14,29 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractProductSubcategoryRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int productCategoryID,
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ProductSubcategoryModel model)
 		{
 			var record = new EFProductSubcategory();
 
-			MapPOCOToEF(
-				0,
-				productCategoryID,
-				name,
-				rowguid,
-				modifiedDate,
+			this.mapper.ProductSubcategoryMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFProductSubcategory>().Add(record);
@@ -46,10 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int productSubcategoryID,
-			int productCategoryID,
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ProductSubcategoryModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ProductSubcategoryID == productSubcategoryID).FirstOrDefault();
 			if (record == null)
@@ -58,12 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ProductSubcategoryMapModelToEF(
 					productSubcategoryID,
-					productCategoryID,
-					name,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -85,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int productSubcategoryID)
+		public virtual ApiResponse GetById(int productSubcategoryID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductSubcategoryID == productSubcategoryID, response);
 			return response;
@@ -95,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOProductSubcategory GetByIdDirect(int productSubcategoryID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductSubcategoryID == productSubcategoryID, response);
 			return response.ProductSubcategories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -119,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOProductSubcategory> GetWhereDirect(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ProductSubcategories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProductSubcategory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFProductSubcategory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductSubcategory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductSubcategoryMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductSubcategory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductSubcategoryMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFProductSubcategory> SearchLinqEF(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -146,34 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int productSubcategoryID,
-			int productCategoryID,
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFProductSubcategory efProductSubcategory)
-		{
-			efProductSubcategory.SetProperties(productSubcategoryID.ToInt(), productCategoryID.ToInt(), name, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFProductSubcategory efProductSubcategory,
-			Response response)
-		{
-			if (efProductSubcategory == null)
-			{
-				return;
-			}
-
-			response.AddProductSubcategory(new POCOProductSubcategory(efProductSubcategory.ProductSubcategoryID.ToInt(), efProductSubcategory.ProductCategoryID.ToInt(), efProductSubcategory.Name, efProductSubcategory.Rowguid, efProductSubcategory.ModifiedDate.ToDateTime()));
-
-			ProductCategoryRepository.MapEFToPOCO(efProductSubcategory.ProductCategory, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>37ddd4c061b287ee5b9d15dba053fd57</Hash>
+    <Hash>01a4eb7049ba6e17fd6f6f335e03e011</Hash>
 </Codenesium>*/

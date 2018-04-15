@@ -19,14 +19,14 @@ namespace FermataFishNS.Api.Contracts
 			int studioId)
 		{
 			this.Id = id.ToInt();
-			this.FirstName = firstName;
-			this.LastName = lastName;
-			this.Email = email;
-			this.Phone = phone;
-			this.Birthday = birthday;
+			this.FirstName = firstName.ToString();
+			this.LastName = lastName.ToString();
+			this.Email = email.ToString();
+			this.Phone = phone.ToString();
+			this.Birthday = birthday.ToDateTime();
 
 			this.StudioId = new ReferenceEntity<int>(studioId,
-			                                         "Studio");
+			                                         nameof(ApiResponse.Studios));
 		}
 
 		public int Id { get; set; }
@@ -107,5 +107,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6e16652aac213634b9a88fd36dc601da</Hash>
+    <Hash>8eb282fc8884da51d9c25ff8aa5f0f6a</Hash>
 </Codenesium>*/

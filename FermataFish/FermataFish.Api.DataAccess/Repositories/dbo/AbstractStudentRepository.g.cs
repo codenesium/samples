@@ -14,41 +14,26 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractStudentRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string email,
-			string firstName,
-			string lastName,
-			string phone,
-			bool isAdult,
-			DateTime birthday,
-			int familyId,
-			int studioId,
-			bool smsRemindersEnabled,
-			bool emailRemindersEnabled)
+			StudentModel model)
 		{
 			var record = new EFStudent();
 
-			MapPOCOToEF(
-				0,
-				email,
-				firstName,
-				lastName,
-				phone,
-				isAdult,
-				birthday,
-				familyId,
-				studioId,
-				smsRemindersEnabled,
-				emailRemindersEnabled,
+			this.mapper.StudentMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFStudent>().Add(record);
@@ -58,16 +43,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			string email,
-			string firstName,
-			string lastName,
-			string phone,
-			bool isAdult,
-			DateTime birthday,
-			int familyId,
-			int studioId,
-			bool smsRemindersEnabled,
-			bool emailRemindersEnabled)
+			StudentModel model)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -76,18 +52,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.StudentMapModelToEF(
 					id,
-					email,
-					firstName,
-					lastName,
-					phone,
-					isAdult,
-					birthday,
-					familyId,
-					studioId,
-					smsRemindersEnabled,
-					emailRemindersEnabled,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -109,9 +76,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int id)
+		public virtual ApiResponse GetById(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
@@ -119,23 +86,23 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual POCOStudent GetByIdDirect(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.Students.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -143,22 +110,22 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual List<POCOStudent> GetWhereDirect(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Students;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFStudent, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFStudent, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFStudent> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.StudentMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFStudent> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.StudentMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFStudent> SearchLinqEF(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -170,42 +137,9 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int id,
-			string email,
-			string firstName,
-			string lastName,
-			string phone,
-			bool isAdult,
-			DateTime birthday,
-			int familyId,
-			int studioId,
-			bool smsRemindersEnabled,
-			bool emailRemindersEnabled,
-			EFStudent efStudent)
-		{
-			efStudent.SetProperties(id.ToInt(), email, firstName, lastName, phone, isAdult, birthday, familyId.ToInt(), studioId.ToInt(), smsRemindersEnabled, emailRemindersEnabled);
-		}
-
-		public static void MapEFToPOCO(
-			EFStudent efStudent,
-			Response response)
-		{
-			if (efStudent == null)
-			{
-				return;
-			}
-
-			response.AddStudent(new POCOStudent(efStudent.Id.ToInt(), efStudent.Email, efStudent.FirstName, efStudent.LastName, efStudent.Phone, efStudent.IsAdult, efStudent.Birthday, efStudent.FamilyId.ToInt(), efStudent.StudioId.ToInt(), efStudent.SmsRemindersEnabled, efStudent.EmailRemindersEnabled));
-
-			FamilyRepository.MapEFToPOCO(efStudent.Family, response);
-
-			StudioRepository.MapEFToPOCO(efStudent.Studio, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>891e62efcb84988c49838ce3ae89b26c</Hash>
+    <Hash>34093ca18a6ef586f6b48dfb13fbe4e4</Hash>
 </Codenesium>*/

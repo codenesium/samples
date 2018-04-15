@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Admins?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Admins;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Admins;
 		}
 
 		public virtual async Task<POCOAdmin> AdminGetByIdAsync(int id)
@@ -48,7 +48,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Admins/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Admins.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Admins.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOAdmin>> AdminGetAllAsync(int offset = 0, int limit = 250)
@@ -56,7 +56,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Admins?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Admins;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Admins;
 		}
 
 		public virtual async Task AdminDeleteAsync(int id)
@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Admins", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task AdminBulkInsertAsync(List<AdminModel> items)
@@ -93,7 +93,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Families;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Families;
 		}
 
 		public virtual async Task<POCOFamily> FamilyGetByIdAsync(int id)
@@ -101,7 +101,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Families.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Families.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOFamily>> FamilyGetAllAsync(int offset = 0, int limit = 250)
@@ -109,7 +109,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Families;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Families;
 		}
 
 		public virtual async Task FamilyDeleteAsync(int id)
@@ -131,7 +131,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Families", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task FamilyBulkInsertAsync(List<FamilyModel> items)
@@ -146,7 +146,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lessons?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Lessons;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Lessons;
 		}
 
 		public virtual async Task<POCOLesson> LessonGetByIdAsync(int id)
@@ -154,7 +154,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lessons/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Lessons.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Lessons.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOLesson>> LessonGetAllAsync(int offset = 0, int limit = 250)
@@ -162,7 +162,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lessons?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Lessons;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Lessons;
 		}
 
 		public virtual async Task LessonDeleteAsync(int id)
@@ -184,7 +184,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Lessons", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task LessonBulkInsertAsync(List<LessonModel> items)
@@ -199,7 +199,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonStatus?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonStatus;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonStatus;
 		}
 
 		public virtual async Task<POCOLessonStatus> LessonStatusGetByIdAsync(int id)
@@ -207,7 +207,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonStatus/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonStatus.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonStatus.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOLessonStatus>> LessonStatusGetAllAsync(int offset = 0, int limit = 250)
@@ -215,7 +215,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonStatus?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonStatus;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonStatus;
 		}
 
 		public virtual async Task LessonStatusDeleteAsync(int id)
@@ -237,7 +237,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LessonStatus", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task LessonStatusBulkInsertAsync(List<LessonStatusModel> items)
@@ -252,7 +252,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXStudents?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonXStudents;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonXStudents;
 		}
 
 		public virtual async Task<POCOLessonXStudent> LessonXStudentGetByIdAsync(int id)
@@ -260,7 +260,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXStudents/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonXStudents.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonXStudents.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOLessonXStudent>> LessonXStudentGetAllAsync(int offset = 0, int limit = 250)
@@ -268,7 +268,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXStudents?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonXStudents;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonXStudents;
 		}
 
 		public virtual async Task LessonXStudentDeleteAsync(int id)
@@ -290,7 +290,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LessonXStudents", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task LessonXStudentBulkInsertAsync(List<LessonXStudentModel> items)
@@ -305,7 +305,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXTeachers?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonXTeachers;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonXTeachers;
 		}
 
 		public virtual async Task<POCOLessonXTeacher> LessonXTeacherGetByIdAsync(int id)
@@ -313,7 +313,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXTeachers/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonXTeachers.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonXTeachers.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOLessonXTeacher>> LessonXTeacherGetAllAsync(int offset = 0, int limit = 250)
@@ -321,7 +321,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXTeachers?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).LessonXTeachers;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LessonXTeachers;
 		}
 
 		public virtual async Task LessonXTeacherDeleteAsync(int id)
@@ -343,7 +343,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LessonXTeachers", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task LessonXTeacherBulkInsertAsync(List<LessonXTeacherModel> items)
@@ -358,7 +358,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Rates?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Rates;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Rates;
 		}
 
 		public virtual async Task<POCORate> RateGetByIdAsync(int id)
@@ -366,7 +366,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Rates/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Rates.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Rates.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCORate>> RateGetAllAsync(int offset = 0, int limit = 250)
@@ -374,7 +374,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Rates?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Rates;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Rates;
 		}
 
 		public virtual async Task RateDeleteAsync(int id)
@@ -396,7 +396,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Rates", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task RateBulkInsertAsync(List<RateModel> items)
@@ -411,7 +411,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Spaces;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Spaces;
 		}
 
 		public virtual async Task<POCOSpace> SpaceGetByIdAsync(int id)
@@ -419,7 +419,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Spaces.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Spaces.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOSpace>> SpaceGetAllAsync(int offset = 0, int limit = 250)
@@ -427,7 +427,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Spaces;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Spaces;
 		}
 
 		public virtual async Task SpaceDeleteAsync(int id)
@@ -449,7 +449,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Spaces", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task SpaceBulkInsertAsync(List<SpaceModel> items)
@@ -464,7 +464,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceFeatures?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpaceFeatures;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).SpaceFeatures;
 		}
 
 		public virtual async Task<POCOSpaceFeature> SpaceFeatureGetByIdAsync(int id)
@@ -472,7 +472,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceFeatures/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpaceFeatures.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).SpaceFeatures.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOSpaceFeature>> SpaceFeatureGetAllAsync(int offset = 0, int limit = 250)
@@ -480,7 +480,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceFeatures?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpaceFeatures;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).SpaceFeatures;
 		}
 
 		public virtual async Task SpaceFeatureDeleteAsync(int id)
@@ -502,7 +502,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SpaceFeatures", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task SpaceFeatureBulkInsertAsync(List<SpaceFeatureModel> items)
@@ -517,7 +517,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceXSpaceFeatures?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpaceXSpaceFeatures;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).SpaceXSpaceFeatures;
 		}
 
 		public virtual async Task<POCOSpaceXSpaceFeature> SpaceXSpaceFeatureGetByIdAsync(int id)
@@ -525,7 +525,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceXSpaceFeatures/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpaceXSpaceFeatures.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).SpaceXSpaceFeatures.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOSpaceXSpaceFeature>> SpaceXSpaceFeatureGetAllAsync(int offset = 0, int limit = 250)
@@ -533,7 +533,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceXSpaceFeatures?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).SpaceXSpaceFeatures;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).SpaceXSpaceFeatures;
 		}
 
 		public virtual async Task SpaceXSpaceFeatureDeleteAsync(int id)
@@ -555,7 +555,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SpaceXSpaceFeatures", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task SpaceXSpaceFeatureBulkInsertAsync(List<SpaceXSpaceFeatureModel> items)
@@ -570,7 +570,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/States?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).States;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).States;
 		}
 
 		public virtual async Task<POCOState> StateGetByIdAsync(int id)
@@ -578,7 +578,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/States/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).States.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).States.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOState>> StateGetAllAsync(int offset = 0, int limit = 250)
@@ -586,7 +586,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/States?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).States;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).States;
 		}
 
 		public virtual async Task StateDeleteAsync(int id)
@@ -608,7 +608,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/States", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task StateBulkInsertAsync(List<StateModel> items)
@@ -623,7 +623,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Students?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Students;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Students;
 		}
 
 		public virtual async Task<POCOStudent> StudentGetByIdAsync(int id)
@@ -631,7 +631,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Students/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Students.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Students.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOStudent>> StudentGetAllAsync(int offset = 0, int limit = 250)
@@ -639,7 +639,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Students?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Students;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Students;
 		}
 
 		public virtual async Task StudentDeleteAsync(int id)
@@ -661,7 +661,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Students", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task StudentBulkInsertAsync(List<StudentModel> items)
@@ -676,7 +676,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StudentXFamilies?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).StudentXFamilies;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).StudentXFamilies;
 		}
 
 		public virtual async Task<POCOStudentXFamily> StudentXFamilyGetByIdAsync(int id)
@@ -684,7 +684,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StudentXFamilies/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).StudentXFamilies.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).StudentXFamilies.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOStudentXFamily>> StudentXFamilyGetAllAsync(int offset = 0, int limit = 250)
@@ -692,7 +692,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StudentXFamilies?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).StudentXFamilies;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).StudentXFamilies;
 		}
 
 		public virtual async Task StudentXFamilyDeleteAsync(int id)
@@ -714,7 +714,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/StudentXFamilies", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task StudentXFamilyBulkInsertAsync(List<StudentXFamilyModel> items)
@@ -729,7 +729,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Studios;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Studios;
 		}
 
 		public virtual async Task<POCOStudio> StudioGetByIdAsync(int id)
@@ -737,7 +737,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Studios.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Studios.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOStudio>> StudioGetAllAsync(int offset = 0, int limit = 250)
@@ -745,7 +745,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Studios;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Studios;
 		}
 
 		public virtual async Task StudioDeleteAsync(int id)
@@ -767,7 +767,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Studios", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task StudioBulkInsertAsync(List<StudioModel> items)
@@ -782,7 +782,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Teachers;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Teachers;
 		}
 
 		public virtual async Task<POCOTeacher> TeacherGetByIdAsync(int id)
@@ -790,7 +790,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Teachers.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Teachers.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOTeacher>> TeacherGetAllAsync(int offset = 0, int limit = 250)
@@ -798,7 +798,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).Teachers;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Teachers;
 		}
 
 		public virtual async Task TeacherDeleteAsync(int id)
@@ -820,7 +820,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teachers", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task TeacherBulkInsertAsync(List<TeacherModel> items)
@@ -835,7 +835,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TeacherSkills;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).TeacherSkills;
 		}
 
 		public virtual async Task<POCOTeacherSkill> TeacherSkillGetByIdAsync(int id)
@@ -843,7 +843,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TeacherSkills.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).TeacherSkills.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOTeacherSkill>> TeacherSkillGetAllAsync(int offset = 0, int limit = 250)
@@ -851,7 +851,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TeacherSkills;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).TeacherSkills;
 		}
 
 		public virtual async Task TeacherSkillDeleteAsync(int id)
@@ -873,7 +873,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TeacherSkills", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task TeacherSkillBulkInsertAsync(List<TeacherSkillModel> items)
@@ -888,7 +888,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherXTeacherSkills?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TeacherXTeacherSkills;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).TeacherXTeacherSkills;
 		}
 
 		public virtual async Task<POCOTeacherXTeacherSkill> TeacherXTeacherSkillGetByIdAsync(int id)
@@ -896,7 +896,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherXTeacherSkills/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TeacherXTeacherSkills.FirstOrDefault();
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).TeacherXTeacherSkills.FirstOrDefault();
 		}
 
 		public virtual async Task<List<POCOTeacherXTeacherSkill>> TeacherXTeacherSkillGetAllAsync(int offset = 0, int limit = 250)
@@ -904,7 +904,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherXTeacherSkills?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<Response>(httpResponse.Content.ContentToString()).TeacherXTeacherSkills;
+			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).TeacherXTeacherSkills;
 		}
 
 		public virtual async Task TeacherXTeacherSkillDeleteAsync(int id)
@@ -926,7 +926,7 @@ namespace FermataFishNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TeacherXTeacherSkills", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return Convert.ToInt32(httpResponse.Content.ContentToString());
+			return httpResponse.Content.ContentToString().ToInt();
 		}
 
 		public virtual async Task TeacherXTeacherSkillBulkInsertAsync(List<TeacherXTeacherSkillModel> items)
@@ -939,5 +939,5 @@ namespace FermataFishNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>0e97a9d0673bfd3a4c9bc973e2d36f7f</Hash>
+    <Hash>4cb719ffdf93145f6a7e4f9f797d4b72</Hash>
 </Codenesium>*/

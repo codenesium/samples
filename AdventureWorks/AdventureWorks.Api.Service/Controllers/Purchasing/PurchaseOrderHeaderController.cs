@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/purchaseOrderHeaders")]
+	[ApiVersion("1.0")]
 	public class PurchaseOrderHeaderController: AbstractPurchaseOrderHeaderController
 	{
 		public PurchaseOrderHeaderController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>93c3c08878e510492d8ccc3bf884c004</Hash>
+    <Hash>9c320375f4847d2dd20f5811a5f62e42</Hash>
 </Codenesium>*/

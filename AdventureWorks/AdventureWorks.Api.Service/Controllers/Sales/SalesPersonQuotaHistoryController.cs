@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesPersonQuotaHistories")]
+	[ApiVersion("1.0")]
 	public class SalesPersonQuotaHistoryController: AbstractSalesPersonQuotaHistoryController
 	{
 		public SalesPersonQuotaHistoryController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>88683ae179e624554d8f41602d3d75a9</Hash>
+    <Hash>7f4a6a6c2447e113a920bd8a7be9d806</Hash>
 </Codenesium>*/

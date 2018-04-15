@@ -23,19 +23,19 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
-			this.CarrierTrackingNumber = carrierTrackingNumber;
+			this.CarrierTrackingNumber = carrierTrackingNumber.ToString();
 			this.OrderQty = orderQty;
 			this.ProductID = productID.ToInt();
-			this.UnitPrice = unitPrice;
-			this.UnitPriceDiscount = unitPriceDiscount;
+			this.UnitPrice = unitPrice.ToDecimal();
+			this.UnitPriceDiscount = unitPriceDiscount.ToDecimal();
 			this.LineTotal = lineTotal.ToDecimal();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.SalesOrderID = new ReferenceEntity<int>(salesOrderID,
-			                                             "SalesOrderHeader");
+			                                             nameof(ApiResponse.SalesOrderHeaders));
 			this.SpecialOfferID = new ReferenceEntity<int>(specialOfferID,
-			                                               "SpecialOfferProduct");
+			                                               nameof(ApiResponse.SpecialOfferProducts));
 		}
 
 		public ReferenceEntity<int> SalesOrderID { get; set; }
@@ -156,5 +156,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>28fd9a8a72cd549d2cba5808d130b31b</Hash>
+    <Hash>52350ffe5efeec68bf2bd6774787349e</Hash>
 </Codenesium>*/

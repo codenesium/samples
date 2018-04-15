@@ -20,9 +20,9 @@ namespace ESPIOTNS.Api.Contracts
 		}
 	}
 
-	public partial class Response
+	public partial class ApiResponse
 	{
-		public Response()
+		public ApiResponse()
 		{}
 		public List<POCODevice> Devices { get; private set; } = new List<POCODevice>();
 
@@ -76,5 +76,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d8a80b0379254b8e8b4568ea71c8436e</Hash>
+    <Hash>2ef4dc86cd64637548e10d833fb7c4a1</Hash>
 </Codenesium>*/

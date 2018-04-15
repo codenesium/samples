@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductCategoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productCategoryRepository.GetById(id);
+			ApiResponse response = this.productCategoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductCategoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productCategoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productCategoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productCategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productCategoryRepository.Create(
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.productCategoryRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productCategoryRepository.Create(
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productCategoryRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productCategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productCategoryRepository.Update(
-					id,
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productCategoryRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -180,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f0e8f7647bde83c384b2f2324e9058ba</Hash>
+    <Hash>ba21ce99b6497bdf713d23e6e1e23506</Hash>
 </Codenesium>*/

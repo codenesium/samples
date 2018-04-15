@@ -14,29 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractEmployeePayHistoryRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			DateTime rateChangeDate,
-			decimal rate,
-			int payFrequency,
-			DateTime modifiedDate)
+			EmployeePayHistoryModel model)
 		{
 			var record = new EFEmployeePayHistory();
 
-			MapPOCOToEF(
-				0,
-				rateChangeDate,
-				rate,
-				payFrequency,
-				modifiedDate,
+			this.mapper.EmployeePayHistoryMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFEmployeePayHistory>().Add(record);
@@ -46,10 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int businessEntityID,
-			DateTime rateChangeDate,
-			decimal rate,
-			int payFrequency,
-			DateTime modifiedDate)
+			EmployeePayHistoryModel model)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
@@ -58,12 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.EmployeePayHistoryMapModelToEF(
 					businessEntityID,
-					rateChangeDate,
-					rate,
-					payFrequency,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -85,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int businessEntityID)
+		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
@@ -95,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOEmployeePayHistory GetByIdDirect(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.EmployeePayHistories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -119,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOEmployeePayHistory> GetWhereDirect(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.EmployeePayHistories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFEmployeePayHistory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFEmployeePayHistory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFEmployeePayHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.EmployeePayHistoryMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFEmployeePayHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.EmployeePayHistoryMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFEmployeePayHistory> SearchLinqEF(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -146,34 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int businessEntityID,
-			DateTime rateChangeDate,
-			decimal rate,
-			int payFrequency,
-			DateTime modifiedDate,
-			EFEmployeePayHistory efEmployeePayHistory)
-		{
-			efEmployeePayHistory.SetProperties(businessEntityID.ToInt(), rateChangeDate.ToDateTime(), rate, payFrequency, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFEmployeePayHistory efEmployeePayHistory,
-			Response response)
-		{
-			if (efEmployeePayHistory == null)
-			{
-				return;
-			}
-
-			response.AddEmployeePayHistory(new POCOEmployeePayHistory(efEmployeePayHistory.BusinessEntityID.ToInt(), efEmployeePayHistory.RateChangeDate.ToDateTime(), efEmployeePayHistory.Rate, efEmployeePayHistory.PayFrequency, efEmployeePayHistory.ModifiedDate.ToDateTime()));
-
-			EmployeeRepository.MapEFToPOCO(efEmployeePayHistory.Employee, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d9cb92348616a5c78dc2b981427d314</Hash>
+    <Hash>32f18f33c46674d4f8eabab437ca525f</Hash>
 </Codenesium>*/

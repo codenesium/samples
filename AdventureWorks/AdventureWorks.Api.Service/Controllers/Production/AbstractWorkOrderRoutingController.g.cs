@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.workOrderRoutingRepository.GetById(id);
+			ApiResponse response = this.workOrderRoutingRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.workOrderRoutingRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.workOrderRoutingRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,18 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.workOrderRoutingRepository.Create(
-					model.ProductID,
-					model.OperationSequence,
-					model.LocationID,
-					model.ScheduledStartDate,
-					model.ScheduledEndDate,
-					model.ActualStartDate,
-					model.ActualEndDate,
-					model.ActualResourceHrs,
-					model.PlannedCost,
-					model.ActualCost,
-					model.ModifiedDate);
+				var id = this.workOrderRoutingRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -132,18 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.workOrderRoutingRepository.Create(
-					model.ProductID,
-					model.OperationSequence,
-					model.LocationID,
-					model.ScheduledStartDate,
-					model.ScheduledEndDate,
-					model.ActualStartDate,
-					model.ActualEndDate,
-					model.ActualResourceHrs,
-					model.PlannedCost,
-					model.ActualCost,
-					model.ModifiedDate);
+				this.workOrderRoutingRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -167,19 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.workOrderRoutingRepository.Update(
-					id,
-					model.ProductID,
-					model.OperationSequence,
-					model.LocationID,
-					model.ScheduledStartDate,
-					model.ScheduledEndDate,
-					model.ActualStartDate,
-					model.ActualEndDate,
-					model.ActualResourceHrs,
-					model.PlannedCost,
-					model.ActualCost,
-					model.ModifiedDate);
+				this.workOrderRoutingRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -206,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/WorkOrders/{id}/WorkOrderRoutings")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByWorkOrderID(int id)
 		{
-			Response response = this.workOrderRoutingRepository.GetWhere(x => x.WorkOrderID == id);
+			ApiResponse response = this.workOrderRoutingRepository.GetWhere(x => x.WorkOrderID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -219,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Locations/{id}/WorkOrderRoutings")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLocationID(short id)
 		{
-			Response response = this.workOrderRoutingRepository.GetWhere(x => x.LocationID == id);
+			ApiResponse response = this.workOrderRoutingRepository.GetWhere(x => x.LocationID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -230,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4a75693f1d8dec21792783b5705c440d</Hash>
+    <Hash>6fed2c5569c7df2ffdf9cc83eb5ecdd7</Hash>
 </Codenesium>*/

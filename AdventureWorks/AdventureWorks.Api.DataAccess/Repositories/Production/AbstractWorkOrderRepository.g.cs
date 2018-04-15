@@ -14,39 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractWorkOrderRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int productID,
-			int orderQty,
-			int stockedQty,
-			short scrappedQty,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			DateTime dueDate,
-			Nullable<short> scrapReasonID,
-			DateTime modifiedDate)
+			WorkOrderModel model)
 		{
 			var record = new EFWorkOrder();
 
-			MapPOCOToEF(
-				0,
-				productID,
-				orderQty,
-				stockedQty,
-				scrappedQty,
-				startDate,
-				endDate,
-				dueDate,
-				scrapReasonID,
-				modifiedDate,
+			this.mapper.WorkOrderMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFWorkOrder>().Add(record);
@@ -56,15 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int workOrderID,
-			int productID,
-			int orderQty,
-			int stockedQty,
-			short scrappedQty,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			DateTime dueDate,
-			Nullable<short> scrapReasonID,
-			DateTime modifiedDate)
+			WorkOrderModel model)
 		{
 			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
@@ -73,17 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.WorkOrderMapModelToEF(
 					workOrderID,
-					productID,
-					orderQty,
-					stockedQty,
-					scrappedQty,
-					startDate,
-					endDate,
-					dueDate,
-					scrapReasonID,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -105,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int workOrderID)
+		public virtual ApiResponse GetById(int workOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID, response);
 			return response;
@@ -115,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOWorkOrder GetByIdDirect(int workOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID, response);
 			return response.WorkOrders.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -139,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOWorkOrder> GetWhereDirect(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.WorkOrders;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFWorkOrder, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFWorkOrder, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFWorkOrder> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.WorkOrderMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFWorkOrder> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.WorkOrderMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFWorkOrder> SearchLinqEF(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -166,41 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int workOrderID,
-			int productID,
-			int orderQty,
-			int stockedQty,
-			short scrappedQty,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			DateTime dueDate,
-			Nullable<short> scrapReasonID,
-			DateTime modifiedDate,
-			EFWorkOrder efWorkOrder)
-		{
-			efWorkOrder.SetProperties(workOrderID.ToInt(), productID.ToInt(), orderQty.ToInt(), stockedQty.ToInt(), scrappedQty, startDate.ToDateTime(), endDate.ToNullableDateTime(), dueDate.ToDateTime(), scrapReasonID, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFWorkOrder efWorkOrder,
-			Response response)
-		{
-			if (efWorkOrder == null)
-			{
-				return;
-			}
-
-			response.AddWorkOrder(new POCOWorkOrder(efWorkOrder.WorkOrderID.ToInt(), efWorkOrder.ProductID.ToInt(), efWorkOrder.OrderQty.ToInt(), efWorkOrder.StockedQty.ToInt(), efWorkOrder.ScrappedQty, efWorkOrder.StartDate.ToDateTime(), efWorkOrder.EndDate.ToNullableDateTime(), efWorkOrder.DueDate.ToDateTime(), efWorkOrder.ScrapReasonID, efWorkOrder.ModifiedDate.ToDateTime()));
-
-			ProductRepository.MapEFToPOCO(efWorkOrder.Product, response);
-
-			ScrapReasonRepository.MapEFToPOCO(efWorkOrder.ScrapReason, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>573e2ea25ee64bf2c4a576d378ed50ac</Hash>
+    <Hash>91c11bf0d83277816aaf26df2e32dfed</Hash>
 </Codenesium>*/

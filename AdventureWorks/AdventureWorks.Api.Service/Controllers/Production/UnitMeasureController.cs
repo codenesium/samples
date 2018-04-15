@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/unitMeasures")]
+	[ApiVersion("1.0")]
 	public class UnitMeasureController: AbstractUnitMeasureController
 	{
 		public UnitMeasureController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>38c1ec688d11a29859d39975fc2b9905</Hash>
+    <Hash>59ae866cea41d6766a236266759817a6</Hash>
 </Codenesium>*/

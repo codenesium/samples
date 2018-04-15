@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/addressTypes")]
+	[ApiVersion("1.0")]
 	public class AddressTypeController: AbstractAddressTypeController
 	{
 		public AddressTypeController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>69c39ca72fd462e6565c532a029cac37</Hash>
+    <Hash>21be4b9e2623887d72ac287a57978920</Hash>
 </Codenesium>*/

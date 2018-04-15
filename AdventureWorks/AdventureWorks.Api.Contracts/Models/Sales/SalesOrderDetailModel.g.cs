@@ -23,14 +23,14 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
-			this.CarrierTrackingNumber = carrierTrackingNumber;
+			this.CarrierTrackingNumber = carrierTrackingNumber.ToString();
 			this.OrderQty = orderQty;
 			this.ProductID = productID.ToInt();
 			this.SpecialOfferID = specialOfferID.ToInt();
-			this.UnitPrice = unitPrice;
-			this.UnitPriceDiscount = unitPriceDiscount;
+			this.UnitPrice = unitPrice.ToDecimal();
+			this.UnitPriceDiscount = unitPriceDiscount.ToDecimal();
 			this.LineTotal = lineTotal.ToDecimal();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -196,5 +196,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1e52f2f7ea4188ad23225857b64192dd</Hash>
+    <Hash>9ab0b9567b613371e99c932c10ecc394</Hash>
 </Codenesium>*/

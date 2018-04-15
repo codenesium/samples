@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductCategoryRepository: AbstractProductCategoryRepository, IProductCategoryRepository
 	{
 		public ProductCategoryRepository(
+			IObjectMapper mapper,
 			ILogger<ProductCategoryRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFProductCategory> SearchLinqEF(Expression<Func<EFProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb76b90bd277cb4f8b3561a7c1193b37</Hash>
+    <Hash>9c70c21f53cf8b5957438190d6ee0936</Hash>
 </Codenesium>*/

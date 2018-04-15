@@ -18,10 +18,10 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.ShipMethodID = shipMethodID.ToInt();
-			this.Name = name;
-			this.ShipBase = shipBase;
-			this.ShipRate = shipRate;
-			this.Rowguid = rowguid;
+			this.Name = name.ToString();
+			this.ShipBase = shipBase.ToDecimal();
+			this.ShipRate = shipRate.ToDecimal();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4d95088bf1fc946b542c545d7794c58b</Hash>
+    <Hash>ecf2ec902af7ba5006c3346a62d6ae35</Hash>
 </Codenesium>*/

@@ -23,17 +23,17 @@ namespace NebulaNS.Api.Contracts
 			string response,
 			Guid externalId)
 		{
-			this.Name = name;
-			this.DynamicParameters = dynamicParameters;
-			this.StaticParameters = staticParameters;
+			this.Name = name.ToString();
+			this.DynamicParameters = dynamicParameters.ToString();
+			this.StaticParameters = staticParameters.ToString();
 			this.ChainId = chainId.ToInt();
 			this.AssignedMachineId = assignedMachineId.ToNullableInt();
 			this.LinkStatusId = linkStatusId.ToInt();
 			this.Order = order.ToInt();
 			this.DateStarted = dateStarted.ToNullableDateTime();
 			this.DateCompleted = dateCompleted.ToNullableDateTime();
-			this.Response = response;
-			this.ExternalId = externalId;
+			this.Response = response.ToString();
+			this.ExternalId = externalId.ToGuid();
 		}
 
 		private string name;
@@ -209,5 +209,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f43a0548521270f03576931c0abcd22f</Hash>
+    <Hash>1640f515ade75a4dd03d681cab602efa</Hash>
 </Codenesium>*/

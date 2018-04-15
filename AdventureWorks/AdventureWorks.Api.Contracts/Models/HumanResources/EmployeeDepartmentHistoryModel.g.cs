@@ -18,9 +18,9 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.DepartmentID = departmentID;
-			this.ShiftID = shiftID;
-			this.StartDate = startDate;
-			this.EndDate = endDate;
+			this.ShiftID = shiftID.ToInt();
+			this.StartDate = startDate.ToDateTime();
+			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a905971e3c3aa204e1d17b18affb28d4</Hash>
+    <Hash>d715ae952f33e3b416ecd6c9efbe2d7c</Hash>
 </Codenesium>*/

@@ -27,20 +27,20 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.NationalIDNumber = nationalIDNumber;
-			this.LoginID = loginID;
+			this.NationalIDNumber = nationalIDNumber.ToString();
+			this.LoginID = loginID.ToString();
 			this.OrganizationNode = organizationNode;
 			this.OrganizationLevel = organizationLevel;
-			this.JobTitle = jobTitle;
-			this.BirthDate = birthDate;
-			this.MaritalStatus = maritalStatus;
-			this.Gender = gender;
-			this.HireDate = hireDate;
-			this.SalariedFlag = salariedFlag;
+			this.JobTitle = jobTitle.ToString();
+			this.BirthDate = birthDate.ToDateTime();
+			this.MaritalStatus = maritalStatus.ToString();
+			this.Gender = gender.ToString();
+			this.HireDate = hireDate.ToDateTime();
+			this.SalariedFlag = salariedFlag.ToBoolean();
 			this.VacationHours = vacationHours;
 			this.SickLeaveHours = sickLeaveHours;
-			this.CurrentFlag = currentFlag;
-			this.Rowguid = rowguid;
+			this.CurrentFlag = currentFlag.ToBoolean();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -285,5 +285,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>02dacbf4277438d3c7b488b8bb257eda</Hash>
+    <Hash>0e934ec80f28ad5f399baa3a73c6f300</Hash>
 </Codenesium>*/

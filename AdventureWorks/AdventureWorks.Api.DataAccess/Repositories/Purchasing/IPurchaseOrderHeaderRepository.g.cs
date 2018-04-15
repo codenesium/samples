@@ -7,48 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPurchaseOrderHeaderRepository
 	{
-		int Create(
-			int revisionNumber,
-			int status,
-			int employeeID,
-			int vendorID,
-			int shipMethodID,
-			DateTime orderDate,
-			Nullable<DateTime> shipDate,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal freight,
-			decimal totalDue,
-			DateTime modifiedDate);
+		int Create(PurchaseOrderHeaderModel model);
 
 		void Update(int purchaseOrderID,
-		            int revisionNumber,
-		            int status,
-		            int employeeID,
-		            int vendorID,
-		            int shipMethodID,
-		            DateTime orderDate,
-		            Nullable<DateTime> shipDate,
-		            decimal subTotal,
-		            decimal taxAmt,
-		            decimal freight,
-		            decimal totalDue,
-		            DateTime modifiedDate);
+		            PurchaseOrderHeaderModel model);
 
 		void Delete(int purchaseOrderID);
 
-		Response GetById(int purchaseOrderID);
+		ApiResponse GetById(int purchaseOrderID);
 
 		POCOPurchaseOrderHeader GetByIdDirect(int purchaseOrderID);
 
-		Response GetWhere(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOPurchaseOrderHeader> GetWhereDirect(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7da796bff3575bf84666c33793defad1</Hash>
+    <Hash>906c8320e90750cbbe94a28cb2132199</Hash>
 </Codenesium>*/

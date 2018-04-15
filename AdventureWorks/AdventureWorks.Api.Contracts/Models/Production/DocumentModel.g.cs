@@ -26,17 +26,17 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.DocumentLevel = documentLevel;
-			this.Title = title;
+			this.Title = title.ToString();
 			this.Owner = owner.ToInt();
-			this.FolderFlag = folderFlag;
-			this.FileName = fileName;
-			this.FileExtension = fileExtension;
-			this.Revision = revision;
+			this.FolderFlag = folderFlag.ToBoolean();
+			this.FileName = fileName.ToString();
+			this.FileExtension = fileExtension.ToString();
+			this.Revision = revision.ToString();
 			this.ChangeNumber = changeNumber.ToInt();
-			this.Status = status;
-			this.DocumentSummary = documentSummary;
+			this.Status = status.ToInt();
+			this.DocumentSummary = documentSummary.ToString();
 			this.Document1 = document1;
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -248,5 +248,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>489a85fee4f6472a442020f56ff8620f</Hash>
+    <Hash>350000809b18c730399a30294f3b4669</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.SalesReasonID = salesReasonID.ToInt();
-			this.Name = name;
-			this.ReasonType = reasonType;
+			this.Name = name.ToString();
+			this.ReasonType = reasonType.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ddbc5809603b1bddafa50a413fe7c260</Hash>
+    <Hash>c18cf8f7aadad2cd51a31cc54e15fdd7</Hash>
 </Codenesium>*/

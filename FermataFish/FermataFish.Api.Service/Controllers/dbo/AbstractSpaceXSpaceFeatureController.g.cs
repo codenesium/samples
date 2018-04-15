@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.spaceXSpaceFeatureRepository.GetById(id);
+			ApiResponse response = this.spaceXSpaceFeatureRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.spaceXSpaceFeatureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.spaceXSpaceFeatureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.spaceXSpaceFeatureRepository.Create(
-					model.SpaceId,
-					model.SpaceFeatureId);
+				var id = this.spaceXSpaceFeatureRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.spaceXSpaceFeatureRepository.Create(
-					model.SpaceId,
-					model.SpaceFeatureId);
+				this.spaceXSpaceFeatureRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.spaceXSpaceFeatureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.spaceXSpaceFeatureRepository.Update(
-					id,
-					model.SpaceId,
-					model.SpaceFeatureId);
+				this.spaceXSpaceFeatureRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -179,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Spaces/{id}/SpaceXSpaceFeatures")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySpaceId(int id)
 		{
-			Response response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceId == id);
+			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -192,10 +185,10 @@ namespace FermataFishNS.Api.Service
 		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SpaceFeatures/{id}/SpaceXSpaceFeatures")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySpaceFeatureId(int id)
 		{
-			Response response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceFeatureId == id);
+			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceFeatureId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -203,5 +196,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7c58a56599f5cc33fb584dfbdf6caf0a</Hash>
+    <Hash>a7a18b80f6bf87faf536fc709c73d5ce</Hash>
 </Codenesium>*/

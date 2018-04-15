@@ -14,7 +14,7 @@ namespace FileServiceNS.Api.Contracts
 			string name)
 		{
 			this.Id = id.ToInt();
-			this.Name = name;
+			this.Name = name.ToString();
 		}
 
 		public int Id { get; set; }
@@ -45,5 +45,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>71ee7d76baed4a95de16109672d005b5</Hash>
+    <Hash>14eac71b7328197b1888c1a834fc8684</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Contracts
 			TimeSpan endTime,
 			DateTime modifiedDate)
 		{
-			this.ShiftID = shiftID;
-			this.Name = name;
+			this.ShiftID = shiftID.ToInt();
+			this.Name = name.ToString();
 			this.StartTime = startTime;
 			this.EndTime = endTime;
 			this.ModifiedDate = modifiedDate.ToDateTime();
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8ebf6d3b48fe87c6e347bf8c8a6a9d59</Hash>
+    <Hash>d4c5b388284aa765e419844ab1b236ef</Hash>
 </Codenesium>*/

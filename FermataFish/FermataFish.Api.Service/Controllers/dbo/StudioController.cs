@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FermataFishNS.Api.DataAccess;
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/studios")]
+	[ApiVersion("1.0")]
 	public class StudioController: AbstractStudioController
 	{
 		public StudioController(
@@ -32,5 +34,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b945ffb8ec066295c9f0c39c74dcfcc5</Hash>
+    <Hash>a0400719b1c5034f697e5cdd0e6aab26</Hash>
 </Codenesium>*/

@@ -14,41 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractPurchaseOrderDetailRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int purchaseOrderDetailID,
-			DateTime dueDate,
-			short orderQty,
-			int productID,
-			decimal unitPrice,
-			decimal lineTotal,
-			decimal receivedQty,
-			decimal rejectedQty,
-			decimal stockedQty,
-			DateTime modifiedDate)
+			PurchaseOrderDetailModel model)
 		{
 			var record = new EFPurchaseOrderDetail();
 
-			MapPOCOToEF(
-				0,
-				purchaseOrderDetailID,
-				dueDate,
-				orderQty,
-				productID,
-				unitPrice,
-				lineTotal,
-				receivedQty,
-				rejectedQty,
-				stockedQty,
-				modifiedDate,
+			this.mapper.PurchaseOrderDetailMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFPurchaseOrderDetail>().Add(record);
@@ -58,16 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int purchaseOrderID,
-			int purchaseOrderDetailID,
-			DateTime dueDate,
-			short orderQty,
-			int productID,
-			decimal unitPrice,
-			decimal lineTotal,
-			decimal receivedQty,
-			decimal rejectedQty,
-			decimal stockedQty,
-			DateTime modifiedDate)
+			PurchaseOrderDetailModel model)
 		{
 			var record = this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
 			if (record == null)
@@ -76,18 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.PurchaseOrderDetailMapModelToEF(
 					purchaseOrderID,
-					purchaseOrderDetailID,
-					dueDate,
-					orderQty,
-					productID,
-					unitPrice,
-					lineTotal,
-					receivedQty,
-					rejectedQty,
-					stockedQty,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -109,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int purchaseOrderID)
+		public virtual ApiResponse GetById(int purchaseOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID, response);
 			return response;
@@ -119,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOPurchaseOrderDetail GetByIdDirect(int purchaseOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID, response);
 			return response.PurchaseOrderDetails.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -143,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOPurchaseOrderDetail> GetWhereDirect(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.PurchaseOrderDetails;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFPurchaseOrderDetail> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.PurchaseOrderDetailMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFPurchaseOrderDetail> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.PurchaseOrderDetailMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFPurchaseOrderDetail> SearchLinqEF(Expression<Func<EFPurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -170,42 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int purchaseOrderID,
-			int purchaseOrderDetailID,
-			DateTime dueDate,
-			short orderQty,
-			int productID,
-			decimal unitPrice,
-			decimal lineTotal,
-			decimal receivedQty,
-			decimal rejectedQty,
-			decimal stockedQty,
-			DateTime modifiedDate,
-			EFPurchaseOrderDetail efPurchaseOrderDetail)
-		{
-			efPurchaseOrderDetail.SetProperties(purchaseOrderID.ToInt(), purchaseOrderDetailID.ToInt(), dueDate.ToDateTime(), orderQty, productID.ToInt(), unitPrice, lineTotal, receivedQty.ToDecimal(), rejectedQty.ToDecimal(), stockedQty.ToDecimal(), modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFPurchaseOrderDetail efPurchaseOrderDetail,
-			Response response)
-		{
-			if (efPurchaseOrderDetail == null)
-			{
-				return;
-			}
-
-			response.AddPurchaseOrderDetail(new POCOPurchaseOrderDetail(efPurchaseOrderDetail.PurchaseOrderID.ToInt(), efPurchaseOrderDetail.PurchaseOrderDetailID.ToInt(), efPurchaseOrderDetail.DueDate.ToDateTime(), efPurchaseOrderDetail.OrderQty, efPurchaseOrderDetail.ProductID.ToInt(), efPurchaseOrderDetail.UnitPrice, efPurchaseOrderDetail.LineTotal, efPurchaseOrderDetail.ReceivedQty.ToDecimal(), efPurchaseOrderDetail.RejectedQty.ToDecimal(), efPurchaseOrderDetail.StockedQty.ToDecimal(), efPurchaseOrderDetail.ModifiedDate.ToDateTime()));
-
-			PurchaseOrderHeaderRepository.MapEFToPOCO(efPurchaseOrderDetail.PurchaseOrderHeader, response);
-
-			ProductRepository.MapEFToPOCO(efPurchaseOrderDetail.Product, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>73b30497487e2547f4d72ba26568f5fa</Hash>
+    <Hash>992ddc833c69f1afb0581dbd50047278</Hash>
 </Codenesium>*/

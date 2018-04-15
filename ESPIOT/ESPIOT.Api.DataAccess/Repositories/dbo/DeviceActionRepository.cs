@@ -12,9 +12,10 @@ namespace ESPIOTNS.Api.DataAccess
 	public class DeviceActionRepository: AbstractDeviceActionRepository, IDeviceActionRepository
 	{
 		public DeviceActionRepository(
+			IObjectMapper mapper,
 			ILogger<DeviceActionRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>48628698622c2f8e1c8b6c1d0a904b31</Hash>
+    <Hash>b2fa4aa485b64fe9985b38e841553323</Hash>
 </Codenesium>*/

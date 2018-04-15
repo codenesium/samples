@@ -23,17 +23,17 @@ namespace FileServiceNS.Api.Contracts
 			Nullable<int> bucketId,
 			string description)
 		{
-			this.ExternalId = externalId;
-			this.PrivateKey = privateKey;
-			this.PublicKey = publicKey;
-			this.Location = location;
+			this.ExternalId = externalId.ToGuid();
+			this.PrivateKey = privateKey.ToString();
+			this.PublicKey = publicKey.ToString();
+			this.Location = location.ToString();
 			this.Expiration = expiration.ToDateTime();
-			this.Extension = extension;
+			this.Extension = extension.ToString();
 			this.DateCreated = dateCreated.ToDateTime();
 			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
 			this.FileTypeId = fileTypeId.ToInt();
 			this.BucketId = bucketId.ToNullableInt();
-			this.Description = description;
+			this.Description = description.ToString();
 		}
 
 		private Guid externalId;
@@ -213,5 +213,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f58f0c0dc6a9b1991a786f64c66c4974</Hash>
+    <Hash>4e71389e2f188f5a8cb7b3088e4eee51</Hash>
 </Codenesium>*/

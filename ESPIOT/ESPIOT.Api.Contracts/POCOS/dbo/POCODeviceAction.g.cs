@@ -16,11 +16,11 @@ namespace ESPIOTNS.Api.Contracts
 			string @value)
 		{
 			this.Id = id.ToInt();
-			this.Name = name;
-			this.@Value = @value;
+			this.Name = name.ToString();
+			this.@Value = @value.ToString();
 
 			this.DeviceId = new ReferenceEntity<int>(deviceId,
-			                                         "Device");
+			                                         nameof(ApiResponse.Devices));
 		}
 
 		public int Id { get; set; }
@@ -71,5 +71,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3f6810fa0bc9e61a833a8d6f7a5ebe18</Hash>
+    <Hash>9a65e1d1fa4eda5f5f9732aab99adbef</Hash>
 </Codenesium>*/

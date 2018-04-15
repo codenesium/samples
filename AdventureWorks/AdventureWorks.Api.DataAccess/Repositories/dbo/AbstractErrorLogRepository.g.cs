@@ -14,37 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractErrorLogRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			DateTime errorTime,
-			string userName,
-			int errorNumber,
-			Nullable<int> errorSeverity,
-			Nullable<int> errorState,
-			string errorProcedure,
-			Nullable<int> errorLine,
-			string errorMessage)
+			ErrorLogModel model)
 		{
 			var record = new EFErrorLog();
 
-			MapPOCOToEF(
-				0,
-				errorTime,
-				userName,
-				errorNumber,
-				errorSeverity,
-				errorState,
-				errorProcedure,
-				errorLine,
-				errorMessage,
+			this.mapper.ErrorLogMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFErrorLog>().Add(record);
@@ -54,14 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int errorLogID,
-			DateTime errorTime,
-			string userName,
-			int errorNumber,
-			Nullable<int> errorSeverity,
-			Nullable<int> errorState,
-			string errorProcedure,
-			Nullable<int> errorLine,
-			string errorMessage)
+			ErrorLogModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
 			if (record == null)
@@ -70,16 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ErrorLogMapModelToEF(
 					errorLogID,
-					errorTime,
-					userName,
-					errorNumber,
-					errorSeverity,
-					errorState,
-					errorProcedure,
-					errorLine,
-					errorMessage,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -101,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int errorLogID)
+		public virtual ApiResponse GetById(int errorLogID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID, response);
 			return response;
@@ -111,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOErrorLog GetByIdDirect(int errorLogID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID, response);
 			return response.ErrorLogs.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -135,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOErrorLog> GetWhereDirect(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ErrorLogs;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFErrorLog, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFErrorLog, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFErrorLog> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ErrorLogMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFErrorLog> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ErrorLogMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFErrorLog> SearchLinqEF(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -162,36 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int errorLogID,
-			DateTime errorTime,
-			string userName,
-			int errorNumber,
-			Nullable<int> errorSeverity,
-			Nullable<int> errorState,
-			string errorProcedure,
-			Nullable<int> errorLine,
-			string errorMessage,
-			EFErrorLog efErrorLog)
-		{
-			efErrorLog.SetProperties(errorLogID.ToInt(), errorTime.ToDateTime(), userName, errorNumber.ToInt(), errorSeverity.ToNullableInt(), errorState.ToNullableInt(), errorProcedure, errorLine.ToNullableInt(), errorMessage);
-		}
-
-		public static void MapEFToPOCO(
-			EFErrorLog efErrorLog,
-			Response response)
-		{
-			if (efErrorLog == null)
-			{
-				return;
-			}
-
-			response.AddErrorLog(new POCOErrorLog(efErrorLog.ErrorLogID.ToInt(), efErrorLog.ErrorTime.ToDateTime(), efErrorLog.UserName, efErrorLog.ErrorNumber.ToInt(), efErrorLog.ErrorSeverity.ToNullableInt(), efErrorLog.ErrorState.ToNullableInt(), efErrorLog.ErrorProcedure, efErrorLog.ErrorLine.ToNullableInt(), efErrorLog.ErrorMessage));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>186993cfd4b6b69ff63ac29ea21894ab</Hash>
+    <Hash>64e2b3174aa09d5f5289ddf0187e54ae</Hash>
 </Codenesium>*/

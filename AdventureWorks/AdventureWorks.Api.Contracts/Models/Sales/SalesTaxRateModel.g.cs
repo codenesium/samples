@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.StateProvinceID = stateProvinceID.ToInt();
-			this.TaxType = taxType;
-			this.TaxRate = taxRate;
-			this.Name = name;
-			this.Rowguid = rowguid;
+			this.TaxType = taxType.ToInt();
+			this.TaxRate = taxRate.ToDecimal();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>65cec9e3e8b42330d6c0b1085297e705</Hash>
+    <Hash>af369612bd92d9afaf1805c7f5e6efe3</Hash>
 </Codenesium>*/

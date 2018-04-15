@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using FermataFishNS.Api.DataAccess;
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/spaceFeatures")]
+	[ApiVersion("1.0")]
 	public class SpaceFeatureController: AbstractSpaceFeatureController
 	{
 		public SpaceFeatureController(
@@ -32,5 +34,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ea8bbfadb208ea23a73b44100cde9586</Hash>
+    <Hash>2575c182afea33090868d3049df9440c</Hash>
 </Codenesium>*/

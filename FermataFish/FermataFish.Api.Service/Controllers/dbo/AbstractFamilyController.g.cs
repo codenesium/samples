@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[FamilyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.familyRepository.GetById(id);
+			ApiResponse response = this.familyRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[FamilyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.familyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.familyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,13 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.familyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.familyRepository.Create(
-					model.PcFirstName,
-					model.PcLastName,
-					model.PcPhone,
-					model.PcEmail,
-					model.Notes,
-					model.StudioId);
+				var id = this.familyRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -127,13 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.familyRepository.Create(
-					model.PcFirstName,
-					model.PcLastName,
-					model.PcPhone,
-					model.PcEmail,
-					model.Notes,
-					model.StudioId);
+				this.familyRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -157,14 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.familyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.familyRepository.Update(
-					id,
-					model.PcFirstName,
-					model.PcLastName,
-					model.PcPhone,
-					model.PcEmail,
-					model.Notes,
-					model.StudioId);
+				this.familyRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -191,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[FamilyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Studios/{id}/Families")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ById(int id)
 		{
-			Response response = this.familyRepository.GetWhere(x => x.Id == id);
+			ApiResponse response = this.familyRepository.GetWhere(x => x.Id == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -204,10 +185,10 @@ namespace FermataFishNS.Api.Service
 		[FamilyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Studios/{id}/Families")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudioId(int id)
 		{
-			Response response = this.familyRepository.GetWhere(x => x.StudioId == id);
+			ApiResponse response = this.familyRepository.GetWhere(x => x.StudioId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -215,5 +196,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>00ea225a437c14a19cfceb09f09558f3</Hash>
+    <Hash>78b768b3658318cc0abae9e9bf62c064</Hash>
 </Codenesium>*/

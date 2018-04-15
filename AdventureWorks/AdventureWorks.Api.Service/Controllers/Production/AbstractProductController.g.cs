@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productRepository.GetById(id);
+			ApiResponse response = this.productRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,31 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productRepository.Create(
-					model.Name,
-					model.ProductNumber,
-					model.MakeFlag,
-					model.FinishedGoodsFlag,
-					model.Color,
-					model.SafetyStockLevel,
-					model.ReorderPoint,
-					model.StandardCost,
-					model.ListPrice,
-					model.Size,
-					model.SizeUnitMeasureCode,
-					model.WeightUnitMeasureCode,
-					model.Weight,
-					model.DaysToManufacture,
-					model.ProductLine,
-					model.@Class,
-					model.Style,
-					model.ProductSubcategoryID,
-					model.ProductModelID,
-					model.SellStartDate,
-					model.SellEndDate,
-					model.DiscontinuedDate,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.productRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -145,31 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productRepository.Create(
-					model.Name,
-					model.ProductNumber,
-					model.MakeFlag,
-					model.FinishedGoodsFlag,
-					model.Color,
-					model.SafetyStockLevel,
-					model.ReorderPoint,
-					model.StandardCost,
-					model.ListPrice,
-					model.Size,
-					model.SizeUnitMeasureCode,
-					model.WeightUnitMeasureCode,
-					model.Weight,
-					model.DaysToManufacture,
-					model.ProductLine,
-					model.@Class,
-					model.Style,
-					model.ProductSubcategoryID,
-					model.ProductModelID,
-					model.SellStartDate,
-					model.SellEndDate,
-					model.DiscontinuedDate,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -193,32 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productRepository.Update(
-					id,
-					model.Name,
-					model.ProductNumber,
-					model.MakeFlag,
-					model.FinishedGoodsFlag,
-					model.Color,
-					model.SafetyStockLevel,
-					model.ReorderPoint,
-					model.StandardCost,
-					model.ListPrice,
-					model.Size,
-					model.SizeUnitMeasureCode,
-					model.WeightUnitMeasureCode,
-					model.Weight,
-					model.DaysToManufacture,
-					model.ProductLine,
-					model.@Class,
-					model.Style,
-					model.ProductSubcategoryID,
-					model.ProductModelID,
-					model.SellStartDate,
-					model.SellEndDate,
-					model.DiscontinuedDate,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -245,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/UnitMeasures/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySizeUnitMeasureCode(string id)
 		{
-			Response response = this.productRepository.GetWhere(x => x.SizeUnitMeasureCode == id);
+			ApiResponse response = this.productRepository.GetWhere(x => x.SizeUnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -258,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/UnitMeasures/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByWeightUnitMeasureCode(string id)
 		{
-			Response response = this.productRepository.GetWhere(x => x.WeightUnitMeasureCode == id);
+			ApiResponse response = this.productRepository.GetWhere(x => x.WeightUnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -271,10 +198,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductSubcategories/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductSubcategoryID(int id)
 		{
-			Response response = this.productRepository.GetWhere(x => x.ProductSubcategoryID == id);
+			ApiResponse response = this.productRepository.GetWhere(x => x.ProductSubcategoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -284,10 +211,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductModels/{id}/Products")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductModelID(int id)
 		{
-			Response response = this.productRepository.GetWhere(x => x.ProductModelID == id);
+			ApiResponse response = this.productRepository.GetWhere(x => x.ProductModelID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -295,5 +222,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>32e6c494afa364e27666033ace4f91cc</Hash>
+    <Hash>7ba80e145f1cc92cd9a2ca46409be164</Hash>
 </Codenesium>*/

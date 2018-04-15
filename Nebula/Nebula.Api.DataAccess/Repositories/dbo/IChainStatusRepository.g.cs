@@ -7,26 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IChainStatusRepository
 	{
-		int Create(
-			string name);
+		int Create(ChainStatusModel model);
 
 		void Update(int id,
-		            string name);
+		            ChainStatusModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOChainStatus GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOChainStatus> GetWhereDirect(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7d0b857ba55e1f97ac076b98373fecde</Hash>
+    <Hash>f6c3f3328ce33e45e6b9ae7d98d3aeb4</Hash>
 </Codenesium>*/

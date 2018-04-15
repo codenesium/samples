@@ -14,31 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractStoreRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			Nullable<int> salesPersonID,
-			string demographics,
-			Guid rowguid,
-			DateTime modifiedDate)
+			StoreModel model)
 		{
 			var record = new EFStore();
 
-			MapPOCOToEF(
-				0,
-				name,
-				salesPersonID,
-				demographics,
-				rowguid,
-				modifiedDate,
+			this.mapper.StoreMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFStore>().Add(record);
@@ -48,11 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int businessEntityID,
-			string name,
-			Nullable<int> salesPersonID,
-			string demographics,
-			Guid rowguid,
-			DateTime modifiedDate)
+			StoreModel model)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
@@ -61,13 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.StoreMapModelToEF(
 					businessEntityID,
-					name,
-					salesPersonID,
-					demographics,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -89,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int businessEntityID)
+		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
@@ -99,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOStore GetByIdDirect(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.Stores.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -123,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOStore> GetWhereDirect(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Stores;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFStore, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFStore, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFStore> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.StoreMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFStore> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.StoreMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFStore> SearchLinqEF(Expression<Func<EFStore, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -150,37 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int businessEntityID,
-			string name,
-			Nullable<int> salesPersonID,
-			string demographics,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFStore efStore)
-		{
-			efStore.SetProperties(businessEntityID.ToInt(), name, salesPersonID.ToNullableInt(), demographics, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFStore efStore,
-			Response response)
-		{
-			if (efStore == null)
-			{
-				return;
-			}
-
-			response.AddStore(new POCOStore(efStore.BusinessEntityID.ToInt(), efStore.Name, efStore.SalesPersonID.ToNullableInt(), efStore.Demographics, efStore.Rowguid, efStore.ModifiedDate.ToDateTime()));
-
-			BusinessEntityRepository.MapEFToPOCO(efStore.BusinessEntity, response);
-
-			SalesPersonRepository.MapEFToPOCO(efStore.SalesPerson, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf65c072b738f24e432749a03d9ae937</Hash>
+    <Hash>0b9cc8ef02717062c6c374179d61c55f</Hash>
 </Codenesium>*/

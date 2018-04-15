@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productListPriceHistories")]
+	[ApiVersion("1.0")]
 	public class ProductListPriceHistoryController: AbstractProductListPriceHistoryController
 	{
 		public ProductListPriceHistoryController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2927fd79bb9873ce93678dd0591e6691</Hash>
+    <Hash>b82fff88d7a4d76b27ed5691779fcdd5</Hash>
 </Codenesium>*/

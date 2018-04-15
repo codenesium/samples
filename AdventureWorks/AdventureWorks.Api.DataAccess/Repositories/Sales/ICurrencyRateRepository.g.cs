@@ -7,36 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICurrencyRateRepository
 	{
-		int Create(
-			DateTime currencyRateDate,
-			string fromCurrencyCode,
-			string toCurrencyCode,
-			decimal averageRate,
-			decimal endOfDayRate,
-			DateTime modifiedDate);
+		int Create(CurrencyRateModel model);
 
 		void Update(int currencyRateID,
-		            DateTime currencyRateDate,
-		            string fromCurrencyCode,
-		            string toCurrencyCode,
-		            decimal averageRate,
-		            decimal endOfDayRate,
-		            DateTime modifiedDate);
+		            CurrencyRateModel model);
 
 		void Delete(int currencyRateID);
 
-		Response GetById(int currencyRateID);
+		ApiResponse GetById(int currencyRateID);
 
 		POCOCurrencyRate GetByIdDirect(int currencyRateID);
 
-		Response GetWhere(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOCurrencyRate> GetWhereDirect(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>dfbc2978504f55d1e1789126e0ca3995</Hash>
+    <Hash>a2b8e60ed0157c41fc5e7b41341d425f</Hash>
 </Codenesium>*/

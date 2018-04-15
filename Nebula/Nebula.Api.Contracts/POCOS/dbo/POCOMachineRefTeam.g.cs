@@ -17,9 +17,9 @@ namespace NebulaNS.Api.Contracts
 			this.Id = id.ToInt();
 
 			this.MachineId = new ReferenceEntity<int>(machineId,
-			                                          "Machine");
+			                                          nameof(ApiResponse.Machines));
 			this.TeamId = new ReferenceEntity<int>(teamId,
-			                                       "Team");
+			                                       nameof(ApiResponse.Teams));
 		}
 
 		public int Id { get; set; }
@@ -60,5 +60,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>38262196b33c7eaa5d90594be3534660</Hash>
+    <Hash>589dd5a9df45a57bdaa4425eec7f7554</Hash>
 </Codenesium>*/

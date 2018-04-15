@@ -47,10 +47,10 @@ namespace ESPIOTNS.Api.Service
 		[Route("{id}")]
 		[DeviceActionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.deviceActionRepository.GetById(id);
+			ApiResponse response = this.deviceActionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace ESPIOTNS.Api.Service
 		[Route("")]
 		[DeviceActionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.deviceActionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.deviceActionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace ESPIOTNS.Api.Service
 			var validationResult = this.deviceActionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.deviceActionRepository.Create(
-					model.DeviceId,
-					model.Name,
-					model.@Value);
+				var id = this.deviceActionRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace ESPIOTNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.deviceActionRepository.Create(
-					model.DeviceId,
-					model.Name,
-					model.@Value);
+				this.deviceActionRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace ESPIOTNS.Api.Service
 			var validationResult = this.deviceActionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.deviceActionRepository.Update(
-					id,
-					model.DeviceId,
-					model.Name,
-					model.@Value);
+				this.deviceActionRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -182,10 +172,10 @@ namespace ESPIOTNS.Api.Service
 		[DeviceActionFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Devices/{id}/DeviceActions")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByDeviceId(int id)
 		{
-			Response response = this.deviceActionRepository.GetWhere(x => x.DeviceId == id);
+			ApiResponse response = this.deviceActionRepository.GetWhere(x => x.DeviceId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -193,5 +183,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>193f235bd28c587f63c9827b0a7745e7</Hash>
+    <Hash>ed138eeef11435b28e7156f1ce7f788b</Hash>
 </Codenesium>*/

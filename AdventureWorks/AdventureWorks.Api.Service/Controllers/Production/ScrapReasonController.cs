@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/scrapReasons")]
+	[ApiVersion("1.0")]
 	public class ScrapReasonController: AbstractScrapReasonController
 	{
 		public ScrapReasonController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>992f1898327ba0d3c94cacdabd496343</Hash>
+    <Hash>e28715bc0dc03153b05ba572f1b17fa9</Hash>
 </Codenesium>*/

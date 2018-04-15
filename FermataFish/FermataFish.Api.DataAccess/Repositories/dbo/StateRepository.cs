@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class StateRepository: AbstractStateRepository, IStateRepository
 	{
 		public StateRepository(
+			IObjectMapper mapper,
 			ILogger<StateRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFState> SearchLinqEF(Expression<Func<EFState, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2d5dfc5b36eada7c82b8b4de83471e3</Hash>
+    <Hash>20f6981c0d9ad85445153b4804f92840</Hash>
 </Codenesium>*/

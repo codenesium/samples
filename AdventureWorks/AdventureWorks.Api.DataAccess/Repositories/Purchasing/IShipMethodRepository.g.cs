@@ -7,34 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShipMethodRepository
 	{
-		int Create(
-			string name,
-			decimal shipBase,
-			decimal shipRate,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(ShipMethodModel model);
 
 		void Update(int shipMethodID,
-		            string name,
-		            decimal shipBase,
-		            decimal shipRate,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            ShipMethodModel model);
 
 		void Delete(int shipMethodID);
 
-		Response GetById(int shipMethodID);
+		ApiResponse GetById(int shipMethodID);
 
 		POCOShipMethod GetByIdDirect(int shipMethodID);
 
-		Response GetWhere(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOShipMethod> GetWhereDirect(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>6afb719455c7e331a57811b74b59a0f0</Hash>
+    <Hash>0a0f908c2684aa7bf223a7925c44d321</Hash>
 </Codenesium>*/

@@ -24,9 +24,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ReferenceOrderID = referenceOrderID.ToInt();
 			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
 			this.TransactionDate = transactionDate.ToDateTime();
-			this.TransactionType = transactionType;
+			this.TransactionType = transactionType.ToString();
 			this.Quantity = quantity.ToInt();
-			this.ActualCost = actualCost;
+			this.ActualCost = actualCost.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -161,5 +161,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>76f8bef7cb59a6b461ae3b7a455fb3c4</Hash>
+    <Hash>b3273a34938977aa4eb3b39bdfe9db34</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTaxRates")]
+	[ApiVersion("1.0")]
 	public class SalesTaxRateController: AbstractSalesTaxRateController
 	{
 		public SalesTaxRateController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>802e354a95154e63ad85f306e2911456</Hash>
+    <Hash>dfe364ed6d3e29ec36c584abb5573844</Hash>
 </Codenesium>*/

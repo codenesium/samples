@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/specialOffers")]
+	[ApiVersion("1.0")]
 	public class SpecialOfferController: AbstractSpecialOfferController
 	{
 		public SpecialOfferController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7154f4adfb2c7bf9ecc3d1427e666945</Hash>
+    <Hash>f094831691a30c255202d11ec581415a</Hash>
 </Codenesium>*/

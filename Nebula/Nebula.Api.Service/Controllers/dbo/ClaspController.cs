@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/clasps")]
+	[ApiVersion("1.0")]
 	public class ClaspController: AbstractClaspController
 	{
 		public ClaspController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a96c4d951815e0bbc41e00bdfae3cdd1</Hash>
+    <Hash>59e4431a96060f7f0ab81eb70b9dbed5</Hash>
 </Codenesium>*/

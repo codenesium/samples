@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class EmailAddressRepository: AbstractEmailAddressRepository, IEmailAddressRepository
 	{
 		public EmailAddressRepository(
+			IObjectMapper mapper,
 			ILogger<EmailAddressRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFEmailAddress> SearchLinqEF(Expression<Func<EFEmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d691dd459c1b02a16e73fcd60dff3833</Hash>
+    <Hash>cd95dfff267cca3eca38d91960afd7a2</Hash>
 </Codenesium>*/

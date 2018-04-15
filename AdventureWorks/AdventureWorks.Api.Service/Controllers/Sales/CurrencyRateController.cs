@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/currencyRates")]
+	[ApiVersion("1.0")]
 	public class CurrencyRateController: AbstractCurrencyRateController
 	{
 		public CurrencyRateController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a3dc62d32e41a6240901e4008de89400</Hash>
+    <Hash>a8138d6943fb039362d2f9786a99e1e8</Hash>
 </Codenesium>*/

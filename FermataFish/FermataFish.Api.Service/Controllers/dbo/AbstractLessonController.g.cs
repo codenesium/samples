@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[LessonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.lessonRepository.GetById(id);
+			ApiResponse response = this.lessonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[LessonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.lessonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.lessonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,16 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.lessonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.lessonRepository.Create(
-					model.ScheduledStartDate,
-					model.ScheduledEndDate,
-					model.ActualStartDate,
-					model.ActualEndDate,
-					model.LessonStatusId,
-					model.TeacherNotes,
-					model.StudentNotes,
-					model.BillAmount,
-					model.StudioId);
+				var id = this.lessonRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -130,16 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.lessonRepository.Create(
-					model.ScheduledStartDate,
-					model.ScheduledEndDate,
-					model.ActualStartDate,
-					model.ActualEndDate,
-					model.LessonStatusId,
-					model.TeacherNotes,
-					model.StudentNotes,
-					model.BillAmount,
-					model.StudioId);
+				this.lessonRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -163,17 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.lessonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.lessonRepository.Update(
-					id,
-					model.ScheduledStartDate,
-					model.ScheduledEndDate,
-					model.ActualStartDate,
-					model.ActualEndDate,
-					model.LessonStatusId,
-					model.TeacherNotes,
-					model.StudentNotes,
-					model.BillAmount,
-					model.StudioId);
+				this.lessonRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -200,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[LessonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/LessonStatus/{id}/Lessons")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLessonStatusId(int id)
 		{
-			Response response = this.lessonRepository.GetWhere(x => x.LessonStatusId == id);
+			ApiResponse response = this.lessonRepository.GetWhere(x => x.LessonStatusId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -213,10 +185,10 @@ namespace FermataFishNS.Api.Service
 		[LessonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Studios/{id}/Lessons")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudioId(int id)
 		{
-			Response response = this.lessonRepository.GetWhere(x => x.StudioId == id);
+			ApiResponse response = this.lessonRepository.GetWhere(x => x.StudioId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -224,5 +196,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f7d7e1c6b1e63ef6d2c56dd8b440dac5</Hash>
+    <Hash>756d3cf2c1e1dd477f5326721b92a9b9</Hash>
 </Codenesium>*/

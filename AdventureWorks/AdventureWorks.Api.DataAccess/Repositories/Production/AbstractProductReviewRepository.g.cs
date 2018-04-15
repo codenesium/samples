@@ -14,35 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractProductReviewRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int productID,
-			string reviewerName,
-			DateTime reviewDate,
-			string emailAddress,
-			int rating,
-			string comments,
-			DateTime modifiedDate)
+			ProductReviewModel model)
 		{
 			var record = new EFProductReview();
 
-			MapPOCOToEF(
-				0,
-				productID,
-				reviewerName,
-				reviewDate,
-				emailAddress,
-				rating,
-				comments,
-				modifiedDate,
+			this.mapper.ProductReviewMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFProductReview>().Add(record);
@@ -52,13 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int productReviewID,
-			int productID,
-			string reviewerName,
-			DateTime reviewDate,
-			string emailAddress,
-			int rating,
-			string comments,
-			DateTime modifiedDate)
+			ProductReviewModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
 			if (record == null)
@@ -67,15 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ProductReviewMapModelToEF(
 					productReviewID,
-					productID,
-					reviewerName,
-					reviewDate,
-					emailAddress,
-					rating,
-					comments,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -97,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int productReviewID)
+		public virtual ApiResponse GetById(int productReviewID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductReviewID == productReviewID, response);
 			return response;
@@ -107,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOProductReview GetByIdDirect(int productReviewID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ProductReviewID == productReviewID, response);
 			return response.ProductReviews.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -131,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOProductReview> GetWhereDirect(Expression<Func<EFProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ProductReviews;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFProductReview, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFProductReview, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductReview> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductReviewMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFProductReview> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ProductReviewMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFProductReview> SearchLinqEF(Expression<Func<EFProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -158,37 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int productReviewID,
-			int productID,
-			string reviewerName,
-			DateTime reviewDate,
-			string emailAddress,
-			int rating,
-			string comments,
-			DateTime modifiedDate,
-			EFProductReview efProductReview)
-		{
-			efProductReview.SetProperties(productReviewID.ToInt(), productID.ToInt(), reviewerName, reviewDate.ToDateTime(), emailAddress, rating.ToInt(), comments, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFProductReview efProductReview,
-			Response response)
-		{
-			if (efProductReview == null)
-			{
-				return;
-			}
-
-			response.AddProductReview(new POCOProductReview(efProductReview.ProductReviewID.ToInt(), efProductReview.ProductID.ToInt(), efProductReview.ReviewerName, efProductReview.ReviewDate.ToDateTime(), efProductReview.EmailAddress, efProductReview.Rating.ToInt(), efProductReview.Comments, efProductReview.ModifiedDate.ToDateTime()));
-
-			ProductRepository.MapEFToPOCO(efProductReview.Product, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b1a1fcf38f60da7f45d53449efe51f63</Hash>
+    <Hash>8f7f7dc6d5f244896e2e932b4c80d50b</Hash>
 </Codenesium>*/

@@ -37,35 +37,35 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
-			this.Name = name;
-			this.ProductNumber = productNumber;
-			this.MakeFlag = makeFlag;
-			this.FinishedGoodsFlag = finishedGoodsFlag;
-			this.Color = color;
+			this.Name = name.ToString();
+			this.ProductNumber = productNumber.ToString();
+			this.MakeFlag = makeFlag.ToBoolean();
+			this.FinishedGoodsFlag = finishedGoodsFlag.ToBoolean();
+			this.Color = color.ToString();
 			this.SafetyStockLevel = safetyStockLevel;
 			this.ReorderPoint = reorderPoint;
-			this.StandardCost = standardCost;
-			this.ListPrice = listPrice;
-			this.Size = size;
+			this.StandardCost = standardCost.ToDecimal();
+			this.ListPrice = listPrice.ToDecimal();
+			this.Size = size.ToString();
 			this.Weight = weight.ToNullableDecimal();
 			this.DaysToManufacture = daysToManufacture.ToInt();
-			this.ProductLine = productLine;
-			this.@Class = @class;
-			this.Style = style;
+			this.ProductLine = productLine.ToString();
+			this.@Class = @class.ToString();
+			this.Style = style.ToString();
 			this.SellStartDate = sellStartDate.ToDateTime();
 			this.SellEndDate = sellEndDate.ToNullableDateTime();
 			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.SizeUnitMeasureCode = new ReferenceEntity<string>(sizeUnitMeasureCode,
-			                                                       "UnitMeasure");
+			                                                       nameof(ApiResponse.UnitMeasures));
 			this.WeightUnitMeasureCode = new ReferenceEntity<string>(weightUnitMeasureCode,
-			                                                         "UnitMeasure");
+			                                                         nameof(ApiResponse.UnitMeasures));
 			this.ProductSubcategoryID = new ReferenceEntity<Nullable<int>>(productSubcategoryID,
-			                                                               "ProductSubcategory");
+			                                                               nameof(ApiResponse.ProductSubcategories));
 			this.ProductModelID = new ReferenceEntity<Nullable<int>>(productModelID,
-			                                                         "ProductModel");
+			                                                         nameof(ApiResponse.ProductModels));
 		}
 
 		public int ProductID { get; set; }
@@ -326,5 +326,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>537425479e6009208dfdc1d65b000752</Hash>
+    <Hash>74bde74b5d7edc537327d4348498201e</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/illustrations")]
+	[ApiVersion("1.0")]
 	public class IllustrationController: AbstractIllustrationController
 	{
 		public IllustrationController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2f26d26fda843ec99dbb5f80e9f60c8d</Hash>
+    <Hash>623674a6fcaad9d6a6537863dc2224be</Hash>
 </Codenesium>*/

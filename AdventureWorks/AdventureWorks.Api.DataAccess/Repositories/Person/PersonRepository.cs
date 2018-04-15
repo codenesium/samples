@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PersonRepository: AbstractPersonRepository, IPersonRepository
 	{
 		public PersonRepository(
+			IObjectMapper mapper,
 			ILogger<PersonRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFPerson> SearchLinqEF(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c5db02b3d8d753143c97750f0fa28273</Hash>
+    <Hash>b9606979da85da29870e8920c9121c41</Hash>
 </Codenesium>*/

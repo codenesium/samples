@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/teams")]
+	[ApiVersion("1.0")]
 	public class TeamController: AbstractTeamController
 	{
 		public TeamController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ad2e04fab5ba7bca0e14d19389668d61</Hash>
+    <Hash>43b988e2dfb8506f637c6df9b8eb6c8f</Hash>
 </Codenesium>*/

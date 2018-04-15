@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class BillOfMaterialsRepository: AbstractBillOfMaterialsRepository, IBillOfMaterialsRepository
 	{
 		public BillOfMaterialsRepository(
+			IObjectMapper mapper,
 			ILogger<BillOfMaterialsRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFBillOfMaterials> SearchLinqEF(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>18959bd8c1de033008315a46bb96c6f2</Hash>
+    <Hash>422b8f895cf5ee9b2a277368bbea4f93</Hash>
 </Codenesium>*/

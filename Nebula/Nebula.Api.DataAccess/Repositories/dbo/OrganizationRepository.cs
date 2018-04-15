@@ -12,9 +12,10 @@ namespace NebulaNS.Api.DataAccess
 	public class OrganizationRepository: AbstractOrganizationRepository, IOrganizationRepository
 	{
 		public OrganizationRepository(
+			IObjectMapper mapper,
 			ILogger<OrganizationRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFOrganization> SearchLinqEF(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d2c447fcb525a75e3e7ea870d80d76f9</Hash>
+    <Hash>b3f1bccf4df17c8f5f16dfb3af99618a</Hash>
 </Codenesium>*/

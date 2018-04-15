@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[MachineFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.machineRepository.GetById(id);
+			ApiResponse response = this.machineRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[MachineFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.machineRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.machineRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,12 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.machineModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.machineRepository.Create(
-					model.Name,
-					model.MachineGuid,
-					model.JwtKey,
-					model.LastIpAddress,
-					model.Description);
+				var id = this.machineRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -126,12 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.machineRepository.Create(
-					model.Name,
-					model.MachineGuid,
-					model.JwtKey,
-					model.LastIpAddress,
-					model.Description);
+				this.machineRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -155,13 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.machineModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.machineRepository.Update(
-					id,
-					model.Name,
-					model.MachineGuid,
-					model.JwtKey,
-					model.LastIpAddress,
-					model.Description);
+				this.machineRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -186,5 +170,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>16defc022257893599125f5d172130a2</Hash>
+    <Hash>0e3234b3aeae2b7971f625d94eed364a</Hash>
 </Codenesium>*/

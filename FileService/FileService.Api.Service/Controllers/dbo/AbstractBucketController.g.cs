@@ -47,10 +47,10 @@ namespace FileServiceNS.Api.Service
 		[Route("{id}")]
 		[BucketFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.bucketRepository.GetById(id);
+			ApiResponse response = this.bucketRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[BucketFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.bucketRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.bucketRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.bucketRepository.Create(
-					model.Name,
-					model.ExternalId);
+				var id = this.bucketRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace FileServiceNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.bucketRepository.Create(
-					model.Name,
-					model.ExternalId);
+				this.bucketRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.bucketModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.bucketRepository.Update(
-					id,
-					model.Name,
-					model.ExternalId);
+				this.bucketRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7030e84724c335c4ad2df8fc432d3f22</Hash>
+    <Hash>b2b6fe5639b5486f4f8c910b4ec8a263</Hash>
 </Codenesium>*/

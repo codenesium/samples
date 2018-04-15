@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[AWBuildVersionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.aWBuildVersionRepository.GetById(id);
+			ApiResponse response = this.aWBuildVersionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[AWBuildVersionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.aWBuildVersionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.aWBuildVersionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.aWBuildVersionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.aWBuildVersionRepository.Create(
-					model.Database_Version,
-					model.VersionDate,
-					model.ModifiedDate);
+				var id = this.aWBuildVersionRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.aWBuildVersionRepository.Create(
-					model.Database_Version,
-					model.VersionDate,
-					model.ModifiedDate);
+				this.aWBuildVersionRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.aWBuildVersionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.aWBuildVersionRepository.Update(
-					id,
-					model.Database_Version,
-					model.VersionDate,
-					model.ModifiedDate);
+				this.aWBuildVersionRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -180,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6f27652c47543f74cfe98c005f1e014e</Hash>
+    <Hash>25de890e2e6d46133a0e3f8a53ea0562</Hash>
 </Codenesium>*/

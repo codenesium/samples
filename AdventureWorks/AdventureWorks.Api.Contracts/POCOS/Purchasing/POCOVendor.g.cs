@@ -19,16 +19,16 @@ namespace AdventureWorksNS.Api.Contracts
 			string purchasingWebServiceURL,
 			DateTime modifiedDate)
 		{
-			this.AccountNumber = accountNumber;
-			this.Name = name;
-			this.CreditRating = creditRating;
-			this.PreferredVendorStatus = preferredVendorStatus;
-			this.ActiveFlag = activeFlag;
-			this.PurchasingWebServiceURL = purchasingWebServiceURL;
+			this.AccountNumber = accountNumber.ToString();
+			this.Name = name.ToString();
+			this.CreditRating = creditRating.ToInt();
+			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
+			this.ActiveFlag = activeFlag.ToBoolean();
+			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 "BusinessEntity");
+			                                                 nameof(ApiResponse.BusinessEntities));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
@@ -119,5 +119,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>971feb0aa922e9fea35dacb797ccfa9c</Hash>
+    <Hash>af4d4c965f67dd7b13f3fed1904a9104</Hash>
 </Codenesium>*/

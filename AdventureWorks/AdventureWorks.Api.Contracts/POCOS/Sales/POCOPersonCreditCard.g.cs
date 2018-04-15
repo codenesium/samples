@@ -17,9 +17,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 "Person");
+			                                                 nameof(ApiResponse.People));
 			this.CreditCardID = new ReferenceEntity<int>(creditCardID,
-			                                             "CreditCard");
+			                                             nameof(ApiResponse.CreditCards));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>822d7913fe70accc82c72c7b034d222d</Hash>
+    <Hash>ea6e97bc02df3fdd9a4040554c420bd6</Hash>
 </Codenesium>*/

@@ -7,32 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesPersonQuotaHistoryRepository
 	{
-		int Create(
-			DateTime quotaDate,
-			decimal salesQuota,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(SalesPersonQuotaHistoryModel model);
 
 		void Update(int businessEntityID,
-		            DateTime quotaDate,
-		            decimal salesQuota,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            SalesPersonQuotaHistoryModel model);
 
 		void Delete(int businessEntityID);
 
-		Response GetById(int businessEntityID);
+		ApiResponse GetById(int businessEntityID);
 
 		POCOSalesPersonQuotaHistory GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOSalesPersonQuotaHistory> GetWhereDirect(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ed71262f325c2d4d0ca5d58787e95ea7</Hash>
+    <Hash>ec28e6f8668128c9b1979415beb37938</Hash>
 </Codenesium>*/

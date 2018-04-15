@@ -14,41 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractSpecialOfferRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string description,
-			decimal discountPct,
-			string type,
-			string category,
-			DateTime startDate,
-			DateTime endDate,
-			int minQty,
-			Nullable<int> maxQty,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SpecialOfferModel model)
 		{
 			var record = new EFSpecialOffer();
 
-			MapPOCOToEF(
-				0,
-				description,
-				discountPct,
-				type,
-				category,
-				startDate,
-				endDate,
-				minQty,
-				maxQty,
-				rowguid,
-				modifiedDate,
+			this.mapper.SpecialOfferMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFSpecialOffer>().Add(record);
@@ -58,16 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int specialOfferID,
-			string description,
-			decimal discountPct,
-			string type,
-			string category,
-			DateTime startDate,
-			DateTime endDate,
-			int minQty,
-			Nullable<int> maxQty,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SpecialOfferModel model)
 		{
 			var record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
 			if (record == null)
@@ -76,18 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.SpecialOfferMapModelToEF(
 					specialOfferID,
-					description,
-					discountPct,
-					type,
-					category,
-					startDate,
-					endDate,
-					minQty,
-					maxQty,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -109,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int specialOfferID)
+		public virtual ApiResponse GetById(int specialOfferID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.SpecialOfferID == specialOfferID, response);
 			return response;
@@ -119,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOSpecialOffer GetByIdDirect(int specialOfferID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.SpecialOfferID == specialOfferID, response);
 			return response.SpecialOffers.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -143,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOSpecialOffer> GetWhereDirect(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.SpecialOffers;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSpecialOffer, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFSpecialOffer, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSpecialOffer> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SpecialOfferMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSpecialOffer> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SpecialOfferMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFSpecialOffer> SearchLinqEF(Expression<Func<EFSpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -170,38 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int specialOfferID,
-			string description,
-			decimal discountPct,
-			string type,
-			string category,
-			DateTime startDate,
-			DateTime endDate,
-			int minQty,
-			Nullable<int> maxQty,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFSpecialOffer efSpecialOffer)
-		{
-			efSpecialOffer.SetProperties(specialOfferID.ToInt(), description, discountPct, type, category, startDate.ToDateTime(), endDate.ToDateTime(), minQty.ToInt(), maxQty.ToNullableInt(), rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFSpecialOffer efSpecialOffer,
-			Response response)
-		{
-			if (efSpecialOffer == null)
-			{
-				return;
-			}
-
-			response.AddSpecialOffer(new POCOSpecialOffer(efSpecialOffer.SpecialOfferID.ToInt(), efSpecialOffer.Description, efSpecialOffer.DiscountPct, efSpecialOffer.Type, efSpecialOffer.Category, efSpecialOffer.StartDate.ToDateTime(), efSpecialOffer.EndDate.ToDateTime(), efSpecialOffer.MinQty.ToInt(), efSpecialOffer.MaxQty.ToNullableInt(), efSpecialOffer.Rowguid, efSpecialOffer.ModifiedDate.ToDateTime()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>be24db7b1ae090f93c116b23a6b6ace9</Hash>
+    <Hash>79ff66528cc933e36a11ef96d96eef2f</Hash>
 </Codenesium>*/

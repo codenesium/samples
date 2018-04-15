@@ -7,38 +7,25 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStudioRepository
 	{
-		int Create(
-			string name,
-			string website,
-			string address1,
-			string address2,
-			string city,
-			int stateId,
-			string zip);
+		int Create(StudioModel model);
 
 		void Update(int id,
-		            string name,
-		            string website,
-		            string address1,
-		            string address2,
-		            string city,
-		            int stateId,
-		            string zip);
+		            StudioModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOStudio GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFStudio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFStudio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOStudio> GetWhereDirect(Expression<Func<EFStudio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5921a575ffba77005d440a32c08f86c</Hash>
+    <Hash>8ea87a9a4f360e9bd71150dcde8f26c2</Hash>
 </Codenesium>*/

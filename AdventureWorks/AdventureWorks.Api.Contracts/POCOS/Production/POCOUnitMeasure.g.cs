@@ -14,8 +14,8 @@ namespace AdventureWorksNS.Api.Contracts
 			string name,
 			DateTime modifiedDate)
 		{
-			this.UnitMeasureCode = unitMeasureCode;
-			this.Name = name;
+			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2d4e306d8bae55c2dcfe18967250fde3</Hash>
+    <Hash>000ab940f0c1f11cabead45365bfb469</Hash>
 </Codenesium>*/

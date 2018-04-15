@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductListPriceHistoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productListPriceHistoryRepository.GetById(id);
+			ApiResponse response = this.productListPriceHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductListPriceHistoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productListPriceHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productListPriceHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productListPriceHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productListPriceHistoryRepository.Create(
-					model.StartDate,
-					model.EndDate,
-					model.ListPrice,
-					model.ModifiedDate);
+				var id = this.productListPriceHistoryRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productListPriceHistoryRepository.Create(
-					model.StartDate,
-					model.EndDate,
-					model.ListPrice,
-					model.ModifiedDate);
+				this.productListPriceHistoryRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productListPriceHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productListPriceHistoryRepository.Update(
-					id,
-					model.StartDate,
-					model.EndDate,
-					model.ListPrice,
-					model.ModifiedDate);
+				this.productListPriceHistoryRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -185,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductListPriceHistoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/ProductListPriceHistories")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			Response response = this.productListPriceHistoryRepository.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.productListPriceHistoryRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -196,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8a619edd305b8c09c8540a9e448442fa</Hash>
+    <Hash>517e511faf06747c42b27d26a2cfcca1</Hash>
 </Codenesium>*/

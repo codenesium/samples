@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ShipMethodFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.shipMethodRepository.GetById(id);
+			ApiResponse response = this.shipMethodRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ShipMethodFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.shipMethodRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.shipMethodRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,12 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.shipMethodModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.shipMethodRepository.Create(
-					model.Name,
-					model.ShipBase,
-					model.ShipRate,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.shipMethodRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -126,12 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.shipMethodRepository.Create(
-					model.Name,
-					model.ShipBase,
-					model.ShipRate,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.shipMethodRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -155,13 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.shipMethodModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.shipMethodRepository.Update(
-					id,
-					model.Name,
-					model.ShipBase,
-					model.ShipRate,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.shipMethodRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -186,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f7d22d23e53df8ed74dc615ace2e1bb5</Hash>
+    <Hash>73ab7cad853da5d0cf38ba4d9e20c75a</Hash>
 </Codenesium>*/

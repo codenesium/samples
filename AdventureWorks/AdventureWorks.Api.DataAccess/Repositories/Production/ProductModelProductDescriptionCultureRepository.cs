@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductModelProductDescriptionCultureRepository: AbstractProductModelProductDescriptionCultureRepository, IProductModelProductDescriptionCultureRepository
 	{
 		public ProductModelProductDescriptionCultureRepository(
+			IObjectMapper mapper,
 			ILogger<ProductModelProductDescriptionCultureRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFProductModelProductDescriptionCulture> SearchLinqEF(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5e5fd3b3c6283d96ed09bf37d09e1211</Hash>
+    <Hash>8cb2ef36c4ec249fa0ff27507650c2ef</Hash>
 </Codenesium>*/

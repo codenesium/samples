@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[ChainStatusFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.chainStatusRepository.GetById(id);
+			ApiResponse response = this.chainStatusRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ChainStatusFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.chainStatusRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.chainStatusRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,8 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.chainStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.chainStatusRepository.Create(
-					model.Name);
+				var id = this.chainStatusRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -122,8 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.chainStatusRepository.Create(
-					model.Name);
+				this.chainStatusRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -147,9 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.chainStatusModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.chainStatusRepository.Update(
-					id,
-					model.Name);
+				this.chainStatusRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -174,5 +170,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2dad529cd3ceee850a0cd98ba1a0f548</Hash>
+    <Hash>eb56033a15c4c99d53369be1b2b5098c</Hash>
 </Codenesium>*/

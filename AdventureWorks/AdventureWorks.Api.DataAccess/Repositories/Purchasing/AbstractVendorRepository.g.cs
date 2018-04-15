@@ -14,35 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractVendorRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string accountNumber,
-			string name,
-			int creditRating,
-			bool preferredVendorStatus,
-			bool activeFlag,
-			string purchasingWebServiceURL,
-			DateTime modifiedDate)
+			VendorModel model)
 		{
 			var record = new EFVendor();
 
-			MapPOCOToEF(
-				0,
-				accountNumber,
-				name,
-				creditRating,
-				preferredVendorStatus,
-				activeFlag,
-				purchasingWebServiceURL,
-				modifiedDate,
+			this.mapper.VendorMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFVendor>().Add(record);
@@ -52,13 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int businessEntityID,
-			string accountNumber,
-			string name,
-			int creditRating,
-			bool preferredVendorStatus,
-			bool activeFlag,
-			string purchasingWebServiceURL,
-			DateTime modifiedDate)
+			VendorModel model)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
@@ -67,15 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.VendorMapModelToEF(
 					businessEntityID,
-					accountNumber,
-					name,
-					creditRating,
-					preferredVendorStatus,
-					activeFlag,
-					purchasingWebServiceURL,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -97,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int businessEntityID)
+		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
@@ -107,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOVendor GetByIdDirect(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.Vendors.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -131,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOVendor> GetWhereDirect(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Vendors;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFVendor, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFVendor, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFVendor> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.VendorMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFVendor> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.VendorMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFVendor> SearchLinqEF(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -158,37 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int businessEntityID,
-			string accountNumber,
-			string name,
-			int creditRating,
-			bool preferredVendorStatus,
-			bool activeFlag,
-			string purchasingWebServiceURL,
-			DateTime modifiedDate,
-			EFVendor efVendor)
-		{
-			efVendor.SetProperties(businessEntityID.ToInt(), accountNumber, name, creditRating, preferredVendorStatus, activeFlag, purchasingWebServiceURL, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFVendor efVendor,
-			Response response)
-		{
-			if (efVendor == null)
-			{
-				return;
-			}
-
-			response.AddVendor(new POCOVendor(efVendor.BusinessEntityID.ToInt(), efVendor.AccountNumber, efVendor.Name, efVendor.CreditRating, efVendor.PreferredVendorStatus, efVendor.ActiveFlag, efVendor.PurchasingWebServiceURL, efVendor.ModifiedDate.ToDateTime()));
-
-			BusinessEntityRepository.MapEFToPOCO(efVendor.BusinessEntity, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7bf1e7693557eca21f280cfed8d34b1f</Hash>
+    <Hash>8d15c2607f0721c62f4abbcb3ea25bba</Hash>
 </Codenesium>*/

@@ -14,27 +14,26 @@ namespace ESPIOTNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractDeviceActionRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int deviceId,
-			string name,
-			string @value)
+			DeviceActionModel model)
 		{
 			var record = new EFDeviceAction();
 
-			MapPOCOToEF(
-				0,
-				deviceId,
-				name,
-				@value,
+			this.mapper.DeviceActionMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFDeviceAction>().Add(record);
@@ -44,9 +43,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			int deviceId,
-			string name,
-			string @value)
+			DeviceActionModel model)
 		{
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -55,11 +52,9 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.DeviceActionMapModelToEF(
 					id,
-					deviceId,
-					name,
-					@value,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -81,9 +76,9 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int id)
+		public virtual ApiResponse GetById(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response;
@@ -91,23 +86,23 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual POCODeviceAction GetByIdDirect(int id)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.Id == id, response);
 			return response.DeviceActions.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -115,22 +110,22 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual List<POCODeviceAction> GetWhereDirect(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.DeviceActions;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFDeviceAction, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFDeviceAction, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFDeviceAction> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.DeviceActionMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFDeviceAction> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.DeviceActionMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFDeviceAction> SearchLinqEF(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -142,33 +137,9 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int id,
-			int deviceId,
-			string name,
-			string @value,
-			EFDeviceAction efDeviceAction)
-		{
-			efDeviceAction.SetProperties(id.ToInt(), deviceId.ToInt(), name, @value);
-		}
-
-		public static void MapEFToPOCO(
-			EFDeviceAction efDeviceAction,
-			Response response)
-		{
-			if (efDeviceAction == null)
-			{
-				return;
-			}
-
-			response.AddDeviceAction(new POCODeviceAction(efDeviceAction.Id.ToInt(), efDeviceAction.DeviceId.ToInt(), efDeviceAction.Name, efDeviceAction.@Value));
-
-			DeviceRepository.MapEFToPOCO(efDeviceAction.Device, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef5be62d64371a3047d5b6d6820e9796</Hash>
+    <Hash>6d392a1442df66ab4be985e4287b3f3e</Hash>
 </Codenesium>*/

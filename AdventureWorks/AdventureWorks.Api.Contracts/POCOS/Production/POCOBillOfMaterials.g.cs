@@ -28,11 +28,11 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.ProductAssemblyID = new ReferenceEntity<Nullable<int>>(productAssemblyID,
-			                                                            "Product");
+			                                                            nameof(ApiResponse.Products));
 			this.ComponentID = new ReferenceEntity<int>(componentID,
-			                                            "Product");
+			                                            nameof(ApiResponse.Products));
 			this.UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
-			                                                   "UnitMeasure");
+			                                                   nameof(ApiResponse.UnitMeasures));
 		}
 
 		public int BillOfMaterialsID { get; set; }
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0f69627edcd0ae3d8439bc76850014d8</Hash>
+    <Hash>7a59ae0cdef61ad72e7ac5e7d356937a</Hash>
 </Codenesium>*/

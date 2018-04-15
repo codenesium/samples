@@ -14,35 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractStateProvinceRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string stateProvinceCode,
-			string countryRegionCode,
-			bool isOnlyStateProvinceFlag,
-			string name,
-			int territoryID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			StateProvinceModel model)
 		{
 			var record = new EFStateProvince();
 
-			MapPOCOToEF(
-				0,
-				stateProvinceCode,
-				countryRegionCode,
-				isOnlyStateProvinceFlag,
-				name,
-				territoryID,
-				rowguid,
-				modifiedDate,
+			this.mapper.StateProvinceMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFStateProvince>().Add(record);
@@ -52,13 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int stateProvinceID,
-			string stateProvinceCode,
-			string countryRegionCode,
-			bool isOnlyStateProvinceFlag,
-			string name,
-			int territoryID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			StateProvinceModel model)
 		{
 			var record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
 			if (record == null)
@@ -67,15 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.StateProvinceMapModelToEF(
 					stateProvinceID,
-					stateProvinceCode,
-					countryRegionCode,
-					isOnlyStateProvinceFlag,
-					name,
-					territoryID,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -97,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int stateProvinceID)
+		public virtual ApiResponse GetById(int stateProvinceID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID, response);
 			return response;
@@ -107,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOStateProvince GetByIdDirect(int stateProvinceID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID, response);
 			return response.StateProvinces.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -131,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOStateProvince> GetWhereDirect(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.StateProvinces;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFStateProvince, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFStateProvince, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFStateProvince> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.StateProvinceMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFStateProvince> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.StateProvinceMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFStateProvince> SearchLinqEF(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -158,39 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int stateProvinceID,
-			string stateProvinceCode,
-			string countryRegionCode,
-			bool isOnlyStateProvinceFlag,
-			string name,
-			int territoryID,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFStateProvince efStateProvince)
-		{
-			efStateProvince.SetProperties(stateProvinceID.ToInt(), stateProvinceCode, countryRegionCode, isOnlyStateProvinceFlag, name, territoryID.ToInt(), rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFStateProvince efStateProvince,
-			Response response)
-		{
-			if (efStateProvince == null)
-			{
-				return;
-			}
-
-			response.AddStateProvince(new POCOStateProvince(efStateProvince.StateProvinceID.ToInt(), efStateProvince.StateProvinceCode, efStateProvince.CountryRegionCode, efStateProvince.IsOnlyStateProvinceFlag, efStateProvince.Name, efStateProvince.TerritoryID.ToInt(), efStateProvince.Rowguid, efStateProvince.ModifiedDate.ToDateTime()));
-
-			CountryRegionRepository.MapEFToPOCO(efStateProvince.CountryRegion, response);
-
-			SalesTerritoryRepository.MapEFToPOCO(efStateProvince.SalesTerritory, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>84def476e82b74237242ef5b2b819e09</Hash>
+    <Hash>e1c863c60c19074fece3e19047e2b4ef</Hash>
 </Codenesium>*/

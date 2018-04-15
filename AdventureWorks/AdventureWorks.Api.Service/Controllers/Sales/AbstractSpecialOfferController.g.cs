@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[SpecialOfferFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.specialOfferRepository.GetById(id);
+			ApiResponse response = this.specialOfferRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[SpecialOfferFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.specialOfferRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.specialOfferRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,17 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.specialOfferModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.specialOfferRepository.Create(
-					model.Description,
-					model.DiscountPct,
-					model.Type,
-					model.Category,
-					model.StartDate,
-					model.EndDate,
-					model.MinQty,
-					model.MaxQty,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.specialOfferRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -131,17 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.specialOfferRepository.Create(
-					model.Description,
-					model.DiscountPct,
-					model.Type,
-					model.Category,
-					model.StartDate,
-					model.EndDate,
-					model.MinQty,
-					model.MaxQty,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.specialOfferRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -165,18 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.specialOfferModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.specialOfferRepository.Update(
-					id,
-					model.Description,
-					model.DiscountPct,
-					model.Type,
-					model.Category,
-					model.StartDate,
-					model.EndDate,
-					model.MinQty,
-					model.MaxQty,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.specialOfferRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -201,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cee388d1592a484a36127fc0bacf3ff5</Hash>
+    <Hash>9c03d8981db47fe78b972ce695d5b385</Hash>
 </Codenesium>*/

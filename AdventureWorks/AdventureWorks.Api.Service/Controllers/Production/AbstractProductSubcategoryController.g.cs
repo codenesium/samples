@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductSubcategoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productSubcategoryRepository.GetById(id);
+			ApiResponse response = this.productSubcategoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductSubcategoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productSubcategoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productSubcategoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productSubcategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productSubcategoryRepository.Create(
-					model.ProductCategoryID,
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.productSubcategoryRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productSubcategoryRepository.Create(
-					model.ProductCategoryID,
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productSubcategoryRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productSubcategoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productSubcategoryRepository.Update(
-					id,
-					model.ProductCategoryID,
-					model.Name,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productSubcategoryRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -185,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductSubcategoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductCategories/{id}/ProductSubcategories")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductCategoryID(int id)
 		{
-			Response response = this.productSubcategoryRepository.GetWhere(x => x.ProductCategoryID == id);
+			ApiResponse response = this.productSubcategoryRepository.GetWhere(x => x.ProductCategoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -196,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>435287c7c3150348caf770ca839a239c</Hash>
+    <Hash>848d3ef6c74549081b9a7ae8e59cb191</Hash>
 </Codenesium>*/

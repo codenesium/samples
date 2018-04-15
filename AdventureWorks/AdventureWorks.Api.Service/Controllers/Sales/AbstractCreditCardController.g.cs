@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[CreditCardFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.creditCardRepository.GetById(id);
+			ApiResponse response = this.creditCardRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[CreditCardFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.creditCardRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.creditCardRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,12 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.creditCardModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.creditCardRepository.Create(
-					model.CardType,
-					model.CardNumber,
-					model.ExpMonth,
-					model.ExpYear,
-					model.ModifiedDate);
+				var id = this.creditCardRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -126,12 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.creditCardRepository.Create(
-					model.CardType,
-					model.CardNumber,
-					model.ExpMonth,
-					model.ExpYear,
-					model.ModifiedDate);
+				this.creditCardRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -155,13 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.creditCardModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.creditCardRepository.Update(
-					id,
-					model.CardType,
-					model.CardNumber,
-					model.ExpMonth,
-					model.ExpYear,
-					model.ModifiedDate);
+				this.creditCardRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -186,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>96cc11c69b402ce7216c16146f97f552</Hash>
+    <Hash>4fc922273f939b13f0059bc1f268b7c8</Hash>
 </Codenesium>*/

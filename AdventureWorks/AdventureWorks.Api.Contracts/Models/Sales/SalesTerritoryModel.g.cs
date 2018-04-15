@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.Name = name;
-			this.CountryRegionCode = countryRegionCode;
-			this.@Group = @group;
-			this.SalesYTD = salesYTD;
-			this.SalesLastYear = salesLastYear;
-			this.CostYTD = costYTD;
-			this.CostLastYear = costLastYear;
-			this.Rowguid = rowguid;
+			this.Name = name.ToString();
+			this.CountryRegionCode = countryRegionCode.ToString();
+			this.@Group = @group.ToString();
+			this.SalesYTD = salesYTD.ToDecimal();
+			this.SalesLastYear = salesLastYear.ToDecimal();
+			this.CostYTD = costYTD.ToDecimal();
+			this.CostLastYear = costLastYear.ToDecimal();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1c1c193f5f7445b55b04a55e307b632d</Hash>
+    <Hash>d22006ec64472771442aae24eadcb5de</Hash>
 </Codenesium>*/

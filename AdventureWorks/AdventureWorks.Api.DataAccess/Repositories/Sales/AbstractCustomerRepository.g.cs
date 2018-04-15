@@ -14,33 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractCustomerRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			Nullable<int> personID,
-			Nullable<int> storeID,
-			Nullable<int> territoryID,
-			string accountNumber,
-			Guid rowguid,
-			DateTime modifiedDate)
+			CustomerModel model)
 		{
 			var record = new EFCustomer();
 
-			MapPOCOToEF(
-				0,
-				personID,
-				storeID,
-				territoryID,
-				accountNumber,
-				rowguid,
-				modifiedDate,
+			this.mapper.CustomerMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFCustomer>().Add(record);
@@ -50,12 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int customerID,
-			Nullable<int> personID,
-			Nullable<int> storeID,
-			Nullable<int> territoryID,
-			string accountNumber,
-			Guid rowguid,
-			DateTime modifiedDate)
+			CustomerModel model)
 		{
 			var record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
 			if (record == null)
@@ -64,14 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.CustomerMapModelToEF(
 					customerID,
-					personID,
-					storeID,
-					territoryID,
-					accountNumber,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -93,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int customerID)
+		public virtual ApiResponse GetById(int customerID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CustomerID == customerID, response);
 			return response;
@@ -103,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOCustomer GetByIdDirect(int customerID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CustomerID == customerID, response);
 			return response.Customers.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFCustomer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFCustomer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -127,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOCustomer> GetWhereDirect(Expression<Func<EFCustomer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.Customers;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFCustomer, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFCustomer, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCustomer> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CustomerMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCustomer> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CustomerMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFCustomer> SearchLinqEF(Expression<Func<EFCustomer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -154,40 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int customerID,
-			Nullable<int> personID,
-			Nullable<int> storeID,
-			Nullable<int> territoryID,
-			string accountNumber,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFCustomer efCustomer)
-		{
-			efCustomer.SetProperties(customerID.ToInt(), personID.ToNullableInt(), storeID.ToNullableInt(), territoryID.ToNullableInt(), accountNumber, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFCustomer efCustomer,
-			Response response)
-		{
-			if (efCustomer == null)
-			{
-				return;
-			}
-
-			response.AddCustomer(new POCOCustomer(efCustomer.CustomerID.ToInt(), efCustomer.PersonID.ToNullableInt(), efCustomer.StoreID.ToNullableInt(), efCustomer.TerritoryID.ToNullableInt(), efCustomer.AccountNumber, efCustomer.Rowguid, efCustomer.ModifiedDate.ToDateTime()));
-
-			PersonRepository.MapEFToPOCO(efCustomer.Person, response);
-
-			StoreRepository.MapEFToPOCO(efCustomer.Store, response);
-
-			SalesTerritoryRepository.MapEFToPOCO(efCustomer.SalesTerritory, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>39e1aa7e7c5e6c1604355e609368bf5e</Hash>
+    <Hash>bae8ef49eaa4c8b92bec310516ab94cf</Hash>
 </Codenesium>*/

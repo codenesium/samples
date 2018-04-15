@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[TransactionHistoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.transactionHistoryRepository.GetById(id);
+			ApiResponse response = this.transactionHistoryRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[TransactionHistoryFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.transactionHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.transactionHistoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,15 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.transactionHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.transactionHistoryRepository.Create(
-					model.ProductID,
-					model.ReferenceOrderID,
-					model.ReferenceOrderLineID,
-					model.TransactionDate,
-					model.TransactionType,
-					model.Quantity,
-					model.ActualCost,
-					model.ModifiedDate);
+				var id = this.transactionHistoryRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -129,15 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.transactionHistoryRepository.Create(
-					model.ProductID,
-					model.ReferenceOrderID,
-					model.ReferenceOrderLineID,
-					model.TransactionDate,
-					model.TransactionType,
-					model.Quantity,
-					model.ActualCost,
-					model.ModifiedDate);
+				this.transactionHistoryRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -161,16 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.transactionHistoryModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.transactionHistoryRepository.Update(
-					id,
-					model.ProductID,
-					model.ReferenceOrderID,
-					model.ReferenceOrderLineID,
-					model.TransactionDate,
-					model.TransactionType,
-					model.Quantity,
-					model.ActualCost,
-					model.ModifiedDate);
+				this.transactionHistoryRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -197,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[TransactionHistoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/TransactionHistories")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			Response response = this.transactionHistoryRepository.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.transactionHistoryRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -208,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c59f0b654776a98ac22ee751fbd9884f</Hash>
+    <Hash>7f936228af7f083855facdae07961d0b</Hash>
 </Codenesium>*/

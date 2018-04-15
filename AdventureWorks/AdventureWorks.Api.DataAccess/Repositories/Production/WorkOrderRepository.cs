@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class WorkOrderRepository: AbstractWorkOrderRepository, IWorkOrderRepository
 	{
 		public WorkOrderRepository(
+			IObjectMapper mapper,
 			ILogger<WorkOrderRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFWorkOrder> SearchLinqEF(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a1e26382ba4e366419b8c6a1e93e2af3</Hash>
+    <Hash>824effed9d5a302086c7efe1bc07ea78</Hash>
 </Codenesium>*/

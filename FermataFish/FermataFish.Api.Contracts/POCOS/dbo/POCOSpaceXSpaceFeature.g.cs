@@ -17,9 +17,9 @@ namespace FermataFishNS.Api.Contracts
 			this.Id = id.ToInt();
 
 			this.SpaceId = new ReferenceEntity<int>(spaceId,
-			                                        "Space");
+			                                        nameof(ApiResponse.Spaces));
 			this.SpaceFeatureId = new ReferenceEntity<int>(spaceFeatureId,
-			                                               "SpaceFeature");
+			                                               nameof(ApiResponse.SpaceFeatures));
 		}
 
 		public int Id { get; set; }
@@ -60,5 +60,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>394396ccbbcbc80061f448fea63402a2</Hash>
+    <Hash>46f3338d699a93242c8fca2c7abb1c15</Hash>
 </Codenesium>*/

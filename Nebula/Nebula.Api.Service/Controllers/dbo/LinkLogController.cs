@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/linkLogs")]
+	[ApiVersion("1.0")]
 	public class LinkLogController: AbstractLinkLogController
 	{
 		public LinkLogController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5110b81e0c327f6d4f31a869fed2afd1</Hash>
+    <Hash>3debf3d4763655d96a04266e29913b83</Hash>
 </Codenesium>*/

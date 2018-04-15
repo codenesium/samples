@@ -7,44 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductVendorRepository
 	{
-		int Create(
-			int businessEntityID,
-			int averageLeadTime,
-			decimal standardPrice,
-			Nullable<decimal> lastReceiptCost,
-			Nullable<DateTime> lastReceiptDate,
-			int minOrderQty,
-			int maxOrderQty,
-			Nullable<int> onOrderQty,
-			string unitMeasureCode,
-			DateTime modifiedDate);
+		int Create(ProductVendorModel model);
 
 		void Update(int productID,
-		            int businessEntityID,
-		            int averageLeadTime,
-		            decimal standardPrice,
-		            Nullable<decimal> lastReceiptCost,
-		            Nullable<DateTime> lastReceiptDate,
-		            int minOrderQty,
-		            int maxOrderQty,
-		            Nullable<int> onOrderQty,
-		            string unitMeasureCode,
-		            DateTime modifiedDate);
+		            ProductVendorModel model);
 
 		void Delete(int productID);
 
-		Response GetById(int productID);
+		ApiResponse GetById(int productID);
 
 		POCOProductVendor GetByIdDirect(int productID);
 
-		Response GetWhere(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOProductVendor> GetWhereDirect(Expression<Func<EFProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>76819ae16e4a7ba26a1258543aa06548</Hash>
+    <Hash>793b8318e316f4d7f2a9106593354d8d</Hash>
 </Codenesium>*/

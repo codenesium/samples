@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
-			this.Name = name;
+			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ceb4a331ac579fae8d56fd6ac3ceb60c</Hash>
+    <Hash>23279f1164f5ef8d4469bff557a58928</Hash>
 </Codenesium>*/

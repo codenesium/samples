@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Contracts
 		public LinkStatusModel(
 			string name)
 		{
-			this.Name = name;
+			this.Name = name.ToString();
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c5aa665398f1cd78a242bf2f784bbc20</Hash>
+    <Hash>dffa5a5f7c22ee395e7659b25cb35f46</Hash>
 </Codenesium>*/

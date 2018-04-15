@@ -7,32 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmailAddressRepository
 	{
-		int Create(
-			int emailAddressID,
-			string emailAddress1,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(EmailAddressModel model);
 
 		void Update(int businessEntityID,
-		            int emailAddressID,
-		            string emailAddress1,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            EmailAddressModel model);
 
 		void Delete(int businessEntityID);
 
-		Response GetById(int businessEntityID);
+		ApiResponse GetById(int businessEntityID);
 
 		POCOEmailAddress GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFEmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFEmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOEmailAddress> GetWhereDirect(Expression<Func<EFEmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>26d84a2efd195370aab139c8646a2be4</Hash>
+    <Hash>823368348bca05dd3ee2572aa5b381ce</Hash>
 </Codenesium>*/

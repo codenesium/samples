@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[SalesPersonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.salesPersonRepository.GetById(id);
+			ApiResponse response = this.salesPersonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[SalesPersonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.salesPersonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.salesPersonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,15 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesPersonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.salesPersonRepository.Create(
-					model.TerritoryID,
-					model.SalesQuota,
-					model.Bonus,
-					model.CommissionPct,
-					model.SalesYTD,
-					model.SalesLastYear,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.salesPersonRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -129,15 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.salesPersonRepository.Create(
-					model.TerritoryID,
-					model.SalesQuota,
-					model.Bonus,
-					model.CommissionPct,
-					model.SalesYTD,
-					model.SalesLastYear,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.salesPersonRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -161,16 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.salesPersonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.salesPersonRepository.Update(
-					id,
-					model.TerritoryID,
-					model.SalesQuota,
-					model.Bonus,
-					model.CommissionPct,
-					model.SalesYTD,
-					model.SalesLastYear,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.salesPersonRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -197,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesPersonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Employees/{id}/SalesPersons")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.salesPersonRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.salesPersonRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -210,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[SalesPersonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesTerritories/{id}/SalesPersons")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			Response response = this.salesPersonRepository.GetWhere(x => x.TerritoryID == id);
+			ApiResponse response = this.salesPersonRepository.GetWhere(x => x.TerritoryID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -221,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>055586933b0bd67e2386af083d7363e4</Hash>
+    <Hash>5fa8dbe4c07f7ab389497b067e70cf58</Hash>
 </Codenesium>*/

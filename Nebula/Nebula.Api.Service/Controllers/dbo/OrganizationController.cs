@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/organizations")]
+	[ApiVersion("1.0")]
 	public class OrganizationController: AbstractOrganizationController
 	{
 		public OrganizationController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>178cd40c377c906e56032c87c6244d6f</Hash>
+    <Hash>c2a83c796f25aef641891c788f5d35ae</Hash>
 </Codenesium>*/

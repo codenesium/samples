@@ -17,11 +17,11 @@ namespace NebulaNS.Api.Contracts
 			string lastIpAddress,
 			string description)
 		{
-			this.Name = name;
-			this.MachineGuid = machineGuid;
-			this.JwtKey = jwtKey;
-			this.LastIpAddress = lastIpAddress;
-			this.Description = description;
+			this.Name = name.ToString();
+			this.MachineGuid = machineGuid.ToGuid();
+			this.JwtKey = jwtKey.ToString();
+			this.LastIpAddress = lastIpAddress.ToString();
+			this.Description = description.ToString();
 		}
 
 		private string name;
@@ -107,5 +107,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6476036825ba61c617c3075291f54875</Hash>
+    <Hash>cfa262a5583331784ac2233298e28c21</Hash>
 </Codenesium>*/

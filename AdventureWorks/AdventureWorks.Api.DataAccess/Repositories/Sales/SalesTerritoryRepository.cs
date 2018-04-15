@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesTerritoryRepository: AbstractSalesTerritoryRepository, ISalesTerritoryRepository
 	{
 		public SalesTerritoryRepository(
+			IObjectMapper mapper,
 			ILogger<SalesTerritoryRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFSalesTerritory> SearchLinqEF(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>506024e4fe3e87441d35b8c807c9d60b</Hash>
+    <Hash>f3c346797b6841374ada9c7c89d8e6cd</Hash>
 </Codenesium>*/

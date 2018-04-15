@@ -7,34 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRepository
 	{
-		int Create(
-			string name,
-			Guid machineGuid,
-			string jwtKey,
-			string lastIpAddress,
-			string description);
+		int Create(MachineModel model);
 
 		void Update(int id,
-		            string name,
-		            Guid machineGuid,
-		            string jwtKey,
-		            string lastIpAddress,
-		            string description);
+		            MachineModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOMachine GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOMachine> GetWhereDirect(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3fc329f8ef8b174f48c89fe9f6d34147</Hash>
+    <Hash>1510c1dc21721eb69205acd6eca18cbd</Hash>
 </Codenesium>*/

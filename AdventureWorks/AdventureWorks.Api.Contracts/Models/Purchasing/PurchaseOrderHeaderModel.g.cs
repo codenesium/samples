@@ -24,17 +24,17 @@ namespace AdventureWorksNS.Api.Contracts
 			decimal totalDue,
 			DateTime modifiedDate)
 		{
-			this.RevisionNumber = revisionNumber;
-			this.Status = status;
+			this.RevisionNumber = revisionNumber.ToInt();
+			this.Status = status.ToInt();
 			this.EmployeeID = employeeID.ToInt();
 			this.VendorID = vendorID.ToInt();
 			this.ShipMethodID = shipMethodID.ToInt();
 			this.OrderDate = orderDate.ToDateTime();
 			this.ShipDate = shipDate.ToNullableDateTime();
-			this.SubTotal = subTotal;
-			this.TaxAmt = taxAmt;
-			this.Freight = freight;
-			this.TotalDue = totalDue;
+			this.SubTotal = subTotal.ToDecimal();
+			this.TaxAmt = taxAmt.ToDecimal();
+			this.Freight = freight.ToDecimal();
+			this.TotalDue = totalDue.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -232,5 +232,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b31ba5fc4f88ea42b1135beef7d731a2</Hash>
+    <Hash>76169092e0305d797a1d3f089916ebe4</Hash>
 </Codenesium>*/

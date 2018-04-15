@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CreditCardRepository: AbstractCreditCardRepository, ICreditCardRepository
 	{
 		public CreditCardRepository(
+			IObjectMapper mapper,
 			ILogger<CreditCardRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFCreditCard> SearchLinqEF(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>04e129fa8da8110a89807790ee4bee3c</Hash>
+    <Hash>ac46eec54a87692925cab22b083ffa6c</Hash>
 </Codenesium>*/

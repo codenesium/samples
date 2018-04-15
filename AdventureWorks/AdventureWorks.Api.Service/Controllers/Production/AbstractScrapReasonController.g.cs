@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ScrapReasonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(short id)
 		{
-			Response response = this.scrapReasonRepository.GetById(id);
+			ApiResponse response = this.scrapReasonRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ScrapReasonFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.scrapReasonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.scrapReasonRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.scrapReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.scrapReasonRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				var id = this.scrapReasonRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.scrapReasonRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				this.scrapReasonRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.scrapReasonModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.scrapReasonRepository.Update(
-					id,
-					model.Name,
-					model.ModifiedDate);
+				this.scrapReasonRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>61fd704cb17b5f90c05f6e0558f9ee09</Hash>
+    <Hash>3a0b2c39ae52056253c6b5b7f41a1a5c</Hash>
 </Codenesium>*/

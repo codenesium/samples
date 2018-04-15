@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[VendorFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.vendorRepository.GetById(id);
+			ApiResponse response = this.vendorRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[VendorFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.vendorRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.vendorRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,14 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.vendorModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.vendorRepository.Create(
-					model.AccountNumber,
-					model.Name,
-					model.CreditRating,
-					model.PreferredVendorStatus,
-					model.ActiveFlag,
-					model.PurchasingWebServiceURL,
-					model.ModifiedDate);
+				var id = this.vendorRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -128,14 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.vendorRepository.Create(
-					model.AccountNumber,
-					model.Name,
-					model.CreditRating,
-					model.PreferredVendorStatus,
-					model.ActiveFlag,
-					model.PurchasingWebServiceURL,
-					model.ModifiedDate);
+				this.vendorRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -159,15 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.vendorModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.vendorRepository.Update(
-					id,
-					model.AccountNumber,
-					model.Name,
-					model.CreditRating,
-					model.PreferredVendorStatus,
-					model.ActiveFlag,
-					model.PurchasingWebServiceURL,
-					model.ModifiedDate);
+				this.vendorRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -194,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[VendorFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/BusinessEntities/{id}/Vendors")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.vendorRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.vendorRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -205,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>41f265c96cbe94fbf42e3b2a20e7eb74</Hash>
+    <Hash>aa84c207f7b7030d02687566351aead7</Hash>
 </Codenesium>*/

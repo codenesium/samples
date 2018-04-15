@@ -14,31 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractCreditCardRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string cardType,
-			string cardNumber,
-			int expMonth,
-			short expYear,
-			DateTime modifiedDate)
+			CreditCardModel model)
 		{
 			var record = new EFCreditCard();
 
-			MapPOCOToEF(
-				0,
-				cardType,
-				cardNumber,
-				expMonth,
-				expYear,
-				modifiedDate,
+			this.mapper.CreditCardMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFCreditCard>().Add(record);
@@ -48,11 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int creditCardID,
-			string cardType,
-			string cardNumber,
-			int expMonth,
-			short expYear,
-			DateTime modifiedDate)
+			CreditCardModel model)
 		{
 			var record = this.SearchLinqEF(x => x.CreditCardID == creditCardID).FirstOrDefault();
 			if (record == null)
@@ -61,13 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.CreditCardMapModelToEF(
 					creditCardID,
-					cardType,
-					cardNumber,
-					expMonth,
-					expYear,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -89,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int creditCardID)
+		public virtual ApiResponse GetById(int creditCardID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CreditCardID == creditCardID, response);
 			return response;
@@ -99,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOCreditCard GetByIdDirect(int creditCardID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.CreditCardID == creditCardID, response);
 			return response.CreditCards.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -123,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOCreditCard> GetWhereDirect(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.CreditCards;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFCreditCard, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFCreditCard, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCreditCard> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CreditCardMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFCreditCard> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.CreditCardMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFCreditCard> SearchLinqEF(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -150,33 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int creditCardID,
-			string cardType,
-			string cardNumber,
-			int expMonth,
-			short expYear,
-			DateTime modifiedDate,
-			EFCreditCard efCreditCard)
-		{
-			efCreditCard.SetProperties(creditCardID.ToInt(), cardType, cardNumber, expMonth, expYear, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFCreditCard efCreditCard,
-			Response response)
-		{
-			if (efCreditCard == null)
-			{
-				return;
-			}
-
-			response.AddCreditCard(new POCOCreditCard(efCreditCard.CreditCardID.ToInt(), efCreditCard.CardType, efCreditCard.CardNumber, efCreditCard.ExpMonth, efCreditCard.ExpYear, efCreditCard.ModifiedDate.ToDateTime()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>927061ab003d3e3b5f5f84586d6fdb13</Hash>
+    <Hash>c5d4c945ce6db835d33dbe0eab998db3</Hash>
 </Codenesium>*/

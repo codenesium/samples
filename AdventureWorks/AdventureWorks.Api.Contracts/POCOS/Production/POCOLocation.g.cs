@@ -17,8 +17,8 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.LocationID = locationID;
-			this.Name = name;
-			this.CostRate = costRate;
+			this.Name = name.ToString();
+			this.CostRate = costRate.ToDecimal();
 			this.Availability = availability.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>920696d35edf95157c560f756d1ea74e</Hash>
+    <Hash>d91c905571ede00c96e080f44e7717e7</Hash>
 </Codenesium>*/

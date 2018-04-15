@@ -23,8 +23,8 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.AverageLeadTime = averageLeadTime.ToInt();
-			this.StandardPrice = standardPrice;
-			this.LastReceiptCost = lastReceiptCost;
+			this.StandardPrice = standardPrice.ToDecimal();
+			this.LastReceiptCost = lastReceiptCost.ToNullableDecimal();
 			this.LastReceiptDate = lastReceiptDate.ToNullableDateTime();
 			this.MinOrderQty = minOrderQty.ToInt();
 			this.MaxOrderQty = maxOrderQty.ToInt();
@@ -32,11 +32,11 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          "Product");
+			                                          nameof(ApiResponse.Products));
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 "Vendor");
+			                                                 nameof(ApiResponse.Vendors));
 			this.UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
-			                                                   "UnitMeasure");
+			                                                   nameof(ApiResponse.UnitMeasures));
 		}
 
 		public ReferenceEntity<int> ProductID { get; set; }
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8117ac450b9d08b79ca869538d8d452a</Hash>
+    <Hash>ac642ffa4a74280efb5ff9371c359001</Hash>
 </Codenesium>*/

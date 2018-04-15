@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[RateFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.rateRepository.GetById(id);
+			ApiResponse response = this.rateRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[RateFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.rateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.rateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.rateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.rateRepository.Create(
-					model.AmountPerMinute,
-					model.TeacherSkillId,
-					model.TeacherId);
+				var id = this.rateRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.rateRepository.Create(
-					model.AmountPerMinute,
-					model.TeacherSkillId,
-					model.TeacherId);
+				this.rateRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.rateModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.rateRepository.Update(
-					id,
-					model.AmountPerMinute,
-					model.TeacherSkillId,
-					model.TeacherId);
+				this.rateRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -182,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[RateFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/TeacherSkills/{id}/Rates")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeacherSkillId(int id)
 		{
-			Response response = this.rateRepository.GetWhere(x => x.TeacherSkillId == id);
+			ApiResponse response = this.rateRepository.GetWhere(x => x.TeacherSkillId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -195,10 +185,10 @@ namespace FermataFishNS.Api.Service
 		[RateFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Teachers/{id}/Rates")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeacherId(int id)
 		{
-			Response response = this.rateRepository.GetWhere(x => x.TeacherId == id);
+			ApiResponse response = this.rateRepository.GetWhere(x => x.TeacherId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -206,5 +196,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f6151c7994260d70a78fab1a178008e4</Hash>
+    <Hash>4c72cc1ca8bbd60cecc7e346ce813170</Hash>
 </Codenesium>*/

@@ -14,29 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractSalesPersonQuotaHistoryRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			DateTime quotaDate,
-			decimal salesQuota,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesPersonQuotaHistoryModel model)
 		{
 			var record = new EFSalesPersonQuotaHistory();
 
-			MapPOCOToEF(
-				0,
-				quotaDate,
-				salesQuota,
-				rowguid,
-				modifiedDate,
+			this.mapper.SalesPersonQuotaHistoryMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFSalesPersonQuotaHistory>().Add(record);
@@ -46,10 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int businessEntityID,
-			DateTime quotaDate,
-			decimal salesQuota,
-			Guid rowguid,
-			DateTime modifiedDate)
+			SalesPersonQuotaHistoryModel model)
 		{
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
@@ -58,12 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.SalesPersonQuotaHistoryMapModelToEF(
 					businessEntityID,
-					quotaDate,
-					salesQuota,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -85,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int businessEntityID)
+		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response;
@@ -95,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOSalesPersonQuotaHistory GetByIdDirect(int businessEntityID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
 			return response.SalesPersonQuotaHistories.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -119,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOSalesPersonQuotaHistory> GetWhereDirect(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.SalesPersonQuotaHistories;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesPersonQuotaHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesPersonQuotaHistoryMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFSalesPersonQuotaHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.SalesPersonQuotaHistoryMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFSalesPersonQuotaHistory> SearchLinqEF(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -146,34 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int businessEntityID,
-			DateTime quotaDate,
-			decimal salesQuota,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFSalesPersonQuotaHistory efSalesPersonQuotaHistory)
-		{
-			efSalesPersonQuotaHistory.SetProperties(businessEntityID.ToInt(), quotaDate.ToDateTime(), salesQuota, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFSalesPersonQuotaHistory efSalesPersonQuotaHistory,
-			Response response)
-		{
-			if (efSalesPersonQuotaHistory == null)
-			{
-				return;
-			}
-
-			response.AddSalesPersonQuotaHistory(new POCOSalesPersonQuotaHistory(efSalesPersonQuotaHistory.BusinessEntityID.ToInt(), efSalesPersonQuotaHistory.QuotaDate.ToDateTime(), efSalesPersonQuotaHistory.SalesQuota, efSalesPersonQuotaHistory.Rowguid, efSalesPersonQuotaHistory.ModifiedDate.ToDateTime()));
-
-			SalesPersonRepository.MapEFToPOCO(efSalesPersonQuotaHistory.SalesPerson, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4cd3c61435f63d4c197d8674a463d336</Hash>
+    <Hash>15da2781db9cff6cf1adf52efa213d1d</Hash>
 </Codenesium>*/

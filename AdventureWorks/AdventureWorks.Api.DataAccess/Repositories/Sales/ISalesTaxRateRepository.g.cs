@@ -7,36 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesTaxRateRepository
 	{
-		int Create(
-			int stateProvinceID,
-			int taxType,
-			decimal taxRate,
-			string name,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(SalesTaxRateModel model);
 
 		void Update(int salesTaxRateID,
-		            int stateProvinceID,
-		            int taxType,
-		            decimal taxRate,
-		            string name,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            SalesTaxRateModel model);
 
 		void Delete(int salesTaxRateID);
 
-		Response GetById(int salesTaxRateID);
+		ApiResponse GetById(int salesTaxRateID);
 
 		POCOSalesTaxRate GetByIdDirect(int salesTaxRateID);
 
-		Response GetWhere(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOSalesTaxRate> GetWhereDirect(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>788796bc7a09dd103935eb4050528bcb</Hash>
+    <Hash>b6bd8f17cb06839c2f92541b30c358d8</Hash>
 </Codenesium>*/

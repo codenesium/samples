@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			DateTime modifiedDate)
 		{
-			this.StateProvinceCode = stateProvinceCode;
-			this.CountryRegionCode = countryRegionCode;
-			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag;
-			this.Name = name;
+			this.StateProvinceCode = stateProvinceCode.ToString();
+			this.CountryRegionCode = countryRegionCode.ToString();
+			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag.ToBoolean();
+			this.Name = name.ToString();
 			this.TerritoryID = territoryID.ToInt();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -143,5 +143,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2696bbb1f498e2c7935e8d9d6e78247c</Hash>
+    <Hash>0195bc6d2838b684d3ae48cdf2c30232</Hash>
 </Codenesium>*/

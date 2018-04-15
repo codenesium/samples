@@ -23,15 +23,15 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.SpecialOfferID = specialOfferID.ToInt();
-			this.Description = description;
-			this.DiscountPct = discountPct;
-			this.Type = type;
-			this.Category = category;
+			this.Description = description.ToString();
+			this.DiscountPct = discountPct.ToDecimal();
+			this.Type = type.ToString();
+			this.Category = category.ToString();
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToDateTime();
 			this.MinQty = minQty.ToInt();
 			this.MaxQty = maxQty.ToNullableInt();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -153,5 +153,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>136a66783b5ac017cb640ba8794e6737</Hash>
+    <Hash>74ba9e2ebec58e9b595d91216177d24c</Hash>
 </Codenesium>*/

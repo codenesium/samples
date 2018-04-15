@@ -18,9 +18,9 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.ThumbNailPhoto = thumbNailPhoto;
-			this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
+			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
 			this.LargePhoto = largePhoto;
-			this.LargePhotoFileName = largePhotoFileName;
+			this.LargePhotoFileName = largePhotoFileName.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -103,5 +103,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>089669c944fe83f248104bdf17d19426</Hash>
+    <Hash>11b53448184ef904de1e37f6f75b0495</Hash>
 </Codenesium>*/

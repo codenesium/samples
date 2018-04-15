@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductModelIllustrationRepository: AbstractProductModelIllustrationRepository, IProductModelIllustrationRepository
 	{
 		public ProductModelIllustrationRepository(
+			IObjectMapper mapper,
 			ILogger<ProductModelIllustrationRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFProductModelIllustration> SearchLinqEF(Expression<Func<EFProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>00cd521f673d19fe1f5ec154f753ac42</Hash>
+    <Hash>7d47a1eeea752915a725e889fbfc4554</Hash>
 </Codenesium>*/

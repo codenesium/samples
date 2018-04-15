@@ -7,46 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IWorkOrderRoutingRepository
 	{
-		int Create(
-			int productID,
-			short operationSequence,
-			short locationID,
-			DateTime scheduledStartDate,
-			DateTime scheduledEndDate,
-			Nullable<DateTime> actualStartDate,
-			Nullable<DateTime> actualEndDate,
-			Nullable<decimal> actualResourceHrs,
-			decimal plannedCost,
-			Nullable<decimal> actualCost,
-			DateTime modifiedDate);
+		int Create(WorkOrderRoutingModel model);
 
 		void Update(int workOrderID,
-		            int productID,
-		            short operationSequence,
-		            short locationID,
-		            DateTime scheduledStartDate,
-		            DateTime scheduledEndDate,
-		            Nullable<DateTime> actualStartDate,
-		            Nullable<DateTime> actualEndDate,
-		            Nullable<decimal> actualResourceHrs,
-		            decimal plannedCost,
-		            Nullable<decimal> actualCost,
-		            DateTime modifiedDate);
+		            WorkOrderRoutingModel model);
 
 		void Delete(int workOrderID);
 
-		Response GetById(int workOrderID);
+		ApiResponse GetById(int workOrderID);
 
 		POCOWorkOrderRouting GetByIdDirect(int workOrderID);
 
-		Response GetWhere(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOWorkOrderRouting> GetWhereDirect(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>37ef86b081c19a332eb3eac1252a1ef2</Hash>
+    <Hash>fcd8c08efd942d21dfc98a67697afcaa</Hash>
 </Codenesium>*/

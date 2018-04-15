@@ -7,30 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkLogRepository
 	{
-		int Create(
-			int linkId,
-			string log,
-			DateTime dateEntered);
+		int Create(LinkLogModel model);
 
 		void Update(int id,
-		            int linkId,
-		            string log,
-		            DateTime dateEntered);
+		            LinkLogModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOLinkLog GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFLinkLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFLinkLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOLinkLog> GetWhereDirect(Expression<Func<EFLinkLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7375616c0f02df7899e10653ba247b73</Hash>
+    <Hash>85190fdcd58f54485927d402efe42bfd</Hash>
 </Codenesium>*/

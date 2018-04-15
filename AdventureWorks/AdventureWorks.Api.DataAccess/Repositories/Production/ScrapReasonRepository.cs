@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ScrapReasonRepository: AbstractScrapReasonRepository, IScrapReasonRepository
 	{
 		public ScrapReasonRepository(
+			IObjectMapper mapper,
 			ILogger<ScrapReasonRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFScrapReason> SearchLinqEF(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>45fe95cd2ef8e7d16d88a03192bc2d86</Hash>
+    <Hash>e1e3562b910f0b7f7d239ced20003b7b</Hash>
 </Codenesium>*/

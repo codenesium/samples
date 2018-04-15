@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ShoppingCartItemFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.shoppingCartItemRepository.GetById(id);
+			ApiResponse response = this.shoppingCartItemRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ShoppingCartItemFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.shoppingCartItemRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.shoppingCartItemRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,12 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.shoppingCartItemModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.shoppingCartItemRepository.Create(
-					model.ShoppingCartID,
-					model.Quantity,
-					model.ProductID,
-					model.DateCreated,
-					model.ModifiedDate);
+				var id = this.shoppingCartItemRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -126,12 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.shoppingCartItemRepository.Create(
-					model.ShoppingCartID,
-					model.Quantity,
-					model.ProductID,
-					model.DateCreated,
-					model.ModifiedDate);
+				this.shoppingCartItemRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -155,13 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.shoppingCartItemModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.shoppingCartItemRepository.Update(
-					id,
-					model.ShoppingCartID,
-					model.Quantity,
-					model.ProductID,
-					model.DateCreated,
-					model.ModifiedDate);
+				this.shoppingCartItemRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -188,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ShoppingCartItemFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/ShoppingCartItems")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			Response response = this.shoppingCartItemRepository.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.shoppingCartItemRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -199,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>12ef95f92486134de35c0c1043684497</Hash>
+    <Hash>b45f6aeb8b20e40029450b732abb4eff</Hash>
 </Codenesium>*/

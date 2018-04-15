@@ -21,13 +21,13 @@ namespace AdventureWorksNS.Api.Contracts
 			string errorMessage)
 		{
 			this.ErrorTime = errorTime.ToDateTime();
-			this.UserName = userName;
+			this.UserName = userName.ToString();
 			this.ErrorNumber = errorNumber.ToInt();
 			this.ErrorSeverity = errorSeverity.ToNullableInt();
 			this.ErrorState = errorState.ToNullableInt();
-			this.ErrorProcedure = errorProcedure;
+			this.ErrorProcedure = errorProcedure.ToString();
 			this.ErrorLine = errorLine.ToNullableInt();
-			this.ErrorMessage = errorMessage;
+			this.ErrorMessage = errorMessage.ToString();
 		}
 
 		private DateTime errorTime;
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4d6b5eee342aba4a2645287e17758b20</Hash>
+    <Hash>aa6c9f7dd7e64490a7c8a4a93ccde889</Hash>
 </Codenesium>*/

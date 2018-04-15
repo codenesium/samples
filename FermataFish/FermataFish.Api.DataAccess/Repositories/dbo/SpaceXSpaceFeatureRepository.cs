@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class SpaceXSpaceFeatureRepository: AbstractSpaceXSpaceFeatureRepository, ISpaceXSpaceFeatureRepository
 	{
 		public SpaceXSpaceFeatureRepository(
+			IObjectMapper mapper,
 			ILogger<SpaceXSpaceFeatureRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFSpaceXSpaceFeature> SearchLinqEF(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>83117920531ef78925959001a815a768</Hash>
+    <Hash>a4b0c2d81f1223fa7ff866d65f383458</Hash>
 </Codenesium>*/

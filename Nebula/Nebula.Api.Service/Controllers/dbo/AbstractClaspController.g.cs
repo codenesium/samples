@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[ClaspFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.claspRepository.GetById(id);
+			ApiResponse response = this.claspRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ClaspFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.claspRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.claspRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.claspRepository.Create(
-					model.PreviousChainId,
-					model.NextChainId);
+				var id = this.claspRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.claspRepository.Create(
-					model.PreviousChainId,
-					model.NextChainId);
+				this.claspRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.claspModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.claspRepository.Update(
-					id,
-					model.PreviousChainId,
-					model.NextChainId);
+				this.claspRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -179,10 +172,10 @@ namespace NebulaNS.Api.Service
 		[ClaspFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Clasps")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByPreviousChainId(int id)
 		{
-			Response response = this.claspRepository.GetWhere(x => x.PreviousChainId == id);
+			ApiResponse response = this.claspRepository.GetWhere(x => x.PreviousChainId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -192,10 +185,10 @@ namespace NebulaNS.Api.Service
 		[ClaspFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Clasps")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByNextChainId(int id)
 		{
-			Response response = this.claspRepository.GetWhere(x => x.NextChainId == id);
+			ApiResponse response = this.claspRepository.GetWhere(x => x.NextChainId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -203,5 +196,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e616afd3fbf882f4fc2b4b96fb422755</Hash>
+    <Hash>d9fd6a0b40d24f09a64e58f2f9c372db</Hash>
 </Codenesium>*/

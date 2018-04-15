@@ -7,54 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmployeeRepository
 	{
-		int Create(
-			string nationalIDNumber,
-			string loginID,
-			Nullable<Guid> organizationNode,
-			Nullable<short> organizationLevel,
-			string jobTitle,
-			DateTime birthDate,
-			string maritalStatus,
-			string gender,
-			DateTime hireDate,
-			bool salariedFlag,
-			short vacationHours,
-			short sickLeaveHours,
-			bool currentFlag,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(EmployeeModel model);
 
 		void Update(int businessEntityID,
-		            string nationalIDNumber,
-		            string loginID,
-		            Nullable<Guid> organizationNode,
-		            Nullable<short> organizationLevel,
-		            string jobTitle,
-		            DateTime birthDate,
-		            string maritalStatus,
-		            string gender,
-		            DateTime hireDate,
-		            bool salariedFlag,
-		            short vacationHours,
-		            short sickLeaveHours,
-		            bool currentFlag,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            EmployeeModel model);
 
 		void Delete(int businessEntityID);
 
-		Response GetById(int businessEntityID);
+		ApiResponse GetById(int businessEntityID);
 
 		POCOEmployee GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFEmployee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFEmployee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOEmployee> GetWhereDirect(Expression<Func<EFEmployee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>97155771577851795a0123ed74fd5e9d</Hash>
+    <Hash>9bb175cb1418544c932fb013f487646a</Hash>
 </Codenesium>*/

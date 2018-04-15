@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[LinkFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.linkRepository.GetById(id);
+			ApiResponse response = this.linkRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[LinkFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.linkRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.linkRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,18 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.linkRepository.Create(
-					model.Name,
-					model.DynamicParameters,
-					model.StaticParameters,
-					model.ChainId,
-					model.AssignedMachineId,
-					model.LinkStatusId,
-					model.Order,
-					model.DateStarted,
-					model.DateCompleted,
-					model.Response,
-					model.ExternalId);
+				var id = this.linkRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -132,18 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.linkRepository.Create(
-					model.Name,
-					model.DynamicParameters,
-					model.StaticParameters,
-					model.ChainId,
-					model.AssignedMachineId,
-					model.LinkStatusId,
-					model.Order,
-					model.DateStarted,
-					model.DateCompleted,
-					model.Response,
-					model.ExternalId);
+				this.linkRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -167,19 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.linkModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.linkRepository.Update(
-					id,
-					model.Name,
-					model.DynamicParameters,
-					model.StaticParameters,
-					model.ChainId,
-					model.AssignedMachineId,
-					model.LinkStatusId,
-					model.Order,
-					model.DateStarted,
-					model.DateCompleted,
-					model.Response,
-					model.ExternalId);
+				this.linkRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -206,10 +172,10 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Links")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByChainId(int id)
 		{
-			Response response = this.linkRepository.GetWhere(x => x.ChainId == id);
+			ApiResponse response = this.linkRepository.GetWhere(x => x.ChainId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -219,10 +185,10 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Machines/{id}/Links")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByAssignedMachineId(int id)
 		{
-			Response response = this.linkRepository.GetWhere(x => x.AssignedMachineId == id);
+			ApiResponse response = this.linkRepository.GetWhere(x => x.AssignedMachineId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -232,10 +198,10 @@ namespace NebulaNS.Api.Service
 		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/LinkStatus/{id}/Links")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLinkStatusId(int id)
 		{
-			Response response = this.linkRepository.GetWhere(x => x.LinkStatusId == id);
+			ApiResponse response = this.linkRepository.GetWhere(x => x.LinkStatusId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -243,5 +209,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>65d22047f850512267648f0c0042bda9</Hash>
+    <Hash>c0cf8eda80b90fdab18fe9aeef4c18e2</Hash>
 </Codenesium>*/

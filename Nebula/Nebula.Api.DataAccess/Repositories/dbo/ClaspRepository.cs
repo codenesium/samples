@@ -12,9 +12,10 @@ namespace NebulaNS.Api.DataAccess
 	public class ClaspRepository: AbstractClaspRepository, IClaspRepository
 	{
 		public ClaspRepository(
+			IObjectMapper mapper,
 			ILogger<ClaspRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3aa99a4dd3150dc342c8f00fdbcf4e44</Hash>
+    <Hash>54989547fed0ee283b02b041e2f19a96</Hash>
 </Codenesium>*/

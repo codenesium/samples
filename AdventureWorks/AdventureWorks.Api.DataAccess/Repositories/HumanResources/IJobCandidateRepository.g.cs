@@ -7,30 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IJobCandidateRepository
 	{
-		int Create(
-			Nullable<int> businessEntityID,
-			string resume,
-			DateTime modifiedDate);
+		int Create(JobCandidateModel model);
 
 		void Update(int jobCandidateID,
-		            Nullable<int> businessEntityID,
-		            string resume,
-		            DateTime modifiedDate);
+		            JobCandidateModel model);
 
 		void Delete(int jobCandidateID);
 
-		Response GetById(int jobCandidateID);
+		ApiResponse GetById(int jobCandidateID);
 
 		POCOJobCandidate GetByIdDirect(int jobCandidateID);
 
-		Response GetWhere(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOJobCandidate> GetWhereDirect(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>77cd3ebfaaed6481637a80854a7ab3c1</Hash>
+    <Hash>1d2d6867ed79662fe2c28c7b406cabc8</Hash>
 </Codenesium>*/

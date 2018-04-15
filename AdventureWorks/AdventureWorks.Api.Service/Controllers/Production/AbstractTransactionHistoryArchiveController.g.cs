@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[TransactionHistoryArchiveFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.transactionHistoryArchiveRepository.GetById(id);
+			ApiResponse response = this.transactionHistoryArchiveRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[TransactionHistoryArchiveFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.transactionHistoryArchiveRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.transactionHistoryArchiveRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,15 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.transactionHistoryArchiveRepository.Create(
-					model.ProductID,
-					model.ReferenceOrderID,
-					model.ReferenceOrderLineID,
-					model.TransactionDate,
-					model.TransactionType,
-					model.Quantity,
-					model.ActualCost,
-					model.ModifiedDate);
+				var id = this.transactionHistoryArchiveRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -129,15 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.transactionHistoryArchiveRepository.Create(
-					model.ProductID,
-					model.ReferenceOrderID,
-					model.ReferenceOrderLineID,
-					model.TransactionDate,
-					model.TransactionType,
-					model.Quantity,
-					model.ActualCost,
-					model.ModifiedDate);
+				this.transactionHistoryArchiveRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -161,16 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.transactionHistoryArchiveRepository.Update(
-					id,
-					model.ProductID,
-					model.ReferenceOrderID,
-					model.ReferenceOrderLineID,
-					model.TransactionDate,
-					model.TransactionType,
-					model.Quantity,
-					model.ActualCost,
-					model.ModifiedDate);
+				this.transactionHistoryArchiveRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -195,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>22d93073e5e1094405465827fe678ab3</Hash>
+    <Hash>b4715494a277666ff4c327bd9b86fa95</Hash>
 </Codenesium>*/

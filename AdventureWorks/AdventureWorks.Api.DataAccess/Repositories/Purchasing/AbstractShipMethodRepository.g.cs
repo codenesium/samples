@@ -14,31 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractShipMethodRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string name,
-			decimal shipBase,
-			decimal shipRate,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ShipMethodModel model)
 		{
 			var record = new EFShipMethod();
 
-			MapPOCOToEF(
-				0,
-				name,
-				shipBase,
-				shipRate,
-				rowguid,
-				modifiedDate,
+			this.mapper.ShipMethodMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFShipMethod>().Add(record);
@@ -48,11 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int shipMethodID,
-			string name,
-			decimal shipBase,
-			decimal shipRate,
-			Guid rowguid,
-			DateTime modifiedDate)
+			ShipMethodModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ShipMethodID == shipMethodID).FirstOrDefault();
 			if (record == null)
@@ -61,13 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ShipMethodMapModelToEF(
 					shipMethodID,
-					name,
-					shipBase,
-					shipRate,
-					rowguid,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -89,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int shipMethodID)
+		public virtual ApiResponse GetById(int shipMethodID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ShipMethodID == shipMethodID, response);
 			return response;
@@ -99,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOShipMethod GetByIdDirect(int shipMethodID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ShipMethodID == shipMethodID, response);
 			return response.ShipMethods.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -123,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOShipMethod> GetWhereDirect(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ShipMethods;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFShipMethod, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFShipMethod, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFShipMethod> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ShipMethodMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFShipMethod> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ShipMethodMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFShipMethod> SearchLinqEF(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -150,33 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int shipMethodID,
-			string name,
-			decimal shipBase,
-			decimal shipRate,
-			Guid rowguid,
-			DateTime modifiedDate,
-			EFShipMethod efShipMethod)
-		{
-			efShipMethod.SetProperties(shipMethodID.ToInt(), name, shipBase, shipRate, rowguid, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFShipMethod efShipMethod,
-			Response response)
-		{
-			if (efShipMethod == null)
-			{
-				return;
-			}
-
-			response.AddShipMethod(new POCOShipMethod(efShipMethod.ShipMethodID.ToInt(), efShipMethod.Name, efShipMethod.ShipBase, efShipMethod.ShipRate, efShipMethod.Rowguid, efShipMethod.ModifiedDate.ToDateTime()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>59ea4212b35e5e296c91535c8f111c2e</Hash>
+    <Hash>26648608a6316d5128852af0d2ac37de</Hash>
 </Codenesium>*/

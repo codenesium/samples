@@ -24,20 +24,20 @@ namespace FileServiceNS.Api.Contracts
 			string description)
 		{
 			this.Id = id.ToInt();
-			this.ExternalId = externalId;
-			this.PrivateKey = privateKey;
-			this.PublicKey = publicKey;
-			this.Location = location;
+			this.ExternalId = externalId.ToGuid();
+			this.PrivateKey = privateKey.ToString();
+			this.PublicKey = publicKey.ToString();
+			this.Location = location.ToString();
 			this.Expiration = expiration.ToDateTime();
-			this.Extension = extension;
+			this.Extension = extension.ToString();
 			this.DateCreated = dateCreated.ToDateTime();
 			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
-			this.Description = description;
+			this.Description = description.ToString();
 
 			this.FileTypeId = new ReferenceEntity<int>(fileTypeId,
-			                                           "FileType");
+			                                           nameof(ApiResponse.FileTypes));
 			this.BucketId = new ReferenceEntity<Nullable<int>>(bucketId,
-			                                                   "Bucket");
+			                                                   nameof(ApiResponse.Buckets));
 		}
 
 		public int Id { get; set; }
@@ -168,5 +168,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1d92adcc98f65ce53f38fb28b739d60a</Hash>
+    <Hash>c22a08160d78c3b5d5b6c77711fd71dd</Hash>
 </Codenesium>*/

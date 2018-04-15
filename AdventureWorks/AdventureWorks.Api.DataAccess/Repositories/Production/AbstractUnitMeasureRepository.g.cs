@@ -14,25 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractUnitMeasureRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual string Create(
-			string name,
-			DateTime modifiedDate)
+			UnitMeasureModel model)
 		{
 			var record = new EFUnitMeasure();
 
-			MapPOCOToEF(
-				string.Empty,
-				name,
-				modifiedDate,
+			this.mapper.UnitMeasureMapModelToEF(
+				default (string),
+				model,
 				record);
 
 			this.context.Set<EFUnitMeasure>().Add(record);
@@ -42,8 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			string unitMeasureCode,
-			string name,
-			DateTime modifiedDate)
+			UnitMeasureModel model)
 		{
 			var record = this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
 			if (record == null)
@@ -52,10 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.UnitMeasureMapModelToEF(
 					unitMeasureCode,
-					name,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -77,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(string unitMeasureCode)
+		public virtual ApiResponse GetById(string unitMeasureCode)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.UnitMeasureCode == unitMeasureCode, response);
 			return response;
@@ -87,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOUnitMeasure GetByIdDirect(string unitMeasureCode)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.UnitMeasureCode == unitMeasureCode, response);
 			return response.UnitMeasures.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -111,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOUnitMeasure> GetWhereDirect(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.UnitMeasures;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFUnitMeasure, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFUnitMeasure, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFUnitMeasure> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.UnitMeasureMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFUnitMeasure> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.UnitMeasureMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFUnitMeasure> SearchLinqEF(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,30 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			string unitMeasureCode,
-			string name,
-			DateTime modifiedDate,
-			EFUnitMeasure efUnitMeasure)
-		{
-			efUnitMeasure.SetProperties(unitMeasureCode, name, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFUnitMeasure efUnitMeasure,
-			Response response)
-		{
-			if (efUnitMeasure == null)
-			{
-				return;
-			}
-
-			response.AddUnitMeasure(new POCOUnitMeasure(efUnitMeasure.UnitMeasureCode, efUnitMeasure.Name, efUnitMeasure.ModifiedDate.ToDateTime()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c70bcbcb596bbd0da3801601baa46c19</Hash>
+    <Hash>c470500c915c139422b3a2eceed86347</Hash>
 </Codenesium>*/

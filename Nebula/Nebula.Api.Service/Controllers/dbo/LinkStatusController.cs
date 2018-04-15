@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.Service
 {
 	[Route("api/linkStatus")]
+	[ApiVersion("1.0")]
 	public class LinkStatusController: AbstractLinkStatusController
 	{
 		public LinkStatusController(
@@ -32,5 +34,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ba2b0769f90d1dcb6f0e46b729aa0626</Hash>
+    <Hash>77d7ddb92fac13d19eea99090e55f23d</Hash>
 </Codenesium>*/

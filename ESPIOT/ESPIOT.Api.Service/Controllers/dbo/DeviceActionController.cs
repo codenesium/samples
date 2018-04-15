@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using ESPIOTNS.Api.DataAccess;
 namespace ESPIOTNS.Api.Service
 {
 	[Route("api/deviceActions")]
+	[ApiVersion("1.0")]
 	public class DeviceActionController: AbstractDeviceActionController
 	{
 		public DeviceActionController(
@@ -32,5 +34,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b4b187b2707352dd4d77578c2724b128</Hash>
+    <Hash>0074392ada39f34c430459ed38764d2a</Hash>
 </Codenesium>*/

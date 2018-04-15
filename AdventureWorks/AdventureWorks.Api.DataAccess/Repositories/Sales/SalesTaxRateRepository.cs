@@ -12,9 +12,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesTaxRateRepository: AbstractSalesTaxRateRepository, ISalesTaxRateRepository
 	{
 		public SalesTaxRateRepository(
+			IObjectMapper mapper,
 			ILogger<SalesTaxRateRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFSalesTaxRate> SearchLinqEF(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>00978ba7aea04f5f3355da0b4c2f5512</Hash>
+    <Hash>c7bab22358701b92763af0c019374c13</Hash>
 </Codenesium>*/

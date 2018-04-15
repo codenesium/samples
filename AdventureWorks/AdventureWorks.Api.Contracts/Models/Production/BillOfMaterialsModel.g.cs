@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ComponentID = componentID.ToInt();
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.UnitMeasureCode = unitMeasureCode;
+			this.UnitMeasureCode = unitMeasureCode.ToString();
 			this.BOMLevel = bOMLevel;
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
@@ -159,5 +159,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dba053e22f93ee049d3f45276ae2a45f</Hash>
+    <Hash>03af6eaf4ab55dd92f05cabaeccb8cf8</Hash>
 </Codenesium>*/

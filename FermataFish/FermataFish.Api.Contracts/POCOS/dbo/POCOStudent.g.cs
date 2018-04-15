@@ -23,19 +23,19 @@ namespace FermataFishNS.Api.Contracts
 			bool emailRemindersEnabled)
 		{
 			this.Id = id.ToInt();
-			this.Email = email;
-			this.FirstName = firstName;
-			this.LastName = lastName;
-			this.Phone = phone;
-			this.IsAdult = isAdult;
-			this.Birthday = birthday;
-			this.SmsRemindersEnabled = smsRemindersEnabled;
-			this.EmailRemindersEnabled = emailRemindersEnabled;
+			this.Email = email.ToString();
+			this.FirstName = firstName.ToString();
+			this.LastName = lastName.ToString();
+			this.Phone = phone.ToString();
+			this.IsAdult = isAdult.ToBoolean();
+			this.Birthday = birthday.ToDateTime();
+			this.SmsRemindersEnabled = smsRemindersEnabled.ToBoolean();
+			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
 
 			this.FamilyId = new ReferenceEntity<int>(familyId,
-			                                         "Family");
+			                                         nameof(ApiResponse.Families));
 			this.StudioId = new ReferenceEntity<int>(studioId,
-			                                         "Studio");
+			                                         nameof(ApiResponse.Studios));
 		}
 
 		public int Id { get; set; }
@@ -156,5 +156,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3b408216a913aaba4255d408cdac9956</Hash>
+    <Hash>7bcd2f49efbba6d946d6cf8034a9b41d</Hash>
 </Codenesium>*/

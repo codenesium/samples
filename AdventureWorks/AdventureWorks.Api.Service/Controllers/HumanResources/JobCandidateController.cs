@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/jobCandidates")]
+	[ApiVersion("1.0")]
 	public class JobCandidateController: AbstractJobCandidateController
 	{
 		public JobCandidateController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4ea45807e8b6840c3fbb4b37c2413b2a</Hash>
+    <Hash>96606fd3c10a5318cb01f42e215dae8f</Hash>
 </Codenesium>*/

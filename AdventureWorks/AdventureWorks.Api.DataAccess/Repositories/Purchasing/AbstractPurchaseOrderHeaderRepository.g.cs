@@ -14,45 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractPurchaseOrderHeaderRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			int revisionNumber,
-			int status,
-			int employeeID,
-			int vendorID,
-			int shipMethodID,
-			DateTime orderDate,
-			Nullable<DateTime> shipDate,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal freight,
-			decimal totalDue,
-			DateTime modifiedDate)
+			PurchaseOrderHeaderModel model)
 		{
 			var record = new EFPurchaseOrderHeader();
 
-			MapPOCOToEF(
-				0,
-				revisionNumber,
-				status,
-				employeeID,
-				vendorID,
-				shipMethodID,
-				orderDate,
-				shipDate,
-				subTotal,
-				taxAmt,
-				freight,
-				totalDue,
-				modifiedDate,
+			this.mapper.PurchaseOrderHeaderMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFPurchaseOrderHeader>().Add(record);
@@ -62,18 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int purchaseOrderID,
-			int revisionNumber,
-			int status,
-			int employeeID,
-			int vendorID,
-			int shipMethodID,
-			DateTime orderDate,
-			Nullable<DateTime> shipDate,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal freight,
-			decimal totalDue,
-			DateTime modifiedDate)
+			PurchaseOrderHeaderModel model)
 		{
 			var record = this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
 			if (record == null)
@@ -82,20 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.PurchaseOrderHeaderMapModelToEF(
 					purchaseOrderID,
-					revisionNumber,
-					status,
-					employeeID,
-					vendorID,
-					shipMethodID,
-					orderDate,
-					shipDate,
-					subTotal,
-					taxAmt,
-					freight,
-					totalDue,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -117,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int purchaseOrderID)
+		public virtual ApiResponse GetById(int purchaseOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID, response);
 			return response;
@@ -127,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOPurchaseOrderHeader GetByIdDirect(int purchaseOrderID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID, response);
 			return response.PurchaseOrderHeaders.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -151,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOPurchaseOrderHeader> GetWhereDirect(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.PurchaseOrderHeaders;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFPurchaseOrderHeader> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.PurchaseOrderHeaderMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFPurchaseOrderHeader> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.PurchaseOrderHeaderMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFPurchaseOrderHeader> SearchLinqEF(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -178,46 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int purchaseOrderID,
-			int revisionNumber,
-			int status,
-			int employeeID,
-			int vendorID,
-			int shipMethodID,
-			DateTime orderDate,
-			Nullable<DateTime> shipDate,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal freight,
-			decimal totalDue,
-			DateTime modifiedDate,
-			EFPurchaseOrderHeader efPurchaseOrderHeader)
-		{
-			efPurchaseOrderHeader.SetProperties(purchaseOrderID.ToInt(), revisionNumber, status, employeeID.ToInt(), vendorID.ToInt(), shipMethodID.ToInt(), orderDate.ToDateTime(), shipDate.ToNullableDateTime(), subTotal, taxAmt, freight, totalDue, modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFPurchaseOrderHeader efPurchaseOrderHeader,
-			Response response)
-		{
-			if (efPurchaseOrderHeader == null)
-			{
-				return;
-			}
-
-			response.AddPurchaseOrderHeader(new POCOPurchaseOrderHeader(efPurchaseOrderHeader.PurchaseOrderID.ToInt(), efPurchaseOrderHeader.RevisionNumber, efPurchaseOrderHeader.Status, efPurchaseOrderHeader.EmployeeID.ToInt(), efPurchaseOrderHeader.VendorID.ToInt(), efPurchaseOrderHeader.ShipMethodID.ToInt(), efPurchaseOrderHeader.OrderDate.ToDateTime(), efPurchaseOrderHeader.ShipDate.ToNullableDateTime(), efPurchaseOrderHeader.SubTotal, efPurchaseOrderHeader.TaxAmt, efPurchaseOrderHeader.Freight, efPurchaseOrderHeader.TotalDue, efPurchaseOrderHeader.ModifiedDate.ToDateTime()));
-
-			EmployeeRepository.MapEFToPOCO(efPurchaseOrderHeader.Employee, response);
-
-			VendorRepository.MapEFToPOCO(efPurchaseOrderHeader.Vendor, response);
-
-			ShipMethodRepository.MapEFToPOCO(efPurchaseOrderHeader.ShipMethod, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a133f7415fba241aad88bb08e3183d1</Hash>
+    <Hash>1e751e316de8d849aa86a5fa6c02955a</Hash>
 </Codenesium>*/

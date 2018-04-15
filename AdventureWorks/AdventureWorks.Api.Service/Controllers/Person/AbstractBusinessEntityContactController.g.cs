@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.businessEntityContactRepository.GetById(id);
+			ApiResponse response = this.businessEntityContactRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.businessEntityContactRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.businessEntityContactRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.businessEntityContactModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.businessEntityContactRepository.Create(
-					model.PersonID,
-					model.ContactTypeID,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.businessEntityContactRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.businessEntityContactRepository.Create(
-					model.PersonID,
-					model.ContactTypeID,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.businessEntityContactRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.businessEntityContactModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.businessEntityContactRepository.Update(
-					id,
-					model.PersonID,
-					model.ContactTypeID,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.businessEntityContactRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -185,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/BusinessEntities/{id}/BusinessEntityContacts")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.businessEntityContactRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -198,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/People/{id}/BusinessEntityContacts")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByPersonID(int id)
 		{
-			Response response = this.businessEntityContactRepository.GetWhere(x => x.PersonID == id);
+			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.PersonID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -211,10 +198,10 @@ namespace AdventureWorksNS.Api.Service
 		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ContactTypes/{id}/BusinessEntityContacts")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByContactTypeID(int id)
 		{
-			Response response = this.businessEntityContactRepository.GetWhere(x => x.ContactTypeID == id);
+			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.ContactTypeID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -222,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7c50601a0945ffa9e3b1f65ff6071429</Hash>
+    <Hash>ecc5761a293ada22624f2df008d3dcfe</Hash>
 </Codenesium>*/

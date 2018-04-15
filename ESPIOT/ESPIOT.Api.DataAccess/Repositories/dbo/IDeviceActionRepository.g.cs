@@ -7,30 +7,25 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public interface IDeviceActionRepository
 	{
-		int Create(
-			int deviceId,
-			string name,
-			string @value);
+		int Create(DeviceActionModel model);
 
 		void Update(int id,
-		            int deviceId,
-		            string name,
-		            string @value);
+		            DeviceActionModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCODeviceAction GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCODeviceAction> GetWhereDirect(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>a256008fdcf19f2331e699db1e8d3ed1</Hash>
+    <Hash>79e741356d17ff9913bd2942088cdb7d</Hash>
 </Codenesium>*/

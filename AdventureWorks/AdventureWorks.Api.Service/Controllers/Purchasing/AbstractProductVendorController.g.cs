@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductVendorFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productVendorRepository.GetById(id);
+			ApiResponse response = this.productVendorRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductVendorFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productVendorRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productVendorRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,17 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productVendorModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productVendorRepository.Create(
-					model.BusinessEntityID,
-					model.AverageLeadTime,
-					model.StandardPrice,
-					model.LastReceiptCost,
-					model.LastReceiptDate,
-					model.MinOrderQty,
-					model.MaxOrderQty,
-					model.OnOrderQty,
-					model.UnitMeasureCode,
-					model.ModifiedDate);
+				var id = this.productVendorRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -131,17 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productVendorRepository.Create(
-					model.BusinessEntityID,
-					model.AverageLeadTime,
-					model.StandardPrice,
-					model.LastReceiptCost,
-					model.LastReceiptDate,
-					model.MinOrderQty,
-					model.MaxOrderQty,
-					model.OnOrderQty,
-					model.UnitMeasureCode,
-					model.ModifiedDate);
+				this.productVendorRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -165,18 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productVendorModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productVendorRepository.Update(
-					id,
-					model.BusinessEntityID,
-					model.AverageLeadTime,
-					model.StandardPrice,
-					model.LastReceiptCost,
-					model.LastReceiptDate,
-					model.MinOrderQty,
-					model.MaxOrderQty,
-					model.OnOrderQty,
-					model.UnitMeasureCode,
-					model.ModifiedDate);
+				this.productVendorRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -203,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductVendorFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/ProductVendors")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			Response response = this.productVendorRepository.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.productVendorRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -216,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductVendorFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Vendors/{id}/ProductVendors")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.productVendorRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.productVendorRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -229,10 +198,10 @@ namespace AdventureWorksNS.Api.Service
 		[ProductVendorFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/UnitMeasures/{id}/ProductVendors")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByUnitMeasureCode(string id)
 		{
-			Response response = this.productVendorRepository.GetWhere(x => x.UnitMeasureCode == id);
+			ApiResponse response = this.productVendorRepository.GetWhere(x => x.UnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -240,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>be1c6fd573166ffb2f310de41c756299</Hash>
+    <Hash>87872c16a5da71b8f25a6342ae186b98</Hash>
 </Codenesium>*/

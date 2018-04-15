@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			Response response = this.countryRegionCurrencyRepository.GetById(id);
+			ApiResponse response = this.countryRegionCurrencyRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.countryRegionCurrencyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.countryRegionCurrencyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.countryRegionCurrencyRepository.Create(
-					model.CurrencyCode,
-					model.ModifiedDate);
+				var id = this.countryRegionCurrencyRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.countryRegionCurrencyRepository.Create(
-					model.CurrencyCode,
-					model.ModifiedDate);
+				this.countryRegionCurrencyRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.countryRegionCurrencyRepository.Update(
-					id,
-					model.CurrencyCode,
-					model.ModifiedDate);
+				this.countryRegionCurrencyRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -179,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CountryRegions/{id}/CountryRegionCurrencies")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCountryRegionCode(string id)
 		{
-			Response response = this.countryRegionCurrencyRepository.GetWhere(x => x.CountryRegionCode == id);
+			ApiResponse response = this.countryRegionCurrencyRepository.GetWhere(x => x.CountryRegionCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -192,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Currencies/{id}/CountryRegionCurrencies")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCurrencyCode(string id)
 		{
-			Response response = this.countryRegionCurrencyRepository.GetWhere(x => x.CurrencyCode == id);
+			ApiResponse response = this.countryRegionCurrencyRepository.GetWhere(x => x.CurrencyCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -203,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1ee2a7088821f6111b727cce62dc8e36</Hash>
+    <Hash>8a629320e0c6a562a884591616853fbf</Hash>
 </Codenesium>*/

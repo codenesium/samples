@@ -18,11 +18,11 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.ListPrice = listPrice;
+			this.ListPrice = listPrice.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          "Product");
+			                                          nameof(ApiResponse.Products));
 		}
 
 		public ReferenceEntity<int> ProductID { get; set; }
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>81c68f5556598cf300c476065e758c4c</Hash>
+    <Hash>bc749c8cdd7e724da31e4f9a4d3ae003</Hash>
 </Codenesium>*/

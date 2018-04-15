@@ -22,17 +22,17 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.TerritoryID = territoryID.ToInt();
-			this.Name = name;
-			this.@Group = @group;
-			this.SalesYTD = salesYTD;
-			this.SalesLastYear = salesLastYear;
-			this.CostYTD = costYTD;
-			this.CostLastYear = costLastYear;
-			this.Rowguid = rowguid;
+			this.Name = name.ToString();
+			this.@Group = @group.ToString();
+			this.SalesYTD = salesYTD.ToDecimal();
+			this.SalesLastYear = salesLastYear.ToDecimal();
+			this.CostYTD = costYTD.ToDecimal();
+			this.CostLastYear = costLastYear.ToDecimal();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
-			                                                     "CountryRegion");
+			                                                     nameof(ApiResponse.CountryRegions));
 		}
 
 		public int TerritoryID { get; set; }
@@ -143,5 +143,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f7023f45cca029c09696a2c9b8655790</Hash>
+    <Hash>1e376a526097d3b2532ce120698120e6</Hash>
 </Codenesium>*/

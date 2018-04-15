@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[PasswordFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.passwordRepository.GetById(id);
+			ApiResponse response = this.passwordRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[PasswordFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.passwordRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.passwordRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,11 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.passwordModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.passwordRepository.Create(
-					model.PasswordHash,
-					model.PasswordSalt,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.passwordRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -125,11 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.passwordRepository.Create(
-					model.PasswordHash,
-					model.PasswordSalt,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.passwordRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -153,12 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.passwordModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.passwordRepository.Update(
-					id,
-					model.PasswordHash,
-					model.PasswordSalt,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.passwordRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -185,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[PasswordFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/People/{id}/Passwords")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			Response response = this.passwordRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.passwordRepository.GetWhere(x => x.BusinessEntityID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -196,5 +183,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e2841cd2e5fd144b6b3a1008cf6af925</Hash>
+    <Hash>802c72e34a069f2e94c467e06dcf106d</Hash>
 </Codenesium>*/

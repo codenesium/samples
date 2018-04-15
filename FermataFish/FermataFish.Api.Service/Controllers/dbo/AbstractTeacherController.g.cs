@@ -47,10 +47,10 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[TeacherFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.teacherRepository.GetById(id);
+			ApiResponse response = this.teacherRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[TeacherFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.teacherRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.teacherRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,13 +83,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.teacherModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.teacherRepository.Create(
-					model.FirstName,
-					model.LastName,
-					model.Email,
-					model.Phone,
-					model.Birthday,
-					model.StudioId);
+				var id = this.teacherRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -127,13 +121,7 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.teacherRepository.Create(
-					model.FirstName,
-					model.LastName,
-					model.Email,
-					model.Phone,
-					model.Birthday,
-					model.StudioId);
+				this.teacherRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -157,14 +145,7 @@ namespace FermataFishNS.Api.Service
 			var validationResult = this.teacherModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.teacherRepository.Update(
-					id,
-					model.FirstName,
-					model.LastName,
-					model.Email,
-					model.Phone,
-					model.Birthday,
-					model.StudioId);
+				this.teacherRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -191,10 +172,10 @@ namespace FermataFishNS.Api.Service
 		[TeacherFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Studios/{id}/Teachers")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudioId(int id)
 		{
-			Response response = this.teacherRepository.GetWhere(x => x.StudioId == id);
+			ApiResponse response = this.teacherRepository.GetWhere(x => x.StudioId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -202,5 +183,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3c28446240967d2a5b936e2b7e52db11</Hash>
+    <Hash>a403120ad4b7936dcad8f5a4b682b140</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.TerritoryID = territoryID.ToInt();
 			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.Rowguid = rowguid;
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -106,5 +106,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1a1de0bab2bb00f9d403c6efc75aa9cf</Hash>
+    <Hash>d2ee6c65dd10c6c61b918d1400535918</Hash>
 </Codenesium>*/

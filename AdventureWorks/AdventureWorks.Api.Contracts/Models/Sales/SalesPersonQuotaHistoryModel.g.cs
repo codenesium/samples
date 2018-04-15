@@ -17,8 +17,8 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.QuotaDate = quotaDate.ToDateTime();
-			this.SalesQuota = salesQuota;
-			this.Rowguid = rowguid;
+			this.SalesQuota = salesQuota.ToDecimal();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3007eeacb34eece87b3641e89d693c4</Hash>
+    <Hash>7199e515744d1bf582434547b091e6fa</Hash>
 </Codenesium>*/

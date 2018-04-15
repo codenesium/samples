@@ -47,10 +47,10 @@ namespace ESPIOTNS.Api.Service
 		[Route("{id}")]
 		[DeviceFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.deviceRepository.GetById(id);
+			ApiResponse response = this.deviceRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace ESPIOTNS.Api.Service
 		[Route("")]
 		[DeviceFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.deviceRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.deviceRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace ESPIOTNS.Api.Service
 			var validationResult = this.deviceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.deviceRepository.Create(
-					model.PublicId,
-					model.Name);
+				var id = this.deviceRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace ESPIOTNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.deviceRepository.Create(
-					model.PublicId,
-					model.Name);
+				this.deviceRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace ESPIOTNS.Api.Service
 			var validationResult = this.deviceModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.deviceRepository.Update(
-					id,
-					model.PublicId,
-					model.Name);
+				this.deviceRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>39eb717a00b219de22882f3c519325f6</Hash>
+    <Hash>7f5a3cdb445ed8bc7a984ee08607d454</Hash>
 </Codenesium>*/

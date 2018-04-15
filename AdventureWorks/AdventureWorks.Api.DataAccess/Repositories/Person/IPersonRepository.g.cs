@@ -7,48 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPersonRepository
 	{
-		int Create(
-			string personType,
-			bool nameStyle,
-			string title,
-			string firstName,
-			string middleName,
-			string lastName,
-			string suffix,
-			int emailPromotion,
-			string additionalContactInfo,
-			string demographics,
-			Guid rowguid,
-			DateTime modifiedDate);
+		int Create(PersonModel model);
 
 		void Update(int businessEntityID,
-		            string personType,
-		            bool nameStyle,
-		            string title,
-		            string firstName,
-		            string middleName,
-		            string lastName,
-		            string suffix,
-		            int emailPromotion,
-		            string additionalContactInfo,
-		            string demographics,
-		            Guid rowguid,
-		            DateTime modifiedDate);
+		            PersonModel model);
 
 		void Delete(int businessEntityID);
 
-		Response GetById(int businessEntityID);
+		ApiResponse GetById(int businessEntityID);
 
 		POCOPerson GetByIdDirect(int businessEntityID);
 
-		Response GetWhere(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOPerson> GetWhereDirect(Expression<Func<EFPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e25460696274dec70e43cb22bb98b0e4</Hash>
+    <Hash>a1abaab88fc8aeccf7d8f6509552f487</Hash>
 </Codenesium>*/

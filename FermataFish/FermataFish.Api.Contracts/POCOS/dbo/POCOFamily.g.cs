@@ -18,16 +18,16 @@ namespace FermataFishNS.Api.Contracts
 			string notes,
 			int studioId)
 		{
-			this.PcFirstName = pcFirstName;
-			this.PcLastName = pcLastName;
-			this.PcPhone = pcPhone;
-			this.PcEmail = pcEmail;
-			this.Notes = notes;
+			this.PcFirstName = pcFirstName.ToString();
+			this.PcLastName = pcLastName.ToString();
+			this.PcPhone = pcPhone.ToString();
+			this.PcEmail = pcEmail.ToString();
+			this.Notes = notes.ToString();
 
 			this.Id = new ReferenceEntity<int>(id,
-			                                   "Studio");
+			                                   nameof(ApiResponse.Studios));
 			this.StudioId = new ReferenceEntity<int>(studioId,
-			                                         "Studio");
+			                                         nameof(ApiResponse.Studios));
 		}
 
 		public ReferenceEntity<int> Id { get; set; }
@@ -108,5 +108,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d73f5a20a48b430e28558a89a4fc6d2f</Hash>
+    <Hash>d56bebb7bb81379ee6a5c640f3d377ca</Hash>
 </Codenesium>*/

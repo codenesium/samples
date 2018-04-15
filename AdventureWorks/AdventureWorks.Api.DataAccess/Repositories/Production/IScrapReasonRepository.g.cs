@@ -7,28 +7,25 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IScrapReasonRepository
 	{
-		short Create(
-			string name,
-			DateTime modifiedDate);
+		short Create(ScrapReasonModel model);
 
 		void Update(short scrapReasonID,
-		            string name,
-		            DateTime modifiedDate);
+		            ScrapReasonModel model);
 
 		void Delete(short scrapReasonID);
 
-		Response GetById(short scrapReasonID);
+		ApiResponse GetById(short scrapReasonID);
 
 		POCOScrapReason GetByIdDirect(short scrapReasonID);
 
-		Response GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc8827d38896c9c8c0e9592dafc806d5</Hash>
+    <Hash>1c3edaa22a03b7132132f51477621771</Hash>
 </Codenesium>*/

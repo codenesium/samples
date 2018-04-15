@@ -14,7 +14,7 @@ namespace FermataFishNS.Api.Contracts
 			string name,
 			int studioId)
 		{
-			this.Name = name;
+			this.Name = name.ToString();
 			this.StudioId = studioId.ToInt();
 		}
 
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6d90a0285df1e8b851b8f5757ef2f082</Hash>
+    <Hash>cafa1afba18adbddfab6eb909b88bfb9</Hash>
 </Codenesium>*/

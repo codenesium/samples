@@ -22,13 +22,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.ErrorLogID = errorLogID.ToInt();
 			this.ErrorTime = errorTime.ToDateTime();
-			this.UserName = userName;
+			this.UserName = userName.ToString();
 			this.ErrorNumber = errorNumber.ToInt();
 			this.ErrorSeverity = errorSeverity.ToNullableInt();
 			this.ErrorState = errorState.ToNullableInt();
-			this.ErrorProcedure = errorProcedure;
+			this.ErrorProcedure = errorProcedure.ToString();
 			this.ErrorLine = errorLine.ToNullableInt();
-			this.ErrorMessage = errorMessage;
+			this.ErrorMessage = errorMessage.ToString();
 		}
 
 		public int ErrorLogID { get; set; }
@@ -129,5 +129,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dea2038ee2a166d7c07b957b4105064e</Hash>
+    <Hash>c37053531c8f6ebf22a2eaff599180fb</Hash>
 </Codenesium>*/

@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shifts")]
+	[ApiVersion("1.0")]
 	public class ShiftController: AbstractShiftController
 	{
 		public ShiftController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>412539f4ace9c4bd42acbeb5c2940da9</Hash>
+    <Hash>49f859ccd0bf5a26d51600abe361c14e</Hash>
 </Codenesium>*/

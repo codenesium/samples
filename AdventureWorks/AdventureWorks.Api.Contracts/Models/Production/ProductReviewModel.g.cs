@@ -20,11 +20,11 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.ProductID = productID.ToInt();
-			this.ReviewerName = reviewerName;
+			this.ReviewerName = reviewerName.ToString();
 			this.ReviewDate = reviewDate.ToDateTime();
-			this.EmailAddress = emailAddress;
+			this.EmailAddress = emailAddress.ToString();
 			this.Rating = rating.ToInt();
-			this.Comments = comments;
+			this.Comments = comments.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -142,5 +142,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bc523761b69e764cbd1954a862122e03</Hash>
+    <Hash>1b7c3642ae786b07149f1f9bb023655d</Hash>
 </Codenesium>*/

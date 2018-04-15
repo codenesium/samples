@@ -9,10 +9,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -45,16 +48,62 @@ namespace FileServiceNS.Api.Service
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-			services.AddSwaggerGen(c =>
+			services.AddMvcCore(config =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "FileService", Version = "v1" });
-                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                /*
+                 var policy = new AuthorizationPolicyBuilder()
+                              .RequireAuthenticatedUser()
+                              .Build();
+                 config.Filters.Add(new AuthorizeFilter(policy));
+                 */
+                 
+            }).AddVersionedApiExplorer(
+            o =>
+            {
+                o.GroupNameFormat = "'v'VVV";
 
-				// c.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert token", Name = "Authorization", Type = "apiKey" });
+                // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                // can also be used to control the format of the API version in route templates
+                o.SubstituteApiVersionInUrl = true;
             });
 
-           services.AddCors(config =>
+            services.AddMvc();
+
+            services.AddApiVersioning(
+             o =>
+             {
+                 // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
+                 o.ReportApiVersions = true;
+                 o.ApiVersionReader = new HeaderApiVersionReader("api-version");
+             });
+
+
+            services.AddSwaggerGen(o =>
             {
+                o.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
+				// resolve the IApiVersionDescriptionProvider service
+                // note: that we have to build a temporary service provider here because one has not been created yet
+                var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
+
+                // add a swagger document for each discovered API version
+                // note: you might choose to skip or document deprecated API versions differently
+                foreach ( var description in provider.ApiVersionDescriptions )
+                {
+                    o.SwaggerDoc( description.GroupName, CreateInfoForApiVersion( description ) );
+                }
+
+                // add a custom operation filter which sets default values
+                o.OperationFilter<SwaggerDefaultValues>();
+
+                // integrate xml comments
+                // o.IncludeXmlComments( XmlCommentsFilePath );
+				// options.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert token", Name = "Authorization", Type = "apiKey" });
+            });
+
+
+           services.AddCors(config =>
+           {
                 var policy = new CorsPolicy();
                 policy.Headers.Add("*");
                 policy.Methods.Add("*");
@@ -79,17 +128,6 @@ namespace FileServiceNS.Api.Service
                 };
             });
 			*/
-
-            // Add services to the collection.
-            services.AddMvc(config =>
-            {
-               /*
-			    var policy = new AuthorizationPolicyBuilder()
-                             .RequireAuthenticatedUser()
-                             .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-				*/
-            });
 
             // Create the container builder.
             var builder = new ContainerBuilder();
@@ -119,10 +157,12 @@ namespace FileServiceNS.Api.Service
                 .As<ITransactionCoordinator>()
                 .InstancePerLifetimeScope();
 
-            // AutofacHack is a static empty class we reference to make it possible
-            // to get the assembly name in any project without having to look up an assembly
-            // dynamically. This section registers repositories by convention.
-            var dataAccessAssembly = typeof(AutofacHack).Assembly;
+
+	        builder.RegisterType<ObjectMapper>()
+                .As<IObjectMapper>()
+                .InstancePerLifetimeScope(); 
+
+            var dataAccessAssembly = typeof(ObjectMapper).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
 				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
 				.AsImplementedInterfaces();
@@ -181,6 +221,36 @@ namespace FileServiceNS.Api.Service
             // You can only do this if you have a direct reference to the container,
             // so it won't work with the above ConfigureContainer mechanism.
             appLifetime.ApplicationStopped.Register(() => this.ApplicationContainer.Dispose());
+        }
+
+		static string XmlCommentsFilePath
+        {
+            get
+            {
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                return Path.Combine(basePath, fileName);
+            }
+        }
+
+        static Info CreateInfoForApiVersion(ApiVersionDescription description)
+        {
+            var info = new Info()
+            {
+                Title = "FileService API " + description.ApiVersion,
+                Version = description.ApiVersion.ToString(),
+                Description = "API",
+                Contact = new Contact() { Name = "test", Email = "test@test.com" },
+                TermsOfService = "",
+                License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
+            };
+
+            if (description.IsDeprecated)
+            {
+                info.Description += " This API version has been deprecated.";
+            }
+
+            return info;
         }
     }
 }

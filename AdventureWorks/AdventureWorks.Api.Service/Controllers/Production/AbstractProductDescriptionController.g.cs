@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ProductDescriptionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.productDescriptionRepository.GetById(id);
+			ApiResponse response = this.productDescriptionRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ProductDescriptionFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.productDescriptionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productDescriptionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productDescriptionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.productDescriptionRepository.Create(
-					model.Description,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.productDescriptionRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productDescriptionRepository.Create(
-					model.Description,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productDescriptionRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.productDescriptionModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.productDescriptionRepository.Update(
-					id,
-					model.Description,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.productDescriptionRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -180,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7e3fb7da042de75656da75ffe97d5a02</Hash>
+    <Hash>e15d04e839632d3b0176b6355fd71b25</Hash>
 </Codenesium>*/

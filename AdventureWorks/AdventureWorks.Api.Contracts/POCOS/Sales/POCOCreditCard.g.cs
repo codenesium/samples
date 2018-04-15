@@ -18,9 +18,9 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.CreditCardID = creditCardID.ToInt();
-			this.CardType = cardType;
-			this.CardNumber = cardNumber;
-			this.ExpMonth = expMonth;
+			this.CardType = cardType.ToString();
+			this.CardNumber = cardNumber.ToString();
+			this.ExpMonth = expMonth.ToInt();
 			this.ExpYear = expYear;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>62a69ad21d7dce28516986017b36effd</Hash>
+    <Hash>7c311ca98914946d63f1199f5f6aa794</Hash>
 </Codenesium>*/

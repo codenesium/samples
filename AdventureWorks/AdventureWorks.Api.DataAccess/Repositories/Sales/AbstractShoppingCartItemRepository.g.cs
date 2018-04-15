@@ -14,31 +14,26 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext context;
 		protected ILogger logger;
+		protected IObjectMapper mapper;
 
 		public AbstractShoppingCartItemRepository(
+			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
+			this.mapper = mapper;
 			this.logger = logger;
 			this.context = context;
 		}
 
 		public virtual int Create(
-			string shoppingCartID,
-			int quantity,
-			int productID,
-			DateTime dateCreated,
-			DateTime modifiedDate)
+			ShoppingCartItemModel model)
 		{
 			var record = new EFShoppingCartItem();
 
-			MapPOCOToEF(
-				0,
-				shoppingCartID,
-				quantity,
-				productID,
-				dateCreated,
-				modifiedDate,
+			this.mapper.ShoppingCartItemMapModelToEF(
+				default (int),
+				model,
 				record);
 
 			this.context.Set<EFShoppingCartItem>().Add(record);
@@ -48,11 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual void Update(
 			int shoppingCartItemID,
-			string shoppingCartID,
-			int quantity,
-			int productID,
-			DateTime dateCreated,
-			DateTime modifiedDate)
+			ShoppingCartItemModel model)
 		{
 			var record = this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
 			if (record == null)
@@ -61,13 +52,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				MapPOCOToEF(
+				this.mapper.ShoppingCartItemMapModelToEF(
 					shoppingCartItemID,
-					shoppingCartID,
-					quantity,
-					productID,
-					dateCreated,
-					modifiedDate,
+					model,
 					record);
 				this.context.SaveChanges();
 			}
@@ -89,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual Response GetById(int shoppingCartItemID)
+		public virtual ApiResponse GetById(int shoppingCartItemID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID, response);
 			return response;
@@ -99,23 +86,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual POCOShoppingCartItem GetByIdDirect(int shoppingCartItemID)
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID, response);
 			return response.ShoppingCartItems.FirstOrDefault();
 		}
 
-		public virtual Response GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response;
 		}
 
-		public virtual Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
 			return response;
@@ -123,22 +110,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new Response();
+			var response = new ApiResponse();
 
 			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
 			return response.ShoppingCartItems;
 		}
 
-		private void SearchLinqPOCO(Expression<Func<EFShoppingCartItem, bool>> predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCO(Expression<Func<EFShoppingCartItem, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFShoppingCartItem> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ShoppingCartItemMapEFToPOCO(x, response));
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, Response response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<EFShoppingCartItem> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => MapEFToPOCO(x, response));
+			records.ForEach(x => this.mapper.ShoppingCartItemMapEFToPOCO(x, response));
 		}
 
 		protected virtual List<EFShoppingCartItem> SearchLinqEF(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -150,35 +137,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			throw new NotImplementedException("This method should be implemented in a derived class");
 		}
-
-		public static void MapPOCOToEF(
-			int shoppingCartItemID,
-			string shoppingCartID,
-			int quantity,
-			int productID,
-			DateTime dateCreated,
-			DateTime modifiedDate,
-			EFShoppingCartItem efShoppingCartItem)
-		{
-			efShoppingCartItem.SetProperties(shoppingCartItemID.ToInt(), shoppingCartID, quantity.ToInt(), productID.ToInt(), dateCreated.ToDateTime(), modifiedDate.ToDateTime());
-		}
-
-		public static void MapEFToPOCO(
-			EFShoppingCartItem efShoppingCartItem,
-			Response response)
-		{
-			if (efShoppingCartItem == null)
-			{
-				return;
-			}
-
-			response.AddShoppingCartItem(new POCOShoppingCartItem(efShoppingCartItem.ShoppingCartItemID.ToInt(), efShoppingCartItem.ShoppingCartID, efShoppingCartItem.Quantity.ToInt(), efShoppingCartItem.ProductID.ToInt(), efShoppingCartItem.DateCreated.ToDateTime(), efShoppingCartItem.ModifiedDate.ToDateTime()));
-
-			ProductRepository.MapEFToPOCO(efShoppingCartItem.Product, response);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f037a065ebfa8ac695111d0ffd7b233f</Hash>
+    <Hash>04e2f378de7fc4fa6e8e25132d82685c</Hash>
 </Codenesium>*/

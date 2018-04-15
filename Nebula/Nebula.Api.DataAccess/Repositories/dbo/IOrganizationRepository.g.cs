@@ -7,26 +7,25 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IOrganizationRepository
 	{
-		int Create(
-			string name);
+		int Create(OrganizationModel model);
 
 		void Update(int id,
-		            string name);
+		            OrganizationModel model);
 
 		void Delete(int id);
 
-		Response GetById(int id);
+		ApiResponse GetById(int id);
 
 		POCOOrganization GetByIdDirect(int id);
 
-		Response GetWhere(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhere(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
 		List<POCOOrganization> GetWhereDirect(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Response GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>58b5dd1826334db3aa0a1a0a4eb06964</Hash>
+    <Hash>a9bfb9be8567759b2f456b79e99a3230</Hash>
 </Codenesium>*/

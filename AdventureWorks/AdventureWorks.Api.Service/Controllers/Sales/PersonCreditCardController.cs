@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personCreditCards")]
+	[ApiVersion("1.0")]
 	public class PersonCreditCardController: AbstractPersonCreditCardController
 	{
 		public PersonCreditCardController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7dfc881fd9b3d3f9847d3b67b04419c3</Hash>
+    <Hash>770b674a32722fe04f71d0bdc3c9f343</Hash>
 </Codenesium>*/

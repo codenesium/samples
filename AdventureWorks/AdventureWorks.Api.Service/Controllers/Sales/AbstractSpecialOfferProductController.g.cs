@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[SpecialOfferProductFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.specialOfferProductRepository.GetById(id);
+			ApiResponse response = this.specialOfferProductRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[SpecialOfferProductFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.specialOfferProductRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.specialOfferProductRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,10 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.specialOfferProductModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.specialOfferProductRepository.Create(
-					model.ProductID,
-					model.Rowguid,
-					model.ModifiedDate);
+				var id = this.specialOfferProductRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -124,10 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.specialOfferProductRepository.Create(
-					model.ProductID,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.specialOfferProductRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -151,11 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.specialOfferProductModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.specialOfferProductRepository.Update(
-					id,
-					model.ProductID,
-					model.Rowguid,
-					model.ModifiedDate);
+				this.specialOfferProductRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -182,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[SpecialOfferProductFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SpecialOffers/{id}/SpecialOfferProducts")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySpecialOfferID(int id)
 		{
-			Response response = this.specialOfferProductRepository.GetWhere(x => x.SpecialOfferID == id);
+			ApiResponse response = this.specialOfferProductRepository.GetWhere(x => x.SpecialOfferID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -195,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[SpecialOfferProductFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/SpecialOfferProducts")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductID(int id)
 		{
-			Response response = this.specialOfferProductRepository.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.specialOfferProductRepository.GetWhere(x => x.ProductID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -206,5 +196,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>26eda563ede3c5538f84bfb6f9e7b970</Hash>
+    <Hash>8bc1a726c6604b61ca896418d44e55fb</Hash>
 </Codenesium>*/

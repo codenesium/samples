@@ -30,14 +30,14 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ActualStartDate = actualStartDate.ToNullableDateTime();
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
 			this.ActualResourceHrs = actualResourceHrs.ToNullableDecimal();
-			this.PlannedCost = plannedCost;
-			this.ActualCost = actualCost;
+			this.PlannedCost = plannedCost.ToDecimal();
+			this.ActualCost = actualCost.ToNullableDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.WorkOrderID = new ReferenceEntity<int>(workOrderID,
-			                                            "WorkOrder");
+			                                            nameof(ApiResponse.WorkOrders));
 			this.LocationID = new ReferenceEntity<short>(locationID,
-			                                             "Location");
+			                                             nameof(ApiResponse.Locations));
 		}
 
 		public ReferenceEntity<int> WorkOrderID { get; set; }
@@ -168,5 +168,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>54c5476802b04c25d4d8698812301005</Hash>
+    <Hash>a4d7032ffdd68275bcdaf168d381fdc9</Hash>
 </Codenesium>*/

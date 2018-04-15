@@ -4,6 +4,7 @@ using FluentValidation.Results;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
@@ -11,6 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productModelProductDescriptionCultures")]
+	[ApiVersion("1.0")]
 	public class ProductModelProductDescriptionCultureController: AbstractProductModelProductDescriptionCultureController
 	{
 		public ProductModelProductDescriptionCultureController(
@@ -32,5 +34,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>44d741c923e4a3e44e4d5709e73ce3b3</Hash>
+    <Hash>e070c2d96fac60f0534bf38cb2f9a888</Hash>
 </Codenesium>*/

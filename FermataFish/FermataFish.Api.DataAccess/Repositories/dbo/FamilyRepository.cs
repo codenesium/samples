@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class FamilyRepository: AbstractFamilyRepository, IFamilyRepository
 	{
 		public FamilyRepository(
+			IObjectMapper mapper,
 			ILogger<FamilyRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFFamily> SearchLinqEF(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ae553fab06f613971448ddaa550764fd</Hash>
+    <Hash>3a9ea61bb9fd6ba15ae57a1051481edd</Hash>
 </Codenesium>*/

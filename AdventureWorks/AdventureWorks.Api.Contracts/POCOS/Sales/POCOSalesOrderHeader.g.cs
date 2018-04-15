@@ -38,40 +38,40 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate)
 		{
 			this.SalesOrderID = salesOrderID.ToInt();
-			this.RevisionNumber = revisionNumber;
+			this.RevisionNumber = revisionNumber.ToInt();
 			this.OrderDate = orderDate.ToDateTime();
 			this.DueDate = dueDate.ToDateTime();
 			this.ShipDate = shipDate.ToNullableDateTime();
-			this.Status = status;
-			this.OnlineOrderFlag = onlineOrderFlag;
-			this.SalesOrderNumber = salesOrderNumber;
-			this.PurchaseOrderNumber = purchaseOrderNumber;
-			this.AccountNumber = accountNumber;
-			this.CreditCardApprovalCode = creditCardApprovalCode;
-			this.SubTotal = subTotal;
-			this.TaxAmt = taxAmt;
-			this.Freight = freight;
-			this.TotalDue = totalDue;
-			this.Comment = comment;
-			this.Rowguid = rowguid;
+			this.Status = status.ToInt();
+			this.OnlineOrderFlag = onlineOrderFlag.ToBoolean();
+			this.SalesOrderNumber = salesOrderNumber.ToString();
+			this.PurchaseOrderNumber = purchaseOrderNumber.ToString();
+			this.AccountNumber = accountNumber.ToString();
+			this.CreditCardApprovalCode = creditCardApprovalCode.ToString();
+			this.SubTotal = subTotal.ToDecimal();
+			this.TaxAmt = taxAmt.ToDecimal();
+			this.Freight = freight.ToDecimal();
+			this.TotalDue = totalDue.ToDecimal();
+			this.Comment = comment.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.CustomerID = new ReferenceEntity<int>(customerID,
-			                                           "Customer");
+			                                           nameof(ApiResponse.Customers));
 			this.SalesPersonID = new ReferenceEntity<Nullable<int>>(salesPersonID,
-			                                                        "SalesPerson");
+			                                                        nameof(ApiResponse.SalesPersons));
 			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
-			                                                      "SalesTerritory");
+			                                                      nameof(ApiResponse.SalesTerritories));
 			this.BillToAddressID = new ReferenceEntity<int>(billToAddressID,
-			                                                "Address");
+			                                                nameof(ApiResponse.Addresses));
 			this.ShipToAddressID = new ReferenceEntity<int>(shipToAddressID,
-			                                                "Address");
+			                                                nameof(ApiResponse.Addresses));
 			this.ShipMethodID = new ReferenceEntity<int>(shipMethodID,
-			                                             "ShipMethod");
+			                                             nameof(ApiResponse.ShipMethods));
 			this.CreditCardID = new ReferenceEntity<Nullable<int>>(creditCardID,
-			                                                       "CreditCard");
+			                                                       nameof(ApiResponse.CreditCards));
 			this.CurrencyRateID = new ReferenceEntity<Nullable<int>>(currencyRateID,
-			                                                         "CurrencyRate");
+			                                                         nameof(ApiResponse.CurrencyRates));
 		}
 
 		public int SalesOrderID { get; set; }
@@ -342,5 +342,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cebdef920e52ddf436e86de3f093e8fa</Hash>
+    <Hash>5c79b7e514996276f4ed133c5fc371af</Hash>
 </Codenesium>*/

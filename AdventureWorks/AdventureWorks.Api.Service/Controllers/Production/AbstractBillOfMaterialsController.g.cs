@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.billOfMaterialsRepository.GetById(id);
+			ApiResponse response = this.billOfMaterialsRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,15 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.billOfMaterialsModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.billOfMaterialsRepository.Create(
-					model.ProductAssemblyID,
-					model.ComponentID,
-					model.StartDate,
-					model.EndDate,
-					model.UnitMeasureCode,
-					model.BOMLevel,
-					model.PerAssemblyQty,
-					model.ModifiedDate);
+				var id = this.billOfMaterialsRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -129,15 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.billOfMaterialsRepository.Create(
-					model.ProductAssemblyID,
-					model.ComponentID,
-					model.StartDate,
-					model.EndDate,
-					model.UnitMeasureCode,
-					model.BOMLevel,
-					model.PerAssemblyQty,
-					model.ModifiedDate);
+				this.billOfMaterialsRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -161,16 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.billOfMaterialsModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.billOfMaterialsRepository.Update(
-					id,
-					model.ProductAssemblyID,
-					model.ComponentID,
-					model.StartDate,
-					model.EndDate,
-					model.UnitMeasureCode,
-					model.BOMLevel,
-					model.PerAssemblyQty,
-					model.ModifiedDate);
+				this.billOfMaterialsRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -197,10 +172,10 @@ namespace AdventureWorksNS.Api.Service
 		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductAssemblyID(int id)
 		{
-			Response response = this.billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id);
+			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -210,10 +185,10 @@ namespace AdventureWorksNS.Api.Service
 		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByComponentID(int id)
 		{
-			Response response = this.billOfMaterialsRepository.GetWhere(x => x.ComponentID == id);
+			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.ComponentID == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -223,10 +198,10 @@ namespace AdventureWorksNS.Api.Service
 		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/UnitMeasures/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByUnitMeasureCode(string id)
 		{
-			Response response = this.billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id);
+			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -234,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>48e37fe0319f834f7954aa51a8059ec1</Hash>
+    <Hash>6205fdb63762707a2ebf7d76ced3a8ac</Hash>
 </Codenesium>*/

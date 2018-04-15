@@ -47,10 +47,10 @@ namespace FileServiceNS.Api.Service
 		[Route("{id}")]
 		[FileFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.fileRepository.GetById(id);
+			ApiResponse response = this.fileRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[FileFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.fileRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.fileRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,18 +83,7 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.fileModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.fileRepository.Create(
-					model.ExternalId,
-					model.PrivateKey,
-					model.PublicKey,
-					model.Location,
-					model.Expiration,
-					model.Extension,
-					model.DateCreated,
-					model.FileSizeInBytes,
-					model.FileTypeId,
-					model.BucketId,
-					model.Description);
+				var id = this.fileRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -132,18 +121,7 @@ namespace FileServiceNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.fileRepository.Create(
-					model.ExternalId,
-					model.PrivateKey,
-					model.PublicKey,
-					model.Location,
-					model.Expiration,
-					model.Extension,
-					model.DateCreated,
-					model.FileSizeInBytes,
-					model.FileTypeId,
-					model.BucketId,
-					model.Description);
+				this.fileRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -167,19 +145,7 @@ namespace FileServiceNS.Api.Service
 			var validationResult = this.fileModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.fileRepository.Update(
-					id,
-					model.ExternalId,
-					model.PrivateKey,
-					model.PublicKey,
-					model.Location,
-					model.Expiration,
-					model.Extension,
-					model.DateCreated,
-					model.FileSizeInBytes,
-					model.FileTypeId,
-					model.BucketId,
-					model.Description);
+				this.fileRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -206,10 +172,10 @@ namespace FileServiceNS.Api.Service
 		[FileFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/FileTypes/{id}/Files")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByFileTypeId(int id)
 		{
-			Response response = this.fileRepository.GetWhere(x => x.FileTypeId == id);
+			ApiResponse response = this.fileRepository.GetWhere(x => x.FileTypeId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -219,10 +185,10 @@ namespace FileServiceNS.Api.Service
 		[FileFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Buckets/{id}/Files")]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBucketId(int id)
 		{
-			Response response = this.fileRepository.GetWhere(x => x.BucketId == id);
+			ApiResponse response = this.fileRepository.GetWhere(x => x.BucketId == id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -230,5 +196,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4a4fc36420d391678f5b9daf2fc4400e</Hash>
+    <Hash>fedb8a5476abff49780ff2c618aedaed</Hash>
 </Codenesium>*/

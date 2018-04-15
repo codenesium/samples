@@ -47,10 +47,10 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitMeasureFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			Response response = this.unitMeasureRepository.GetById(id);
+			ApiResponse response = this.unitMeasureRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitMeasureFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.unitMeasureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.unitMeasureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,9 +83,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.unitMeasureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.unitMeasureRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				var id = this.unitMeasureRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -123,9 +121,7 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.unitMeasureRepository.Create(
-					model.Name,
-					model.ModifiedDate);
+				this.unitMeasureRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -149,10 +145,7 @@ namespace AdventureWorksNS.Api.Service
 			var validationResult = this.unitMeasureModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.unitMeasureRepository.Update(
-					id,
-					model.Name,
-					model.ModifiedDate);
+				this.unitMeasureRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -177,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e3f2565b099d4fdbd9f6a0812543d87c</Hash>
+    <Hash>a760dafa3287ac45865d292656980b7b</Hash>
 </Codenesium>*/

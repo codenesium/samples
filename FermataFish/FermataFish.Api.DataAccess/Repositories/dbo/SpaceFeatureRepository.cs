@@ -12,9 +12,10 @@ namespace FermataFishNS.Api.DataAccess
 	public class SpaceFeatureRepository: AbstractSpaceFeatureRepository, ISpaceFeatureRepository
 	{
 		public SpaceFeatureRepository(
+			IObjectMapper mapper,
 			ILogger<SpaceFeatureRepository> logger,
 			ApplicationDbContext context)
-			: base(logger, context)
+			: base(mapper, logger, context)
 		{}
 
 		protected override List<EFSpaceFeature> SearchLinqEF(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>287ee3cd0edb8c6141edb0a354dbab77</Hash>
+    <Hash>e68b3f96b3d537adbc7da2b6647a95b7</Hash>
 </Codenesium>*/

@@ -47,10 +47,10 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[OrganizationFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			Response response = this.organizationRepository.GetById(id);
+			ApiResponse response = this.organizationRepository.GetById(id);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -59,13 +59,13 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[OrganizationFilter]
 		[ReadOnlyFilter]
-		[ProducesResponseType(typeof(Response), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			Response response = this.organizationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.organizationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
@@ -83,8 +83,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.organizationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				var id = this.organizationRepository.Create(
-					model.Name);
+				var id = this.organizationRepository.Create(model);
 				return this.Ok(id);
 			}
 			else
@@ -122,8 +121,7 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.organizationRepository.Create(
-					model.Name);
+				this.organizationRepository.Create(model);
 			}
 
 			return this.Ok();
@@ -147,9 +145,7 @@ namespace NebulaNS.Api.Service
 			var validationResult = this.organizationModelValidator.Validate(model);
 			if (validationResult.IsValid)
 			{
-				this.organizationRepository.Update(
-					id,
-					model.Name);
+				this.organizationRepository.Update(id, model);
 				return this.Ok();
 			}
 			else
@@ -174,5 +170,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bb30d822cac5cd8dccf0b84c2b6dced6</Hash>
+    <Hash>7cbecbf8f807e885c8552571c12332c2</Hash>
 </Codenesium>*/
