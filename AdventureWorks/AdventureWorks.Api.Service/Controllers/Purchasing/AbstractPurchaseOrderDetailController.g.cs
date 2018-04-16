@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IPurchaseOrderDetailRepository purchaseOrderDetailRepository;
 
-		protected IPurchaseOrderDetailModelValidator purchaseOrderDetailModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractPurchaseOrderDetailController(
 			ILogger<AbstractPurchaseOrderDetailController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPurchaseOrderDetailRepository purchaseOrderDetailRepository,
-			IPurchaseOrderDetailModelValidator purchaseOrderDetailModelValidator
+			IPurchaseOrderDetailRepository purchaseOrderDetailRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.purchaseOrderDetailRepository = purchaseOrderDetailRepository;
-			this.purchaseOrderDetailModelValidator = purchaseOrderDetailModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[PurchaseOrderDetailFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[PurchaseOrderDetailFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[PurchaseOrderDetailFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] PurchaseOrderDetailModel model)
 		{
-			this.purchaseOrderDetailModelValidator.CreateMode();
-			var validationResult = this.purchaseOrderDetailModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.purchaseOrderDetailRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.purchaseOrderDetailRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[PurchaseOrderDetailFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<PurchaseOrderDetailModel> models)
 		{
-			this.purchaseOrderDetailModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.purchaseOrderDetailModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[PurchaseOrderDetailFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] PurchaseOrderDetailModel model)
 		{
-			if (this.purchaseOrderDetailRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.purchaseOrderDetailModelValidator.UpdateMode();
-			var validationResult = this.purchaseOrderDetailModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.purchaseOrderDetailRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.purchaseOrderDetailRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[PurchaseOrderDetailFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByPurchaseOrderID/{id}")]
-		[PurchaseOrderDetailFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/PurchaseOrderHeaders/{id}/PurchaseOrderDetails")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByProductID/{id}")]
-		[PurchaseOrderDetailFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/PurchaseOrderDetails")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4f3258eb14d6841fcf531f5505655004</Hash>
+    <Hash>e71b23316ffc865326b3dff3f109011b</Hash>
 </Codenesium>*/

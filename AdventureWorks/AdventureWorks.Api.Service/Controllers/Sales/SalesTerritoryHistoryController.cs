@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTerritoryHistories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SalesTerritoryHistoryFilter))]
 	public class SalesTerritoryHistoryController: AbstractSalesTerritoryHistoryController
 	{
 		public SalesTerritoryHistoryController(
 			ILogger<SalesTerritoryHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
-			ISalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator
+			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesTerritoryHistoryRepository,
-			       salesTerritoryHistoryModelValidator)
+			       salesTerritoryHistoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4dd94f942c088897f487842268d56862</Hash>
+    <Hash>a05c8c3cce1b0cb196d6ea672695c0d6</Hash>
 </Codenesium>*/

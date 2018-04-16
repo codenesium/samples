@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IProductModelIllustrationRepository productModelIllustrationRepository;
 
-		protected IProductModelIllustrationModelValidator productModelIllustrationModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractProductModelIllustrationController(
 			ILogger<AbstractProductModelIllustrationController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductModelIllustrationRepository productModelIllustrationRepository,
-			IProductModelIllustrationModelValidator productModelIllustrationModelValidator
+			IProductModelIllustrationRepository productModelIllustrationRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.productModelIllustrationRepository = productModelIllustrationRepository;
-			this.productModelIllustrationModelValidator = productModelIllustrationModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[ProductModelIllustrationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] ProductModelIllustrationModel model)
 		{
-			this.productModelIllustrationModelValidator.CreateMode();
-			var validationResult = this.productModelIllustrationModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.productModelIllustrationRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.productModelIllustrationRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[ProductModelIllustrationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<ProductModelIllustrationModel> models)
 		{
-			this.productModelIllustrationModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.productModelIllustrationModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductModelIllustrationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] ProductModelIllustrationModel model)
 		{
-			if (this.productModelIllustrationRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.productModelIllustrationModelValidator.UpdateMode();
-			var validationResult = this.productModelIllustrationModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.productModelIllustrationRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.productModelIllustrationRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductModelIllustrationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByProductModelID/{id}")]
-		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductModels/{id}/ProductModelIllustrations")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByIllustrationID/{id}")]
-		[ProductModelIllustrationFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Illustrations/{id}/ProductModelIllustrations")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>823ff38370215fffb4f5b2191aa4dd63</Hash>
+    <Hash>39e4ab4e3b6fa07f9e226da65b6d798f</Hash>
 </Codenesium>*/

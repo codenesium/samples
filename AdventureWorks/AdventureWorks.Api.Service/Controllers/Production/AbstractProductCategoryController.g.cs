@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IProductCategoryRepository productCategoryRepository;
 
-		protected IProductCategoryModelValidator productCategoryModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractProductCategoryController(
 			ILogger<AbstractProductCategoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductCategoryRepository productCategoryRepository,
-			IProductCategoryModelValidator productCategoryModelValidator
+			IProductCategoryRepository productCategoryRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.productCategoryRepository = productCategoryRepository;
-			this.productCategoryModelValidator = productCategoryModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ProductCategoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ProductCategoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[ProductCategoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] ProductCategoryModel model)
 		{
-			this.productCategoryModelValidator.CreateMode();
-			var validationResult = this.productCategoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.productCategoryRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.productCategoryRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[ProductCategoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<ProductCategoryModel> models)
 		{
-			this.productCategoryModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.productCategoryModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductCategoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] ProductCategoryModel model)
 		{
-			if (this.productCategoryRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.productCategoryModelValidator.UpdateMode();
-			var validationResult = this.productCategoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.productCategoryRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.productCategoryRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductCategoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -170,5 +111,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ba21ce99b6497bdf713d23e6e1e23506</Hash>
+    <Hash>a65b5e6e8a579fe047717d8bb4ce5843</Hash>
 </Codenesium>*/

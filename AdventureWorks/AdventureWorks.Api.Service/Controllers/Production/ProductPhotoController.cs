@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productPhotoes")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ProductPhotoFilter))]
 	public class ProductPhotoController: AbstractProductPhotoController
 	{
 		public ProductPhotoController(
 			ILogger<ProductPhotoController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductPhotoRepository productPhotoRepository,
-			IProductPhotoModelValidator productPhotoModelValidator
+			IProductPhotoRepository productPhotoRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productPhotoRepository,
-			       productPhotoModelValidator)
+			       productPhotoRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>443c1e942b16aa179c591960c8463503</Hash>
+    <Hash>58f2c518072d590a729f4d159793f3e2</Hash>
 </Codenesium>*/

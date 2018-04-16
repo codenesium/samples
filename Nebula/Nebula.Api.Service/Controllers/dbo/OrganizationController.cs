@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/organizations")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(OrganizationFilter))]
 	public class OrganizationController: AbstractOrganizationController
 	{
 		public OrganizationController(
 			ILogger<OrganizationController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IOrganizationRepository organizationRepository,
-			IOrganizationModelValidator organizationModelValidator
+			IOrganizationRepository organizationRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       organizationRepository,
-			       organizationModelValidator)
+			       organizationRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c2a83c796f25aef641891c788f5d35ae</Hash>
+    <Hash>799ce8b7743e2c657cc8221be6eac51d</Hash>
 </Codenesium>*/

@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository;
 
-		protected ITransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractTransactionHistoryArchiveController(
 			ILogger<AbstractTransactionHistoryArchiveController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
-			ITransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator
+			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.transactionHistoryArchiveRepository = transactionHistoryArchiveRepository;
-			this.transactionHistoryArchiveModelValidator = transactionHistoryArchiveModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[TransactionHistoryArchiveFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[TransactionHistoryArchiveFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[TransactionHistoryArchiveFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] TransactionHistoryArchiveModel model)
 		{
-			this.transactionHistoryArchiveModelValidator.CreateMode();
-			var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.transactionHistoryArchiveRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.transactionHistoryArchiveRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[TransactionHistoryArchiveFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<TransactionHistoryArchiveModel> models)
 		{
-			this.transactionHistoryArchiveModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[TransactionHistoryArchiveFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] TransactionHistoryArchiveModel model)
 		{
-			if (this.transactionHistoryArchiveRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.transactionHistoryArchiveModelValidator.UpdateMode();
-			var validationResult = this.transactionHistoryArchiveModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.transactionHistoryArchiveRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.transactionHistoryArchiveRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[TransactionHistoryArchiveFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -170,5 +111,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b4715494a277666ff4c327bd9b86fa95</Hash>
+    <Hash>5d808d17bbcbf150dee5fd2e47b6f0d2</Hash>
 </Codenesium>*/

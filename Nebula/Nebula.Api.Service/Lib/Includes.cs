@@ -8,6 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Codenesium.Foundation.CommonMVC
 {
@@ -170,10 +171,22 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
-	/// <summary>
+    public class BenchmarkFilter : ActionFilterAttribute
+    {
+        public override async Task OnActionExecutionAsync(ActionExecutingContext actionContext, ActionExecutionDelegate next)
+        {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            await next();
+            stopwatch.Stop();
+            actionContext.HttpContext.Response.Headers.Add("x-time-elapsed", stopwatch.Elapsed.ToString());
+        }
+    }
+
+
+    /// <summary>
     /// This attribute enabled transaction support on a request by hooking in to the request pipeline
-	/// and starting a transaction when a request begins and committing or rolling back the transaction if 
-	/// there is an exception during the request.
+    /// and starting a transaction when a request begins and committing or rolling back the transaction if 
+    /// there is an exception during the request.
     /// </summary>
     public class UnitOfWorkActionFilter : ActionFilterAttribute
     {

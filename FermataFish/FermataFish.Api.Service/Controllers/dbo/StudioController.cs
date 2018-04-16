@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/studios")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(StudioFilter))]
 	public class StudioController: AbstractStudioController
 	{
 		public StudioController(
 			ILogger<StudioController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStudioRepository studioRepository,
-			IStudioModelValidator studioModelValidator
+			IStudioRepository studioRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       studioRepository,
-			       studioModelValidator)
+			       studioRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a0400719b1c5034f697e5cdd0e6aab26</Hash>
+    <Hash>5f53b5dacd03d5cf950e5f08cef317e1</Hash>
 </Codenesium>*/

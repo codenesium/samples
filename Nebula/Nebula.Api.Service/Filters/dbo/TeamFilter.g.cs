@@ -1,18 +1,78 @@
+using System;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
+using NebulaNS.Api.Contracts;
 namespace NebulaNS.Api.Service
 {
 	public class TeamFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(ActionExecutingContext actionContext)
-		{}
+		ITeamModelValidator validator { get; set; }
 
-		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
+		public TeamFilter(ITeamModelValidator validator)
 		{
-			base.OnActionExecuted(actionExecutedContext);
+			this.validator = validator;
+		}
+
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
+		{
+			if (actionContext.ActionArguments.Any(kv => kv.Value == null))
+			{
+				actionContext.Result = new BadRequestObjectResult("Null model is invalid");
+
+				return;
+			}
+
+			var items = actionContext.ActionArguments.Values.OfType<TeamModel>().ToList();
+
+			if (items.Any())
+			{
+				if(actionContext.HttpContext.Request.Method == "POST")
+				{
+					this.validator.CreateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "PUT")
+				{
+					this.validator.UpdateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "DELETE")
+				{
+					this.validator.DeleteMode();
+				}
+				else
+				{
+					return;
+				}
+
+				Action<ValidationResult> addError = (result) =>
+				{
+					foreach (var error in result.Errors)
+					{
+						actionContext.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+					}
+				};
+
+				bool validationFailure = false;
+				items.ForEach(x =>
+				{
+					ValidationResult result = this.validator.Validate(x);
+					if (!result.IsValid)
+					{
+					        validationFailure = true;
+					        addError(result);
+					}
+				});
+
+				if (validationFailure)
+				{
+					actionContext.Result = new BadRequestObjectResult(actionContext.ModelState);
+				}
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a264919b5d3b12f95327ae3475ec22d2</Hash>
+    <Hash>67f4d45b47173e30adb6c98fa8b360b7</Hash>
 </Codenesium>*/

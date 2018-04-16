@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
 
-		protected ISalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractSalesTerritoryHistoryController(
 			ILogger<AbstractSalesTerritoryHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
-			ISalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator
+			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
-			this.salesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[SalesTerritoryHistoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[SalesTerritoryHistoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[SalesTerritoryHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] SalesTerritoryHistoryModel model)
 		{
-			this.salesTerritoryHistoryModelValidator.CreateMode();
-			var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.salesTerritoryHistoryRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.salesTerritoryHistoryRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[SalesTerritoryHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<SalesTerritoryHistoryModel> models)
 		{
-			this.salesTerritoryHistoryModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesTerritoryHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] SalesTerritoryHistoryModel model)
 		{
-			if (this.salesTerritoryHistoryRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.salesTerritoryHistoryModelValidator.UpdateMode();
-			var validationResult = this.salesTerritoryHistoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.salesTerritoryHistoryRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.salesTerritoryHistoryRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesTerritoryHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByBusinessEntityID/{id}")]
-		[SalesTerritoryHistoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesPersons/{id}/SalesTerritoryHistories")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByTerritoryID/{id}")]
-		[SalesTerritoryHistoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesTerritories/{id}/SalesTerritoryHistories")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7e9cdeeb61b573ad738cd4b09fb177a3</Hash>
+    <Hash>4a60a2a0b80166dddc411f8cc3d97651</Hash>
 </Codenesium>*/

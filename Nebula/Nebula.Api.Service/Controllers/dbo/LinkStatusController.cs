@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/linkStatus")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(LinkStatusFilter))]
 	public class LinkStatusController: AbstractLinkStatusController
 	{
 		public LinkStatusController(
 			ILogger<LinkStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILinkStatusRepository linkStatusRepository,
-			ILinkStatusModelValidator linkStatusModelValidator
+			ILinkStatusRepository linkStatusRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       linkStatusRepository,
-			       linkStatusModelValidator)
+			       linkStatusRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>77d7ddb92fac13d19eea99090e55f23d</Hash>
+    <Hash>1a57109015a99cfd229687d76eabc7eb</Hash>
 </Codenesium>*/

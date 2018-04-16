@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IPersonCreditCardRepository personCreditCardRepository;
 
-		protected IPersonCreditCardModelValidator personCreditCardModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractPersonCreditCardController(
 			ILogger<AbstractPersonCreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPersonCreditCardRepository personCreditCardRepository,
-			IPersonCreditCardModelValidator personCreditCardModelValidator
+			IPersonCreditCardRepository personCreditCardRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.personCreditCardRepository = personCreditCardRepository;
-			this.personCreditCardModelValidator = personCreditCardModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[PersonCreditCardFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[PersonCreditCardFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[PersonCreditCardFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] PersonCreditCardModel model)
 		{
-			this.personCreditCardModelValidator.CreateMode();
-			var validationResult = this.personCreditCardModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.personCreditCardRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.personCreditCardRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[PersonCreditCardFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<PersonCreditCardModel> models)
 		{
-			this.personCreditCardModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.personCreditCardModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[PersonCreditCardFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] PersonCreditCardModel model)
 		{
-			if (this.personCreditCardRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.personCreditCardModelValidator.UpdateMode();
-			var validationResult = this.personCreditCardModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.personCreditCardRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.personCreditCardRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[PersonCreditCardFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByBusinessEntityID/{id}")]
-		[PersonCreditCardFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/People/{id}/PersonCreditCards")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByCreditCardID/{id}")]
-		[PersonCreditCardFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CreditCards/{id}/PersonCreditCards")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5bdc36bdbed2882848449a144f93ae4d</Hash>
+    <Hash>26876297b32415e9c80bcfb29051b844</Hash>
 </Codenesium>*/

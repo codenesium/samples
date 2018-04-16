@@ -1,18 +1,78 @@
+using System;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
+using FileServiceNS.Api.Contracts;
 namespace FileServiceNS.Api.Service
 {
 	public class BucketFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(ActionExecutingContext actionContext)
-		{}
+		IBucketModelValidator validator { get; set; }
 
-		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
+		public BucketFilter(IBucketModelValidator validator)
 		{
-			base.OnActionExecuted(actionExecutedContext);
+			this.validator = validator;
+		}
+
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
+		{
+			if (actionContext.ActionArguments.Any(kv => kv.Value == null))
+			{
+				actionContext.Result = new BadRequestObjectResult("Null model is invalid");
+
+				return;
+			}
+
+			var items = actionContext.ActionArguments.Values.OfType<BucketModel>().ToList();
+
+			if (items.Any())
+			{
+				if(actionContext.HttpContext.Request.Method == "POST")
+				{
+					this.validator.CreateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "PUT")
+				{
+					this.validator.UpdateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "DELETE")
+				{
+					this.validator.DeleteMode();
+				}
+				else
+				{
+					return;
+				}
+
+				Action<ValidationResult> addError = (result) =>
+				{
+					foreach (var error in result.Errors)
+					{
+						actionContext.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+					}
+				};
+
+				bool validationFailure = false;
+				items.ForEach(x =>
+				{
+					ValidationResult result = this.validator.Validate(x);
+					if (!result.IsValid)
+					{
+					        validationFailure = true;
+					        addError(result);
+					}
+				});
+
+				if (validationFailure)
+				{
+					actionContext.Result = new BadRequestObjectResult(actionContext.ModelState);
+				}
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7c4ba17324a826ebfe5735cfc86be23</Hash>
+    <Hash>e44068cce940cc89e77aef78b1551db5</Hash>
 </Codenesium>*/

@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
 
-		protected ISalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractSalesPersonQuotaHistoryController(
 			ILogger<AbstractSalesPersonQuotaHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
-			ISalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator
+			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.salesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
-			this.salesPersonQuotaHistoryModelValidator = salesPersonQuotaHistoryModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[SalesPersonQuotaHistoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[SalesPersonQuotaHistoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[SalesPersonQuotaHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] SalesPersonQuotaHistoryModel model)
 		{
-			this.salesPersonQuotaHistoryModelValidator.CreateMode();
-			var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.salesPersonQuotaHistoryRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.salesPersonQuotaHistoryRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[SalesPersonQuotaHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<SalesPersonQuotaHistoryModel> models)
 		{
-			this.salesPersonQuotaHistoryModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesPersonQuotaHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] SalesPersonQuotaHistoryModel model)
 		{
-			if (this.salesPersonQuotaHistoryRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.salesPersonQuotaHistoryModelValidator.UpdateMode();
-			var validationResult = this.salesPersonQuotaHistoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.salesPersonQuotaHistoryRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.salesPersonQuotaHistoryRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesPersonQuotaHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByBusinessEntityID/{id}")]
-		[SalesPersonQuotaHistoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesPersons/{id}/SalesPersonQuotaHistories")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -183,5 +123,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5ce6c9be0a78ed8d191c940caba4407d</Hash>
+    <Hash>a3c1204653de6b3b39b4cc1108446bd2</Hash>
 </Codenesium>*/

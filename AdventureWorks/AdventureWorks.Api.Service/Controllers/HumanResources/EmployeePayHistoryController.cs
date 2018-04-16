@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employeePayHistories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(EmployeePayHistoryFilter))]
 	public class EmployeePayHistoryController: AbstractEmployeePayHistoryController
 	{
 		public EmployeePayHistoryController(
 			ILogger<EmployeePayHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IEmployeePayHistoryRepository employeePayHistoryRepository,
-			IEmployeePayHistoryModelValidator employeePayHistoryModelValidator
+			IEmployeePayHistoryRepository employeePayHistoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       employeePayHistoryRepository,
-			       employeePayHistoryModelValidator)
+			       employeePayHistoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cbe06a5b99b5adea4effd25e8551a06b</Hash>
+    <Hash>cbbeb5de9aaf15c26429923d24b5a57e</Hash>
 </Codenesium>*/

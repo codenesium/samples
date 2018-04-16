@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/cultures")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(CultureFilter))]
 	public class CultureController: AbstractCultureController
 	{
 		public CultureController(
 			ILogger<CultureController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICultureRepository cultureRepository,
-			ICultureModelValidator cultureModelValidator
+			ICultureRepository cultureRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       cultureRepository,
-			       cultureModelValidator)
+			       cultureRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fd991afa84d6121a2bd3270dd000e3bd</Hash>
+    <Hash>63d41127e67f8c0abe660651c47079f8</Hash>
 </Codenesium>*/

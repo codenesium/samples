@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTaxRates")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SalesTaxRateFilter))]
 	public class SalesTaxRateController: AbstractSalesTaxRateController
 	{
 		public SalesTaxRateController(
 			ILogger<SalesTaxRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesTaxRateRepository salesTaxRateRepository,
-			ISalesTaxRateModelValidator salesTaxRateModelValidator
+			ISalesTaxRateRepository salesTaxRateRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesTaxRateRepository,
-			       salesTaxRateModelValidator)
+			       salesTaxRateRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dfe364ed6d3e29ec36c584abb5573844</Hash>
+    <Hash>0c8923faa1548a3926ef87407be8a808</Hash>
 </Codenesium>*/

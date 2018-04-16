@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/unitMeasures")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(UnitMeasureFilter))]
 	public class UnitMeasureController: AbstractUnitMeasureController
 	{
 		public UnitMeasureController(
 			ILogger<UnitMeasureController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IUnitMeasureRepository unitMeasureRepository,
-			IUnitMeasureModelValidator unitMeasureModelValidator
+			IUnitMeasureRepository unitMeasureRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       unitMeasureRepository,
-			       unitMeasureModelValidator)
+			       unitMeasureRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>59ae866cea41d6766a236266759817a6</Hash>
+    <Hash>fdb676bac79e8fc10588ca08fb1e61dc</Hash>
 </Codenesium>*/

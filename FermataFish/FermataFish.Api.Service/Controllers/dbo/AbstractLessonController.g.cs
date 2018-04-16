@@ -15,8 +15,6 @@ namespace FermataFishNS.Api.Service
 	{
 		protected ILessonRepository lessonRepository;
 
-		protected ILessonModelValidator lessonModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace FermataFishNS.Api.Service
 		public AbstractLessonController(
 			ILogger<AbstractLessonController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILessonRepository lessonRepository,
-			ILessonModelValidator lessonModelValidator
+			ILessonRepository lessonRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.lessonRepository = lessonRepository;
-			this.lessonModelValidator = lessonModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[LessonFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[LessonFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[LessonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] LessonModel model)
 		{
-			this.lessonModelValidator.CreateMode();
-			var validationResult = this.lessonModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.lessonRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.lessonRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[LessonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<LessonModel> models)
 		{
-			this.lessonModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.lessonModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LessonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] LessonModel model)
 		{
-			if (this.lessonRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.lessonModelValidator.UpdateMode();
-			var validationResult = this.lessonModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.lessonRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.lessonRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LessonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("ByLessonStatusId/{id}")]
-		[LessonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/LessonStatus/{id}/Lessons")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("ByStudioId/{id}")]
-		[LessonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Studios/{id}/Lessons")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>756d3cf2c1e1dd477f5326721b92a9b9</Hash>
+    <Hash>38ca09183179548d56b8b1110e86b1de</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/illustrations")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(IllustrationFilter))]
 	public class IllustrationController: AbstractIllustrationController
 	{
 		public IllustrationController(
 			ILogger<IllustrationController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IIllustrationRepository illustrationRepository,
-			IIllustrationModelValidator illustrationModelValidator
+			IIllustrationRepository illustrationRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       illustrationRepository,
-			       illustrationModelValidator)
+			       illustrationRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>623674a6fcaad9d6a6537863dc2224be</Hash>
+    <Hash>735c7c994541e2d7d251aab6a7f574cb</Hash>
 </Codenesium>*/

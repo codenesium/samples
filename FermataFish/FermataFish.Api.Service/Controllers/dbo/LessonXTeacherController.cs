@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/lessonXTeachers")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(LessonXTeacherFilter))]
 	public class LessonXTeacherController: AbstractLessonXTeacherController
 	{
 		public LessonXTeacherController(
 			ILogger<LessonXTeacherController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILessonXTeacherRepository lessonXTeacherRepository,
-			ILessonXTeacherModelValidator lessonXTeacherModelValidator
+			ILessonXTeacherRepository lessonXTeacherRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       lessonXTeacherRepository,
-			       lessonXTeacherModelValidator)
+			       lessonXTeacherRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bf0ef0f2e1070b48a11f44c77359a03c</Hash>
+    <Hash>d08cb7aa612d0d024cc7af8e5e016b63</Hash>
 </Codenesium>*/

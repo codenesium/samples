@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/countryRegions")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(CountryRegionFilter))]
 	public class CountryRegionController: AbstractCountryRegionController
 	{
 		public CountryRegionController(
 			ILogger<CountryRegionController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICountryRegionRepository countryRegionRepository,
-			ICountryRegionModelValidator countryRegionModelValidator
+			ICountryRegionRepository countryRegionRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       countryRegionRepository,
-			       countryRegionModelValidator)
+			       countryRegionRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2a3717aec1aabc44e575adb8e2b7003b</Hash>
+    <Hash>def757cfc7a91e6406a360472ee41337</Hash>
 </Codenesium>*/

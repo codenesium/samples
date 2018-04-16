@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IProductCostHistoryRepository productCostHistoryRepository;
 
-		protected IProductCostHistoryModelValidator productCostHistoryModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractProductCostHistoryController(
 			ILogger<AbstractProductCostHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductCostHistoryRepository productCostHistoryRepository,
-			IProductCostHistoryModelValidator productCostHistoryModelValidator
+			IProductCostHistoryRepository productCostHistoryRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.productCostHistoryRepository = productCostHistoryRepository;
-			this.productCostHistoryModelValidator = productCostHistoryModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ProductCostHistoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ProductCostHistoryFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[ProductCostHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] ProductCostHistoryModel model)
 		{
-			this.productCostHistoryModelValidator.CreateMode();
-			var validationResult = this.productCostHistoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.productCostHistoryRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.productCostHistoryRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[ProductCostHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<ProductCostHistoryModel> models)
 		{
-			this.productCostHistoryModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.productCostHistoryModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductCostHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] ProductCostHistoryModel model)
 		{
-			if (this.productCostHistoryRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.productCostHistoryModelValidator.UpdateMode();
-			var validationResult = this.productCostHistoryModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.productCostHistoryRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.productCostHistoryRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductCostHistoryFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByProductID/{id}")]
-		[ProductCostHistoryFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/ProductCostHistories")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -183,5 +123,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>89cb9289488b2581411c81108226dba7</Hash>
+    <Hash>33111033f50f89afb387d72a16ecfde8</Hash>
 </Codenesium>*/

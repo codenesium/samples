@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/studentXFamilies")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(StudentXFamilyFilter))]
 	public class StudentXFamilyController: AbstractStudentXFamilyController
 	{
 		public StudentXFamilyController(
 			ILogger<StudentXFamilyController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStudentXFamilyRepository studentXFamilyRepository,
-			IStudentXFamilyModelValidator studentXFamilyModelValidator
+			IStudentXFamilyRepository studentXFamilyRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       studentXFamilyRepository,
-			       studentXFamilyModelValidator)
+			       studentXFamilyRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f1dcd6796c09f313d55afb30f143c77d</Hash>
+    <Hash>481aaaff56d7a9e0d663e30a852e4423</Hash>
 </Codenesium>*/

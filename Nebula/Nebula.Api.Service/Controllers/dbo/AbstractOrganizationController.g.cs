@@ -15,8 +15,6 @@ namespace NebulaNS.Api.Service
 	{
 		protected IOrganizationRepository organizationRepository;
 
-		protected IOrganizationModelValidator organizationModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace NebulaNS.Api.Service
 		public AbstractOrganizationController(
 			ILogger<AbstractOrganizationController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IOrganizationRepository organizationRepository,
-			IOrganizationModelValidator organizationModelValidator
+			IOrganizationRepository organizationRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.organizationRepository = organizationRepository;
-			this.organizationModelValidator = organizationModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[OrganizationFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[OrganizationFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace NebulaNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] OrganizationModel model)
 		{
-			this.organizationModelValidator.CreateMode();
-			var validationResult = this.organizationModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.organizationRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.organizationRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<OrganizationModel> models)
 		{
-			this.organizationModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.organizationModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace NebulaNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] OrganizationModel model)
 		{
-			if (this.organizationRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.organizationModelValidator.UpdateMode();
-			var validationResult = this.organizationModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.organizationRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.organizationRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[OrganizationFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -170,5 +111,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7cbecbf8f807e885c8552571c12332c2</Hash>
+    <Hash>3440e5dcc666a536c94c1c3a4dfc74b6</Hash>
 </Codenesium>*/

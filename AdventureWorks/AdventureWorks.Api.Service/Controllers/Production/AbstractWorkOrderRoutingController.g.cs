@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IWorkOrderRoutingRepository workOrderRoutingRepository;
 
-		protected IWorkOrderRoutingModelValidator workOrderRoutingModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractWorkOrderRoutingController(
 			ILogger<AbstractWorkOrderRoutingController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IWorkOrderRoutingRepository workOrderRoutingRepository,
-			IWorkOrderRoutingModelValidator workOrderRoutingModelValidator
+			IWorkOrderRoutingRepository workOrderRoutingRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.workOrderRoutingRepository = workOrderRoutingRepository;
-			this.workOrderRoutingModelValidator = workOrderRoutingModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[WorkOrderRoutingFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] WorkOrderRoutingModel model)
 		{
-			this.workOrderRoutingModelValidator.CreateMode();
-			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.workOrderRoutingRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.workOrderRoutingRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[WorkOrderRoutingFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<WorkOrderRoutingModel> models)
 		{
-			this.workOrderRoutingModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.workOrderRoutingModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[WorkOrderRoutingFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] WorkOrderRoutingModel model)
 		{
-			if (this.workOrderRoutingRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.workOrderRoutingModelValidator.UpdateMode();
-			var validationResult = this.workOrderRoutingModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.workOrderRoutingRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.workOrderRoutingRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[WorkOrderRoutingFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByWorkOrderID/{id}")]
-		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/WorkOrders/{id}/WorkOrderRoutings")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByLocationID/{id}")]
-		[WorkOrderRoutingFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Locations/{id}/WorkOrderRoutings")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6fed2c5569c7df2ffdf9cc83eb5ecdd7</Hash>
+    <Hash>523620be612df165102adaad08cba0e3</Hash>
 </Codenesium>*/

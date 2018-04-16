@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/scrapReasons")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ScrapReasonFilter))]
 	public class ScrapReasonController: AbstractScrapReasonController
 	{
 		public ScrapReasonController(
 			ILogger<ScrapReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IScrapReasonRepository scrapReasonRepository,
-			IScrapReasonModelValidator scrapReasonModelValidator
+			IScrapReasonRepository scrapReasonRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       scrapReasonRepository,
-			       scrapReasonModelValidator)
+			       scrapReasonRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e28715bc0dc03153b05ba572f1b17fa9</Hash>
+    <Hash>f4f5354bf77a9e349a615ccdc5cdd1fa</Hash>
 </Codenesium>*/

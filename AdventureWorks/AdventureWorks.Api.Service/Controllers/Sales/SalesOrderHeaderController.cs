@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesOrderHeaders")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SalesOrderHeaderFilter))]
 	public class SalesOrderHeaderController: AbstractSalesOrderHeaderController
 	{
 		public SalesOrderHeaderController(
 			ILogger<SalesOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesOrderHeaderRepository salesOrderHeaderRepository,
-			ISalesOrderHeaderModelValidator salesOrderHeaderModelValidator
+			ISalesOrderHeaderRepository salesOrderHeaderRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesOrderHeaderRepository,
-			       salesOrderHeaderModelValidator)
+			       salesOrderHeaderRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>df9b7220bbd9dffaf96e889ae9a689bc</Hash>
+    <Hash>c858dcfc59a5adbdd8a5e912d70643b9</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/families")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(FamilyFilter))]
 	public class FamilyController: AbstractFamilyController
 	{
 		public FamilyController(
 			ILogger<FamilyController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IFamilyRepository familyRepository,
-			IFamilyModelValidator familyModelValidator
+			IFamilyRepository familyRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       familyRepository,
-			       familyModelValidator)
+			       familyRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2718fe02e0cd77c6594ac0bcc525eaaf</Hash>
+    <Hash>cac297c9eb957cb571957e1944bfe69f</Hash>
 </Codenesium>*/

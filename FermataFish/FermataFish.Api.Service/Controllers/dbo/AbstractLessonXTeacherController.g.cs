@@ -15,8 +15,6 @@ namespace FermataFishNS.Api.Service
 	{
 		protected ILessonXTeacherRepository lessonXTeacherRepository;
 
-		protected ILessonXTeacherModelValidator lessonXTeacherModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace FermataFishNS.Api.Service
 		public AbstractLessonXTeacherController(
 			ILogger<AbstractLessonXTeacherController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILessonXTeacherRepository lessonXTeacherRepository,
-			ILessonXTeacherModelValidator lessonXTeacherModelValidator
+			ILessonXTeacherRepository lessonXTeacherRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.lessonXTeacherRepository = lessonXTeacherRepository;
-			this.lessonXTeacherModelValidator = lessonXTeacherModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[LessonXTeacherFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[LessonXTeacherFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[LessonXTeacherFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] LessonXTeacherModel model)
 		{
-			this.lessonXTeacherModelValidator.CreateMode();
-			var validationResult = this.lessonXTeacherModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.lessonXTeacherRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.lessonXTeacherRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[LessonXTeacherFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<LessonXTeacherModel> models)
 		{
-			this.lessonXTeacherModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.lessonXTeacherModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LessonXTeacherFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] LessonXTeacherModel model)
 		{
-			if (this.lessonXTeacherRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.lessonXTeacherModelValidator.UpdateMode();
-			var validationResult = this.lessonXTeacherModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.lessonXTeacherRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.lessonXTeacherRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LessonXTeacherFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("ByLessonId/{id}")]
-		[LessonXTeacherFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Lessons/{id}/LessonXTeachers")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("ByStudentId/{id}")]
-		[LessonXTeacherFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Students/{id}/LessonXTeachers")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>92151ad70632cb5e0e0057284a31aadb</Hash>
+    <Hash>1783db377fa523c2ea38f1639d6fe7b9</Hash>
 </Codenesium>*/

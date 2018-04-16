@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/states")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(StateFilter))]
 	public class StateController: AbstractStateController
 	{
 		public StateController(
 			ILogger<StateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStateRepository stateRepository,
-			IStateModelValidator stateModelValidator
+			IStateRepository stateRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       stateRepository,
-			       stateModelValidator)
+			       stateRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>080fb74b564ae792a2131830d84ae454</Hash>
+    <Hash>9f3a9e92c3beee85731548653bf0d0b5</Hash>
 </Codenesium>*/

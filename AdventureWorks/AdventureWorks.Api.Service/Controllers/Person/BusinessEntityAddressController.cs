@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/businessEntityAddresses")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(BusinessEntityAddressFilter))]
 	public class BusinessEntityAddressController: AbstractBusinessEntityAddressController
 	{
 		public BusinessEntityAddressController(
 			ILogger<BusinessEntityAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBusinessEntityAddressRepository businessEntityAddressRepository,
-			IBusinessEntityAddressModelValidator businessEntityAddressModelValidator
+			IBusinessEntityAddressRepository businessEntityAddressRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       businessEntityAddressRepository,
-			       businessEntityAddressModelValidator)
+			       businessEntityAddressRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>973bb409e6f58db4441193958ef6eaf3</Hash>
+    <Hash>cac39c767b0bf30702499743bd228fcd</Hash>
 </Codenesium>*/

@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected ISalesTaxRateRepository salesTaxRateRepository;
 
-		protected ISalesTaxRateModelValidator salesTaxRateModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractSalesTaxRateController(
 			ILogger<AbstractSalesTaxRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesTaxRateRepository salesTaxRateRepository,
-			ISalesTaxRateModelValidator salesTaxRateModelValidator
+			ISalesTaxRateRepository salesTaxRateRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.salesTaxRateRepository = salesTaxRateRepository;
-			this.salesTaxRateModelValidator = salesTaxRateModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[SalesTaxRateFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[SalesTaxRateFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[SalesTaxRateFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] SalesTaxRateModel model)
 		{
-			this.salesTaxRateModelValidator.CreateMode();
-			var validationResult = this.salesTaxRateModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.salesTaxRateRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.salesTaxRateRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[SalesTaxRateFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<SalesTaxRateModel> models)
 		{
-			this.salesTaxRateModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.salesTaxRateModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesTaxRateFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] SalesTaxRateModel model)
 		{
-			if (this.salesTaxRateRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.salesTaxRateModelValidator.UpdateMode();
-			var validationResult = this.salesTaxRateModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.salesTaxRateRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.salesTaxRateRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesTaxRateFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByStateProvinceID/{id}")]
-		[SalesTaxRateFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/StateProvinces/{id}/SalesTaxRates")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -183,5 +123,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>15177c7c065e19cf642a56188c0945fe</Hash>
+    <Hash>c1a7a929a3a4e32536759586e72a9725</Hash>
 </Codenesium>*/

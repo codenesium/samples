@@ -15,8 +15,6 @@ namespace NebulaNS.Api.Service
 	{
 		protected ILinkStatusRepository linkStatusRepository;
 
-		protected ILinkStatusModelValidator linkStatusModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace NebulaNS.Api.Service
 		public AbstractLinkStatusController(
 			ILogger<AbstractLinkStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILinkStatusRepository linkStatusRepository,
-			ILinkStatusModelValidator linkStatusModelValidator
+			ILinkStatusRepository linkStatusRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.linkStatusRepository = linkStatusRepository;
-			this.linkStatusModelValidator = linkStatusModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[LinkStatusFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[LinkStatusFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace NebulaNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] LinkStatusModel model)
 		{
-			this.linkStatusModelValidator.CreateMode();
-			var validationResult = this.linkStatusModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.linkStatusRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.linkStatusRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<LinkStatusModel> models)
 		{
-			this.linkStatusModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.linkStatusModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace NebulaNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] LinkStatusModel model)
 		{
-			if (this.linkStatusRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.linkStatusModelValidator.UpdateMode();
-			var validationResult = this.linkStatusModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.linkStatusRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.linkStatusRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LinkStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -170,5 +111,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4520a3c369f05538405f5de0dd2d116a</Hash>
+    <Hash>e179d331104a64ab5cd0d05dd669adc4</Hash>
 </Codenesium>*/

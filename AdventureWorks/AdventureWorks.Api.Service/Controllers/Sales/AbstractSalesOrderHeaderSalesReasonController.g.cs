@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
 
-		protected ISalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractSalesOrderHeaderSalesReasonController(
 			ILogger<AbstractSalesOrderHeaderSalesReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
-			ISalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator
+			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
-			this.salesOrderHeaderSalesReasonModelValidator = salesOrderHeaderSalesReasonModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderSalesReasonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] SalesOrderHeaderSalesReasonModel model)
 		{
-			this.salesOrderHeaderSalesReasonModelValidator.CreateMode();
-			var validationResult = this.salesOrderHeaderSalesReasonModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.salesOrderHeaderSalesReasonRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.salesOrderHeaderSalesReasonRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderSalesReasonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<SalesOrderHeaderSalesReasonModel> models)
 		{
-			this.salesOrderHeaderSalesReasonModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.salesOrderHeaderSalesReasonModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderSalesReasonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] SalesOrderHeaderSalesReasonModel model)
 		{
-			if (this.salesOrderHeaderSalesReasonRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.salesOrderHeaderSalesReasonModelValidator.UpdateMode();
-			var validationResult = this.salesOrderHeaderSalesReasonModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.salesOrderHeaderSalesReasonRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.salesOrderHeaderSalesReasonRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderSalesReasonFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("BySalesOrderID/{id}")]
-		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesOrderHeaders/{id}/SalesOrderHeaderSalesReasons")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("BySalesReasonID/{id}")]
-		[SalesOrderHeaderSalesReasonFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesReasons/{id}/SalesOrderHeaderSalesReasons")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5c7ebb5a35063f08a32f291c71b5227c</Hash>
+    <Hash>fa827340705af84d6fa071ee9cb35355</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesPersons")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SalesPersonFilter))]
 	public class SalesPersonController: AbstractSalesPersonController
 	{
 		public SalesPersonController(
 			ILogger<SalesPersonController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesPersonRepository salesPersonRepository,
-			ISalesPersonModelValidator salesPersonModelValidator
+			ISalesPersonRepository salesPersonRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesPersonRepository,
-			       salesPersonModelValidator)
+			       salesPersonRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>51a74a149bb0fb34c51894d2a4363cd7</Hash>
+    <Hash>f24951b410ef5dac771688a0dc85cac2</Hash>
 </Codenesium>*/

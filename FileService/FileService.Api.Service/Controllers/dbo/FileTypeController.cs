@@ -13,18 +13,17 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/fileTypes")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(FileTypeFilter))]
 	public class FileTypeController: AbstractFileTypeController
 	{
 		public FileTypeController(
 			ILogger<FileTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IFileTypeRepository fileTypeRepository,
-			IFileTypeModelValidator fileTypeModelValidator
+			IFileTypeRepository fileTypeRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       fileTypeRepository,
-			       fileTypeModelValidator)
+			       fileTypeRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0b914cc2e9a89edf906853363d253e5d</Hash>
+    <Hash>7ed782a8ce9d3ce03f0ad01ff7c620f1</Hash>
 </Codenesium>*/

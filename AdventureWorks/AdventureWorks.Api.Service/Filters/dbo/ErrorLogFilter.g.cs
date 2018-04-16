@@ -1,18 +1,78 @@
+using System;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
+using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.Service
 {
 	public class ErrorLogFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(ActionExecutingContext actionContext)
-		{}
+		IErrorLogModelValidator validator { get; set; }
 
-		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
+		public ErrorLogFilter(IErrorLogModelValidator validator)
 		{
-			base.OnActionExecuted(actionExecutedContext);
+			this.validator = validator;
+		}
+
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
+		{
+			if (actionContext.ActionArguments.Any(kv => kv.Value == null))
+			{
+				actionContext.Result = new BadRequestObjectResult("Null model is invalid");
+
+				return;
+			}
+
+			var items = actionContext.ActionArguments.Values.OfType<ErrorLogModel>().ToList();
+
+			if (items.Any())
+			{
+				if(actionContext.HttpContext.Request.Method == "POST")
+				{
+					this.validator.CreateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "PUT")
+				{
+					this.validator.UpdateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "DELETE")
+				{
+					this.validator.DeleteMode();
+				}
+				else
+				{
+					return;
+				}
+
+				Action<ValidationResult> addError = (result) =>
+				{
+					foreach (var error in result.Errors)
+					{
+						actionContext.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+					}
+				};
+
+				bool validationFailure = false;
+				items.ForEach(x =>
+				{
+					ValidationResult result = this.validator.Validate(x);
+					if (!result.IsValid)
+					{
+					        validationFailure = true;
+					        addError(result);
+					}
+				});
+
+				if (validationFailure)
+				{
+					actionContext.Result = new BadRequestObjectResult(actionContext.ModelState);
+				}
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe1b90611190fa9d933d2b976af2d977</Hash>
+    <Hash>d097e8ea3b33e2d334c310db461a0e36</Hash>
 </Codenesium>*/

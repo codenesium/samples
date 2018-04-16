@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/lessonXStudents")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(LessonXStudentFilter))]
 	public class LessonXStudentController: AbstractLessonXStudentController
 	{
 		public LessonXStudentController(
 			ILogger<LessonXStudentController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILessonXStudentRepository lessonXStudentRepository,
-			ILessonXStudentModelValidator lessonXStudentModelValidator
+			ILessonXStudentRepository lessonXStudentRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       lessonXStudentRepository,
-			       lessonXStudentModelValidator)
+			       lessonXStudentRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>354b9b2102cee4677157b31560ce4017</Hash>
+    <Hash>891a29f338324b3243f6677fc69509c0</Hash>
 </Codenesium>*/

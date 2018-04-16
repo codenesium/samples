@@ -15,8 +15,6 @@ namespace ESPIOTNS.Api.Service
 	{
 		protected IDeviceRepository deviceRepository;
 
-		protected IDeviceModelValidator deviceModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace ESPIOTNS.Api.Service
 		public AbstractDeviceController(
 			ILogger<AbstractDeviceController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IDeviceRepository deviceRepository,
-			IDeviceModelValidator deviceModelValidator
+			IDeviceRepository deviceRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.deviceRepository = deviceRepository;
-			this.deviceModelValidator = deviceModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[DeviceFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace ESPIOTNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[DeviceFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace ESPIOTNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[DeviceFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] DeviceModel model)
 		{
-			this.deviceModelValidator.CreateMode();
-			var validationResult = this.deviceModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.deviceRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.deviceRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[DeviceFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<DeviceModel> models)
 		{
-			this.deviceModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.deviceModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace ESPIOTNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[DeviceFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] DeviceModel model)
 		{
-			if (this.deviceRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.deviceModelValidator.UpdateMode();
-			var validationResult = this.deviceModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.deviceRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.deviceRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[DeviceFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -170,5 +111,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7f5a3cdb445ed8bc7a984ee08607d454</Hash>
+    <Hash>93701a379acee0f40b68ba063ae5e127</Hash>
 </Codenesium>*/

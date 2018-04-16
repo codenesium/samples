@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/billOfMaterials")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(BillOfMaterialsFilter))]
 	public class BillOfMaterialsController: AbstractBillOfMaterialsController
 	{
 		public BillOfMaterialsController(
 			ILogger<BillOfMaterialsController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBillOfMaterialsRepository billOfMaterialsRepository,
-			IBillOfMaterialsModelValidator billOfMaterialsModelValidator
+			IBillOfMaterialsRepository billOfMaterialsRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       billOfMaterialsRepository,
-			       billOfMaterialsModelValidator)
+			       billOfMaterialsRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4adc67c81fdffb5436fde33705ff7407</Hash>
+    <Hash>962871556d71146b99130698e377b15b</Hash>
 </Codenesium>*/

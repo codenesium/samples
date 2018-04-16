@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/machines")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(MachineFilter))]
 	public class MachineController: AbstractMachineController
 	{
 		public MachineController(
 			ILogger<MachineController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IMachineRepository machineRepository,
-			IMachineModelValidator machineModelValidator
+			IMachineRepository machineRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       machineRepository,
-			       machineModelValidator)
+			       machineRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3693d7b2143d609d7fc7f82e61874930</Hash>
+    <Hash>4af46df2f46654486f06da6cc61f36f0</Hash>
 </Codenesium>*/

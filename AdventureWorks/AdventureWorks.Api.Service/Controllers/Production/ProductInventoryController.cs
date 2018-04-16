@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productInventories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ProductInventoryFilter))]
 	public class ProductInventoryController: AbstractProductInventoryController
 	{
 		public ProductInventoryController(
 			ILogger<ProductInventoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductInventoryRepository productInventoryRepository,
-			IProductInventoryModelValidator productInventoryModelValidator
+			IProductInventoryRepository productInventoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productInventoryRepository,
-			       productInventoryModelValidator)
+			       productInventoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8f25807eb6df0340b35f414004acd8c2</Hash>
+    <Hash>c55f68bd7aff2cd6e0bc6adc8cb574ef</Hash>
 </Codenesium>*/

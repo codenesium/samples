@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personPhones")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(PersonPhoneFilter))]
 	public class PersonPhoneController: AbstractPersonPhoneController
 	{
 		public PersonPhoneController(
 			ILogger<PersonPhoneController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPersonPhoneRepository personPhoneRepository,
-			IPersonPhoneModelValidator personPhoneModelValidator
+			IPersonPhoneRepository personPhoneRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       personPhoneRepository,
-			       personPhoneModelValidator)
+			       personPhoneRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b976ec49c2f3c4712d95b1b62ca8b34c</Hash>
+    <Hash>99df2815beaeeebb3b79db866dee4685</Hash>
 </Codenesium>*/

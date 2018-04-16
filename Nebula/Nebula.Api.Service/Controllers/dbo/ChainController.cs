@@ -11,7 +11,8 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Service
 {
-	[Route("api/chains")]
+    [ServiceFilter(typeof(ChainFilter))]
+    [Route("api/chains")]
 	[ApiVersion("1.0")]
 	public class ChainController: AbstractChainController
 	{

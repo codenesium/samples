@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productModelProductDescriptionCultures")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ProductModelProductDescriptionCultureFilter))]
 	public class ProductModelProductDescriptionCultureController: AbstractProductModelProductDescriptionCultureController
 	{
 		public ProductModelProductDescriptionCultureController(
 			ILogger<ProductModelProductDescriptionCultureController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
-			IProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator
+			IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productModelProductDescriptionCultureRepository,
-			       productModelProductDescriptionCultureModelValidator)
+			       productModelProductDescriptionCultureRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e070c2d96fac60f0534bf38cb2f9a888</Hash>
+    <Hash>07ace72a592dbdad46bbcbef0921c7b2</Hash>
 </Codenesium>*/

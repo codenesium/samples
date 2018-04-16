@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/locations")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(LocationFilter))]
 	public class LocationController: AbstractLocationController
 	{
 		public LocationController(
 			ILogger<LocationController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILocationRepository locationRepository,
-			ILocationModelValidator locationModelValidator
+			ILocationRepository locationRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       locationRepository,
-			       locationModelValidator)
+			       locationRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8e7bfd293c9107984d3b3774fdfc5875</Hash>
+    <Hash>ba827bed3d574f193aaa5d61f82498cc</Hash>
 </Codenesium>*/

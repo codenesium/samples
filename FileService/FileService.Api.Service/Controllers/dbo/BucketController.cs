@@ -13,18 +13,17 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/buckets")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(BucketFilter))]
 	public class BucketController: AbstractBucketController
 	{
 		public BucketController(
 			ILogger<BucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBucketRepository bucketRepository,
-			IBucketModelValidator bucketModelValidator
+			IBucketRepository bucketRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       bucketRepository,
-			       bucketModelValidator)
+			       bucketRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>61b8de53319c2d9af58b85b0c8df24c1</Hash>
+    <Hash>0b12001caf89461e6b8a5978ec5f9954</Hash>
 </Codenesium>*/

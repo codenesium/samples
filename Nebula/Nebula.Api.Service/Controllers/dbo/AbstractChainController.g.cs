@@ -45,7 +45,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("{id}")]
-		[ChainFilter]
+		[ServiceFilter(typeof(ChainFilter))]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +57,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ChainFilter]
+		[ServiceFilter(typeof(ChainFilter))]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -73,7 +73,7 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[ModelValidateFilter]
-		[ChainFilter]
+	
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
@@ -96,7 +96,7 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[ModelValidateFilter]
-		[ChainFilter]
+		[ServiceFilter(typeof(ChainFilter))]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
@@ -130,7 +130,7 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[ModelValidateFilter]
-		[ChainFilter]
+		[ServiceFilter(typeof(ChainFilter))]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
@@ -158,7 +158,7 @@ namespace NebulaNS.Api.Service
 		[HttpDelete]
 		[Route("{id}")]
 		[ModelValidateFilter]
-		[ChainFilter]
+		[ServiceFilter(typeof(ChainFilter))]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +169,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByTeamId/{id}")]
-		[ChainFilter]
+		[ServiceFilter(typeof(ChainFilter))]
 		[ReadOnlyFilter]
 		[Route("~/api/Teams/{id}/Chains")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +182,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByChainStatusId/{id}")]
-		[ChainFilter]
+		[ServiceFilter(typeof(ChainFilter))]
 		[ReadOnlyFilter]
 		[Route("~/api/ChainStatus/{id}/Chains")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]

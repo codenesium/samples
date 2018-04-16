@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/customers")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(CustomerFilter))]
 	public class CustomerController: AbstractCustomerController
 	{
 		public CustomerController(
 			ILogger<CustomerController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICustomerRepository customerRepository,
-			ICustomerModelValidator customerModelValidator
+			ICustomerRepository customerRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       customerRepository,
-			       customerModelValidator)
+			       customerRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6bf9cef4d9c18bee7525f2f57e69b473</Hash>
+    <Hash>eeec28e4e0ac35e477af8df93c8b0960</Hash>
 </Codenesium>*/

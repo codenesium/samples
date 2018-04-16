@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IBillOfMaterialsRepository billOfMaterialsRepository;
 
-		protected IBillOfMaterialsModelValidator billOfMaterialsModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractBillOfMaterialsController(
 			ILogger<AbstractBillOfMaterialsController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBillOfMaterialsRepository billOfMaterialsRepository,
-			IBillOfMaterialsModelValidator billOfMaterialsModelValidator
+			IBillOfMaterialsRepository billOfMaterialsRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.billOfMaterialsRepository = billOfMaterialsRepository;
-			this.billOfMaterialsModelValidator = billOfMaterialsModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[BillOfMaterialsFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] BillOfMaterialsModel model)
 		{
-			this.billOfMaterialsModelValidator.CreateMode();
-			var validationResult = this.billOfMaterialsModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.billOfMaterialsRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.billOfMaterialsRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[BillOfMaterialsFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<BillOfMaterialsModel> models)
 		{
-			this.billOfMaterialsModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.billOfMaterialsModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[BillOfMaterialsFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] BillOfMaterialsModel model)
 		{
-			if (this.billOfMaterialsRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.billOfMaterialsModelValidator.UpdateMode();
-			var validationResult = this.billOfMaterialsModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.billOfMaterialsRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.billOfMaterialsRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[BillOfMaterialsFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByProductAssemblyID/{id}")]
-		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/BillOfMaterials")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByComponentID/{id}")]
-		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Products/{id}/BillOfMaterials")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -195,7 +134,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByUnitMeasureCode/{id}")]
-		[BillOfMaterialsFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/UnitMeasures/{id}/BillOfMaterials")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -209,5 +147,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6205fdb63762707a2ebf7d76ced3a8ac</Hash>
+    <Hash>71f7e8009599379e80448a8761f7627e</Hash>
 </Codenesium>*/

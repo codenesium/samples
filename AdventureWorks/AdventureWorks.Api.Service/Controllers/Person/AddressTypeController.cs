@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/addressTypes")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(AddressTypeFilter))]
 	public class AddressTypeController: AbstractAddressTypeController
 	{
 		public AddressTypeController(
 			ILogger<AddressTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IAddressTypeRepository addressTypeRepository,
-			IAddressTypeModelValidator addressTypeModelValidator
+			IAddressTypeRepository addressTypeRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       addressTypeRepository,
-			       addressTypeModelValidator)
+			       addressTypeRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>21be4b9e2623887d72ac287a57978920</Hash>
+    <Hash>567d2cc31ef0b345a9f6c8d25e0da35f</Hash>
 </Codenesium>*/

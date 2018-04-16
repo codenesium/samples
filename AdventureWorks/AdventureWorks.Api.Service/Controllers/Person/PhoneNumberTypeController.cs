@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/phoneNumberTypes")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(PhoneNumberTypeFilter))]
 	public class PhoneNumberTypeController: AbstractPhoneNumberTypeController
 	{
 		public PhoneNumberTypeController(
 			ILogger<PhoneNumberTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPhoneNumberTypeRepository phoneNumberTypeRepository,
-			IPhoneNumberTypeModelValidator phoneNumberTypeModelValidator
+			IPhoneNumberTypeRepository phoneNumberTypeRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       phoneNumberTypeRepository,
-			       phoneNumberTypeModelValidator)
+			       phoneNumberTypeRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2ef6d81dc0357711a686b294c5d75f15</Hash>
+    <Hash>2fca3774dcdc89e2018b65963c26ae9c</Hash>
 </Codenesium>*/

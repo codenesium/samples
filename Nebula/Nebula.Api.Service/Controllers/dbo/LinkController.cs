@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/links")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(LinkFilter))]
 	public class LinkController: AbstractLinkController
 	{
 		public LinkController(
 			ILogger<LinkController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILinkRepository linkRepository,
-			ILinkModelValidator linkModelValidator
+			ILinkRepository linkRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       linkRepository,
-			       linkModelValidator)
+			       linkRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0f7cd043044a9d4be2a08d31e4737c37</Hash>
+    <Hash>7eeda3273ea9cf9b6fcccf7c911ea707</Hash>
 </Codenesium>*/

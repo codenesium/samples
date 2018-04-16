@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/currencies")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(CurrencyFilter))]
 	public class CurrencyController: AbstractCurrencyController
 	{
 		public CurrencyController(
 			ILogger<CurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICurrencyRepository currencyRepository,
-			ICurrencyModelValidator currencyModelValidator
+			ICurrencyRepository currencyRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       currencyRepository,
-			       currencyModelValidator)
+			       currencyRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6bc6165a73327ec58fc76e1c85360ca3</Hash>
+    <Hash>c4c893facbb28ef17865c884fc722cbe</Hash>
 </Codenesium>*/

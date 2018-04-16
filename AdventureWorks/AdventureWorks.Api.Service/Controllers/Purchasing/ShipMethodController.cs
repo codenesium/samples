@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shipMethods")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ShipMethodFilter))]
 	public class ShipMethodController: AbstractShipMethodController
 	{
 		public ShipMethodController(
 			ILogger<ShipMethodController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IShipMethodRepository shipMethodRepository,
-			IShipMethodModelValidator shipMethodModelValidator
+			IShipMethodRepository shipMethodRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       shipMethodRepository,
-			       shipMethodModelValidator)
+			       shipMethodRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>78896730e03db8c7e29fb4c7f2a467e6</Hash>
+    <Hash>9a686abb748f6dda3bc5ce74fc8b1994</Hash>
 </Codenesium>*/

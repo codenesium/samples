@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shoppingCartItems")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ShoppingCartItemFilter))]
 	public class ShoppingCartItemController: AbstractShoppingCartItemController
 	{
 		public ShoppingCartItemController(
 			ILogger<ShoppingCartItemController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IShoppingCartItemRepository shoppingCartItemRepository,
-			IShoppingCartItemModelValidator shoppingCartItemModelValidator
+			IShoppingCartItemRepository shoppingCartItemRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       shoppingCartItemRepository,
-			       shoppingCartItemModelValidator)
+			       shoppingCartItemRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>58a67071520d6cacea7310b9ae7d1546</Hash>
+    <Hash>9e3d2808edf8f20b2c8809bc74285f08</Hash>
 </Codenesium>*/

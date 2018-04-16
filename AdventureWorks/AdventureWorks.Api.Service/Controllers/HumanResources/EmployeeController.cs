@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employees")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(EmployeeFilter))]
 	public class EmployeeController: AbstractEmployeeController
 	{
 		public EmployeeController(
 			ILogger<EmployeeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IEmployeeRepository employeeRepository,
-			IEmployeeModelValidator employeeModelValidator
+			IEmployeeRepository employeeRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       employeeRepository,
-			       employeeModelValidator)
+			       employeeRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c87bc1a889c582597f1c1a1cc7a3c358</Hash>
+    <Hash>01e129a1c96c0783765e10058d27de20</Hash>
 </Codenesium>*/

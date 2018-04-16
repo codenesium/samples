@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shifts")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ShiftFilter))]
 	public class ShiftController: AbstractShiftController
 	{
 		public ShiftController(
 			ILogger<ShiftController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IShiftRepository shiftRepository,
-			IShiftModelValidator shiftModelValidator
+			IShiftRepository shiftRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       shiftRepository,
-			       shiftModelValidator)
+			       shiftRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>49f859ccd0bf5a26d51600abe361c14e</Hash>
+    <Hash>9e34d2058e0da467e8346397a3c5a367</Hash>
 </Codenesium>*/

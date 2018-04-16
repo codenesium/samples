@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Mapping - Copy\**" />
+    <Compile Remove="Mapping\**" />
+    <EmbeddedResource Remove="Mapping - Copy\**" />
+    <EmbeddedResource Remove="Mapping\**" />
+    <None Remove="Mapping - Copy\**" />
+    <None Remove="Mapping\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../Nebula.Api.Contracts/Nebula.Api.Contracts.csproj" />
   </ItemGroup>
 

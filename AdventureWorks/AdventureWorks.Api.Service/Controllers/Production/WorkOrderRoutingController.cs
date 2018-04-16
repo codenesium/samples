@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/workOrderRoutings")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(WorkOrderRoutingFilter))]
 	public class WorkOrderRoutingController: AbstractWorkOrderRoutingController
 	{
 		public WorkOrderRoutingController(
 			ILogger<WorkOrderRoutingController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IWorkOrderRoutingRepository workOrderRoutingRepository,
-			IWorkOrderRoutingModelValidator workOrderRoutingModelValidator
+			IWorkOrderRoutingRepository workOrderRoutingRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       workOrderRoutingRepository,
-			       workOrderRoutingModelValidator)
+			       workOrderRoutingRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>39c9ef9fd8b213c53c208c60c7417724</Hash>
+    <Hash>e6562367f4b72cd776d264c0d91377a0</Hash>
 </Codenesium>*/

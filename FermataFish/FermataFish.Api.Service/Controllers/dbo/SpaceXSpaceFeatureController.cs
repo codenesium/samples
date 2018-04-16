@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/spaceXSpaceFeatures")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SpaceXSpaceFeatureFilter))]
 	public class SpaceXSpaceFeatureController: AbstractSpaceXSpaceFeatureController
 	{
 		public SpaceXSpaceFeatureController(
 			ILogger<SpaceXSpaceFeatureController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
-			ISpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator
+			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       spaceXSpaceFeatureRepository,
-			       spaceXSpaceFeatureModelValidator)
+			       spaceXSpaceFeatureRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f875a3d91ff6be0bc1757b6c43322ee9</Hash>
+    <Hash>f4d1b8d729849d3ca092de5c4a6501e0</Hash>
 </Codenesium>*/

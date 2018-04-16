@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/clasps")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ClaspFilter))]
 	public class ClaspController: AbstractClaspController
 	{
 		public ClaspController(
 			ILogger<ClaspController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IClaspRepository claspRepository,
-			IClaspModelValidator claspModelValidator
+			IClaspRepository claspRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       claspRepository,
-			       claspModelValidator)
+			       claspRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>59e4431a96060f7f0ab81eb70b9dbed5</Hash>
+    <Hash>67da185a2963ded785a28f0d258d1f41</Hash>
 </Codenesium>*/

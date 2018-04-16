@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/transactionHistories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(TransactionHistoryFilter))]
 	public class TransactionHistoryController: AbstractTransactionHistoryController
 	{
 		public TransactionHistoryController(
 			ILogger<TransactionHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITransactionHistoryRepository transactionHistoryRepository,
-			ITransactionHistoryModelValidator transactionHistoryModelValidator
+			ITransactionHistoryRepository transactionHistoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       transactionHistoryRepository,
-			       transactionHistoryModelValidator)
+			       transactionHistoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a0a52b60b2a48bd74426e4e07f59ea67</Hash>
+    <Hash>f1754b806975cb9728ab385393263872</Hash>
 </Codenesium>*/

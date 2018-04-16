@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IBusinessEntityContactRepository businessEntityContactRepository;
 
-		protected IBusinessEntityContactModelValidator businessEntityContactModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractBusinessEntityContactController(
 			ILogger<AbstractBusinessEntityContactController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBusinessEntityContactRepository businessEntityContactRepository,
-			IBusinessEntityContactModelValidator businessEntityContactModelValidator
+			IBusinessEntityContactRepository businessEntityContactRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.businessEntityContactRepository = businessEntityContactRepository;
-			this.businessEntityContactModelValidator = businessEntityContactModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[BusinessEntityContactFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] BusinessEntityContactModel model)
 		{
-			this.businessEntityContactModelValidator.CreateMode();
-			var validationResult = this.businessEntityContactModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.businessEntityContactRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.businessEntityContactRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[BusinessEntityContactFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<BusinessEntityContactModel> models)
 		{
-			this.businessEntityContactModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.businessEntityContactModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[BusinessEntityContactFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] BusinessEntityContactModel model)
 		{
-			if (this.businessEntityContactRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.businessEntityContactModelValidator.UpdateMode();
-			var validationResult = this.businessEntityContactModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.businessEntityContactRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.businessEntityContactRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[BusinessEntityContactFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByBusinessEntityID/{id}")]
-		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/BusinessEntities/{id}/BusinessEntityContacts")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByPersonID/{id}")]
-		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/People/{id}/BusinessEntityContacts")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -195,7 +134,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByContactTypeID/{id}")]
-		[BusinessEntityContactFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ContactTypes/{id}/BusinessEntityContacts")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -209,5 +147,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ecc5761a293ada22624f2df008d3dcfe</Hash>
+    <Hash>932ac4518e223ba234eadf49f931b226</Hash>
 </Codenesium>*/

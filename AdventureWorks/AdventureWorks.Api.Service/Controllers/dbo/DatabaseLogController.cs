@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/databaseLogs")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(DatabaseLogFilter))]
 	public class DatabaseLogController: AbstractDatabaseLogController
 	{
 		public DatabaseLogController(
 			ILogger<DatabaseLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IDatabaseLogRepository databaseLogRepository,
-			IDatabaseLogModelValidator databaseLogModelValidator
+			IDatabaseLogRepository databaseLogRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       databaseLogRepository,
-			       databaseLogModelValidator)
+			       databaseLogRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>680a0f71c0f44ac18ecba9dac795d685</Hash>
+    <Hash>1a614f394e257a21e71d7ac98b91f0b6</Hash>
 </Codenesium>*/

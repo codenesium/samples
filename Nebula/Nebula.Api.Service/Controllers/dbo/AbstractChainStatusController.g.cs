@@ -15,8 +15,6 @@ namespace NebulaNS.Api.Service
 	{
 		protected IChainStatusRepository chainStatusRepository;
 
-		protected IChainStatusModelValidator chainStatusModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace NebulaNS.Api.Service
 		public AbstractChainStatusController(
 			ILogger<AbstractChainStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IChainStatusRepository chainStatusRepository,
-			IChainStatusModelValidator chainStatusModelValidator
+			IChainStatusRepository chainStatusRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.chainStatusRepository = chainStatusRepository;
-			this.chainStatusModelValidator = chainStatusModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ChainStatusFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ChainStatusFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace NebulaNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[ChainStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] ChainStatusModel model)
 		{
-			this.chainStatusModelValidator.CreateMode();
-			var validationResult = this.chainStatusModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.chainStatusRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.chainStatusRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[ChainStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<ChainStatusModel> models)
 		{
-			this.chainStatusModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.chainStatusModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace NebulaNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ChainStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] ChainStatusModel model)
 		{
-			if (this.chainStatusRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.chainStatusModelValidator.UpdateMode();
-			var validationResult = this.chainStatusModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.chainStatusRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.chainStatusRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ChainStatusFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -170,5 +111,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>eb56033a15c4c99d53369be1b2b5098c</Hash>
+    <Hash>24719ccf0563100c46373385d49208bd</Hash>
 </Codenesium>*/

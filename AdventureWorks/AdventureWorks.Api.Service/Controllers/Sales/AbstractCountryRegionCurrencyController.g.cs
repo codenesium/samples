@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
 
-		protected ICountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractCountryRegionCurrencyController(
 			ILogger<AbstractCountryRegionCurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
-			ICountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator
+			ICountryRegionCurrencyRepository countryRegionCurrencyRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
-			this.countryRegionCurrencyModelValidator = countryRegionCurrencyModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(string id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[CountryRegionCurrencyFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] CountryRegionCurrencyModel model)
 		{
-			this.countryRegionCurrencyModelValidator.CreateMode();
-			var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.countryRegionCurrencyRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.countryRegionCurrencyRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[CountryRegionCurrencyFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<CountryRegionCurrencyModel> models)
 		{
-			this.countryRegionCurrencyModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[CountryRegionCurrencyFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(string id, [FromBody] CountryRegionCurrencyModel model)
 		{
-			if (this.countryRegionCurrencyRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.countryRegionCurrencyModelValidator.UpdateMode();
-			var validationResult = this.countryRegionCurrencyModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.countryRegionCurrencyRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.countryRegionCurrencyRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[CountryRegionCurrencyFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(string id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByCountryRegionCode/{id}")]
-		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CountryRegions/{id}/CountryRegionCurrencies")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByCurrencyCode/{id}")]
-		[CountryRegionCurrencyFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Currencies/{id}/CountryRegionCurrencies")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8a629320e0c6a562a884591616853fbf</Hash>
+    <Hash>6b8d2309676f5c5df7dc4702a547511f</Hash>
 </Codenesium>*/

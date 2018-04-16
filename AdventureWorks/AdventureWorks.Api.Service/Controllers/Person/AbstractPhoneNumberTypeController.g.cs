@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IPhoneNumberTypeRepository phoneNumberTypeRepository;
 
-		protected IPhoneNumberTypeModelValidator phoneNumberTypeModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractPhoneNumberTypeController(
 			ILogger<AbstractPhoneNumberTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPhoneNumberTypeRepository phoneNumberTypeRepository,
-			IPhoneNumberTypeModelValidator phoneNumberTypeModelValidator
+			IPhoneNumberTypeRepository phoneNumberTypeRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.phoneNumberTypeRepository = phoneNumberTypeRepository;
-			this.phoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[PhoneNumberTypeFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[PhoneNumberTypeFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[PhoneNumberTypeFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] PhoneNumberTypeModel model)
 		{
-			this.phoneNumberTypeModelValidator.CreateMode();
-			var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.phoneNumberTypeRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.phoneNumberTypeRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[PhoneNumberTypeFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<PhoneNumberTypeModel> models)
 		{
-			this.phoneNumberTypeModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[PhoneNumberTypeFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] PhoneNumberTypeModel model)
 		{
-			if (this.phoneNumberTypeRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.phoneNumberTypeModelValidator.UpdateMode();
-			var validationResult = this.phoneNumberTypeModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.phoneNumberTypeRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.phoneNumberTypeRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[PhoneNumberTypeFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -170,5 +111,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a943245b0f3756bc8e82b5f5d93e744d</Hash>
+    <Hash>d7f687772e0bc4ebef0fd78e9d43ab50</Hash>
 </Codenesium>*/

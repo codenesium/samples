@@ -15,8 +15,6 @@ namespace NebulaNS.Api.Service
 	{
 		protected IClaspRepository claspRepository;
 
-		protected IClaspModelValidator claspModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace NebulaNS.Api.Service
 		public AbstractClaspController(
 			ILogger<AbstractClaspController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IClaspRepository claspRepository,
-			IClaspModelValidator claspModelValidator
+			IClaspRepository claspRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.claspRepository = claspRepository;
-			this.claspModelValidator = claspModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ClaspFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ClaspFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace NebulaNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[ClaspFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] ClaspModel model)
 		{
-			this.claspModelValidator.CreateMode();
-			var validationResult = this.claspModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.claspRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.claspRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[ClaspFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<ClaspModel> models)
 		{
-			this.claspModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.claspModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace NebulaNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ClaspFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] ClaspModel model)
 		{
-			if (this.claspRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.claspModelValidator.UpdateMode();
-			var validationResult = this.claspModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.claspRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.claspRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ClaspFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByPreviousChainId/{id}")]
-		[ClaspFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Clasps")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByNextChainId/{id}")]
-		[ClaspFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Clasps")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d9fd6a0b40d24f09a64e58f2f9c372db</Hash>
+    <Hash>7fba52801abd27b7d7a5e0f8b7662bd4</Hash>
 </Codenesium>*/

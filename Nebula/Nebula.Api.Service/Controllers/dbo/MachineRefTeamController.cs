@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/machineRefTeams")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(MachineRefTeamFilter))]
 	public class MachineRefTeamController: AbstractMachineRefTeamController
 	{
 		public MachineRefTeamController(
 			ILogger<MachineRefTeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IMachineRefTeamRepository machineRefTeamRepository,
-			IMachineRefTeamModelValidator machineRefTeamModelValidator
+			IMachineRefTeamRepository machineRefTeamRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       machineRefTeamRepository,
-			       machineRefTeamModelValidator)
+			       machineRefTeamRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>18f73c109c60ce7aa387b8f4ef7f2a3e</Hash>
+    <Hash>1163d89711642d7d55ea2af39d77c14a</Hash>
 </Codenesium>*/

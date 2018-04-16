@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/teams")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(TeamFilter))]
 	public class TeamController: AbstractTeamController
 	{
 		public TeamController(
 			ILogger<TeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITeamRepository teamRepository,
-			ITeamModelValidator teamModelValidator
+			ITeamRepository teamRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       teamRepository,
-			       teamModelValidator)
+			       teamRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>43b988e2dfb8506f637c6df9b8eb6c8f</Hash>
+    <Hash>6e6138dba017c18f428ff3b933129c22</Hash>
 </Codenesium>*/

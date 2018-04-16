@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/departments")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(DepartmentFilter))]
 	public class DepartmentController: AbstractDepartmentController
 	{
 		public DepartmentController(
 			ILogger<DepartmentController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IDepartmentRepository departmentRepository,
-			IDepartmentModelValidator departmentModelValidator
+			IDepartmentRepository departmentRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       departmentRepository,
-			       departmentModelValidator)
+			       departmentRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1c3c81d66e56d7a362592577278fbd1d</Hash>
+    <Hash>490864de463139a28c23137b3db69ea8</Hash>
 </Codenesium>*/

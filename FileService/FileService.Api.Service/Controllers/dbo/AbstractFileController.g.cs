@@ -15,8 +15,6 @@ namespace FileServiceNS.Api.Service
 	{
 		protected IFileRepository fileRepository;
 
-		protected IFileModelValidator fileModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace FileServiceNS.Api.Service
 		public AbstractFileController(
 			ILogger<AbstractFileController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IFileRepository fileRepository,
-			IFileModelValidator fileModelValidator
+			IFileRepository fileRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.fileRepository = fileRepository;
-			this.fileModelValidator = fileModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[FileFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace FileServiceNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[FileFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace FileServiceNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[FileFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] FileModel model)
 		{
-			this.fileModelValidator.CreateMode();
-			var validationResult = this.fileModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.fileRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.fileRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[FileFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<FileModel> models)
 		{
-			this.fileModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.fileModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace FileServiceNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[FileFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] FileModel model)
 		{
-			if (this.fileRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.fileModelValidator.UpdateMode();
-			var validationResult = this.fileModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.fileRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.fileRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[FileFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace FileServiceNS.Api.Service
 
 		[HttpGet]
 		[Route("ByFileTypeId/{id}")]
-		[FileFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/FileTypes/{id}/Files")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace FileServiceNS.Api.Service
 
 		[HttpGet]
 		[Route("ByBucketId/{id}")]
-		[FileFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Buckets/{id}/Files")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fedb8a5476abff49780ff2c618aedaed</Hash>
+    <Hash>7c3ba76884d3cd8b9a28ccf10ef2acf0</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/contactTypes")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ContactTypeFilter))]
 	public class ContactTypeController: AbstractContactTypeController
 	{
 		public ContactTypeController(
 			ILogger<ContactTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IContactTypeRepository contactTypeRepository,
-			IContactTypeModelValidator contactTypeModelValidator
+			IContactTypeRepository contactTypeRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       contactTypeRepository,
-			       contactTypeModelValidator)
+			       contactTypeRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>225b75ada6a705c410a4e25cdcfe6fa6</Hash>
+    <Hash>9846971591f3a57aca23640f3e2b4d1c</Hash>
 </Codenesium>*/

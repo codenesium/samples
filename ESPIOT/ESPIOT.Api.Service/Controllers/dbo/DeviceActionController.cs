@@ -13,18 +13,17 @@ namespace ESPIOTNS.Api.Service
 {
 	[Route("api/deviceActions")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(DeviceActionFilter))]
 	public class DeviceActionController: AbstractDeviceActionController
 	{
 		public DeviceActionController(
 			ILogger<DeviceActionController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IDeviceActionRepository deviceActionRepository,
-			IDeviceActionModelValidator deviceActionModelValidator
+			IDeviceActionRepository deviceActionRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       deviceActionRepository,
-			       deviceActionModelValidator)
+			       deviceActionRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0074392ada39f34c430459ed38764d2a</Hash>
+    <Hash>a546e0e963f515e901a446333b096f1b</Hash>
 </Codenesium>*/

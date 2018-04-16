@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/passwords")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(PasswordFilter))]
 	public class PasswordController: AbstractPasswordController
 	{
 		public PasswordController(
 			ILogger<PasswordController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPasswordRepository passwordRepository,
-			IPasswordModelValidator passwordModelValidator
+			IPasswordRepository passwordRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       passwordRepository,
-			       passwordModelValidator)
+			       passwordRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>32f6e5fd33fb33b8accc7465a1170dc9</Hash>
+    <Hash>29fb183dcbff3b12c666fd8ec53f9003</Hash>
 </Codenesium>*/

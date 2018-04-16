@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected ISalesOrderHeaderRepository salesOrderHeaderRepository;
 
-		protected ISalesOrderHeaderModelValidator salesOrderHeaderModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractSalesOrderHeaderController(
 			ILogger<AbstractSalesOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesOrderHeaderRepository salesOrderHeaderRepository,
-			ISalesOrderHeaderModelValidator salesOrderHeaderModelValidator
+			ISalesOrderHeaderRepository salesOrderHeaderRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.salesOrderHeaderRepository = salesOrderHeaderRepository;
-			this.salesOrderHeaderModelValidator = salesOrderHeaderModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] SalesOrderHeaderModel model)
 		{
-			this.salesOrderHeaderModelValidator.CreateMode();
-			var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.salesOrderHeaderRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.salesOrderHeaderRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<SalesOrderHeaderModel> models)
 		{
-			this.salesOrderHeaderModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] SalesOrderHeaderModel model)
 		{
-			if (this.salesOrderHeaderRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.salesOrderHeaderModelValidator.UpdateMode();
-			var validationResult = this.salesOrderHeaderModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.salesOrderHeaderRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.salesOrderHeaderRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SalesOrderHeaderFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByCustomerID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Customers/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("BySalesPersonID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesPersons/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -195,7 +134,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByTerritoryID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SalesTerritories/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -208,7 +146,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByBillToAddressID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -221,7 +158,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByShipToAddressID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -234,7 +170,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByShipMethodID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ShipMethods/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -247,7 +182,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByCreditCardID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CreditCards/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -260,7 +194,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByCurrencyRateID/{id}")]
-		[SalesOrderHeaderFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/CurrencyRates/{id}/SalesOrderHeaders")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -274,5 +207,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fa3d071d9d9126237e95eafc95465d2a</Hash>
+    <Hash>ae5d9d53b6cc388141229c36d4764bf0</Hash>
 </Codenesium>*/

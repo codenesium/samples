@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/spaces")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SpaceFilter))]
 	public class SpaceController: AbstractSpaceController
 	{
 		public SpaceController(
 			ILogger<SpaceController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISpaceRepository spaceRepository,
-			ISpaceModelValidator spaceModelValidator
+			ISpaceRepository spaceRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       spaceRepository,
-			       spaceModelValidator)
+			       spaceRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>34b038a96d75d79ba0a6cac402b40860</Hash>
+    <Hash>d514d52e3787dec0100fa5c2a43df244</Hash>
 </Codenesium>*/

@@ -1,18 +1,78 @@
+using System;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
+using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.Service
 {
 	public class ShipMethodFilter: ActionFilterAttribute
 	{
-		public override void OnActionExecuting(ActionExecutingContext actionContext)
-		{}
+		IShipMethodModelValidator validator { get; set; }
 
-		public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
+		public ShipMethodFilter(IShipMethodModelValidator validator)
 		{
-			base.OnActionExecuted(actionExecutedContext);
+			this.validator = validator;
+		}
+
+		public override void OnActionExecuting(ActionExecutingContext actionContext)
+		{
+			if (actionContext.ActionArguments.Any(kv => kv.Value == null))
+			{
+				actionContext.Result = new BadRequestObjectResult("Null model is invalid");
+
+				return;
+			}
+
+			var items = actionContext.ActionArguments.Values.OfType<ShipMethodModel>().ToList();
+
+			if (items.Any())
+			{
+				if(actionContext.HttpContext.Request.Method == "POST")
+				{
+					this.validator.CreateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "PUT")
+				{
+					this.validator.UpdateMode();
+				}
+				else if (actionContext.HttpContext.Request.Method == "DELETE")
+				{
+					this.validator.DeleteMode();
+				}
+				else
+				{
+					return;
+				}
+
+				Action<ValidationResult> addError = (result) =>
+				{
+					foreach (var error in result.Errors)
+					{
+						actionContext.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+					}
+				};
+
+				bool validationFailure = false;
+				items.ForEach(x =>
+				{
+					ValidationResult result = this.validator.Validate(x);
+					if (!result.IsValid)
+					{
+					        validationFailure = true;
+					        addError(result);
+					}
+				});
+
+				if (validationFailure)
+				{
+					actionContext.Result = new BadRequestObjectResult(actionContext.ModelState);
+				}
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>40bf730d560f516b22734ac968246b71</Hash>
+    <Hash>a161b013fc7047bd01d350ae6303afcf</Hash>
 </Codenesium>*/

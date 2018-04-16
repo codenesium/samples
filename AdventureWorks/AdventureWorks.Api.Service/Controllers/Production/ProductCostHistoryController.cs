@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productCostHistories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ProductCostHistoryFilter))]
 	public class ProductCostHistoryController: AbstractProductCostHistoryController
 	{
 		public ProductCostHistoryController(
 			ILogger<ProductCostHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductCostHistoryRepository productCostHistoryRepository,
-			IProductCostHistoryModelValidator productCostHistoryModelValidator
+			IProductCostHistoryRepository productCostHistoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productCostHistoryRepository,
-			       productCostHistoryModelValidator)
+			       productCostHistoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>66747568587df5e53081ead5a01e4c0e</Hash>
+    <Hash>a8f3b23db3f619e4c0ee32a991d625e6</Hash>
 </Codenesium>*/

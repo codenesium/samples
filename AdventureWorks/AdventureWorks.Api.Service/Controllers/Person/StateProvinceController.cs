@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/stateProvinces")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(StateProvinceFilter))]
 	public class StateProvinceController: AbstractStateProvinceController
 	{
 		public StateProvinceController(
 			ILogger<StateProvinceController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStateProvinceRepository stateProvinceRepository,
-			IStateProvinceModelValidator stateProvinceModelValidator
+			IStateProvinceRepository stateProvinceRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       stateProvinceRepository,
-			       stateProvinceModelValidator)
+			       stateProvinceRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>05f352129c99efc79f2ab4d0437c3dea</Hash>
+    <Hash>736444c4caff424beb65f168a98801e2</Hash>
 </Codenesium>*/

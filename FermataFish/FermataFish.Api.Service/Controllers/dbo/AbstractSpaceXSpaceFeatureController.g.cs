@@ -15,8 +15,6 @@ namespace FermataFishNS.Api.Service
 	{
 		protected ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
 
-		protected ISpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace FermataFishNS.Api.Service
 		public AbstractSpaceXSpaceFeatureController(
 			ILogger<AbstractSpaceXSpaceFeatureController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
-			ISpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator
+			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.spaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
-			this.spaceXSpaceFeatureModelValidator = spaceXSpaceFeatureModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[SpaceXSpaceFeatureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] SpaceXSpaceFeatureModel model)
 		{
-			this.spaceXSpaceFeatureModelValidator.CreateMode();
-			var validationResult = this.spaceXSpaceFeatureModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.spaceXSpaceFeatureRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.spaceXSpaceFeatureRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[SpaceXSpaceFeatureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<SpaceXSpaceFeatureModel> models)
 		{
-			this.spaceXSpaceFeatureModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.spaceXSpaceFeatureModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SpaceXSpaceFeatureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] SpaceXSpaceFeatureModel model)
 		{
-			if (this.spaceXSpaceFeatureRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.spaceXSpaceFeatureModelValidator.UpdateMode();
-			var validationResult = this.spaceXSpaceFeatureModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.spaceXSpaceFeatureRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.spaceXSpaceFeatureRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[SpaceXSpaceFeatureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("BySpaceId/{id}")]
-		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Spaces/{id}/SpaceXSpaceFeatures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("BySpaceFeatureId/{id}")]
-		[SpaceXSpaceFeatureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/SpaceFeatures/{id}/SpaceXSpaceFeatures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -196,5 +135,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a7a18b80f6bf87faf536fc709c73d5ce</Hash>
+    <Hash>aa405e2c79608aa7569a3c5c14f80ca3</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/admins")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(AdminFilter))]
 	public class AdminController: AbstractAdminController
 	{
 		public AdminController(
 			ILogger<AdminController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IAdminRepository adminRepository,
-			IAdminModelValidator adminModelValidator
+			IAdminRepository adminRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       adminRepository,
-			       adminModelValidator)
+			       adminRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f9b2841fa6ac29eea365b364c3643cc9</Hash>
+    <Hash>308f990691e81b795f0d6638b0f7d62e</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/purchaseOrderDetails")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(PurchaseOrderDetailFilter))]
 	public class PurchaseOrderDetailController: AbstractPurchaseOrderDetailController
 	{
 		public PurchaseOrderDetailController(
 			ILogger<PurchaseOrderDetailController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPurchaseOrderDetailRepository purchaseOrderDetailRepository,
-			IPurchaseOrderDetailModelValidator purchaseOrderDetailModelValidator
+			IPurchaseOrderDetailRepository purchaseOrderDetailRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       purchaseOrderDetailRepository,
-			       purchaseOrderDetailModelValidator)
+			       purchaseOrderDetailRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f87aef6384eedb7e95d0a926de5dffc0</Hash>
+    <Hash>ec87a1d4b0693dadd44c6dee4a4046b0</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employeeDepartmentHistories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(EmployeeDepartmentHistoryFilter))]
 	public class EmployeeDepartmentHistoryController: AbstractEmployeeDepartmentHistoryController
 	{
 		public EmployeeDepartmentHistoryController(
 			ILogger<EmployeeDepartmentHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
-			IEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator
+			IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       employeeDepartmentHistoryRepository,
-			       employeeDepartmentHistoryModelValidator)
+			       employeeDepartmentHistoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5df26f6e38ff0e0b19056522b8a6a8fd</Hash>
+    <Hash>ff60deac6dec5ad3fec1e202be4ec687</Hash>
 </Codenesium>*/

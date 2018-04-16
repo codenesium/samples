@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personCreditCards")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(PersonCreditCardFilter))]
 	public class PersonCreditCardController: AbstractPersonCreditCardController
 	{
 		public PersonCreditCardController(
 			ILogger<PersonCreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPersonCreditCardRepository personCreditCardRepository,
-			IPersonCreditCardModelValidator personCreditCardModelValidator
+			IPersonCreditCardRepository personCreditCardRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       personCreditCardRepository,
-			       personCreditCardModelValidator)
+			       personCreditCardRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>770b674a32722fe04f71d0bdc3c9f343</Hash>
+    <Hash>29688b6e24aa09a9c3f5a7c2bbd9424d</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/jobCandidates")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(JobCandidateFilter))]
 	public class JobCandidateController: AbstractJobCandidateController
 	{
 		public JobCandidateController(
 			ILogger<JobCandidateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IJobCandidateRepository jobCandidateRepository,
-			IJobCandidateModelValidator jobCandidateModelValidator
+			IJobCandidateRepository jobCandidateRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       jobCandidateRepository,
-			       jobCandidateModelValidator)
+			       jobCandidateRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>96606fd3c10a5318cb01f42e215dae8f</Hash>
+    <Hash>43f35bacaad13a26b44dc6ffedfa8f71</Hash>
 </Codenesium>*/

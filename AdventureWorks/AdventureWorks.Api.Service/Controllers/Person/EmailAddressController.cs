@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/emailAddresses")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(EmailAddressFilter))]
 	public class EmailAddressController: AbstractEmailAddressController
 	{
 		public EmailAddressController(
 			ILogger<EmailAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IEmailAddressRepository emailAddressRepository,
-			IEmailAddressModelValidator emailAddressModelValidator
+			IEmailAddressRepository emailAddressRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       emailAddressRepository,
-			       emailAddressModelValidator)
+			       emailAddressRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7f78162e4881d5694f540a7b9a33e56f</Hash>
+    <Hash>ef37285fc2552625006ffe67558618c1</Hash>
 </Codenesium>*/

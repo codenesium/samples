@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/specialOfferProducts")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SpecialOfferProductFilter))]
 	public class SpecialOfferProductController: AbstractSpecialOfferProductController
 	{
 		public SpecialOfferProductController(
 			ILogger<SpecialOfferProductController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISpecialOfferProductRepository specialOfferProductRepository,
-			ISpecialOfferProductModelValidator specialOfferProductModelValidator
+			ISpecialOfferProductRepository specialOfferProductRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       specialOfferProductRepository,
-			       specialOfferProductModelValidator)
+			       specialOfferProductRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1e41fe3ebec7aca27067aa44425e7c99</Hash>
+    <Hash>cc29d7d2659f234a11b227441200dd37</Hash>
 </Codenesium>*/

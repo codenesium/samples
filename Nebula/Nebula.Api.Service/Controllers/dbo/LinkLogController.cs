@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/linkLogs")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(LinkLogFilter))]
 	public class LinkLogController: AbstractLinkLogController
 	{
 		public LinkLogController(
 			ILogger<LinkLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILinkLogRepository linkLogRepository,
-			ILinkLogModelValidator linkLogModelValidator
+			ILinkLogRepository linkLogRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       linkLogRepository,
-			       linkLogModelValidator)
+			       linkLogRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3debf3d4763655d96a04266e29913b83</Hash>
+    <Hash>e64f713f9ea7dd81d23072428cf29ef7</Hash>
 </Codenesium>*/

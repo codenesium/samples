@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTerritories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SalesTerritoryFilter))]
 	public class SalesTerritoryController: AbstractSalesTerritoryController
 	{
 		public SalesTerritoryController(
 			ILogger<SalesTerritoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesTerritoryRepository salesTerritoryRepository,
-			ISalesTerritoryModelValidator salesTerritoryModelValidator
+			ISalesTerritoryRepository salesTerritoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesTerritoryRepository,
-			       salesTerritoryModelValidator)
+			       salesTerritoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ff07ea3ac49dd8c84328a0a09d838722</Hash>
+    <Hash>9397bccf1bf20e19c49056abbaf529c7</Hash>
 </Codenesium>*/

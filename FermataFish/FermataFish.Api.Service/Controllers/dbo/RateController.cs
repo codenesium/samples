@@ -13,18 +13,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/rates")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(RateFilter))]
 	public class RateController: AbstractRateController
 	{
 		public RateController(
 			ILogger<RateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IRateRepository rateRepository,
-			IRateModelValidator rateModelValidator
+			IRateRepository rateRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       rateRepository,
-			       rateModelValidator)
+			       rateRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>91168e21b1cd8ea9b9f3159af489534c</Hash>
+    <Hash>caccb7925da4a1abdd3c527cee4a402f</Hash>
 </Codenesium>*/

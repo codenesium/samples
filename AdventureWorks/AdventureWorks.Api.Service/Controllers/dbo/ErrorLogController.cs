@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/errorLogs")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ErrorLogFilter))]
 	public class ErrorLogController: AbstractErrorLogController
 	{
 		public ErrorLogController(
 			ILogger<ErrorLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IErrorLogRepository errorLogRepository,
-			IErrorLogModelValidator errorLogModelValidator
+			IErrorLogRepository errorLogRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       errorLogRepository,
-			       errorLogModelValidator)
+			       errorLogRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>09610f183d265d0d29d0777906f7c1f6</Hash>
+    <Hash>618753e415a5d4405d907ee39cebca56</Hash>
 </Codenesium>*/

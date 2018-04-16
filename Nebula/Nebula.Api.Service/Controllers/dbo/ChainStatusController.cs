@@ -13,18 +13,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/chainStatus")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ChainStatusFilter))]
 	public class ChainStatusController: AbstractChainStatusController
 	{
 		public ChainStatusController(
 			ILogger<ChainStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IChainStatusRepository chainStatusRepository,
-			IChainStatusModelValidator chainStatusModelValidator
+			IChainStatusRepository chainStatusRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       chainStatusRepository,
-			       chainStatusModelValidator)
+			       chainStatusRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9da010edd1abcedd906addb33f7d5a23</Hash>
+    <Hash>1aec1658bfbb92ef1a89a7de81a87f23</Hash>
 </Codenesium>*/

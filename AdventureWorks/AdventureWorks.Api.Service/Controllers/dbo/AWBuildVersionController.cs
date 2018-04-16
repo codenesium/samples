@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/aWBuildVersions")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(AWBuildVersionFilter))]
 	public class AWBuildVersionController: AbstractAWBuildVersionController
 	{
 		public AWBuildVersionController(
 			ILogger<AWBuildVersionController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IAWBuildVersionRepository aWBuildVersionRepository,
-			IAWBuildVersionModelValidator aWBuildVersionModelValidator
+			IAWBuildVersionRepository aWBuildVersionRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       aWBuildVersionRepository,
-			       aWBuildVersionModelValidator)
+			       aWBuildVersionRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1f0a748888ec49744ec6c1ed33a7e49b</Hash>
+    <Hash>782381843145c792270ca41b89937aed</Hash>
 </Codenesium>*/

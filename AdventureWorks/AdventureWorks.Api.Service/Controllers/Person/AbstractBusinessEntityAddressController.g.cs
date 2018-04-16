@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IBusinessEntityAddressRepository businessEntityAddressRepository;
 
-		protected IBusinessEntityAddressModelValidator businessEntityAddressModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractBusinessEntityAddressController(
 			ILogger<AbstractBusinessEntityAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBusinessEntityAddressRepository businessEntityAddressRepository,
-			IBusinessEntityAddressModelValidator businessEntityAddressModelValidator
+			IBusinessEntityAddressRepository businessEntityAddressRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.businessEntityAddressRepository = businessEntityAddressRepository;
-			this.businessEntityAddressModelValidator = businessEntityAddressModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[BusinessEntityAddressFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[BusinessEntityAddressFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[BusinessEntityAddressFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] BusinessEntityAddressModel model)
 		{
-			this.businessEntityAddressModelValidator.CreateMode();
-			var validationResult = this.businessEntityAddressModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.businessEntityAddressRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.businessEntityAddressRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[BusinessEntityAddressFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<BusinessEntityAddressModel> models)
 		{
-			this.businessEntityAddressModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.businessEntityAddressModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[BusinessEntityAddressFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] BusinessEntityAddressModel model)
 		{
-			if (this.businessEntityAddressRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.businessEntityAddressModelValidator.UpdateMode();
-			var validationResult = this.businessEntityAddressModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.businessEntityAddressRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.businessEntityAddressRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[BusinessEntityAddressFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByBusinessEntityID/{id}")]
-		[BusinessEntityAddressFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/BusinessEntities/{id}/BusinessEntityAddresses")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByAddressID/{id}")]
-		[BusinessEntityAddressFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Addresses/{id}/BusinessEntityAddresses")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -195,7 +134,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByAddressTypeID/{id}")]
-		[BusinessEntityAddressFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/AddressTypes/{id}/BusinessEntityAddresses")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -209,5 +147,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b5fffe9182264b65165dcba805c62ab9</Hash>
+    <Hash>e91f42b06dd4e4847ad4c9bd1c126b75</Hash>
 </Codenesium>*/

@@ -13,18 +13,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesPersonQuotaHistories")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(SalesPersonQuotaHistoryFilter))]
 	public class SalesPersonQuotaHistoryController: AbstractSalesPersonQuotaHistoryController
 	{
 		public SalesPersonQuotaHistoryController(
 			ILogger<SalesPersonQuotaHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
-			ISalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator
+			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesPersonQuotaHistoryRepository,
-			       salesPersonQuotaHistoryModelValidator)
+			       salesPersonQuotaHistoryRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -34,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7f4a6a6c2447e113a920bd8a7be9d806</Hash>
+    <Hash>f1e2c7b08ef56532cc7a7563965e365c</Hash>
 </Codenesium>*/

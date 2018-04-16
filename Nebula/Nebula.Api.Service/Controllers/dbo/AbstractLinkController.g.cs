@@ -15,8 +15,6 @@ namespace NebulaNS.Api.Service
 	{
 		protected ILinkRepository linkRepository;
 
-		protected ILinkModelValidator linkModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace NebulaNS.Api.Service
 		public AbstractLinkController(
 			ILogger<AbstractLinkController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILinkRepository linkRepository,
-			ILinkModelValidator linkModelValidator
+			ILinkRepository linkRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.linkRepository = linkRepository;
-			this.linkModelValidator = linkModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[LinkFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[LinkFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace NebulaNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[LinkFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] LinkModel model)
 		{
-			this.linkModelValidator.CreateMode();
-			var validationResult = this.linkModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.linkRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.linkRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[LinkFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<LinkModel> models)
 		{
-			this.linkModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.linkModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace NebulaNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LinkFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] LinkModel model)
 		{
-			if (this.linkRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.linkModelValidator.UpdateMode();
-			var validationResult = this.linkModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.linkRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.linkRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[LinkFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByChainId/{id}")]
-		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Chains/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByAssignedMachineId/{id}")]
-		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Machines/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -195,7 +134,6 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByLinkStatusId/{id}")]
-		[LinkFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/LinkStatus/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -209,5 +147,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c0cf8eda80b90fdab18fe9aeef4c18e2</Hash>
+    <Hash>a7fbbda1b87ab6b21d80432fd4b270dc</Hash>
 </Codenesium>*/

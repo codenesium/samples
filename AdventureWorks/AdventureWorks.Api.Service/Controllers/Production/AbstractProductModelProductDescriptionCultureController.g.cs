@@ -15,8 +15,6 @@ namespace AdventureWorksNS.Api.Service
 	{
 		protected IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
 
-		protected IProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator;
-
 		protected int BulkInsertLimit { get; set; }
 
 		protected int SearchRecordLimit { get; set; }
@@ -26,26 +24,15 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractProductModelProductDescriptionCultureController(
 			ILogger<AbstractProductModelProductDescriptionCultureController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
-			IProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator
+			IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository
 			)
 			: base(logger, transactionCoordinator)
 		{
 			this.productModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
-			this.productModelProductDescriptionCultureModelValidator = productModelProductDescriptionCultureModelValidator;
-		}
-
-		protected void AddErrors(ValidationResult result)
-		{
-			foreach (var error in result.Errors)
-			{
-				this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-			}
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
@@ -57,7 +44,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Search()
@@ -72,51 +58,25 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[ModelValidateFilter]
-		[ProductModelProductDescriptionCultureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Create([FromBody] ProductModelProductDescriptionCultureModel model)
 		{
-			this.productModelProductDescriptionCultureModelValidator.CreateMode();
-			var validationResult = this.productModelProductDescriptionCultureModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				var id = this.productModelProductDescriptionCultureRepository.Create(model);
-				return this.Ok(id);
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			var id = this.productModelProductDescriptionCultureRepository.Create(model);
+			return this.Ok(id);
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[ModelValidateFilter]
-		[ProductModelProductDescriptionCultureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult BulkInsert([FromBody] List<ProductModelProductDescriptionCultureModel> models)
 		{
-			this.productModelProductDescriptionCultureModelValidator.CreateMode();
-
 			if (models.Count > this.BulkInsertLimit)
 			{
 				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
-			}
-
-			foreach (var model in models)
-			{
-				var validationResult = this.productModelProductDescriptionCultureModelValidator.Validate(model);
-				if (!validationResult.IsValid)
-				{
-					this.AddErrors(validationResult);
-					return this.BadRequest(this.ModelState);
-				}
 			}
 
 			foreach (var model in models)
@@ -129,36 +89,17 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPut]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductModelProductDescriptionCultureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
 		public virtual IActionResult Update(int id, [FromBody] ProductModelProductDescriptionCultureModel model)
 		{
-			if (this.productModelProductDescriptionCultureRepository.GetByIdDirect(id) == null)
-			{
-				return this.BadRequest(this.ModelState);
-			}
-
-			this.productModelProductDescriptionCultureModelValidator.UpdateMode();
-			var validationResult = this.productModelProductDescriptionCultureModelValidator.Validate(model);
-			if (validationResult.IsValid)
-			{
-				this.productModelProductDescriptionCultureRepository.Update(id, model);
-				return this.Ok();
-			}
-			else
-			{
-				this.AddErrors(validationResult);
-				return this.BadRequest(this.ModelState);
-			}
+			this.productModelProductDescriptionCultureRepository.Update(id, model);
+			return this.Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
-		[ModelValidateFilter]
-		[ProductModelProductDescriptionCultureFilter]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
 		public virtual IActionResult Delete(int id)
@@ -169,7 +110,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByProductModelID/{id}")]
-		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductModels/{id}/ProductModelProductDescriptionCultures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -182,7 +122,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByProductDescriptionID/{id}")]
-		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/ProductDescriptions/{id}/ProductModelProductDescriptionCultures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -195,7 +134,6 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByCultureID/{id}")]
-		[ProductModelProductDescriptionCultureFilter]
 		[ReadOnlyFilter]
 		[Route("~/api/Cultures/{id}/ProductModelProductDescriptionCultures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
@@ -209,5 +147,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>be4b0468cb03fc5243f2eb1df35a8617</Hash>
+    <Hash>e24e8280787bb6fb8196fa7388438d97</Hash>
 </Codenesium>*/
