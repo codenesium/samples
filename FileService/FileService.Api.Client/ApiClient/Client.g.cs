@@ -15,7 +15,9 @@ namespace FileServiceNS.Api.Client
 
 		protected string ApiUrl { get; set; }
 
-		public AbstractApiClient(string apiUri)
+		protected string ApiVersion { get; set; }
+
+		public AbstractApiClient(string apiUri, string apiVersion)
 		{
 			if (string.IsNullOrWhiteSpace(apiUri))
 			{
@@ -25,14 +27,20 @@ namespace FileServiceNS.Api.Client
 			{
 				throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
 			}
+			if (string.IsNullOrWhiteSpace(apiVersion))
+			{
+				throw new ArgumentException("apiVersion is not set");
+			}
 
 			this.ApiUrl = apiUri;
+			this.ApiVersion = apiVersion;
 			this.client = new HttpClient();
 
 			this.client.BaseAddress = new Uri(apiUri);
 
 			this.client.DefaultRequestHeaders.Accept.Clear();
 			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
 		public virtual async Task<List<POCOBucket>> BucketSearchAsync(string query, int offset = 0, int limit = 250)
@@ -197,5 +205,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>8e85aa8acf1ac5c89c9539f779fb09ba</Hash>
+    <Hash>0f3e4eeb4539da619d2fa51a76e1b0cd</Hash>
 </Codenesium>*/

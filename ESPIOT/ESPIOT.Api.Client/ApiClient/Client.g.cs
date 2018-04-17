@@ -15,7 +15,9 @@ namespace ESPIOTNS.Api.Client
 
 		protected string ApiUrl { get; set; }
 
-		public AbstractApiClient(string apiUri)
+		protected string ApiVersion { get; set; }
+
+		public AbstractApiClient(string apiUri, string apiVersion)
 		{
 			if (string.IsNullOrWhiteSpace(apiUri))
 			{
@@ -25,14 +27,20 @@ namespace ESPIOTNS.Api.Client
 			{
 				throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
 			}
+			if (string.IsNullOrWhiteSpace(apiVersion))
+			{
+				throw new ArgumentException("apiVersion is not set");
+			}
 
 			this.ApiUrl = apiUri;
+			this.ApiVersion = apiVersion;
 			this.client = new HttpClient();
 
 			this.client.BaseAddress = new Uri(apiUri);
 
 			this.client.DefaultRequestHeaders.Accept.Clear();
 			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
 		public virtual async Task<List<POCODevice>> DeviceSearchAsync(string query, int offset = 0, int limit = 250)
@@ -144,5 +152,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>11ab672cbf152ca9cde7690889ae8037</Hash>
+    <Hash>092245b17de3ad8772bd5c61a112b7e8</Hash>
 </Codenesium>*/

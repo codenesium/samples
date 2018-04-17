@@ -15,7 +15,9 @@ namespace AdventureWorksNS.Api.Client
 
 		protected string ApiUrl { get; set; }
 
-		public AbstractApiClient(string apiUri)
+		protected string ApiVersion { get; set; }
+
+		public AbstractApiClient(string apiUri, string apiVersion)
 		{
 			if (string.IsNullOrWhiteSpace(apiUri))
 			{
@@ -25,14 +27,20 @@ namespace AdventureWorksNS.Api.Client
 			{
 				throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
 			}
+			if (string.IsNullOrWhiteSpace(apiVersion))
+			{
+				throw new ArgumentException("apiVersion is not set");
+			}
 
 			this.ApiUrl = apiUri;
+			this.ApiVersion = apiVersion;
 			this.client = new HttpClient();
 
 			this.client.BaseAddress = new Uri(apiUri);
 
 			this.client.DefaultRequestHeaders.Accept.Clear();
 			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
 		public virtual async Task<List<POCOAWBuildVersion>> AWBuildVersionSearchAsync(string query, int offset = 0, int limit = 250)
@@ -3801,5 +3809,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a2e3cf650e3634132433918e009a93ae</Hash>
+    <Hash>c343788d49fc62a3da389970f4baecb5</Hash>
 </Codenesium>*/

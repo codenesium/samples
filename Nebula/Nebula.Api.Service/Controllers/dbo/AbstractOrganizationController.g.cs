@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
@@ -36,6 +37,7 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.organizationManager.GetById(id);
@@ -46,6 +48,7 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
@@ -59,7 +62,7 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] OrganizationModel model)
 		{
 			var result = await this.organizationManager.Create(model);
@@ -70,7 +73,7 @@ namespace NebulaNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -78,12 +81,13 @@ namespace NebulaNS.Api.Service
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<OrganizationModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
-				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
 			foreach (var model in models)
@@ -92,7 +96,7 @@ namespace NebulaNS.Api.Service
 
 				if(!result.Success)
 				{
-					return this.BadRequest(result);
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
@@ -103,7 +107,7 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] OrganizationModel model)
 		{
 			var result = await this.organizationManager.Update(id, model);
@@ -114,7 +118,7 @@ namespace NebulaNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -122,7 +126,7 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			var result = await this.organizationManager.Delete(id);
@@ -133,12 +137,12 @@ namespace NebulaNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>59d91051403d2270c7d93d8c8f1d695c</Hash>
+    <Hash>90085ec229e156e442f57c74a74cd009</Hash>
 </Codenesium>*/

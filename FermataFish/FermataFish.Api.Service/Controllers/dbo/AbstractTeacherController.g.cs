@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.BusinessObjects;
@@ -36,6 +37,7 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.teacherManager.GetById(id);
@@ -46,6 +48,7 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
@@ -59,7 +62,7 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] TeacherModel model)
 		{
 			var result = await this.teacherManager.Create(model);
@@ -70,7 +73,7 @@ namespace FermataFishNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -78,12 +81,13 @@ namespace FermataFishNS.Api.Service
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<TeacherModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
-				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
 			foreach (var model in models)
@@ -92,7 +96,7 @@ namespace FermataFishNS.Api.Service
 
 				if(!result.Success)
 				{
-					return this.BadRequest(result);
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
@@ -103,7 +107,7 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] TeacherModel model)
 		{
 			var result = await this.teacherManager.Update(id, model);
@@ -114,7 +118,7 @@ namespace FermataFishNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -122,7 +126,7 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			var result = await this.teacherManager.Delete(id);
@@ -133,7 +137,7 @@ namespace FermataFishNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -151,5 +155,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0592aee09be7d6b58473d318a338218d</Hash>
+    <Hash>5448f56a244200575599639720a98b31</Hash>
 </Codenesium>*/

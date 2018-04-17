@@ -15,7 +15,9 @@ namespace NebulaNS.Api.Client
 
 		protected string ApiUrl { get; set; }
 
-		public AbstractApiClient(string apiUri)
+		protected string ApiVersion { get; set; }
+
+		public AbstractApiClient(string apiUri, string apiVersion)
 		{
 			if (string.IsNullOrWhiteSpace(apiUri))
 			{
@@ -25,14 +27,20 @@ namespace NebulaNS.Api.Client
 			{
 				throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
 			}
+			if (string.IsNullOrWhiteSpace(apiVersion))
+			{
+				throw new ArgumentException("apiVersion is not set");
+			}
 
 			this.ApiUrl = apiUri;
+			this.ApiVersion = apiVersion;
 			this.client = new HttpClient();
 
 			this.client.BaseAddress = new Uri(apiUri);
 
 			this.client.DefaultRequestHeaders.Accept.Clear();
 			this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
 		public virtual async Task<List<POCOChain>> ChainSearchAsync(string query, int offset = 0, int limit = 250)
@@ -568,5 +576,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>f3ad051204c55f37d9ba7fab3e67a120</Hash>
+    <Hash>873816a5c00c42d255226f11071b38ba</Hash>
 </Codenesium>*/

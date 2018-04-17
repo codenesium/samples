@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
@@ -36,6 +37,7 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.personManager.GetById(id);
@@ -46,6 +48,7 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnlyFilter]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Search()
 		{
 			var query = new SearchQuery();
@@ -59,7 +62,7 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] PersonModel model)
 		{
 			var result = await this.personManager.Create(model);
@@ -70,7 +73,7 @@ namespace AdventureWorksNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -78,12 +81,13 @@ namespace AdventureWorksNS.Api.Service
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<PersonModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
-				throw new Exception($"Request exceeds maximum record limit of {this.BulkInsertLimit}");
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
 			foreach (var model in models)
@@ -92,7 +96,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if(!result.Success)
 				{
-					return this.BadRequest(result);
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
@@ -103,7 +107,7 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] PersonModel model)
 		{
 			var result = await this.personManager.Update(id, model);
@@ -114,7 +118,7 @@ namespace AdventureWorksNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -122,7 +126,7 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ActionResponse), 400)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
 			var result = await this.personManager.Delete(id);
@@ -133,7 +137,7 @@ namespace AdventureWorksNS.Api.Service
 			}
 			else
 			{
-				return this.BadRequest(result);
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
 
@@ -151,5 +155,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3434ab4a31c1414d630a899761c35f41</Hash>
+    <Hash>7f14acb2a6a71b365947875f40dfa577</Hash>
 </Codenesium>*/
