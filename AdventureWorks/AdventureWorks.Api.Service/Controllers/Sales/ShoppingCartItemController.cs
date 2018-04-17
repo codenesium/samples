@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shoppingCartItems")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ShoppingCartItemFilter))]
 	public class ShoppingCartItemController: AbstractShoppingCartItemController
 	{
 		public ShoppingCartItemController(
 			ILogger<ShoppingCartItemController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IShoppingCartItemRepository shoppingCartItemRepository
+			IBOShoppingCartItem shoppingCartItemManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       shoppingCartItemRepository)
+			       shoppingCartItemManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9e3d2808edf8f20b2c8809bc74285f08</Hash>
+    <Hash>324e76a4f7ae539f508b3794d94fbdc0</Hash>
 </Codenesium>*/

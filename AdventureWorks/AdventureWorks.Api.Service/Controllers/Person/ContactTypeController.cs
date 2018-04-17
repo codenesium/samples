@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/contactTypes")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ContactTypeFilter))]
 	public class ContactTypeController: AbstractContactTypeController
 	{
 		public ContactTypeController(
 			ILogger<ContactTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IContactTypeRepository contactTypeRepository
+			IBOContactType contactTypeManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       contactTypeRepository)
+			       contactTypeManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9846971591f3a57aca23640f3e2b4d1c</Hash>
+    <Hash>f464dc126787cf2ecb25e31cccba00bb</Hash>
 </Codenesium>*/

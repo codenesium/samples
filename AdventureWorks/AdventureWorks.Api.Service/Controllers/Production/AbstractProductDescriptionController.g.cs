@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractProductDescriptionController: AbstractApiController
 	{
-		protected IProductDescriptionRepository productDescriptionRepository;
+		protected IBOProductDescription productDescriptionManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractProductDescriptionController(
 			ILogger<AbstractProductDescriptionController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductDescriptionRepository productDescriptionRepository
+			IBOProductDescription productDescriptionManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.productDescriptionRepository = productDescriptionRepository;
+			this.productDescriptionManager = productDescriptionManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.productDescriptionRepository.GetById(id);
+			ApiResponse response = this.productDescriptionManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.productDescriptionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.productDescriptionManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] ProductDescriptionModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] ProductDescriptionModel model)
 		{
-			var id = this.productDescriptionRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.productDescriptionManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<ProductDescriptionModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ProductDescriptionModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.productDescriptionRepository.Create(model);
+				var result = await this.productDescriptionManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,25 +103,42 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] ProductDescriptionModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ProductDescriptionModel model)
 		{
-			this.productDescriptionRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.productDescriptionManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.productDescriptionRepository.Delete(id);
-			return this.Ok();
+			var result = await this.productDescriptionManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3d1ff1413a05376c0b0caccbdfc329e7</Hash>
+    <Hash>9804c07180a3227bdc90b36995e91f24</Hash>
 </Codenesium>*/

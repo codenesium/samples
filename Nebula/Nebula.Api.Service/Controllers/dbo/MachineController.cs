@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	[Route("api/machines")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(MachineFilter))]
 	public class MachineController: AbstractMachineController
 	{
 		public MachineController(
 			ILogger<MachineController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IMachineRepository machineRepository
+			IBOMachine machineManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       machineRepository)
+			       machineManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4af46df2f46654486f06da6cc61f36f0</Hash>
+    <Hash>8d399a53fb77aedda424098a1c418bf0</Hash>
 </Codenesium>*/

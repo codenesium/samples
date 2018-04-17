@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
+using FileServiceNS.Api.BusinessObjects;
 
 namespace FileServiceNS.Api.Service
 {
 	public abstract class AbstractFileController: AbstractApiController
 	{
-		protected IFileRepository fileRepository;
+		protected IBOFile fileManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace FileServiceNS.Api.Service
 		public AbstractFileController(
 			ILogger<AbstractFileController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IFileRepository fileRepository
+			IBOFile fileManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.fileRepository = fileRepository;
+			this.fileManager = fileManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.fileRepository.GetById(id);
+			ApiResponse response = this.fileManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace FileServiceNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.fileRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.fileManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] FileModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] FileModel model)
 		{
-			var id = this.fileRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.fileManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<FileModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<FileModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace FileServiceNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.fileRepository.Create(model);
+				var result = await this.fileManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace FileServiceNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] FileModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] FileModel model)
 		{
-			this.fileRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.fileManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.fileRepository.Delete(id);
-			return this.Ok();
+			var result = await this.fileManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByFileTypeId(int id)
 		{
-			ApiResponse response = this.fileRepository.GetWhere(x => x.FileTypeId == id);
+			ApiResponse response = this.fileManager.GetWhere(x => x.FileTypeId == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBucketId(int id)
 		{
-			ApiResponse response = this.fileRepository.GetWhere(x => x.BucketId == id);
+			ApiResponse response = this.fileManager.GetWhere(x => x.BucketId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>45c5af2dafd97623f8aea639c7e4cf23</Hash>
+    <Hash>695a8fb706cc2f2c4527e811ec516029</Hash>
 </Codenesium>*/

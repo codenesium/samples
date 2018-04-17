@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/stores")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(StoreFilter))]
 	public class StoreController: AbstractStoreController
 	{
 		public StoreController(
 			ILogger<StoreController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStoreRepository storeRepository
+			IBOStore storeManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       storeRepository)
+			       storeManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>292a73254126f8ed4901248249ed4a89</Hash>
+    <Hash>5a9957580d680a9448a5d5f4adf68c92</Hash>
 </Codenesium>*/

@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/people")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(PersonFilter))]
 	public class PersonController: AbstractPersonController
 	{
 		public PersonController(
 			ILogger<PersonController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPersonRepository personRepository
+			IBOPerson personManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       personRepository)
+			       personManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2a3de68a29283fa4e42c1bccdc88c1ee</Hash>
+    <Hash>cb7a298abcfa273d954da54ebf43d595</Hash>
 </Codenesium>*/

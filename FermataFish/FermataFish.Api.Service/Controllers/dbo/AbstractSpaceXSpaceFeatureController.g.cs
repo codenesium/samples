@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	public abstract class AbstractSpaceXSpaceFeatureController: AbstractApiController
 	{
-		protected ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
+		protected IBOSpaceXSpaceFeature spaceXSpaceFeatureManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace FermataFishNS.Api.Service
 		public AbstractSpaceXSpaceFeatureController(
 			ILogger<AbstractSpaceXSpaceFeatureController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository
+			IBOSpaceXSpaceFeature spaceXSpaceFeatureManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.spaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
+			this.spaceXSpaceFeatureManager = spaceXSpaceFeatureManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.spaceXSpaceFeatureRepository.GetById(id);
+			ApiResponse response = this.spaceXSpaceFeatureManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace FermataFishNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.spaceXSpaceFeatureManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] SpaceXSpaceFeatureModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] SpaceXSpaceFeatureModel model)
 		{
-			var id = this.spaceXSpaceFeatureRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.spaceXSpaceFeatureManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<SpaceXSpaceFeatureModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<SpaceXSpaceFeatureModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.spaceXSpaceFeatureRepository.Create(model);
+				var result = await this.spaceXSpaceFeatureManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] SpaceXSpaceFeatureModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] SpaceXSpaceFeatureModel model)
 		{
-			this.spaceXSpaceFeatureRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.spaceXSpaceFeatureManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.spaceXSpaceFeatureRepository.Delete(id);
-			return this.Ok();
+			var result = await this.spaceXSpaceFeatureManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySpaceId(int id)
 		{
-			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceId == id);
+			ApiResponse response = this.spaceXSpaceFeatureManager.GetWhere(x => x.SpaceId == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySpaceFeatureId(int id)
 		{
-			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceFeatureId == id);
+			ApiResponse response = this.spaceXSpaceFeatureManager.GetWhere(x => x.SpaceFeatureId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>319858e81533fd236547054a06417e48</Hash>
+    <Hash>69fe0e1375824b42f913227471e066e8</Hash>
 </Codenesium>*/

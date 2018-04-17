@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractCreditCardController: AbstractApiController
 	{
-		protected ICreditCardRepository creditCardRepository;
+		protected IBOCreditCard creditCardManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractCreditCardController(
 			ILogger<AbstractCreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICreditCardRepository creditCardRepository
+			IBOCreditCard creditCardManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.creditCardRepository = creditCardRepository;
+			this.creditCardManager = creditCardManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.creditCardRepository.GetById(id);
+			ApiResponse response = this.creditCardManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.creditCardRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.creditCardManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] CreditCardModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] CreditCardModel model)
 		{
-			var id = this.creditCardRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.creditCardManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<CreditCardModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<CreditCardModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.creditCardRepository.Create(model);
+				var result = await this.creditCardManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,25 +103,42 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] CreditCardModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] CreditCardModel model)
 		{
-			this.creditCardRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.creditCardManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.creditCardRepository.Delete(id);
-			return this.Ok();
+			var result = await this.creditCardManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ef16cd27f1a68ecb07feb233d6f2b13</Hash>
+    <Hash>1ec7550e6ede5059f17376341e02b260</Hash>
 </Codenesium>*/

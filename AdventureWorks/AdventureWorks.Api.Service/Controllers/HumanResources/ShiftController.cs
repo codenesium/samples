@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shifts")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ShiftFilter))]
 	public class ShiftController: AbstractShiftController
 	{
 		public ShiftController(
 			ILogger<ShiftController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IShiftRepository shiftRepository
+			IBOShift shiftManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       shiftRepository)
+			       shiftManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9e34d2058e0da467e8346397a3c5a367</Hash>
+    <Hash>a8714f94c793f23e39f19af522200b35</Hash>
 </Codenesium>*/

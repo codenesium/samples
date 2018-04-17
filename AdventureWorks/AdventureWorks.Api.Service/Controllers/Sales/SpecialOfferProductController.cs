@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/specialOfferProducts")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(SpecialOfferProductFilter))]
 	public class SpecialOfferProductController: AbstractSpecialOfferProductController
 	{
 		public SpecialOfferProductController(
 			ILogger<SpecialOfferProductController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISpecialOfferProductRepository specialOfferProductRepository
+			IBOSpecialOfferProduct specialOfferProductManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       specialOfferProductRepository)
+			       specialOfferProductManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cc29d7d2659f234a11b227441200dd37</Hash>
+    <Hash>e59a7805dd8dd98205609c6c2284a989</Hash>
 </Codenesium>*/

@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personCreditCards")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(PersonCreditCardFilter))]
 	public class PersonCreditCardController: AbstractPersonCreditCardController
 	{
 		public PersonCreditCardController(
 			ILogger<PersonCreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPersonCreditCardRepository personCreditCardRepository
+			IBOPersonCreditCard personCreditCardManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       personCreditCardRepository)
+			       personCreditCardManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>29688b6e24aa09a9c3f5a7c2bbd9424d</Hash>
+    <Hash>8be45e39d008394f893179cc20a5a4bd</Hash>
 </Codenesium>*/

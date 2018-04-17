@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractBusinessEntityAddressController: AbstractApiController
 	{
-		protected IBusinessEntityAddressRepository businessEntityAddressRepository;
+		protected IBOBusinessEntityAddress businessEntityAddressManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractBusinessEntityAddressController(
 			ILogger<AbstractBusinessEntityAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBusinessEntityAddressRepository businessEntityAddressRepository
+			IBOBusinessEntityAddress businessEntityAddressManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.businessEntityAddressRepository = businessEntityAddressRepository;
+			this.businessEntityAddressManager = businessEntityAddressManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.businessEntityAddressRepository.GetById(id);
+			ApiResponse response = this.businessEntityAddressManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.businessEntityAddressRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.businessEntityAddressManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] BusinessEntityAddressModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] BusinessEntityAddressModel model)
 		{
-			var id = this.businessEntityAddressRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.businessEntityAddressManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<BusinessEntityAddressModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<BusinessEntityAddressModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.businessEntityAddressRepository.Create(model);
+				var result = await this.businessEntityAddressManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] BusinessEntityAddressModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] BusinessEntityAddressModel model)
 		{
-			this.businessEntityAddressRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.businessEntityAddressManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.businessEntityAddressRepository.Delete(id);
-			return this.Ok();
+			var result = await this.businessEntityAddressManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			ApiResponse response = this.businessEntityAddressRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.BusinessEntityID == id);
 			return this.Ok(response);
 		}
 
@@ -124,7 +155,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByAddressID(int id)
 		{
-			ApiResponse response = this.businessEntityAddressRepository.GetWhere(x => x.AddressID == id);
+			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.AddressID == id);
 			return this.Ok(response);
 		}
 
@@ -135,12 +166,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByAddressTypeID(int id)
 		{
-			ApiResponse response = this.businessEntityAddressRepository.GetWhere(x => x.AddressTypeID == id);
+			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.AddressTypeID == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6601477038576f13ce6deefde6a690a8</Hash>
+    <Hash>cc631bc57f336f3fe0a01f9970818aa3</Hash>
 </Codenesium>*/

@@ -22,6 +22,7 @@
   
   <ItemGroup>
     <ProjectReference Include="../AdventureWorks.Api.Contracts/AdventureWorks.Api.Contracts.csproj" />
+    <ProjectReference Include="../AdventureWorks.Api.BusinessObjects/AdventureWorks.Api.BusinessObjects.csproj" />
     <ProjectReference Include="../AdventureWorks.Api.DataAccess/AdventureWorks.Api.DataAccess.csproj" />
   </ItemGroup>
 

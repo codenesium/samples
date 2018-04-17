@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractCountryRegionController: AbstractApiController
 	{
-		protected ICountryRegionRepository countryRegionRepository;
+		protected IBOCountryRegion countryRegionManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractCountryRegionController(
 			ILogger<AbstractCountryRegionController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICountryRegionRepository countryRegionRepository
+			IBOCountryRegion countryRegionManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.countryRegionRepository = countryRegionRepository;
+			this.countryRegionManager = countryRegionManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			ApiResponse response = this.countryRegionRepository.GetById(id);
+			ApiResponse response = this.countryRegionManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.countryRegionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.countryRegionManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] CountryRegionModel model)
+		[ProducesResponseType(typeof(CreateResponse<string>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] CountryRegionModel model)
 		{
-			var id = this.countryRegionRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.countryRegionManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<CountryRegionModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<CountryRegionModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.countryRegionRepository.Create(model);
+				var result = await this.countryRegionManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,25 +103,42 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id, [FromBody] CountryRegionModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(string id, [FromBody] CountryRegionModel model)
 		{
-			this.countryRegionRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.countryRegionManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(string id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(string id)
 		{
-			this.countryRegionRepository.Delete(id);
-			return this.Ok();
+			var result = await this.countryRegionManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>17bc58c4197a4589a5e8326c74c0e1f0</Hash>
+    <Hash>7099dab2d293bec6b2e0c9aa4dfc3b50</Hash>
 </Codenesium>*/

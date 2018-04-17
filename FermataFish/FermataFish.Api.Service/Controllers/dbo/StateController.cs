@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/states")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(StateFilter))]
 	public class StateController: AbstractStateController
 	{
 		public StateController(
 			ILogger<StateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStateRepository stateRepository
+			IBOState stateManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       stateRepository)
+			       stateManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9f3a9e92c3beee85731548653bf0d0b5</Hash>
+    <Hash>ddab46998fc9e1c5683559356877099f</Hash>
 </Codenesium>*/

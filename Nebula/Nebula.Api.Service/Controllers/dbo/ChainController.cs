@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	[Route("api/chains")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ChainFilter))]
 	public class ChainController: AbstractChainController
 	{
 		public ChainController(
 			ILogger<ChainController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IChainRepository chainRepository
+			IBOChain chainManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       chainRepository)
+			       chainManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>56de1f8934ea6f9d5aecda678998b8e3</Hash>
+    <Hash>0d3e76c6a3a2886de730d68cbb6517d1</Hash>
 </Codenesium>*/

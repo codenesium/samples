@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesPersonQuotaHistories")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(SalesPersonQuotaHistoryFilter))]
 	public class SalesPersonQuotaHistoryController: AbstractSalesPersonQuotaHistoryController
 	{
 		public SalesPersonQuotaHistoryController(
 			ILogger<SalesPersonQuotaHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository
+			IBOSalesPersonQuotaHistory salesPersonQuotaHistoryManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesPersonQuotaHistoryRepository)
+			       salesPersonQuotaHistoryManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f1e2c7b08ef56532cc7a7563965e365c</Hash>
+    <Hash>aee9a57ac32751756e9aacdf666b38e4</Hash>
 </Codenesium>*/

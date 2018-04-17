@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractTransactionHistoryArchiveController: AbstractApiController
 	{
-		protected ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository;
+		protected IBOTransactionHistoryArchive transactionHistoryArchiveManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractTransactionHistoryArchiveController(
 			ILogger<AbstractTransactionHistoryArchiveController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository
+			IBOTransactionHistoryArchive transactionHistoryArchiveManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.transactionHistoryArchiveRepository = transactionHistoryArchiveRepository;
+			this.transactionHistoryArchiveManager = transactionHistoryArchiveManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.transactionHistoryArchiveRepository.GetById(id);
+			ApiResponse response = this.transactionHistoryArchiveManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.transactionHistoryArchiveRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.transactionHistoryArchiveManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] TransactionHistoryArchiveModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] TransactionHistoryArchiveModel model)
 		{
-			var id = this.transactionHistoryArchiveRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.transactionHistoryArchiveManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<TransactionHistoryArchiveModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<TransactionHistoryArchiveModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.transactionHistoryArchiveRepository.Create(model);
+				var result = await this.transactionHistoryArchiveManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,25 +103,42 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] TransactionHistoryArchiveModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] TransactionHistoryArchiveModel model)
 		{
-			this.transactionHistoryArchiveRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.transactionHistoryArchiveManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.transactionHistoryArchiveRepository.Delete(id);
-			return this.Ok();
+			var result = await this.transactionHistoryArchiveManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5af71a6cdad854d79766975ca298765d</Hash>
+    <Hash>a5e2c656025ab9e916919b0d22ae5006</Hash>
 </Codenesium>*/

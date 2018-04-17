@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractPersonPhoneController: AbstractApiController
 	{
-		protected IPersonPhoneRepository personPhoneRepository;
+		protected IBOPersonPhone personPhoneManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractPersonPhoneController(
 			ILogger<AbstractPersonPhoneController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPersonPhoneRepository personPhoneRepository
+			IBOPersonPhone personPhoneManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.personPhoneRepository = personPhoneRepository;
+			this.personPhoneManager = personPhoneManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.personPhoneRepository.GetById(id);
+			ApiResponse response = this.personPhoneManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.personPhoneRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.personPhoneManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] PersonPhoneModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] PersonPhoneModel model)
 		{
-			var id = this.personPhoneRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.personPhoneManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<PersonPhoneModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<PersonPhoneModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.personPhoneRepository.Create(model);
+				var result = await this.personPhoneManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] PersonPhoneModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] PersonPhoneModel model)
 		{
-			this.personPhoneRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.personPhoneManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.personPhoneRepository.Delete(id);
-			return this.Ok();
+			var result = await this.personPhoneManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			ApiResponse response = this.personPhoneRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.personPhoneManager.GetWhere(x => x.BusinessEntityID == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByPhoneNumberTypeID(int id)
 		{
-			ApiResponse response = this.personPhoneRepository.GetWhere(x => x.PhoneNumberTypeID == id);
+			ApiResponse response = this.personPhoneManager.GetWhere(x => x.PhoneNumberTypeID == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>196ae65a97cc583ad6c39f1c10b37510</Hash>
+    <Hash>a39804c7effb10887309aa5f8325a512</Hash>
 </Codenesium>*/

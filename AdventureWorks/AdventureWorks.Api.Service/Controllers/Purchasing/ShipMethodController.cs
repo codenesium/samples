@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shipMethods")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ShipMethodFilter))]
 	public class ShipMethodController: AbstractShipMethodController
 	{
 		public ShipMethodController(
 			ILogger<ShipMethodController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IShipMethodRepository shipMethodRepository
+			IBOShipMethod shipMethodManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       shipMethodRepository)
+			       shipMethodManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9a686abb748f6dda3bc5ce74fc8b1994</Hash>
+    <Hash>7e0142f820e5c292077c4a5c1ab488fe</Hash>
 </Codenesium>*/

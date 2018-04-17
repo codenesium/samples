@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/phoneNumberTypes")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(PhoneNumberTypeFilter))]
 	public class PhoneNumberTypeController: AbstractPhoneNumberTypeController
 	{
 		public PhoneNumberTypeController(
 			ILogger<PhoneNumberTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPhoneNumberTypeRepository phoneNumberTypeRepository
+			IBOPhoneNumberType phoneNumberTypeManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       phoneNumberTypeRepository)
+			       phoneNumberTypeManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2fca3774dcdc89e2018b65963c26ae9c</Hash>
+    <Hash>063a998b859fe50698eddd99684b6c94</Hash>
 </Codenesium>*/

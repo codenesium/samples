@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/workOrders")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(WorkOrderFilter))]
 	public class WorkOrderController: AbstractWorkOrderController
 	{
 		public WorkOrderController(
 			ILogger<WorkOrderController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IWorkOrderRepository workOrderRepository
+			IBOWorkOrder workOrderManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       workOrderRepository)
+			       workOrderManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>96a00e55493a64823b434f067a507c6c</Hash>
+    <Hash>d6838fba884b4935381d76b61f359e38</Hash>
 </Codenesium>*/

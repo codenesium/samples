@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
+using FileServiceNS.Api.BusinessObjects;
 
 namespace FileServiceNS.Api.Service
 {
 	public abstract class AbstractBucketController: AbstractApiController
 	{
-		protected IBucketRepository bucketRepository;
+		protected IBOBucket bucketManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace FileServiceNS.Api.Service
 		public AbstractBucketController(
 			ILogger<AbstractBucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBucketRepository bucketRepository
+			IBOBucket bucketManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.bucketRepository = bucketRepository;
+			this.bucketManager = bucketManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.bucketRepository.GetById(id);
+			ApiResponse response = this.bucketManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace FileServiceNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.bucketRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.bucketManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] BucketModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] BucketModel model)
 		{
-			var id = this.bucketRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.bucketManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<BucketModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<BucketModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace FileServiceNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.bucketRepository.Create(model);
+				var result = await this.bucketManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,25 +103,42 @@ namespace FileServiceNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] BucketModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] BucketModel model)
 		{
-			this.bucketRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.bucketManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.bucketRepository.Delete(id);
-			return this.Ok();
+			var result = await this.bucketManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>01d7e91eb8b12be298a932b466ef2342</Hash>
+    <Hash>e94c9523bab4e187e8c86e8df7393992</Hash>
 </Codenesium>*/

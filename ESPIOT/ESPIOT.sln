@@ -14,7 +14,9 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.DataAccess", "ES
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.Service", "ESPIOT.Api.Service/ESPIOT.Api.Service.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
 	EndProject
 	
-Global
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.BusinessObjects", "ESPIOT.Api.BusinessObjects/ESPIOT.Api.BusinessObjects.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
+	EndProject
+	Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -37,6 +39,10 @@ Global
 		{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}.Release|Any CPU.Build.0 = Release|Any CPU
 
+		        {a34fd529-025b-496b-aa90-00bc3fa19829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{a34fd529-025b-496b-aa90-00bc3fa19829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.Build.0 = Release|Any CPU
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

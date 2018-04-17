@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/teacherXTeacherSkills")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(TeacherXTeacherSkillFilter))]
 	public class TeacherXTeacherSkillController: AbstractTeacherXTeacherSkillController
 	{
 		public TeacherXTeacherSkillController(
 			ILogger<TeacherXTeacherSkillController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository
+			IBOTeacherXTeacherSkill teacherXTeacherSkillManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       teacherXTeacherSkillRepository)
+			       teacherXTeacherSkillManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9686e5898b8749f480ba0baab15358a6</Hash>
+    <Hash>a22337dfca29b312019e5dfb3afab664</Hash>
 </Codenesium>*/

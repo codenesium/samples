@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/currencyRates")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(CurrencyRateFilter))]
 	public class CurrencyRateController: AbstractCurrencyRateController
 	{
 		public CurrencyRateController(
 			ILogger<CurrencyRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICurrencyRateRepository currencyRateRepository
+			IBOCurrencyRate currencyRateManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       currencyRateRepository)
+			       currencyRateManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>67c184ad07bcebc4490c2c8e65ba9917</Hash>
+    <Hash>213ba9c1479c7747acc936e7c6e15d9f</Hash>
 </Codenesium>*/

@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractBillOfMaterialsController: AbstractApiController
 	{
-		protected IBillOfMaterialsRepository billOfMaterialsRepository;
+		protected IBOBillOfMaterials billOfMaterialsManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractBillOfMaterialsController(
 			ILogger<AbstractBillOfMaterialsController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBillOfMaterialsRepository billOfMaterialsRepository
+			IBOBillOfMaterials billOfMaterialsManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.billOfMaterialsRepository = billOfMaterialsRepository;
+			this.billOfMaterialsManager = billOfMaterialsManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.billOfMaterialsRepository.GetById(id);
+			ApiResponse response = this.billOfMaterialsManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.billOfMaterialsManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] BillOfMaterialsModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] BillOfMaterialsModel model)
 		{
-			var id = this.billOfMaterialsRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.billOfMaterialsManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<BillOfMaterialsModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<BillOfMaterialsModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.billOfMaterialsRepository.Create(model);
+				var result = await this.billOfMaterialsManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] BillOfMaterialsModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] BillOfMaterialsModel model)
 		{
-			this.billOfMaterialsRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.billOfMaterialsManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.billOfMaterialsRepository.Delete(id);
-			return this.Ok();
+			var result = await this.billOfMaterialsManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByProductAssemblyID(int id)
 		{
-			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id);
+			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ProductAssemblyID == id);
 			return this.Ok(response);
 		}
 
@@ -124,7 +155,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByComponentID(int id)
 		{
-			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.ComponentID == id);
+			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ComponentID == id);
 			return this.Ok(response);
 		}
 
@@ -135,12 +166,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByUnitMeasureCode(string id)
 		{
-			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id);
+			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.UnitMeasureCode == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>824b31ea0008fcd74f61b565127318de</Hash>
+    <Hash>902100b0fd5e61d14e4985d6f23c743d</Hash>
 </Codenesium>*/

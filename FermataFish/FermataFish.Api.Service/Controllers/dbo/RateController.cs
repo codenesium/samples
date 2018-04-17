@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/rates")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(RateFilter))]
 	public class RateController: AbstractRateController
 	{
 		public RateController(
 			ILogger<RateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IRateRepository rateRepository
+			IBORate rateManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       rateRepository)
+			       rateManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>caccb7925da4a1abdd3c527cee4a402f</Hash>
+    <Hash>8dc91d233bfb4b670b23a523380308ed</Hash>
 </Codenesium>*/

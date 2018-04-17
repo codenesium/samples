@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	[Route("api/linkStatus")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(LinkStatusFilter))]
 	public class LinkStatusController: AbstractLinkStatusController
 	{
 		public LinkStatusController(
 			ILogger<LinkStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILinkStatusRepository linkStatusRepository
+			IBOLinkStatus linkStatusManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       linkStatusRepository)
+			       linkStatusManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1a57109015a99cfd229687d76eabc7eb</Hash>
+    <Hash>b15ff23d1494e93b3d9b87d0ed7f2933</Hash>
 </Codenesium>*/

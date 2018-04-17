@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.DataAccess;
+using ESPIOTNS.Api.BusinessObjects;
 
 namespace ESPIOTNS.Api.Service
 {
 	public abstract class AbstractDeviceActionController: AbstractApiController
 	{
-		protected IDeviceActionRepository deviceActionRepository;
+		protected IBODeviceAction deviceActionManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace ESPIOTNS.Api.Service
 		public AbstractDeviceActionController(
 			ILogger<AbstractDeviceActionController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IDeviceActionRepository deviceActionRepository
+			IBODeviceAction deviceActionManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.deviceActionRepository = deviceActionRepository;
+			this.deviceActionManager = deviceActionManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.deviceActionRepository.GetById(id);
+			ApiResponse response = this.deviceActionManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace ESPIOTNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.deviceActionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.deviceActionManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace ESPIOTNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] DeviceActionModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] DeviceActionModel model)
 		{
-			var id = this.deviceActionRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.deviceActionManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<DeviceActionModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<DeviceActionModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace ESPIOTNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.deviceActionRepository.Create(model);
+				var result = await this.deviceActionManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace ESPIOTNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] DeviceActionModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] DeviceActionModel model)
 		{
-			this.deviceActionRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.deviceActionManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.deviceActionRepository.Delete(id);
-			return this.Ok();
+			var result = await this.deviceActionManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,12 +144,12 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByDeviceId(int id)
 		{
-			ApiResponse response = this.deviceActionRepository.GetWhere(x => x.DeviceId == id);
+			ApiResponse response = this.deviceActionManager.GetWhere(x => x.DeviceId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ab74c7e34856845e4ece58348d76f6b</Hash>
+    <Hash>d8ad55a558567739db9b58c1360f7bf0</Hash>
 </Codenesium>*/

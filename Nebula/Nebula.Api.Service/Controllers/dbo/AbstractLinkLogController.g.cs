@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractLinkLogController: AbstractApiController
 	{
-		protected ILinkLogRepository linkLogRepository;
+		protected IBOLinkLog linkLogManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace NebulaNS.Api.Service
 		public AbstractLinkLogController(
 			ILogger<AbstractLinkLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ILinkLogRepository linkLogRepository
+			IBOLinkLog linkLogManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.linkLogRepository = linkLogRepository;
+			this.linkLogManager = linkLogManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.linkLogRepository.GetById(id);
+			ApiResponse response = this.linkLogManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.linkLogRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.linkLogManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] LinkLogModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] LinkLogModel model)
 		{
-			var id = this.linkLogRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.linkLogManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<LinkLogModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<LinkLogModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.linkLogRepository.Create(model);
+				var result = await this.linkLogManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] LinkLogModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] LinkLogModel model)
 		{
-			this.linkLogRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.linkLogManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.linkLogRepository.Delete(id);
-			return this.Ok();
+			var result = await this.linkLogManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,12 +144,12 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLinkId(int id)
 		{
-			ApiResponse response = this.linkLogRepository.GetWhere(x => x.LinkId == id);
+			ApiResponse response = this.linkLogManager.GetWhere(x => x.LinkId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d733b420ad5186fa25ade58b3f4e247</Hash>
+    <Hash>0910ce6ace25a54a0f1679ebccec46e3</Hash>
 </Codenesium>*/

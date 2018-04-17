@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/departments")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(DepartmentFilter))]
 	public class DepartmentController: AbstractDepartmentController
 	{
 		public DepartmentController(
 			ILogger<DepartmentController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IDepartmentRepository departmentRepository
+			IBODepartment departmentManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       departmentRepository)
+			       departmentManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>490864de463139a28c23137b3db69ea8</Hash>
+    <Hash>c5fa44e8bc3d8bca4636537ec7910847</Hash>
 </Codenesium>*/

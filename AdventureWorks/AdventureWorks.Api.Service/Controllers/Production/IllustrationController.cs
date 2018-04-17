@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/illustrations")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(IllustrationFilter))]
 	public class IllustrationController: AbstractIllustrationController
 	{
 		public IllustrationController(
 			ILogger<IllustrationController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IIllustrationRepository illustrationRepository
+			IBOIllustration illustrationManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       illustrationRepository)
+			       illustrationManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>735c7c994541e2d7d251aab6a7f574cb</Hash>
+    <Hash>793a1a8ca73ed095259d826a5f0f2f34</Hash>
 </Codenesium>*/

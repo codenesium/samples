@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	public abstract class AbstractRateController: AbstractApiController
 	{
-		protected IRateRepository rateRepository;
+		protected IBORate rateManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace FermataFishNS.Api.Service
 		public AbstractRateController(
 			ILogger<AbstractRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IRateRepository rateRepository
+			IBORate rateManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.rateRepository = rateRepository;
+			this.rateManager = rateManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.rateRepository.GetById(id);
+			ApiResponse response = this.rateManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace FermataFishNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.rateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.rateManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] RateModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] RateModel model)
 		{
-			var id = this.rateRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.rateManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<RateModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<RateModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.rateRepository.Create(model);
+				var result = await this.rateManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] RateModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] RateModel model)
 		{
-			this.rateRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.rateManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.rateRepository.Delete(id);
-			return this.Ok();
+			var result = await this.rateManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeacherSkillId(int id)
 		{
-			ApiResponse response = this.rateRepository.GetWhere(x => x.TeacherSkillId == id);
+			ApiResponse response = this.rateManager.GetWhere(x => x.TeacherSkillId == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeacherId(int id)
 		{
-			ApiResponse response = this.rateRepository.GetWhere(x => x.TeacherId == id);
+			ApiResponse response = this.rateManager.GetWhere(x => x.TeacherId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1e180f1bf59b0f0a4c438333932a1478</Hash>
+    <Hash>9f152993c709352848debb542fd010ec</Hash>
 </Codenesium>*/

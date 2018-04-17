@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productPhotoes")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ProductPhotoFilter))]
 	public class ProductPhotoController: AbstractProductPhotoController
 	{
 		public ProductPhotoController(
 			ILogger<ProductPhotoController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductPhotoRepository productPhotoRepository
+			IBOProductPhoto productPhotoManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productPhotoRepository)
+			       productPhotoManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>58f2c518072d590a729f4d159793f3e2</Hash>
+    <Hash>68838fcdb8f092e031404d3b569c57b5</Hash>
 </Codenesium>*/

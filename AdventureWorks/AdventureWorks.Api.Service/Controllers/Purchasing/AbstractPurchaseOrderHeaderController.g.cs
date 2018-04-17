@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractPurchaseOrderHeaderController: AbstractApiController
 	{
-		protected IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
+		protected IBOPurchaseOrderHeader purchaseOrderHeaderManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractPurchaseOrderHeaderController(
 			ILogger<AbstractPurchaseOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository
+			IBOPurchaseOrderHeader purchaseOrderHeaderManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.purchaseOrderHeaderRepository = purchaseOrderHeaderRepository;
+			this.purchaseOrderHeaderManager = purchaseOrderHeaderManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.purchaseOrderHeaderRepository.GetById(id);
+			ApiResponse response = this.purchaseOrderHeaderManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.purchaseOrderHeaderManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] PurchaseOrderHeaderModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] PurchaseOrderHeaderModel model)
 		{
-			var id = this.purchaseOrderHeaderRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.purchaseOrderHeaderManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<PurchaseOrderHeaderModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<PurchaseOrderHeaderModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.purchaseOrderHeaderRepository.Create(model);
+				var result = await this.purchaseOrderHeaderManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] PurchaseOrderHeaderModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] PurchaseOrderHeaderModel model)
 		{
-			this.purchaseOrderHeaderRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.purchaseOrderHeaderManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.purchaseOrderHeaderRepository.Delete(id);
-			return this.Ok();
+			var result = await this.purchaseOrderHeaderManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByEmployeeID(int id)
 		{
-			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhere(x => x.EmployeeID == id);
+			ApiResponse response = this.purchaseOrderHeaderManager.GetWhere(x => x.EmployeeID == id);
 			return this.Ok(response);
 		}
 
@@ -124,7 +155,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByVendorID(int id)
 		{
-			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhere(x => x.VendorID == id);
+			ApiResponse response = this.purchaseOrderHeaderManager.GetWhere(x => x.VendorID == id);
 			return this.Ok(response);
 		}
 
@@ -135,12 +166,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByShipMethodID(int id)
 		{
-			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id);
+			ApiResponse response = this.purchaseOrderHeaderManager.GetWhere(x => x.ShipMethodID == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c679bcd7e42c66fbb891fd1b5de85e1</Hash>
+    <Hash>f5f0999559f0c942bba635d8d2706327</Hash>
 </Codenesium>*/

@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/billOfMaterials")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(BillOfMaterialsFilter))]
 	public class BillOfMaterialsController: AbstractBillOfMaterialsController
 	{
 		public BillOfMaterialsController(
 			ILogger<BillOfMaterialsController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBillOfMaterialsRepository billOfMaterialsRepository
+			IBOBillOfMaterials billOfMaterialsManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       billOfMaterialsRepository)
+			       billOfMaterialsManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>962871556d71146b99130698e377b15b</Hash>
+    <Hash>dc1f320facab63c82df117d8870172c5</Hash>
 </Codenesium>*/

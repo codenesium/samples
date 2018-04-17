@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
+using FileServiceNS.Api.BusinessObjects;
 
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/files")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(FileFilter))]
 	public class FileController: AbstractFileController
 	{
 		public FileController(
 			ILogger<FileController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IFileRepository fileRepository
+			IBOFile fileManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       fileRepository)
+			       fileManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>13ad0d1a4c2cfd660110069c2bced813</Hash>
+    <Hash>58687712a48b43875761c063007e4b4d</Hash>
 </Codenesium>*/

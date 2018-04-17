@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/transactionHistories")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(TransactionHistoryFilter))]
 	public class TransactionHistoryController: AbstractTransactionHistoryController
 	{
 		public TransactionHistoryController(
 			ILogger<TransactionHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITransactionHistoryRepository transactionHistoryRepository
+			IBOTransactionHistory transactionHistoryManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       transactionHistoryRepository)
+			       transactionHistoryManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f1754b806975cb9728ab385393263872</Hash>
+    <Hash>7cee77487490a946625b8269978db117</Hash>
 </Codenesium>*/

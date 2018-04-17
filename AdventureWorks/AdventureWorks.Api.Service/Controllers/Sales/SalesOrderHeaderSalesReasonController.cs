@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesOrderHeaderSalesReasons")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(SalesOrderHeaderSalesReasonFilter))]
 	public class SalesOrderHeaderSalesReasonController: AbstractSalesOrderHeaderSalesReasonController
 	{
 		public SalesOrderHeaderSalesReasonController(
 			ILogger<SalesOrderHeaderSalesReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository
+			IBOSalesOrderHeaderSalesReason salesOrderHeaderSalesReasonManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesOrderHeaderSalesReasonRepository)
+			       salesOrderHeaderSalesReasonManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a79fbd186f2299d913e08f67a7233e9c</Hash>
+    <Hash>0209714bc5dec870a3835bb25090250b</Hash>
 </Codenesium>*/

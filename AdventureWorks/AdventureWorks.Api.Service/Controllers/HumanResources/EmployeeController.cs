@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employees")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(EmployeeFilter))]
 	public class EmployeeController: AbstractEmployeeController
 	{
 		public EmployeeController(
 			ILogger<EmployeeController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IEmployeeRepository employeeRepository
+			IBOEmployee employeeManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       employeeRepository)
+			       employeeManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>01e129a1c96c0783765e10058d27de20</Hash>
+    <Hash>7eb2f04a79c1d5205b56df7a406f64b8</Hash>
 </Codenesium>*/

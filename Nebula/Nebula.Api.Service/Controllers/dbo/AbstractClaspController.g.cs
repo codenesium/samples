@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractClaspController: AbstractApiController
 	{
-		protected IClaspRepository claspRepository;
+		protected IBOClasp claspManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace NebulaNS.Api.Service
 		public AbstractClaspController(
 			ILogger<AbstractClaspController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IClaspRepository claspRepository
+			IBOClasp claspManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.claspRepository = claspRepository;
+			this.claspManager = claspManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.claspRepository.GetById(id);
+			ApiResponse response = this.claspManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.claspRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.claspManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] ClaspModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] ClaspModel model)
 		{
-			var id = this.claspRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.claspManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<ClaspModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ClaspModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.claspRepository.Create(model);
+				var result = await this.claspManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] ClaspModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ClaspModel model)
 		{
-			this.claspRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.claspManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.claspRepository.Delete(id);
-			return this.Ok();
+			var result = await this.claspManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByPreviousChainId(int id)
 		{
-			ApiResponse response = this.claspRepository.GetWhere(x => x.PreviousChainId == id);
+			ApiResponse response = this.claspManager.GetWhere(x => x.PreviousChainId == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByNextChainId(int id)
 		{
-			ApiResponse response = this.claspRepository.GetWhere(x => x.NextChainId == id);
+			ApiResponse response = this.claspManager.GetWhere(x => x.NextChainId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>06f4a365f700bcd1473ee0fb8d31887f</Hash>
+    <Hash>e25c626e3662caa8f8ce10bd89404ffc</Hash>
 </Codenesium>*/

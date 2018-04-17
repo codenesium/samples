@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/studios")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(StudioFilter))]
 	public class StudioController: AbstractStudioController
 	{
 		public StudioController(
 			ILogger<StudioController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStudioRepository studioRepository
+			IBOStudio studioManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       studioRepository)
+			       studioManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5f53b5dacd03d5cf950e5f08cef317e1</Hash>
+    <Hash>028afbb7f2b5bd3854c5883499e69bfd</Hash>
 </Codenesium>*/

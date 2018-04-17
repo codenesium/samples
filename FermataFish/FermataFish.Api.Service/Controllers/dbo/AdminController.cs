@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/admins")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(AdminFilter))]
 	public class AdminController: AbstractAdminController
 	{
 		public AdminController(
 			ILogger<AdminController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IAdminRepository adminRepository
+			IBOAdmin adminManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       adminRepository)
+			       adminManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>308f990691e81b795f0d6638b0f7d62e</Hash>
+    <Hash>e316d78d6125e2f6252048c8b63f8b91</Hash>
 </Codenesium>*/

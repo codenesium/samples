@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/businessEntityContacts")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(BusinessEntityContactFilter))]
 	public class BusinessEntityContactController: AbstractBusinessEntityContactController
 	{
 		public BusinessEntityContactController(
 			ILogger<BusinessEntityContactController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBusinessEntityContactRepository businessEntityContactRepository
+			IBOBusinessEntityContact businessEntityContactManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       businessEntityContactRepository)
+			       businessEntityContactManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>34d3142d81586f299c054c6c35d0c94b</Hash>
+    <Hash>dd5b57423b3cb37a7be7a11534ade10d</Hash>
 </Codenesium>*/

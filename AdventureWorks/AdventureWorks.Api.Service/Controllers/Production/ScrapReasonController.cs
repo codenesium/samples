@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/scrapReasons")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ScrapReasonFilter))]
 	public class ScrapReasonController: AbstractScrapReasonController
 	{
 		public ScrapReasonController(
 			ILogger<ScrapReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IScrapReasonRepository scrapReasonRepository
+			IBOScrapReason scrapReasonManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       scrapReasonRepository)
+			       scrapReasonManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f4f5354bf77a9e349a615ccdc5cdd1fa</Hash>
+    <Hash>7ae78ff59669f1ee3d0f73c9a99dbcfd</Hash>
 </Codenesium>*/

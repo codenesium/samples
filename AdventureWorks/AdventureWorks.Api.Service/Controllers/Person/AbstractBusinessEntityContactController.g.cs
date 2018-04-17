@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractBusinessEntityContactController: AbstractApiController
 	{
-		protected IBusinessEntityContactRepository businessEntityContactRepository;
+		protected IBOBusinessEntityContact businessEntityContactManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractBusinessEntityContactController(
 			ILogger<AbstractBusinessEntityContactController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBusinessEntityContactRepository businessEntityContactRepository
+			IBOBusinessEntityContact businessEntityContactManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.businessEntityContactRepository = businessEntityContactRepository;
+			this.businessEntityContactManager = businessEntityContactManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.businessEntityContactRepository.GetById(id);
+			ApiResponse response = this.businessEntityContactManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.businessEntityContactRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.businessEntityContactManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] BusinessEntityContactModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] BusinessEntityContactModel model)
 		{
-			var id = this.businessEntityContactRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.businessEntityContactManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<BusinessEntityContactModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<BusinessEntityContactModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.businessEntityContactRepository.Create(model);
+				var result = await this.businessEntityContactManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] BusinessEntityContactModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] BusinessEntityContactModel model)
 		{
-			this.businessEntityContactRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.businessEntityContactManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.businessEntityContactRepository.Delete(id);
-			return this.Ok();
+			var result = await this.businessEntityContactManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.businessEntityContactManager.GetWhere(x => x.BusinessEntityID == id);
 			return this.Ok(response);
 		}
 
@@ -124,7 +155,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByPersonID(int id)
 		{
-			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.PersonID == id);
+			ApiResponse response = this.businessEntityContactManager.GetWhere(x => x.PersonID == id);
 			return this.Ok(response);
 		}
 
@@ -135,12 +166,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByContactTypeID(int id)
 		{
-			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.ContactTypeID == id);
+			ApiResponse response = this.businessEntityContactManager.GetWhere(x => x.ContactTypeID == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f1891aa511a8a7b38e8140163d6984eb</Hash>
+    <Hash>ec15063f89c4bc1d4269b527fa1c62c0</Hash>
 </Codenesium>*/

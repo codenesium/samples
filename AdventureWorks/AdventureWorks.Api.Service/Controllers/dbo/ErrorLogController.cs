@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/errorLogs")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ErrorLogFilter))]
 	public class ErrorLogController: AbstractErrorLogController
 	{
 		public ErrorLogController(
 			ILogger<ErrorLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IErrorLogRepository errorLogRepository
+			IBOErrorLog errorLogManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       errorLogRepository)
+			       errorLogManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>618753e415a5d4405d907ee39cebca56</Hash>
+    <Hash>0ef235275c7646a4fe3bfd4ec05a694f</Hash>
 </Codenesium>*/

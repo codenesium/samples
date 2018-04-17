@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../FermataFish.Api.Contracts/FermataFish.Api.Contracts.csproj" />
+    <ProjectReference Include="../FermataFish.Api.DataAccess/FermataFish.Api.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Codenesium.DataConversionExtensions.AspNetCore" Version="2018.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.0" />
+  </ItemGroup>
+  
+    
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>FermataFish.Api.BusinessObjects.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>FermataFish.Api.BusinessObjects.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+</Project>

@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractCountryRegionCurrencyController: AbstractApiController
 	{
-		protected ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
+		protected IBOCountryRegionCurrency countryRegionCurrencyManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractCountryRegionCurrencyController(
 			ILogger<AbstractCountryRegionCurrencyController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ICountryRegionCurrencyRepository countryRegionCurrencyRepository
+			IBOCountryRegionCurrency countryRegionCurrencyManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
+			this.countryRegionCurrencyManager = countryRegionCurrencyManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(string id)
 		{
-			ApiResponse response = this.countryRegionCurrencyRepository.GetById(id);
+			ApiResponse response = this.countryRegionCurrencyManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.countryRegionCurrencyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.countryRegionCurrencyManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] CountryRegionCurrencyModel model)
+		[ProducesResponseType(typeof(CreateResponse<string>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] CountryRegionCurrencyModel model)
 		{
-			var id = this.countryRegionCurrencyRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.countryRegionCurrencyManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<CountryRegionCurrencyModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<CountryRegionCurrencyModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.countryRegionCurrencyRepository.Create(model);
+				var result = await this.countryRegionCurrencyManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(string id, [FromBody] CountryRegionCurrencyModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(string id, [FromBody] CountryRegionCurrencyModel model)
 		{
-			this.countryRegionCurrencyRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.countryRegionCurrencyManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(string id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(string id)
 		{
-			this.countryRegionCurrencyRepository.Delete(id);
-			return this.Ok();
+			var result = await this.countryRegionCurrencyManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCountryRegionCode(string id)
 		{
-			ApiResponse response = this.countryRegionCurrencyRepository.GetWhere(x => x.CountryRegionCode == id);
+			ApiResponse response = this.countryRegionCurrencyManager.GetWhere(x => x.CountryRegionCode == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCurrencyCode(string id)
 		{
-			ApiResponse response = this.countryRegionCurrencyRepository.GetWhere(x => x.CurrencyCode == id);
+			ApiResponse response = this.countryRegionCurrencyManager.GetWhere(x => x.CurrencyCode == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c081aff67ee4f913fc7220f63f176995</Hash>
+    <Hash>dd9fc1cf6cfa62511f7f7825d88b2430</Hash>
 </Codenesium>*/

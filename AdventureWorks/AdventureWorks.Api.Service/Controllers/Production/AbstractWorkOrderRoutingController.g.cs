@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractWorkOrderRoutingController: AbstractApiController
 	{
-		protected IWorkOrderRoutingRepository workOrderRoutingRepository;
+		protected IBOWorkOrderRouting workOrderRoutingManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractWorkOrderRoutingController(
 			ILogger<AbstractWorkOrderRoutingController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IWorkOrderRoutingRepository workOrderRoutingRepository
+			IBOWorkOrderRouting workOrderRoutingManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.workOrderRoutingRepository = workOrderRoutingRepository;
+			this.workOrderRoutingManager = workOrderRoutingManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.workOrderRoutingRepository.GetById(id);
+			ApiResponse response = this.workOrderRoutingManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.workOrderRoutingRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.workOrderRoutingManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] WorkOrderRoutingModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] WorkOrderRoutingModel model)
 		{
-			var id = this.workOrderRoutingRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.workOrderRoutingManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<WorkOrderRoutingModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<WorkOrderRoutingModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.workOrderRoutingRepository.Create(model);
+				var result = await this.workOrderRoutingManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] WorkOrderRoutingModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] WorkOrderRoutingModel model)
 		{
-			this.workOrderRoutingRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.workOrderRoutingManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.workOrderRoutingRepository.Delete(id);
-			return this.Ok();
+			var result = await this.workOrderRoutingManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByWorkOrderID(int id)
 		{
-			ApiResponse response = this.workOrderRoutingRepository.GetWhere(x => x.WorkOrderID == id);
+			ApiResponse response = this.workOrderRoutingManager.GetWhere(x => x.WorkOrderID == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLocationID(short id)
 		{
-			ApiResponse response = this.workOrderRoutingRepository.GetWhere(x => x.LocationID == id);
+			ApiResponse response = this.workOrderRoutingManager.GetWhere(x => x.LocationID == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4cd0ba7d39bc2bd4889ca9f6cb02aca8</Hash>
+    <Hash>f4c05675d2ec4262c708f8c73000d0cd</Hash>
 </Codenesium>*/

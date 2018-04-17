@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employeePayHistories")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(EmployeePayHistoryFilter))]
 	public class EmployeePayHistoryController: AbstractEmployeePayHistoryController
 	{
 		public EmployeePayHistoryController(
 			ILogger<EmployeePayHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IEmployeePayHistoryRepository employeePayHistoryRepository
+			IBOEmployeePayHistory employeePayHistoryManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       employeePayHistoryRepository)
+			       employeePayHistoryManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cbbeb5de9aaf15c26429923d24b5a57e</Hash>
+    <Hash>ba372103c1ec3eebe687bf939e8b2e50</Hash>
 </Codenesium>*/

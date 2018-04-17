@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productReviews")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ProductReviewFilter))]
 	public class ProductReviewController: AbstractProductReviewController
 	{
 		public ProductReviewController(
 			ILogger<ProductReviewController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductReviewRepository productReviewRepository
+			IBOProductReview productReviewManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productReviewRepository)
+			       productReviewManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2a89123cfba61f477b403b2e8cbeb9da</Hash>
+    <Hash>5e5b0e0fe9d8f3de7460bc25f086a9af</Hash>
 </Codenesium>*/

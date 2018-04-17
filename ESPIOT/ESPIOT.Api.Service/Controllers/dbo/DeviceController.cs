@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.DataAccess;
+using ESPIOTNS.Api.BusinessObjects;
 
 namespace ESPIOTNS.Api.Service
 {
 	[Route("api/devices")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(DeviceFilter))]
 	public class DeviceController: AbstractDeviceController
 	{
 		public DeviceController(
 			ILogger<DeviceController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IDeviceRepository deviceRepository
+			IBODevice deviceManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       deviceRepository)
+			       deviceManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e9ea5bd2e7daa491e80798f3e17b355c</Hash>
+    <Hash>ae3c498532437aac82d3274734fd8051</Hash>
 </Codenesium>*/

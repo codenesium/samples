@@ -22,6 +22,7 @@
   
   <ItemGroup>
     <ProjectReference Include="../FileService.Api.Contracts/FileService.Api.Contracts.csproj" />
+    <ProjectReference Include="../FileService.Api.BusinessObjects/FileService.Api.BusinessObjects.csproj" />
     <ProjectReference Include="../FileService.Api.DataAccess/FileService.Api.DataAccess.csproj" />
   </ItemGroup>
 

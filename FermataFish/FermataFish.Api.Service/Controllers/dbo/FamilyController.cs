@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/families")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(FamilyFilter))]
 	public class FamilyController: AbstractFamilyController
 	{
 		public FamilyController(
 			ILogger<FamilyController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IFamilyRepository familyRepository
+			IBOFamily familyManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       familyRepository)
+			       familyManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cac297c9eb957cb571957e1944bfe69f</Hash>
+    <Hash>622f89753317f7d69a3faa962a6a0dba</Hash>
 </Codenesium>*/

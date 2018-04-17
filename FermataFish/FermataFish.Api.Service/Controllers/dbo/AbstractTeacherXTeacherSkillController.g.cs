@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	public abstract class AbstractTeacherXTeacherSkillController: AbstractApiController
 	{
-		protected ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
+		protected IBOTeacherXTeacherSkill teacherXTeacherSkillManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace FermataFishNS.Api.Service
 		public AbstractTeacherXTeacherSkillController(
 			ILogger<AbstractTeacherXTeacherSkillController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository
+			IBOTeacherXTeacherSkill teacherXTeacherSkillManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
+			this.teacherXTeacherSkillManager = teacherXTeacherSkillManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.teacherXTeacherSkillRepository.GetById(id);
+			ApiResponse response = this.teacherXTeacherSkillManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace FermataFishNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.teacherXTeacherSkillRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.teacherXTeacherSkillManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] TeacherXTeacherSkillModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] TeacherXTeacherSkillModel model)
 		{
-			var id = this.teacherXTeacherSkillRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.teacherXTeacherSkillManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<TeacherXTeacherSkillModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<TeacherXTeacherSkillModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace FermataFishNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.teacherXTeacherSkillRepository.Create(model);
+				var result = await this.teacherXTeacherSkillManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace FermataFishNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] TeacherXTeacherSkillModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] TeacherXTeacherSkillModel model)
 		{
-			this.teacherXTeacherSkillRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.teacherXTeacherSkillManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.teacherXTeacherSkillRepository.Delete(id);
-			return this.Ok();
+			var result = await this.teacherXTeacherSkillManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeacherId(int id)
 		{
-			ApiResponse response = this.teacherXTeacherSkillRepository.GetWhere(x => x.TeacherId == id);
+			ApiResponse response = this.teacherXTeacherSkillManager.GetWhere(x => x.TeacherId == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeacherSkillId(int id)
 		{
-			ApiResponse response = this.teacherXTeacherSkillRepository.GetWhere(x => x.TeacherSkillId == id);
+			ApiResponse response = this.teacherXTeacherSkillManager.GetWhere(x => x.TeacherSkillId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8cce5f14292091eb0d4d6044ed4e5d6a</Hash>
+    <Hash>428e41f3c89ab32a9d802f625d499310</Hash>
 </Codenesium>*/

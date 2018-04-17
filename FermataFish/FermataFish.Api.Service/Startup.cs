@@ -24,6 +24,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.BusinessObjects;
 using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Service
@@ -163,17 +164,17 @@ namespace FermataFishNS.Api.Service
                 .As<IObjectMapper>()
                 .InstancePerLifetimeScope(); 
 
+
+			var businessObjectsAssembly = typeof(ValidationError).Assembly;
+            builder.RegisterAssemblyTypes(businessObjectsAssembly)
+                .Where(t => t.IsClass && !t.IsAbstract && (t.Name.StartsWith("BO") ||  t.Name.EndsWith("ModelValidator")))
+                .AsImplementedInterfaces();
+
             var dataAccessAssembly = typeof(ObjectMapper).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
 				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
 				.AsImplementedInterfaces();
 
-            // Register our model validators by convention
-           builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
-                    .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ModelValidator"))
-                    .AsImplementedInterfaces()
-                    .AsSelf()
-                    .PropertiesAutowired();
 
             // Register anything else we might have that isn't a system, Microsoft, Abstract or Generic class
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource(

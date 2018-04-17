@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/emailAddresses")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(EmailAddressFilter))]
 	public class EmailAddressController: AbstractEmailAddressController
 	{
 		public EmailAddressController(
 			ILogger<EmailAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IEmailAddressRepository emailAddressRepository
+			IBOEmailAddress emailAddressManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       emailAddressRepository)
+			       emailAddressManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ef37285fc2552625006ffe67558618c1</Hash>
+    <Hash>c6890efc6caae50c3abe44db09276e60</Hash>
 </Codenesium>*/

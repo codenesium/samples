@@ -22,6 +22,7 @@
   
   <ItemGroup>
     <ProjectReference Include="../Nebula.Api.Contracts/Nebula.Api.Contracts.csproj" />
+    <ProjectReference Include="../Nebula.Api.BusinessObjects/Nebula.Api.BusinessObjects.csproj" />
     <ProjectReference Include="../Nebula.Api.DataAccess/Nebula.Api.DataAccess.csproj" />
   </ItemGroup>
 

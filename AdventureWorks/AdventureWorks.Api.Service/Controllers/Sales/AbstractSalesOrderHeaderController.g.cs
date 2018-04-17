@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	public abstract class AbstractSalesOrderHeaderController: AbstractApiController
 	{
-		protected ISalesOrderHeaderRepository salesOrderHeaderRepository;
+		protected IBOSalesOrderHeader salesOrderHeaderManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace AdventureWorksNS.Api.Service
 		public AbstractSalesOrderHeaderController(
 			ILogger<AbstractSalesOrderHeaderController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesOrderHeaderRepository salesOrderHeaderRepository
+			IBOSalesOrderHeader salesOrderHeaderManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.salesOrderHeaderRepository = salesOrderHeaderRepository;
+			this.salesOrderHeaderManager = salesOrderHeaderManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetById(id);
+			ApiResponse response = this.salesOrderHeaderManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace AdventureWorksNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] SalesOrderHeaderModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] SalesOrderHeaderModel model)
 		{
-			var id = this.salesOrderHeaderRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.salesOrderHeaderManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<SalesOrderHeaderModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<SalesOrderHeaderModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace AdventureWorksNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.salesOrderHeaderRepository.Create(model);
+				var result = await this.salesOrderHeaderManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace AdventureWorksNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] SalesOrderHeaderModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] SalesOrderHeaderModel model)
 		{
-			this.salesOrderHeaderRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.salesOrderHeaderManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.salesOrderHeaderRepository.Delete(id);
-			return this.Ok();
+			var result = await this.salesOrderHeaderManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCustomerID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CustomerID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.CustomerID == id);
 			return this.Ok(response);
 		}
 
@@ -124,7 +155,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult BySalesPersonID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.SalesPersonID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.SalesPersonID == id);
 			return this.Ok(response);
 		}
 
@@ -135,7 +166,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTerritoryID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.TerritoryID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.TerritoryID == id);
 			return this.Ok(response);
 		}
 
@@ -146,7 +177,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByBillToAddressID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.BillToAddressID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.BillToAddressID == id);
 			return this.Ok(response);
 		}
 
@@ -157,7 +188,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByShipToAddressID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipToAddressID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.ShipToAddressID == id);
 			return this.Ok(response);
 		}
 
@@ -168,7 +199,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByShipMethodID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.ShipMethodID == id);
 			return this.Ok(response);
 		}
 
@@ -179,7 +210,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCreditCardID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CreditCardID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.CreditCardID == id);
 			return this.Ok(response);
 		}
 
@@ -190,12 +221,12 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByCurrencyRateID(int id)
 		{
-			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CurrencyRateID == id);
+			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.CurrencyRateID == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9854e436ef47c5acf98253572d4aff87</Hash>
+    <Hash>989b0885ace1fc7bf034a1e74a35dd8e</Hash>
 </Codenesium>*/

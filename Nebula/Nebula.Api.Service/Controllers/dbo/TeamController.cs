@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	[Route("api/teams")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(TeamFilter))]
 	public class TeamController: AbstractTeamController
 	{
 		public TeamController(
 			ILogger<TeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ITeamRepository teamRepository
+			IBOTeam teamManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       teamRepository)
+			       teamManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6e6138dba017c18f428ff3b933129c22</Hash>
+    <Hash>a5488ac0164578b20c98e2e88e877b82</Hash>
 </Codenesium>*/

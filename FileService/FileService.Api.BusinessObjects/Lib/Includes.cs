@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using FluentValidation.Results;
+namespace FileServiceNS.Api.BusinessObjects
+{
+
+    public class ValidationError
+    {
+        public ValidationError(string errorCode, string errorMessage, string propertyName)
+        {
+            this.ErrorCode = errorCode;
+            this.ErrorMessage = errorMessage;
+            this.PropertyName = propertyName;
+        }
+
+        public string ErrorMessage { get; set; } = string.Empty;
+
+        public string PropertyName { get; set; } = string.Empty;
+
+        public string ErrorCode { get; set; } = string.Empty;
+    }
+
+    public class CreateResponse<T> : ActionResponse
+    {
+        public T Id { get; private set; }
+        public CreateResponse(FluentValidation.Results.ValidationResult result)
+            : base(result)
+        {
+        }
+
+        public void SetId(T id)
+        {
+            this.Id = id;
+        }
+    }
+
+
+    public class ActionResponse
+    {
+        public bool Success { get; private set; }
+
+        public List<ValidationError> ValidationErrors { get; private set; } = new List<ValidationError>();
+
+        private FluentValidation.Results.ValidationResult result;
+
+        public ActionResponse(ValidationResult result)
+        {
+            this.Success = result.IsValid;
+            foreach (ValidationFailure error in result.Errors)
+            {
+                this.ValidationErrors.Add(new ValidationError(error.ErrorCode, error.ErrorMessage, error.PropertyName));
+            }
+        }
+    }
+}

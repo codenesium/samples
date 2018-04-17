@@ -6,14 +6,15 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	public abstract class AbstractMachineRefTeamController: AbstractApiController
 	{
-		protected IMachineRefTeamRepository machineRefTeamRepository;
+		protected IBOMachineRefTeam machineRefTeamManager;
 
 		protected int BulkInsertLimit { get; set; }
 
@@ -24,11 +25,11 @@ namespace NebulaNS.Api.Service
 		public AbstractMachineRefTeamController(
 			ILogger<AbstractMachineRefTeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IMachineRefTeamRepository machineRefTeamRepository
+			IBOMachineRefTeam machineRefTeamManager
 			)
 			: base(logger, transactionCoordinator)
 		{
-			this.machineRefTeamRepository = machineRefTeamRepository;
+			this.machineRefTeamManager = machineRefTeamManager;
 		}
 
 		[HttpGet]
@@ -37,7 +38,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.machineRefTeamRepository.GetById(id);
+			ApiResponse response = this.machineRefTeamManager.GetById(id);
 			return this.Ok(response);
 		}
 
@@ -50,7 +51,7 @@ namespace NebulaNS.Api.Service
 			var query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.machineRefTeamRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
+			ApiResponse response = this.machineRefTeamManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
 			return this.Ok(response);
 		}
 
@@ -58,19 +59,27 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(int), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Create([FromBody] MachineRefTeamModel model)
+		[ProducesResponseType(typeof(CreateResponse<int>), 400)]
+		public virtual async Task<IActionResult> Create([FromBody] MachineRefTeamModel model)
 		{
-			var id = this.machineRefTeamRepository.Create(model);
-			return this.Ok(id);
+			var result = await this.machineRefTeamManager.Create(model);
+
+			if(result.Success)
+			{
+				return this.Ok(result);
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult BulkInsert([FromBody] List<MachineRefTeamModel> models)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<MachineRefTeamModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -79,7 +88,12 @@ namespace NebulaNS.Api.Service
 
 			foreach (var model in models)
 			{
-				this.machineRefTeamRepository.Create(model);
+				var result = await this.machineRefTeamManager.Create(model);
+
+				if(!result.Success)
+				{
+					return this.BadRequest(result);
+				}
 			}
 
 			return this.Ok();
@@ -89,21 +103,38 @@ namespace NebulaNS.Api.Service
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		[ProducesResponseType(typeof(ModelStateDictionary), 400)]
-		public virtual IActionResult Update(int id, [FromBody] MachineRefTeamModel model)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] MachineRefTeamModel model)
 		{
-			this.machineRefTeamRepository.Update(id, model);
-			return this.Ok();
+			var result = await this.machineRefTeamManager.Update(id, model);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWorkActionFilter]
 		[ProducesResponseType(typeof(void), 200)]
-		public virtual IActionResult Delete(int id)
+		[ProducesResponseType(typeof(ActionResponse), 400)]
+		public virtual async Task<IActionResult> Delete(int id)
 		{
-			this.machineRefTeamRepository.Delete(id);
-			return this.Ok();
+			var result = await this.machineRefTeamManager.Delete(id);
+
+			if(result.Success)
+			{
+				return this.Ok();
+			}
+			else
+			{
+				return this.BadRequest(result);
+			}
 		}
 
 		[HttpGet]
@@ -113,7 +144,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByMachineId(int id)
 		{
-			ApiResponse response = this.machineRefTeamRepository.GetWhere(x => x.MachineId == id);
+			ApiResponse response = this.machineRefTeamManager.GetWhere(x => x.MachineId == id);
 			return this.Ok(response);
 		}
 
@@ -124,12 +155,12 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByTeamId(int id)
 		{
-			ApiResponse response = this.machineRefTeamRepository.GetWhere(x => x.TeamId == id);
+			ApiResponse response = this.machineRefTeamManager.GetWhere(x => x.TeamId == id);
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ed8f5d8d25dbed8b08f5957ee79e5b4</Hash>
+    <Hash>a473f5dbdef380fd1fe2f0a737a07322</Hash>
 </Codenesium>*/

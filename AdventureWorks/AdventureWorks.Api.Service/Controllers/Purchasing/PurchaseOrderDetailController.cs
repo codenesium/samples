@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/purchaseOrderDetails")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(PurchaseOrderDetailFilter))]
 	public class PurchaseOrderDetailController: AbstractPurchaseOrderDetailController
 	{
 		public PurchaseOrderDetailController(
 			ILogger<PurchaseOrderDetailController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IPurchaseOrderDetailRepository purchaseOrderDetailRepository
+			IBOPurchaseOrderDetail purchaseOrderDetailManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       purchaseOrderDetailRepository)
+			       purchaseOrderDetailManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ec87a1d4b0693dadd44c6dee4a4046b0</Hash>
+    <Hash>1794cc82a88798b11ce4ceee6c113ca0</Hash>
 </Codenesium>*/

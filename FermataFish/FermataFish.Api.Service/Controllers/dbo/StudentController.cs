@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using FermataFishNS.Api.BusinessObjects;
 
 namespace FermataFishNS.Api.Service
 {
 	[Route("api/students")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(StudentFilter))]
 	public class StudentController: AbstractStudentController
 	{
 		public StudentController(
 			ILogger<StudentController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IStudentRepository studentRepository
+			IBOStudent studentManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       studentRepository)
+			       studentManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8a6e18f281af275fdd20fc3f392c91f8</Hash>
+    <Hash>2be9474f3e673aec117514f9a9ee9bba</Hash>
 </Codenesium>*/

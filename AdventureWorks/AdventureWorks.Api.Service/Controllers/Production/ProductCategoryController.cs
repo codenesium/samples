@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productCategories")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ProductCategoryFilter))]
 	public class ProductCategoryController: AbstractProductCategoryController
 	{
 		public ProductCategoryController(
 			ILogger<ProductCategoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductCategoryRepository productCategoryRepository
+			IBOProductCategory productCategoryManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productCategoryRepository)
+			       productCategoryManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6512663088e1edb21595625c6bc5d686</Hash>
+    <Hash>e556be40d86034eacfdc8e56ff17b3bc</Hash>
 </Codenesium>*/

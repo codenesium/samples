@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productListPriceHistories")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(ProductListPriceHistoryFilter))]
 	public class ProductListPriceHistoryController: AbstractProductListPriceHistoryController
 	{
 		public ProductListPriceHistoryController(
 			ILogger<ProductListPriceHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IProductListPriceHistoryRepository productListPriceHistoryRepository
+			IBOProductListPriceHistory productListPriceHistoryManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       productListPriceHistoryRepository)
+			       productListPriceHistoryManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7e0bd11f6cdd517b8a582cca959543ce</Hash>
+    <Hash>7e725dbbdbb25d8945defc61bbde9729</Hash>
 </Codenesium>*/

@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
+using FileServiceNS.Api.BusinessObjects;
 
 namespace FileServiceNS.Api.Service
 {
 	[Route("api/buckets")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(BucketFilter))]
 	public class BucketController: AbstractBucketController
 	{
 		public BucketController(
 			ILogger<BucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IBucketRepository bucketRepository
+			IBOBucket bucketManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       bucketRepository)
+			       bucketManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0b12001caf89461e6b8a5978ec5f9954</Hash>
+    <Hash>4007dbdc88e262034429120d4171675e</Hash>
 </Codenesium>*/

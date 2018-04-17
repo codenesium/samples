@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.BusinessObjects;
 
 namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTerritoryHistories")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(SalesTerritoryHistoryFilter))]
 	public class SalesTerritoryHistoryController: AbstractSalesTerritoryHistoryController
 	{
 		public SalesTerritoryHistoryController(
 			ILogger<SalesTerritoryHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository
+			IBOSalesTerritoryHistory salesTerritoryHistoryManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       salesTerritoryHistoryRepository)
+			       salesTerritoryHistoryManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a05c8c3cce1b0cb196d6ea672695c0d6</Hash>
+    <Hash>10a327f1c474e1eaa9321852f7b927d7</Hash>
 </Codenesium>*/

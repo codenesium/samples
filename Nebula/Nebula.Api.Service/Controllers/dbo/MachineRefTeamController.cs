@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
+using NebulaNS.Api.BusinessObjects;
 
 namespace NebulaNS.Api.Service
 {
 	[Route("api/machineRefTeams")]
 	[ApiVersion("1.0")]
-	[ServiceFilter(typeof(MachineRefTeamFilter))]
 	public class MachineRefTeamController: AbstractMachineRefTeamController
 	{
 		public MachineRefTeamController(
 			ILogger<MachineRefTeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IMachineRefTeamRepository machineRefTeamRepository
+			IBOMachineRefTeam machineRefTeamManager
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       machineRefTeamRepository)
+			       machineRefTeamManager)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -33,5 +32,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1163d89711642d7d55ea2af39d77c14a</Hash>
+    <Hash>f85da663fcc1345432452115e1c2136c</Hash>
 </Codenesium>*/
