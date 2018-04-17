@@ -13,6 +13,7 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/teacherXTeacherSkills")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class TeacherXTeacherSkillController: AbstractTeacherXTeacherSkillController
 	{
 		public TeacherXTeacherSkillController(
@@ -32,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a22337dfca29b312019e5dfb3afab664</Hash>
+    <Hash>7fc9ca66732a6f526c525df01b6c3842</Hash>
 </Codenesium>*/

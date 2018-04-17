@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using FileServiceNS.Api.Contracts;
@@ -12,5 +13,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c1c941d7a7d9380dd4d99f31cdf53742</Hash>
+    <Hash>f65a88f28731ee8d18cf79cad4ebf263</Hash>
 </Codenesium>*/

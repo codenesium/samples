@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesOrderHeaders")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class SalesOrderHeaderController: AbstractSalesOrderHeaderController
 	{
 		public SalesOrderHeaderController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1bfb491a2cb0307246767cc518a38073</Hash>
+    <Hash>b44857152a027998c33ede53b6787428</Hash>
 </Codenesium>*/

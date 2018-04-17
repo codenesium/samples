@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using NebulaNS.Api.Contracts;
@@ -12,5 +13,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0373d50a4ec8d2aca07776742463b789</Hash>
+    <Hash>6bee7c04d9561bc80c32c304c6c16a38</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/families")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class FamilyController: AbstractFamilyController
 	{
 		public FamilyController(
@@ -32,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>622f89753317f7d69a3faa962a6a0dba</Hash>
+    <Hash>3790f35781cc7cddacf651211bba058c</Hash>
 </Codenesium>*/

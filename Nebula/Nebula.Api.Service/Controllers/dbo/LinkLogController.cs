@@ -13,6 +13,7 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/linkLogs")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class LinkLogController: AbstractLinkLogController
 	{
 		public LinkLogController(
@@ -32,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>96733867b1c1c8147ddd76e534c2cba9</Hash>
+    <Hash>f46e1cf3efa893188e07d2111bdb9dec</Hash>
 </Codenesium>*/

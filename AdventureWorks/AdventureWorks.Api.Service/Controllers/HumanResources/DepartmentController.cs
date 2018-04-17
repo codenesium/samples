@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/departments")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class DepartmentController: AbstractDepartmentController
 	{
 		public DepartmentController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c5fa44e8bc3d8bca4636537ec7910847</Hash>
+    <Hash>965c6cac7ffe2c924b6e27d149fa9900</Hash>
 </Codenesium>*/

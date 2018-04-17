@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using FermataFishNS.Api.Contracts;
@@ -12,5 +13,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7951707098e62d259af61c351f6b642a</Hash>
+    <Hash>2f9fa3153d08a3aac7186e00c916802c</Hash>
 </Codenesium>*/

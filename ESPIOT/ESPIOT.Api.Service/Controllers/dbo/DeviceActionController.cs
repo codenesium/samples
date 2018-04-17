@@ -13,6 +13,7 @@ namespace ESPIOTNS.Api.Service
 {
 	[Route("api/deviceActions")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class DeviceActionController: AbstractDeviceActionController
 	{
 		public DeviceActionController(
@@ -32,5 +33,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d9f79262330aeeed8007645025f56f1a</Hash>
+    <Hash>16eb47ec2f89845dbce6b7b1c5ef2c7a</Hash>
 </Codenesium>*/

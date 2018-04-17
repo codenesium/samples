@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/businessEntities")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class BusinessEntityController: AbstractBusinessEntityController
 	{
 		public BusinessEntityController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d7198188ff4f5be540d2fd07fe239df2</Hash>
+    <Hash>d26e0895b713072f4814aacd73ab956c</Hash>
 </Codenesium>*/

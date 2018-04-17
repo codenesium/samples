@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/locations")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class LocationController: AbstractLocationController
 	{
 		public LocationController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>588c78cfb153b623f6966682e664e676</Hash>
+    <Hash>0542bd4b65d4cde5ed9fd052357017a1</Hash>
 </Codenesium>*/

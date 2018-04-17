@@ -13,6 +13,7 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/fileTypes")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class FileTypeController: AbstractFileTypeController
 	{
 		public FileTypeController(
@@ -32,5 +33,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d06c8b77bc316fe79adacddd0b27a6a1</Hash>
+    <Hash>fb904073214743df8dad852a560a88a9</Hash>
 </Codenesium>*/

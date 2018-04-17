@@ -13,6 +13,7 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/students")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class StudentController: AbstractStudentController
 	{
 		public StudentController(
@@ -32,5 +33,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2be9474f3e673aec117514f9a9ee9bba</Hash>
+    <Hash>8ad6ea4b71e00e60366ee6f9eed12e78</Hash>
 </Codenesium>*/

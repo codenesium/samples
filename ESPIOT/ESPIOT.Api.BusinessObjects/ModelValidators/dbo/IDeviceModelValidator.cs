@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using ESPIOTNS.Api.Contracts;
@@ -12,5 +13,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f7bdf015017c2c8d3a1c5f4ff90b2870</Hash>
+    <Hash>a5b1e58b03699c271a951a3c0a383eaa</Hash>
 </Codenesium>*/

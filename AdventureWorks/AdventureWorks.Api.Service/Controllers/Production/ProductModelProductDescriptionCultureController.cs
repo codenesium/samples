@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productModelProductDescriptionCultures")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class ProductModelProductDescriptionCultureController: AbstractProductModelProductDescriptionCultureController
 	{
 		public ProductModelProductDescriptionCultureController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cef6a605eb035b2c9a98d20b281affd4</Hash>
+    <Hash>eb0cec25edac75700bc36582797e4e4f</Hash>
 </Codenesium>*/

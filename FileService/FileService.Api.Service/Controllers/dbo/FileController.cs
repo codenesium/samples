@@ -13,6 +13,7 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/files")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class FileController: AbstractFileController
 	{
 		public FileController(
@@ -32,5 +33,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>58687712a48b43875761c063007e4b4d</Hash>
+    <Hash>293279a9154fc1124c8c3ad9aabc9f90</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/linkStatus")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class LinkStatusController: AbstractLinkStatusController
 	{
 		public LinkStatusController(
@@ -32,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b15ff23d1494e93b3d9b87d0ed7f2933</Hash>
+    <Hash>c38c972a4afede2389de1e836fa244d1</Hash>
 </Codenesium>*/

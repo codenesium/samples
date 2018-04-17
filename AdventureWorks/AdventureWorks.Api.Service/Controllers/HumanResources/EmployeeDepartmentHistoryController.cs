@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employeeDepartmentHistories")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class EmployeeDepartmentHistoryController: AbstractEmployeeDepartmentHistoryController
 	{
 		public EmployeeDepartmentHistoryController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d5630168c9b354a0a913286391a7ae89</Hash>
+    <Hash>3b5b3bf1a690cfd0f42fcf90967aff29</Hash>
 </Codenesium>*/

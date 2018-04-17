@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/passwords")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class PasswordController: AbstractPasswordController
 	{
 		public PasswordController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ad7ace853d13c3081a2f9fe8f29b71c1</Hash>
+    <Hash>5bd47c2792f1f4d378fd863a9beaa7dd</Hash>
 </Codenesium>*/

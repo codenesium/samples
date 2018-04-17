@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/phoneNumberTypes")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class PhoneNumberTypeController: AbstractPhoneNumberTypeController
 	{
 		public PhoneNumberTypeController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>063a998b859fe50698eddd99684b6c94</Hash>
+    <Hash>30473c2d961107cfedfa13b9d100c3ab</Hash>
 </Codenesium>*/

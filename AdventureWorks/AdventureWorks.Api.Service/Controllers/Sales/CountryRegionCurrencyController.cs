@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/countryRegionCurrencies")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class CountryRegionCurrencyController: AbstractCountryRegionCurrencyController
 	{
 		public CountryRegionCurrencyController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2607431391997c10b34249088217a028</Hash>
+    <Hash>a3dceeb557d57eea1c67e81ed631b252</Hash>
 </Codenesium>*/

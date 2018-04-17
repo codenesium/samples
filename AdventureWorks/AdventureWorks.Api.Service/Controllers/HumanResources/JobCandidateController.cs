@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/jobCandidates")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class JobCandidateController: AbstractJobCandidateController
 	{
 		public JobCandidateController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>797b50b9ebf0d88370080ba6788d7503</Hash>
+    <Hash>38fa6e71a663e259be6df362fb276ba7</Hash>
 </Codenesium>*/

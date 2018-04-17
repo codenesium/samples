@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/scrapReasons")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class ScrapReasonController: AbstractScrapReasonController
 	{
 		public ScrapReasonController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7ae78ff59669f1ee3d0f73c9a99dbcfd</Hash>
+    <Hash>0a3afdbe0d04472d73619fc2387f54fb</Hash>
 </Codenesium>*/

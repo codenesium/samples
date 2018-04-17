@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productReviews")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class ProductReviewController: AbstractProductReviewController
 	{
 		public ProductReviewController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5e5b0e0fe9d8f3de7460bc25f086a9af</Hash>
+    <Hash>d61084e0f1a95358dca4a7136e96ea0f</Hash>
 </Codenesium>*/

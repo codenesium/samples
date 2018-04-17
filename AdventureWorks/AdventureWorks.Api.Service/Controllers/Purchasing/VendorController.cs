@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/vendors")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class VendorController: AbstractVendorController
 	{
 		public VendorController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f833c9bee4060c431568e6e5778f1835</Hash>
+    <Hash>19978725cd196eee57b3b1628a2a428b</Hash>
 </Codenesium>*/

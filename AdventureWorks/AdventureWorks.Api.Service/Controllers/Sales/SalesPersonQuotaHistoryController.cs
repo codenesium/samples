@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesPersonQuotaHistories")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class SalesPersonQuotaHistoryController: AbstractSalesPersonQuotaHistoryController
 	{
 		public SalesPersonQuotaHistoryController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>aee9a57ac32751756e9aacdf666b38e4</Hash>
+    <Hash>1ec078987fb512ce06c65fbc423032ea</Hash>
 </Codenesium>*/

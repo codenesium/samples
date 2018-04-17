@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/illustrations")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class IllustrationController: AbstractIllustrationController
 	{
 		public IllustrationController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>793a1a8ca73ed095259d826a5f0f2f34</Hash>
+    <Hash>c8767f2f815fbaf7d73801160cefba4a</Hash>
 </Codenesium>*/

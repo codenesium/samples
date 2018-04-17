@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shipMethods")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class ShipMethodController: AbstractShipMethodController
 	{
 		public ShipMethodController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7e0142f820e5c292077c4a5c1ab488fe</Hash>
+    <Hash>5c36c0caa825b1a7c368b564d54f0460</Hash>
 </Codenesium>*/

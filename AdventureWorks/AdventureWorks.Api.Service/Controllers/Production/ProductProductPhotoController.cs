@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productProductPhotoes")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class ProductProductPhotoController: AbstractProductProductPhotoController
 	{
 		public ProductProductPhotoController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>754ad84b85be661843d20ed54d0059b5</Hash>
+    <Hash>e5f79ef216efd9b08ef6b6e7816df7b1</Hash>
 </Codenesium>*/

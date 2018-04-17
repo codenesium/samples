@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/emailAddresses")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class EmailAddressController: AbstractEmailAddressController
 	{
 		public EmailAddressController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c6890efc6caae50c3abe44db09276e60</Hash>
+    <Hash>34dffe51c2b20a2c96908ee61605cfba</Hash>
 </Codenesium>*/

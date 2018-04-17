@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/unitMeasures")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class UnitMeasureController: AbstractUnitMeasureController
 	{
 		public UnitMeasureController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>62842ab55255796bccb242ccdab74a0e</Hash>
+    <Hash>1e8a79381ecbab70dfdd545586440a5d</Hash>
 </Codenesium>*/

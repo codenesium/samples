@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/currencies")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class CurrencyController: AbstractCurrencyController
 	{
 		public CurrencyController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f72b931be5af0711ce90533feb11218b</Hash>
+    <Hash>03964460fba33eff8c40610aabd6dced</Hash>
 </Codenesium>*/

@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/countryRegions")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class CountryRegionController: AbstractCountryRegionController
 	{
 		public CountryRegionController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c18394000afb4f5e057e249c26f6d8ea</Hash>
+    <Hash>9255a501d5436f9f3659058942484bc1</Hash>
 </Codenesium>*/

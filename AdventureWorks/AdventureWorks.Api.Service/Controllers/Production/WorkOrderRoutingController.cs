@@ -13,6 +13,7 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/workOrderRoutings")]
 	[ApiVersion("1.0")]
+	[ResponseFilter]
 	public class WorkOrderRoutingController: AbstractWorkOrderRoutingController
 	{
 		public WorkOrderRoutingController(
@@ -32,5 +33,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>04368feeb262fc2628f1365195c1a0f6</Hash>
+    <Hash>710ade4cc1a6b378eb81b7c5f7c3d248</Hash>
 </Codenesium>*/
