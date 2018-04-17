@@ -56,10 +56,8 @@ namespace NebulaNS.Api.Service
                               .Build();
                  config.Filters.Add(new AuthorizeFilter(policy));
                  */
-                  config.Filters.Add(new BenchmarkFilter());
-                
-
-
+				 config.Filters.Add(new BenchmarkFilter());
+                 
             }).AddVersionedApiExplorer(
             o =>
             {
@@ -177,14 +175,6 @@ namespace NebulaNS.Api.Service
                     .AsSelf()
                     .PropertiesAutowired();
 
-  
-           /* builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
-                       .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Filter"))
-                       .AsImplementedInterfaces()
-                       .AsSelf()
-                       .PropertiesAutowired();
-
-    */
             // Register anything else we might have that isn't a system, Microsoft, Abstract or Generic class
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource(
                 t =>

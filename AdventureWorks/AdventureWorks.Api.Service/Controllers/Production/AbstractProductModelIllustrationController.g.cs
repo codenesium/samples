@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.productModelIllustrationRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.productModelIllustrationRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByProductModelID(int id)
 		{
 			ApiResponse response = this.productModelIllustrationRepository.GetWhere(x => x.ProductModelID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,12 +125,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByIllustrationID(int id)
 		{
 			ApiResponse response = this.productModelIllustrationRepository.GetWhere(x => x.IllustrationID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>39e4ab4e3b6fa07f9e226da65b6d798f</Hash>
+    <Hash>1363a219231ae932cad9121ae853aa6e</Hash>
 </Codenesium>*/

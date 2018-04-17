@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.shoppingCartItemRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.shoppingCartItemRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,12 +114,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByProductID(int id)
 		{
 			ApiResponse response = this.shoppingCartItemRepository.GetWhere(x => x.ProductID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6815c71627f5355c3f52729ce9274bd8</Hash>
+    <Hash>9d3b488539a07db70bc9797d8426712a</Hash>
 </Codenesium>*/

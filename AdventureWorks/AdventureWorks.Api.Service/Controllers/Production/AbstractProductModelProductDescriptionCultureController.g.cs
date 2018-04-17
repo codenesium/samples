@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByProductModelID(int id)
 		{
 			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductModelID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByProductDescriptionID(int id)
 		{
 			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.ProductDescriptionID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -140,12 +136,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByCultureID(string id)
 		{
 			ApiResponse response = this.productModelProductDescriptionCultureRepository.GetWhere(x => x.CultureID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e24e8280787bb6fb8196fa7388438d97</Hash>
+    <Hash>51d5d6ce90938c3c4ff93bd8dace7fa7</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.spaceXSpaceFeatureRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace FermataFishNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace FermataFishNS.Api.Service
 		public virtual IActionResult BySpaceId(int id)
 		{
 			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceId == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,12 +125,11 @@ namespace FermataFishNS.Api.Service
 		public virtual IActionResult BySpaceFeatureId(int id)
 		{
 			ApiResponse response = this.spaceXSpaceFeatureRepository.GetWhere(x => x.SpaceFeatureId == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa405e2c79608aa7569a3c5c14f80ca3</Hash>
+    <Hash>319858e81533fd236547054a06417e48</Hash>
 </Codenesium>*/

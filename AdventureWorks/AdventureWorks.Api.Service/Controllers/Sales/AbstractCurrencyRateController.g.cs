@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.currencyRateRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.currencyRateRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByFromCurrencyCode(string id)
 		{
 			ApiResponse response = this.currencyRateRepository.GetWhere(x => x.FromCurrencyCode == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,12 +125,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByToCurrencyCode(string id)
 		{
 			ApiResponse response = this.currencyRateRepository.GetWhere(x => x.ToCurrencyCode == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd08bf6bd0687032a63667e21dcb8842</Hash>
+    <Hash>7a81754b5f28c2c587bbee83035ad7c0</Hash>
 </Codenesium>*/

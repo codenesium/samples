@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.salesTerritoryRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.salesTerritoryRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,12 +114,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByCountryRegionCode(string id)
 		{
 			ApiResponse response = this.salesTerritoryRepository.GetWhere(x => x.CountryRegionCode == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa6d8129c799e73fc3b7dd67903e14f0</Hash>
+    <Hash>0b87e82f0c5d30fbc184e9ce6cfe2124</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.familyRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace FermataFishNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.familyRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace FermataFishNS.Api.Service
 		public virtual IActionResult ById(int id)
 		{
 			ApiResponse response = this.familyRepository.GetWhere(x => x.Id == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,12 +125,11 @@ namespace FermataFishNS.Api.Service
 		public virtual IActionResult ByStudioId(int id)
 		{
 			ApiResponse response = this.familyRepository.GetWhere(x => x.StudioId == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14bac631b35b6fd72173c562d139104f</Hash>
+    <Hash>df6a1739b270bcb1c46b4e92865e7dbe</Hash>
 </Codenesium>*/

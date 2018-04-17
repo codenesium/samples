@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByCustomerID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CustomerID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult BySalesPersonID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.SalesPersonID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -140,7 +136,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByTerritoryID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.TerritoryID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -152,7 +147,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByBillToAddressID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.BillToAddressID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -164,7 +158,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByShipToAddressID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipToAddressID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -176,7 +169,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByShipMethodID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -188,7 +180,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByCreditCardID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CreditCardID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -200,12 +191,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByCurrencyRateID(int id)
 		{
 			ApiResponse response = this.salesOrderHeaderRepository.GetWhere(x => x.CurrencyRateID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae5d9d53b6cc388141229c36d4764bf0</Hash>
+    <Hash>9854e436ef47c5acf98253572d4aff87</Hash>
 </Codenesium>*/

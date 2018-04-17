@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.billOfMaterialsRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.billOfMaterialsRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByProductAssemblyID(int id)
 		{
 			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.ProductAssemblyID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByComponentID(int id)
 		{
 			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.ComponentID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -140,12 +136,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByUnitMeasureCode(string id)
 		{
 			ApiResponse response = this.billOfMaterialsRepository.GetWhere(x => x.UnitMeasureCode == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>71f7e8009599379e80448a8761f7627e</Hash>
+    <Hash>824b31ea0008fcd74f61b565127318de</Hash>
 </Codenesium>*/

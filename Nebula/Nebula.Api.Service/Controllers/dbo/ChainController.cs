@@ -11,21 +11,19 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Service
 {
-    [ServiceFilter(typeof(ChainFilter))]
-    [Route("api/chains")]
+	[Route("api/chains")]
 	[ApiVersion("1.0")]
+	[ServiceFilter(typeof(ChainFilter))]
 	public class ChainController: AbstractChainController
 	{
 		public ChainController(
 			ILogger<ChainController> logger,
 			ITransactionCoordinator transactionCoordinator,
-			IChainRepository chainRepository,
-			IChainModelValidator chainModelValidator
+			IChainRepository chainRepository
 			)
 			: base(logger,
 			       transactionCoordinator,
-			       chainRepository,
-			       chainModelValidator)
+			       chainRepository)
 		{
 			this.BulkInsertLimit = 250;
 			this.SearchRecordLimit = 1000;
@@ -35,5 +33,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1102cb5458d8125dbb727c30b9533626</Hash>
+    <Hash>56de1f8934ea6f9d5aecda678998b8e3</Hash>
 </Codenesium>*/

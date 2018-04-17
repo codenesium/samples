@@ -38,7 +38,6 @@ namespace FileServiceNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.fileTypeRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace FileServiceNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.fileTypeRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -111,5 +109,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3b8d5b0ce2ed91206553f2cdee2ce162</Hash>
+    <Hash>03140803dcbfd548a9ca06b042608dc2</Hash>
 </Codenesium>*/

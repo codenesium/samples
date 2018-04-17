@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.purchaseOrderHeaderRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByEmployeeID(int id)
 		{
 			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhere(x => x.EmployeeID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByVendorID(int id)
 		{
 			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhere(x => x.VendorID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -140,12 +136,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByShipMethodID(int id)
 		{
 			ApiResponse response = this.purchaseOrderHeaderRepository.GetWhere(x => x.ShipMethodID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2f4fdba821c7335a2d32f953add663f4</Hash>
+    <Hash>1c679bcd7e42c66fbb891fd1b5de85e1</Hash>
 </Codenesium>*/

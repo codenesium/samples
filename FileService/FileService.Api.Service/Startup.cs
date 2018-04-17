@@ -56,6 +56,7 @@ namespace FileServiceNS.Api.Service
                               .Build();
                  config.Filters.Add(new AuthorizeFilter(policy));
                  */
+				 config.Filters.Add(new BenchmarkFilter());
                  
             }).AddVersionedApiExplorer(
             o =>

@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
+using System.Net.Http;
 using FermataFishNS.Api.Contracts;
 namespace FermataFishNS.Api.Service
 {
@@ -13,6 +14,21 @@ namespace FermataFishNS.Api.Service
 		public SpaceXSpaceFeatureFilter(ISpaceXSpaceFeatureModelValidator validator)
 		{
 			this.validator = validator;
+		}
+
+		public override void OnActionExecuted(ActionExecutedContext context)
+		{
+			if (context.Result is OkObjectResult)
+			{
+				OkObjectResult result = context.Result as OkObjectResult;
+				if (result.Value is ApiResponse)
+				{
+					var response = result.Value as ApiResponse;
+					response.DisableSerializationOfEmptyFields();
+					context.Result = new OkObjectResult(response);
+				}
+			}
+			base.OnActionExecuted(context);
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext actionContext)
@@ -28,15 +44,15 @@ namespace FermataFishNS.Api.Service
 
 			if (items.Any())
 			{
-				if(actionContext.HttpContext.Request.Method == "POST")
+				if (actionContext.HttpContext.Request.Method == HttpMethod.Post.ToString())
 				{
 					this.validator.CreateMode();
 				}
-				else if (actionContext.HttpContext.Request.Method == "PUT")
+				else if (actionContext.HttpContext.Request.Method == HttpMethod.Put.ToString())
 				{
 					this.validator.UpdateMode();
 				}
-				else if (actionContext.HttpContext.Request.Method == "DELETE")
+				else if (actionContext.HttpContext.Request.Method == HttpMethod.Delete.ToString())
 				{
 					this.validator.DeleteMode();
 				}
@@ -74,5 +90,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1a0bd3ee6039f6943ec9cd3575c6c6f9</Hash>
+    <Hash>64d1dc87340b1f48f00db9be218ad250</Hash>
 </Codenesium>*/

@@ -171,22 +171,10 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
-    public class BenchmarkFilter : ActionFilterAttribute
-    {
-        public override async Task OnActionExecutionAsync(ActionExecutingContext actionContext, ActionExecutionDelegate next)
-        {
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-            await next();
-            stopwatch.Stop();
-            actionContext.HttpContext.Response.Headers.Add("x-time-elapsed", stopwatch.Elapsed.ToString());
-        }
-    }
-
-
-    /// <summary>
+	/// <summary>
     /// This attribute enabled transaction support on a request by hooking in to the request pipeline
-    /// and starting a transaction when a request begins and committing or rolling back the transaction if 
-    /// there is an exception during the request.
+	/// and starting a transaction when a request begins and committing or rolling back the transaction if 
+	/// there is an exception during the request.
     /// </summary>
     public class UnitOfWorkActionFilter : ActionFilterAttribute
     {
@@ -234,6 +222,22 @@ namespace Codenesium.Foundation.CommonMVC
             }
 
             base.OnActionExecuted(actionExecutedContext);
+        }
+    }
+
+	/// <summary>
+    /// This filter logs the time it takes to execute a request and returns the execution time
+	/// to the client in the header x-time-elapsed
+    /// 
+    /// </summary>
+	public class BenchmarkFilter : ActionFilterAttribute
+    {
+        public override async Task OnActionExecutionAsync(ActionExecutingContext actionContext, ActionExecutionDelegate next)
+        {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            await next();
+            stopwatch.Stop();
+            actionContext.HttpContext.Response.Headers.Add("x-time-elapsed", stopwatch.Elapsed.ToString());
         }
     }
   

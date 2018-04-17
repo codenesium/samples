@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
+using System.Net.Http;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.Service
 {
@@ -13,6 +14,21 @@ namespace AdventureWorksNS.Api.Service
 		public ProductListPriceHistoryFilter(IProductListPriceHistoryModelValidator validator)
 		{
 			this.validator = validator;
+		}
+
+		public override void OnActionExecuted(ActionExecutedContext context)
+		{
+			if (context.Result is OkObjectResult)
+			{
+				OkObjectResult result = context.Result as OkObjectResult;
+				if (result.Value is ApiResponse)
+				{
+					var response = result.Value as ApiResponse;
+					response.DisableSerializationOfEmptyFields();
+					context.Result = new OkObjectResult(response);
+				}
+			}
+			base.OnActionExecuted(context);
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext actionContext)
@@ -28,15 +44,15 @@ namespace AdventureWorksNS.Api.Service
 
 			if (items.Any())
 			{
-				if(actionContext.HttpContext.Request.Method == "POST")
+				if (actionContext.HttpContext.Request.Method == HttpMethod.Post.ToString())
 				{
 					this.validator.CreateMode();
 				}
-				else if (actionContext.HttpContext.Request.Method == "PUT")
+				else if (actionContext.HttpContext.Request.Method == HttpMethod.Put.ToString())
 				{
 					this.validator.UpdateMode();
 				}
-				else if (actionContext.HttpContext.Request.Method == "DELETE")
+				else if (actionContext.HttpContext.Request.Method == HttpMethod.Delete.ToString())
 				{
 					this.validator.DeleteMode();
 				}
@@ -74,5 +90,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>54a5708bfca63bda8bb22f71629cbb21</Hash>
+    <Hash>d2f9755b6b03cc28d82dc7508d1a8ce6</Hash>
 </Codenesium>*/

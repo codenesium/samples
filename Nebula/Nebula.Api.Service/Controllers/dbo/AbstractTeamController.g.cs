@@ -38,7 +38,6 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.teamRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace NebulaNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.teamRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,12 +114,11 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult ByOrganizationId(int id)
 		{
 			ApiResponse response = this.teamRepository.GetWhere(x => x.OrganizationId == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>237a0b000d59118a6c979ca449a4afb8</Hash>
+    <Hash>f87bf3e0edb4a63244ebc738cd8af160</Hash>
 </Codenesium>*/

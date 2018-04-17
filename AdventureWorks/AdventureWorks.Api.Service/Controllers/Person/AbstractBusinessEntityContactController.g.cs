@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.businessEntityContactRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace AdventureWorksNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.businessEntityContactRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
 			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.BusinessEntityID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByPersonID(int id)
 		{
 			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.PersonID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -140,12 +136,11 @@ namespace AdventureWorksNS.Api.Service
 		public virtual IActionResult ByContactTypeID(int id)
 		{
 			ApiResponse response = this.businessEntityContactRepository.GetWhere(x => x.ContactTypeID == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>932ac4518e223ba234eadf49f931b226</Hash>
+    <Hash>f1891aa511a8a7b38e8140163d6984eb</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace ESPIOTNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.deviceActionRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace ESPIOTNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.deviceActionRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,12 +114,11 @@ namespace ESPIOTNS.Api.Service
 		public virtual IActionResult ByDeviceId(int id)
 		{
 			ApiResponse response = this.deviceActionRepository.GetWhere(x => x.DeviceId == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6608a471282a3c833789f951368743fc</Hash>
+    <Hash>4ab74c7e34856845e4ece58348d76f6b</Hash>
 </Codenesium>*/

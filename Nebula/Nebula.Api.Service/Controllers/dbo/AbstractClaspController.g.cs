@@ -38,7 +38,6 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult Get(int id)
 		{
 			ApiResponse response = this.claspRepository.GetById(id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -52,7 +51,6 @@ namespace NebulaNS.Api.Service
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.claspRepository.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -116,7 +114,6 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult ByPreviousChainId(int id)
 		{
 			ApiResponse response = this.claspRepository.GetWhere(x => x.PreviousChainId == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 
@@ -128,12 +125,11 @@ namespace NebulaNS.Api.Service
 		public virtual IActionResult ByNextChainId(int id)
 		{
 			ApiResponse response = this.claspRepository.GetWhere(x => x.NextChainId == id);
-			response.DisableSerializationOfEmptyFields();
 			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7fba52801abd27b7d7a5e0f8b7662bd4</Hash>
+    <Hash>06f4a365f700bcd1473ee0fb8d31887f</Hash>
 </Codenesium>*/
