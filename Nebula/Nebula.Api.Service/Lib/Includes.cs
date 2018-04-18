@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NebulaNS.Api.Contracts;
 
 namespace Codenesium.Foundation.CommonMVC
 {
@@ -241,6 +242,24 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
   
+    public class ResponseFilter : ActionFilterAttribute
+    {
+		public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            if (context.Result is OkObjectResult)
+            {
+                OkObjectResult result = context.Result as OkObjectResult;
+                if (result.Value is ApiResponse)
+                {
+                    var response = result.Value as ApiResponse;
+                    response.DisableSerializationOfEmptyFields();
+                    context.Result = new OkObjectResult(response);
+                }
+            }
+            base.OnActionExecuted(context);
+        }
+    }
+
     /// <summary>
     /// This filter helps api versioning work with swagger
     /// https://github.com/Microsoft/aspnet-api-versioning/wiki/Swashbuckle-Integration
@@ -280,6 +299,7 @@ namespace Codenesium.Foundation.CommonMVC
             }
         }
     }
+
     public class SearchQuery
     {
         public int Limit { get; private set; } = 0;
