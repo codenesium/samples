@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productListPriceHistories")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ProductListPriceHistoryController: AbstractProductListPriceHistoryController
 	{
 		public ProductListPriceHistoryController(
+			ServiceSettings settings,
 			ILogger<ProductListPriceHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOProductListPriceHistory productListPriceHistoryManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       productListPriceHistoryManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cf1f566efa994324c00e625f64dd982c</Hash>
+    <Hash>2ee12d1625d98c450f1c37b8a8327b03</Hash>
 </Codenesium>*/

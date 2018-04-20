@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/passwords")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class PasswordController: AbstractPasswordController
 	{
 		public PasswordController(
+			ServiceSettings settings,
 			ILogger<PasswordController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOPassword passwordManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       passwordManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5bd47c2792f1f4d378fd863a9beaa7dd</Hash>
+    <Hash>188c24ae1a7ffffa7025df00e2e5db50</Hash>
 </Codenesium>*/

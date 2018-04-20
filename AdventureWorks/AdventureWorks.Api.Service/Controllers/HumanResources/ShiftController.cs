@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shifts")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ShiftController: AbstractShiftController
 	{
 		public ShiftController(
+			ServiceSettings settings,
 			ILogger<ShiftController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOShift shiftManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       shiftManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ff3c1ceb519d7fb1c0402258365fdca4</Hash>
+    <Hash>f4973f533473048fbf379b806c06d566</Hash>
 </Codenesium>*/

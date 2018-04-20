@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
@@ -24,18 +25,19 @@ namespace FermataFishNS.Api.Service
 		protected int SearchRecordDefault { get; set; }
 
 		public AbstractSpaceFeatureController(
+			ServiceSettings settings,
 			ILogger<AbstractSpaceFeatureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOSpaceFeature spaceFeatureManager
 			)
-			: base(logger, transactionCoordinator)
+			: base(settings, logger, transactionCoordinator)
 		{
 			this.spaceFeatureManager = spaceFeatureManager;
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Get(int id)
@@ -46,7 +48,7 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Search()
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[UnitOfWorkActionFilter]
+		[UnitOfWork]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] SpaceFeatureModel model)
@@ -69,6 +71,8 @@ namespace FermataFishNS.Api.Service
 
 			if(result.Success)
 			{
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/spaceFeatures/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -79,8 +83,8 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<SpaceFeatureModel> models)
@@ -100,13 +104,13 @@ namespace FermataFishNS.Api.Service
 				}
 			}
 
-			return this.Ok();
+			return this.NoContent();
 		}
 
 		[HttpPut]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] SpaceFeatureModel model)
 		{
@@ -114,7 +118,7 @@ namespace FermataFishNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -124,8 +128,8 @@ namespace FermataFishNS.Api.Service
 
 		[HttpDelete]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -133,7 +137,7 @@ namespace FermataFishNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -143,7 +147,7 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("ByStudioId/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/Studios/{id}/SpaceFeatures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudioId(int id)
@@ -155,5 +159,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f8615872484650aebf0f680a28d5962a</Hash>
+    <Hash>37302ade4775fe0bfb17bfdbd36d8aa9</Hash>
 </Codenesium>*/

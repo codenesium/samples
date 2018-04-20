@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
@@ -24,18 +25,19 @@ namespace NebulaNS.Api.Service
 		protected int SearchRecordDefault { get; set; }
 
 		public AbstractLinkController(
+			ServiceSettings settings,
 			ILogger<AbstractLinkController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOLink linkManager
 			)
-			: base(logger, transactionCoordinator)
+			: base(settings, logger, transactionCoordinator)
 		{
 			this.linkManager = linkManager;
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Get(int id)
@@ -46,7 +48,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Search()
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[UnitOfWorkActionFilter]
+		[UnitOfWork]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] LinkModel model)
@@ -69,6 +71,8 @@ namespace NebulaNS.Api.Service
 
 			if(result.Success)
 			{
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/links/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -79,8 +83,8 @@ namespace NebulaNS.Api.Service
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<LinkModel> models)
@@ -100,13 +104,13 @@ namespace NebulaNS.Api.Service
 				}
 			}
 
-			return this.Ok();
+			return this.NoContent();
 		}
 
 		[HttpPut]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] LinkModel model)
 		{
@@ -114,7 +118,7 @@ namespace NebulaNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -124,8 +128,8 @@ namespace NebulaNS.Api.Service
 
 		[HttpDelete]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -133,7 +137,7 @@ namespace NebulaNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -143,7 +147,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByChainId/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/Chains/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByChainId(int id)
@@ -154,7 +158,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByAssignedMachineId/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/Machines/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByAssignedMachineId(int id)
@@ -165,7 +169,7 @@ namespace NebulaNS.Api.Service
 
 		[HttpGet]
 		[Route("ByLinkStatusId/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/LinkStatus/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLinkStatusId(int id)
@@ -177,5 +181,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cc23a3b9981b75d0f8dd45a34849461a</Hash>
+    <Hash>49df2243d6dd40a400142c588cc2b6d5</Hash>
 </Codenesium>*/

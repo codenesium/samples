@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
@@ -24,18 +25,19 @@ namespace AdventureWorksNS.Api.Service
 		protected int SearchRecordDefault { get; set; }
 
 		public AbstractWorkOrderRoutingController(
+			ServiceSettings settings,
 			ILogger<AbstractWorkOrderRoutingController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOWorkOrderRouting workOrderRoutingManager
 			)
-			: base(logger, transactionCoordinator)
+			: base(settings, logger, transactionCoordinator)
 		{
 			this.workOrderRoutingManager = workOrderRoutingManager;
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Get(int id)
@@ -46,7 +48,7 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Search()
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[UnitOfWorkActionFilter]
+		[UnitOfWork]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] WorkOrderRoutingModel model)
@@ -69,6 +71,8 @@ namespace AdventureWorksNS.Api.Service
 
 			if(result.Success)
 			{
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/workOrderRoutings/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -79,8 +83,8 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<WorkOrderRoutingModel> models)
@@ -100,13 +104,13 @@ namespace AdventureWorksNS.Api.Service
 				}
 			}
 
-			return this.Ok();
+			return this.NoContent();
 		}
 
 		[HttpPut]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] WorkOrderRoutingModel model)
 		{
@@ -114,7 +118,7 @@ namespace AdventureWorksNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -124,8 +128,8 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpDelete]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -133,7 +137,7 @@ namespace AdventureWorksNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -143,7 +147,7 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByWorkOrderID/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/WorkOrders/{id}/WorkOrderRoutings")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByWorkOrderID(int id)
@@ -154,7 +158,7 @@ namespace AdventureWorksNS.Api.Service
 
 		[HttpGet]
 		[Route("ByLocationID/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/Locations/{id}/WorkOrderRoutings")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByLocationID(short id)
@@ -166,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>14342be357281af699c7c468b6e32c0a</Hash>
+    <Hash>0f1bee72abc16648b6631b48a790b314</Hash>
 </Codenesium>*/

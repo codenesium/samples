@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/transactionHistories")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class TransactionHistoryController: AbstractTransactionHistoryController
 	{
 		public TransactionHistoryController(
+			ServiceSettings settings,
 			ILogger<TransactionHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOTransactionHistory transactionHistoryManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       transactionHistoryManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ddd70cf452b650ed76063c99120652d7</Hash>
+    <Hash>2abab91adafd18adfc1725531b34eb1c</Hash>
 </Codenesium>*/

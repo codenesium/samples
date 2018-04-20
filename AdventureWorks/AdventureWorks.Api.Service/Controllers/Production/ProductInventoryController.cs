@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productInventories")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ProductInventoryController: AbstractProductInventoryController
 	{
 		public ProductInventoryController(
+			ServiceSettings settings,
 			ILogger<ProductInventoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOProductInventory productInventoryManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       productInventoryManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>56c2bb912226ed579acae9786a88669a</Hash>
+    <Hash>c41ff55868370b13384eb300e8aefab8</Hash>
 </Codenesium>*/

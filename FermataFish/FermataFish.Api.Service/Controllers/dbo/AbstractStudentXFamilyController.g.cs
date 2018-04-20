@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
@@ -24,18 +25,19 @@ namespace FermataFishNS.Api.Service
 		protected int SearchRecordDefault { get; set; }
 
 		public AbstractStudentXFamilyController(
+			ServiceSettings settings,
 			ILogger<AbstractStudentXFamilyController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOStudentXFamily studentXFamilyManager
 			)
-			: base(logger, transactionCoordinator)
+			: base(settings, logger, transactionCoordinator)
 		{
 			this.studentXFamilyManager = studentXFamilyManager;
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Get(int id)
@@ -46,7 +48,7 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(ApiResponse), 404)]
 		public virtual IActionResult Search()
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPost]
 		[Route("")]
-		[UnitOfWorkActionFilter]
+		[UnitOfWork]
 		[ProducesResponseType(typeof(int), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] StudentXFamilyModel model)
@@ -69,6 +71,8 @@ namespace FermataFishNS.Api.Service
 
 			if(result.Success)
 			{
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/studentXFamilies/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -79,8 +83,8 @@ namespace FermataFishNS.Api.Service
 
 		[HttpPost]
 		[Route("BulkInsert")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<StudentXFamilyModel> models)
@@ -100,13 +104,13 @@ namespace FermataFishNS.Api.Service
 				}
 			}
 
-			return this.Ok();
+			return this.NoContent();
 		}
 
 		[HttpPut]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] StudentXFamilyModel model)
 		{
@@ -114,7 +118,7 @@ namespace FermataFishNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -124,8 +128,8 @@ namespace FermataFishNS.Api.Service
 
 		[HttpDelete]
 		[Route("{id}")]
-		[UnitOfWorkActionFilter]
-		[ProducesResponseType(typeof(void), 200)]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(void), 204)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -133,7 +137,7 @@ namespace FermataFishNS.Api.Service
 
 			if(result.Success)
 			{
-				return this.Ok();
+				return this.NoContent();
 			}
 			else
 			{
@@ -143,7 +147,7 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("ByStudentId/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/Students/{id}/StudentXFamilies")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByStudentId(int id)
@@ -154,7 +158,7 @@ namespace FermataFishNS.Api.Service
 
 		[HttpGet]
 		[Route("ByFamilyId/{id}")]
-		[ReadOnlyFilter]
+		[ReadOnly]
 		[Route("~/api/Families/{id}/StudentXFamilies")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		public virtual IActionResult ByFamilyId(int id)
@@ -166,5 +170,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b2bb2e16d0472df22c1cea469d97a9e9</Hash>
+    <Hash>85ca92e4d6ec969be7d60daee01d4d33</Hash>
 </Codenesium>*/

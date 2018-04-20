@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shipMethods")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ShipMethodController: AbstractShipMethodController
 	{
 		public ShipMethodController(
+			ServiceSettings settings,
 			ILogger<ShipMethodController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOShipMethod shipMethodManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       shipMethodManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5c36c0caa825b1a7c368b564d54f0460</Hash>
+    <Hash>d99febb96c5431942c1e034931ba4fe2</Hash>
 </Codenesium>*/

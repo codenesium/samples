@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/spaceXSpaceFeatures")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class SpaceXSpaceFeatureController: AbstractSpaceXSpaceFeatureController
 	{
 		public SpaceXSpaceFeatureController(
+			ServiceSettings settings,
 			ILogger<SpaceXSpaceFeatureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOSpaceXSpaceFeature spaceXSpaceFeatureManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       spaceXSpaceFeatureManager)
 		{
@@ -33,5 +36,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7d595a3d396d5f19b644ce9ac0267f11</Hash>
+    <Hash>8df8865a29189d4e84e96a3eb6501f74</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/creditCards")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class CreditCardController: AbstractCreditCardController
 	{
 		public CreditCardController(
+			ServiceSettings settings,
 			ILogger<CreditCardController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOCreditCard creditCardManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       creditCardManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2d3ac1e56f51aacc1de49e27cf52bf34</Hash>
+    <Hash>7ffae625f60845b72311cec2ac2af64b</Hash>
 </Codenesium>*/

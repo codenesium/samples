@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/emailAddresses")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class EmailAddressController: AbstractEmailAddressController
 	{
 		public EmailAddressController(
+			ServiceSettings settings,
 			ILogger<EmailAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOEmailAddress emailAddressManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       emailAddressManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>34dffe51c2b20a2c96908ee61605cfba</Hash>
+    <Hash>fbf8a03a416336fdd6d84365c7ffa09e</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/machineRefTeams")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class MachineRefTeamController: AbstractMachineRefTeamController
 	{
 		public MachineRefTeamController(
+			ServiceSettings settings,
 			ILogger<MachineRefTeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOMachineRefTeam machineRefTeamManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       machineRefTeamManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>20cc3218fd167f45d55373b043a6eb32</Hash>
+    <Hash>1526caa8fe35ca589da73092d7490b69</Hash>
 </Codenesium>*/

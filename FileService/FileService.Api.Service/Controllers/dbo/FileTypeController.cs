@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/fileTypes")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class FileTypeController: AbstractFileTypeController
 	{
 		public FileTypeController(
+			ServiceSettings settings,
 			ILogger<FileTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOFileType fileTypeManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       fileTypeManager)
 		{
@@ -33,5 +36,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fb904073214743df8dad852a560a88a9</Hash>
+    <Hash>f0f14b49e9cd92ce2ded692077fe89cd</Hash>
 </Codenesium>*/

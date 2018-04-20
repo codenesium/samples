@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/currencyRates")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class CurrencyRateController: AbstractCurrencyRateController
 	{
 		public CurrencyRateController(
+			ServiceSettings settings,
 			ILogger<CurrencyRateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOCurrencyRate currencyRateManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       currencyRateManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c984621dea04cbb53db1d6e81ca7253e</Hash>
+    <Hash>166da6764abbab4c343454b49ce7c3d1</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/stateProvinces")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class StateProvinceController: AbstractStateProvinceController
 	{
 		public StateProvinceController(
+			ServiceSettings settings,
 			ILogger<StateProvinceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOStateProvince stateProvinceManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       stateProvinceManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2890fd8bff9a753fe106e8b7195e0cca</Hash>
+    <Hash>afa87305d2431e8ac1e8e005fdf366e3</Hash>
 </Codenesium>*/

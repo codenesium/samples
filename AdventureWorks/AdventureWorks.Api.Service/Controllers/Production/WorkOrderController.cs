@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/workOrders")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class WorkOrderController: AbstractWorkOrderController
 	{
 		public WorkOrderController(
+			ServiceSettings settings,
 			ILogger<WorkOrderController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOWorkOrder workOrderManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       workOrderManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>67e0fb3412b3aafb6514b2812ff3bb7e</Hash>
+    <Hash>4f91bf58be6d7a028144fdb64f082ea3</Hash>
 </Codenesium>*/

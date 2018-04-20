@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productPhotoes")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ProductPhotoController: AbstractProductPhotoController
 	{
 		public ProductPhotoController(
+			ServiceSettings settings,
 			ILogger<ProductPhotoController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOProductPhoto productPhotoManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       productPhotoManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>48378f9259f7915dcd5c3925c0c607cc</Hash>
+    <Hash>e897359d74105dabd834a6662410b35c</Hash>
 </Codenesium>*/

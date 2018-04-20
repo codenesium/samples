@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/errorLogs")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ErrorLogController: AbstractErrorLogController
 	{
 		public ErrorLogController(
+			ServiceSettings settings,
 			ILogger<ErrorLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOErrorLog errorLogManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       errorLogManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2c5736874182b2c013459599a16a05e6</Hash>
+    <Hash>56d8be79d9af5177d34c342bbde49e2d</Hash>
 </Codenesium>*/

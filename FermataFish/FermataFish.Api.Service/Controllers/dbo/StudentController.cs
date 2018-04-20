@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/students")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class StudentController: AbstractStudentController
 	{
 		public StudentController(
+			ServiceSettings settings,
 			ILogger<StudentController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOStudent studentManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       studentManager)
 		{
@@ -33,5 +36,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8ad6ea4b71e00e60366ee6f9eed12e78</Hash>
+    <Hash>37b037c5c7cf68e98d008aa32afc19ed</Hash>
 </Codenesium>*/

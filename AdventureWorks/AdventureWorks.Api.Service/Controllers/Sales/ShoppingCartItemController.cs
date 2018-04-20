@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shoppingCartItems")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ShoppingCartItemController: AbstractShoppingCartItemController
 	{
 		public ShoppingCartItemController(
+			ServiceSettings settings,
 			ILogger<ShoppingCartItemController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOShoppingCartItem shoppingCartItemManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       shoppingCartItemManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b916ca8fd2f77b7bcd9406e69a223c30</Hash>
+    <Hash>b4a77a555015bd9bdb30f835a75b45c1</Hash>
 </Codenesium>*/

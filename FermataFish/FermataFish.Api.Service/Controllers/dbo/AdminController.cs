@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/admins")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class AdminController: AbstractAdminController
 	{
 		public AdminController(
+			ServiceSettings settings,
 			ILogger<AdminController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOAdmin adminManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       adminManager)
 		{
@@ -33,5 +36,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dbceabc09ed98f8b166112cd16027f2a</Hash>
+    <Hash>654313adffede132a1be8958ee2c9411</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/chains")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ChainController: AbstractChainController
 	{
 		public ChainController(
+			ServiceSettings settings,
 			ILogger<ChainController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOChain chainManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       chainManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d6dd2681a769995752b30d71d0e20b0c</Hash>
+    <Hash>bf60c259d93f845f2c1a3feccda8f564</Hash>
 </Codenesium>*/

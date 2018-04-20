@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/buckets")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class BucketController: AbstractBucketController
 	{
 		public BucketController(
+			ServiceSettings settings,
 			ILogger<BucketController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOBucket bucketManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       bucketManager)
 		{
@@ -33,5 +36,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>84ff1f70ef6371f4c5c316d573d238d0</Hash>
+    <Hash>449e1822ac43e898644e5eb1d626a364</Hash>
 </Codenesium>*/

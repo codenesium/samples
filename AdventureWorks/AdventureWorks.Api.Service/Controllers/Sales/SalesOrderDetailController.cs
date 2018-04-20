@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesOrderDetails")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class SalesOrderDetailController: AbstractSalesOrderDetailController
 	{
 		public SalesOrderDetailController(
+			ServiceSettings settings,
 			ILogger<SalesOrderDetailController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOSalesOrderDetail salesOrderDetailManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       salesOrderDetailManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d821aa0950abd05379a3577814e5d77f</Hash>
+    <Hash>7d16961b6512ee784a5cb69254086568</Hash>
 </Codenesium>*/

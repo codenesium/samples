@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/illustrations")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class IllustrationController: AbstractIllustrationController
 	{
 		public IllustrationController(
+			ServiceSettings settings,
 			ILogger<IllustrationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOIllustration illustrationManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       illustrationManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c8767f2f815fbaf7d73801160cefba4a</Hash>
+    <Hash>9a86b88f2e8b7c77920888c45d88a3b5</Hash>
 </Codenesium>*/

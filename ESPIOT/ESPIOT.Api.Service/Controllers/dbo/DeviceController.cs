@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace ESPIOTNS.Api.Service
 {
 	[Route("api/devices")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class DeviceController: AbstractDeviceController
 	{
 		public DeviceController(
+			ServiceSettings settings,
 			ILogger<DeviceController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBODevice deviceManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       deviceManager)
 		{
@@ -33,5 +36,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3b7592b49f4d63976b907a4a7a6c036e</Hash>
+    <Hash>e0585488c4a1ff7164b635e45fcb6719</Hash>
 </Codenesium>*/

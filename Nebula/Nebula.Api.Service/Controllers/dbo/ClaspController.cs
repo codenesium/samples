@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/clasps")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ClaspController: AbstractClaspController
 	{
 		public ClaspController(
+			ServiceSettings settings,
 			ILogger<ClaspController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOClasp claspManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       claspManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0cedb4e4736f44307a27543e0218d889</Hash>
+    <Hash>cd6acfbd1b8ce3ee238bd685002c876d</Hash>
 </Codenesium>*/

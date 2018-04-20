@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/machines")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class MachineController: AbstractMachineController
 	{
 		public MachineController(
+			ServiceSettings settings,
 			ILogger<MachineController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOMachine machineManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       machineManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b914d639b1f50fd7961cc48d0c2c1f67</Hash>
+    <Hash>18788fda9fec8536ca024c316d0777c0</Hash>
 </Codenesium>*/

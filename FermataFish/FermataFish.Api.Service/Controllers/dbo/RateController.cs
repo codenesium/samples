@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/rates")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class RateController: AbstractRateController
 	{
 		public RateController(
+			ServiceSettings settings,
 			ILogger<RateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBORate rateManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       rateManager)
 		{
@@ -33,5 +36,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1bb5bbd6bd45f3b0e5890b1a6d0b034e</Hash>
+    <Hash>a722064cccd653e8773171ccf6564d94</Hash>
 </Codenesium>*/

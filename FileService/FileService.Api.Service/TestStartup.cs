@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
@@ -49,6 +50,8 @@ namespace FileServiceNS.Api.Service
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+		    services.Configure<ServiceSettings>(this.Configuration);
+
 			services.AddMvcCore(config =>
             {
                 /*
@@ -57,7 +60,7 @@ namespace FileServiceNS.Api.Service
                               .Build();
                  config.Filters.Add(new AuthorizeFilter(policy));
                  */
-                 config.Filters.Add(new BenchmarkFilter());
+                 config.Filters.Add(new BenchmarkAttribute());
             }).AddVersionedApiExplorer(
             o =>
             {
@@ -145,6 +148,8 @@ namespace FileServiceNS.Api.Service
             // AFTER Populate those registrations can override things
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
+
+            builder.Register(ctx => ctx.Resolve<IOptions<ServiceSettings>>().Value);
 
             // set up entity framework options
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();

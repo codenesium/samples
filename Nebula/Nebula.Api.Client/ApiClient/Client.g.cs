@@ -43,6 +43,28 @@ namespace NebulaNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
+		public virtual async Task<int> ChainCreateAsync(ChainModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task ChainUpdateAsync(int id, ChainModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Chains/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task ChainDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Chains/{id}");
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
 		public virtual async Task<List<POCOChain>> ChainSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains?{query}&offset={offset}&limit={limit}");
@@ -67,31 +89,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Chains;
 		}
 
-		public virtual async Task ChainDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Chains/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task ChainUpdateAsync(int id, ChainModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Chains/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> ChainCreateAsync(ChainModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task ChainBulkInsertAsync(List<ChainModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> ChainStatusCreateAsync(ChainStatusModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task ChainStatusUpdateAsync(int id, ChainStatusModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ChainStatus/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task ChainStatusDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/ChainStatus/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -120,31 +142,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).ChainStatus;
 		}
 
-		public virtual async Task ChainStatusDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/ChainStatus/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task ChainStatusUpdateAsync(int id, ChainStatusModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ChainStatus/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> ChainStatusCreateAsync(ChainStatusModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task ChainStatusBulkInsertAsync(List<ChainStatusModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> ClaspCreateAsync(ClaspModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clasps", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task ClaspUpdateAsync(int id, ClaspModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Clasps/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task ClaspDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Clasps/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -173,31 +195,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Clasps;
 		}
 
-		public virtual async Task ClaspDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Clasps/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task ClaspUpdateAsync(int id, ClaspModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Clasps/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> ClaspCreateAsync(ClaspModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clasps", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task ClaspBulkInsertAsync(List<ClaspModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clasps/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> LinkCreateAsync(LinkModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task LinkUpdateAsync(int id, LinkModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Links/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task LinkDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Links/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -226,31 +248,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Links;
 		}
 
-		public virtual async Task LinkDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Links/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task LinkUpdateAsync(int id, LinkModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Links/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> LinkCreateAsync(LinkModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task LinkBulkInsertAsync(List<LinkModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> LinkLogCreateAsync(LinkLogModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkLogs", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task LinkLogUpdateAsync(int id, LinkLogModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkLogs/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task LinkLogDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/LinkLogs/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -279,31 +301,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LinkLogs;
 		}
 
-		public virtual async Task LinkLogDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/LinkLogs/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task LinkLogUpdateAsync(int id, LinkLogModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkLogs/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> LinkLogCreateAsync(LinkLogModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkLogs", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task LinkLogBulkInsertAsync(List<LinkLogModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkLogs/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> LinkStatusCreateAsync(LinkStatusModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatus", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task LinkStatusUpdateAsync(int id, LinkStatusModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkStatus/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task LinkStatusDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/LinkStatus/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -332,31 +354,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).LinkStatus;
 		}
 
-		public virtual async Task LinkStatusDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/LinkStatus/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task LinkStatusUpdateAsync(int id, LinkStatusModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkStatus/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> LinkStatusCreateAsync(LinkStatusModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatus", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task LinkStatusBulkInsertAsync(List<LinkStatusModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatus/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> MachineCreateAsync(MachineModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task MachineUpdateAsync(int id, MachineModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Machines/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task MachineDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Machines/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -385,31 +407,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Machines;
 		}
 
-		public virtual async Task MachineDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Machines/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task MachineUpdateAsync(int id, MachineModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Machines/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> MachineCreateAsync(MachineModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task MachineBulkInsertAsync(List<MachineModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> MachineRefTeamCreateAsync(MachineRefTeamModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/MachineRefTeams", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task MachineRefTeamUpdateAsync(int id, MachineRefTeamModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/MachineRefTeams/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task MachineRefTeamDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/MachineRefTeams/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -438,31 +460,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).MachineRefTeams;
 		}
 
-		public virtual async Task MachineRefTeamDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/MachineRefTeams/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task MachineRefTeamUpdateAsync(int id, MachineRefTeamModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/MachineRefTeams/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> MachineRefTeamCreateAsync(MachineRefTeamModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/MachineRefTeams", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task MachineRefTeamBulkInsertAsync(List<MachineRefTeamModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/MachineRefTeams/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> OrganizationCreateAsync(OrganizationModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Organizations", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task OrganizationUpdateAsync(int id, OrganizationModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Organizations/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task OrganizationDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Organizations/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -491,31 +513,31 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Organizations;
 		}
 
-		public virtual async Task OrganizationDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Organizations/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task OrganizationUpdateAsync(int id, OrganizationModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Organizations/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> OrganizationCreateAsync(OrganizationModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Organizations", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task OrganizationBulkInsertAsync(List<OrganizationModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Organizations/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> TeamCreateAsync(TeamModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task TeamUpdateAsync(int id, TeamModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Teams/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task TeamDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Teams/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -544,28 +566,6 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Teams;
 		}
 
-		public virtual async Task TeamDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Teams/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task TeamUpdateAsync(int id, TeamModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Teams/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> TeamCreateAsync(TeamModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task TeamBulkInsertAsync(List<TeamModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams/BulkInsert", items);
@@ -576,5 +576,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>873816a5c00c42d255226f11071b38ba</Hash>
+    <Hash>cd4d5ab1e57f5f8313d66977b5951c90</Hash>
 </Codenesium>*/

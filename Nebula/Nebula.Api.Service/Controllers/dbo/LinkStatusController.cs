@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/linkStatus")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class LinkStatusController: AbstractLinkStatusController
 	{
 		public LinkStatusController(
+			ServiceSettings settings,
 			ILogger<LinkStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOLinkStatus linkStatusManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       linkStatusManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c38c972a4afede2389de1e836fa244d1</Hash>
+    <Hash>fae6e15a51616975e9d7be14acba5314</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/databaseLogs")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class DatabaseLogController: AbstractDatabaseLogController
 	{
 		public DatabaseLogController(
+			ServiceSettings settings,
 			ILogger<DatabaseLogController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBODatabaseLog databaseLogManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       databaseLogManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>95f04ff75008ccc7425c7ba0967af6d4</Hash>
+    <Hash>21e65defa340c2d761288b50c0264fba</Hash>
 </Codenesium>*/

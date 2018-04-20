@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/scrapReasons")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ScrapReasonController: AbstractScrapReasonController
 	{
 		public ScrapReasonController(
+			ServiceSettings settings,
 			ILogger<ScrapReasonController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOScrapReason scrapReasonManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       scrapReasonManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0a3afdbe0d04472d73619fc2387f54fb</Hash>
+    <Hash>4786209f574f500f560790a9a73f3a04</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/teams")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class TeamController: AbstractTeamController
 	{
 		public TeamController(
+			ServiceSettings settings,
 			ILogger<TeamController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOTeam teamManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       teamManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>86507c72144544588ca5776b1d6b7e9d</Hash>
+    <Hash>26b9c3eea2f658e3d45456cf007bd882</Hash>
 </Codenesium>*/

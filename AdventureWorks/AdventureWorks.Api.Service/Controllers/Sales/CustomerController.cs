@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/customers")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class CustomerController: AbstractCustomerController
 	{
 		public CustomerController(
+			ServiceSettings settings,
 			ILogger<CustomerController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOCustomer customerManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       customerManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7996385971e7d499efb64287dcbaeb64</Hash>
+    <Hash>975105fa2314b378ecb5a527fe687287</Hash>
 </Codenesium>*/

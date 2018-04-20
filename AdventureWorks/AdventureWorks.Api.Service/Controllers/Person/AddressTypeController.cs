@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/addressTypes")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class AddressTypeController: AbstractAddressTypeController
 	{
 		public AddressTypeController(
+			ServiceSettings settings,
 			ILogger<AddressTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOAddressType addressTypeManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       addressTypeManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>109a0e15a31a82b568e849f0bde24fa6</Hash>
+    <Hash>fb43601123d21131aca68095a076e572</Hash>
 </Codenesium>*/

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/businessEntityAddresses")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class BusinessEntityAddressController: AbstractBusinessEntityAddressController
 	{
 		public BusinessEntityAddressController(
+			ServiceSettings settings,
 			ILogger<BusinessEntityAddressController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOBusinessEntityAddress businessEntityAddressManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       businessEntityAddressManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>036224aada7005f4d8deb7fa8a9f4a51</Hash>
+    <Hash>7234bea577d3df8dc9bf391425dc2782</Hash>
 </Codenesium>*/

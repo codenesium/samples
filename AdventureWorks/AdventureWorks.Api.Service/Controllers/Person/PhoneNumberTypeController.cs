@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/phoneNumberTypes")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class PhoneNumberTypeController: AbstractPhoneNumberTypeController
 	{
 		public PhoneNumberTypeController(
+			ServiceSettings settings,
 			ILogger<PhoneNumberTypeController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOPhoneNumberType phoneNumberTypeManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       phoneNumberTypeManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>30473c2d961107cfedfa13b9d100c3ab</Hash>
+    <Hash>01cd8127f03f2013c708010d3bd0f328</Hash>
 </Codenesium>*/

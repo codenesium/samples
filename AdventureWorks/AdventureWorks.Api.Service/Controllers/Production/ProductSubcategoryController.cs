@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productSubcategories")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ProductSubcategoryController: AbstractProductSubcategoryController
 	{
 		public ProductSubcategoryController(
+			ServiceSettings settings,
 			ILogger<ProductSubcategoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOProductSubcategory productSubcategoryManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       productSubcategoryManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0288a1f9567405100e9bbd48821f2dbe</Hash>
+    <Hash>466fee6e7709f02385553761163f23b5</Hash>
 </Codenesium>*/

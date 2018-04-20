@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/locations")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class LocationController: AbstractLocationController
 	{
 		public LocationController(
+			ServiceSettings settings,
 			ILogger<LocationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOLocation locationManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       locationManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0542bd4b65d4cde5ed9fd052357017a1</Hash>
+    <Hash>b4a084e7b7eae95c99eb21b09abe5586</Hash>
 </Codenesium>*/

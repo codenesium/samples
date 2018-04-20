@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/aWBuildVersions")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class AWBuildVersionController: AbstractAWBuildVersionController
 	{
 		public AWBuildVersionController(
+			ServiceSettings settings,
 			ILogger<AWBuildVersionController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOAWBuildVersion aWBuildVersionManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       aWBuildVersionManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a7c1021a6d3ce1c47468a39f5f6ec0fb</Hash>
+    <Hash>d21f268a93dd128405fce26bff611a22</Hash>
 </Codenesium>*/

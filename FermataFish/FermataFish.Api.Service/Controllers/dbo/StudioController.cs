@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/studios")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class StudioController: AbstractStudioController
 	{
 		public StudioController(
+			ServiceSettings settings,
 			ILogger<StudioController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOStudio studioManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       studioManager)
 		{
@@ -33,5 +36,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9b39a7d3788e32992b070a5e22028da6</Hash>
+    <Hash>9c8d808accccb592ba652f033fc16155</Hash>
 </Codenesium>*/

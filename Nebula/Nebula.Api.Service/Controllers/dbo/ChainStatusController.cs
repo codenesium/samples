@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/chainStatus")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class ChainStatusController: AbstractChainStatusController
 	{
 		public ChainStatusController(
+			ServiceSettings settings,
 			ILogger<ChainStatusController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOChainStatus chainStatusManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       chainStatusManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>384d50558b27bc878ba079a2a964ce73</Hash>
+    <Hash>1146b0397d483f3b7fc83103467749e9</Hash>
 </Codenesium>*/

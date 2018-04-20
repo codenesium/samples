@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/purchaseOrderDetails")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class PurchaseOrderDetailController: AbstractPurchaseOrderDetailController
 	{
 		public PurchaseOrderDetailController(
+			ServiceSettings settings,
 			ILogger<PurchaseOrderDetailController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOPurchaseOrderDetail purchaseOrderDetailManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       purchaseOrderDetailManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2638fd8e80dfca36a047800f38fec2ef</Hash>
+    <Hash>1114624d77f954745b36bee18ec75e40</Hash>
 </Codenesium>*/

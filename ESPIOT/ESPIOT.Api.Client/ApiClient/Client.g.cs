@@ -43,6 +43,28 @@ namespace ESPIOTNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
+		public virtual async Task<int> DeviceCreateAsync(DeviceModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task DeviceUpdateAsync(int id, DeviceModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Devices/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task DeviceDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Devices/{id}");
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
 		public virtual async Task<List<POCODevice>> DeviceSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices?{query}&offset={offset}&limit={limit}");
@@ -67,31 +89,31 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Devices;
 		}
 
-		public virtual async Task DeviceDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Devices/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task DeviceUpdateAsync(int id, DeviceModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Devices/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> DeviceCreateAsync(DeviceModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task DeviceBulkInsertAsync(List<DeviceModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> DeviceActionCreateAsync(DeviceActionModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task DeviceActionUpdateAsync(int id, DeviceActionModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/DeviceActions/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task DeviceActionDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/DeviceActions/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -120,28 +142,6 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).DeviceActions;
 		}
 
-		public virtual async Task DeviceActionDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/DeviceActions/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task DeviceActionUpdateAsync(int id, DeviceActionModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/DeviceActions/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> DeviceActionCreateAsync(DeviceActionModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task DeviceActionBulkInsertAsync(List<DeviceActionModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items);
@@ -152,5 +152,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>092245b17de3ad8772bd5c61a112b7e8</Hash>
+    <Hash>67c7df2788a2b2b37bdb4e7fa73e374d</Hash>
 </Codenesium>*/

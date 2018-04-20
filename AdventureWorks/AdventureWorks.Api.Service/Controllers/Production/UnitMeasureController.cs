@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/unitMeasures")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class UnitMeasureController: AbstractUnitMeasureController
 	{
 		public UnitMeasureController(
+			ServiceSettings settings,
 			ILogger<UnitMeasureController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOUnitMeasure unitMeasureManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       unitMeasureManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1e8a79381ecbab70dfdd545586440a5d</Hash>
+    <Hash>8275031d1077c10c863321dc0c03ee2d</Hash>
 </Codenesium>*/

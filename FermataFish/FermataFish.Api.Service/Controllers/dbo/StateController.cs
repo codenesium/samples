@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/states")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class StateController: AbstractStateController
 	{
 		public StateController(
+			ServiceSettings settings,
 			ILogger<StateController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOState stateManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       stateManager)
 		{
@@ -33,5 +36,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ce60b4da71537b731d9bc55f4971feb0</Hash>
+    <Hash>c031883478a517dfd06add840b8f98c1</Hash>
 </Codenesium>*/

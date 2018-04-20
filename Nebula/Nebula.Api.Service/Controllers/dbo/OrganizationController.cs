@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/organizations")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class OrganizationController: AbstractOrganizationController
 	{
 		public OrganizationController(
+			ServiceSettings settings,
 			ILogger<OrganizationController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOOrganization organizationManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       organizationManager)
 		{
@@ -33,5 +36,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>25f88455d4c4a030cf86e8d8bdae270b</Hash>
+    <Hash>4cba1cd20cbaaf53984b040dfefd04c5</Hash>
 </Codenesium>*/

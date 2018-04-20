@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -117,12 +118,16 @@ namespace Codenesium.Foundation.CommonMVC
 
         protected ILogger logger { get; set; }
 
+		protected ServiceSettings settings { get;set; }
+
         public AbstractApiController(
+	        ServiceSettings settings,
             ILogger logger,
             ITransactionCoordinator transactionCooordinator
             )
         {
             this.logger = logger;
+			this.settings = settings;
             this.TransactionCooordinator = transactionCooordinator;
         }
     }
@@ -133,7 +138,7 @@ namespace Codenesium.Foundation.CommonMVC
     /// The purpose of this filter is to throw an error when a client passes a null model to a controller
     /// from http://stackoverflow.com/questions/14517151/how-to-ensure-asp-net-web-api-controllers-parameter-is-not-null
     /// </summary>
-    public class ModelValidateFilter : ActionFilterAttribute
+    public class ModelValidateAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
@@ -153,7 +158,7 @@ namespace Codenesium.Foundation.CommonMVC
     /// This attribute can be added to disable entity framework change tracking for read only scenarios. This can
 	/// drastically improve performance.
     /// </summary>
-    public class ReadOnlyFilter : ActionFilterAttribute
+    public class ReadOnlyAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
@@ -177,7 +182,7 @@ namespace Codenesium.Foundation.CommonMVC
 	/// and starting a transaction when a request begins and committing or rolling back the transaction if 
 	/// there is an exception during the request.
     /// </summary>
-    public class UnitOfWorkActionFilter : ActionFilterAttribute
+    public class UnitOfWorkAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
@@ -231,7 +236,7 @@ namespace Codenesium.Foundation.CommonMVC
 	/// to the client in the header x-time-elapsed
     /// 
     /// </summary>
-	public class BenchmarkFilter : ActionFilterAttribute
+	public class BenchmarkAttribute : ActionFilterAttribute
     {
         public override async Task OnActionExecutionAsync(ActionExecutingContext actionContext, ActionExecutionDelegate next)
         {
@@ -242,7 +247,7 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
   
-    public class ResponseFilter : ActionFilterAttribute
+    public class ResponseAttribute : ActionFilterAttribute
     {
 		public override void OnActionExecuted(ActionExecutedContext context)
         {
@@ -298,6 +303,11 @@ namespace Codenesium.Foundation.CommonMVC
                 parameter.Required |= !routeInfo.IsOptional;
             }
         }
+    }
+
+	public class ServiceSettings
+    {
+        public string ExternalBaseUrl { get; set; }
     }
 
     public class SearchQuery

@@ -43,6 +43,28 @@ namespace FileServiceNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
+		public virtual async Task<int> BucketCreateAsync(BucketModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task BucketUpdateAsync(int id, BucketModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Buckets/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task BucketDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Buckets/{id}");
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
 		public virtual async Task<List<POCOBucket>> BucketSearchAsync(string query, int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?{query}&offset={offset}&limit={limit}");
@@ -67,31 +89,31 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Buckets;
 		}
 
-		public virtual async Task BucketDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Buckets/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task BucketUpdateAsync(int id, BucketModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Buckets/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> BucketCreateAsync(BucketModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task BucketBulkInsertAsync(List<BucketModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> FileCreateAsync(FileModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task FileUpdateAsync(int id, FileModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Files/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task FileDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Files/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -120,31 +142,31 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Files;
 		}
 
-		public virtual async Task FileDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Files/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task FileUpdateAsync(int id, FileModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Files/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> FileCreateAsync(FileModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task FileBulkInsertAsync(List<FileModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<int> FileTypeCreateAsync(FileTypeModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+		}
+
+		public virtual async Task FileTypeUpdateAsync(int id, FileTypeModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/FileTypes/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task FileTypeDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/FileTypes/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
 		}
@@ -173,28 +195,6 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).FileTypes;
 		}
 
-		public virtual async Task FileTypeDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/FileTypes/{id}");
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task FileTypeUpdateAsync(int id, FileTypeModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/FileTypes/{id}", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-		}
-
-		public virtual async Task<int> FileTypeCreateAsync(FileTypeModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes", item);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.Content.ContentToString().ToInt();
-		}
-
 		public virtual async Task FileTypeBulkInsertAsync(List<FileTypeModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items);
@@ -205,5 +205,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>0f3e4eeb4539da619d2fa51a76e1b0cd</Hash>
+    <Hash>63e9b66adb4270edc3f6797c08470e77</Hash>
 </Codenesium>*/

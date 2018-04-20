@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.BusinessObjects;
 
@@ -13,15 +14,17 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employeePayHistories")]
 	[ApiVersion("1.0")]
-	[ResponseFilter]
+	[Response]
 	public class EmployeePayHistoryController: AbstractEmployeePayHistoryController
 	{
 		public EmployeePayHistoryController(
+			ServiceSettings settings,
 			ILogger<EmployeePayHistoryController> logger,
 			ITransactionCoordinator transactionCoordinator,
 			IBOEmployeePayHistory employeePayHistoryManager
 			)
-			: base(logger,
+			: base(settings,
+			       logger,
 			       transactionCoordinator,
 			       employeePayHistoryManager)
 		{
@@ -33,5 +36,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>09d3e732347f8a4b9001158858e8d051</Hash>
+    <Hash>86d23c1f7dec6eaead4c691e2ec1834f</Hash>
 </Codenesium>*/
