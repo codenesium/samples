@@ -22,11 +22,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.Context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 			else
 			{
-				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.Context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 		}
 
@@ -34,16 +34,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.Context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 			else
 			{
-				return this.context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
+				return this.Context.Set<EFProductDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductDocument>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>156d3f98da0eab8b2282cbe5f0adebc0</Hash>
+    <Hash>fddec8f312f987ee9394129cb58b324f</Hash>
 </Codenesium>*/

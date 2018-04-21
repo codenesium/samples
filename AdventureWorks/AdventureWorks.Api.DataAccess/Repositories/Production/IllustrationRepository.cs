@@ -22,11 +22,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy("IllustrationID ASC").Skip(skip).Take(take).ToList<EFIllustration>();
+				return this.Context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy("IllustrationID ASC").Skip(skip).Take(take).ToList<EFIllustration>();
 			}
 			else
 			{
-				return this.context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFIllustration>();
+				return this.Context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFIllustration>();
 			}
 		}
 
@@ -34,16 +34,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy("IllustrationID ASC").Skip(skip).Take(take).ToList<EFIllustration>();
+				return this.Context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy("IllustrationID ASC").Skip(skip).Take(take).ToList<EFIllustration>();
 			}
 			else
 			{
-				return this.context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFIllustration>();
+				return this.Context.Set<EFIllustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFIllustration>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>112e3fada0c04af89acf2a4f52b596cb</Hash>
+    <Hash>7afa273f1c8c383f33fd5903f25bcaac</Hash>
 </Codenesium>*/

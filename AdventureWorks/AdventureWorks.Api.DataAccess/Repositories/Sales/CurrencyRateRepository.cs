@@ -22,11 +22,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.Context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 			else
 			{
-				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.Context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 		}
 
@@ -34,16 +34,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.Context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy("CurrencyRateID ASC").Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 			else
 			{
-				return this.context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
+				return this.Context.Set<EFCurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCurrencyRate>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>77fdae16eb49247a858fd609fa9cda7e</Hash>
+    <Hash>123f073c5462a5e133fe99fb3d0675a1</Hash>
 </Codenesium>*/

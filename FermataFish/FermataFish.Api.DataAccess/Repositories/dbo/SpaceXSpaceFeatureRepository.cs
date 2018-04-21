@@ -22,11 +22,11 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
 			}
 			else
 			{
-				return this.context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
 			}
 		}
 
@@ -34,16 +34,16 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
 			}
 			else
 			{
-				return this.context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4b0c2d81f1223fa7ff866d65f383458</Hash>
+    <Hash>166c83d1eb1d9fc1737ffb728f1064e8</Hash>
 </Codenesium>*/

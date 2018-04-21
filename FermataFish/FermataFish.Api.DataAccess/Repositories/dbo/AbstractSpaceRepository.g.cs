@@ -12,18 +12,18 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public abstract class AbstractSpaceRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractSpaceRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			var record = new EFSpace();
 
-			this.mapper.SpaceMapModelToEF(
+			this.Mapper.SpaceMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFSpace>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFSpace>().Add(record);
+			this.Context.SaveChanges();
 			return record.Id;
 		}
 
@@ -48,15 +48,15 @@ namespace FermataFishNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{id}");
+				throw new Exception($"Unable to find id:{id}");
 			}
 			else
 			{
-				this.mapper.SpaceMapModelToEF(
+				this.Mapper.SpaceMapModelToEF(
 					id,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFSpace>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFSpace>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int id)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.Id == id, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.Id == id);
 		}
 
 		public virtual POCOSpace GetByIdDirect(int id)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.Id == id, response);
-			return response.Spaces.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.Id == id).Spaces.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFSpace, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOSpace> GetWhereDirect(Expression<Func<EFSpace, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).Spaces;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFSpace, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.Spaces;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFSpace, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFSpace> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.SpaceMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.SpaceMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFSpace> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.SpaceMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.SpaceMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFSpace> SearchLinqEF(Expression<Func<EFSpace, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>73dd62495d9897f8622c32daa328a1df</Hash>
+    <Hash>2787f6abf9170b26610cf88d24d53d2b</Hash>
 </Codenesium>*/

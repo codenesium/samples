@@ -22,11 +22,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.Context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 			else
 			{
-				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.Context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 		}
 
@@ -34,16 +34,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			if (string.IsNullOrEmpty(orderClause))
 			{
-				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.Context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 			else
 			{
-				return this.context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
+				return this.Context.Set<EFPersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonPhone>();
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4513ec1c4b8f1a406b6b40fd5856c6a</Hash>
+    <Hash>0efe63f36d3a4b1f35397d06dbf42715</Hash>
 </Codenesium>*/

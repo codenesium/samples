@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractPurchaseOrderHeaderRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractPurchaseOrderHeaderRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFPurchaseOrderHeader();
 
-			this.mapper.PurchaseOrderHeaderMapModelToEF(
+			this.Mapper.PurchaseOrderHeaderMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFPurchaseOrderHeader>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFPurchaseOrderHeader>().Add(record);
+			this.Context.SaveChanges();
 			return record.PurchaseOrderID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{purchaseOrderID}");
+				throw new Exception($"Unable to find id:{purchaseOrderID}");
 			}
 			else
 			{
-				this.mapper.PurchaseOrderHeaderMapModelToEF(
+				this.Mapper.PurchaseOrderHeaderMapModelToEF(
 					purchaseOrderID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFPurchaseOrderHeader>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFPurchaseOrderHeader>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int purchaseOrderID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID);
 		}
 
 		public virtual POCOPurchaseOrderHeader GetByIdDirect(int purchaseOrderID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID, response);
-			return response.PurchaseOrderHeaders.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID).PurchaseOrderHeaders.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOPurchaseOrderHeader> GetWhereDirect(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).PurchaseOrderHeaders;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.PurchaseOrderHeaders;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFPurchaseOrderHeader> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.PurchaseOrderHeaderMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.PurchaseOrderHeaderMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFPurchaseOrderHeader> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.PurchaseOrderHeaderMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.PurchaseOrderHeaderMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFPurchaseOrderHeader> SearchLinqEF(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e751e316de8d849aa86a5fa6c02955a</Hash>
+    <Hash>e3c1929b91a869e4c4721a4c1dc493ff</Hash>
 </Codenesium>*/

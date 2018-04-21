@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractTransactionHistoryRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractTransactionHistoryRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFTransactionHistory();
 
-			this.mapper.TransactionHistoryMapModelToEF(
+			this.Mapper.TransactionHistoryMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFTransactionHistory>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFTransactionHistory>().Add(record);
+			this.Context.SaveChanges();
 			return record.TransactionID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{transactionID}");
+				throw new Exception($"Unable to find id:{transactionID}");
 			}
 			else
 			{
-				this.mapper.TransactionHistoryMapModelToEF(
+				this.Mapper.TransactionHistoryMapModelToEF(
 					transactionID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFTransactionHistory>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFTransactionHistory>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int transactionID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.TransactionID == transactionID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.TransactionID == transactionID);
 		}
 
 		public virtual POCOTransactionHistory GetByIdDirect(int transactionID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.TransactionID == transactionID, response);
-			return response.TransactionHistories.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.TransactionID == transactionID).TransactionHistories.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOTransactionHistory> GetWhereDirect(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).TransactionHistories;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.TransactionHistories;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFTransactionHistory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFTransactionHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.TransactionHistoryMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.TransactionHistoryMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFTransactionHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.TransactionHistoryMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.TransactionHistoryMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFTransactionHistory> SearchLinqEF(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>345d5128d625df94e053da5a60c80960</Hash>
+    <Hash>065b338643cf3a032cc0b7481cc05fbc</Hash>
 </Codenesium>*/

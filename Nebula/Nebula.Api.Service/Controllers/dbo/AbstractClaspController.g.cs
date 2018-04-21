@@ -72,7 +72,7 @@ namespace NebulaNS.Api.Service
 			if(result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/clasps/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/clasps/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -170,5 +170,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>af2ad9a7d4ee62506ac802578c4780d3</Hash>
+    <Hash>6341158fab886286ac4bc0858122d8bf</Hash>
 </Codenesium>*/

@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Service
 			if(result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/documents/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/documents/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -159,5 +159,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c57b9be88a0365b4abd87a4a63878c61</Hash>
+    <Hash>80b798972cb06b3e56d0db13baf57454</Hash>
 </Codenesium>*/

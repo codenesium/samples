@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractProductInventoryRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractProductInventoryRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFProductInventory();
 
-			this.mapper.ProductInventoryMapModelToEF(
+			this.Mapper.ProductInventoryMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFProductInventory>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFProductInventory>().Add(record);
+			this.Context.SaveChanges();
 			return record.ProductID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{productID}");
+				throw new Exception($"Unable to find id:{productID}");
 			}
 			else
 			{
-				this.mapper.ProductInventoryMapModelToEF(
+				this.Mapper.ProductInventoryMapModelToEF(
 					productID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFProductInventory>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFProductInventory>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int productID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ProductID == productID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.ProductID == productID);
 		}
 
 		public virtual POCOProductInventory GetByIdDirect(int productID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ProductID == productID, response);
-			return response.ProductInventories.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.ProductID == productID).ProductInventories.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOProductInventory> GetWhereDirect(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).ProductInventories;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.ProductInventories;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFProductInventory, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFProductInventory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ProductInventoryMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ProductInventoryMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFProductInventory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ProductInventoryMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ProductInventoryMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFProductInventory> SearchLinqEF(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ced2382d1bde26e6a128477c519bd12</Hash>
+    <Hash>330ad799d6bde2039219133480c61a89</Hash>
 </Codenesium>*/

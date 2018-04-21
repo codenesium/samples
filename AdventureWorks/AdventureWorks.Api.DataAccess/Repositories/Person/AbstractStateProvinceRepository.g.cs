@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractStateProvinceRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractStateProvinceRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFStateProvince();
 
-			this.mapper.StateProvinceMapModelToEF(
+			this.Mapper.StateProvinceMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFStateProvince>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFStateProvince>().Add(record);
+			this.Context.SaveChanges();
 			return record.StateProvinceID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{stateProvinceID}");
+				throw new Exception($"Unable to find id:{stateProvinceID}");
 			}
 			else
 			{
-				this.mapper.StateProvinceMapModelToEF(
+				this.Mapper.StateProvinceMapModelToEF(
 					stateProvinceID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFStateProvince>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFStateProvince>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int stateProvinceID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID);
 		}
 
 		public virtual POCOStateProvince GetByIdDirect(int stateProvinceID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID, response);
-			return response.StateProvinces.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID).StateProvinces.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOStateProvince> GetWhereDirect(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).StateProvinces;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.StateProvinces;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFStateProvince, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFStateProvince> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.StateProvinceMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.StateProvinceMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFStateProvince> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.StateProvinceMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.StateProvinceMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFStateProvince> SearchLinqEF(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e1c863c60c19074fece3e19047e2b4ef</Hash>
+    <Hash>c1532e82f326d54bfb32a095200a98ce</Hash>
 </Codenesium>*/

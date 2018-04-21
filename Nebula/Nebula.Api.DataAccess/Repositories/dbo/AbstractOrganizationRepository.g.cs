@@ -12,18 +12,18 @@ namespace NebulaNS.Api.DataAccess
 {
 	public abstract class AbstractOrganizationRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractOrganizationRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var record = new EFOrganization();
 
-			this.mapper.OrganizationMapModelToEF(
+			this.Mapper.OrganizationMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFOrganization>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFOrganization>().Add(record);
+			this.Context.SaveChanges();
 			return record.Id;
 		}
 
@@ -48,15 +48,15 @@ namespace NebulaNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{id}");
+				throw new Exception($"Unable to find id:{id}");
 			}
 			else
 			{
-				this.mapper.OrganizationMapModelToEF(
+				this.Mapper.OrganizationMapModelToEF(
 					id,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFOrganization>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFOrganization>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int id)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.Id == id, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.Id == id);
 		}
 
 		public virtual POCOOrganization GetByIdDirect(int id)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.Id == id, response);
-			return response.Organizations.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.Id == id).Organizations.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOOrganization> GetWhereDirect(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).Organizations;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.Organizations;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFOrganization, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFOrganization> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.OrganizationMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.OrganizationMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFOrganization> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.OrganizationMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.OrganizationMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFOrganization> SearchLinqEF(Expression<Func<EFOrganization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3330eafd9c4ea4d6fa05d2ae55aff4fa</Hash>
+    <Hash>92a9d46214090f63752b30ddac64f769</Hash>
 </Codenesium>*/

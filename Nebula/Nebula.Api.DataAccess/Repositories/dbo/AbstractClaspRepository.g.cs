@@ -12,18 +12,18 @@ namespace NebulaNS.Api.DataAccess
 {
 	public abstract class AbstractClaspRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractClaspRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace NebulaNS.Api.DataAccess
 		{
 			var record = new EFClasp();
 
-			this.mapper.ClaspMapModelToEF(
+			this.Mapper.ClaspMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFClasp>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFClasp>().Add(record);
+			this.Context.SaveChanges();
 			return record.Id;
 		}
 
@@ -48,15 +48,15 @@ namespace NebulaNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{id}");
+				throw new Exception($"Unable to find id:{id}");
 			}
 			else
 			{
-				this.mapper.ClaspMapModelToEF(
+				this.Mapper.ClaspMapModelToEF(
 					id,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFClasp>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFClasp>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int id)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.Id == id, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.Id == id);
 		}
 
 		public virtual POCOClasp GetByIdDirect(int id)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.Id == id, response);
-			return response.Clasps.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.Id == id).Clasps.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOClasp> GetWhereDirect(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).Clasps;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.Clasps;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFClasp, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFClasp> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ClaspMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ClaspMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFClasp> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ClaspMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ClaspMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>34ef99b7ef8b2b464eb82648a6b8a0ad</Hash>
+    <Hash>0bb403f57f50f83da13062ace84e4a1e</Hash>
 </Codenesium>*/

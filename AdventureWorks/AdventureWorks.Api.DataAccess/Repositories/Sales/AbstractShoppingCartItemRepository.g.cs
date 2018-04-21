@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractShoppingCartItemRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractShoppingCartItemRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFShoppingCartItem();
 
-			this.mapper.ShoppingCartItemMapModelToEF(
+			this.Mapper.ShoppingCartItemMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFShoppingCartItem>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFShoppingCartItem>().Add(record);
+			this.Context.SaveChanges();
 			return record.ShoppingCartItemID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{shoppingCartItemID}");
+				throw new Exception($"Unable to find id:{shoppingCartItemID}");
 			}
 			else
 			{
-				this.mapper.ShoppingCartItemMapModelToEF(
+				this.Mapper.ShoppingCartItemMapModelToEF(
 					shoppingCartItemID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFShoppingCartItem>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFShoppingCartItem>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int shoppingCartItemID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID);
 		}
 
 		public virtual POCOShoppingCartItem GetByIdDirect(int shoppingCartItemID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID, response);
-			return response.ShoppingCartItems.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID).ShoppingCartItems.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).ShoppingCartItems;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.ShoppingCartItems;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFShoppingCartItem, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFShoppingCartItem> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ShoppingCartItemMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ShoppingCartItemMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFShoppingCartItem> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ShoppingCartItemMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ShoppingCartItemMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFShoppingCartItem> SearchLinqEF(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>04e2f378de7fc4fa6e8e25132d82685c</Hash>
+    <Hash>575779d390ba832fea13d0de36a7a7c5</Hash>
 </Codenesium>*/

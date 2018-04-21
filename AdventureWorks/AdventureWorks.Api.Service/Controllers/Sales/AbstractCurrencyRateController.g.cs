@@ -72,7 +72,7 @@ namespace AdventureWorksNS.Api.Service
 			if(result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/currencyRates/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/currencyRates/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -170,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>be3f186ff00a86728a9924f3dcd55f68</Hash>
+    <Hash>d9dbbf62e9498e1fe2a17fb058148f2c</Hash>
 </Codenesium>*/

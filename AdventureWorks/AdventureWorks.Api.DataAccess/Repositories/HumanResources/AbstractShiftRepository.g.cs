@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractShiftRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractShiftRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFShift();
 
-			this.mapper.ShiftMapModelToEF(
+			this.Mapper.ShiftMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFShift>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFShift>().Add(record);
+			this.Context.SaveChanges();
 			return record.ShiftID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{shiftID}");
+				throw new Exception($"Unable to find id:{shiftID}");
 			}
 			else
 			{
-				this.mapper.ShiftMapModelToEF(
+				this.Mapper.ShiftMapModelToEF(
 					shiftID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFShift>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFShift>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int shiftID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ShiftID == shiftID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.ShiftID == shiftID);
 		}
 
 		public virtual POCOShift GetByIdDirect(int shiftID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ShiftID == shiftID, response);
-			return response.Shifts.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.ShiftID == shiftID).Shifts.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOShift> GetWhereDirect(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).Shifts;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.Shifts;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFShift, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFShift> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ShiftMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ShiftMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFShift> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ShiftMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ShiftMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFShift> SearchLinqEF(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ab7286eb85dbeae4d1174ae1b16847e7</Hash>
+    <Hash>7cf3fdd245dd3200ea113656bc6760cc</Hash>
 </Codenesium>*/

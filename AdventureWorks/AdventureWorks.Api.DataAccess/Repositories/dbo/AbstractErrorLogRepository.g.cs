@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractErrorLogRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractErrorLogRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFErrorLog();
 
-			this.mapper.ErrorLogMapModelToEF(
+			this.Mapper.ErrorLogMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFErrorLog>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFErrorLog>().Add(record);
+			this.Context.SaveChanges();
 			return record.ErrorLogID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{errorLogID}");
+				throw new Exception($"Unable to find id:{errorLogID}");
 			}
 			else
 			{
-				this.mapper.ErrorLogMapModelToEF(
+				this.Mapper.ErrorLogMapModelToEF(
 					errorLogID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFErrorLog>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFErrorLog>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int errorLogID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID);
 		}
 
 		public virtual POCOErrorLog GetByIdDirect(int errorLogID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID, response);
-			return response.ErrorLogs.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID).ErrorLogs.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOErrorLog> GetWhereDirect(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).ErrorLogs;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.ErrorLogs;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFErrorLog, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFErrorLog> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ErrorLogMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ErrorLogMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFErrorLog> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.ErrorLogMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.ErrorLogMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFErrorLog> SearchLinqEF(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>64e2b3174aa09d5f5289ddf0187e54ae</Hash>
+    <Hash>127d7733a5fa008dc5c3369de544018f</Hash>
 </Codenesium>*/

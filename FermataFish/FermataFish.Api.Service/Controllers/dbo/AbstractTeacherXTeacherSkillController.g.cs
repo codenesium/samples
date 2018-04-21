@@ -72,7 +72,7 @@ namespace FermataFishNS.Api.Service
 			if(result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.settings.ExternalBaseUrl}/api/teacherXTeacherSkills/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/teacherXTeacherSkills/{result.Id.ToString()}");
 				return this.Ok(result);
 			}
 			else
@@ -170,5 +170,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>104108d17a99cf1e0eae23a7fc98bfbb</Hash>
+    <Hash>3bbe94197ac36c987c7875e7546935e3</Hash>
 </Codenesium>*/

@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractBusinessEntityAddressRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractBusinessEntityAddressRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFBusinessEntityAddress();
 
-			this.mapper.BusinessEntityAddressMapModelToEF(
+			this.Mapper.BusinessEntityAddressMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFBusinessEntityAddress>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFBusinessEntityAddress>().Add(record);
+			this.Context.SaveChanges();
 			return record.BusinessEntityID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{businessEntityID}");
+				throw new Exception($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
-				this.mapper.BusinessEntityAddressMapModelToEF(
+				this.Mapper.BusinessEntityAddressMapModelToEF(
 					businessEntityID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFBusinessEntityAddress>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFBusinessEntityAddress>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int businessEntityID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID);
 		}
 
 		public virtual POCOBusinessEntityAddress GetByIdDirect(int businessEntityID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID, response);
-			return response.BusinessEntityAddresses.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID).BusinessEntityAddresses.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFBusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOBusinessEntityAddress> GetWhereDirect(Expression<Func<EFBusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).BusinessEntityAddresses;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFBusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.BusinessEntityAddresses;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFBusinessEntityAddress, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFBusinessEntityAddress> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.BusinessEntityAddressMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.BusinessEntityAddressMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFBusinessEntityAddress> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.BusinessEntityAddressMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.BusinessEntityAddressMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFBusinessEntityAddress> SearchLinqEF(Expression<Func<EFBusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6d93a1a7f20ec73bc9b0c39925ca3ab1</Hash>
+    <Hash>e1c4d7f4a696b76784260d26eae0e207</Hash>
 </Codenesium>*/

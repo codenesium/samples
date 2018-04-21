@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractAddressTypeRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractAddressTypeRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFAddressType();
 
-			this.mapper.AddressTypeMapModelToEF(
+			this.Mapper.AddressTypeMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFAddressType>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFAddressType>().Add(record);
+			this.Context.SaveChanges();
 			return record.AddressTypeID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.AddressTypeID == addressTypeID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{addressTypeID}");
+				throw new Exception($"Unable to find id:{addressTypeID}");
 			}
 			else
 			{
-				this.mapper.AddressTypeMapModelToEF(
+				this.Mapper.AddressTypeMapModelToEF(
 					addressTypeID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFAddressType>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFAddressType>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int addressTypeID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.AddressTypeID == addressTypeID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.AddressTypeID == addressTypeID);
 		}
 
 		public virtual POCOAddressType GetByIdDirect(int addressTypeID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.AddressTypeID == addressTypeID, response);
-			return response.AddressTypes.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.AddressTypeID == addressTypeID).AddressTypes.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOAddressType> GetWhereDirect(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).AddressTypes;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.AddressTypes;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFAddressType, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFAddressType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.AddressTypeMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.AddressTypeMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFAddressType> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.AddressTypeMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.AddressTypeMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFAddressType> SearchLinqEF(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca90911ecf540c3eedb817ed4e556d34</Hash>
+    <Hash>4782496b09d427ad733f8742218ddd0f</Hash>
 </Codenesium>*/

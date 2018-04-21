@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractAWBuildVersionRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractAWBuildVersionRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFAWBuildVersion();
 
-			this.mapper.AWBuildVersionMapModelToEF(
+			this.Mapper.AWBuildVersionMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFAWBuildVersion>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFAWBuildVersion>().Add(record);
+			this.Context.SaveChanges();
 			return record.SystemInformationID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{systemInformationID}");
+				throw new Exception($"Unable to find id:{systemInformationID}");
 			}
 			else
 			{
-				this.mapper.AWBuildVersionMapModelToEF(
+				this.Mapper.AWBuildVersionMapModelToEF(
 					systemInformationID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFAWBuildVersion>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFAWBuildVersion>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int systemInformationID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.SystemInformationID == systemInformationID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.SystemInformationID == systemInformationID);
 		}
 
 		public virtual POCOAWBuildVersion GetByIdDirect(int systemInformationID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.SystemInformationID == systemInformationID, response);
-			return response.AWBuildVersions.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.SystemInformationID == systemInformationID).AWBuildVersions.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOAWBuildVersion> GetWhereDirect(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).AWBuildVersions;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.AWBuildVersions;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFAWBuildVersion, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFAWBuildVersion> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.AWBuildVersionMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.AWBuildVersionMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFAWBuildVersion> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.AWBuildVersionMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.AWBuildVersionMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFAWBuildVersion> SearchLinqEF(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f7abcb7c71b9df30448a4eec0e68759d</Hash>
+    <Hash>63d42004c10f71fef022ffe6295dc496</Hash>
 </Codenesium>*/

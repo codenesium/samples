@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractCurrencyRateRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractCurrencyRateRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFCurrencyRate();
 
-			this.mapper.CurrencyRateMapModelToEF(
+			this.Mapper.CurrencyRateMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFCurrencyRate>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFCurrencyRate>().Add(record);
+			this.Context.SaveChanges();
 			return record.CurrencyRateID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{currencyRateID}");
+				throw new Exception($"Unable to find id:{currencyRateID}");
 			}
 			else
 			{
-				this.mapper.CurrencyRateMapModelToEF(
+				this.Mapper.CurrencyRateMapModelToEF(
 					currencyRateID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFCurrencyRate>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFCurrencyRate>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int currencyRateID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID);
 		}
 
 		public virtual POCOCurrencyRate GetByIdDirect(int currencyRateID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID, response);
-			return response.CurrencyRates.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID).CurrencyRates.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOCurrencyRate> GetWhereDirect(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).CurrencyRates;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.CurrencyRates;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFCurrencyRate, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFCurrencyRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.CurrencyRateMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.CurrencyRateMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFCurrencyRate> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.CurrencyRateMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.CurrencyRateMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFCurrencyRate> SearchLinqEF(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>836d1dc29d158afbe19134ba43a18902</Hash>
+    <Hash>0722f96582c3b4e828a27bdce4ba0e54</Hash>
 </Codenesium>*/

@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractWorkOrderRoutingRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractWorkOrderRoutingRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFWorkOrderRouting();
 
-			this.mapper.WorkOrderRoutingMapModelToEF(
+			this.Mapper.WorkOrderRoutingMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFWorkOrderRouting>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFWorkOrderRouting>().Add(record);
+			this.Context.SaveChanges();
 			return record.WorkOrderID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{workOrderID}");
+				throw new Exception($"Unable to find id:{workOrderID}");
 			}
 			else
 			{
-				this.mapper.WorkOrderRoutingMapModelToEF(
+				this.Mapper.WorkOrderRoutingMapModelToEF(
 					workOrderID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFWorkOrderRouting>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFWorkOrderRouting>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int workOrderID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID);
 		}
 
 		public virtual POCOWorkOrderRouting GetByIdDirect(int workOrderID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID, response);
-			return response.WorkOrderRoutings.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID).WorkOrderRoutings.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOWorkOrderRouting> GetWhereDirect(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).WorkOrderRoutings;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.WorkOrderRoutings;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFWorkOrderRouting, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFWorkOrderRouting> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.WorkOrderRoutingMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.WorkOrderRoutingMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFWorkOrderRouting> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.WorkOrderRoutingMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.WorkOrderRoutingMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFWorkOrderRouting> SearchLinqEF(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e3a8e3810f904761d85fcce3e187d408</Hash>
+    <Hash>a25e4f1007b20ed2f27a963d666b57ba</Hash>
 </Codenesium>*/

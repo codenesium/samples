@@ -12,18 +12,18 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public abstract class AbstractJobCandidateRepository
 	{
-		protected ApplicationDbContext context;
-		protected ILogger logger;
-		protected IObjectMapper mapper;
+		protected ApplicationDbContext Context { get; }
+		protected ILogger Logger { get; }
+		protected IObjectMapper Mapper { get; }
 
 		public AbstractJobCandidateRepository(
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 		{
-			this.mapper = mapper;
-			this.logger = logger;
-			this.context = context;
+			this.Mapper = mapper;
+			this.Logger = logger;
+			this.Context = context;
 		}
 
 		public virtual int Create(
@@ -31,13 +31,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			var record = new EFJobCandidate();
 
-			this.mapper.JobCandidateMapModelToEF(
+			this.Mapper.JobCandidateMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.context.Set<EFJobCandidate>().Add(record);
-			this.context.SaveChanges();
+			this.Context.Set<EFJobCandidate>().Add(record);
+			this.Context.SaveChanges();
 			return record.JobCandidateID;
 		}
 
@@ -48,15 +48,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			var record = this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
 			if (record == null)
 			{
-				this.logger.LogError($"Unable to find id:{jobCandidateID}");
+				throw new Exception($"Unable to find id:{jobCandidateID}");
 			}
 			else
 			{
-				this.mapper.JobCandidateMapModelToEF(
+				this.Mapper.JobCandidateMapModelToEF(
 					jobCandidateID,
 					model,
 					record);
-				this.context.SaveChanges();
+				this.Context.SaveChanges();
 			}
 		}
 
@@ -71,61 +71,52 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.context.Set<EFJobCandidate>().Remove(record);
-				this.context.SaveChanges();
+				this.Context.Set<EFJobCandidate>().Remove(record);
+				this.Context.SaveChanges();
 			}
 		}
 
 		public virtual ApiResponse GetById(int jobCandidateID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID, response);
-			return response;
+			return this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID);
 		}
 
 		public virtual POCOJobCandidate GetByIdDirect(int jobCandidateID)
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID, response);
-			return response.JobCandidates.FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID).JobCandidates.FirstOrDefault();
 		}
 
 		public virtual ApiResponse GetWhere(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
 		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
-
-			this.SearchLinqPOCODynamic(predicate, response, skip, take, orderClause);
-			return response;
+			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
 		}
 
 		public virtual List<POCOJobCandidate> GetWhereDirect(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			return this.SearchLinqPOCO(predicate, skip, take, orderClause).JobCandidates;
+		}
+
+		private ApiResponse SearchLinqPOCO(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
 			var response = new ApiResponse();
 
-			this.SearchLinqPOCO(predicate, response, skip, take, orderClause);
-			return response.JobCandidates;
-		}
-
-		private void SearchLinqPOCO(Expression<Func<EFJobCandidate, bool>> predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
 			List<EFJobCandidate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.JobCandidateMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.JobCandidateMapEFToPOCO(x, response));
+			return response;
 		}
 
-		private void SearchLinqPOCODynamic(string predicate, ApiResponse response, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
+			var response = new ApiResponse();
+
 			List<EFJobCandidate> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.mapper.JobCandidateMapEFToPOCO(x, response));
+			records.ForEach(x => this.Mapper.JobCandidateMapEFToPOCO(x, response));
+			return response;
 		}
 
 		protected virtual List<EFJobCandidate> SearchLinqEF(Expression<Func<EFJobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -141,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b35e9c25c1af4683096442fa85bc39b0</Hash>
+    <Hash>f44c3d8d7a8cc856eb4cb65ab2441a2f</Hash>
 </Codenesium>*/
