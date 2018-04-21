@@ -16,7 +16,14 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Service", "
 	
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.BusinessObjects", "FileService.Api.BusinessObjects/FileService.Api.BusinessObjects.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
 	EndProject
-	Global
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Service.IntegrationTests", "FileService.Api.Service.IntegrationTests/FileService.Api.Service.IntegrationTests.csproj", "{FileService.Api.Service.IntegrationTests}"
+	EndProject
+	
+
+
+
+Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -43,6 +50,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.BusinessObj
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {FileService.Api.Service.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FileService.Api.Service.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FileService.Api.Service.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FileService.Api.Service.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+	    
+		
+		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

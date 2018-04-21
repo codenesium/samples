@@ -116,9 +116,9 @@ namespace Codenesium.Foundation.CommonMVC
     {
         public ITransactionCoordinator TransactionCooordinator { get; private set; }
 
-        protected ILogger logger { get; set; }
+        protected ILogger Logger { get; private set;  }
 
-		protected ServiceSettings settings { get;set; }
+		protected ServiceSettings Settings { get; private set;  }
 
         public AbstractApiController(
 	        ServiceSettings settings,
@@ -126,8 +126,8 @@ namespace Codenesium.Foundation.CommonMVC
             ITransactionCoordinator transactionCooordinator
             )
         {
-            this.logger = logger;
-			this.settings = settings;
+            this.Logger = logger;
+			this.Settings = settings;
             this.TransactionCooordinator = transactionCooordinator;
         }
     }
