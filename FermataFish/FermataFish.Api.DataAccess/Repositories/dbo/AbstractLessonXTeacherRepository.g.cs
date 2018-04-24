@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual int Create(
 			LessonXTeacherModel model)
 		{
-			var record = new EFLessonXTeacher();
+			EFLessonXTeacher record = new EFLessonXTeacher();
 
 			this.Mapper.LessonXTeacherMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace FermataFishNS.Api.DataAccess
 			int id,
 			LessonXTeacherModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFLessonXTeacher record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFLessonXTeacher record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFLessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFLessonXTeacher> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.LessonXTeacherMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFLessonXTeacher> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.LessonXTeacherMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e188d4b053c896f3c0c9656baaea455</Hash>
+    <Hash>56424e89e0e0de20657240880e464a6c</Hash>
 </Codenesium>*/

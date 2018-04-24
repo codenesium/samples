@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ProductModelIllustrationModel model)
 		{
-			var record = new EFProductModelIllustration();
+			EFProductModelIllustration record = new EFProductModelIllustration();
 
 			this.Mapper.ProductModelIllustrationMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int productModelID,
 			ProductModelIllustrationModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
+			EFProductModelIllustration record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{productModelID}");
+				throw new RecordNotFoundException($"Unable to find id:{productModelID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int productModelID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
+			EFProductModelIllustration record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductModelIllustration> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductModelIllustrationMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductModelIllustration> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductModelIllustrationMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6d981395867ea29d6e9571e5825b0589</Hash>
+    <Hash>d7ed45e016536cd0ca853916bb163c83</Hash>
 </Codenesium>*/

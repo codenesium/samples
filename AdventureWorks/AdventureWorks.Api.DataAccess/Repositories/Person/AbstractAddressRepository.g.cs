@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			AddressModel model)
 		{
-			var record = new EFAddress();
+			EFAddress record = new EFAddress();
 
 			this.Mapper.AddressMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int addressID,
 			AddressModel model)
 		{
-			var record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
+			EFAddress record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{addressID}");
+				throw new RecordNotFoundException($"Unable to find id:{addressID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int addressID)
 		{
-			var record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
+			EFAddress record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFAddress> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.AddressMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFAddress> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.AddressMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bf3304be2fe06aba7668dceb2d10d8ea</Hash>
+    <Hash>fa27bc0ea9849a2b866a2da4fae3fab7</Hash>
 </Codenesium>*/

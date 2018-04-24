@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			EmployeePayHistoryModel model)
 		{
-			var record = new EFEmployeePayHistory();
+			EFEmployeePayHistory record = new EFEmployeePayHistory();
 
 			this.Mapper.EmployeePayHistoryMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int businessEntityID,
 			EmployeePayHistoryModel model)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EFEmployeePayHistory record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{businessEntityID}");
+				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EFEmployeePayHistory record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFEmployeePayHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.EmployeePayHistoryMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFEmployeePayHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.EmployeePayHistoryMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>edcfabc92993d6365cc4c9a542a4e906</Hash>
+    <Hash>654293d625fed9aba9ca4d5b136e3920</Hash>
 </Codenesium>*/

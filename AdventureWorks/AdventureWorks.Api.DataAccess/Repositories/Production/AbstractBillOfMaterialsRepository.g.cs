@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			BillOfMaterialsModel model)
 		{
-			var record = new EFBillOfMaterials();
+			EFBillOfMaterials record = new EFBillOfMaterials();
 
 			this.Mapper.BillOfMaterialsMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int billOfMaterialsID,
 			BillOfMaterialsModel model)
 		{
-			var record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			EFBillOfMaterials record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{billOfMaterialsID}");
+				throw new RecordNotFoundException($"Unable to find id:{billOfMaterialsID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int billOfMaterialsID)
 		{
-			var record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			EFBillOfMaterials record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFBillOfMaterials> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.BillOfMaterialsMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFBillOfMaterials> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.BillOfMaterialsMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd68d5dab8a799ee58a98294634ab5f6</Hash>
+    <Hash>f229cb2fb2cb0cb29a29dec1dd96f486</Hash>
 </Codenesium>*/

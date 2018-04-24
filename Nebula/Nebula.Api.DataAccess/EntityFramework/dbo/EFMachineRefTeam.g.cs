@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("MachineRefTeam", Schema="dbo")]
-	public partial class EFMachineRefTeam
+	public partial class EFMachineRefTeam: AbstractEntityFrameworkPOCO
 	{
 		public EFMachineRefTeam()
 		{}
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>69e4e9280c55f3268a586a0a474a61f3</Hash>
+    <Hash>1b0c2b0875a4ad925fc89a80f61b48bd</Hash>
 </Codenesium>*/

@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ProductCostHistoryModel model)
 		{
-			var record = new EFProductCostHistory();
+			EFProductCostHistory record = new EFProductCostHistory();
 
 			this.Mapper.ProductCostHistoryMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int productID,
 			ProductCostHistoryModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			EFProductCostHistory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{productID}");
+				throw new RecordNotFoundException($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int productID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			EFProductCostHistory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductCostHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductCostHistoryMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductCostHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductCostHistoryMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a77e3c048af84ecabaf361612b7ba25f</Hash>
+    <Hash>0a17ba1588f143bc697f3baa3100d45f</Hash>
 </Codenesium>*/

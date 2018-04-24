@@ -29,7 +29,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int Create(
 			LinkStatusModel model)
 		{
-			var record = new EFLinkStatus();
+			EFLinkStatus record = new EFLinkStatus();
 
 			this.Mapper.LinkStatusMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace NebulaNS.Api.DataAccess
 			int id,
 			LinkStatusModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFLinkStatus record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFLinkStatus record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFLinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFLinkStatus> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.LinkStatusMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFLinkStatus> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.LinkStatusMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f080fecc092a4e32f8b9e63da6427cf</Hash>
+    <Hash>3a3a010ca1ab50ec7175b3e277b85fcb</Hash>
 </Codenesium>*/

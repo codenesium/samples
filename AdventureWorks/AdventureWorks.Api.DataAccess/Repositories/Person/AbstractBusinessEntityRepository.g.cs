@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			BusinessEntityModel model)
 		{
-			var record = new EFBusinessEntity();
+			EFBusinessEntity record = new EFBusinessEntity();
 
 			this.Mapper.BusinessEntityMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int businessEntityID,
 			BusinessEntityModel model)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EFBusinessEntity record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{businessEntityID}");
+				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EFBusinessEntity record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFBusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFBusinessEntity> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.BusinessEntityMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFBusinessEntity> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.BusinessEntityMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8bdee1e496771058777f2f9713c08f92</Hash>
+    <Hash>d914f5072b47c003ac6e6367246b64bf</Hash>
 </Codenesium>*/

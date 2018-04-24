@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			WorkOrderModel model)
 		{
-			var record = new EFWorkOrder();
+			EFWorkOrder record = new EFWorkOrder();
 
 			this.Mapper.WorkOrderMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int workOrderID,
 			WorkOrderModel model)
 		{
-			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			EFWorkOrder record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{workOrderID}");
+				throw new RecordNotFoundException($"Unable to find id:{workOrderID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int workOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			EFWorkOrder record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFWorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFWorkOrder> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.WorkOrderMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFWorkOrder> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.WorkOrderMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>72031c5c38450393dc637a779a77f9c6</Hash>
+    <Hash>c710ffe82e0a12be7733d54b4492adc7</Hash>
 </Codenesium>*/

@@ -38,42 +38,59 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(POCOTeacher), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.teacherManager.GetById(id);
-			return this.Ok(response);
+			POCOTeacher response = this.teacherManager.GetById(id).Teachers.FirstOrDefault();
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(List<POCOTeacher>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Search()
 		{
-			var query = new SearchQuery();
+			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.teacherManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Teachers);
+			}
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(POCOTeacher), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] TeacherModel model)
 		{
-			var result = await this.teacherManager.Create(model);
+			CreateResponse<int> result = await this.teacherManager.Create(model);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/teachers/{result.Id.ToString()}");
-				return this.Ok(result);
+				POCOTeacher response = this.teacherManager.GetById(result.Id).Teachers.First();
+				return this.Ok(response);
 			}
 			else
 			{
@@ -84,7 +101,7 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(List<int>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<TeacherModel> models)
@@ -94,35 +111,49 @@ namespace FermataFishNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
+			List<int> ids = new List<int>();
 			foreach (var model in models)
 			{
-				var result = await this.teacherManager.Create(model);
+				CreateResponse<int> result = await this.teacherManager.Create(model);
 
-				if(!result.Success)
+				if(result.Success)
+				{
+					ids.Add(result.Id);
+				}
+				else
 				{
 					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
-			return this.NoContent();
+			return this.Ok(ids);
 		}
 
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(POCOTeacher), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] TeacherModel model)
 		{
-			var result = await this.teacherManager.Update(id, model);
+			try
+			{
+				ActionResponse result = await this.teacherManager.Update(id, model);
 
-			if(result.Success)
-			{
-				return this.NoContent();
+				if (result.Success)
+				{
+					POCOTeacher response = this.teacherManager.GetById(id).Teachers.First();
+					return this.Ok(response);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
 			}
-			else
+			catch(RecordNotFoundException)
 			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
 		}
 
@@ -133,9 +164,9 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
-			var result = await this.teacherManager.Delete(id);
+			ActionResponse result = await this.teacherManager.Delete(id);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				return this.NoContent();
 			}
@@ -150,14 +181,23 @@ namespace FermataFishNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Studios/{id}/Teachers")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOTeacher>), 200)]
 		public virtual IActionResult ByStudioId(int id)
 		{
 			ApiResponse response = this.teacherManager.GetWhere(x => x.StudioId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Teachers);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>995c99a4e3a2bfbb887271ae5215f7b8</Hash>
+    <Hash>bacc2154c30beec4b3cb49337a3c83bb</Hash>
 </Codenesium>*/

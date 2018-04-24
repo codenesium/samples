@@ -29,7 +29,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int Create(
 			ClaspModel model)
 		{
-			var record = new EFClasp();
+			EFClasp record = new EFClasp();
 
 			this.Mapper.ClaspMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace NebulaNS.Api.DataAccess
 			int id,
 			ClaspModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFClasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFClasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFClasp> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ClaspMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFClasp> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ClaspMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0bb403f57f50f83da13062ace84e4a1e</Hash>
+    <Hash>98b805db383ba6993ccf96727a3e8a67</Hash>
 </Codenesium>*/

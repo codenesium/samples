@@ -29,7 +29,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual int Create(
 			FileTypeModel model)
 		{
-			var record = new EFFileType();
+			EFFileType record = new EFFileType();
 
 			this.Mapper.FileTypeMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace FileServiceNS.Api.DataAccess
 			int id,
 			FileTypeModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFFileType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFFileType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFFileType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.FileTypeMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFFileType> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.FileTypeMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d3d073eaca221ac749ea241d2eb1af95</Hash>
+    <Hash>f861ee908a0d70faf749148e8d1d21d5</Hash>
 </Codenesium>*/

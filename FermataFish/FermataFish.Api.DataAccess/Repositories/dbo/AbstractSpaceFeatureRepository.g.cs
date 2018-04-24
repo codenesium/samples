@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual int Create(
 			SpaceFeatureModel model)
 		{
-			var record = new EFSpaceFeature();
+			EFSpaceFeature record = new EFSpaceFeature();
 
 			this.Mapper.SpaceFeatureMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace FermataFishNS.Api.DataAccess
 			int id,
 			SpaceFeatureModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFSpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFSpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSpaceFeature> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SpaceFeatureMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSpaceFeature> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SpaceFeatureMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b5217ba7b89c02e838f5f1f9373a68f4</Hash>
+    <Hash>47a72488abab0aa6d34e97a204cbba32</Hash>
 </Codenesium>*/

@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			PersonPhoneModel model)
 		{
-			var record = new EFPersonPhone();
+			EFPersonPhone record = new EFPersonPhone();
 
 			this.Mapper.PersonPhoneMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int businessEntityID,
 			PersonPhoneModel model)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EFPersonPhone record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{businessEntityID}");
+				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int businessEntityID)
 		{
-			var record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EFPersonPhone record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFPersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFPersonPhone> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.PersonPhoneMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFPersonPhone> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.PersonPhoneMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9e6d5531ef30f0470d447a21aaf2162b</Hash>
+    <Hash>c3f948836e1b5104665a824a3cafce86</Hash>
 </Codenesium>*/

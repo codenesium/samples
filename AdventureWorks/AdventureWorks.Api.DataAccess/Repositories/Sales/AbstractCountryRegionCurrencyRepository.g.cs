@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual string Create(
 			CountryRegionCurrencyModel model)
 		{
-			var record = new EFCountryRegionCurrency();
+			EFCountryRegionCurrency record = new EFCountryRegionCurrency();
 
 			this.Mapper.CountryRegionCurrencyMapModelToEF(
 				default (string),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			string countryRegionCode,
 			CountryRegionCurrencyModel model)
 		{
-			var record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			EFCountryRegionCurrency record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{countryRegionCode}");
+				throw new RecordNotFoundException($"Unable to find id:{countryRegionCode}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			string countryRegionCode)
 		{
-			var record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			EFCountryRegionCurrency record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCountryRegionCurrency> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CountryRegionCurrencyMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCountryRegionCurrency> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CountryRegionCurrencyMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>23da211c934b7faee0064cb0cef1edc5</Hash>
+    <Hash>009f5bd1930d34e9a4b39fdf162a9c99</Hash>
 </Codenesium>*/

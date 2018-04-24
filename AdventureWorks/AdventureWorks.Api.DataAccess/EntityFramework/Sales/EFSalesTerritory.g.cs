@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesTerritory", Schema="Sales")]
-	public partial class EFSalesTerritory
+	public partial class EFSalesTerritory: AbstractEntityFrameworkPOCO
 	{
 		public EFSalesTerritory()
 		{}
@@ -73,5 +73,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b2a8562cf51b11dbfc36fe1969e55c9</Hash>
+    <Hash>3ca14cee3f1b3e030278a4288c41d3b8</Hash>
 </Codenesium>*/

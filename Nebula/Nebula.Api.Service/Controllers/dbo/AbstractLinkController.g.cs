@@ -38,42 +38,59 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(POCOLink), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.linkManager.GetById(id);
-			return this.Ok(response);
+			POCOLink response = this.linkManager.GetById(id).Links.FirstOrDefault();
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Search()
 		{
-			var query = new SearchQuery();
+			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.linkManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Links);
+			}
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(POCOLink), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] LinkModel model)
 		{
-			var result = await this.linkManager.Create(model);
+			CreateResponse<int> result = await this.linkManager.Create(model);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/links/{result.Id.ToString()}");
-				return this.Ok(result);
+				POCOLink response = this.linkManager.GetById(result.Id).Links.First();
+				return this.Ok(response);
 			}
 			else
 			{
@@ -84,7 +101,7 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(List<int>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<LinkModel> models)
@@ -94,35 +111,49 @@ namespace NebulaNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
+			List<int> ids = new List<int>();
 			foreach (var model in models)
 			{
-				var result = await this.linkManager.Create(model);
+				CreateResponse<int> result = await this.linkManager.Create(model);
 
-				if(!result.Success)
+				if(result.Success)
+				{
+					ids.Add(result.Id);
+				}
+				else
 				{
 					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
-			return this.NoContent();
+			return this.Ok(ids);
 		}
 
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(POCOLink), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] LinkModel model)
 		{
-			var result = await this.linkManager.Update(id, model);
+			try
+			{
+				ActionResponse result = await this.linkManager.Update(id, model);
 
-			if(result.Success)
-			{
-				return this.NoContent();
+				if (result.Success)
+				{
+					POCOLink response = this.linkManager.GetById(id).Links.First();
+					return this.Ok(response);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
 			}
-			else
+			catch(RecordNotFoundException)
 			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
 		}
 
@@ -133,9 +164,9 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
-			var result = await this.linkManager.Delete(id);
+			ActionResponse result = await this.linkManager.Delete(id);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				return this.NoContent();
 			}
@@ -150,10 +181,19 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Chains/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
 		public virtual IActionResult ByChainId(int id)
 		{
 			ApiResponse response = this.linkManager.GetWhere(x => x.ChainId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Links);
+			}
 		}
 
 		[HttpGet]
@@ -161,10 +201,19 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Machines/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
 		public virtual IActionResult ByAssignedMachineId(int id)
 		{
 			ApiResponse response = this.linkManager.GetWhere(x => x.AssignedMachineId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Links);
+			}
 		}
 
 		[HttpGet]
@@ -172,14 +221,23 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/LinkStatus/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
 		public virtual IActionResult ByLinkStatusId(int id)
 		{
 			ApiResponse response = this.linkManager.GetWhere(x => x.LinkStatusId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Links);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7635ace8ae6a174060d1d8ea1efc377b</Hash>
+    <Hash>f6f24b1aaa1ce80ac7cc9609ffbcafcc</Hash>
 </Codenesium>*/

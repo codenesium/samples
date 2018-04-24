@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	[Table("StudentXFamily", Schema="dbo")]
-	public partial class EFStudentXFamily
+	public partial class EFStudentXFamily: AbstractEntityFrameworkPOCO
 	{
 		public EFStudentXFamily()
 		{}
@@ -41,5 +41,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>83032e0af7169ad2393e04a137591b84</Hash>
+    <Hash>0002a37e968825d60e51e68b29a8d269</Hash>
 </Codenesium>*/

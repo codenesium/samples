@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual string Create(
 			CurrencyModel model)
 		{
-			var record = new EFCurrency();
+			EFCurrency record = new EFCurrency();
 
 			this.Mapper.CurrencyMapModelToEF(
 				default (string),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			string currencyCode,
 			CurrencyModel model)
 		{
-			var record = this.SearchLinqEF(x => x.CurrencyCode == currencyCode).FirstOrDefault();
+			EFCurrency record = this.SearchLinqEF(x => x.CurrencyCode == currencyCode).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{currencyCode}");
+				throw new RecordNotFoundException($"Unable to find id:{currencyCode}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			string currencyCode)
 		{
-			var record = this.SearchLinqEF(x => x.CurrencyCode == currencyCode).FirstOrDefault();
+			EFCurrency record = this.SearchLinqEF(x => x.CurrencyCode == currencyCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCurrency> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CurrencyMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCurrency> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CurrencyMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8800ae1fb38653d49437f92b19dcf04a</Hash>
+    <Hash>4cc1ddec88d5b57d8c418ba8e3af5c5e</Hash>
 </Codenesium>*/

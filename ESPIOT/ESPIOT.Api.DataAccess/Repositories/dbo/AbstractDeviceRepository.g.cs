@@ -29,7 +29,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual int Create(
 			DeviceModel model)
 		{
-			var record = new EFDevice();
+			EFDevice record = new EFDevice();
 
 			this.Mapper.DeviceMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace ESPIOTNS.Api.DataAccess
 			int id,
 			DeviceModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFDevice record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFDevice record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDevice> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DeviceMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDevice> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DeviceMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81006d22fcd9d1b2b2959f20f81f7c70</Hash>
+    <Hash>5f06a3721adf1dbdbad4e9ccfcfdfef0</Hash>
 </Codenesium>*/

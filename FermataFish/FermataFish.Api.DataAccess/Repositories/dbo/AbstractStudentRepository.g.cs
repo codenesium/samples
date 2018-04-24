@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual int Create(
 			StudentModel model)
 		{
-			var record = new EFStudent();
+			EFStudent record = new EFStudent();
 
 			this.Mapper.StudentMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace FermataFishNS.Api.DataAccess
 			int id,
 			StudentModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFStudent record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFStudent record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFStudent> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.StudentMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFStudent> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.StudentMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bb3649ec660ddff01f5e90c60ba2d467</Hash>
+    <Hash>ba87b67d05760830b105576513edde41</Hash>
 </Codenesium>*/

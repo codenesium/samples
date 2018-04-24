@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ProductModelProductDescriptionCultureModel model)
 		{
-			var record = new EFProductModelProductDescriptionCulture();
+			EFProductModelProductDescriptionCulture record = new EFProductModelProductDescriptionCulture();
 
 			this.Mapper.ProductModelProductDescriptionCultureMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int productModelID,
 			ProductModelProductDescriptionCultureModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
+			EFProductModelProductDescriptionCulture record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{productModelID}");
+				throw new RecordNotFoundException($"Unable to find id:{productModelID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int productModelID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
+			EFProductModelProductDescriptionCulture record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductModelProductDescriptionCulture> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductModelProductDescriptionCulture> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9317be6e4e94a7346af5b5001b9893c0</Hash>
+    <Hash>c880cb8a123814d5d6ab9bd0e2ac6a44</Hash>
 </Codenesium>*/

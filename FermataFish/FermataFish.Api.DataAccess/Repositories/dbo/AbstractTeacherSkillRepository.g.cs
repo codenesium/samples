@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual int Create(
 			TeacherSkillModel model)
 		{
-			var record = new EFTeacherSkill();
+			EFTeacherSkill record = new EFTeacherSkill();
 
 			this.Mapper.TeacherSkillMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace FermataFishNS.Api.DataAccess
 			int id,
 			TeacherSkillModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFTeacherSkill record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFTeacherSkill record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFTeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFTeacherSkill> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.TeacherSkillMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFTeacherSkill> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.TeacherSkillMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ce2d6ffaa24dc6ec1dc72744cf3102c3</Hash>
+    <Hash>27b9e48df280269eb8cce5c7a0246b6b</Hash>
 </Codenesium>*/

@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			CustomerModel model)
 		{
-			var record = new EFCustomer();
+			EFCustomer record = new EFCustomer();
 
 			this.Mapper.CustomerMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int customerID,
 			CustomerModel model)
 		{
-			var record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
+			EFCustomer record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{customerID}");
+				throw new RecordNotFoundException($"Unable to find id:{customerID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int customerID)
 		{
-			var record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
+			EFCustomer record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFCustomer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCustomer> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CustomerMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCustomer> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CustomerMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5a3769107432ea7d8c0a42b8286ac6c5</Hash>
+    <Hash>885f972868fa95d5db89c7bd5681207c</Hash>
 </Codenesium>*/

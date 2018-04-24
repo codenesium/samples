@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Chain", Schema="dbo")]
-	public partial class EFChain
+	public partial class EFChain: AbstractEntityFrameworkPOCO
 	{
 		public EFChain()
 		{}
@@ -51,5 +51,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa04f61790a9026da7b572a75185dfd7</Hash>
+    <Hash>7dcbd2a88758d270020f70dacf584d68</Hash>
 </Codenesium>*/

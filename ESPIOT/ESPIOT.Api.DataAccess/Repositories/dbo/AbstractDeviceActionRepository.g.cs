@@ -29,7 +29,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual int Create(
 			DeviceActionModel model)
 		{
-			var record = new EFDeviceAction();
+			EFDeviceAction record = new EFDeviceAction();
 
 			this.Mapper.DeviceActionMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace ESPIOTNS.Api.DataAccess
 			int id,
 			DeviceActionModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFDeviceAction record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFDeviceAction record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDeviceAction> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DeviceActionMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDeviceAction> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DeviceActionMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c115cb42b2be39d44f9a5dabca390ec7</Hash>
+    <Hash>0989c7d7f23ef8746c4f4e7ab98e1eea</Hash>
 </Codenesium>*/

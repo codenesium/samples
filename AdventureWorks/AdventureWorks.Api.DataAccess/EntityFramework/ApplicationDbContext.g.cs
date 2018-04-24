@@ -1,11 +1,35 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
 	{
+		public Guid UserId { get; private set; }
+
+		public int TenantId { get; private set; }
+
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		public void SetUserId(Guid userId)
+		{
+			if(userId == default (Guid))
+			{
+				throw new ArgumentException("UserId cannot be a default value");
+			}
+			this.UserId = userId;
+		}
+
+		public void SetTenantId(int tenantId)
+		{
+			if(tenantId <= 0)
+			{
+				throw new ArgumentException("TenantId must be greater than 0");
+			}
+			this.TenantId = tenantId;
+		}
+
 		public virtual DbSet<EFAWBuildVersion> AWBuildVersions { get; set; }
 
 		public virtual DbSet<EFDatabaseLog> DatabaseLogs { get; set; }
@@ -151,5 +175,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>53e8ea8566154eb168106434aecacd0c</Hash>
+    <Hash>b6f59530c143f030cb3d8e16b00e5b15</Hash>
 </Codenesium>*/

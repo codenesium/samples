@@ -38,42 +38,59 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(POCOStudent), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.studentManager.GetById(id);
-			return this.Ok(response);
+			POCOStudent response = this.studentManager.GetById(id).Students.FirstOrDefault();
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Search()
 		{
-			var query = new SearchQuery();
+			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.studentManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Students);
+			}
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(POCOStudent), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] StudentModel model)
 		{
-			var result = await this.studentManager.Create(model);
+			CreateResponse<int> result = await this.studentManager.Create(model);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/students/{result.Id.ToString()}");
-				return this.Ok(result);
+				POCOStudent response = this.studentManager.GetById(result.Id).Students.First();
+				return this.Ok(response);
 			}
 			else
 			{
@@ -84,7 +101,7 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(List<int>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<StudentModel> models)
@@ -94,35 +111,49 @@ namespace FermataFishNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
+			List<int> ids = new List<int>();
 			foreach (var model in models)
 			{
-				var result = await this.studentManager.Create(model);
+				CreateResponse<int> result = await this.studentManager.Create(model);
 
-				if(!result.Success)
+				if(result.Success)
+				{
+					ids.Add(result.Id);
+				}
+				else
 				{
 					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
-			return this.NoContent();
+			return this.Ok(ids);
 		}
 
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(POCOStudent), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] StudentModel model)
 		{
-			var result = await this.studentManager.Update(id, model);
+			try
+			{
+				ActionResponse result = await this.studentManager.Update(id, model);
 
-			if(result.Success)
-			{
-				return this.NoContent();
+				if (result.Success)
+				{
+					POCOStudent response = this.studentManager.GetById(id).Students.First();
+					return this.Ok(response);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
 			}
-			else
+			catch(RecordNotFoundException)
 			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
 		}
 
@@ -133,9 +164,9 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
-			var result = await this.studentManager.Delete(id);
+			ActionResponse result = await this.studentManager.Delete(id);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				return this.NoContent();
 			}
@@ -150,10 +181,19 @@ namespace FermataFishNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Families/{id}/Students")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
 		public virtual IActionResult ByFamilyId(int id)
 		{
 			ApiResponse response = this.studentManager.GetWhere(x => x.FamilyId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Students);
+			}
 		}
 
 		[HttpGet]
@@ -161,14 +201,23 @@ namespace FermataFishNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Studios/{id}/Students")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
 		public virtual IActionResult ByStudioId(int id)
 		{
 			ApiResponse response = this.studentManager.GetWhere(x => x.StudioId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Students);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b0011a2d6a4e84ff73a0f3c9a4d8916</Hash>
+    <Hash>116a6e3a055cf56042253c48148280c3</Hash>
 </Codenesium>*/

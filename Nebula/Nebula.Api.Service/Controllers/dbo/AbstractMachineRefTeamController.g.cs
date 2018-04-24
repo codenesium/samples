@@ -38,42 +38,59 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(POCOMachineRefTeam), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.machineRefTeamManager.GetById(id);
-			return this.Ok(response);
+			POCOMachineRefTeam response = this.machineRefTeamManager.GetById(id).MachineRefTeams.FirstOrDefault();
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(List<POCOMachineRefTeam>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Search()
 		{
-			var query = new SearchQuery();
+			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.machineRefTeamManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.MachineRefTeams);
+			}
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(POCOMachineRefTeam), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] MachineRefTeamModel model)
 		{
-			var result = await this.machineRefTeamManager.Create(model);
+			CreateResponse<int> result = await this.machineRefTeamManager.Create(model);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/machineRefTeams/{result.Id.ToString()}");
-				return this.Ok(result);
+				POCOMachineRefTeam response = this.machineRefTeamManager.GetById(result.Id).MachineRefTeams.First();
+				return this.Ok(response);
 			}
 			else
 			{
@@ -84,7 +101,7 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(List<int>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<MachineRefTeamModel> models)
@@ -94,35 +111,49 @@ namespace NebulaNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
+			List<int> ids = new List<int>();
 			foreach (var model in models)
 			{
-				var result = await this.machineRefTeamManager.Create(model);
+				CreateResponse<int> result = await this.machineRefTeamManager.Create(model);
 
-				if(!result.Success)
+				if(result.Success)
+				{
+					ids.Add(result.Id);
+				}
+				else
 				{
 					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
-			return this.NoContent();
+			return this.Ok(ids);
 		}
 
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(POCOMachineRefTeam), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] MachineRefTeamModel model)
 		{
-			var result = await this.machineRefTeamManager.Update(id, model);
+			try
+			{
+				ActionResponse result = await this.machineRefTeamManager.Update(id, model);
 
-			if(result.Success)
-			{
-				return this.NoContent();
+				if (result.Success)
+				{
+					POCOMachineRefTeam response = this.machineRefTeamManager.GetById(id).MachineRefTeams.First();
+					return this.Ok(response);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
 			}
-			else
+			catch(RecordNotFoundException)
 			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
 		}
 
@@ -133,9 +164,9 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
-			var result = await this.machineRefTeamManager.Delete(id);
+			ActionResponse result = await this.machineRefTeamManager.Delete(id);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				return this.NoContent();
 			}
@@ -150,10 +181,19 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Machines/{id}/MachineRefTeams")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOMachineRefTeam>), 200)]
 		public virtual IActionResult ByMachineId(int id)
 		{
 			ApiResponse response = this.machineRefTeamManager.GetWhere(x => x.MachineId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.MachineRefTeams);
+			}
 		}
 
 		[HttpGet]
@@ -161,14 +201,23 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Teams/{id}/MachineRefTeams")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOMachineRefTeam>), 200)]
 		public virtual IActionResult ByTeamId(int id)
 		{
 			ApiResponse response = this.machineRefTeamManager.GetWhere(x => x.TeamId == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.MachineRefTeams);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2c468376ac6af0ddb9fd576a08147151</Hash>
+    <Hash>b5cb3ac4ab7376fd77063cf50b957665</Hash>
 </Codenesium>*/

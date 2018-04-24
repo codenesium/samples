@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			CurrencyRateModel model)
 		{
-			var record = new EFCurrencyRate();
+			EFCurrencyRate record = new EFCurrencyRate();
 
 			this.Mapper.CurrencyRateMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int currencyRateID,
 			CurrencyRateModel model)
 		{
-			var record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
+			EFCurrencyRate record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{currencyRateID}");
+				throw new RecordNotFoundException($"Unable to find id:{currencyRateID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int currencyRateID)
 		{
-			var record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
+			EFCurrencyRate record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCurrencyRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CurrencyRateMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCurrencyRate> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CurrencyRateMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0722f96582c3b4e828a27bdce4ba0e54</Hash>
+    <Hash>670dc8fc9d31b0273417a710b36c6877</Hash>
 </Codenesium>*/

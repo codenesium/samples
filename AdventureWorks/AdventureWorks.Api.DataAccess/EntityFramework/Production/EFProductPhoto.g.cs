@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductPhoto", Schema="Production")]
-	public partial class EFProductPhoto
+	public partial class EFProductPhoto: AbstractEntityFrameworkPOCO
 	{
 		public EFProductPhoto()
 		{}
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d506a955b41d40725021b315bf0485d4</Hash>
+    <Hash>a4d1df2e5a0cddb4690b164ad4cd720f</Hash>
 </Codenesium>*/

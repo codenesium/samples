@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("AWBuildVersion", Schema="dbo")]
-	public partial class EFAWBuildVersion
+	public partial class EFAWBuildVersion: AbstractEntityFrameworkPOCO
 	{
 		public EFAWBuildVersion()
 		{}
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7e0fcef4a51c2952cc8c23f2875f2e74</Hash>
+    <Hash>bfec5de5fdb88edcca542e15522a9807</Hash>
 </Codenesium>*/

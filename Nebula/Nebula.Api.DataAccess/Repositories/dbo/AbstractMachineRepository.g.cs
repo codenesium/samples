@@ -29,7 +29,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int Create(
 			MachineModel model)
 		{
-			var record = new EFMachine();
+			EFMachine record = new EFMachine();
 
 			this.Mapper.MachineMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace NebulaNS.Api.DataAccess
 			int id,
 			MachineModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFMachine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFMachine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFMachine> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.MachineMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFMachine> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.MachineMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2cb8b6154864c946d1cfe422dfc82f2e</Hash>
+    <Hash>f0e0f5ec1488b13e0ea4f744d4a16b45</Hash>
 </Codenesium>*/

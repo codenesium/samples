@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	[Table("SpaceXSpaceFeature", Schema="dbo")]
-	public partial class EFSpaceXSpaceFeature
+	public partial class EFSpaceXSpaceFeature: AbstractEntityFrameworkPOCO
 	{
 		public EFSpaceXSpaceFeature()
 		{}
@@ -41,5 +41,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>804e1e8302ba6bca4264677ad7788920</Hash>
+    <Hash>74ec8368b9d580ffb733d2460d135a2b</Hash>
 </Codenesium>*/

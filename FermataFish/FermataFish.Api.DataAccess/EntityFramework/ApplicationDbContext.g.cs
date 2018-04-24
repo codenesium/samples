@@ -1,11 +1,35 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
 	{
+		public Guid UserId { get; private set; }
+
+		public int TenantId { get; private set; }
+
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		public void SetUserId(Guid userId)
+		{
+			if(userId == default (Guid))
+			{
+				throw new ArgumentException("UserId cannot be a default value");
+			}
+			this.UserId = userId;
+		}
+
+		public void SetTenantId(int tenantId)
+		{
+			if(tenantId <= 0)
+			{
+				throw new ArgumentException("TenantId must be greater than 0");
+			}
+			this.TenantId = tenantId;
+		}
+
 		public virtual DbSet<EFAdmin> Admins { get; set; }
 
 		public virtual DbSet<EFFamily> Families { get; set; }
@@ -43,5 +67,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54adb4cc15e183cef916006b0076b588</Hash>
+    <Hash>566caac21b65bb98c84afd24923e706a</Hash>
 </Codenesium>*/

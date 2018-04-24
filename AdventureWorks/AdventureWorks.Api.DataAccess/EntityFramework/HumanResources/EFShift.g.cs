@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Shift", Schema="HumanResources")]
-	public partial class EFShift
+	public partial class EFShift: AbstractEntityFrameworkPOCO
 	{
 		public EFShift()
 		{}
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f0e3df658c3e6dbaabafffbc9ca146d</Hash>
+    <Hash>430f5b8856666129a1f0b3dd8f9c5a51</Hash>
 </Codenesium>*/

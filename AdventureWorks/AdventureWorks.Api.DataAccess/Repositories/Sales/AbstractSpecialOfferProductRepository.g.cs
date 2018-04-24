@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			SpecialOfferProductModel model)
 		{
-			var record = new EFSpecialOfferProduct();
+			EFSpecialOfferProduct record = new EFSpecialOfferProduct();
 
 			this.Mapper.SpecialOfferProductMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int specialOfferID,
 			SpecialOfferProductModel model)
 		{
-			var record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
+			EFSpecialOfferProduct record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{specialOfferID}");
+				throw new RecordNotFoundException($"Unable to find id:{specialOfferID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int specialOfferID)
 		{
-			var record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
+			EFSpecialOfferProduct record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFSpecialOfferProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSpecialOfferProduct> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SpecialOfferProductMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSpecialOfferProduct> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SpecialOfferProductMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc64d12b5b0eaa41a584540930b93ff8</Hash>
+    <Hash>b148bf253ae32e82fc0154c683860c7b</Hash>
 </Codenesium>*/

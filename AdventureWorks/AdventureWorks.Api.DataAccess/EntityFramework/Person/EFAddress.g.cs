@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Address", Schema="Person")]
-	public partial class EFAddress
+	public partial class EFAddress: AbstractEntityFrameworkPOCO
 	{
 		public EFAddress()
 		{}
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ce03939d774fcca90e29d138bf3844d1</Hash>
+    <Hash>fb99c1861faaa44c3538b1a747b73513</Hash>
 </Codenesium>*/

@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual Guid Create(
 			DocumentModel model)
 		{
-			var record = new EFDocument();
+			EFDocument record = new EFDocument();
 
 			this.Mapper.DocumentMapModelToEF(
 				default (Guid),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			Guid documentNode,
 			DocumentModel model)
 		{
-			var record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
+			EFDocument record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{documentNode}");
+				throw new RecordNotFoundException($"Unable to find id:{documentNode}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			Guid documentNode)
 		{
-			var record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
+			EFDocument record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDocument> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DocumentMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDocument> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DocumentMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>96294e8540f3fe16201728d88f6369a3</Hash>
+    <Hash>01bee3a722d29d866764ffe8eff2a8dd</Hash>
 </Codenesium>*/

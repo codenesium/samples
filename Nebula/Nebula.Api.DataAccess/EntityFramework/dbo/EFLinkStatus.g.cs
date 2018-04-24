@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("LinkStatus", Schema="dbo")]
-	public partial class EFLinkStatus
+	public partial class EFLinkStatus: AbstractEntityFrameworkPOCO
 	{
 		public EFLinkStatus()
 		{}
@@ -30,5 +30,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>909aef721a943dc757e4bf2c38319c4e</Hash>
+    <Hash>ea63e351ae8818b5cd6e4db4089fe0c5</Hash>
 </Codenesium>*/

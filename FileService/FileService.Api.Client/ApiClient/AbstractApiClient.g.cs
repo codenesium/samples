@@ -48,19 +48,20 @@ namespace FileServiceNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
-		public virtual async Task<int> BucketCreateAsync(BucketModel item)
+		public virtual async Task<POCOBucket> BucketCreateAsync(BucketModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+			return JsonConvert.DeserializeObject<POCOBucket>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task BucketUpdateAsync(int id, BucketModel item)
+		public virtual async Task<POCOBucket> BucketUpdateAsync(int id, BucketModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Buckets/{id}", item);
 
 			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOBucket>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task BucketDeleteAsync(int id)
@@ -75,7 +76,7 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Buckets;
+			return JsonConvert.DeserializeObject<List<POCOBucket>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOBucket> BucketGetByIdAsync(int id)
@@ -83,7 +84,7 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Buckets.FirstOrDefault();
+			return JsonConvert.DeserializeObject<POCOBucket>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<POCOBucket>> BucketGetAllAsync(int offset = 0, int limit = 250)
@@ -91,29 +92,31 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Buckets;
+			return JsonConvert.DeserializeObject<List<POCOBucket>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task BucketBulkInsertAsync(List<BucketModel> items)
+		public virtual async Task<List<int>> BucketBulkInsertAsync(List<BucketModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<int> FileCreateAsync(FileModel item)
+		public virtual async Task<POCOFile> FileCreateAsync(FileModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+			return JsonConvert.DeserializeObject<POCOFile>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task FileUpdateAsync(int id, FileModel item)
+		public virtual async Task<POCOFile> FileUpdateAsync(int id, FileModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Files/{id}", item);
 
 			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOFile>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task FileDeleteAsync(int id)
@@ -128,7 +131,7 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Files;
+			return JsonConvert.DeserializeObject<List<POCOFile>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOFile> FileGetByIdAsync(int id)
@@ -136,7 +139,7 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Files.FirstOrDefault();
+			return JsonConvert.DeserializeObject<POCOFile>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<POCOFile>> FileGetAllAsync(int offset = 0, int limit = 250)
@@ -144,29 +147,31 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).Files;
+			return JsonConvert.DeserializeObject<List<POCOFile>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task FileBulkInsertAsync(List<FileModel> items)
+		public virtual async Task<List<int>> FileBulkInsertAsync(List<FileModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<int> FileTypeCreateAsync(FileTypeModel item)
+		public virtual async Task<POCOFileType> FileTypeCreateAsync(FileTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes", item);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return httpResponse.GetHeaderValue("x-record-id").ToInt();
+			return JsonConvert.DeserializeObject<POCOFileType>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task FileTypeUpdateAsync(int id, FileTypeModel item)
+		public virtual async Task<POCOFileType> FileTypeUpdateAsync(int id, FileTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/FileTypes/{id}", item);
 
 			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOFileType>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task FileTypeDeleteAsync(int id)
@@ -181,7 +186,7 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?{query}&offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).FileTypes;
+			return JsonConvert.DeserializeObject<List<POCOFileType>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOFileType> FileTypeGetByIdAsync(int id)
@@ -189,7 +194,7 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes/{id}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).FileTypes.FirstOrDefault();
+			return JsonConvert.DeserializeObject<POCOFileType>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<POCOFileType>> FileTypeGetAllAsync(int offset = 0, int limit = 250)
@@ -197,18 +202,19 @@ namespace FileServiceNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?offset={offset}&limit={limit}");
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiResponse>(httpResponse.Content.ContentToString()).FileTypes;
+			return JsonConvert.DeserializeObject<List<POCOFileType>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task FileTypeBulkInsertAsync(List<FileTypeModel> items)
+		public virtual async Task<List<int>> FileTypeBulkInsertAsync(List<FileTypeModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bdfcb9a1d7d8f0d4a9497e9f778f0e1a</Hash>
+    <Hash>076f40d48f2a70634b1f9a47472d35bd</Hash>
 </Codenesium>*/

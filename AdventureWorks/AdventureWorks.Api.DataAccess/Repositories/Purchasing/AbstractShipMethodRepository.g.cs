@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ShipMethodModel model)
 		{
-			var record = new EFShipMethod();
+			EFShipMethod record = new EFShipMethod();
 
 			this.Mapper.ShipMethodMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int shipMethodID,
 			ShipMethodModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ShipMethodID == shipMethodID).FirstOrDefault();
+			EFShipMethod record = this.SearchLinqEF(x => x.ShipMethodID == shipMethodID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{shipMethodID}");
+				throw new RecordNotFoundException($"Unable to find id:{shipMethodID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int shipMethodID)
 		{
-			var record = this.SearchLinqEF(x => x.ShipMethodID == shipMethodID).FirstOrDefault();
+			EFShipMethod record = this.SearchLinqEF(x => x.ShipMethodID == shipMethodID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFShipMethod> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ShipMethodMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFShipMethod> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ShipMethodMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2da1ab1a4ca38c70df9279087b212dc2</Hash>
+    <Hash>d6443503fa0474274f0e2a0a0ce6b51e</Hash>
 </Codenesium>*/

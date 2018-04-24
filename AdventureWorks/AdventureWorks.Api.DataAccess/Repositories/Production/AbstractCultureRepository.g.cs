@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual string Create(
 			CultureModel model)
 		{
-			var record = new EFCulture();
+			EFCulture record = new EFCulture();
 
 			this.Mapper.CultureMapModelToEF(
 				default (string),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			string cultureID,
 			CultureModel model)
 		{
-			var record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
+			EFCulture record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{cultureID}");
+				throw new RecordNotFoundException($"Unable to find id:{cultureID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			string cultureID)
 		{
-			var record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
+			EFCulture record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCulture> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CultureMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCulture> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CultureMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70d763fae7a942efab28af3e88a7bf45</Hash>
+    <Hash>b263c03ecd8deacc03fd2f878ff18d80</Hash>
 </Codenesium>*/

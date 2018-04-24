@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ProductListPriceHistoryModel model)
 		{
-			var record = new EFProductListPriceHistory();
+			EFProductListPriceHistory record = new EFProductListPriceHistory();
 
 			this.Mapper.ProductListPriceHistoryMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int productID,
 			ProductListPriceHistoryModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			EFProductListPriceHistory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{productID}");
+				throw new RecordNotFoundException($"Unable to find id:{productID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int productID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			EFProductListPriceHistory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductListPriceHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductListPriceHistoryMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductListPriceHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductListPriceHistoryMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>caf183126e7e40c4087b6e3a39f77d61</Hash>
+    <Hash>a33870710592b76c6f3032ec7a9818c2</Hash>
 </Codenesium>*/

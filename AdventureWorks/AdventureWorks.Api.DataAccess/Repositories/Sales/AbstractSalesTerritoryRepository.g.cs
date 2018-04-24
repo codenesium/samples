@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			SalesTerritoryModel model)
 		{
-			var record = new EFSalesTerritory();
+			EFSalesTerritory record = new EFSalesTerritory();
 
 			this.Mapper.SalesTerritoryMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int territoryID,
 			SalesTerritoryModel model)
 		{
-			var record = this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
+			EFSalesTerritory record = this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{territoryID}");
+				throw new RecordNotFoundException($"Unable to find id:{territoryID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int territoryID)
 		{
-			var record = this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
+			EFSalesTerritory record = this.SearchLinqEF(x => x.TerritoryID == territoryID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesTerritory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesTerritoryMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesTerritory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesTerritoryMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>177c6c7e65b9892938caf7ce2aa218f5</Hash>
+    <Hash>07e905ce89daf58e45303337307a4e09</Hash>
 </Codenesium>*/

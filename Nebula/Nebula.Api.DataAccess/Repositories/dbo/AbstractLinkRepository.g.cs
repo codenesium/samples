@@ -29,7 +29,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int Create(
 			LinkModel model)
 		{
-			var record = new EFLink();
+			EFLink record = new EFLink();
 
 			this.Mapper.LinkMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace NebulaNS.Api.DataAccess
 			int id,
 			LinkModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFLink record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFLink record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFLink> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.LinkMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFLink> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.LinkMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8ce2e32485ef4ab805d100858d2b406</Hash>
+    <Hash>b66516b469d25494b77b0269719fe8e1</Hash>
 </Codenesium>*/

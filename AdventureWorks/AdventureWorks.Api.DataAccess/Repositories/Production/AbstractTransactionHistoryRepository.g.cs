@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			TransactionHistoryModel model)
 		{
-			var record = new EFTransactionHistory();
+			EFTransactionHistory record = new EFTransactionHistory();
 
 			this.Mapper.TransactionHistoryMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int transactionID,
 			TransactionHistoryModel model)
 		{
-			var record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
+			EFTransactionHistory record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{transactionID}");
+				throw new RecordNotFoundException($"Unable to find id:{transactionID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int transactionID)
 		{
-			var record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
+			EFTransactionHistory record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFTransactionHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.TransactionHistoryMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFTransactionHistory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.TransactionHistoryMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>065b338643cf3a032cc0b7481cc05fbc</Hash>
+    <Hash>a6d503998a85fe21b6faaa41f0360f9e</Hash>
 </Codenesium>*/

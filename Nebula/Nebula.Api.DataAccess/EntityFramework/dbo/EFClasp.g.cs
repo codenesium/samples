@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Clasp", Schema="dbo")]
-	public partial class EFClasp
+	public partial class EFClasp: AbstractEntityFrameworkPOCO
 	{
 		public EFClasp()
 		{}
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>66c0253d1b5750033faaed65a15208b6</Hash>
+    <Hash>1ded61dd288d000c1e7ba38cccaea117</Hash>
 </Codenesium>*/

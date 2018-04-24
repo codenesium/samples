@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ErrorLogModel model)
 		{
-			var record = new EFErrorLog();
+			EFErrorLog record = new EFErrorLog();
 
 			this.Mapper.ErrorLogMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int errorLogID,
 			ErrorLogModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
+			EFErrorLog record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{errorLogID}");
+				throw new RecordNotFoundException($"Unable to find id:{errorLogID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int errorLogID)
 		{
-			var record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
+			EFErrorLog record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFErrorLog> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ErrorLogMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFErrorLog> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ErrorLogMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>127d7733a5fa008dc5c3369de544018f</Hash>
+    <Hash>5cb78fcf7c0df88ed8e94f584eb4a955</Hash>
 </Codenesium>*/

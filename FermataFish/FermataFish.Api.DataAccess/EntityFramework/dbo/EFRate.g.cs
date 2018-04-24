@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	[Table("Rate", Schema="dbo")]
-	public partial class EFRate
+	public partial class EFRate:AbstractEntityFrameworkPOCO
 	{
 		public EFRate()
 		{}
@@ -46,5 +46,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0c1c3daab8168e51fef04ad330a58170</Hash>
+    <Hash>ae2a1754f7e86efb365cc5542bd486a9</Hash>
 </Codenesium>*/

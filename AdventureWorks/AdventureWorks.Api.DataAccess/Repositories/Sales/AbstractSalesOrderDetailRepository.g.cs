@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			SalesOrderDetailModel model)
 		{
-			var record = new EFSalesOrderDetail();
+			EFSalesOrderDetail record = new EFSalesOrderDetail();
 
 			this.Mapper.SalesOrderDetailMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int salesOrderID,
 			SalesOrderDetailModel model)
 		{
-			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			EFSalesOrderDetail record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{salesOrderID}");
+				throw new RecordNotFoundException($"Unable to find id:{salesOrderID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int salesOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			EFSalesOrderDetail record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFSalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesOrderDetail> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesOrderDetailMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesOrderDetail> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesOrderDetailMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2848c75fcd4004bbc288a7a9382f2c3c</Hash>
+    <Hash>f8a194e3b80de2a458664c04aac28db2</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ShipMethod", Schema="Purchasing")]
-	public partial class EFShipMethod
+	public partial class EFShipMethod: AbstractEntityFrameworkPOCO
 	{
 		public EFShipMethod()
 		{}
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>80f3f58f812cfed0475f9cba80938ea3</Hash>
+    <Hash>a531e66816792d4d8406548fbb87c904</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Organization", Schema="dbo")]
-	public partial class EFOrganization
+	public partial class EFOrganization: AbstractEntityFrameworkPOCO
 	{
 		public EFOrganization()
 		{}
@@ -30,5 +30,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d1dfe2e54e5d0f499a989545a825ba2</Hash>
+    <Hash>fcd671ba9e6d2ffba59c6d4a3c994929</Hash>
 </Codenesium>*/

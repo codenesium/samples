@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual string Create(
 			UnitMeasureModel model)
 		{
-			var record = new EFUnitMeasure();
+			EFUnitMeasure record = new EFUnitMeasure();
 
 			this.Mapper.UnitMeasureMapModelToEF(
 				default (string),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			string unitMeasureCode,
 			UnitMeasureModel model)
 		{
-			var record = this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
+			EFUnitMeasure record = this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{unitMeasureCode}");
+				throw new RecordNotFoundException($"Unable to find id:{unitMeasureCode}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			string unitMeasureCode)
 		{
-			var record = this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
+			EFUnitMeasure record = this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFUnitMeasure> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.UnitMeasureMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFUnitMeasure> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.UnitMeasureMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2f26490d58a71a85d3f658286b71b6a8</Hash>
+    <Hash>3107b7bb37a8e222dd93e5a558e29dc3</Hash>
 </Codenesium>*/

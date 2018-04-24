@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			WorkOrderRoutingModel model)
 		{
-			var record = new EFWorkOrderRouting();
+			EFWorkOrderRouting record = new EFWorkOrderRouting();
 
 			this.Mapper.WorkOrderRoutingMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int workOrderID,
 			WorkOrderRoutingModel model)
 		{
-			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			EFWorkOrderRouting record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{workOrderID}");
+				throw new RecordNotFoundException($"Unable to find id:{workOrderID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int workOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			EFWorkOrderRouting record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFWorkOrderRouting> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.WorkOrderRoutingMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFWorkOrderRouting> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.WorkOrderRoutingMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a25e4f1007b20ed2f27a963d666b57ba</Hash>
+    <Hash>9446ef77496f28b26231c613370cc431</Hash>
 </Codenesium>*/

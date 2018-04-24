@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			CreditCardModel model)
 		{
-			var record = new EFCreditCard();
+			EFCreditCard record = new EFCreditCard();
 
 			this.Mapper.CreditCardMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int creditCardID,
 			CreditCardModel model)
 		{
-			var record = this.SearchLinqEF(x => x.CreditCardID == creditCardID).FirstOrDefault();
+			EFCreditCard record = this.SearchLinqEF(x => x.CreditCardID == creditCardID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{creditCardID}");
+				throw new RecordNotFoundException($"Unable to find id:{creditCardID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int creditCardID)
 		{
-			var record = this.SearchLinqEF(x => x.CreditCardID == creditCardID).FirstOrDefault();
+			EFCreditCard record = this.SearchLinqEF(x => x.CreditCardID == creditCardID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCreditCard> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CreditCardMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCreditCard> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CreditCardMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>afb5430fb41caada8e3b801100576364</Hash>
+    <Hash>ec609f0331717020b2333a7b540784b1</Hash>
 </Codenesium>*/

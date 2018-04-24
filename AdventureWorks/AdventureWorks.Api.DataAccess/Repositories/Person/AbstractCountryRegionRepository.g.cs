@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual string Create(
 			CountryRegionModel model)
 		{
-			var record = new EFCountryRegion();
+			EFCountryRegion record = new EFCountryRegion();
 
 			this.Mapper.CountryRegionMapModelToEF(
 				default (string),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			string countryRegionCode,
 			CountryRegionModel model)
 		{
-			var record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			EFCountryRegion record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{countryRegionCode}");
+				throw new RecordNotFoundException($"Unable to find id:{countryRegionCode}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			string countryRegionCode)
 		{
-			var record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			EFCountryRegion record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFCountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCountryRegion> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CountryRegionMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFCountryRegion> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.CountryRegionMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>45d133b839a45cb0001b2a87c26562fc</Hash>
+    <Hash>5970617f62d56df19bf4faadb2799d94</Hash>
 </Codenesium>*/

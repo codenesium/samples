@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ProductCategoryModel model)
 		{
-			var record = new EFProductCategory();
+			EFProductCategory record = new EFProductCategory();
 
 			this.Mapper.ProductCategoryMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int productCategoryID,
 			ProductCategoryModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
+			EFProductCategory record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{productCategoryID}");
+				throw new RecordNotFoundException($"Unable to find id:{productCategoryID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int productCategoryID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
+			EFProductCategory record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductCategory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductCategoryMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductCategory> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductCategoryMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4ed2b1165a4c90acd89c4188d116286a</Hash>
+    <Hash>f924132918df0adb303bda2f01e2909b</Hash>
 </Codenesium>*/

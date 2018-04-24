@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			SalesOrderHeaderSalesReasonModel model)
 		{
-			var record = new EFSalesOrderHeaderSalesReason();
+			EFSalesOrderHeaderSalesReason record = new EFSalesOrderHeaderSalesReason();
 
 			this.Mapper.SalesOrderHeaderSalesReasonMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int salesOrderID,
 			SalesOrderHeaderSalesReasonModel model)
 		{
-			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			EFSalesOrderHeaderSalesReason record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{salesOrderID}");
+				throw new RecordNotFoundException($"Unable to find id:{salesOrderID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int salesOrderID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			EFSalesOrderHeaderSalesReason record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFSalesOrderHeaderSalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesOrderHeaderSalesReason> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesOrderHeaderSalesReasonMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesOrderHeaderSalesReason> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesOrderHeaderSalesReasonMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2888a23ace471920e9cd124bd7167fb5</Hash>
+    <Hash>dcf9b93e3e5875142e3e409cb6143d88</Hash>
 </Codenesium>*/

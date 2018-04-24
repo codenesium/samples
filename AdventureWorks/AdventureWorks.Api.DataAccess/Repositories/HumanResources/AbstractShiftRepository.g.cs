@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ShiftModel model)
 		{
-			var record = new EFShift();
+			EFShift record = new EFShift();
 
 			this.Mapper.ShiftMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int shiftID,
 			ShiftModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
+			EFShift record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{shiftID}");
+				throw new RecordNotFoundException($"Unable to find id:{shiftID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int shiftID)
 		{
-			var record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
+			EFShift record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFShift> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ShiftMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFShift> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ShiftMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7cf3fdd245dd3200ea113656bc6760cc</Hash>
+    <Hash>7db3cda5ce13d1a76b53d559ef5c7132</Hash>
 </Codenesium>*/

@@ -29,7 +29,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual int Create(
 			FileModel model)
 		{
-			var record = new EFFile();
+			EFFile record = new EFFile();
 
 			this.Mapper.FileMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace FileServiceNS.Api.DataAccess
 			int id,
 			FileModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFFile record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFFile record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFFile> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.FileMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFFile> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.FileMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad0b4fb9cb0d6dd075a527e76dabc0f7</Hash>
+    <Hash>7d00cd9cee33b4ecfd8578fa13b953c5</Hash>
 </Codenesium>*/

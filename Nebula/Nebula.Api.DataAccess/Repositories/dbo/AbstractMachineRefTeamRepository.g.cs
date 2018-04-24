@@ -29,7 +29,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual int Create(
 			MachineRefTeamModel model)
 		{
-			var record = new EFMachineRefTeam();
+			EFMachineRefTeam record = new EFMachineRefTeam();
 
 			this.Mapper.MachineRefTeamMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace NebulaNS.Api.DataAccess
 			int id,
 			MachineRefTeamModel model)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFMachineRefTeam record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{id}");
+				throw new RecordNotFoundException($"Unable to find id:{id}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			var record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			EFMachineRefTeam record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFMachineRefTeam> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.MachineRefTeamMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace NebulaNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFMachineRefTeam> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.MachineRefTeamMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b7e7a97813e181ff04dc35f6e567b28d</Hash>
+    <Hash>4f39e1389dc5a37a9c887b9666529e19</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace ESPIOTNS.Api.DataAccess
 {
 	[Table("DeviceAction", Schema="dbo")]
-	public partial class EFDeviceAction
+	public partial class EFDeviceAction: AbstractEntityFrameworkPOCO
 	{
 		public EFDeviceAction()
 		{}
@@ -43,5 +43,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ffe8b1013818e0360e92c9085478bbd4</Hash>
+    <Hash>34ed85e19cd37e0237556277c2340d22</Hash>
 </Codenesium>*/

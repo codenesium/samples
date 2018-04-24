@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual short Create(
 			DepartmentModel model)
 		{
-			var record = new EFDepartment();
+			EFDepartment record = new EFDepartment();
 
 			this.Mapper.DepartmentMapModelToEF(
 				default (short),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			short departmentID,
 			DepartmentModel model)
 		{
-			var record = this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
+			EFDepartment record = this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{departmentID}");
+				throw new RecordNotFoundException($"Unable to find id:{departmentID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			short departmentID)
 		{
-			var record = this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
+			EFDepartment record = this.SearchLinqEF(x => x.DepartmentID == departmentID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFDepartment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDepartment> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DepartmentMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFDepartment> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.DepartmentMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9609c3ef54d45e69109bf86d7ef1b3fb</Hash>
+    <Hash>413eae90e95d22daf288974ad0e16c78</Hash>
 </Codenesium>*/

@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			ProductReviewModel model)
 		{
-			var record = new EFProductReview();
+			EFProductReview record = new EFProductReview();
 
 			this.Mapper.ProductReviewMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int productReviewID,
 			ProductReviewModel model)
 		{
-			var record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
+			EFProductReview record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{productReviewID}");
+				throw new RecordNotFoundException($"Unable to find id:{productReviewID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int productReviewID)
 		{
-			var record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
+			EFProductReview record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductReview> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductReviewMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFProductReview> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.ProductReviewMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9414b211eb66e6e2a5c6b75adbed3d9a</Hash>
+    <Hash>638fb64f62672154340637804082d6c6</Hash>
 </Codenesium>*/

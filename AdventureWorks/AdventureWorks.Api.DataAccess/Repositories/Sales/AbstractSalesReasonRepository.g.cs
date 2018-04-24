@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			SalesReasonModel model)
 		{
-			var record = new EFSalesReason();
+			EFSalesReason record = new EFSalesReason();
 
 			this.Mapper.SalesReasonMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int salesReasonID,
 			SalesReasonModel model)
 		{
-			var record = this.SearchLinqEF(x => x.SalesReasonID == salesReasonID).FirstOrDefault();
+			EFSalesReason record = this.SearchLinqEF(x => x.SalesReasonID == salesReasonID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{salesReasonID}");
+				throw new RecordNotFoundException($"Unable to find id:{salesReasonID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int salesReasonID)
 		{
-			var record = this.SearchLinqEF(x => x.SalesReasonID == salesReasonID).FirstOrDefault();
+			EFSalesReason record = this.SearchLinqEF(x => x.SalesReasonID == salesReasonID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFSalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesReason> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesReasonMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFSalesReason> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.SalesReasonMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1614ebc3b9a319cddf80ce883c426543</Hash>
+    <Hash>5f38484fe2edabef151f0431b30b8e9a</Hash>
 </Codenesium>*/

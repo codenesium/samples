@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			AWBuildVersionModel model)
 		{
-			var record = new EFAWBuildVersion();
+			EFAWBuildVersion record = new EFAWBuildVersion();
 
 			this.Mapper.AWBuildVersionMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int systemInformationID,
 			AWBuildVersionModel model)
 		{
-			var record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
+			EFAWBuildVersion record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{systemInformationID}");
+				throw new RecordNotFoundException($"Unable to find id:{systemInformationID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int systemInformationID)
 		{
-			var record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
+			EFAWBuildVersion record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFAWBuildVersion> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.AWBuildVersionMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFAWBuildVersion> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.AWBuildVersionMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>63d42004c10f71fef022ffe6295dc496</Hash>
+    <Hash>dc35458dd2a6b555e37fcc4fb4232c7c</Hash>
 </Codenesium>*/

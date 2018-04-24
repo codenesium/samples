@@ -1,11 +1,35 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 namespace NebulaNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
 	{
+		public Guid UserId { get; private set; }
+
+		public int TenantId { get; private set; }
+
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		public void SetUserId(Guid userId)
+		{
+			if(userId == default (Guid))
+			{
+				throw new ArgumentException("UserId cannot be a default value");
+			}
+			this.UserId = userId;
+		}
+
+		public void SetTenantId(int tenantId)
+		{
+			if(tenantId <= 0)
+			{
+				throw new ArgumentException("TenantId must be greater than 0");
+			}
+			this.TenantId = tenantId;
+		}
+
 		public virtual DbSet<EFChain> Chains { get; set; }
 
 		public virtual DbSet<EFChainStatus> ChainStatus { get; set; }
@@ -29,5 +53,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9a295df0a379a229f6145bdb0e3ab049</Hash>
+    <Hash>b2a40b326c24151aaec77b1b85157c13</Hash>
 </Codenesium>*/

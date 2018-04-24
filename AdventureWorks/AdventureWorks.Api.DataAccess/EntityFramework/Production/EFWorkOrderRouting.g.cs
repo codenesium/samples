@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("WorkOrderRouting", Schema="Production")]
-	public partial class EFWorkOrderRouting
+	public partial class EFWorkOrderRouting: AbstractEntityFrameworkPOCO
 	{
 		public EFWorkOrderRouting()
 		{}
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f2b4f924a3dd8a3647398fe23c49b85e</Hash>
+    <Hash>1ecb5a27b6c82911e5b8ab797b1c1a7c</Hash>
 </Codenesium>*/

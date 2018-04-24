@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual int Create(
 			StateProvinceModel model)
 		{
-			var record = new EFStateProvince();
+			EFStateProvince record = new EFStateProvince();
 
 			this.Mapper.StateProvinceMapModelToEF(
 				default (int),
@@ -45,10 +45,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int stateProvinceID,
 			StateProvinceModel model)
 		{
-			var record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
+			EFStateProvince record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
 			if (record == null)
 			{
-				throw new Exception($"Unable to find id:{stateProvinceID}");
+				throw new RecordNotFoundException($"Unable to find id:{stateProvinceID}");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual void Delete(
 			int stateProvinceID)
 		{
-			var record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
+			EFStateProvince record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -103,7 +103,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCO(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFStateProvince> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.StateProvinceMapEFToPOCO(x, response));
@@ -112,7 +112,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			var response = new ApiResponse();
+			ApiResponse response = new ApiResponse();
 
 			List<EFStateProvince> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
 			records.ForEach(x => this.Mapper.StateProvinceMapEFToPOCO(x, response));
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c1532e82f326d54bfb32a095200a98ce</Hash>
+    <Hash>167ed4ee19aec2bde8de88d262bf5c26</Hash>
 </Codenesium>*/

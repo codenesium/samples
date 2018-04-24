@@ -38,42 +38,59 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(POCOEmployeeDepartmentHistory), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			ApiResponse response = this.employeeDepartmentHistoryManager.GetById(id);
-			return this.Ok(response);
+			POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.GetById(id).EmployeeDepartmentHistories.FirstOrDefault();
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
 		}
 
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(ApiResponse), 404)]
+		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Search()
 		{
-			var query = new SearchQuery();
+			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.EmployeeDepartmentHistories);
+			}
 		}
 
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(int), 200)]
+		[ProducesResponseType(typeof(POCOEmployeeDepartmentHistory), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] EmployeeDepartmentHistoryModel model)
 		{
-			var result = await this.employeeDepartmentHistoryManager.Create(model);
+			CreateResponse<int> result = await this.employeeDepartmentHistoryManager.Create(model);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/employeeDepartmentHistories/{result.Id.ToString()}");
-				return this.Ok(result);
+				POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.GetById(result.Id).EmployeeDepartmentHistories.First();
+				return this.Ok(response);
 			}
 			else
 			{
@@ -84,7 +101,7 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(List<int>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<EmployeeDepartmentHistoryModel> models)
@@ -94,35 +111,49 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
+			List<int> ids = new List<int>();
 			foreach (var model in models)
 			{
-				var result = await this.employeeDepartmentHistoryManager.Create(model);
+				CreateResponse<int> result = await this.employeeDepartmentHistoryManager.Create(model);
 
-				if(!result.Success)
+				if(result.Success)
+				{
+					ids.Add(result.Id);
+				}
+				else
 				{
 					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 				}
 			}
 
-			return this.NoContent();
+			return this.Ok(ids);
 		}
 
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(POCOEmployeeDepartmentHistory), 200)]
+		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Update(int id, [FromBody] EmployeeDepartmentHistoryModel model)
 		{
-			var result = await this.employeeDepartmentHistoryManager.Update(id, model);
+			try
+			{
+				ActionResponse result = await this.employeeDepartmentHistoryManager.Update(id, model);
 
-			if(result.Success)
-			{
-				return this.NoContent();
+				if (result.Success)
+				{
+					POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.GetById(id).EmployeeDepartmentHistories.First();
+					return this.Ok(response);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
 			}
-			else
+			catch(RecordNotFoundException)
 			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				return this.StatusCode(StatusCodes.Status404NotFound);
 			}
 		}
 
@@ -133,9 +164,9 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
-			var result = await this.employeeDepartmentHistoryManager.Delete(id);
+			ActionResponse result = await this.employeeDepartmentHistoryManager.Delete(id);
 
-			if(result.Success)
+			if (result.Success)
 			{
 				return this.NoContent();
 			}
@@ -150,10 +181,19 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Employees/{id}/EmployeeDepartmentHistories")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
 		public virtual IActionResult ByBusinessEntityID(int id)
 		{
 			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhere(x => x.BusinessEntityID == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.EmployeeDepartmentHistories);
+			}
 		}
 
 		[HttpGet]
@@ -161,10 +201,19 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Departments/{id}/EmployeeDepartmentHistories")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
 		public virtual IActionResult ByDepartmentID(short id)
 		{
 			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhere(x => x.DepartmentID == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.EmployeeDepartmentHistories);
+			}
 		}
 
 		[HttpGet]
@@ -172,14 +221,23 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[Route("~/api/Shifts/{id}/EmployeeDepartmentHistories")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
 		public virtual IActionResult ByShiftID(int id)
 		{
 			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhere(x => x.ShiftID == id);
-			return this.Ok(response);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.EmployeeDepartmentHistories);
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4871fb0cbaa23a471aafbcaf4fd919d4</Hash>
+    <Hash>9d7bd0b23a46b370b81f82c02a55f27d</Hash>
 </Codenesium>*/
