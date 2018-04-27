@@ -1,359 +1,330 @@
-USE [master]
+IF NOT EXISTS(SELECT *
+FROM sys.schemas
+WHERE name = N'dbo')
+EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
-/****** Object:  Database [Nebula]    Script Date: 3/12/2018 7:52:54 PM ******/
-CREATE DATABASE [Nebula]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'Nebula', FILENAME = N'C:\Program Files (x86)\Microsoft SQL Server\MSSQL12.PROD\MSSQL\DATA\Nebula.mdf' , SIZE = 86016KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
- LOG ON 
-( NAME = N'Nebula_log', FILENAME = N'C:\Program Files (x86)\Microsoft SQL Server\MSSQL12.PROD\MSSQL\DATA\Nebula_log.ldf' , SIZE = 20096KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+
+IF (OBJECT_ID('FK_Clasp_nextChainId_Chain_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Clasp] DROP CONSTRAINT [FK_Clasp_nextChainId_Chain_id]
+END
 GO
-ALTER DATABASE [Nebula] SET COMPATIBILITY_LEVEL = 120
+IF (OBJECT_ID('FK_Clasp_previousChainId_Chain_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Clasp] DROP CONSTRAINT [FK_Clasp_previousChainId_Chain_id]
+END
 GO
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [Nebula].[dbo].[sp_fulltext_database] @action = 'enable'
-end
+IF (OBJECT_ID('FK_Link_chainId_Chain_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_chainId_Chain_id]
+END
 GO
-ALTER DATABASE [Nebula] SET ANSI_NULL_DEFAULT OFF 
+IF (OBJECT_ID('FK_Chain_chainStatusId_ChainStatus_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Chain] DROP CONSTRAINT [FK_Chain_chainStatusId_ChainStatus_id]
+END
 GO
-ALTER DATABASE [Nebula] SET ANSI_NULLS OFF 
+IF (OBJECT_ID('FK_LinkLog_linkId_Link_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[LinkLog] DROP CONSTRAINT [FK_LinkLog_linkId_Link_id]
+END
 GO
-ALTER DATABASE [Nebula] SET ANSI_PADDING OFF 
+IF (OBJECT_ID('FK_Link_linkStatusId_LinkStatus_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_linkStatusId_LinkStatus_id]
+END
 GO
-ALTER DATABASE [Nebula] SET ANSI_WARNINGS OFF 
+IF (OBJECT_ID('FK_Link_assignedMachineId_Machine_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_assignedMachineId_Machine_id]
+END
 GO
-ALTER DATABASE [Nebula] SET ARITHABORT OFF 
+IF (OBJECT_ID('FK_MachineRefTeam_machineId_Machine_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[MachineRefTeam] DROP CONSTRAINT [FK_MachineRefTeam_machineId_Machine_id]
+END
 GO
-ALTER DATABASE [Nebula] SET AUTO_CLOSE OFF 
+IF (OBJECT_ID('FK_Team_organizationId_Organization_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Team] DROP CONSTRAINT [FK_Team_organizationId_Organization_id]
+END
 GO
-ALTER DATABASE [Nebula] SET AUTO_SHRINK OFF 
+IF (OBJECT_ID('FK_Chain_teamId_Team_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[Chain] DROP CONSTRAINT [FK_Chain_teamId_Team_id]
+END
 GO
-ALTER DATABASE [Nebula] SET AUTO_UPDATE_STATISTICS ON 
+IF (OBJECT_ID('FK_machineRefTeam_teamId_Team_id', 'F') IS NOT NULL)
+BEGIN
+ALTER TABLE [dbo].[MachineRefTeam] DROP CONSTRAINT [FK_machineRefTeam_teamId_Team_id]
+END
 GO
-ALTER DATABASE [Nebula] SET CURSOR_CLOSE_ON_COMMIT OFF 
+
+IF OBJECT_ID('dbo.Chain', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[Chain]
+END
 GO
-ALTER DATABASE [Nebula] SET CURSOR_DEFAULT  GLOBAL 
+IF OBJECT_ID('dbo.ChainStatus', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[ChainStatus]
+END
 GO
-ALTER DATABASE [Nebula] SET CONCAT_NULL_YIELDS_NULL OFF 
+IF OBJECT_ID('dbo.Clasp', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[Clasp]
+END
 GO
-ALTER DATABASE [Nebula] SET NUMERIC_ROUNDABORT OFF 
+IF OBJECT_ID('dbo.Link', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[Link]
+END
 GO
-ALTER DATABASE [Nebula] SET QUOTED_IDENTIFIER OFF 
+IF OBJECT_ID('dbo.LinkLog', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[LinkLog]
+END
 GO
-ALTER DATABASE [Nebula] SET RECURSIVE_TRIGGERS OFF 
+IF OBJECT_ID('dbo.LinkStatus', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[LinkStatus]
+END
 GO
-ALTER DATABASE [Nebula] SET  DISABLE_BROKER 
+IF OBJECT_ID('dbo.Machine', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[Machine]
+END
 GO
-ALTER DATABASE [Nebula] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+IF OBJECT_ID('dbo.MachineRefTeam', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[MachineRefTeam]
+END
 GO
-ALTER DATABASE [Nebula] SET DATE_CORRELATION_OPTIMIZATION OFF 
+IF OBJECT_ID('dbo.Organization', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[Organization]
+END
 GO
-ALTER DATABASE [Nebula] SET TRUSTWORTHY OFF 
+IF OBJECT_ID('dbo.Team', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[Team]
+END
 GO
-ALTER DATABASE [Nebula] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+IF OBJECT_ID('dbo.VersionInfo', 'U') IS NOT NULL 
+BEGIN
+DROP TABLE [dbo].[VersionInfo]
+END
 GO
-ALTER DATABASE [Nebula] SET PARAMETERIZATION SIMPLE 
-GO
-ALTER DATABASE [Nebula] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-ALTER DATABASE [Nebula] SET HONOR_BROKER_PRIORITY OFF 
-GO
-ALTER DATABASE [Nebula] SET RECOVERY FULL 
-GO
-ALTER DATABASE [Nebula] SET  MULTI_USER 
-GO
-ALTER DATABASE [Nebula] SET PAGE_VERIFY CHECKSUM  
-GO
-ALTER DATABASE [Nebula] SET DB_CHAINING OFF 
-GO
-ALTER DATABASE [Nebula] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-ALTER DATABASE [Nebula] SET TARGET_RECOVERY_TIME = 0 SECONDS 
-GO
-ALTER DATABASE [Nebula] SET DELAYED_DURABILITY = DISABLED 
-GO
-USE [Nebula]
-GO
-/****** Object:  User [NebulaUser]    Script Date: 3/12/2018 7:52:55 PM ******/
-CREATE USER [NebulaUser] FOR LOGIN [NebulaUser] WITH DEFAULT_SCHEMA=[dbo]
-GO
-ALTER ROLE [db_owner] ADD MEMBER [NebulaUser]
-GO
-/****** Object:  Table [dbo].[Chain]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
+
 CREATE TABLE [dbo].[Chain](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](128) NOT NULL,
-	[teamId] [int] NOT NULL,
-	[chainStatusId] [int] NOT NULL,
-	[externalId] [uniqueidentifier] NOT NULL CONSTRAINT [DF_Chain_externalId]  DEFAULT ('00000000-0000-0000-0000-000000000000'),
- CONSTRAINT [PK_chain] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[chainStatusId] [int]    NOT NULL,
+[externalId] [uniqueidentifier]    NOT NULL,
+[name] [varchar]  (128)  NOT NULL,
+[teamId] [int]    NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[ChainStatus]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[ChainStatus](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](128) NOT NULL,
- CONSTRAINT [PK_chainStatus] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[name] [varchar]  (128)  NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[Clasp]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 CREATE TABLE [dbo].[Clasp](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[previousChainId] [int] NOT NULL,
-	[nextChainId] [int] NOT NULL,
- CONSTRAINT [PK_Clasp] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[nextChainId] [int]    NOT NULL,
+[previousChainId] [int]    NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-/****** Object:  Table [dbo].[Link]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[Link](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](128) NOT NULL,
-	[dynamicParameters] [text] NULL,
-	[staticParameters] [text] NULL,
-	[chainId] [int] NOT NULL,
-	[assignedMachineId] [int] NULL,
-	[linkStatusId] [int] NOT NULL,
-	[order] [int] NOT NULL,
-	[dateStarted] [datetime] NULL,
-	[dateCompleted] [datetime] NULL,
-	[response] [text] NULL,
-	[externalId] [uniqueidentifier] NOT NULL CONSTRAINT [DF_Link_externalId]  DEFAULT ('00000000-0000-0000-0000-000000000000'),
- CONSTRAINT [PK_link] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[assignedMachineId] [int]    NULL,
+[chainId] [int]    NOT NULL,
+[dateCompleted] [datetime]    NULL,
+[dateStarted] [datetime]    NULL,
+[dynamicParameters] [text]    NULL,
+[externalId] [uniqueidentifier]    NOT NULL,
+[linkStatusId] [int]    NOT NULL,
+[name] [varchar]  (128)  NOT NULL,
+[order] [int]    NOT NULL,
+[response] [text]    NULL,
+[staticParameters] [text]    NULL,
+[timeoutInSeconds] [int]    NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[LinkLog]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 CREATE TABLE [dbo].[LinkLog](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[linkId] [int] NOT NULL,
-	[log] [text] NOT NULL,
-	[dateEntered] [datetime] NOT NULL,
- CONSTRAINT [PK_linkLog] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[dateEntered] [datetime]    NOT NULL,
+[linkId] [int]    NOT NULL,
+[log] [text]    NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-/****** Object:  Table [dbo].[LinkStatus]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[LinkStatus](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](128) NOT NULL,
- CONSTRAINT [PK_linkStatus] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[name] [varchar]  (128)  NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[Machine]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[Machine](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](128) NOT NULL,
-	[machineGuid] [uniqueidentifier] NOT NULL,
-	[jwtKey] [varchar](128) NOT NULL,
-	[lastIpAddress] [varchar](128) NOT NULL,
-	[description] [text] NOT NULL,
- CONSTRAINT [PK_machine] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[description] [text]    NOT NULL,
+[jwtKey] [varchar]  (128)  NOT NULL,
+[lastIpAddress] [varchar]  (128)  NOT NULL,
+[machineGuid] [uniqueidentifier]    NOT NULL,
+[name] [varchar]  (128)  NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[MachineRefTeam]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 CREATE TABLE [dbo].[MachineRefTeam](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[machineId] [int] NOT NULL,
-	[teamId] [int] NOT NULL,
- CONSTRAINT [PK_machineRefTeam] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[machineId] [int]    NOT NULL,
+[teamId] [int]    NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-/****** Object:  Table [dbo].[Organization]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[Organization](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](128) NOT NULL,
- CONSTRAINT [PK_organization] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[name] [varchar]  (128)  NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[Team]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[Team](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[name] [varchar](128) NOT NULL,
-	[organizationId] [int] NOT NULL,
- CONSTRAINT [PK_team] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+[id] [int]   IDENTITY(1,1) NOT NULL,
+[name] [varchar]  (128)  NOT NULL,
+[organizationId] [int]    NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-SET ANSI_PADDING OFF
-GO
-/****** Object:  Table [dbo].[VersionInfo]    Script Date: 3/12/2018 7:52:55 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 CREATE TABLE [dbo].[VersionInfo](
-	[Version] [bigint] NOT NULL,
-	[AppliedOn] [datetime] NULL,
-	[Description] [nvarchar](1024) NULL
-) ON [PRIMARY]
+[AppliedOn] [datetime]    NULL,
+[Description] [nvarchar]  (1024)  NULL,
+[Version] [bigint]    NOT NULL,
+) ON[PRIMARY]
+GO
 
-GO
-/****** Object:  Index [UC_Version]    Script Date: 3/12/2018 7:52:55 PM ******/
-CREATE UNIQUE CLUSTERED INDEX [UC_Version] ON [dbo].[VersionInfo]
+ALTER TABLE[dbo].[Chain]
+ADD CONSTRAINT[PK_chain] PRIMARY KEY CLUSTERED
 (
-	[Version] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Chain]  WITH CHECK ADD  CONSTRAINT [FK_Chain_chainStatusId_ChainStatus_id] FOREIGN KEY([chainStatusId])
-REFERENCES [dbo].[ChainStatus] ([id])
+ALTER TABLE[dbo].[ChainStatus]
+ADD CONSTRAINT[PK_chainStatus] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Chain] CHECK CONSTRAINT [FK_Chain_chainStatusId_ChainStatus_id]
+ALTER TABLE[dbo].[Clasp]
+ADD CONSTRAINT[PK_Clasp] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Chain]  WITH CHECK ADD  CONSTRAINT [FK_Chain_teamId_Team_id] FOREIGN KEY([teamId])
-REFERENCES [dbo].[Team] ([id])
+ALTER TABLE[dbo].[Link]
+ADD CONSTRAINT[PK_link] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Chain] CHECK CONSTRAINT [FK_Chain_teamId_Team_id]
+ALTER TABLE[dbo].[LinkLog]
+ADD CONSTRAINT[PK_linkLog] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Clasp]  WITH CHECK ADD  CONSTRAINT [FK_Clasp_nextChainId_Chain_id] FOREIGN KEY([nextChainId])
-REFERENCES [dbo].[Chain] ([id])
+ALTER TABLE[dbo].[LinkStatus]
+ADD CONSTRAINT[PK_linkStatus] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Clasp] CHECK CONSTRAINT [FK_Clasp_nextChainId_Chain_id]
+ALTER TABLE[dbo].[Machine]
+ADD CONSTRAINT[PK_machine] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Clasp]  WITH CHECK ADD  CONSTRAINT [FK_Clasp_previousChainId_Chain_id] FOREIGN KEY([previousChainId])
-REFERENCES [dbo].[Chain] ([id])
+ALTER TABLE[dbo].[MachineRefTeam]
+ADD CONSTRAINT[PK_machineRefTeam] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Clasp] CHECK CONSTRAINT [FK_Clasp_previousChainId_Chain_id]
+ALTER TABLE[dbo].[Organization]
+ADD CONSTRAINT[PK_organization] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Link]  WITH CHECK ADD  CONSTRAINT [FK_Link_assignedMachineId_Machine_id] FOREIGN KEY([assignedMachineId])
-REFERENCES [dbo].[Machine] ([id])
+ALTER TABLE[dbo].[Team]
+ADD CONSTRAINT[PK_team] PRIMARY KEY CLUSTERED
+(
+id ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Link] CHECK CONSTRAINT [FK_Link_assignedMachineId_Machine_id]
+CREATE UNIQUE CLUSTERED INDEX[UC_Version] ON[dbo].[VersionInfo]
+(
+[Version] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE [dbo].[Link]  WITH CHECK ADD  CONSTRAINT [FK_Link_chainId_Chain_id] FOREIGN KEY([chainId])
-REFERENCES [dbo].[Chain] ([id])
+
+ALTER TABLE[dbo].[Clasp]  WITH CHECK ADD  CONSTRAINT[FK_Clasp_nextChainId_Chain_id] FOREIGN KEY([nextChainId])
+REFERENCES[dbo].[Chain]([id])
 GO
-ALTER TABLE [dbo].[Link] CHECK CONSTRAINT [FK_Link_chainId_Chain_id]
+ALTER TABLE[dbo].[Clasp] CHECK CONSTRAINT[FK_Clasp_nextChainId_Chain_id]
 GO
-ALTER TABLE [dbo].[Link]  WITH CHECK ADD  CONSTRAINT [FK_Link_linkStatusId_LinkStatus_id] FOREIGN KEY([linkStatusId])
-REFERENCES [dbo].[LinkStatus] ([id])
+ALTER TABLE[dbo].[Clasp]  WITH CHECK ADD  CONSTRAINT[FK_Clasp_previousChainId_Chain_id] FOREIGN KEY([previousChainId])
+REFERENCES[dbo].[Chain]([id])
 GO
-ALTER TABLE [dbo].[Link] CHECK CONSTRAINT [FK_Link_linkStatusId_LinkStatus_id]
+ALTER TABLE[dbo].[Clasp] CHECK CONSTRAINT[FK_Clasp_previousChainId_Chain_id]
 GO
-ALTER TABLE [dbo].[LinkLog]  WITH CHECK ADD  CONSTRAINT [FK_LinkLog_linkId_Link_id] FOREIGN KEY([linkId])
-REFERENCES [dbo].[Link] ([id])
+ALTER TABLE[dbo].[Link]  WITH CHECK ADD  CONSTRAINT[FK_Link_chainId_Chain_id] FOREIGN KEY([chainId])
+REFERENCES[dbo].[Chain]([id])
 GO
-ALTER TABLE [dbo].[LinkLog] CHECK CONSTRAINT [FK_LinkLog_linkId_Link_id]
+ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_chainId_Chain_id]
 GO
-ALTER TABLE [dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT [FK_MachineRefTeam_machineId_Machine_id] FOREIGN KEY([machineId])
-REFERENCES [dbo].[Machine] ([id])
+ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id] FOREIGN KEY([chainStatusId])
+REFERENCES[dbo].[ChainStatus]([id])
 GO
-ALTER TABLE [dbo].[MachineRefTeam] CHECK CONSTRAINT [FK_MachineRefTeam_machineId_Machine_id]
+ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id]
 GO
-ALTER TABLE [dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT [FK_machineRefTeam_teamId_Team_id] FOREIGN KEY([teamId])
-REFERENCES [dbo].[Team] ([id])
+ALTER TABLE[dbo].[LinkLog]  WITH CHECK ADD  CONSTRAINT[FK_LinkLog_linkId_Link_id] FOREIGN KEY([linkId])
+REFERENCES[dbo].[Link]([id])
 GO
-ALTER TABLE [dbo].[MachineRefTeam] CHECK CONSTRAINT [FK_machineRefTeam_teamId_Team_id]
+ALTER TABLE[dbo].[LinkLog] CHECK CONSTRAINT[FK_LinkLog_linkId_Link_id]
 GO
-ALTER TABLE [dbo].[Team]  WITH CHECK ADD  CONSTRAINT [FK_Team_organizationId_Organization_id] FOREIGN KEY([organizationId])
-REFERENCES [dbo].[Organization] ([id])
+ALTER TABLE[dbo].[Link]  WITH CHECK ADD  CONSTRAINT[FK_Link_linkStatusId_LinkStatus_id] FOREIGN KEY([linkStatusId])
+REFERENCES[dbo].[LinkStatus]([id])
 GO
-ALTER TABLE [dbo].[Team] CHECK CONSTRAINT [FK_Team_organizationId_Organization_id]
+ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_linkStatusId_LinkStatus_id]
 GO
-USE [master]
+ALTER TABLE[dbo].[Link]  WITH CHECK ADD  CONSTRAINT[FK_Link_assignedMachineId_Machine_id] FOREIGN KEY([assignedMachineId])
+REFERENCES[dbo].[Machine]([id])
 GO
-ALTER DATABASE [Nebula] SET  READ_WRITE 
+ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_assignedMachineId_Machine_id]
 GO
+ALTER TABLE[dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id] FOREIGN KEY([machineId])
+REFERENCES[dbo].[Machine]([id])
+GO
+ALTER TABLE[dbo].[MachineRefTeam] CHECK CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id]
+GO
+ALTER TABLE[dbo].[Team]  WITH CHECK ADD  CONSTRAINT[FK_Team_organizationId_Organization_id] FOREIGN KEY([organizationId])
+REFERENCES[dbo].[Organization]([id])
+GO
+ALTER TABLE[dbo].[Team] CHECK CONSTRAINT[FK_Team_organizationId_Organization_id]
+GO
+ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_teamId_Team_id] FOREIGN KEY([teamId])
+REFERENCES[dbo].[Team]([id])
+GO
+ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_teamId_Team_id]
+GO
+ALTER TABLE[dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT[FK_machineRefTeam_teamId_Team_id] FOREIGN KEY([teamId])
+REFERENCES[dbo].[Team]([id])
+GO
+ALTER TABLE[dbo].[MachineRefTeam] CHECK CONSTRAINT[FK_machineRefTeam_teamId_Team_id]
+GO
+
