@@ -11,25 +11,25 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOSalesPersonQuotaHistory(
 			int businessEntityID,
+			DateTime modifiedDate,
 			DateTime quotaDate,
-			decimal salesQuota,
 			Guid rowguid,
-			DateTime modifiedDate)
+			decimal salesQuota)
 		{
-			this.QuotaDate = quotaDate.ToDateTime();
-			this.SalesQuota = salesQuota.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.QuotaDate = quotaDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesQuota = salesQuota.ToDecimal();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.SalesPersons));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public DateTime QuotaDate { get; set; }
-		public decimal SalesQuota { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public DateTime QuotaDate { get; set; }
+		public Guid Rowguid { get; set; }
+		public decimal SalesQuota { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -37,6 +37,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBusinessEntityID()
 		{
 			return this.ShouldSerializeBusinessEntityIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -48,14 +56,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesQuotaValue { get; set; } = true;
-
-		public bool ShouldSerializeSalesQuota()
-		{
-			return this.ShouldSerializeSalesQuotaValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
@@ -64,24 +64,24 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeSalesQuotaValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeSalesQuota()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeSalesQuotaValue;
 		}
 
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeQuotaDateValue = false;
-			this.ShouldSerializeSalesQuotaValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeQuotaDateValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeSalesQuotaValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>79f81994ced908e6a024578794520777</Hash>
+    <Hash>92930285bd40b96d42f2d7839b6f8fc0</Hash>
 </Codenesium>*/

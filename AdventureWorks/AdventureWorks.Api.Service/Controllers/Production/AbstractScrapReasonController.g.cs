@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/scrapReasons/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ScrapReasons/{result.Id.ToString()}");
 				POCOScrapReason response = this.scrapReasonManager.GetById(result.Id).ScrapReasons.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f09db81e0424ad6e2cde18d3bfec6073</Hash>
+    <Hash>7457f189b9c8c8c19b3cde350b159f40</Hash>
 </Codenesium>*/

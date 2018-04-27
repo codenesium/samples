@@ -13,27 +13,27 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(ErrorLogModel model)
 		{
-			this.ErrorTimeRules();
-			this.UserNameRules();
-			this.ErrorNumberRules();
-			this.ErrorSeverityRules();
-			this.ErrorStateRules();
-			this.ErrorProcedureRules();
 			this.ErrorLineRules();
 			this.ErrorMessageRules();
+			this.ErrorNumberRules();
+			this.ErrorProcedureRules();
+			this.ErrorSeverityRules();
+			this.ErrorStateRules();
+			this.ErrorTimeRules();
+			this.UserNameRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ErrorLogModel model)
 		{
-			this.ErrorTimeRules();
-			this.UserNameRules();
-			this.ErrorNumberRules();
-			this.ErrorSeverityRules();
-			this.ErrorStateRules();
-			this.ErrorProcedureRules();
 			this.ErrorLineRules();
 			this.ErrorMessageRules();
+			this.ErrorNumberRules();
+			this.ErrorProcedureRules();
+			this.ErrorSeverityRules();
+			this.ErrorStateRules();
+			this.ErrorTimeRules();
+			this.UserNameRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c440bab7e05bf8d26c862c9d1c86b734</Hash>
+    <Hash>510ffe9e8f57a03611570706276b6a43</Hash>
 </Codenesium>*/

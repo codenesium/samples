@@ -11,33 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductModelModel(
-			string name,
 			string catalogDescription,
 			string instructions,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name,
+			Guid rowguid)
 		{
-			this.Name = name.ToString();
 			this.CatalogDescription = catalogDescription;
 			this.Instructions = instructions;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
 		private string catalogDescription;
@@ -70,22 +54,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private Guid rowguid;
-
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
-
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-
 		private DateTime modifiedDate;
 
 		[Required]
@@ -101,9 +69,41 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
+
+		private Guid rowguid;
+
+		[Required]
+		public Guid Rowguid
+		{
+			get
+			{
+				return this.rowguid;
+			}
+
+			set
+			{
+				this.rowguid = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d41054982d0dd70eea4284c27afee0a1</Hash>
+    <Hash>259919600a1eeef43d4fe09f6ae247c5</Hash>
 </Codenesium>*/

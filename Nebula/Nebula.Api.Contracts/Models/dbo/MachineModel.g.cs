@@ -11,48 +11,32 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		public MachineModel(
-			string name,
-			Guid machineGuid,
+			string description,
 			string jwtKey,
 			string lastIpAddress,
-			string description)
+			Guid machineGuid,
+			string name)
 		{
-			this.Name = name.ToString();
-			this.MachineGuid = machineGuid.ToGuid();
+			this.Description = description.ToString();
 			this.JwtKey = jwtKey.ToString();
 			this.LastIpAddress = lastIpAddress.ToString();
-			this.Description = description.ToString();
+			this.MachineGuid = machineGuid.ToGuid();
+			this.Name = name.ToString();
 		}
 
-		private string name;
+		private string description;
 
 		[Required]
-		public string Name
+		public string Description
 		{
 			get
 			{
-				return this.name;
+				return this.description;
 			}
 
 			set
 			{
-				this.name = value;
-			}
-		}
-
-		private Guid machineGuid;
-
-		[Required]
-		public Guid MachineGuid
-		{
-			get
-			{
-				return this.machineGuid;
-			}
-
-			set
-			{
-				this.machineGuid = value;
+				this.description = value;
 			}
 		}
 
@@ -88,24 +72,40 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
-		private string description;
+		private Guid machineGuid;
 
 		[Required]
-		public string Description
+		public Guid MachineGuid
 		{
 			get
 			{
-				return this.description;
+				return this.machineGuid;
 			}
 
 			set
 			{
-				this.description = value;
+				this.machineGuid = value;
+			}
+		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cfa262a5583331784ac2233298e28c21</Hash>
+    <Hash>9c5f528cdaf6bf60db99e9eb1c6ca82e</Hash>
 </Codenesium>*/

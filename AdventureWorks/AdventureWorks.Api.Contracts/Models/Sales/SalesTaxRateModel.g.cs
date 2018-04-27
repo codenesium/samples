@@ -11,66 +11,34 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public SalesTaxRateModel(
-			int stateProvinceID,
-			int taxType,
-			decimal taxRate,
+			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int stateProvinceID,
+			decimal taxRate,
+			int taxType)
 		{
-			this.StateProvinceID = stateProvinceID.ToInt();
-			this.TaxType = taxType.ToInt();
-			this.TaxRate = taxRate.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.StateProvinceID = stateProvinceID.ToInt();
+			this.TaxRate = taxRate.ToDecimal();
+			this.TaxType = taxType.ToInt();
 		}
 
-		private int stateProvinceID;
+		private DateTime modifiedDate;
 
 		[Required]
-		public int StateProvinceID
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.stateProvinceID;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.stateProvinceID = value;
-			}
-		}
-
-		private int taxType;
-
-		[Required]
-		public int TaxType
-		{
-			get
-			{
-				return this.taxType;
-			}
-
-			set
-			{
-				this.taxType = value;
-			}
-		}
-
-		private decimal taxRate;
-
-		[Required]
-		public decimal TaxRate
-		{
-			get
-			{
-				return this.taxRate;
-			}
-
-			set
-			{
-				this.taxRate = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -106,24 +74,56 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private int stateProvinceID;
 
 		[Required]
-		public DateTime ModifiedDate
+		public int StateProvinceID
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.stateProvinceID;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.stateProvinceID = value;
+			}
+		}
+
+		private decimal taxRate;
+
+		[Required]
+		public decimal TaxRate
+		{
+			get
+			{
+				return this.taxRate;
+			}
+
+			set
+			{
+				this.taxRate = value;
+			}
+		}
+
+		private int taxType;
+
+		[Required]
+		public int TaxType
+		{
+			get
+			{
+				return this.taxType;
+			}
+
+			set
+			{
+				this.taxType = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>af369612bd92d9afaf1805c7f5e6efe3</Hash>
+    <Hash>ea80d0955d1fb9416431b8c17a2d381c</Hash>
 </Codenesium>*/

@@ -20,14 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void ThumbNailPhotoRules()
-		{                       }
-
-		public virtual void ThumbnailPhotoFileNameRules()
-		{
-			this.RuleFor(x => x.ThumbnailPhotoFileName).Length(0, 50);
-		}
-
 		public virtual void LargePhotoRules()
 		{                       }
 
@@ -40,9 +32,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public virtual void ThumbNailPhotoRules()
+		{                       }
+
+		public virtual void ThumbnailPhotoFileNameRules()
+		{
+			this.RuleFor(x => x.ThumbnailPhotoFileName).Length(0, 50);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e84fd4eccfd1250a68aa047f0e3f774</Hash>
+    <Hash>39e0b446c1819f5779b611874106b856</Hash>
 </Codenesium>*/

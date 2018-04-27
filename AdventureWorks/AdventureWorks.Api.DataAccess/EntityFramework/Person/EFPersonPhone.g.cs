@@ -13,28 +13,28 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
+			DateTime modifiedDate,
 			string phoneNumber,
-			int phoneNumberTypeID,
-			DateTime modifiedDate)
+			int phoneNumberTypeID)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PhoneNumber = phoneNumber.ToString();
 			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
 		[Column("PhoneNumber", TypeName="nvarchar(25)")]
 		public string PhoneNumber { get; set; }
 
 		[Column("PhoneNumberTypeID", TypeName="int")]
 		public int PhoneNumberTypeID { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFPerson Person { get; set; }
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>62f59afc490265b39d4922a2725e15c6</Hash>
+    <Hash>a0375b6db73171f44b67bfafb8bd5900</Hash>
 </Codenesium>*/

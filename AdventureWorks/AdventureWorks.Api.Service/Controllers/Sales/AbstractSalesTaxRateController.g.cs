@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/salesTaxRates/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesTaxRates/{result.Id.ToString()}");
 				POCOSalesTaxRate response = this.salesTaxRateManager.GetById(result.Id).SalesTaxRates.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8f6b68bdb0b0c92ba3b066017733d36e</Hash>
+    <Hash>57775bb0b6698ea9b406b9df9bac233a</Hash>
 </Codenesium>*/

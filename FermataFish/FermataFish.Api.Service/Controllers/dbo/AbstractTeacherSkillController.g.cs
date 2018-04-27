@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/teacherSkills/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/TeacherSkills/{result.Id.ToString()}");
 				POCOTeacherSkill response = this.teacherSkillManager.GetById(result.Id).TeacherSkills.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c1a2d8f08ef2e4cd053aacf14bbb1c63</Hash>
+    <Hash>d05be45ec94651467f4354f86ece50c4</Hash>
 </Codenesium>*/

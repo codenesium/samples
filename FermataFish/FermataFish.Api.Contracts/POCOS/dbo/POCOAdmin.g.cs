@@ -10,39 +10,39 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public POCOAdmin(
-			int id,
+			Nullable<DateTime> birthday,
 			string email,
 			string firstName,
+			int id,
 			string lastName,
 			string phone,
-			Nullable<DateTime> birthday,
 			int studioId)
 		{
-			this.Id = id.ToInt();
+			this.Birthday = birthday.ToNullableDateTime();
 			this.Email = email.ToString();
 			this.FirstName = firstName.ToString();
+			this.Id = id.ToInt();
 			this.LastName = lastName.ToString();
 			this.Phone = phone.ToString();
-			this.Birthday = birthday.ToNullableDateTime();
 
 			this.StudioId = new ReferenceEntity<int>(studioId,
 			                                         nameof(ApiResponse.Studios));
 		}
 
-		public int Id { get; set; }
+		public Nullable<DateTime> Birthday { get; set; }
 		public string Email { get; set; }
 		public string FirstName { get; set; }
+		public int Id { get; set; }
 		public string LastName { get; set; }
 		public string Phone { get; set; }
-		public Nullable<DateTime> Birthday { get; set; }
 		public ReferenceEntity<int> StudioId { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+		public bool ShouldSerializeBirthdayValue { get; set; } = true;
 
-		public bool ShouldSerializeId()
+		public bool ShouldSerializeBirthday()
 		{
-			return this.ShouldSerializeIdValue;
+			return this.ShouldSerializeBirthdayValue;
 		}
 
 		[JsonIgnore]
@@ -62,6 +62,14 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeIdValue { get; set; } = true;
+
+		public bool ShouldSerializeId()
+		{
+			return this.ShouldSerializeIdValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeLastNameValue { get; set; } = true;
 
 		public bool ShouldSerializeLastName()
@@ -78,14 +86,6 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBirthdayValue { get; set; } = true;
-
-		public bool ShouldSerializeBirthday()
-		{
-			return this.ShouldSerializeBirthdayValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeStudioIdValue { get; set; } = true;
 
 		public bool ShouldSerializeStudioId()
@@ -95,17 +95,17 @@ namespace FermataFishNS.Api.Contracts
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeBirthdayValue = false;
 			this.ShouldSerializeEmailValue = false;
 			this.ShouldSerializeFirstNameValue = false;
+			this.ShouldSerializeIdValue = false;
 			this.ShouldSerializeLastNameValue = false;
 			this.ShouldSerializePhoneValue = false;
-			this.ShouldSerializeBirthdayValue = false;
 			this.ShouldSerializeStudioIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b0f772d6d8fcd526dce8a714f80a24bf</Hash>
+    <Hash>a8f11ff7414e211665428433c630355c</Hash>
 </Codenesium>*/

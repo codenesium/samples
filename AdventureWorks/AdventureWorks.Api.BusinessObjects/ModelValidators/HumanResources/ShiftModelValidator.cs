@@ -13,19 +13,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(ShiftModel model)
 		{
-			this.NameRules();
-			this.StartTimeRules();
 			this.EndTimeRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.StartTimeRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ShiftModel model)
 		{
-			this.NameRules();
-			this.StartTimeRules();
 			this.EndTimeRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.StartTimeRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>396a1af408c776c2e59e01a3e31b7c01</Hash>
+    <Hash>39269b846e959eae2764d03053221a2f</Hash>
 </Codenesium>*/

@@ -13,41 +13,41 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(EmployeeModel model)
 		{
-			this.NationalIDNumberRules();
-			this.LoginIDRules();
-			this.OrganizationNodeRules();
-			this.OrganizationLevelRules();
-			this.JobTitleRules();
 			this.BirthDateRules();
-			this.MaritalStatusRules();
+			this.CurrentFlagRules();
 			this.GenderRules();
 			this.HireDateRules();
-			this.SalariedFlagRules();
-			this.VacationHoursRules();
-			this.SickLeaveHoursRules();
-			this.CurrentFlagRules();
-			this.RowguidRules();
+			this.JobTitleRules();
+			this.LoginIDRules();
+			this.MaritalStatusRules();
 			this.ModifiedDateRules();
+			this.NationalIDNumberRules();
+			this.OrganizationLevelRules();
+			this.OrganizationNodeRules();
+			this.RowguidRules();
+			this.SalariedFlagRules();
+			this.SickLeaveHoursRules();
+			this.VacationHoursRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, EmployeeModel model)
 		{
-			this.NationalIDNumberRules();
-			this.LoginIDRules();
-			this.OrganizationNodeRules();
-			this.OrganizationLevelRules();
-			this.JobTitleRules();
 			this.BirthDateRules();
-			this.MaritalStatusRules();
+			this.CurrentFlagRules();
 			this.GenderRules();
 			this.HireDateRules();
-			this.SalariedFlagRules();
-			this.VacationHoursRules();
-			this.SickLeaveHoursRules();
-			this.CurrentFlagRules();
-			this.RowguidRules();
+			this.JobTitleRules();
+			this.LoginIDRules();
+			this.MaritalStatusRules();
 			this.ModifiedDateRules();
+			this.NationalIDNumberRules();
+			this.OrganizationLevelRules();
+			this.OrganizationNodeRules();
+			this.RowguidRules();
+			this.SalariedFlagRules();
+			this.SickLeaveHoursRules();
+			this.VacationHoursRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>3b95443eeb2970b9bc3e8616bc1cb251</Hash>
+    <Hash>c8fbebccc3f94bfd3bb3086b9cc1cd78</Hash>
 </Codenesium>*/

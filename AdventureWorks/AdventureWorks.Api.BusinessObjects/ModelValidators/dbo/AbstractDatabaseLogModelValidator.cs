@@ -20,11 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void PostTimeRules()
-		{
-			this.RuleFor(x => x.PostTime).NotNull();
-		}
-
 		public virtual void DatabaseUserRules()
 		{
 			this.RuleFor(x => x.DatabaseUser).NotNull();
@@ -37,14 +32,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.@Event).Length(0, 128);
 		}
 
-		public virtual void SchemaRules()
-		{
-			this.RuleFor(x => x.Schema).Length(0, 128);
-		}
-
 		public virtual void @ObjectRules()
 		{
 			this.RuleFor(x => x.@Object).Length(0, 128);
+		}
+
+		public virtual void PostTimeRules()
+		{
+			this.RuleFor(x => x.PostTime).NotNull();
+		}
+
+		public virtual void SchemaRules()
+		{
+			this.RuleFor(x => x.Schema).Length(0, 128);
 		}
 
 		public virtual void TSQLRules()
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c18a5736eb5d2f919c685a0fe08325b4</Hash>
+    <Hash>9c055b146226ccc0aa38613cd8ddc5bc</Hash>
 </Codenesium>*/

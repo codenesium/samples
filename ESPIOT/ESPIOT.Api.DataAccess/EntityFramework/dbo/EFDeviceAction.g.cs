@@ -17,19 +17,18 @@ namespace ESPIOTNS.Api.DataAccess
 			string name,
 			string @value)
 		{
-			this.Id = id.ToInt();
 			this.DeviceId = deviceId.ToInt();
+			this.Id = id.ToInt();
 			this.Name = name.ToString();
 			this.@Value = @value.ToString();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id", TypeName="int")]
-		public int Id { get; set; }
-
 		[Column("deviceId", TypeName="int")]
 		public int DeviceId { get; set; }
+
+		[Key]
+		[Column("id", TypeName="int")]
+		public int Id { get; set; }
 
 		[Column("name", TypeName="varchar(90)")]
 		public string Name { get; set; }
@@ -43,5 +42,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>34ed85e19cd37e0237556277c2340d22</Hash>
+    <Hash>91fbb76dd1003fdca6802bcceebaefb0</Hash>
 </Codenesium>*/

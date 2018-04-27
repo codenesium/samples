@@ -13,21 +13,21 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(MachineModel model)
 		{
-			this.NameRules();
-			this.MachineGuidRules();
+			this.DescriptionRules();
 			this.JwtKeyRules();
 			this.LastIpAddressRules();
-			this.DescriptionRules();
+			this.MachineGuidRules();
+			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, MachineModel model)
 		{
-			this.NameRules();
-			this.MachineGuidRules();
+			this.DescriptionRules();
 			this.JwtKeyRules();
 			this.LastIpAddressRules();
-			this.DescriptionRules();
+			this.MachineGuidRules();
+			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -39,5 +39,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>3ac3929e66c7c3f2df980e0efab62ce8</Hash>
+    <Hash>7797889b89bb3296fd7ac7b55baafc88</Hash>
 </Codenesium>*/

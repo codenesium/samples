@@ -10,21 +10,29 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public POCOStudentXFamily(
+			int familyId,
 			int id,
-			int studentId,
-			int familyId)
+			int studentId)
 		{
 			this.Id = id.ToInt();
 
-			this.StudentId = new ReferenceEntity<int>(studentId,
-			                                          nameof(ApiResponse.Students));
 			this.FamilyId = new ReferenceEntity<int>(familyId,
 			                                         nameof(ApiResponse.Families));
+			this.StudentId = new ReferenceEntity<int>(studentId,
+			                                          nameof(ApiResponse.Students));
 		}
 
+		public ReferenceEntity<int> FamilyId { get; set; }
 		public int Id { get; set; }
 		public ReferenceEntity<int> StudentId { get; set; }
-		public ReferenceEntity<int> FamilyId { get; set; }
+
+		[JsonIgnore]
+		public bool ShouldSerializeFamilyIdValue { get; set; } = true;
+
+		public bool ShouldSerializeFamilyId()
+		{
+			return this.ShouldSerializeFamilyIdValue;
+		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue { get; set; } = true;
@@ -42,23 +50,15 @@ namespace FermataFishNS.Api.Contracts
 			return this.ShouldSerializeStudentIdValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeFamilyIdValue { get; set; } = true;
-
-		public bool ShouldSerializeFamilyId()
-		{
-			return this.ShouldSerializeFamilyIdValue;
-		}
-
 		public void DisableAllFields()
 		{
+			this.ShouldSerializeFamilyIdValue = false;
 			this.ShouldSerializeIdValue = false;
 			this.ShouldSerializeStudentIdValue = false;
-			this.ShouldSerializeFamilyIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a6d3f4cc29808fdd18c1e4b1419b400</Hash>
+    <Hash>afcd2e7ba270f4ebba67e622d963733e</Hash>
 </Codenesium>*/

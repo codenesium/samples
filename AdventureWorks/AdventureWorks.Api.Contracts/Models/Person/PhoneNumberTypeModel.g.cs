@@ -11,27 +11,11 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public PhoneNumberTypeModel(
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
+			this.Name = name.ToString();
 		}
 
 		private DateTime modifiedDate;
@@ -49,9 +33,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec29a86cafb0a0bbe78666f8cb50c0ce</Hash>
+    <Hash>a0725f2cab6679d33423aa32faaa3854</Hash>
 </Codenesium>*/

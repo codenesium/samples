@@ -13,38 +13,39 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
-			int territoryID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime startDate,
+			int territoryID)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.TerritoryID = territoryID.ToInt();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.StartDate = startDate.ToDateTime();
+			this.TerritoryID = territoryID.ToInt();
 		}
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
-		[Column("TerritoryID", TypeName="int")]
-		public int TerritoryID { get; set; }
+		[Column("EndDate", TypeName="datetime")]
+		public Nullable<DateTime> EndDate { get; set; }
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 
 		[Column("StartDate", TypeName="datetime")]
 		public DateTime StartDate { get; set; }
 
-		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate { get; set; }
-
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("TerritoryID", TypeName="int")]
+		public int TerritoryID { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFSalesPerson SalesPerson { get; set; }
@@ -55,5 +56,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1cb0a9a0726cf138d102cea406537847</Hash>
+    <Hash>4ea49c638f2d454dc79c6b44927f08d3</Hash>
 </Codenesium>*/

@@ -20,8 +20,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ISpecialOfferRepository SpecialOfferRepository { get; set; }
 		public IProductRepository ProductRepository { get; set; }
+		public ISpecialOfferRepository SpecialOfferRepository { get; set; }
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void ProductIDRules()
 		{
 			this.RuleFor(x => x.ProductID).NotNull();
@@ -33,23 +38,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		private bool BeValidProduct(int id)
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			return this.ProductRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidSpecialOffer(int id)
 		{
 			return this.SpecialOfferRepository.GetByIdDirect(id) != null;
 		}
-
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0555e02eac84219c92d094181f0ef6b3</Hash>
+    <Hash>d3b02a5cb16a0e72cd48dd5777700e63</Hash>
 </Codenesium>*/

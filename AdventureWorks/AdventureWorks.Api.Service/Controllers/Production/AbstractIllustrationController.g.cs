@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/illustrations/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Illustrations/{result.Id.ToString()}");
 				POCOIllustration response = this.illustrationManager.GetById(result.Id).Illustrations.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>66766168edbaca28ecae4d027457e213</Hash>
+    <Hash>89788f1162340559203abd5bfdc7c43c</Hash>
 </Codenesium>*/

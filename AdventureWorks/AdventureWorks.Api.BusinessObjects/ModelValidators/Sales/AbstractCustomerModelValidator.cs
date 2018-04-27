@@ -23,9 +23,25 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public IPersonRepository PersonRepository { get; set; }
 		public IStoreRepository StoreRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
+		public virtual void AccountNumberRules()
+		{
+			this.RuleFor(x => x.AccountNumber).NotNull();
+			this.RuleFor(x => x.AccountNumber).Length(0, 10);
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void PersonIDRules()
 		{
 			this.RuleFor(x => x.PersonID).Must(this.BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void RowguidRules()
+		{
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void StoreIDRules()
@@ -36,22 +52,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void TerritoryIDRules()
 		{
 			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void AccountNumberRules()
-		{
-			this.RuleFor(x => x.AccountNumber).NotNull();
-			this.RuleFor(x => x.AccountNumber).Length(0, 10);
-		}
-
-		public virtual void RowguidRules()
-		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidPerson(Nullable<int> id)
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4b99ae92264eb3a835dabcfe79f38e71</Hash>
+    <Hash>e468d9b53796c4335e0dd497a59dcc2e</Hash>
 </Codenesium>*/

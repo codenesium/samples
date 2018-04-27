@@ -20,6 +20,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
@@ -30,14 +35,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35a94f4d6b1a0f9008e42112a967fb7f</Hash>
+    <Hash>e5ffaebcf817542c31a2ed83d7a136f9</Hash>
 </Codenesium>*/

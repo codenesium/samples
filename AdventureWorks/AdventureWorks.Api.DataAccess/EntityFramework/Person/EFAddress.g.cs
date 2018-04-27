@@ -16,25 +16,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			string addressLine1,
 			string addressLine2,
 			string city,
-			int stateProvinceID,
+			DateTime modifiedDate,
 			string postalCode,
-			object spatialLocation,
 			Guid rowguid,
-			DateTime modifiedDate)
+			object spatialLocation,
+			int stateProvinceID)
 		{
 			this.AddressID = addressID.ToInt();
 			this.AddressLine1 = addressLine1.ToString();
 			this.AddressLine2 = addressLine2.ToString();
 			this.City = city.ToString();
-			this.StateProvinceID = stateProvinceID.ToInt();
-			this.PostalCode = postalCode.ToString();
-			this.SpatialLocation = spatialLocation;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PostalCode = postalCode.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.SpatialLocation = spatialLocation;
+			this.StateProvinceID = stateProvinceID.ToInt();
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("AddressID", TypeName="int")]
 		public int AddressID { get; set; }
 
@@ -47,20 +46,21 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("City", TypeName="nvarchar(30)")]
 		public string City { get; set; }
 
-		[Column("StateProvinceID", TypeName="int")]
-		public int StateProvinceID { get; set; }
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("PostalCode", TypeName="nvarchar(15)")]
 		public string PostalCode { get; set; }
 
-		[Column("SpatialLocation", TypeName="geography(-1)")]
-		public object SpatialLocation { get; set; }
-
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("SpatialLocation", TypeName="geography(-1)")]
+		public object SpatialLocation { get; set; }
+
+		[Column("StateProvinceID", TypeName="int")]
+		public int StateProvinceID { get; set; }
 
 		[ForeignKey("StateProvinceID")]
 		public virtual EFStateProvince StateProvince { get; set; }
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb99c1861faaa44c3538b1a747b73513</Hash>
+    <Hash>773f70501dd633fdefedf2e9621a2ab6</Hash>
 </Codenesium>*/

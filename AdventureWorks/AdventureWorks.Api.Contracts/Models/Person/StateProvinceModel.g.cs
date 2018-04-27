@@ -11,37 +11,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public StateProvinceModel(
-			string stateProvinceCode,
 			string countryRegionCode,
 			bool isOnlyStateProvinceFlag,
+			DateTime modifiedDate,
 			string name,
-			int territoryID,
 			Guid rowguid,
-			DateTime modifiedDate)
+			string stateProvinceCode,
+			int territoryID)
 		{
-			this.StateProvinceCode = stateProvinceCode.ToString();
 			this.CountryRegionCode = countryRegionCode.ToString();
 			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag.ToBoolean();
-			this.Name = name.ToString();
-			this.TerritoryID = territoryID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string stateProvinceCode;
-
-		[Required]
-		public string StateProvinceCode
-		{
-			get
-			{
-				return this.stateProvinceCode;
-			}
-
-			set
-			{
-				this.stateProvinceCode = value;
-			}
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.StateProvinceCode = stateProvinceCode.ToString();
+			this.TerritoryID = territoryID.ToInt();
 		}
 
 		private string countryRegionCode;
@@ -76,6 +60,22 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
+		}
+
 		private string name;
 
 		[Required]
@@ -89,22 +89,6 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.name = value;
-			}
-		}
-
-		private int territoryID;
-
-		[Required]
-		public int TerritoryID
-		{
-			get
-			{
-				return this.territoryID;
-			}
-
-			set
-			{
-				this.territoryID = value;
 			}
 		}
 
@@ -124,24 +108,40 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private string stateProvinceCode;
 
 		[Required]
-		public DateTime ModifiedDate
+		public string StateProvinceCode
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.stateProvinceCode;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.stateProvinceCode = value;
+			}
+		}
+
+		private int territoryID;
+
+		[Required]
+		public int TerritoryID
+		{
+			get
+			{
+				return this.territoryID;
+			}
+
+			set
+			{
+				this.territoryID = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0195bc6d2838b684d3ae48cdf2c30232</Hash>
+    <Hash>6dba9b8ab084557010e2d8260a61c75c</Hash>
 </Codenesium>*/

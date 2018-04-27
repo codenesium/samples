@@ -12,12 +12,12 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public AWBuildVersionModel(
 			string database_Version,
-			DateTime versionDate,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			DateTime versionDate)
 		{
 			this.Database_Version = database_Version.ToString();
-			this.VersionDate = versionDate.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.VersionDate = versionDate.ToDateTime();
 		}
 
 		private string database_Version;
@@ -36,22 +36,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime versionDate;
-
-		[Required]
-		public DateTime VersionDate
-		{
-			get
-			{
-				return this.versionDate;
-			}
-
-			set
-			{
-				this.versionDate = value;
-			}
-		}
-
 		private DateTime modifiedDate;
 
 		[Required]
@@ -67,9 +51,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private DateTime versionDate;
+
+		[Required]
+		public DateTime VersionDate
+		{
+			get
+			{
+				return this.versionDate;
+			}
+
+			set
+			{
+				this.versionDate = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c4c4dbeea12b094847fb80fa4056f56b</Hash>
+    <Hash>0fcd7f73ea7464db718ffc65e173ae7b</Hash>
 </Codenesium>*/

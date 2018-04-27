@@ -13,27 +13,27 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(TransactionHistoryArchiveModel model)
 		{
+			this.ActualCostRules();
+			this.ModifiedDateRules();
 			this.ProductIDRules();
+			this.QuantityRules();
 			this.ReferenceOrderIDRules();
 			this.ReferenceOrderLineIDRules();
 			this.TransactionDateRules();
 			this.TransactionTypeRules();
-			this.QuantityRules();
-			this.ActualCostRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, TransactionHistoryArchiveModel model)
 		{
+			this.ActualCostRules();
+			this.ModifiedDateRules();
 			this.ProductIDRules();
+			this.QuantityRules();
 			this.ReferenceOrderIDRules();
 			this.ReferenceOrderLineIDRules();
 			this.TransactionDateRules();
 			this.TransactionTypeRules();
-			this.QuantityRules();
-			this.ActualCostRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>49a7c54a1eaca5355c99292e3ba72699</Hash>
+    <Hash>58f4009f49e89be9b6938a11ba711a53</Hash>
 </Codenesium>*/

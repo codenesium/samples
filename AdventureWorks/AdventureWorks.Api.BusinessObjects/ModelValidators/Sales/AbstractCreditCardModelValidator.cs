@@ -20,16 +20,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void CardTypeRules()
-		{
-			this.RuleFor(x => x.CardType).NotNull();
-			this.RuleFor(x => x.CardType).Length(0, 50);
-		}
-
 		public virtual void CardNumberRules()
 		{
 			this.RuleFor(x => x.CardNumber).NotNull();
 			this.RuleFor(x => x.CardNumber).Length(0, 25);
+		}
+
+		public virtual void CardTypeRules()
+		{
+			this.RuleFor(x => x.CardType).NotNull();
+			this.RuleFor(x => x.CardType).Length(0, 50);
 		}
 
 		public virtual void ExpMonthRules()
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f42e82e48671fb68047ecced985506b0</Hash>
+    <Hash>1a1285bddebbb615e82daa119f0e3794</Hash>
 </Codenesium>*/

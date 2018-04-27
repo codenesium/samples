@@ -21,21 +21,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IProductRepository ProductRepository { get; set; }
-		public virtual void ProductIDRules()
+		public virtual void CommentsRules()
 		{
-			this.RuleFor(x => x.ProductID).NotNull();
-			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void ReviewerNameRules()
-		{
-			this.RuleFor(x => x.ReviewerName).NotNull();
-			this.RuleFor(x => x.ReviewerName).Length(0, 50);
-		}
-
-		public virtual void ReviewDateRules()
-		{
-			this.RuleFor(x => x.ReviewDate).NotNull();
+			this.RuleFor(x => x.Comments).Length(0, 3850);
 		}
 
 		public virtual void EmailAddressRules()
@@ -44,19 +32,31 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.EmailAddress).Length(0, 50);
 		}
 
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void ProductIDRules()
+		{
+			this.RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+		}
+
 		public virtual void RatingRules()
 		{
 			this.RuleFor(x => x.Rating).NotNull();
 		}
 
-		public virtual void CommentsRules()
+		public virtual void ReviewDateRules()
 		{
-			this.RuleFor(x => x.Comments).Length(0, 3850);
+			this.RuleFor(x => x.ReviewDate).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void ReviewerNameRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ReviewerName).NotNull();
+			this.RuleFor(x => x.ReviewerName).Length(0, 50);
 		}
 
 		private bool BeValidProduct(int id)
@@ -67,5 +67,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>86c16e02b6516ade8594b02a3d92904f</Hash>
+    <Hash>deb64dcac10dd24d15c6952d0110d00a</Hash>
 </Codenesium>*/

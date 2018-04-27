@@ -20,23 +20,12 @@ namespace NebulaNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IChainRepository ChainRepository { get; set; }
 		public IMachineRepository MachineRepository { get; set; }
+		public IChainRepository ChainRepository { get; set; }
 		public ILinkStatusRepository LinkStatusRepository { get; set; }
-		public virtual void NameRules()
+		public virtual void AssignedMachineIdRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
-		}
-
-		public virtual void DynamicParametersRules()
-		{
-			this.RuleFor(x => x.DynamicParameters).Length(0, 2147483647);
-		}
-
-		public virtual void StaticParametersRules()
-		{
-			this.RuleFor(x => x.StaticParameters).Length(0, 2147483647);
+			this.RuleFor(x => x.AssignedMachineId).Must(this.BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ChainIdRules()
@@ -45,9 +34,20 @@ namespace NebulaNS.Api.BusinessObjects
 			this.RuleFor(x => x.ChainId).Must(this.BeValidChain).When(x => x ?.ChainId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void AssignedMachineIdRules()
+		public virtual void DateCompletedRules()
+		{                       }
+
+		public virtual void DateStartedRules()
+		{                       }
+
+		public virtual void DynamicParametersRules()
 		{
-			this.RuleFor(x => x.AssignedMachineId).Must(this.BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.DynamicParameters).Length(0, 2147483647);
+		}
+
+		public virtual void ExternalIdRules()
+		{
+			this.RuleFor(x => x.ExternalId).NotNull();
 		}
 
 		public virtual void LinkStatusIdRules()
@@ -56,35 +56,40 @@ namespace NebulaNS.Api.BusinessObjects
 			this.RuleFor(x => x.LinkStatusId).Must(this.BeValidLinkStatus).When(x => x ?.LinkStatusId != null).WithMessage("Invalid reference");
 		}
 
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+
 		public virtual void OrderRules()
 		{
 			this.RuleFor(x => x.Order).NotNull();
 		}
-
-		public virtual void DateStartedRules()
-		{                       }
-
-		public virtual void DateCompletedRules()
-		{                       }
 
 		public virtual void ResponseRules()
 		{
 			this.RuleFor(x => x.Response).Length(0, 2147483647);
 		}
 
-		public virtual void ExternalIdRules()
+		public virtual void StaticParametersRules()
 		{
-			this.RuleFor(x => x.ExternalId).NotNull();
+			this.RuleFor(x => x.StaticParameters).Length(0, 2147483647);
 		}
 
-		private bool BeValidChain(int id)
+		public virtual void TimeoutInSecondsRules()
 		{
-			return this.ChainRepository.GetByIdDirect(id) != null;
+			this.RuleFor(x => x.TimeoutInSeconds).NotNull();
 		}
 
 		private bool BeValidMachine(Nullable<int> id)
 		{
 			return this.MachineRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+		}
+
+		private bool BeValidChain(int id)
+		{
+			return this.ChainRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidLinkStatus(int id)
@@ -95,5 +100,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f9d1ab7f703c76f511cbcdee73888005</Hash>
+    <Hash>c28a635e57563fbb1c3be32b9177e609</Hash>
 </Codenesium>*/

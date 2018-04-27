@@ -11,29 +11,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductModelProductDescriptionCultureModel(
-			int productDescriptionID,
 			string cultureID,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productDescriptionID)
 		{
-			this.ProductDescriptionID = productDescriptionID.ToInt();
 			this.CultureID = cultureID.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private int productDescriptionID;
-
-		[Required]
-		public int ProductDescriptionID
-		{
-			get
-			{
-				return this.productDescriptionID;
-			}
-
-			set
-			{
-				this.productDescriptionID = value;
-			}
+			this.ProductDescriptionID = productDescriptionID.ToInt();
 		}
 
 		private string cultureID;
@@ -67,9 +51,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private int productDescriptionID;
+
+		[Required]
+		public int ProductDescriptionID
+		{
+			get
+			{
+				return this.productDescriptionID;
+			}
+
+			set
+			{
+				this.productDescriptionID = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b0e7728f8d26d3d4b68d6cd083fe23a9</Hash>
+    <Hash>59652823d0484c9296e38e13840c20e1</Hash>
 </Codenesium>*/

@@ -21,23 +21,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
-		public IPersonRepository PersonRepository { get; set; }
 		public IContactTypeRepository ContactTypeRepository { get; set; }
-		public virtual void PersonIDRules()
-		{
-			this.RuleFor(x => x.PersonID).NotNull();
-			this.RuleFor(x => x.PersonID).Must(this.BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
-		}
-
+		public IPersonRepository PersonRepository { get; set; }
 		public virtual void ContactTypeIDRules()
 		{
 			this.RuleFor(x => x.ContactTypeID).NotNull();
 			this.RuleFor(x => x.ContactTypeID).Must(this.BeValidContactType).When(x => x ?.ContactTypeID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void RowguidRules()
-		{
-			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void ModifiedDateRules()
@@ -45,23 +34,34 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
+		public virtual void PersonIDRules()
+		{
+			this.RuleFor(x => x.PersonID).NotNull();
+			this.RuleFor(x => x.PersonID).Must(this.BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void RowguidRules()
+		{
+			this.RuleFor(x => x.Rowguid).NotNull();
+		}
+
 		private bool BeValidBusinessEntity(int id)
 		{
 			return this.BusinessEntityRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidPerson(int id)
-		{
-			return this.PersonRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidContactType(int id)
 		{
 			return this.ContactTypeRepository.GetByIdDirect(id) != null;
 		}
+
+		private bool BeValidPerson(int id)
+		{
+			return this.PersonRepository.GetByIdDirect(id) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf0c408171644283ccb1329957f1f651</Hash>
+    <Hash>a596a166bc64616544e298dece982d31</Hash>
 </Codenesium>*/

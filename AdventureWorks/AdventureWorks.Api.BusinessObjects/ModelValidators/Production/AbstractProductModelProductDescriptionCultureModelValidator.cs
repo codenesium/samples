@@ -20,15 +20,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductModelRepository ProductModelRepository { get; set; }
-		public IProductDescriptionRepository ProductDescriptionRepository { get; set; }
 		public ICultureRepository CultureRepository { get; set; }
-		public virtual void ProductDescriptionIDRules()
-		{
-			this.RuleFor(x => x.ProductDescriptionID).NotNull();
-			this.RuleFor(x => x.ProductDescriptionID).Must(this.BeValidProductDescription).When(x => x ?.ProductDescriptionID != null).WithMessage("Invalid reference");
-		}
-
+		public IProductDescriptionRepository ProductDescriptionRepository { get; set; }
+		public IProductModelRepository ProductModelRepository { get; set; }
 		public virtual void CultureIDRules()
 		{
 			this.RuleFor(x => x.CultureID).NotNull();
@@ -41,9 +35,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		private bool BeValidProductModel(int id)
+		public virtual void ProductDescriptionIDRules()
 		{
-			return this.ProductModelRepository.GetByIdDirect(id) != null;
+			this.RuleFor(x => x.ProductDescriptionID).NotNull();
+			this.RuleFor(x => x.ProductDescriptionID).Must(this.BeValidProductDescription).When(x => x ?.ProductDescriptionID != null).WithMessage("Invalid reference");
+		}
+
+		private bool BeValidCulture(string id)
+		{
+			return this.CultureRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidProductDescription(int id)
@@ -51,13 +51,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return this.ProductDescriptionRepository.GetByIdDirect(id) != null;
 		}
 
-		private bool BeValidCulture(string id)
+		private bool BeValidProductModel(int id)
 		{
-			return this.CultureRepository.GetByIdDirect(id) != null;
+			return this.ProductModelRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>10712102546999435a6ed37b2d0f5781</Hash>
+    <Hash>70111ecfc9f7b49e0233f8a7e658e15c</Hash>
 </Codenesium>*/

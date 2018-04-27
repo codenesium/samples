@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/shoppingCartItems/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ShoppingCartItems/{result.Id.ToString()}");
 				POCOShoppingCartItem response = this.shoppingCartItemManager.GetById(result.Id).ShoppingCartItems.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b27a600bfc732e716a334923ab8a96b9</Hash>
+    <Hash>5ac931287143e56f11a527057100e9fc</Hash>
 </Codenesium>*/

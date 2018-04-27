@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/studios/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Studios/{result.Id.ToString()}");
 				POCOStudio response = this.studioManager.GetById(result.Id).Studios.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>066d1e30053d176a0d9a829e074924f0</Hash>
+    <Hash>906115323152270597c318d6fa5b34df</Hash>
 </Codenesium>*/

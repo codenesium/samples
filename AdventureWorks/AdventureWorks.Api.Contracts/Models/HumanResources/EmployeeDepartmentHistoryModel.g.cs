@@ -12,16 +12,16 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public EmployeeDepartmentHistoryModel(
 			short departmentID,
-			int shiftID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int shiftID,
+			DateTime startDate)
 		{
 			this.DepartmentID = departmentID;
-			this.ShiftID = shiftID.ToInt();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ShiftID = shiftID.ToInt();
+			this.StartDate = startDate.ToDateTime();
 		}
 
 		private short departmentID;
@@ -37,6 +37,37 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.departmentID = value;
+			}
+		}
+
+		private Nullable<DateTime> endDate;
+
+		public Nullable<DateTime> EndDate
+		{
+			get
+			{
+				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+			}
+
+			set
+			{
+				this.endDate = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
 			}
 		}
 
@@ -71,40 +102,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.startDate = value;
 			}
 		}
-
-		private Nullable<DateTime> endDate;
-
-		public Nullable<DateTime> EndDate
-		{
-			get
-			{
-				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
-			}
-
-			set
-			{
-				this.endDate = value;
-			}
-		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d715ae952f33e3b416ecd6c9efbe2d7c</Hash>
+    <Hash>6a62e38c1208432a7f65b4f3a76094a6</Hash>
 </Codenesium>*/

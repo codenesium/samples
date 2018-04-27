@@ -13,44 +13,43 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int currencyRateID,
-			DateTime currencyRateDate,
-			string fromCurrencyCode,
-			string toCurrencyCode,
 			decimal averageRate,
+			DateTime currencyRateDate,
 			decimal endOfDayRate,
-			DateTime modifiedDate)
+			string fromCurrencyCode,
+			DateTime modifiedDate,
+			string toCurrencyCode)
 		{
-			this.CurrencyRateID = currencyRateID.ToInt();
-			this.CurrencyRateDate = currencyRateDate.ToDateTime();
-			this.FromCurrencyCode = fromCurrencyCode.ToString();
-			this.ToCurrencyCode = toCurrencyCode.ToString();
 			this.AverageRate = averageRate.ToDecimal();
+			this.CurrencyRateDate = currencyRateDate.ToDateTime();
+			this.CurrencyRateID = currencyRateID.ToInt();
 			this.EndOfDayRate = endOfDayRate.ToDecimal();
+			this.FromCurrencyCode = fromCurrencyCode.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ToCurrencyCode = toCurrencyCode.ToString();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("CurrencyRateID", TypeName="int")]
-		public int CurrencyRateID { get; set; }
-
-		[Column("CurrencyRateDate", TypeName="datetime")]
-		public DateTime CurrencyRateDate { get; set; }
-
-		[Column("FromCurrencyCode", TypeName="nchar(3)")]
-		public string FromCurrencyCode { get; set; }
-
-		[Column("ToCurrencyCode", TypeName="nchar(3)")]
-		public string ToCurrencyCode { get; set; }
 
 		[Column("AverageRate", TypeName="money")]
 		public decimal AverageRate { get; set; }
 
+		[Column("CurrencyRateDate", TypeName="datetime")]
+		public DateTime CurrencyRateDate { get; set; }
+
+		[Key]
+		[Column("CurrencyRateID", TypeName="int")]
+		public int CurrencyRateID { get; set; }
+
 		[Column("EndOfDayRate", TypeName="money")]
 		public decimal EndOfDayRate { get; set; }
 
+		[Column("FromCurrencyCode", TypeName="nchar(3)")]
+		public string FromCurrencyCode { get; set; }
+
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("ToCurrencyCode", TypeName="nchar(3)")]
+		public string ToCurrencyCode { get; set; }
 
 		[ForeignKey("FromCurrencyCode")]
 		public virtual EFCurrency Currency { get; set; }
@@ -61,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3206cf77932546c746f7ded3b7d704f5</Hash>
+    <Hash>ec25a62fe1c6f9d2f8dae794d24efe3c</Hash>
 </Codenesium>*/

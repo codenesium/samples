@@ -13,15 +13,15 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(SpaceXSpaceFeatureModel model)
 		{
-			this.SpaceIdRules();
 			this.SpaceFeatureIdRules();
+			this.SpaceIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, SpaceXSpaceFeatureModel model)
 		{
-			this.SpaceIdRules();
 			this.SpaceFeatureIdRules();
+			this.SpaceIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -33,5 +33,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>dff91380ecbf2cb11b070d5746b4a420</Hash>
+    <Hash>cacd0ebea9a169f8a1f550ddf0f35c93</Hash>
 </Codenesium>*/

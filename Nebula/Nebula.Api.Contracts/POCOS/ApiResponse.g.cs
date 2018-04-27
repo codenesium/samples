@@ -37,6 +37,7 @@ namespace NebulaNS.Api.Contracts
 			from.MachineRefTeams.ForEach(x => this.AddMachineRefTeam(x));
 			from.Organizations.ForEach(x => this.AddOrganization(x));
 			from.Teams.ForEach(x => this.AddTeam(x));
+			from.VersionInfoes.ForEach(x => this.AddVersionInfo(x));
 		}
 
 		public List<POCOChain> Chains { get; private set; } = new List<POCOChain>();
@@ -58,6 +59,8 @@ namespace NebulaNS.Api.Contracts
 		public List<POCOOrganization> Organizations { get; private set; } = new List<POCOOrganization>();
 
 		public List<POCOTeam> Teams { get; private set; } = new List<POCOTeam>();
+
+		public List<POCOVersionInfo> VersionInfoes { get; private set; } = new List<POCOVersionInfo>();
 
 		[JsonIgnore]
 		public bool ShouldSerializeChainsValue { get; set; } = true;
@@ -219,6 +222,22 @@ namespace NebulaNS.Api.Contracts
 			}
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeVersionInfoesValue { get; set; } = true;
+
+		public bool ShouldSerializeVersionInfoes()
+		{
+			return this.ShouldSerializeVersionInfoesValue;
+		}
+
+		public void AddVersionInfo(POCOVersionInfo item)
+		{
+			if (!this.VersionInfoes.Any(x => x.Version == item.Version))
+			{
+				this.VersionInfoes.Add(item);
+			}
+		}
+
 		public void DisableSerializationOfEmptyFields()
 		{
 			if (this.Chains.Count == 0)
@@ -270,10 +289,15 @@ namespace NebulaNS.Api.Contracts
 			{
 				this.ShouldSerializeTeamsValue = false;
 			}
+
+			if (this.VersionInfoes.Count == 0)
+			{
+				this.ShouldSerializeVersionInfoesValue = false;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>01e77e5ec544f0545c5e222583f50f4b</Hash>
+    <Hash>f632deaa1bc99ca3818b1056539e0d80</Hash>
 </Codenesium>*/

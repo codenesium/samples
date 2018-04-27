@@ -10,27 +10,35 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		public POCOMachine(
+			string description,
 			int id,
-			string name,
-			Guid machineGuid,
 			string jwtKey,
 			string lastIpAddress,
-			string description)
+			Guid machineGuid,
+			string name)
 		{
+			this.Description = description.ToString();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
-			this.MachineGuid = machineGuid.ToGuid();
 			this.JwtKey = jwtKey.ToString();
 			this.LastIpAddress = lastIpAddress.ToString();
-			this.Description = description.ToString();
+			this.MachineGuid = machineGuid.ToGuid();
+			this.Name = name.ToString();
 		}
 
+		public string Description { get; set; }
 		public int Id { get; set; }
-		public string Name { get; set; }
-		public Guid MachineGuid { get; set; }
 		public string JwtKey { get; set; }
 		public string LastIpAddress { get; set; }
-		public string Description { get; set; }
+		public Guid MachineGuid { get; set; }
+		public string Name { get; set; }
+
+		[JsonIgnore]
+		public bool ShouldSerializeDescriptionValue { get; set; } = true;
+
+		public bool ShouldSerializeDescription()
+		{
+			return this.ShouldSerializeDescriptionValue;
+		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue { get; set; } = true;
@@ -38,22 +46,6 @@ namespace NebulaNS.Api.Contracts
 		public bool ShouldSerializeId()
 		{
 			return this.ShouldSerializeIdValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeMachineGuidValue { get; set; } = true;
-
-		public bool ShouldSerializeMachineGuid()
-		{
-			return this.ShouldSerializeMachineGuidValue;
 		}
 
 		[JsonIgnore]
@@ -73,25 +65,33 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDescriptionValue { get; set; } = true;
+		public bool ShouldSerializeMachineGuidValue { get; set; } = true;
 
-		public bool ShouldSerializeDescription()
+		public bool ShouldSerializeMachineGuid()
 		{
-			return this.ShouldSerializeDescriptionValue;
+			return this.ShouldSerializeMachineGuidValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
 		}
 
 		public void DisableAllFields()
 		{
+			this.ShouldSerializeDescriptionValue = false;
 			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeMachineGuidValue = false;
 			this.ShouldSerializeJwtKeyValue = false;
 			this.ShouldSerializeLastIpAddressValue = false;
-			this.ShouldSerializeDescriptionValue = false;
+			this.ShouldSerializeMachineGuidValue = false;
+			this.ShouldSerializeNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d09bc608ccabbd4052346f1fc211554f</Hash>
+    <Hash>88e5bdfbc2d4872482c9e90e520220a7</Hash>
 </Codenesium>*/

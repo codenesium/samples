@@ -10,40 +10,40 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductInventory(
-			int productID,
-			short locationID,
-			string shelf,
 			int bin,
+			short locationID,
+			DateTime modifiedDate,
+			int productID,
 			short quantity,
 			Guid rowguid,
-			DateTime modifiedDate)
+			string shelf)
 		{
-			this.Shelf = shelf.ToString();
 			this.Bin = bin.ToInt();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Quantity = quantity;
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Shelf = shelf.ToString();
 
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 			this.LocationID = new ReferenceEntity<short>(locationID,
 			                                             nameof(ApiResponse.Locations));
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          nameof(ApiResponse.Products));
 		}
 
-		public ReferenceEntity<int> ProductID { get; set; }
-		public ReferenceEntity<short> LocationID { get; set; }
-		public string Shelf { get; set; }
 		public int Bin { get; set; }
+		public ReferenceEntity<short> LocationID { get; set; }
+		public DateTime ModifiedDate { get; set; }
+		public ReferenceEntity<int> ProductID { get; set; }
 		public short Quantity { get; set; }
 		public Guid Rowguid { get; set; }
-		public DateTime ModifiedDate { get; set; }
+		public string Shelf { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
+		public bool ShouldSerializeBinValue { get; set; } = true;
 
-		public bool ShouldSerializeProductID()
+		public bool ShouldSerializeBin()
 		{
-			return this.ShouldSerializeProductIDValue;
+			return this.ShouldSerializeBinValue;
 		}
 
 		[JsonIgnore]
@@ -55,19 +55,19 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShelfValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeShelf()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeShelfValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBinValue { get; set; } = true;
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
 
-		public bool ShouldSerializeBin()
+		public bool ShouldSerializeProductID()
 		{
-			return this.ShouldSerializeBinValue;
+			return this.ShouldSerializeProductIDValue;
 		}
 
 		[JsonIgnore]
@@ -87,26 +87,26 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeShelfValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeShelf()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeShelfValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeLocationIDValue = false;
-			this.ShouldSerializeShelfValue = false;
 			this.ShouldSerializeBinValue = false;
+			this.ShouldSerializeLocationIDValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeProductIDValue = false;
 			this.ShouldSerializeQuantityValue = false;
 			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeShelfValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3f50bca2e344e7505304f8fb59e0a6c8</Hash>
+    <Hash>acc81dbd66f8c8d7f056ca60a9ce6fc7</Hash>
 </Codenesium>*/

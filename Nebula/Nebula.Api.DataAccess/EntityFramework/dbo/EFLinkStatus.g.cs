@@ -20,7 +20,6 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
 
@@ -30,5 +29,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ea63e351ae8818b5cd6e4db4089fe0c5</Hash>
+    <Hash>63c504993459c85602a319f9f383b726</Hash>
 </Codenesium>*/

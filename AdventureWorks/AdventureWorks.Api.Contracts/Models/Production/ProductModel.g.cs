@@ -11,102 +11,115 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductModel(
-			string name,
-			string productNumber,
-			bool makeFlag,
-			bool finishedGoodsFlag,
+			string @class,
 			string color,
-			short safetyStockLevel,
-			short reorderPoint,
-			decimal standardCost,
+			int daysToManufacture,
+			Nullable<DateTime> discontinuedDate,
+			bool finishedGoodsFlag,
 			decimal listPrice,
+			bool makeFlag,
+			DateTime modifiedDate,
+			string name,
+			string productLine,
+			Nullable<int> productModelID,
+			string productNumber,
+			Nullable<int> productSubcategoryID,
+			short reorderPoint,
+			Guid rowguid,
+			short safetyStockLevel,
+			Nullable<DateTime> sellEndDate,
+			DateTime sellStartDate,
 			string size,
 			string sizeUnitMeasureCode,
-			string weightUnitMeasureCode,
-			Nullable<decimal> weight,
-			int daysToManufacture,
-			string productLine,
-			string @class,
+			decimal standardCost,
 			string style,
-			Nullable<int> productSubcategoryID,
-			Nullable<int> productModelID,
-			DateTime sellStartDate,
-			Nullable<DateTime> sellEndDate,
-			Nullable<DateTime> discontinuedDate,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Nullable<decimal> weight,
+			string weightUnitMeasureCode)
 		{
-			this.Name = name.ToString();
-			this.ProductNumber = productNumber.ToString();
-			this.MakeFlag = makeFlag.ToBoolean();
-			this.FinishedGoodsFlag = finishedGoodsFlag.ToBoolean();
+			this.@Class = @class.ToString();
 			this.Color = color.ToString();
-			this.SafetyStockLevel = safetyStockLevel;
-			this.ReorderPoint = reorderPoint;
-			this.StandardCost = standardCost.ToDecimal();
+			this.DaysToManufacture = daysToManufacture.ToInt();
+			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
+			this.FinishedGoodsFlag = finishedGoodsFlag.ToBoolean();
 			this.ListPrice = listPrice.ToDecimal();
+			this.MakeFlag = makeFlag.ToBoolean();
+			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ProductLine = productLine.ToString();
+			this.ProductModelID = productModelID.ToNullableInt();
+			this.ProductNumber = productNumber.ToString();
+			this.ProductSubcategoryID = productSubcategoryID.ToNullableInt();
+			this.ReorderPoint = reorderPoint;
+			this.Rowguid = rowguid.ToGuid();
+			this.SafetyStockLevel = safetyStockLevel;
+			this.SellEndDate = sellEndDate.ToNullableDateTime();
+			this.SellStartDate = sellStartDate.ToDateTime();
 			this.Size = size.ToString();
 			this.SizeUnitMeasureCode = sizeUnitMeasureCode.ToString();
-			this.WeightUnitMeasureCode = weightUnitMeasureCode.ToString();
-			this.Weight = weight.ToNullableDecimal();
-			this.DaysToManufacture = daysToManufacture.ToInt();
-			this.ProductLine = productLine.ToString();
-			this.@Class = @class.ToString();
+			this.StandardCost = standardCost.ToDecimal();
 			this.Style = style.ToString();
-			this.ProductSubcategoryID = productSubcategoryID.ToNullableInt();
-			this.ProductModelID = productModelID.ToNullableInt();
-			this.SellStartDate = sellStartDate.ToDateTime();
-			this.SellEndDate = sellEndDate.ToNullableDateTime();
-			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
-			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Weight = weight.ToNullableDecimal();
+			this.WeightUnitMeasureCode = weightUnitMeasureCode.ToString();
 		}
 
-		private string name;
+		private string @class;
 
-		[Required]
-		public string Name
+		public string @Class
 		{
 			get
 			{
-				return this.name;
+				return this.@class.IsEmptyOrZeroOrNull() ? null : this.@class;
 			}
 
 			set
 			{
-				this.name = value;
+				this.@class = value;
 			}
 		}
 
-		private string productNumber;
+		private string color;
 
-		[Required]
-		public string ProductNumber
+		public string Color
 		{
 			get
 			{
-				return this.productNumber;
+				return this.color.IsEmptyOrZeroOrNull() ? null : this.color;
 			}
 
 			set
 			{
-				this.productNumber = value;
+				this.color = value;
 			}
 		}
 
-		private bool makeFlag;
+		private int daysToManufacture;
 
 		[Required]
-		public bool MakeFlag
+		public int DaysToManufacture
 		{
 			get
 			{
-				return this.makeFlag;
+				return this.daysToManufacture;
 			}
 
 			set
 			{
-				this.makeFlag = value;
+				this.daysToManufacture = value;
+			}
+		}
+
+		private Nullable<DateTime> discontinuedDate;
+
+		public Nullable<DateTime> DiscontinuedDate
+		{
+			get
+			{
+				return this.discontinuedDate.IsEmptyOrZeroOrNull() ? null : this.discontinuedDate;
+			}
+
+			set
+			{
+				this.discontinuedDate = value;
 			}
 		}
 
@@ -126,34 +139,128 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string color;
+		private decimal listPrice;
 
-		public string Color
+		[Required]
+		public decimal ListPrice
 		{
 			get
 			{
-				return this.color.IsEmptyOrZeroOrNull() ? null : this.color;
+				return this.listPrice;
 			}
 
 			set
 			{
-				this.color = value;
+				this.listPrice = value;
 			}
 		}
 
-		private short safetyStockLevel;
+		private bool makeFlag;
 
 		[Required]
-		public short SafetyStockLevel
+		public bool MakeFlag
 		{
 			get
 			{
-				return this.safetyStockLevel;
+				return this.makeFlag;
 			}
 
 			set
 			{
-				this.safetyStockLevel = value;
+				this.makeFlag = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
+		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
+
+		private string productLine;
+
+		public string ProductLine
+		{
+			get
+			{
+				return this.productLine.IsEmptyOrZeroOrNull() ? null : this.productLine;
+			}
+
+			set
+			{
+				this.productLine = value;
+			}
+		}
+
+		private Nullable<int> productModelID;
+
+		public Nullable<int> ProductModelID
+		{
+			get
+			{
+				return this.productModelID.IsEmptyOrZeroOrNull() ? null : this.productModelID;
+			}
+
+			set
+			{
+				this.productModelID = value;
+			}
+		}
+
+		private string productNumber;
+
+		[Required]
+		public string ProductNumber
+		{
+			get
+			{
+				return this.productNumber;
+			}
+
+			set
+			{
+				this.productNumber = value;
+			}
+		}
+
+		private Nullable<int> productSubcategoryID;
+
+		public Nullable<int> ProductSubcategoryID
+		{
+			get
+			{
+				return this.productSubcategoryID.IsEmptyOrZeroOrNull() ? null : this.productSubcategoryID;
+			}
+
+			set
+			{
+				this.productSubcategoryID = value;
 			}
 		}
 
@@ -173,35 +280,66 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private decimal standardCost;
+		private Guid rowguid;
 
 		[Required]
-		public decimal StandardCost
+		public Guid Rowguid
 		{
 			get
 			{
-				return this.standardCost;
+				return this.rowguid;
 			}
 
 			set
 			{
-				this.standardCost = value;
+				this.rowguid = value;
 			}
 		}
 
-		private decimal listPrice;
+		private short safetyStockLevel;
 
 		[Required]
-		public decimal ListPrice
+		public short SafetyStockLevel
 		{
 			get
 			{
-				return this.listPrice;
+				return this.safetyStockLevel;
 			}
 
 			set
 			{
-				this.listPrice = value;
+				this.safetyStockLevel = value;
+			}
+		}
+
+		private Nullable<DateTime> sellEndDate;
+
+		public Nullable<DateTime> SellEndDate
+		{
+			get
+			{
+				return this.sellEndDate.IsEmptyOrZeroOrNull() ? null : this.sellEndDate;
+			}
+
+			set
+			{
+				this.sellEndDate = value;
+			}
+		}
+
+		private DateTime sellStartDate;
+
+		[Required]
+		public DateTime SellStartDate
+		{
+			get
+			{
+				return this.sellStartDate;
+			}
+
+			set
+			{
+				this.sellStartDate = value;
 			}
 		}
 
@@ -235,79 +373,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string weightUnitMeasureCode;
-
-		public string WeightUnitMeasureCode
-		{
-			get
-			{
-				return this.weightUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : this.weightUnitMeasureCode;
-			}
-
-			set
-			{
-				this.weightUnitMeasureCode = value;
-			}
-		}
-
-		private Nullable<decimal> weight;
-
-		public Nullable<decimal> Weight
-		{
-			get
-			{
-				return this.weight.IsEmptyOrZeroOrNull() ? null : this.weight;
-			}
-
-			set
-			{
-				this.weight = value;
-			}
-		}
-
-		private int daysToManufacture;
+		private decimal standardCost;
 
 		[Required]
-		public int DaysToManufacture
+		public decimal StandardCost
 		{
 			get
 			{
-				return this.daysToManufacture;
+				return this.standardCost;
 			}
 
 			set
 			{
-				this.daysToManufacture = value;
-			}
-		}
-
-		private string productLine;
-
-		public string ProductLine
-		{
-			get
-			{
-				return this.productLine.IsEmptyOrZeroOrNull() ? null : this.productLine;
-			}
-
-			set
-			{
-				this.productLine = value;
-			}
-		}
-
-		private string @class;
-
-		public string @Class
-		{
-			get
-			{
-				return this.@class.IsEmptyOrZeroOrNull() ? null : this.@class;
-			}
-
-			set
-			{
-				this.@class = value;
+				this.standardCost = value;
 			}
 		}
 
@@ -326,116 +404,38 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private Nullable<int> productSubcategoryID;
+		private Nullable<decimal> weight;
 
-		public Nullable<int> ProductSubcategoryID
+		public Nullable<decimal> Weight
 		{
 			get
 			{
-				return this.productSubcategoryID.IsEmptyOrZeroOrNull() ? null : this.productSubcategoryID;
+				return this.weight.IsEmptyOrZeroOrNull() ? null : this.weight;
 			}
 
 			set
 			{
-				this.productSubcategoryID = value;
+				this.weight = value;
 			}
 		}
 
-		private Nullable<int> productModelID;
+		private string weightUnitMeasureCode;
 
-		public Nullable<int> ProductModelID
+		public string WeightUnitMeasureCode
 		{
 			get
 			{
-				return this.productModelID.IsEmptyOrZeroOrNull() ? null : this.productModelID;
+				return this.weightUnitMeasureCode.IsEmptyOrZeroOrNull() ? null : this.weightUnitMeasureCode;
 			}
 
 			set
 			{
-				this.productModelID = value;
-			}
-		}
-
-		private DateTime sellStartDate;
-
-		[Required]
-		public DateTime SellStartDate
-		{
-			get
-			{
-				return this.sellStartDate;
-			}
-
-			set
-			{
-				this.sellStartDate = value;
-			}
-		}
-
-		private Nullable<DateTime> sellEndDate;
-
-		public Nullable<DateTime> SellEndDate
-		{
-			get
-			{
-				return this.sellEndDate.IsEmptyOrZeroOrNull() ? null : this.sellEndDate;
-			}
-
-			set
-			{
-				this.sellEndDate = value;
-			}
-		}
-
-		private Nullable<DateTime> discontinuedDate;
-
-		public Nullable<DateTime> DiscontinuedDate
-		{
-			get
-			{
-				return this.discontinuedDate.IsEmptyOrZeroOrNull() ? null : this.discontinuedDate;
-			}
-
-			set
-			{
-				this.discontinuedDate = value;
-			}
-		}
-
-		private Guid rowguid;
-
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
-
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
+				this.weightUnitMeasureCode = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec4e12e5f50928a0f1ef0ae6fe00434b</Hash>
+    <Hash>3160144d848975fa519975c0f2dbefb1</Hash>
 </Codenesium>*/

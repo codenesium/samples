@@ -10,43 +10,35 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOVendor(
-			int businessEntityID,
 			string accountNumber,
-			string name,
-			int creditRating,
-			bool preferredVendorStatus,
 			bool activeFlag,
-			string purchasingWebServiceURL,
-			DateTime modifiedDate)
+			int businessEntityID,
+			int creditRating,
+			DateTime modifiedDate,
+			string name,
+			bool preferredVendorStatus,
+			string purchasingWebServiceURL)
 		{
 			this.AccountNumber = accountNumber.ToString();
-			this.Name = name.ToString();
-			this.CreditRating = creditRating.ToInt();
-			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
 			this.ActiveFlag = activeFlag.ToBoolean();
-			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
+			this.CreditRating = creditRating.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
+			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.BusinessEntities));
 		}
 
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
 		public string AccountNumber { get; set; }
-		public string Name { get; set; }
-		public int CreditRating { get; set; }
-		public bool PreferredVendorStatus { get; set; }
 		public bool ActiveFlag { get; set; }
-		public string PurchasingWebServiceURL { get; set; }
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int CreditRating { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-		public bool ShouldSerializeBusinessEntityID()
-		{
-			return this.ShouldSerializeBusinessEntityIDValue;
-		}
+		public string Name { get; set; }
+		public bool PreferredVendorStatus { get; set; }
+		public string PurchasingWebServiceURL { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeAccountNumberValue { get; set; } = true;
@@ -54,30 +46,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeAccountNumber()
 		{
 			return this.ShouldSerializeAccountNumberValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeCreditRatingValue { get; set; } = true;
-
-		public bool ShouldSerializeCreditRating()
-		{
-			return this.ShouldSerializeCreditRatingValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializePreferredVendorStatusValue { get; set; } = true;
-
-		public bool ShouldSerializePreferredVendorStatus()
-		{
-			return this.ShouldSerializePreferredVendorStatusValue;
 		}
 
 		[JsonIgnore]
@@ -89,11 +57,19 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchasingWebServiceURLValue { get; set; } = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
-		public bool ShouldSerializePurchasingWebServiceURL()
+		public bool ShouldSerializeBusinessEntityID()
 		{
-			return this.ShouldSerializePurchasingWebServiceURLValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeCreditRatingValue { get; set; } = true;
+
+		public bool ShouldSerializeCreditRating()
+		{
+			return this.ShouldSerializeCreditRatingValue;
 		}
 
 		[JsonIgnore]
@@ -104,20 +80,44 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializePreferredVendorStatusValue { get; set; } = true;
+
+		public bool ShouldSerializePreferredVendorStatus()
+		{
+			return this.ShouldSerializePreferredVendorStatusValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializePurchasingWebServiceURLValue { get; set; } = true;
+
+		public bool ShouldSerializePurchasingWebServiceURL()
+		{
+			return this.ShouldSerializePurchasingWebServiceURLValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeBusinessEntityIDValue = false;
 			this.ShouldSerializeAccountNumberValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeCreditRatingValue = false;
-			this.ShouldSerializePreferredVendorStatusValue = false;
 			this.ShouldSerializeActiveFlagValue = false;
-			this.ShouldSerializePurchasingWebServiceURLValue = false;
+			this.ShouldSerializeBusinessEntityIDValue = false;
+			this.ShouldSerializeCreditRatingValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializePreferredVendorStatusValue = false;
+			this.ShouldSerializePurchasingWebServiceURLValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>af4d4c965f67dd7b13f3fed1904a9104</Hash>
+    <Hash>8b770f81467353a211ae9b1d8a3148a7</Hash>
 </Codenesium>*/

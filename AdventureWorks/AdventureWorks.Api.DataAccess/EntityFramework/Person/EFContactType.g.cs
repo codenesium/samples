@@ -13,27 +13,26 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int contactTypeID,
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
 			this.ContactTypeID = contactTypeID.ToInt();
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ContactTypeID", TypeName="int")]
 		public int ContactTypeID { get; set; }
 
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
-
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b5c47f0abb1a34aa16f6f09d91c3482</Hash>
+    <Hash>c006ed41634a2104ed2ec6b53be28d7c</Hash>
 </Codenesium>*/

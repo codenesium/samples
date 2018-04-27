@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/aWBuildVersions/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/AWBuildVersions/{result.Id.ToString()}");
 				POCOAWBuildVersion response = this.aWBuildVersionManager.GetById(result.Id).AWBuildVersions.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>86fd2d1cbabf9cc4ea9fc565a47085a5</Hash>
+    <Hash>ca9acc4bb6549614f846bff3609814fd</Hash>
 </Codenesium>*/

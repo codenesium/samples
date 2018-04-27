@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/currencies/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Currencies/{result.Id.ToString()}");
 				POCOCurrency response = this.currencyManager.GetById(result.Id).Currencies.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>791e0c736e887284c027d9988264c0ab</Hash>
+    <Hash>0cb92815ff4157e1d280cdb1451b973f</Hash>
 </Codenesium>*/

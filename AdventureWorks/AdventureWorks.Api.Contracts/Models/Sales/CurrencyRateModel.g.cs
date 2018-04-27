@@ -11,67 +11,19 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public CurrencyRateModel(
-			DateTime currencyRateDate,
-			string fromCurrencyCode,
-			string toCurrencyCode,
 			decimal averageRate,
+			DateTime currencyRateDate,
 			decimal endOfDayRate,
-			DateTime modifiedDate)
+			string fromCurrencyCode,
+			DateTime modifiedDate,
+			string toCurrencyCode)
 		{
-			this.CurrencyRateDate = currencyRateDate.ToDateTime();
-			this.FromCurrencyCode = fromCurrencyCode.ToString();
-			this.ToCurrencyCode = toCurrencyCode.ToString();
 			this.AverageRate = averageRate.ToDecimal();
+			this.CurrencyRateDate = currencyRateDate.ToDateTime();
 			this.EndOfDayRate = endOfDayRate.ToDecimal();
+			this.FromCurrencyCode = fromCurrencyCode.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private DateTime currencyRateDate;
-
-		[Required]
-		public DateTime CurrencyRateDate
-		{
-			get
-			{
-				return this.currencyRateDate;
-			}
-
-			set
-			{
-				this.currencyRateDate = value;
-			}
-		}
-
-		private string fromCurrencyCode;
-
-		[Required]
-		public string FromCurrencyCode
-		{
-			get
-			{
-				return this.fromCurrencyCode;
-			}
-
-			set
-			{
-				this.fromCurrencyCode = value;
-			}
-		}
-
-		private string toCurrencyCode;
-
-		[Required]
-		public string ToCurrencyCode
-		{
-			get
-			{
-				return this.toCurrencyCode;
-			}
-
-			set
-			{
-				this.toCurrencyCode = value;
-			}
+			this.ToCurrencyCode = toCurrencyCode.ToString();
 		}
 
 		private decimal averageRate;
@@ -87,6 +39,22 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.averageRate = value;
+			}
+		}
+
+		private DateTime currencyRateDate;
+
+		[Required]
+		public DateTime CurrencyRateDate
+		{
+			get
+			{
+				return this.currencyRateDate;
+			}
+
+			set
+			{
+				this.currencyRateDate = value;
 			}
 		}
 
@@ -106,6 +74,22 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
+		private string fromCurrencyCode;
+
+		[Required]
+		public string FromCurrencyCode
+		{
+			get
+			{
+				return this.fromCurrencyCode;
+			}
+
+			set
+			{
+				this.fromCurrencyCode = value;
+			}
+		}
+
 		private DateTime modifiedDate;
 
 		[Required]
@@ -121,9 +105,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string toCurrencyCode;
+
+		[Required]
+		public string ToCurrencyCode
+		{
+			get
+			{
+				return this.toCurrencyCode;
+			}
+
+			set
+			{
+				this.toCurrencyCode = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>17da897ce2ae7fd921f26ac0a40b1f9a</Hash>
+    <Hash>5a5f32e62c2992ad5b6fe680db79589d</Hash>
 </Codenesium>*/

@@ -13,27 +13,19 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int productModelID,
-			string name,
 			string catalogDescription,
 			string instructions,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name,
+			Guid rowguid)
 		{
-			this.ProductModelID = productModelID.ToInt();
-			this.Name = name.ToString();
 			this.CatalogDescription = catalogDescription;
 			this.Instructions = instructions;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ProductModelID = productModelID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("ProductModelID", TypeName="int")]
-		public int ProductModelID { get; set; }
-
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
 
 		[Column("CatalogDescription", TypeName="xml(-1)")]
 		public string CatalogDescription { get; set; }
@@ -41,14 +33,22 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Instructions", TypeName="xml(-1)")]
 		public string Instructions { get; set; }
 
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
+
+		[Key]
+		[Column("ProductModelID", TypeName="int")]
+		public int ProductModelID { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb64dfbb86c865667d1960a62e8f1c61</Hash>
+    <Hash>cefada98f6edb887d3867aff8b0aac24</Hash>
 </Codenesium>*/

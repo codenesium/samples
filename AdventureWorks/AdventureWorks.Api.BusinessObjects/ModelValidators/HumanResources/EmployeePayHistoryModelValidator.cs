@@ -13,19 +13,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(EmployeePayHistoryModel model)
 		{
-			this.RateChangeDateRules();
-			this.RateRules();
-			this.PayFrequencyRules();
 			this.ModifiedDateRules();
+			this.PayFrequencyRules();
+			this.RateRules();
+			this.RateChangeDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, EmployeePayHistoryModel model)
 		{
-			this.RateChangeDateRules();
-			this.RateRules();
-			this.PayFrequencyRules();
 			this.ModifiedDateRules();
+			this.PayFrequencyRules();
+			this.RateRules();
+			this.RateChangeDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>58e22120e745683838e22127bc813cbc</Hash>
+    <Hash>7a59267b38ee807ea6903d17dcc7daeb</Hash>
 </Codenesium>*/

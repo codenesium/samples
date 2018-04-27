@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/productCategories/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductCategories/{result.Id.ToString()}");
 				POCOProductCategory response = this.productCategoryManager.GetById(result.Id).ProductCategories.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>11c05c361f55306a08628082f6e106e4</Hash>
+    <Hash>ce7a7d99aebdf178508c595a4bc9dd73</Hash>
 </Codenesium>*/

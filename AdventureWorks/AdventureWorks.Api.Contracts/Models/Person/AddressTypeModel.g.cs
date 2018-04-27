@@ -11,13 +11,29 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public AddressTypeModel(
+			DateTime modifiedDate,
 			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Guid rowguid)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private string name;
@@ -51,25 +67,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.rowguid = value;
 			}
 		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b55630b04a9cd1f8beab91a7a789ee18</Hash>
+    <Hash>b322fa3a8c30b11faf4e9ce8a570654f</Hash>
 </Codenesium>*/

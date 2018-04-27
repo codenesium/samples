@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/passwords/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Passwords/{result.Id.ToString()}");
 				POCOPassword response = this.passwordManager.GetById(result.Id).Passwords.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9df15ae0b1e2863d424cef33b4ab7c77</Hash>
+    <Hash>a22c3740ab80dfeca03f2f98d50da299</Hash>
 </Codenesium>*/

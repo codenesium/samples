@@ -12,12 +12,12 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public ProductDescriptionModel(
 			string description,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
 			this.Description = description.ToString();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
 		private string description;
@@ -36,22 +36,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private Guid rowguid;
-
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
-
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-
 		private DateTime modifiedDate;
 
 		[Required]
@@ -67,9 +51,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private Guid rowguid;
+
+		[Required]
+		public Guid Rowguid
+		{
+			get
+			{
+				return this.rowguid;
+			}
+
+			set
+			{
+				this.rowguid = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>916318bcc7f93312b62db7561a92c758</Hash>
+    <Hash>fdab215b9629fd68f45234a7e01e7a30</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/purchaseOrderDetails/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderDetails/{result.Id.ToString()}");
 				POCOPurchaseOrderDetail response = this.purchaseOrderDetailManager.GetById(result.Id).PurchaseOrderDetails.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByPurchaseOrderID/{id}")]
-		[ReadOnly]
-		[Route("~/api/PurchaseOrderHeaders/{id}/PurchaseOrderDetails")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPurchaseOrderDetail>), 200)]
-		public virtual IActionResult ByPurchaseOrderID(int id)
-		{
-			ApiResponse response = this.purchaseOrderDetailManager.GetWhere(x => x.PurchaseOrderID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PurchaseOrderDetails);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByProductID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Products/{id}/PurchaseOrderDetails")]
@@ -215,9 +195,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.PurchaseOrderDetails);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByPurchaseOrderID/{id}")]
+		[ReadOnly]
+		[Route("~/api/PurchaseOrderHeaders/{id}/PurchaseOrderDetails")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOPurchaseOrderDetail>), 200)]
+		public virtual IActionResult ByPurchaseOrderID(int id)
+		{
+			ApiResponse response = this.purchaseOrderDetailManager.GetWhere(x => x.PurchaseOrderID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.PurchaseOrderDetails);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f7c90c920c7217116968cfb8d829146f</Hash>
+    <Hash>622400042f453f7660932133b20fa944</Hash>
 </Codenesium>*/

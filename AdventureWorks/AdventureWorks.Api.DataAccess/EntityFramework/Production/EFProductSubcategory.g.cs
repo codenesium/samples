@@ -13,34 +13,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int productSubcategoryID,
-			int productCategoryID,
+			DateTime modifiedDate,
 			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			int productCategoryID,
+			Guid rowguid)
 		{
-			this.ProductSubcategoryID = productSubcategoryID.ToInt();
-			this.ProductCategoryID = productCategoryID.ToInt();
-			this.Name = name.ToString();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ProductCategoryID = productCategoryID.ToInt();
+			this.ProductSubcategoryID = productSubcategoryID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("ProductSubcategoryID", TypeName="int")]
-		public int ProductSubcategoryID { get; set; }
-
-		[Column("ProductCategoryID", TypeName="int")]
-		public int ProductCategoryID { get; set; }
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
 		public string Name { get; set; }
 
+		[Column("ProductCategoryID", TypeName="int")]
+		public int ProductCategoryID { get; set; }
+
+		[Key]
+		[Column("ProductSubcategoryID", TypeName="int")]
+		public int ProductSubcategoryID { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("ProductCategoryID")]
 		public virtual EFProductCategory ProductCategory { get; set; }
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>48025bd806a0a336448e02fd4a5d78d5</Hash>
+    <Hash>19a18cca3d5f338ea73e0f3210b2a341</Hash>
 </Codenesium>*/

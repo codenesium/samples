@@ -20,16 +20,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; set; }
 		public IProductRepository ProductRepository { get; set; }
-		public virtual void PurchaseOrderDetailIDRules()
-		{
-			this.RuleFor(x => x.PurchaseOrderDetailID).NotNull();
-		}
-
+		public IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; set; }
 		public virtual void DueDateRules()
 		{
 			this.RuleFor(x => x.DueDate).NotNull();
+		}
+
+		public virtual void LineTotalRules()
+		{
+			this.RuleFor(x => x.LineTotal).NotNull();
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void OrderQtyRules()
@@ -43,14 +48,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void UnitPriceRules()
+		public virtual void PurchaseOrderDetailIDRules()
 		{
-			this.RuleFor(x => x.UnitPrice).NotNull();
-		}
-
-		public virtual void LineTotalRules()
-		{
-			this.RuleFor(x => x.LineTotal).NotNull();
+			this.RuleFor(x => x.PurchaseOrderDetailID).NotNull();
 		}
 
 		public virtual void ReceivedQtyRules()
@@ -68,23 +68,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.StockedQty).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void UnitPriceRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
-		}
-
-		private bool BeValidPurchaseOrderHeader(int id)
-		{
-			return this.PurchaseOrderHeaderRepository.GetByIdDirect(id) != null;
+			this.RuleFor(x => x.UnitPrice).NotNull();
 		}
 
 		private bool BeValidProduct(int id)
 		{
 			return this.ProductRepository.GetByIdDirect(id) != null;
 		}
+
+		private bool BeValidPurchaseOrderHeader(int id)
+		{
+			return this.PurchaseOrderHeaderRepository.GetByIdDirect(id) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2772d2f3a55cf08a341f02b7f6467ecf</Hash>
+    <Hash>6f4628cf3fac56d73ccb96f59bbed956</Hash>
 </Codenesium>*/

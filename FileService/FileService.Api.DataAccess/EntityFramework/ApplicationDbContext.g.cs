@@ -35,9 +35,11 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual DbSet<EFFile> Files { get; set; }
 
 		public virtual DbSet<EFFileType> FileTypes { get; set; }
+
+		public virtual DbSet<EFVersionInfo> VersionInfoes { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fad6f8ce11f9368abe5129841b8a38ba</Hash>
+    <Hash>6f290396919f6c172b23d41777f6e331</Hash>
 </Codenesium>*/

@@ -26,13 +26,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.BusinessEntityID).Must(this.BeValidEmployee).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void ResumeRules()
-		{                       }
-
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		public virtual void ResumeRules()
+		{                       }
 
 		private bool BeValidEmployee(Nullable<int> id)
 		{
@@ -42,5 +42,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ac85caf120bf02928a30b9a834bd7bde</Hash>
+    <Hash>10d018e2ebe289b2d73154565d3d20c2</Hash>
 </Codenesium>*/

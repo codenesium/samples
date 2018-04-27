@@ -11,27 +11,43 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public SpecialOfferModel(
+			string category,
 			string description,
 			decimal discountPct,
-			string type,
-			string category,
-			DateTime startDate,
 			DateTime endDate,
-			int minQty,
 			Nullable<int> maxQty,
+			int minQty,
+			DateTime modifiedDate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime startDate,
+			string type)
 		{
+			this.Category = category.ToString();
 			this.Description = description.ToString();
 			this.DiscountPct = discountPct.ToDecimal();
-			this.Type = type.ToString();
-			this.Category = category.ToString();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToDateTime();
-			this.MinQty = minQty.ToInt();
 			this.MaxQty = maxQty.ToNullableInt();
-			this.Rowguid = rowguid.ToGuid();
+			this.MinQty = minQty.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.StartDate = startDate.ToDateTime();
+			this.Type = type.ToString();
+		}
+
+		private string category;
+
+		[Required]
+		public string Category
+		{
+			get
+			{
+				return this.category;
+			}
+
+			set
+			{
+				this.category = value;
+			}
 		}
 
 		private string description;
@@ -66,54 +82,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string type;
-
-		[Required]
-		public string Type
-		{
-			get
-			{
-				return this.type;
-			}
-
-			set
-			{
-				this.type = value;
-			}
-		}
-
-		private string category;
-
-		[Required]
-		public string Category
-		{
-			get
-			{
-				return this.category;
-			}
-
-			set
-			{
-				this.category = value;
-			}
-		}
-
-		private DateTime startDate;
-
-		[Required]
-		public DateTime StartDate
-		{
-			get
-			{
-				return this.startDate;
-			}
-
-			set
-			{
-				this.startDate = value;
-			}
-		}
-
 		private DateTime endDate;
 
 		[Required]
@@ -127,6 +95,21 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.endDate = value;
+			}
+		}
+
+		private Nullable<int> maxQty;
+
+		public Nullable<int> MaxQty
+		{
+			get
+			{
+				return this.maxQty.IsEmptyOrZeroOrNull() ? null : this.maxQty;
+			}
+
+			set
+			{
+				this.maxQty = value;
 			}
 		}
 
@@ -146,18 +129,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private Nullable<int> maxQty;
+		private DateTime modifiedDate;
 
-		public Nullable<int> MaxQty
+		[Required]
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.maxQty.IsEmptyOrZeroOrNull() ? null : this.maxQty;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.maxQty = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -177,24 +161,40 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private DateTime startDate;
 
 		[Required]
-		public DateTime ModifiedDate
+		public DateTime StartDate
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.startDate;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.startDate = value;
+			}
+		}
+
+		private string type;
+
+		[Required]
+		public string Type
+		{
+			get
+			{
+				return this.type;
+			}
+
+			set
+			{
+				this.type = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a015b64ab1a65d87726257085e86dea6</Hash>
+    <Hash>adc24a436328115428eaeef0de3a1435</Hash>
 </Codenesium>*/

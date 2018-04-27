@@ -11,33 +11,64 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public DocumentModel(
-			Nullable<short> documentLevel,
-			string title,
-			int owner,
-			bool folderFlag,
-			string fileName,
-			string fileExtension,
-			string revision,
 			int changeNumber,
-			int status,
-			string documentSummary,
 			byte[] document1,
+			Nullable<short> documentLevel,
+			string documentSummary,
+			string fileExtension,
+			string fileName,
+			bool folderFlag,
+			DateTime modifiedDate,
+			int owner,
+			string revision,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int status,
+			string title)
 		{
-			this.DocumentLevel = documentLevel;
-			this.Title = title.ToString();
-			this.Owner = owner.ToInt();
-			this.FolderFlag = folderFlag.ToBoolean();
-			this.FileName = fileName.ToString();
-			this.FileExtension = fileExtension.ToString();
-			this.Revision = revision.ToString();
 			this.ChangeNumber = changeNumber.ToInt();
-			this.Status = status.ToInt();
-			this.DocumentSummary = documentSummary.ToString();
 			this.Document1 = document1;
-			this.Rowguid = rowguid.ToGuid();
+			this.DocumentLevel = documentLevel;
+			this.DocumentSummary = documentSummary.ToString();
+			this.FileExtension = fileExtension.ToString();
+			this.FileName = fileName.ToString();
+			this.FolderFlag = folderFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Owner = owner.ToInt();
+			this.Revision = revision.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.Status = status.ToInt();
+			this.Title = title.ToString();
+		}
+
+		private int changeNumber;
+
+		[Required]
+		public int ChangeNumber
+		{
+			get
+			{
+				return this.changeNumber;
+			}
+
+			set
+			{
+				this.changeNumber = value;
+			}
+		}
+
+		private byte[] document1;
+
+		public byte[] Document1
+		{
+			get
+			{
+				return this.document1.IsEmptyOrZeroOrNull() ? null : this.document1;
+			}
+
+			set
+			{
+				this.document1 = value;
+			}
 		}
 
 		private Nullable<short> documentLevel;
@@ -55,67 +86,18 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string title;
+		private string documentSummary;
 
-		[Required]
-		public string Title
+		public string DocumentSummary
 		{
 			get
 			{
-				return this.title;
+				return this.documentSummary.IsEmptyOrZeroOrNull() ? null : this.documentSummary;
 			}
 
 			set
 			{
-				this.title = value;
-			}
-		}
-
-		private int owner;
-
-		[Required]
-		public int Owner
-		{
-			get
-			{
-				return this.owner;
-			}
-
-			set
-			{
-				this.owner = value;
-			}
-		}
-
-		private bool folderFlag;
-
-		[Required]
-		public bool FolderFlag
-		{
-			get
-			{
-				return this.folderFlag;
-			}
-
-			set
-			{
-				this.folderFlag = value;
-			}
-		}
-
-		private string fileName;
-
-		[Required]
-		public string FileName
-		{
-			get
-			{
-				return this.fileName;
-			}
-
-			set
-			{
-				this.fileName = value;
+				this.documentSummary = value;
 			}
 		}
 
@@ -135,6 +117,70 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
+		private string fileName;
+
+		[Required]
+		public string FileName
+		{
+			get
+			{
+				return this.fileName;
+			}
+
+			set
+			{
+				this.fileName = value;
+			}
+		}
+
+		private bool folderFlag;
+
+		[Required]
+		public bool FolderFlag
+		{
+			get
+			{
+				return this.folderFlag;
+			}
+
+			set
+			{
+				this.folderFlag = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
+		}
+
+		private int owner;
+
+		[Required]
+		public int Owner
+		{
+			get
+			{
+				return this.owner;
+			}
+
+			set
+			{
+				this.owner = value;
+			}
+		}
+
 		private string revision;
 
 		[Required]
@@ -148,68 +194,6 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.revision = value;
-			}
-		}
-
-		private int changeNumber;
-
-		[Required]
-		public int ChangeNumber
-		{
-			get
-			{
-				return this.changeNumber;
-			}
-
-			set
-			{
-				this.changeNumber = value;
-			}
-		}
-
-		private int status;
-
-		[Required]
-		public int Status
-		{
-			get
-			{
-				return this.status;
-			}
-
-			set
-			{
-				this.status = value;
-			}
-		}
-
-		private string documentSummary;
-
-		public string DocumentSummary
-		{
-			get
-			{
-				return this.documentSummary.IsEmptyOrZeroOrNull() ? null : this.documentSummary;
-			}
-
-			set
-			{
-				this.documentSummary = value;
-			}
-		}
-
-		private byte[] document1;
-
-		public byte[] Document1
-		{
-			get
-			{
-				return this.document1.IsEmptyOrZeroOrNull() ? null : this.document1;
-			}
-
-			set
-			{
-				this.document1 = value;
 			}
 		}
 
@@ -229,24 +213,40 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private int status;
 
 		[Required]
-		public DateTime ModifiedDate
+		public int Status
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.status;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.status = value;
+			}
+		}
+
+		private string title;
+
+		[Required]
+		public string Title
+		{
+			get
+			{
+				return this.title;
+			}
+
+			set
+			{
+				this.title = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>350000809b18c730399a30294f3b4669</Hash>
+    <Hash>7265129857956cf36543f5307d69c95f</Hash>
 </Codenesium>*/

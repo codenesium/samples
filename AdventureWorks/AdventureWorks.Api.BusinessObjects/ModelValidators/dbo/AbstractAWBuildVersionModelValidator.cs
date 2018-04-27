@@ -26,18 +26,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Database_Version).Length(0, 25);
 		}
 
-		public virtual void VersionDateRules()
-		{
-			this.RuleFor(x => x.VersionDate).NotNull();
-		}
-
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void VersionDateRules()
+		{
+			this.RuleFor(x => x.VersionDate).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ab9cee63080332997c181a3e813fe17</Hash>
+    <Hash>ab782297c024ca532715b06f4b00bf91</Hash>
 </Codenesium>*/

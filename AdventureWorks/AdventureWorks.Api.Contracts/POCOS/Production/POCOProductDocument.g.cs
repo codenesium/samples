@@ -10,29 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductDocument(
-			int productID,
 			Guid documentNode,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productID)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 			this.DocumentNode = new ReferenceEntity<Guid>(documentNode,
 			                                              nameof(ApiResponse.Documents));
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          nameof(ApiResponse.Products));
 		}
 
-		public ReferenceEntity<int> ProductID { get; set; }
 		public ReferenceEntity<Guid> DocumentNode { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
+		public ReferenceEntity<int> ProductID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeDocumentNodeValue { get; set; } = true;
@@ -50,15 +42,23 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductID()
+		{
+			return this.ShouldSerializeProductIDValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductIDValue = false;
 			this.ShouldSerializeDocumentNodeValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeProductIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>98526e76c99c30da377d18d1fdddbc77</Hash>
+    <Hash>d36b6ba71415d0ef272d91e23abdb493</Hash>
 </Codenesium>*/

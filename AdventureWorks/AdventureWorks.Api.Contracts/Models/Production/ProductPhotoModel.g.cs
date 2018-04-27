@@ -11,47 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductPhotoModel(
-			byte[] thumbNailPhoto,
-			string thumbnailPhotoFileName,
 			byte[] largePhoto,
 			string largePhotoFileName,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			byte[] thumbNailPhoto,
+			string thumbnailPhotoFileName)
 		{
-			this.ThumbNailPhoto = thumbNailPhoto;
-			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
 			this.LargePhoto = largePhoto;
 			this.LargePhotoFileName = largePhotoFileName.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private byte[] thumbNailPhoto;
-
-		public byte[] ThumbNailPhoto
-		{
-			get
-			{
-				return this.thumbNailPhoto.IsEmptyOrZeroOrNull() ? null : this.thumbNailPhoto;
-			}
-
-			set
-			{
-				this.thumbNailPhoto = value;
-			}
-		}
-
-		private string thumbnailPhotoFileName;
-
-		public string ThumbnailPhotoFileName
-		{
-			get
-			{
-				return this.thumbnailPhotoFileName.IsEmptyOrZeroOrNull() ? null : this.thumbnailPhotoFileName;
-			}
-
-			set
-			{
-				this.thumbnailPhotoFileName = value;
-			}
+			this.ThumbNailPhoto = thumbNailPhoto;
+			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
 		}
 
 		private byte[] largePhoto;
@@ -99,9 +69,39 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private byte[] thumbNailPhoto;
+
+		public byte[] ThumbNailPhoto
+		{
+			get
+			{
+				return this.thumbNailPhoto.IsEmptyOrZeroOrNull() ? null : this.thumbNailPhoto;
+			}
+
+			set
+			{
+				this.thumbNailPhoto = value;
+			}
+		}
+
+		private string thumbnailPhotoFileName;
+
+		public string ThumbnailPhotoFileName
+		{
+			get
+			{
+				return this.thumbnailPhotoFileName.IsEmptyOrZeroOrNull() ? null : this.thumbnailPhotoFileName;
+			}
+
+			set
+			{
+				this.thumbnailPhotoFileName = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>11b53448184ef904de1e37f6f75b0495</Hash>
+    <Hash>5bb4bd531ef60fcc3c393597a0123d53</Hash>
 </Codenesium>*/

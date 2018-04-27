@@ -13,15 +13,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(SalesOrderHeaderSalesReasonModel model)
 		{
-			this.SalesReasonIDRules();
 			this.ModifiedDateRules();
+			this.SalesReasonIDRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, SalesOrderHeaderSalesReasonModel model)
 		{
-			this.SalesReasonIDRules();
 			this.ModifiedDateRules();
+			this.SalesReasonIDRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cbf1833cd6720e5f793fac0940cef7a5</Hash>
+    <Hash>0d3e36d5674388ac32ca51f5dababcef</Hash>
 </Codenesium>*/

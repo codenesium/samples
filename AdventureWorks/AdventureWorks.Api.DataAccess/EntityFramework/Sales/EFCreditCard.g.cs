@@ -13,30 +13,29 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int creditCardID,
-			string cardType,
 			string cardNumber,
+			string cardType,
 			int expMonth,
 			short expYear,
 			DateTime modifiedDate)
 		{
-			this.CreditCardID = creditCardID.ToInt();
-			this.CardType = cardType.ToString();
 			this.CardNumber = cardNumber.ToString();
+			this.CardType = cardType.ToString();
+			this.CreditCardID = creditCardID.ToInt();
 			this.ExpMonth = expMonth.ToInt();
 			this.ExpYear = expYear;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("CreditCardID", TypeName="int")]
-		public int CreditCardID { get; set; }
+		[Column("CardNumber", TypeName="nvarchar(25)")]
+		public string CardNumber { get; set; }
 
 		[Column("CardType", TypeName="nvarchar(50)")]
 		public string CardType { get; set; }
 
-		[Column("CardNumber", TypeName="nvarchar(25)")]
-		public string CardNumber { get; set; }
+		[Key]
+		[Column("CreditCardID", TypeName="int")]
+		public int CreditCardID { get; set; }
 
 		[Column("ExpMonth", TypeName="tinyint")]
 		public int ExpMonth { get; set; }
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2521b532c73694b10317c301f4e8b9c9</Hash>
+    <Hash>6c962400ac65da09c5009d97cf3c1c92</Hash>
 </Codenesium>*/

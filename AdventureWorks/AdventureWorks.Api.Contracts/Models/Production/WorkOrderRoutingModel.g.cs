@@ -11,123 +11,43 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public WorkOrderRoutingModel(
-			int productID,
-			short operationSequence,
-			short locationID,
-			DateTime scheduledStartDate,
-			DateTime scheduledEndDate,
-			Nullable<DateTime> actualStartDate,
+			Nullable<decimal> actualCost,
 			Nullable<DateTime> actualEndDate,
 			Nullable<decimal> actualResourceHrs,
+			Nullable<DateTime> actualStartDate,
+			short locationID,
+			DateTime modifiedDate,
+			short operationSequence,
 			decimal plannedCost,
-			Nullable<decimal> actualCost,
-			DateTime modifiedDate)
+			int productID,
+			DateTime scheduledEndDate,
+			DateTime scheduledStartDate)
 		{
-			this.ProductID = productID.ToInt();
-			this.OperationSequence = operationSequence;
-			this.LocationID = locationID;
-			this.ScheduledStartDate = scheduledStartDate.ToDateTime();
-			this.ScheduledEndDate = scheduledEndDate.ToDateTime();
-			this.ActualStartDate = actualStartDate.ToNullableDateTime();
+			this.ActualCost = actualCost.ToNullableDecimal();
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
 			this.ActualResourceHrs = actualResourceHrs.ToNullableDecimal();
-			this.PlannedCost = plannedCost.ToDecimal();
-			this.ActualCost = actualCost.ToNullableDecimal();
+			this.ActualStartDate = actualStartDate.ToNullableDateTime();
+			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.OperationSequence = operationSequence;
+			this.PlannedCost = plannedCost.ToDecimal();
+			this.ProductID = productID.ToInt();
+			this.ScheduledEndDate = scheduledEndDate.ToDateTime();
+			this.ScheduledStartDate = scheduledStartDate.ToDateTime();
 		}
 
-		private int productID;
+		private Nullable<decimal> actualCost;
 
-		[Required]
-		public int ProductID
+		public Nullable<decimal> ActualCost
 		{
 			get
 			{
-				return this.productID;
+				return this.actualCost.IsEmptyOrZeroOrNull() ? null : this.actualCost;
 			}
 
 			set
 			{
-				this.productID = value;
-			}
-		}
-
-		private short operationSequence;
-
-		[Required]
-		public short OperationSequence
-		{
-			get
-			{
-				return this.operationSequence;
-			}
-
-			set
-			{
-				this.operationSequence = value;
-			}
-		}
-
-		private short locationID;
-
-		[Required]
-		public short LocationID
-		{
-			get
-			{
-				return this.locationID;
-			}
-
-			set
-			{
-				this.locationID = value;
-			}
-		}
-
-		private DateTime scheduledStartDate;
-
-		[Required]
-		public DateTime ScheduledStartDate
-		{
-			get
-			{
-				return this.scheduledStartDate;
-			}
-
-			set
-			{
-				this.scheduledStartDate = value;
-			}
-		}
-
-		private DateTime scheduledEndDate;
-
-		[Required]
-		public DateTime ScheduledEndDate
-		{
-			get
-			{
-				return this.scheduledEndDate;
-			}
-
-			set
-			{
-				this.scheduledEndDate = value;
-			}
-		}
-
-		private Nullable<DateTime> actualStartDate;
-
-		public Nullable<DateTime> ActualStartDate
-		{
-			get
-			{
-				return this.actualStartDate.IsEmptyOrZeroOrNull() ? null : this.actualStartDate;
-			}
-
-			set
-			{
-				this.actualStartDate = value;
+				this.actualCost = value;
 			}
 		}
 
@@ -161,34 +81,34 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private decimal plannedCost;
+		private Nullable<DateTime> actualStartDate;
 
-		[Required]
-		public decimal PlannedCost
+		public Nullable<DateTime> ActualStartDate
 		{
 			get
 			{
-				return this.plannedCost;
+				return this.actualStartDate.IsEmptyOrZeroOrNull() ? null : this.actualStartDate;
 			}
 
 			set
 			{
-				this.plannedCost = value;
+				this.actualStartDate = value;
 			}
 		}
 
-		private Nullable<decimal> actualCost;
+		private short locationID;
 
-		public Nullable<decimal> ActualCost
+		[Required]
+		public short LocationID
 		{
 			get
 			{
-				return this.actualCost.IsEmptyOrZeroOrNull() ? null : this.actualCost;
+				return this.locationID;
 			}
 
 			set
 			{
-				this.actualCost = value;
+				this.locationID = value;
 			}
 		}
 
@@ -207,9 +127,89 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private short operationSequence;
+
+		[Required]
+		public short OperationSequence
+		{
+			get
+			{
+				return this.operationSequence;
+			}
+
+			set
+			{
+				this.operationSequence = value;
+			}
+		}
+
+		private decimal plannedCost;
+
+		[Required]
+		public decimal PlannedCost
+		{
+			get
+			{
+				return this.plannedCost;
+			}
+
+			set
+			{
+				this.plannedCost = value;
+			}
+		}
+
+		private int productID;
+
+		[Required]
+		public int ProductID
+		{
+			get
+			{
+				return this.productID;
+			}
+
+			set
+			{
+				this.productID = value;
+			}
+		}
+
+		private DateTime scheduledEndDate;
+
+		[Required]
+		public DateTime ScheduledEndDate
+		{
+			get
+			{
+				return this.scheduledEndDate;
+			}
+
+			set
+			{
+				this.scheduledEndDate = value;
+			}
+		}
+
+		private DateTime scheduledStartDate;
+
+		[Required]
+		public DateTime ScheduledStartDate
+		{
+			get
+			{
+				return this.scheduledStartDate;
+			}
+
+			set
+			{
+				this.scheduledStartDate = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe4aba0f2d2af2d0cb65d8499834d975</Hash>
+    <Hash>416f95247d4e49478b15be982a104c86</Hash>
 </Codenesium>*/

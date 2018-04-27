@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/productModelProductDescriptionCultures/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductModelProductDescriptionCultures/{result.Id.ToString()}");
 				POCOProductModelProductDescriptionCulture response = this.productModelProductDescriptionCultureManager.GetById(result.Id).ProductModelProductDescriptionCultures.First();
 				return this.Ok(response);
 			}
@@ -177,14 +177,14 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductModelID/{id}")]
+		[Route("ByCultureID/{id}")]
 		[ReadOnly]
-		[Route("~/api/ProductModels/{id}/ProductModelProductDescriptionCultures")]
+		[Route("~/api/Cultures/{id}/ProductModelProductDescriptionCultures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
-		public virtual IActionResult ByProductModelID(int id)
+		public virtual IActionResult ByCultureID(string id)
 		{
-			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhere(x => x.ProductModelID == id);
+			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhere(x => x.CultureID == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -217,14 +217,14 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByCultureID/{id}")]
+		[Route("ByProductModelID/{id}")]
 		[ReadOnly]
-		[Route("~/api/Cultures/{id}/ProductModelProductDescriptionCultures")]
+		[Route("~/api/ProductModels/{id}/ProductModelProductDescriptionCultures")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
-		public virtual IActionResult ByCultureID(string id)
+		public virtual IActionResult ByProductModelID(int id)
 		{
-			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhere(x => x.CultureID == id);
+			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhere(x => x.ProductModelID == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -239,5 +239,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>31bad994f11ad5c9cd0f96652227686c</Hash>
+    <Hash>933a58b1bc4a9583821aef08e2301fd0</Hash>
 </Codenesium>*/

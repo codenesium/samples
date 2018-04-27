@@ -13,59 +13,61 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int purchaseOrderID,
-			int revisionNumber,
-			int status,
 			int employeeID,
-			int vendorID,
-			int shipMethodID,
+			decimal freight,
+			DateTime modifiedDate,
 			DateTime orderDate,
+			int revisionNumber,
 			Nullable<DateTime> shipDate,
+			int shipMethodID,
+			int status,
 			decimal subTotal,
 			decimal taxAmt,
-			decimal freight,
 			decimal totalDue,
-			DateTime modifiedDate)
+			int vendorID)
 		{
+			this.EmployeeID = employeeID.ToInt();
+			this.Freight = freight.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.OrderDate = orderDate.ToDateTime();
 			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.RevisionNumber = revisionNumber.ToInt();
-			this.Status = status.ToInt();
-			this.EmployeeID = employeeID.ToInt();
-			this.VendorID = vendorID.ToInt();
-			this.ShipMethodID = shipMethodID.ToInt();
-			this.OrderDate = orderDate.ToDateTime();
 			this.ShipDate = shipDate.ToNullableDateTime();
+			this.ShipMethodID = shipMethodID.ToInt();
+			this.Status = status.ToInt();
 			this.SubTotal = subTotal.ToDecimal();
 			this.TaxAmt = taxAmt.ToDecimal();
-			this.Freight = freight.ToDecimal();
 			this.TotalDue = totalDue.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.VendorID = vendorID.ToInt();
 		}
 
+		[Column("EmployeeID", TypeName="int")]
+		public int EmployeeID { get; set; }
+
+		[Column("Freight", TypeName="money")]
+		public decimal Freight { get; set; }
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[Column("OrderDate", TypeName="datetime")]
+		public DateTime OrderDate { get; set; }
+
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("PurchaseOrderID", TypeName="int")]
 		public int PurchaseOrderID { get; set; }
 
 		[Column("RevisionNumber", TypeName="tinyint")]
 		public int RevisionNumber { get; set; }
 
-		[Column("Status", TypeName="tinyint")]
-		public int Status { get; set; }
-
-		[Column("EmployeeID", TypeName="int")]
-		public int EmployeeID { get; set; }
-
-		[Column("VendorID", TypeName="int")]
-		public int VendorID { get; set; }
+		[Column("ShipDate", TypeName="datetime")]
+		public Nullable<DateTime> ShipDate { get; set; }
 
 		[Column("ShipMethodID", TypeName="int")]
 		public int ShipMethodID { get; set; }
 
-		[Column("OrderDate", TypeName="datetime")]
-		public DateTime OrderDate { get; set; }
-
-		[Column("ShipDate", TypeName="datetime")]
-		public Nullable<DateTime> ShipDate { get; set; }
+		[Column("Status", TypeName="tinyint")]
+		public int Status { get; set; }
 
 		[Column("SubTotal", TypeName="money")]
 		public decimal SubTotal { get; set; }
@@ -73,26 +75,23 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("TaxAmt", TypeName="money")]
 		public decimal TaxAmt { get; set; }
 
-		[Column("Freight", TypeName="money")]
-		public decimal Freight { get; set; }
-
 		[Column("TotalDue", TypeName="money")]
 		public decimal TotalDue { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("VendorID", TypeName="int")]
+		public int VendorID { get; set; }
 
 		[ForeignKey("EmployeeID")]
 		public virtual EFEmployee Employee { get; set; }
 
-		[ForeignKey("VendorID")]
-		public virtual EFVendor Vendor { get; set; }
-
 		[ForeignKey("ShipMethodID")]
 		public virtual EFShipMethod ShipMethod { get; set; }
+
+		[ForeignKey("VendorID")]
+		public virtual EFVendor Vendor { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6b4e2234b8d42b62b606e7c35f59c546</Hash>
+    <Hash>fbfed3d49beb2f3626999dab87cd1e98</Hash>
 </Codenesium>*/

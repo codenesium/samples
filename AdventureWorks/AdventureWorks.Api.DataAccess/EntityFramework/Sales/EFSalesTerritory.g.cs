@@ -13,35 +13,33 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int territoryID,
-			string name,
+			decimal costLastYear,
+			decimal costYTD,
 			string countryRegionCode,
 			string @group,
-			decimal salesYTD,
-			decimal salesLastYear,
-			decimal costYTD,
-			decimal costLastYear,
+			DateTime modifiedDate,
+			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			decimal salesLastYear,
+			decimal salesYTD)
 		{
-			this.TerritoryID = territoryID.ToInt();
-			this.Name = name.ToString();
+			this.CostLastYear = costLastYear.ToDecimal();
+			this.CostYTD = costYTD.ToDecimal();
 			this.CountryRegionCode = countryRegionCode.ToString();
 			this.@Group = @group.ToString();
-			this.SalesYTD = salesYTD.ToDecimal();
-			this.SalesLastYear = salesLastYear.ToDecimal();
-			this.CostYTD = costYTD.ToDecimal();
-			this.CostLastYear = costLastYear.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesLastYear = salesLastYear.ToDecimal();
+			this.SalesYTD = salesYTD.ToDecimal();
+			this.TerritoryID = territoryID.ToInt();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("TerritoryID", TypeName="int")]
-		public int TerritoryID { get; set; }
+		[Column("CostLastYear", TypeName="money")]
+		public decimal CostLastYear { get; set; }
 
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		[Column("CostYTD", TypeName="money")]
+		public decimal CostYTD { get; set; }
 
 		[Column("CountryRegionCode", TypeName="nvarchar(3)")]
 		public string CountryRegionCode { get; set; }
@@ -49,23 +47,25 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Group", TypeName="nvarchar(50)")]
 		public string @Group { get; set; }
 
-		[Column("SalesYTD", TypeName="money")]
-		public decimal SalesYTD { get; set; }
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 
 		[Column("SalesLastYear", TypeName="money")]
 		public decimal SalesLastYear { get; set; }
 
-		[Column("CostYTD", TypeName="money")]
-		public decimal CostYTD { get; set; }
+		[Column("SalesYTD", TypeName="money")]
+		public decimal SalesYTD { get; set; }
 
-		[Column("CostLastYear", TypeName="money")]
-		public decimal CostLastYear { get; set; }
-
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Key]
+		[Column("TerritoryID", TypeName="int")]
+		public int TerritoryID { get; set; }
 
 		[ForeignKey("CountryRegionCode")]
 		public virtual EFCountryRegion CountryRegion { get; set; }
@@ -73,5 +73,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3ca14cee3f1b3e030278a4288c41d3b8</Hash>
+    <Hash>e3edcb06fea3c6905e62d4a0dd8c059a</Hash>
 </Codenesium>*/

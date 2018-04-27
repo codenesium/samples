@@ -13,21 +13,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(StoreModel model)
 		{
-			this.NameRules();
-			this.SalesPersonIDRules();
 			this.DemographicsRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.RowguidRules();
+			this.SalesPersonIDRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, StoreModel model)
 		{
-			this.NameRules();
-			this.SalesPersonIDRules();
 			this.DemographicsRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.RowguidRules();
+			this.SalesPersonIDRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c9b4da1057929efe7dab82430264808b</Hash>
+    <Hash>873ed2077cba0a287ddd0e331ad1b7fc</Hash>
 </Codenesium>*/

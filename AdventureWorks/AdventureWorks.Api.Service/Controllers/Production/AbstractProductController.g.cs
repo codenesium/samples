@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/products/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Products/{result.Id.ToString()}");
 				POCOProduct response = this.productManager.GetById(result.Id).Products.First();
 				return this.Ok(response);
 			}
@@ -177,6 +177,46 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("ByProductModelID/{id}")]
+		[ReadOnly]
+		[Route("~/api/ProductModels/{id}/Products")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
+		public virtual IActionResult ByProductModelID(int id)
+		{
+			ApiResponse response = this.productManager.GetWhere(x => x.ProductModelID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Products);
+			}
+		}
+
+		[HttpGet]
+		[Route("ByProductSubcategoryID/{id}")]
+		[ReadOnly]
+		[Route("~/api/ProductSubcategories/{id}/Products")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
+		public virtual IActionResult ByProductSubcategoryID(int id)
+		{
+			ApiResponse response = this.productManager.GetWhere(x => x.ProductSubcategoryID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Products);
+			}
+		}
+
+		[HttpGet]
 		[Route("BySizeUnitMeasureCode/{id}")]
 		[ReadOnly]
 		[Route("~/api/UnitMeasures/{id}/Products")]
@@ -215,49 +255,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.Products);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductSubcategoryID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductSubcategories/{id}/Products")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
-		public virtual IActionResult ByProductSubcategoryID(int id)
-		{
-			ApiResponse response = this.productManager.GetWhere(x => x.ProductSubcategoryID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Products);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByProductModelID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductModels/{id}/Products")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
-		public virtual IActionResult ByProductModelID(int id)
-		{
-			ApiResponse response = this.productManager.GetWhere(x => x.ProductModelID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Products);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>82548d4718cbd3385595f8f83f798b7e</Hash>
+    <Hash>85360c334ec92cd1729fd1bb3db654ad</Hash>
 </Codenesium>*/

@@ -13,34 +13,23 @@ namespace FermataFishNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
-			string name,
-			string website,
 			string address1,
 			string address2,
 			string city,
+			string name,
 			int stateId,
+			string website,
 			string zip)
 		{
-			this.Id = id.ToInt();
-			this.Name = name.ToString();
-			this.Website = website.ToString();
 			this.Address1 = address1.ToString();
 			this.Address2 = address2.ToString();
 			this.City = city.ToString();
+			this.Id = id.ToInt();
+			this.Name = name.ToString();
 			this.StateId = stateId.ToInt();
+			this.Website = website.ToString();
 			this.Zip = zip.ToString();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id", TypeName="int")]
-		public int Id { get; set; }
-
-		[Column("name", TypeName="varchar(128)")]
-		public string Name { get; set; }
-
-		[Column("website", TypeName="varchar(128)")]
-		public string Website { get; set; }
 
 		[Column("address1", TypeName="varchar(128)")]
 		public string Address1 { get; set; }
@@ -51,8 +40,18 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("city", TypeName="varchar(128)")]
 		public string City { get; set; }
 
+		[Key]
+		[Column("id", TypeName="int")]
+		public int Id { get; set; }
+
+		[Column("name", TypeName="varchar(128)")]
+		public string Name { get; set; }
+
 		[Column("stateId", TypeName="int")]
 		public int StateId { get; set; }
+
+		[Column("website", TypeName="varchar(128)")]
+		public string Website { get; set; }
 
 		[Column("zip", TypeName="varchar(128)")]
 		public string Zip { get; set; }
@@ -63,5 +62,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6488c546d0cbde14a78ea8127be93d4e</Hash>
+    <Hash>9ab1e562a708f19df0eceb7ee991c82d</Hash>
 </Codenesium>*/

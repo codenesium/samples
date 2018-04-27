@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/linkLogs/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/LinkLogs/{result.Id.ToString()}");
 				POCOLinkLog response = this.linkLogManager.GetById(result.Id).LinkLogs.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c3ff38a8dd804aef99a03652e38c57c4</Hash>
+    <Hash>f41544afe943ca81d6d272d103cbb73f</Hash>
 </Codenesium>*/

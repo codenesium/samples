@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/stores/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Stores/{result.Id.ToString()}");
 				POCOStore response = this.storeManager.GetById(result.Id).Stores.First();
 				return this.Ok(response);
 			}
@@ -219,5 +219,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7eaae183fdd7bf60023da3d4372fc353</Hash>
+    <Hash>98c849442040626733007c0a0aa6d270</Hash>
 </Codenesium>*/

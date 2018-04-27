@@ -20,32 +20,32 @@ namespace FermataFishNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IStudentRepository StudentRepository { get; set; }
 		public IFamilyRepository FamilyRepository { get; set; }
-		public virtual void StudentIdRules()
-		{
-			this.RuleFor(x => x.StudentId).NotNull();
-			this.RuleFor(x => x.StudentId).Must(this.BeValidStudent).When(x => x ?.StudentId != null).WithMessage("Invalid reference");
-		}
-
+		public IStudentRepository StudentRepository { get; set; }
 		public virtual void FamilyIdRules()
 		{
 			this.RuleFor(x => x.FamilyId).NotNull();
 			this.RuleFor(x => x.FamilyId).Must(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
 		}
 
-		private bool BeValidStudent(int id)
+		public virtual void StudentIdRules()
 		{
-			return this.StudentRepository.GetByIdDirect(id) != null;
+			this.RuleFor(x => x.StudentId).NotNull();
+			this.RuleFor(x => x.StudentId).Must(this.BeValidStudent).When(x => x ?.StudentId != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidFamily(int id)
 		{
 			return this.FamilyRepository.GetByIdDirect(id) != null;
 		}
+
+		private bool BeValidStudent(int id)
+		{
+			return this.StudentRepository.GetByIdDirect(id) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d51483cf12ce1f2419ef91587139c13e</Hash>
+    <Hash>71b63bdc386fb25e43b6f3159c23d9f8</Hash>
 </Codenesium>*/

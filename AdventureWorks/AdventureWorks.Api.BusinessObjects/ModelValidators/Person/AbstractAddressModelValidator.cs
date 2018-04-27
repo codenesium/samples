@@ -38,10 +38,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.City).Length(0, 30);
 		}
 
-		public virtual void StateProvinceIDRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.StateProvinceID).NotNull();
-			this.RuleFor(x => x.StateProvinceID).Must(this.BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void PostalCodeRules()
@@ -50,17 +49,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.PostalCode).Length(0, 15);
 		}
 
-		public virtual void SpatialLocationRules()
-		{                       }
-
 		public virtual void RowguidRules()
 		{
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void SpatialLocationRules()
+		{                       }
+
+		public virtual void StateProvinceIDRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.StateProvinceID).NotNull();
+			this.RuleFor(x => x.StateProvinceID).Must(this.BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidStateProvince(int id)
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f24418d560b010ab787b064d6050b6e7</Hash>
+    <Hash>c9721c08a420c7f99edc14a7fec5332d</Hash>
 </Codenesium>*/

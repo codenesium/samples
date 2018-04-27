@@ -14,28 +14,27 @@ namespace AdventureWorksNS.Api.DataAccess
 		public void SetProperties(
 			int jobCandidateID,
 			Nullable<int> businessEntityID,
-			string resume,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string resume)
 		{
-			this.JobCandidateID = jobCandidateID.ToInt();
 			this.BusinessEntityID = businessEntityID.ToNullableInt();
-			this.Resume = resume;
+			this.JobCandidateID = jobCandidateID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Resume = resume;
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("JobCandidateID", TypeName="int")]
-		public int JobCandidateID { get; set; }
 
 		[Column("BusinessEntityID", TypeName="int")]
 		public Nullable<int> BusinessEntityID { get; set; }
 
-		[Column("Resume", TypeName="xml(-1)")]
-		public string Resume { get; set; }
+		[Key]
+		[Column("JobCandidateID", TypeName="int")]
+		public int JobCandidateID { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("Resume", TypeName="xml(-1)")]
+		public string Resume { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFEmployee Employee { get; set; }
@@ -43,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6f67392109c52c82d4d7fb6de753a282</Hash>
+    <Hash>40e115d5e4ad2d30da2bb31f3d530b64</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/spaces/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Spaces/{result.Id.ToString()}");
 				POCOSpace response = this.spaceManager.GetById(result.Id).Spaces.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4aec04d63bcec61df1667e0e404633ca</Hash>
+    <Hash>5b5fc4db85a2495aafe2bd585fc11856</Hash>
 </Codenesium>*/

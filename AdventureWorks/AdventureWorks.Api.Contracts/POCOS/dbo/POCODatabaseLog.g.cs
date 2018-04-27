@@ -11,30 +11,30 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCODatabaseLog(
 			int databaseLogID,
-			DateTime postTime,
 			string databaseUser,
 			string @event,
-			string schema,
 			string @object,
+			DateTime postTime,
+			string schema,
 			string tSQL,
 			string xmlEvent)
 		{
 			this.DatabaseLogID = databaseLogID.ToInt();
-			this.PostTime = postTime.ToDateTime();
 			this.DatabaseUser = databaseUser.ToString();
 			this.@Event = @event.ToString();
-			this.Schema = schema.ToString();
 			this.@Object = @object.ToString();
+			this.PostTime = postTime.ToDateTime();
+			this.Schema = schema.ToString();
 			this.TSQL = tSQL.ToString();
 			this.XmlEvent = xmlEvent;
 		}
 
 		public int DatabaseLogID { get; set; }
-		public DateTime PostTime { get; set; }
 		public string DatabaseUser { get; set; }
 		public string @Event { get; set; }
-		public string Schema { get; set; }
 		public string @Object { get; set; }
+		public DateTime PostTime { get; set; }
+		public string Schema { get; set; }
 		public string TSQL { get; set; }
 		public string XmlEvent { get; set; }
 
@@ -44,14 +44,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeDatabaseLogID()
 		{
 			return this.ShouldSerializeDatabaseLogIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializePostTimeValue { get; set; } = true;
-
-		public bool ShouldSerializePostTime()
-		{
-			return this.ShouldSerializePostTimeValue;
 		}
 
 		[JsonIgnore]
@@ -71,19 +63,27 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSchemaValue { get; set; } = true;
-
-		public bool ShouldSerializeSchema()
-		{
-			return this.ShouldSerializeSchemaValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeObjectValue { get; set; } = true;
 
 		public bool ShouldSerializeObject()
 		{
 			return this.ShouldSerializeObjectValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializePostTimeValue { get; set; } = true;
+
+		public bool ShouldSerializePostTime()
+		{
+			return this.ShouldSerializePostTimeValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeSchemaValue { get; set; } = true;
+
+		public bool ShouldSerializeSchema()
+		{
+			return this.ShouldSerializeSchemaValue;
 		}
 
 		[JsonIgnore]
@@ -105,11 +105,11 @@ namespace AdventureWorksNS.Api.Contracts
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeDatabaseLogIDValue = false;
-			this.ShouldSerializePostTimeValue = false;
 			this.ShouldSerializeDatabaseUserValue = false;
 			this.ShouldSerializeEventValue = false;
-			this.ShouldSerializeSchemaValue = false;
 			this.ShouldSerializeObjectValue = false;
+			this.ShouldSerializePostTimeValue = false;
+			this.ShouldSerializeSchemaValue = false;
 			this.ShouldSerializeTSQLValue = false;
 			this.ShouldSerializeXmlEventValue = false;
 		}
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3bc5af430081451cd3ec9349d7d32d2d</Hash>
+    <Hash>900bc53fa9feb8ff8e19d8a7f0df11f1</Hash>
 </Codenesium>*/

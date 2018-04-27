@@ -14,31 +14,30 @@ namespace AdventureWorksNS.Api.DataAccess
 		public void SetProperties(
 			int systemInformationID,
 			string database_Version,
-			DateTime versionDate,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			DateTime versionDate)
 		{
-			this.SystemInformationID = systemInformationID.ToInt();
 			this.Database_Version = database_Version.ToString();
-			this.VersionDate = versionDate.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.SystemInformationID = systemInformationID.ToInt();
+			this.VersionDate = versionDate.ToDateTime();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("SystemInformationID", TypeName="tinyint")]
-		public int SystemInformationID { get; set; }
 
 		[Column("Database Version", TypeName="nvarchar(25)")]
 		public string Database_Version { get; set; }
 
-		[Column("VersionDate", TypeName="datetime")]
-		public DateTime VersionDate { get; set; }
-
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Key]
+		[Column("SystemInformationID", TypeName="tinyint")]
+		public int SystemInformationID { get; set; }
+
+		[Column("VersionDate", TypeName="datetime")]
+		public DateTime VersionDate { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bfec5de5fdb88edcca542e15522a9807</Hash>
+    <Hash>8693a3a36189894d2ff75a188c515525</Hash>
 </Codenesium>*/

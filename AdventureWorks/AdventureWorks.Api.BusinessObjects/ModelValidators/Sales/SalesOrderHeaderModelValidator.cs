@@ -13,61 +13,61 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(SalesOrderHeaderModel model)
 		{
-			this.RevisionNumberRules();
-			this.OrderDateRules();
-			this.DueDateRules();
-			this.ShipDateRules();
-			this.StatusRules();
-			this.OnlineOrderFlagRules();
-			this.SalesOrderNumberRules();
-			this.PurchaseOrderNumberRules();
 			this.AccountNumberRules();
-			this.CustomerIDRules();
-			this.SalesPersonIDRules();
-			this.TerritoryIDRules();
 			this.BillToAddressIDRules();
-			this.ShipToAddressIDRules();
-			this.ShipMethodIDRules();
-			this.CreditCardIDRules();
+			this.CommentRules();
 			this.CreditCardApprovalCodeRules();
+			this.CreditCardIDRules();
 			this.CurrencyRateIDRules();
+			this.CustomerIDRules();
+			this.DueDateRules();
+			this.FreightRules();
+			this.ModifiedDateRules();
+			this.OnlineOrderFlagRules();
+			this.OrderDateRules();
+			this.PurchaseOrderNumberRules();
+			this.RevisionNumberRules();
+			this.RowguidRules();
+			this.SalesOrderNumberRules();
+			this.SalesPersonIDRules();
+			this.ShipDateRules();
+			this.ShipMethodIDRules();
+			this.ShipToAddressIDRules();
+			this.StatusRules();
 			this.SubTotalRules();
 			this.TaxAmtRules();
-			this.FreightRules();
+			this.TerritoryIDRules();
 			this.TotalDueRules();
-			this.CommentRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, SalesOrderHeaderModel model)
 		{
-			this.RevisionNumberRules();
-			this.OrderDateRules();
-			this.DueDateRules();
-			this.ShipDateRules();
-			this.StatusRules();
-			this.OnlineOrderFlagRules();
-			this.SalesOrderNumberRules();
-			this.PurchaseOrderNumberRules();
 			this.AccountNumberRules();
-			this.CustomerIDRules();
-			this.SalesPersonIDRules();
-			this.TerritoryIDRules();
 			this.BillToAddressIDRules();
-			this.ShipToAddressIDRules();
-			this.ShipMethodIDRules();
-			this.CreditCardIDRules();
+			this.CommentRules();
 			this.CreditCardApprovalCodeRules();
+			this.CreditCardIDRules();
 			this.CurrencyRateIDRules();
+			this.CustomerIDRules();
+			this.DueDateRules();
+			this.FreightRules();
+			this.ModifiedDateRules();
+			this.OnlineOrderFlagRules();
+			this.OrderDateRules();
+			this.PurchaseOrderNumberRules();
+			this.RevisionNumberRules();
+			this.RowguidRules();
+			this.SalesOrderNumberRules();
+			this.SalesPersonIDRules();
+			this.ShipDateRules();
+			this.ShipMethodIDRules();
+			this.ShipToAddressIDRules();
+			this.StatusRules();
 			this.SubTotalRules();
 			this.TaxAmtRules();
-			this.FreightRules();
+			this.TerritoryIDRules();
 			this.TotalDueRules();
-			this.CommentRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -79,5 +79,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b3cc7bcb768f54050026ad70ed5f9f24</Hash>
+    <Hash>151d9e02a38faf273b40532d25639e9f</Hash>
 </Codenesium>*/

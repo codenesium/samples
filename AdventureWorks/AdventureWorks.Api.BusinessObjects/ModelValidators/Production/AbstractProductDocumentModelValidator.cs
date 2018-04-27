@@ -20,8 +20,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository { get; set; }
 		public IDocumentRepository DocumentRepository { get; set; }
+		public IProductRepository ProductRepository { get; set; }
 		public virtual void DocumentNodeRules()
 		{
 			this.RuleFor(x => x.DocumentNode).NotNull();
@@ -33,18 +33,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidDocument(Guid id)
 		{
 			return this.DocumentRepository.GetByIdDirect(id) != null;
+		}
+
+		private bool BeValidProduct(int id)
+		{
+			return this.ProductRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fcfec21e7a580a6676fa3a518d01c781</Hash>
+    <Hash>da086f53f45e3d4915bd5209bab66b3a</Hash>
 </Codenesium>*/

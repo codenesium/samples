@@ -20,19 +20,19 @@ namespace FileServiceNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public virtual void ExternalIdRules()
+		{
+			this.RuleFor(x => x.ExternalId).NotNull();
+		}
+
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 255);
 		}
-
-		public virtual void ExternalIdRules()
-		{
-			this.RuleFor(x => x.ExternalId).NotNull();
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0b741c4758a0feeccc5043eb93c973ad</Hash>
+    <Hash>aafef1ab3a1c04e4805b6a0b660b98df</Hash>
 </Codenesium>*/

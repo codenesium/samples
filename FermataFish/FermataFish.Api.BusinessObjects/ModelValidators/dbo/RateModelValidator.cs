@@ -14,16 +14,16 @@ namespace FermataFishNS.Api.BusinessObjects
 		public async Task<ValidationResult> ValidateCreateAsync(RateModel model)
 		{
 			this.AmountPerMinuteRules();
-			this.TeacherSkillIdRules();
 			this.TeacherIdRules();
+			this.TeacherSkillIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, RateModel model)
 		{
 			this.AmountPerMinuteRules();
-			this.TeacherSkillIdRules();
 			this.TeacherIdRules();
+			this.TeacherSkillIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>59e45c479ce67d568539ccccfd97c876</Hash>
+    <Hash>8a91080cc17e9a8f06f0a8b80c544e6d</Hash>
 </Codenesium>*/

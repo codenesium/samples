@@ -20,9 +20,24 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public virtual void ActualCostRules()
+		{
+			this.RuleFor(x => x.ActualCost).NotNull();
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void ProductIDRules()
 		{
 			this.RuleFor(x => x.ProductID).NotNull();
+		}
+
+		public virtual void QuantityRules()
+		{
+			this.RuleFor(x => x.Quantity).NotNull();
 		}
 
 		public virtual void ReferenceOrderIDRules()
@@ -45,24 +60,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.TransactionType).NotNull();
 			this.RuleFor(x => x.TransactionType).Length(0, 1);
 		}
-
-		public virtual void QuantityRules()
-		{
-			this.RuleFor(x => x.Quantity).NotNull();
-		}
-
-		public virtual void ActualCostRules()
-		{
-			this.RuleFor(x => x.ActualCost).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6809028640b97758079c804492a0ec41</Hash>
+    <Hash>39d9cc3a82b0404f662b1685df8ccfe9</Hash>
 </Codenesium>*/

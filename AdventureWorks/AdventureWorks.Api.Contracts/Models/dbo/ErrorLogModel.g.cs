@@ -11,54 +11,53 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ErrorLogModel(
-			DateTime errorTime,
-			string userName,
+			Nullable<int> errorLine,
+			string errorMessage,
 			int errorNumber,
+			string errorProcedure,
 			Nullable<int> errorSeverity,
 			Nullable<int> errorState,
-			string errorProcedure,
-			Nullable<int> errorLine,
-			string errorMessage)
+			DateTime errorTime,
+			string userName)
 		{
-			this.ErrorTime = errorTime.ToDateTime();
-			this.UserName = userName.ToString();
-			this.ErrorNumber = errorNumber.ToInt();
-			this.ErrorSeverity = errorSeverity.ToNullableInt();
-			this.ErrorState = errorState.ToNullableInt();
-			this.ErrorProcedure = errorProcedure.ToString();
 			this.ErrorLine = errorLine.ToNullableInt();
 			this.ErrorMessage = errorMessage.ToString();
+			this.ErrorNumber = errorNumber.ToInt();
+			this.ErrorProcedure = errorProcedure.ToString();
+			this.ErrorSeverity = errorSeverity.ToNullableInt();
+			this.ErrorState = errorState.ToNullableInt();
+			this.ErrorTime = errorTime.ToDateTime();
+			this.UserName = userName.ToString();
 		}
 
-		private DateTime errorTime;
+		private Nullable<int> errorLine;
 
-		[Required]
-		public DateTime ErrorTime
+		public Nullable<int> ErrorLine
 		{
 			get
 			{
-				return this.errorTime;
+				return this.errorLine.IsEmptyOrZeroOrNull() ? null : this.errorLine;
 			}
 
 			set
 			{
-				this.errorTime = value;
+				this.errorLine = value;
 			}
 		}
 
-		private string userName;
+		private string errorMessage;
 
 		[Required]
-		public string UserName
+		public string ErrorMessage
 		{
 			get
 			{
-				return this.userName;
+				return this.errorMessage;
 			}
 
 			set
 			{
-				this.userName = value;
+				this.errorMessage = value;
 			}
 		}
 
@@ -75,6 +74,21 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.errorNumber = value;
+			}
+		}
+
+		private string errorProcedure;
+
+		public string ErrorProcedure
+		{
+			get
+			{
+				return this.errorProcedure.IsEmptyOrZeroOrNull() ? null : this.errorProcedure;
+			}
+
+			set
+			{
+				this.errorProcedure = value;
 			}
 		}
 
@@ -108,54 +122,40 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string errorProcedure;
-
-		public string ErrorProcedure
-		{
-			get
-			{
-				return this.errorProcedure.IsEmptyOrZeroOrNull() ? null : this.errorProcedure;
-			}
-
-			set
-			{
-				this.errorProcedure = value;
-			}
-		}
-
-		private Nullable<int> errorLine;
-
-		public Nullable<int> ErrorLine
-		{
-			get
-			{
-				return this.errorLine.IsEmptyOrZeroOrNull() ? null : this.errorLine;
-			}
-
-			set
-			{
-				this.errorLine = value;
-			}
-		}
-
-		private string errorMessage;
+		private DateTime errorTime;
 
 		[Required]
-		public string ErrorMessage
+		public DateTime ErrorTime
 		{
 			get
 			{
-				return this.errorMessage;
+				return this.errorTime;
 			}
 
 			set
 			{
-				this.errorMessage = value;
+				this.errorTime = value;
+			}
+		}
+
+		private string userName;
+
+		[Required]
+		public string UserName
+		{
+			get
+			{
+				return this.userName;
+			}
+
+			set
+			{
+				this.userName = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa6c9f7dd7e64490a7c8a4a93ccde889</Hash>
+    <Hash>e8a0972b1c9997dedf957d7bd0aa395d</Hash>
 </Codenesium>*/

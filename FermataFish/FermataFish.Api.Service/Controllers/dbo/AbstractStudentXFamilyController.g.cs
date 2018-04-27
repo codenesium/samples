@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/studentXFamilies/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/StudentXFamilies/{result.Id.ToString()}");
 				POCOStudentXFamily response = this.studentXFamilyManager.GetById(result.Id).StudentXFamilies.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace FermataFishNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByStudentId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Students/{id}/StudentXFamilies")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOStudentXFamily>), 200)]
-		public virtual IActionResult ByStudentId(int id)
-		{
-			ApiResponse response = this.studentXFamilyManager.GetWhere(x => x.StudentId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.StudentXFamilies);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByFamilyId/{id}")]
 		[ReadOnly]
 		[Route("~/api/Families/{id}/StudentXFamilies")]
@@ -215,9 +195,29 @@ namespace FermataFishNS.Api.Service
 				return this.Ok(response.StudentXFamilies);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByStudentId/{id}")]
+		[ReadOnly]
+		[Route("~/api/Students/{id}/StudentXFamilies")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOStudentXFamily>), 200)]
+		public virtual IActionResult ByStudentId(int id)
+		{
+			ApiResponse response = this.studentXFamilyManager.GetWhere(x => x.StudentId == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.StudentXFamilies);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7151c46698f26db0abf70ebbf60f6198</Hash>
+    <Hash>7724b34cf1c5bfd94bf394bf20559161</Hash>
 </Codenesium>*/

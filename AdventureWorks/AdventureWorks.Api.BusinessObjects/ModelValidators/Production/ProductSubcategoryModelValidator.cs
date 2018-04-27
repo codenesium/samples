@@ -13,19 +13,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(ProductSubcategoryModel model)
 		{
-			this.ProductCategoryIDRules();
-			this.NameRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.ProductCategoryIDRules();
+			this.RowguidRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ProductSubcategoryModel model)
 		{
-			this.ProductCategoryIDRules();
-			this.NameRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.ProductCategoryIDRules();
+			this.RowguidRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>03712a4a88c0c7bf34c40b388f1a4b24</Hash>
+    <Hash>c6ab9b3a201407094a32acca89c885a3</Hash>
 </Codenesium>*/

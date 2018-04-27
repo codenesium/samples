@@ -10,80 +10,59 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		public POCOLink(
-			int id,
-			string name,
-			string dynamicParameters,
-			string staticParameters,
-			int chainId,
 			Nullable<int> assignedMachineId,
-			int linkStatusId,
-			int order,
-			Nullable<DateTime> dateStarted,
+			int chainId,
 			Nullable<DateTime> dateCompleted,
+			Nullable<DateTime> dateStarted,
+			string dynamicParameters,
+			Guid externalId,
+			int id,
+			int linkStatusId,
+			string name,
+			int order,
 			string response,
-			Guid externalId)
+			string staticParameters,
+			int timeoutInSeconds)
 		{
+			this.DateCompleted = dateCompleted.ToNullableDateTime();
+			this.DateStarted = dateStarted.ToNullableDateTime();
+			this.DynamicParameters = dynamicParameters.ToString();
+			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
 			this.Name = name.ToString();
-			this.DynamicParameters = dynamicParameters.ToString();
-			this.StaticParameters = staticParameters.ToString();
 			this.Order = order.ToInt();
-			this.DateStarted = dateStarted.ToNullableDateTime();
-			this.DateCompleted = dateCompleted.ToNullableDateTime();
 			this.Response = response.ToString();
-			this.ExternalId = externalId.ToGuid();
+			this.StaticParameters = staticParameters.ToString();
+			this.TimeoutInSeconds = timeoutInSeconds.ToInt();
 
-			this.ChainId = new ReferenceEntity<int>(chainId,
-			                                        nameof(ApiResponse.Chains));
 			this.AssignedMachineId = new ReferenceEntity<Nullable<int>>(assignedMachineId,
 			                                                            nameof(ApiResponse.Machines));
+			this.ChainId = new ReferenceEntity<int>(chainId,
+			                                        nameof(ApiResponse.Chains));
 			this.LinkStatusId = new ReferenceEntity<int>(linkStatusId,
 			                                             nameof(ApiResponse.LinkStatus));
 		}
 
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string DynamicParameters { get; set; }
-		public string StaticParameters { get; set; }
-		public ReferenceEntity<int> ChainId { get; set; }
 		public ReferenceEntity<Nullable<int>> AssignedMachineId { get; set; }
-		public ReferenceEntity<int> LinkStatusId { get; set; }
-		public int Order { get; set; }
-		public Nullable<DateTime> DateStarted { get; set; }
+		public ReferenceEntity<int> ChainId { get; set; }
 		public Nullable<DateTime> DateCompleted { get; set; }
-		public string Response { get; set; }
+		public Nullable<DateTime> DateStarted { get; set; }
+		public string DynamicParameters { get; set; }
 		public Guid ExternalId { get; set; }
+		public int Id { get; set; }
+		public ReferenceEntity<int> LinkStatusId { get; set; }
+		public string Name { get; set; }
+		public int Order { get; set; }
+		public string Response { get; set; }
+		public string StaticParameters { get; set; }
+		public int TimeoutInSeconds { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+		public bool ShouldSerializeAssignedMachineIdValue { get; set; } = true;
 
-		public bool ShouldSerializeId()
+		public bool ShouldSerializeAssignedMachineId()
 		{
-			return this.ShouldSerializeIdValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeDynamicParametersValue { get; set; } = true;
-
-		public bool ShouldSerializeDynamicParameters()
-		{
-			return this.ShouldSerializeDynamicParametersValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStaticParametersValue { get; set; } = true;
-
-		public bool ShouldSerializeStaticParameters()
-		{
-			return this.ShouldSerializeStaticParametersValue;
+			return this.ShouldSerializeAssignedMachineIdValue;
 		}
 
 		[JsonIgnore]
@@ -95,27 +74,11 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAssignedMachineIdValue { get; set; } = true;
+		public bool ShouldSerializeDateCompletedValue { get; set; } = true;
 
-		public bool ShouldSerializeAssignedMachineId()
+		public bool ShouldSerializeDateCompleted()
 		{
-			return this.ShouldSerializeAssignedMachineIdValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeLinkStatusIdValue { get; set; } = true;
-
-		public bool ShouldSerializeLinkStatusId()
-		{
-			return this.ShouldSerializeLinkStatusIdValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeOrderValue { get; set; } = true;
-
-		public bool ShouldSerializeOrder()
-		{
-			return this.ShouldSerializeOrderValue;
+			return this.ShouldSerializeDateCompletedValue;
 		}
 
 		[JsonIgnore]
@@ -127,11 +90,51 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDateCompletedValue { get; set; } = true;
+		public bool ShouldSerializeDynamicParametersValue { get; set; } = true;
 
-		public bool ShouldSerializeDateCompleted()
+		public bool ShouldSerializeDynamicParameters()
 		{
-			return this.ShouldSerializeDateCompletedValue;
+			return this.ShouldSerializeDynamicParametersValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeExternalIdValue { get; set; } = true;
+
+		public bool ShouldSerializeExternalId()
+		{
+			return this.ShouldSerializeExternalIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeIdValue { get; set; } = true;
+
+		public bool ShouldSerializeId()
+		{
+			return this.ShouldSerializeIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeLinkStatusIdValue { get; set; } = true;
+
+		public bool ShouldSerializeLinkStatusId()
+		{
+			return this.ShouldSerializeLinkStatusIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeOrderValue { get; set; } = true;
+
+		public bool ShouldSerializeOrder()
+		{
+			return this.ShouldSerializeOrderValue;
 		}
 
 		[JsonIgnore]
@@ -143,31 +146,40 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeExternalIdValue { get; set; } = true;
+		public bool ShouldSerializeStaticParametersValue { get; set; } = true;
 
-		public bool ShouldSerializeExternalId()
+		public bool ShouldSerializeStaticParameters()
 		{
-			return this.ShouldSerializeExternalIdValue;
+			return this.ShouldSerializeStaticParametersValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeTimeoutInSecondsValue { get; set; } = true;
+
+		public bool ShouldSerializeTimeoutInSeconds()
+		{
+			return this.ShouldSerializeTimeoutInSecondsValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeDynamicParametersValue = false;
-			this.ShouldSerializeStaticParametersValue = false;
-			this.ShouldSerializeChainIdValue = false;
 			this.ShouldSerializeAssignedMachineIdValue = false;
-			this.ShouldSerializeLinkStatusIdValue = false;
-			this.ShouldSerializeOrderValue = false;
-			this.ShouldSerializeDateStartedValue = false;
+			this.ShouldSerializeChainIdValue = false;
 			this.ShouldSerializeDateCompletedValue = false;
-			this.ShouldSerializeResponseValue = false;
+			this.ShouldSerializeDateStartedValue = false;
+			this.ShouldSerializeDynamicParametersValue = false;
 			this.ShouldSerializeExternalIdValue = false;
+			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeLinkStatusIdValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeOrderValue = false;
+			this.ShouldSerializeResponseValue = false;
+			this.ShouldSerializeStaticParametersValue = false;
+			this.ShouldSerializeTimeoutInSecondsValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9b1019eef9ac921289af689a80808f17</Hash>
+    <Hash>7291421546d47f2c2b4ff2b9406bcecb</Hash>
 </Codenesium>*/

@@ -11,115 +11,37 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public EmployeeModel(
-			string nationalIDNumber,
-			string loginID,
-			Nullable<Guid> organizationNode,
-			Nullable<short> organizationLevel,
-			string jobTitle,
 			DateTime birthDate,
-			string maritalStatus,
+			bool currentFlag,
 			string gender,
 			DateTime hireDate,
-			bool salariedFlag,
-			short vacationHours,
-			short sickLeaveHours,
-			bool currentFlag,
+			string jobTitle,
+			string loginID,
+			string maritalStatus,
+			DateTime modifiedDate,
+			string nationalIDNumber,
+			Nullable<short> organizationLevel,
+			Nullable<Guid> organizationNode,
 			Guid rowguid,
-			DateTime modifiedDate)
+			bool salariedFlag,
+			short sickLeaveHours,
+			short vacationHours)
 		{
-			this.NationalIDNumber = nationalIDNumber.ToString();
-			this.LoginID = loginID.ToString();
-			this.OrganizationNode = organizationNode;
-			this.OrganizationLevel = organizationLevel;
-			this.JobTitle = jobTitle.ToString();
 			this.BirthDate = birthDate.ToDateTime();
-			this.MaritalStatus = maritalStatus.ToString();
+			this.CurrentFlag = currentFlag.ToBoolean();
 			this.Gender = gender.ToString();
 			this.HireDate = hireDate.ToDateTime();
-			this.SalariedFlag = salariedFlag.ToBoolean();
-			this.VacationHours = vacationHours;
-			this.SickLeaveHours = sickLeaveHours;
-			this.CurrentFlag = currentFlag.ToBoolean();
-			this.Rowguid = rowguid.ToGuid();
+			this.JobTitle = jobTitle.ToString();
+			this.LoginID = loginID.ToString();
+			this.MaritalStatus = maritalStatus.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string nationalIDNumber;
-
-		[Required]
-		public string NationalIDNumber
-		{
-			get
-			{
-				return this.nationalIDNumber;
-			}
-
-			set
-			{
-				this.nationalIDNumber = value;
-			}
-		}
-
-		private string loginID;
-
-		[Required]
-		public string LoginID
-		{
-			get
-			{
-				return this.loginID;
-			}
-
-			set
-			{
-				this.loginID = value;
-			}
-		}
-
-		private Nullable<Guid> organizationNode;
-
-		public Nullable<Guid> OrganizationNode
-		{
-			get
-			{
-				return this.organizationNode.IsEmptyOrZeroOrNull() ? null : this.organizationNode;
-			}
-
-			set
-			{
-				this.organizationNode = value;
-			}
-		}
-
-		private Nullable<short> organizationLevel;
-
-		public Nullable<short> OrganizationLevel
-		{
-			get
-			{
-				return this.organizationLevel.IsEmptyOrZeroOrNull() ? null : this.organizationLevel;
-			}
-
-			set
-			{
-				this.organizationLevel = value;
-			}
-		}
-
-		private string jobTitle;
-
-		[Required]
-		public string JobTitle
-		{
-			get
-			{
-				return this.jobTitle;
-			}
-
-			set
-			{
-				this.jobTitle = value;
-			}
+			this.NationalIDNumber = nationalIDNumber.ToString();
+			this.OrganizationLevel = organizationLevel;
+			this.OrganizationNode = organizationNode;
+			this.Rowguid = rowguid.ToGuid();
+			this.SalariedFlag = salariedFlag.ToBoolean();
+			this.SickLeaveHours = sickLeaveHours;
+			this.VacationHours = vacationHours;
 		}
 
 		private DateTime birthDate;
@@ -138,19 +60,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string maritalStatus;
+		private bool currentFlag;
 
 		[Required]
-		public string MaritalStatus
+		public bool CurrentFlag
 		{
 			get
 			{
-				return this.maritalStatus;
+				return this.currentFlag;
 			}
 
 			set
 			{
-				this.maritalStatus = value;
+				this.currentFlag = value;
 			}
 		}
 
@@ -186,67 +108,113 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private bool salariedFlag;
+		private string jobTitle;
 
 		[Required]
-		public bool SalariedFlag
+		public string JobTitle
 		{
 			get
 			{
-				return this.salariedFlag;
+				return this.jobTitle;
 			}
 
 			set
 			{
-				this.salariedFlag = value;
+				this.jobTitle = value;
 			}
 		}
 
-		private short vacationHours;
+		private string loginID;
 
 		[Required]
-		public short VacationHours
+		public string LoginID
 		{
 			get
 			{
-				return this.vacationHours;
+				return this.loginID;
 			}
 
 			set
 			{
-				this.vacationHours = value;
+				this.loginID = value;
 			}
 		}
 
-		private short sickLeaveHours;
+		private string maritalStatus;
 
 		[Required]
-		public short SickLeaveHours
+		public string MaritalStatus
 		{
 			get
 			{
-				return this.sickLeaveHours;
+				return this.maritalStatus;
 			}
 
 			set
 			{
-				this.sickLeaveHours = value;
+				this.maritalStatus = value;
 			}
 		}
 
-		private bool currentFlag;
+		private DateTime modifiedDate;
 
 		[Required]
-		public bool CurrentFlag
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.currentFlag;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.currentFlag = value;
+				this.modifiedDate = value;
+			}
+		}
+
+		private string nationalIDNumber;
+
+		[Required]
+		public string NationalIDNumber
+		{
+			get
+			{
+				return this.nationalIDNumber;
+			}
+
+			set
+			{
+				this.nationalIDNumber = value;
+			}
+		}
+
+		private Nullable<short> organizationLevel;
+
+		public Nullable<short> OrganizationLevel
+		{
+			get
+			{
+				return this.organizationLevel.IsEmptyOrZeroOrNull() ? null : this.organizationLevel;
+			}
+
+			set
+			{
+				this.organizationLevel = value;
+			}
+		}
+
+		private Nullable<Guid> organizationNode;
+
+		public Nullable<Guid> OrganizationNode
+		{
+			get
+			{
+				return this.organizationNode.IsEmptyOrZeroOrNull() ? null : this.organizationNode;
+			}
+
+			set
+			{
+				this.organizationNode = value;
 			}
 		}
 
@@ -266,24 +234,56 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private bool salariedFlag;
 
 		[Required]
-		public DateTime ModifiedDate
+		public bool SalariedFlag
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.salariedFlag;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.salariedFlag = value;
+			}
+		}
+
+		private short sickLeaveHours;
+
+		[Required]
+		public short SickLeaveHours
+		{
+			get
+			{
+				return this.sickLeaveHours;
+			}
+
+			set
+			{
+				this.sickLeaveHours = value;
+			}
+		}
+
+		private short vacationHours;
+
+		[Required]
+		public short VacationHours
+		{
+			get
+			{
+				return this.vacationHours;
+			}
+
+			set
+			{
+				this.vacationHours = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e934ec80f28ad5f399baa3a73c6f300</Hash>
+    <Hash>d29f8dfde9055dd3fad0ed023260bf28</Hash>
 </Codenesium>*/

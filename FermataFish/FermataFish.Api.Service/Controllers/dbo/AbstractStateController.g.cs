@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/states/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/States/{result.Id.ToString()}");
 				POCOState response = this.stateManager.GetById(result.Id).States.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a90f923e9d03808e1707f3c9d9ec8067</Hash>
+    <Hash>500c0650c0f9756a20a7b357a89fa83b</Hash>
 </Codenesium>*/

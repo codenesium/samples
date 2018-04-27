@@ -20,16 +20,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
 		public ISpecialOfferProductRepository SpecialOfferProductRepository { get; set; }
-		public virtual void SalesOrderDetailIDRules()
-		{
-			this.RuleFor(x => x.SalesOrderDetailID).NotNull();
-		}
-
+		public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
 		public virtual void CarrierTrackingNumberRules()
 		{
 			this.RuleFor(x => x.CarrierTrackingNumber).Length(0, 25);
+		}
+
+		public virtual void LineTotalRules()
+		{
+			this.RuleFor(x => x.LineTotal).NotNull();
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void OrderQtyRules()
@@ -40,6 +45,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ProductIDRules()
 		{
 			this.RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).Must(this.BeValidSpecialOfferProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void RowguidRules()
+		{
+			this.RuleFor(x => x.Rowguid).NotNull();
+		}
+
+		public virtual void SalesOrderDetailIDRules()
+		{
+			this.RuleFor(x => x.SalesOrderDetailID).NotNull();
 		}
 
 		public virtual void SpecialOfferIDRules()
@@ -58,33 +74,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.UnitPriceDiscount).NotNull();
 		}
 
-		public virtual void LineTotalRules()
+		private bool BeValidSpecialOfferProduct(int id)
 		{
-			this.RuleFor(x => x.LineTotal).NotNull();
-		}
-
-		public virtual void RowguidRules()
-		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			return this.SpecialOfferProductRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidSalesOrderHeader(int id)
 		{
 			return this.SalesOrderHeaderRepository.GetByIdDirect(id) != null;
 		}
-
-		private bool BeValidSpecialOfferProduct(int id)
-		{
-			return this.SpecialOfferProductRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5685d014fc48a67904d5a65a6698e623</Hash>
+    <Hash>b84e4113d0826dc8639fcc59856304a7</Hash>
 </Codenesium>*/

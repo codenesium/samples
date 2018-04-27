@@ -11,25 +11,25 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOEmployeePayHistory(
 			int businessEntityID,
-			DateTime rateChangeDate,
-			decimal rate,
+			DateTime modifiedDate,
 			int payFrequency,
-			DateTime modifiedDate)
+			decimal rate,
+			DateTime rateChangeDate)
 		{
-			this.RateChangeDate = rateChangeDate.ToDateTime();
-			this.Rate = rate.ToDecimal();
-			this.PayFrequency = payFrequency.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PayFrequency = payFrequency.ToInt();
+			this.Rate = rate.ToDecimal();
+			this.RateChangeDate = rateChangeDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.Employees));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public DateTime RateChangeDate { get; set; }
-		public decimal Rate { get; set; }
-		public int PayFrequency { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public int PayFrequency { get; set; }
+		public decimal Rate { get; set; }
+		public DateTime RateChangeDate { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -40,19 +40,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRateChangeDateValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeRateChangeDate()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeRateChangeDateValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeRateValue { get; set; } = true;
-
-		public bool ShouldSerializeRate()
-		{
-			return this.ShouldSerializeRateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -64,24 +56,32 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeRateValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeRate()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeRateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeRateChangeDateValue { get; set; } = true;
+
+		public bool ShouldSerializeRateChangeDate()
+		{
+			return this.ShouldSerializeRateChangeDateValue;
 		}
 
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeRateChangeDateValue = false;
-			this.ShouldSerializeRateValue = false;
-			this.ShouldSerializePayFrequencyValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializePayFrequencyValue = false;
+			this.ShouldSerializeRateValue = false;
+			this.ShouldSerializeRateChangeDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7224f3675596d95d0e306edeb9ba32ae</Hash>
+    <Hash>6145324da6c70582c095019fa8e73b82</Hash>
 </Codenesium>*/

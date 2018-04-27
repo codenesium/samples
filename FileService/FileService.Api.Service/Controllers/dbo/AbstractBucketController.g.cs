@@ -88,7 +88,7 @@ namespace FileServiceNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/buckets/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Buckets/{result.Id.ToString()}");
 				POCOBucket response = this.bucketManager.GetById(result.Id).Buckets.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>911f93f0b39543fb31c611e6d8ea0d66</Hash>
+    <Hash>f459c6f26b7eadd698b68e0ed9f310f6</Hash>
 </Codenesium>*/

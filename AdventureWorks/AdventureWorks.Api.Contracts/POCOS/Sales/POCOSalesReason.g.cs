@@ -10,28 +10,28 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOSalesReason(
-			int salesReasonID,
+			DateTime modifiedDate,
 			string name,
 			string reasonType,
-			DateTime modifiedDate)
+			int salesReasonID)
 		{
-			this.SalesReasonID = salesReasonID.ToInt();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.ReasonType = reasonType.ToString();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.SalesReasonID = salesReasonID.ToInt();
 		}
 
-		public int SalesReasonID { get; set; }
+		public DateTime ModifiedDate { get; set; }
 		public string Name { get; set; }
 		public string ReasonType { get; set; }
-		public DateTime ModifiedDate { get; set; }
+		public int SalesReasonID { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesReasonIDValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeSalesReasonID()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeSalesReasonIDValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -51,23 +51,23 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeSalesReasonIDValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeSalesReasonID()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeSalesReasonIDValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeSalesReasonIDValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeReasonTypeValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeSalesReasonIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c18cf8f7aadad2cd51a31cc54e15fdd7</Hash>
+    <Hash>e987b3b05bfdfa1bcd64fd50a309feeb</Hash>
 </Codenesium>*/

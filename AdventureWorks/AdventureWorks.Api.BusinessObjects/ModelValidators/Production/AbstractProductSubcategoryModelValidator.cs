@@ -21,10 +21,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IProductCategoryRepository ProductCategoryRepository { get; set; }
-		public virtual void ProductCategoryIDRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.ProductCategoryID).NotNull();
-			this.RuleFor(x => x.ProductCategoryID).Must(this.BeValidProductCategory).When(x => x ?.ProductCategoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void NameRules()
@@ -33,14 +32,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
+		public virtual void ProductCategoryIDRules()
+		{
+			this.RuleFor(x => x.ProductCategoryID).NotNull();
+			this.RuleFor(x => x.ProductCategoryID).Must(this.BeValidProductCategory).When(x => x ?.ProductCategoryID != null).WithMessage("Invalid reference");
+		}
+
 		public virtual void RowguidRules()
 		{
 			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidProductCategory(int id)
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0d7089c96f90cbac7df059181e3d1bb6</Hash>
+    <Hash>4b786a64305f64f832a3bb9aedcfe28b</Hash>
 </Codenesium>*/

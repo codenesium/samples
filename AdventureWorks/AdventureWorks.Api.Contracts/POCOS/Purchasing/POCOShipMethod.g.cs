@@ -10,34 +10,34 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOShipMethod(
-			int shipMethodID,
+			DateTime modifiedDate,
 			string name,
-			decimal shipBase,
-			decimal shipRate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			decimal shipBase,
+			int shipMethodID,
+			decimal shipRate)
 		{
-			this.ShipMethodID = shipMethodID.ToInt();
-			this.Name = name.ToString();
-			this.ShipBase = shipBase.ToDecimal();
-			this.ShipRate = shipRate.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.ShipBase = shipBase.ToDecimal();
+			this.ShipMethodID = shipMethodID.ToInt();
+			this.ShipRate = shipRate.ToDecimal();
 		}
 
-		public int ShipMethodID { get; set; }
-		public string Name { get; set; }
-		public decimal ShipBase { get; set; }
-		public decimal ShipRate { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
+		public Guid Rowguid { get; set; }
+		public decimal ShipBase { get; set; }
+		public int ShipMethodID { get; set; }
+		public decimal ShipRate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipMethodIDValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeShipMethodID()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeShipMethodIDValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -49,11 +49,27 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeShipBaseValue { get; set; } = true;
 
 		public bool ShouldSerializeShipBase()
 		{
 			return this.ShouldSerializeShipBaseValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeShipMethodIDValue { get; set; } = true;
+
+		public bool ShouldSerializeShipMethodID()
+		{
+			return this.ShouldSerializeShipMethodIDValue;
 		}
 
 		[JsonIgnore]
@@ -64,34 +80,18 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeShipRateValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
-
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeShipMethodIDValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeShipBaseValue = false;
-			this.ShouldSerializeShipRateValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeShipBaseValue = false;
+			this.ShouldSerializeShipMethodIDValue = false;
+			this.ShouldSerializeShipRateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ecf2ec902af7ba5006c3346a62d6ae35</Hash>
+    <Hash>a15b3ad59775cd791f5cbbafc6f36857</Hash>
 </Codenesium>*/

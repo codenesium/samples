@@ -13,19 +13,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(EmailAddressModel model)
 		{
-			this.EmailAddressIDRules();
 			this.EmailAddress1Rules();
-			this.RowguidRules();
+			this.EmailAddressIDRules();
 			this.ModifiedDateRules();
+			this.RowguidRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, EmailAddressModel model)
 		{
-			this.EmailAddressIDRules();
 			this.EmailAddress1Rules();
-			this.RowguidRules();
+			this.EmailAddressIDRules();
 			this.ModifiedDateRules();
+			this.RowguidRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d2d2731fb79077af252ed51d007cf20f</Hash>
+    <Hash>4e46ee1d0c685f20abfb638584880171</Hash>
 </Codenesium>*/

@@ -22,7 +22,6 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
 
@@ -41,5 +40,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b6c02f6c3deca4cf04c33d799de2fc29</Hash>
+    <Hash>46d820d9eef6c884363f760100e88190</Hash>
 </Codenesium>*/

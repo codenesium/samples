@@ -13,19 +13,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(PasswordModel model)
 		{
+			this.ModifiedDateRules();
 			this.PasswordHashRules();
 			this.PasswordSaltRules();
 			this.RowguidRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, PasswordModel model)
 		{
+			this.ModifiedDateRules();
 			this.PasswordHashRules();
 			this.PasswordSaltRules();
 			this.RowguidRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>48500fb80b4dc7b068ab23b90b1dc023</Hash>
+    <Hash>05089c275374c39fbeba83c7b6c0db34</Hash>
 </Codenesium>*/

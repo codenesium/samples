@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/spaceXSpaceFeatures/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SpaceXSpaceFeatures/{result.Id.ToString()}");
 				POCOSpaceXSpaceFeature response = this.spaceXSpaceFeatureManager.GetById(result.Id).SpaceXSpaceFeatures.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace FermataFishNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("BySpaceId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Spaces/{id}/SpaceXSpaceFeatures")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSpaceXSpaceFeature>), 200)]
-		public virtual IActionResult BySpaceId(int id)
-		{
-			ApiResponse response = this.spaceXSpaceFeatureManager.GetWhere(x => x.SpaceId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpaceXSpaceFeatures);
-			}
-		}
-
-		[HttpGet]
 		[Route("BySpaceFeatureId/{id}")]
 		[ReadOnly]
 		[Route("~/api/SpaceFeatures/{id}/SpaceXSpaceFeatures")]
@@ -215,9 +195,29 @@ namespace FermataFishNS.Api.Service
 				return this.Ok(response.SpaceXSpaceFeatures);
 			}
 		}
+
+		[HttpGet]
+		[Route("BySpaceId/{id}")]
+		[ReadOnly]
+		[Route("~/api/Spaces/{id}/SpaceXSpaceFeatures")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOSpaceXSpaceFeature>), 200)]
+		public virtual IActionResult BySpaceId(int id)
+		{
+			ApiResponse response = this.spaceXSpaceFeatureManager.GetWhere(x => x.SpaceId == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.SpaceXSpaceFeatures);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4bd33d857e1692b1a7a2496bd78f0212</Hash>
+    <Hash>f4572f7ed5008a2a6859504e2e9fcb97</Hash>
 </Codenesium>*/

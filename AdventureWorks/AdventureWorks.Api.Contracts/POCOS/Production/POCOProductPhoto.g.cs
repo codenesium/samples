@@ -10,51 +10,27 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductPhoto(
-			int productPhotoID,
-			byte[] thumbNailPhoto,
-			string thumbnailPhotoFileName,
 			byte[] largePhoto,
 			string largePhotoFileName,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productPhotoID,
+			byte[] thumbNailPhoto,
+			string thumbnailPhotoFileName)
 		{
-			this.ProductPhotoID = productPhotoID.ToInt();
-			this.ThumbNailPhoto = thumbNailPhoto;
-			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
 			this.LargePhoto = largePhoto;
 			this.LargePhotoFileName = largePhotoFileName.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductPhotoID = productPhotoID.ToInt();
+			this.ThumbNailPhoto = thumbNailPhoto;
+			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
 		}
 
-		public int ProductPhotoID { get; set; }
-		public byte[] ThumbNailPhoto { get; set; }
-		public string ThumbnailPhotoFileName { get; set; }
 		public byte[] LargePhoto { get; set; }
 		public string LargePhotoFileName { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductPhotoIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductPhotoID()
-		{
-			return this.ShouldSerializeProductPhotoIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeThumbNailPhotoValue { get; set; } = true;
-
-		public bool ShouldSerializeThumbNailPhoto()
-		{
-			return this.ShouldSerializeThumbNailPhotoValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeThumbnailPhotoFileNameValue { get; set; } = true;
-
-		public bool ShouldSerializeThumbnailPhotoFileName()
-		{
-			return this.ShouldSerializeThumbnailPhotoFileNameValue;
-		}
+		public int ProductPhotoID { get; set; }
+		public byte[] ThumbNailPhoto { get; set; }
+		public string ThumbnailPhotoFileName { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeLargePhotoValue { get; set; } = true;
@@ -80,18 +56,42 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeProductPhotoIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductPhotoID()
+		{
+			return this.ShouldSerializeProductPhotoIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeThumbNailPhotoValue { get; set; } = true;
+
+		public bool ShouldSerializeThumbNailPhoto()
+		{
+			return this.ShouldSerializeThumbNailPhotoValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeThumbnailPhotoFileNameValue { get; set; } = true;
+
+		public bool ShouldSerializeThumbnailPhotoFileName()
+		{
+			return this.ShouldSerializeThumbnailPhotoFileNameValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductPhotoIDValue = false;
-			this.ShouldSerializeThumbNailPhotoValue = false;
-			this.ShouldSerializeThumbnailPhotoFileNameValue = false;
 			this.ShouldSerializeLargePhotoValue = false;
 			this.ShouldSerializeLargePhotoFileNameValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeProductPhotoIDValue = false;
+			this.ShouldSerializeThumbNailPhotoValue = false;
+			this.ShouldSerializeThumbnailPhotoFileNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd00fd2a2a2784b0b9601c44a0efb312</Hash>
+    <Hash>227e6b7054f484022634b57ee63855b4</Hash>
 </Codenesium>*/

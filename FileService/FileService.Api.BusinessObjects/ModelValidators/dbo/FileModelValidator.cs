@@ -13,33 +13,33 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(FileModel model)
 		{
-			this.ExternalIdRules();
-			this.PrivateKeyRules();
-			this.PublicKeyRules();
-			this.LocationRules();
+			this.BucketIdRules();
+			this.DateCreatedRules();
+			this.DescriptionRules();
 			this.ExpirationRules();
 			this.ExtensionRules();
-			this.DateCreatedRules();
+			this.ExternalIdRules();
 			this.FileSizeInBytesRules();
 			this.FileTypeIdRules();
-			this.BucketIdRules();
-			this.DescriptionRules();
+			this.LocationRules();
+			this.PrivateKeyRules();
+			this.PublicKeyRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, FileModel model)
 		{
-			this.ExternalIdRules();
-			this.PrivateKeyRules();
-			this.PublicKeyRules();
-			this.LocationRules();
+			this.BucketIdRules();
+			this.DateCreatedRules();
+			this.DescriptionRules();
 			this.ExpirationRules();
 			this.ExtensionRules();
-			this.DateCreatedRules();
+			this.ExternalIdRules();
 			this.FileSizeInBytesRules();
 			this.FileTypeIdRules();
-			this.BucketIdRules();
-			this.DescriptionRules();
+			this.LocationRules();
+			this.PrivateKeyRules();
+			this.PublicKeyRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -51,5 +51,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>9042dc1a407c9c7032d4b388cc13fbda</Hash>
+    <Hash>f397733d05de1256ad38ff51ec34e003</Hash>
 </Codenesium>*/

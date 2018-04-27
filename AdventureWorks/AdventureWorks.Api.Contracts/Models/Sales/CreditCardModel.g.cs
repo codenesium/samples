@@ -11,33 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public CreditCardModel(
-			string cardType,
 			string cardNumber,
+			string cardType,
 			int expMonth,
 			short expYear,
 			DateTime modifiedDate)
 		{
-			this.CardType = cardType.ToString();
 			this.CardNumber = cardNumber.ToString();
+			this.CardType = cardType.ToString();
 			this.ExpMonth = expMonth.ToInt();
 			this.ExpYear = expYear;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string cardType;
-
-		[Required]
-		public string CardType
-		{
-			get
-			{
-				return this.cardType;
-			}
-
-			set
-			{
-				this.cardType = value;
-			}
 		}
 
 		private string cardNumber;
@@ -53,6 +37,22 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.cardNumber = value;
+			}
+		}
+
+		private string cardType;
+
+		[Required]
+		public string CardType
+		{
+			get
+			{
+				return this.cardType;
+			}
+
+			set
+			{
+				this.cardType = value;
 			}
 		}
 
@@ -107,5 +107,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ec0f1fffd8b8088f0104f6670858c485</Hash>
+    <Hash>9d44e6f226a458e9e7cefed8e65575d6</Hash>
 </Codenesium>*/

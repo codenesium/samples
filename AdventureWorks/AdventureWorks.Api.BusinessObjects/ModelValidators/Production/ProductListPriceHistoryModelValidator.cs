@@ -13,19 +13,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(ProductListPriceHistoryModel model)
 		{
-			this.StartDateRules();
 			this.EndDateRules();
 			this.ListPriceRules();
 			this.ModifiedDateRules();
+			this.StartDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ProductListPriceHistoryModel model)
 		{
-			this.StartDateRules();
 			this.EndDateRules();
 			this.ListPriceRules();
 			this.ModifiedDateRules();
+			this.StartDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a73b3473c10c7f72454b562852090c3c</Hash>
+    <Hash>0c905fe5a295b9c1ef84137b62024fe4</Hash>
 </Codenesium>*/

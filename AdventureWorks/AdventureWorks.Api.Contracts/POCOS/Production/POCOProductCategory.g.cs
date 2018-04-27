@@ -10,28 +10,28 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductCategory(
-			int productCategoryID,
+			DateTime modifiedDate,
 			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			int productCategoryID,
+			Guid rowguid)
 		{
-			this.ProductCategoryID = productCategoryID.ToInt();
-			this.Name = name.ToString();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ProductCategoryID = productCategoryID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
-		public int ProductCategoryID { get; set; }
-		public string Name { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
+		public int ProductCategoryID { get; set; }
+		public Guid Rowguid { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductCategoryIDValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeProductCategoryID()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeProductCategoryIDValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -43,6 +43,14 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeProductCategoryIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductCategoryID()
+		{
+			return this.ShouldSerializeProductCategoryIDValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
@@ -50,24 +58,16 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeRowguidValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
-
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductCategoryIDValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeProductCategoryIDValue = false;
+			this.ShouldSerializeRowguidValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b7371cf9f201ed3bd91a48ce8be93b58</Hash>
+    <Hash>f46d33f6f9cffa67452223c6e76debe7</Hash>
 </Codenesium>*/

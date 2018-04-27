@@ -13,34 +13,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
-			int emailAddressID,
 			string emailAddress1,
-			Guid rowguid,
-			DateTime modifiedDate)
+			int emailAddressID,
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.EmailAddressID = emailAddressID.ToInt();
 			this.EmailAddress1 = emailAddress1.ToString();
-			this.Rowguid = rowguid.ToGuid();
+			this.EmailAddressID = emailAddressID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-		[Column("EmailAddressID", TypeName="int")]
-		public int EmailAddressID { get; set; }
-
 		[Column("EmailAddress", TypeName="nvarchar(50)")]
 		public string EmailAddress1 { get; set; }
 
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		[Column("EmailAddressID", TypeName="int")]
+		public int EmailAddressID { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFPerson Person { get; set; }
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ab7b4bc1507945d9fefb3f579dd9ac3d</Hash>
+    <Hash>a7be6d114ca9ee9df5b31e6ca904ab3e</Hash>
 </Codenesium>*/

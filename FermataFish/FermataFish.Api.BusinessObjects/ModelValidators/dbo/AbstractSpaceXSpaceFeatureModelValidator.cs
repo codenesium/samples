@@ -20,32 +20,32 @@ namespace FermataFishNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ISpaceRepository SpaceRepository { get; set; }
 		public ISpaceFeatureRepository SpaceFeatureRepository { get; set; }
-		public virtual void SpaceIdRules()
-		{
-			this.RuleFor(x => x.SpaceId).NotNull();
-			this.RuleFor(x => x.SpaceId).Must(this.BeValidSpace).When(x => x ?.SpaceId != null).WithMessage("Invalid reference");
-		}
-
+		public ISpaceRepository SpaceRepository { get; set; }
 		public virtual void SpaceFeatureIdRules()
 		{
 			this.RuleFor(x => x.SpaceFeatureId).NotNull();
 			this.RuleFor(x => x.SpaceFeatureId).Must(this.BeValidSpaceFeature).When(x => x ?.SpaceFeatureId != null).WithMessage("Invalid reference");
 		}
 
-		private bool BeValidSpace(int id)
+		public virtual void SpaceIdRules()
 		{
-			return this.SpaceRepository.GetByIdDirect(id) != null;
+			this.RuleFor(x => x.SpaceId).NotNull();
+			this.RuleFor(x => x.SpaceId).Must(this.BeValidSpace).When(x => x ?.SpaceId != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidSpaceFeature(int id)
 		{
 			return this.SpaceFeatureRepository.GetByIdDirect(id) != null;
 		}
+
+		private bool BeValidSpace(int id)
+		{
+			return this.SpaceRepository.GetByIdDirect(id) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>96be22305944e343d316235a4756275d</Hash>
+    <Hash>9bc8fa03b732fa61745cd4a0b495b4da</Hash>
 </Codenesium>*/

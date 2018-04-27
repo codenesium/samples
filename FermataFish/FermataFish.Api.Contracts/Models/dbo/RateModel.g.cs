@@ -12,12 +12,12 @@ namespace FermataFishNS.Api.Contracts
 
 		public RateModel(
 			decimal amountPerMinute,
-			int teacherSkillId,
-			int teacherId)
+			int teacherId,
+			int teacherSkillId)
 		{
 			this.AmountPerMinute = amountPerMinute.ToDecimal();
-			this.TeacherSkillId = teacherSkillId.ToInt();
 			this.TeacherId = teacherId.ToInt();
+			this.TeacherSkillId = teacherSkillId.ToInt();
 		}
 
 		private decimal amountPerMinute;
@@ -36,22 +36,6 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private int teacherSkillId;
-
-		[Required]
-		public int TeacherSkillId
-		{
-			get
-			{
-				return this.teacherSkillId;
-			}
-
-			set
-			{
-				this.teacherSkillId = value;
-			}
-		}
-
 		private int teacherId;
 
 		[Required]
@@ -67,9 +51,25 @@ namespace FermataFishNS.Api.Contracts
 				this.teacherId = value;
 			}
 		}
+
+		private int teacherSkillId;
+
+		[Required]
+		public int TeacherSkillId
+		{
+			get
+			{
+				return this.teacherSkillId;
+			}
+
+			set
+			{
+				this.teacherSkillId = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f3661593364858d7f951af290ba26f6</Hash>
+    <Hash>949bfb743b01f6d108755c8db3811dbb</Hash>
 </Codenesium>*/

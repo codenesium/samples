@@ -12,14 +12,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public POCOEmployeeDepartmentHistory(
 			int businessEntityID,
 			short departmentID,
-			int shiftID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int shiftID,
+			DateTime startDate)
 		{
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.StartDate = startDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.Employees));
@@ -31,10 +31,10 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
 		public ReferenceEntity<short> DepartmentID { get; set; }
-		public ReferenceEntity<int> ShiftID { get; set; }
-		public DateTime StartDate { get; set; }
 		public Nullable<DateTime> EndDate { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public ReferenceEntity<int> ShiftID { get; set; }
+		public DateTime StartDate { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -53,22 +53,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShiftIDValue { get; set; } = true;
-
-		public bool ShouldSerializeShiftID()
-		{
-			return this.ShouldSerializeShiftIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeEndDateValue { get; set; } = true;
 
 		public bool ShouldSerializeEndDate()
@@ -84,18 +68,34 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeShiftIDValue { get; set; } = true;
+
+		public bool ShouldSerializeShiftID()
+		{
+			return this.ShouldSerializeShiftIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
+
+		public bool ShouldSerializeStartDate()
+		{
+			return this.ShouldSerializeStartDateValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
 			this.ShouldSerializeDepartmentIDValue = false;
-			this.ShouldSerializeShiftIDValue = false;
-			this.ShouldSerializeStartDateValue = false;
 			this.ShouldSerializeEndDateValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeShiftIDValue = false;
+			this.ShouldSerializeStartDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>569f52c953abad092f4ce57cfd5cd001</Hash>
+    <Hash>d358d1eb57ae7d38cd5ad7ac1753612d</Hash>
 </Codenesium>*/

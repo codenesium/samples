@@ -13,20 +13,18 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int salesReasonID,
+			DateTime modifiedDate,
 			string name,
-			string reasonType,
-			DateTime modifiedDate)
+			string reasonType)
 		{
-			this.SalesReasonID = salesReasonID.ToInt();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.ReasonType = reasonType.ToString();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.SalesReasonID = salesReasonID.ToInt();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("SalesReasonID", TypeName="int")]
-		public int SalesReasonID { get; set; }
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
 		public string Name { get; set; }
@@ -34,11 +32,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ReasonType", TypeName="nvarchar(50)")]
 		public string ReasonType { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Key]
+		[Column("SalesReasonID", TypeName="int")]
+		public int SalesReasonID { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9724378906e6a6c803efc26dfb10bdba</Hash>
+    <Hash>50776b3cb26305af2da25aaeeda0021f</Hash>
 </Codenesium>*/

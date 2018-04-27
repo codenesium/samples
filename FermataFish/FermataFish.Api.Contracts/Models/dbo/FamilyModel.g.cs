@@ -11,19 +11,51 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public FamilyModel(
+			string notes,
+			string pcEmail,
 			string pcFirstName,
 			string pcLastName,
 			string pcPhone,
-			string pcEmail,
-			string notes,
 			int studioId)
 		{
+			this.Notes = notes.ToString();
+			this.PcEmail = pcEmail.ToString();
 			this.PcFirstName = pcFirstName.ToString();
 			this.PcLastName = pcLastName.ToString();
 			this.PcPhone = pcPhone.ToString();
-			this.PcEmail = pcEmail.ToString();
-			this.Notes = notes.ToString();
 			this.StudioId = studioId.ToInt();
+		}
+
+		private string notes;
+
+		[Required]
+		public string Notes
+		{
+			get
+			{
+				return this.notes;
+			}
+
+			set
+			{
+				this.notes = value;
+			}
+		}
+
+		private string pcEmail;
+
+		[Required]
+		public string PcEmail
+		{
+			get
+			{
+				return this.pcEmail;
+			}
+
+			set
+			{
+				this.pcEmail = value;
+			}
 		}
 
 		private string pcFirstName;
@@ -74,38 +106,6 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private string pcEmail;
-
-		[Required]
-		public string PcEmail
-		{
-			get
-			{
-				return this.pcEmail;
-			}
-
-			set
-			{
-				this.pcEmail = value;
-			}
-		}
-
-		private string notes;
-
-		[Required]
-		public string Notes
-		{
-			get
-			{
-				return this.notes;
-			}
-
-			set
-			{
-				this.notes = value;
-			}
-		}
-
 		private int studioId;
 
 		[Required]
@@ -125,5 +125,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>71735e0c3fa43b532676e6bc3e43bd9d</Hash>
+    <Hash>a4abba3b8e138d78690ee9674e557223</Hash>
 </Codenesium>*/

@@ -13,27 +13,27 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4847bcd43a2b29e92b968bdbe8dd75b7</Hash>
+    <Hash>9f56a2ba259ba2099a1efd5e483cf740</Hash>
 </Codenesium>*/

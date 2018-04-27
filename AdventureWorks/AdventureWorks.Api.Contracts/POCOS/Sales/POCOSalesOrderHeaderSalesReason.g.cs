@@ -10,9 +10,9 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOSalesOrderHeaderSalesReason(
+			DateTime modifiedDate,
 			int salesOrderID,
-			int salesReasonID,
-			DateTime modifiedDate)
+			int salesReasonID)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
@@ -22,9 +22,17 @@ namespace AdventureWorksNS.Api.Contracts
 			                                              nameof(ApiResponse.SalesReasons));
 		}
 
+		public DateTime ModifiedDate { get; set; }
 		public ReferenceEntity<int> SalesOrderID { get; set; }
 		public ReferenceEntity<int> SalesReasonID { get; set; }
-		public DateTime ModifiedDate { get; set; }
+
+		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
+		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeSalesOrderIDValue { get; set; } = true;
@@ -42,23 +50,15 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeSalesReasonIDValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
-
 		public void DisableAllFields()
 		{
+			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializeSalesOrderIDValue = false;
 			this.ShouldSerializeSalesReasonIDValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ee9cccdef64c3900de234e6597ff7683</Hash>
+    <Hash>cc9dadb09e8e6ec26592742c4dd024d1</Hash>
 </Codenesium>*/

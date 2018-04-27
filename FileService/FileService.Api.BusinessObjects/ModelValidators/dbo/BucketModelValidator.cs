@@ -13,15 +13,15 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(BucketModel model)
 		{
-			this.NameRules();
 			this.ExternalIdRules();
+			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, BucketModel model)
 		{
-			this.NameRules();
 			this.ExternalIdRules();
+			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -33,5 +33,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c7115d73f75497e0cccf0cbcff87d33b</Hash>
+    <Hash>bf35cae0de78f99c8358e30722817a01</Hash>
 </Codenesium>*/

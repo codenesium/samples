@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/employeePayHistories/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/EmployeePayHistories/{result.Id.ToString()}");
 				POCOEmployeePayHistory response = this.employeePayHistoryManager.GetById(result.Id).EmployeePayHistories.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a91bd83d0ca9923fa0d8d7265a5db6e7</Hash>
+    <Hash>10e8b1cc0d35b84cf969bd2fa48a814d</Hash>
 </Codenesium>*/

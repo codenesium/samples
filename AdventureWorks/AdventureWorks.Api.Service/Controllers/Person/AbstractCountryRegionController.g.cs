@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/countryRegions/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/CountryRegions/{result.Id.ToString()}");
 				POCOCountryRegion response = this.countryRegionManager.GetById(result.Id).CountryRegions.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d899b6aae6119458a285b4010da09fbf</Hash>
+    <Hash>fea957ee4586006577344755aaf2dc9d</Hash>
 </Codenesium>*/

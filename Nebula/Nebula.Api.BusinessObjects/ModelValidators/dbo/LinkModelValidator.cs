@@ -13,33 +13,35 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(LinkModel model)
 		{
-			this.NameRules();
-			this.DynamicParametersRules();
-			this.StaticParametersRules();
-			this.ChainIdRules();
 			this.AssignedMachineIdRules();
-			this.LinkStatusIdRules();
-			this.OrderRules();
-			this.DateStartedRules();
+			this.ChainIdRules();
 			this.DateCompletedRules();
-			this.ResponseRules();
+			this.DateStartedRules();
+			this.DynamicParametersRules();
 			this.ExternalIdRules();
+			this.LinkStatusIdRules();
+			this.NameRules();
+			this.OrderRules();
+			this.ResponseRules();
+			this.StaticParametersRules();
+			this.TimeoutInSecondsRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, LinkModel model)
 		{
-			this.NameRules();
-			this.DynamicParametersRules();
-			this.StaticParametersRules();
-			this.ChainIdRules();
 			this.AssignedMachineIdRules();
-			this.LinkStatusIdRules();
-			this.OrderRules();
-			this.DateStartedRules();
+			this.ChainIdRules();
 			this.DateCompletedRules();
-			this.ResponseRules();
+			this.DateStartedRules();
+			this.DynamicParametersRules();
 			this.ExternalIdRules();
+			this.LinkStatusIdRules();
+			this.NameRules();
+			this.OrderRules();
+			this.ResponseRules();
+			this.StaticParametersRules();
+			this.TimeoutInSecondsRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -51,5 +53,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>12d55ec70a2ddb4c4ba8f0b1517c1a0f</Hash>
+    <Hash>3b94a54791bfd46edd99898197ffc2a5</Hash>
 </Codenesium>*/

@@ -13,17 +13,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(PersonPhoneModel model)
 		{
+			this.ModifiedDateRules();
 			this.PhoneNumberRules();
 			this.PhoneNumberTypeIDRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, PersonPhoneModel model)
 		{
+			this.ModifiedDateRules();
 			this.PhoneNumberRules();
 			this.PhoneNumberTypeIDRules();
-			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>be95aba1188340aca698632d234d5593</Hash>
+    <Hash>b56c145c3e6460592b5acd45cbcd0c0b</Hash>
 </Codenesium>*/

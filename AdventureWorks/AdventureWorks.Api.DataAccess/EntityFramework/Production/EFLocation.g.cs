@@ -13,37 +13,36 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			short locationID,
-			string name,
-			decimal costRate,
 			decimal availability,
-			DateTime modifiedDate)
+			decimal costRate,
+			DateTime modifiedDate,
+			string name)
 		{
-			this.LocationID = locationID;
-			this.Name = name.ToString();
-			this.CostRate = costRate.ToDecimal();
 			this.Availability = availability.ToDecimal();
+			this.CostRate = costRate.ToDecimal();
+			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("LocationID", TypeName="smallint")]
-		public short LocationID { get; set; }
-
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
-
-		[Column("CostRate", TypeName="smallmoney")]
-		public decimal CostRate { get; set; }
 
 		[Column("Availability", TypeName="decimal")]
 		public decimal Availability { get; set; }
 
+		[Column("CostRate", TypeName="smallmoney")]
+		public decimal CostRate { get; set; }
+
+		[Key]
+		[Column("LocationID", TypeName="smallint")]
+		public short LocationID { get; set; }
+
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>efd508b6d0e8e0d9bb3957c512fe0d23</Hash>
+    <Hash>1308a899056ed7f44aa9ad4bb4f58805</Hash>
 </Codenesium>*/

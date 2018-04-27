@@ -212,9 +212,64 @@ namespace FileServiceNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
 		}
+
+		public virtual async Task<POCOVersionInfo> VersionInfoCreateAsync(VersionInfoModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOVersionInfo> VersionInfoUpdateAsync(long id, VersionInfoModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VersionInfoes/{id}", item);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task VersionInfoDeleteAsync(long id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VersionInfoes/{id}");
+
+			httpResponse.EnsureSuccessStatusCode();
+		}
+
+		public virtual async Task<List<POCOVersionInfo>> VersionInfoSearchAsync(string query, int offset = 0, int limit = 250)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?{query}&offset={offset}&limit={limit}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOVersionInfo> VersionInfoGetByIdAsync(long id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/{id}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<POCOVersionInfo>> VersionInfoGetAllAsync(int offset = 0, int limit = 250)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?offset={offset}&limit={limit}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<long>> VersionInfoBulkInsertAsync(List<VersionInfoModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items);
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<long>>(httpResponse.Content.ContentToString());
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>076f40d48f2a70634b1f9a47472d35bd</Hash>
+    <Hash>ef5ded9b06995da04152d5b1c9a6fbd3</Hash>
 </Codenesium>*/

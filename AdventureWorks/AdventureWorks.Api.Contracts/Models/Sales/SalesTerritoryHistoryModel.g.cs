@@ -11,49 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public SalesTerritoryHistoryModel(
-			int territoryID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime startDate,
+			int territoryID)
 		{
-			this.TerritoryID = territoryID.ToInt();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private int territoryID;
-
-		[Required]
-		public int TerritoryID
-		{
-			get
-			{
-				return this.territoryID;
-			}
-
-			set
-			{
-				this.territoryID = value;
-			}
-		}
-
-		private DateTime startDate;
-
-		[Required]
-		public DateTime StartDate
-		{
-			get
-			{
-				return this.startDate;
-			}
-
-			set
-			{
-				this.startDate = value;
-			}
+			this.Rowguid = rowguid.ToGuid();
+			this.StartDate = startDate.ToDateTime();
+			this.TerritoryID = territoryID.ToInt();
 		}
 
 		private Nullable<DateTime> endDate;
@@ -68,6 +36,22 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.endDate = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
 			}
 		}
 
@@ -87,24 +71,40 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private DateTime startDate;
 
 		[Required]
-		public DateTime ModifiedDate
+		public DateTime StartDate
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.startDate;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.startDate = value;
+			}
+		}
+
+		private int territoryID;
+
+		[Required]
+		public int TerritoryID
+		{
+			get
+			{
+				return this.territoryID;
+			}
+
+			set
+			{
+				this.territoryID = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2ee6c65dd10c6c61b918d1400535918</Hash>
+    <Hash>174a3ab8575c055547b6ddb996051bdb</Hash>
 </Codenesium>*/

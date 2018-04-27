@@ -22,16 +22,37 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public IFamilyRepository FamilyRepository { get; set; }
 		public IStudioRepository StudioRepository { get; set; }
+		public virtual void BirthdayRules()
+		{
+			this.RuleFor(x => x.Birthday).NotNull();
+		}
+
 		public virtual void EmailRules()
 		{
 			this.RuleFor(x => x.Email).NotNull();
 			this.RuleFor(x => x.Email).Length(0, 128);
 		}
 
+		public virtual void EmailRemindersEnabledRules()
+		{
+			this.RuleFor(x => x.EmailRemindersEnabled).NotNull();
+		}
+
+		public virtual void FamilyIdRules()
+		{
+			this.RuleFor(x => x.FamilyId).NotNull();
+			this.RuleFor(x => x.FamilyId).Must(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
+		}
+
 		public virtual void FirstNameRules()
 		{
 			this.RuleFor(x => x.FirstName).NotNull();
 			this.RuleFor(x => x.FirstName).Length(0, 128);
+		}
+
+		public virtual void IsAdultRules()
+		{
+			this.RuleFor(x => x.IsAdult).NotNull();
 		}
 
 		public virtual void LastNameRules()
@@ -46,36 +67,15 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.RuleFor(x => x.Phone).Length(0, 128);
 		}
 
-		public virtual void IsAdultRules()
+		public virtual void SmsRemindersEnabledRules()
 		{
-			this.RuleFor(x => x.IsAdult).NotNull();
-		}
-
-		public virtual void BirthdayRules()
-		{
-			this.RuleFor(x => x.Birthday).NotNull();
-		}
-
-		public virtual void FamilyIdRules()
-		{
-			this.RuleFor(x => x.FamilyId).NotNull();
-			this.RuleFor(x => x.FamilyId).Must(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SmsRemindersEnabled).NotNull();
 		}
 
 		public virtual void StudioIdRules()
 		{
 			this.RuleFor(x => x.StudioId).NotNull();
 			this.RuleFor(x => x.StudioId).Must(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void SmsRemindersEnabledRules()
-		{
-			this.RuleFor(x => x.SmsRemindersEnabled).NotNull();
-		}
-
-		public virtual void EmailRemindersEnabledRules()
-		{
-			this.RuleFor(x => x.EmailRemindersEnabled).NotNull();
 		}
 
 		private bool BeValidFamily(int id)
@@ -91,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8874ee510171db223a3106dc18cdfd9d</Hash>
+    <Hash>e974dee20791f3bca62b41e1a4709f80</Hash>
 </Codenesium>*/

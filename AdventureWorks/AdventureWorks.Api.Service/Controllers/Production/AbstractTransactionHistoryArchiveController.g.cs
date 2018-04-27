@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/transactionHistoryArchives/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/TransactionHistoryArchives/{result.Id.ToString()}");
 				POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.GetById(result.Id).TransactionHistoryArchives.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>63d827f2d90f32c2b708f0ce4ae2c3db</Hash>
+    <Hash>152fb531c2ad451867518da169130404</Hash>
 </Codenesium>*/

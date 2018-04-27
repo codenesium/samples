@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/billOfMaterials/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/BillOfMaterials/{result.Id.ToString()}");
 				POCOBillOfMaterials response = this.billOfMaterialsManager.GetById(result.Id).BillOfMaterials.First();
 				return this.Ok(response);
 			}
@@ -177,14 +177,14 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductAssemblyID/{id}")]
+		[Route("ByComponentID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Products/{id}/BillOfMaterials")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
-		public virtual IActionResult ByProductAssemblyID(int id)
+		public virtual IActionResult ByComponentID(int id)
 		{
-			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ProductAssemblyID == id);
+			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ComponentID == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -197,14 +197,14 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByComponentID/{id}")]
+		[Route("ByProductAssemblyID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Products/{id}/BillOfMaterials")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
-		public virtual IActionResult ByComponentID(int id)
+		public virtual IActionResult ByProductAssemblyID(int id)
 		{
-			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ComponentID == id);
+			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ProductAssemblyID == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -239,5 +239,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7507d9fbe7d19adde53b2ac4812813bb</Hash>
+    <Hash>b76282746d4ecc6ca9ee16dcb4f4c90e</Hash>
 </Codenesium>*/

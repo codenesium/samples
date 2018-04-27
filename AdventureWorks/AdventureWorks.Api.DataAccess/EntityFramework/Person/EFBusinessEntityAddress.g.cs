@@ -15,19 +15,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			int businessEntityID,
 			int addressID,
 			int addressTypeID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
 			this.AddressID = addressID.ToInt();
 			this.AddressTypeID = addressTypeID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 		}
-
-		[Key]
-		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
 
 		[Column("AddressID", TypeName="int")]
 		public int AddressID { get; set; }
@@ -35,23 +31,28 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("AddressTypeID", TypeName="int")]
 		public int AddressTypeID { get; set; }
 
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		[Key]
+		[Column("BusinessEntityID", TypeName="int")]
+		public int BusinessEntityID { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntity { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 
 		[ForeignKey("AddressID")]
 		public virtual EFAddress Address { get; set; }
 
 		[ForeignKey("AddressTypeID")]
 		public virtual EFAddressType AddressType { get; set; }
+
+		[ForeignKey("BusinessEntityID")]
+		public virtual EFBusinessEntity BusinessEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>368ed99369f73bdbe87136c28ba97e6a</Hash>
+    <Hash>2d7e2a99cdfdce9198b141361d7569cc</Hash>
 </Codenesium>*/

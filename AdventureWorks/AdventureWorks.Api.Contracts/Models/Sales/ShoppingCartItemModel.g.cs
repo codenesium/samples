@@ -11,65 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ShoppingCartItemModel(
-			string shoppingCartID,
-			int quantity,
-			int productID,
 			DateTime dateCreated,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productID,
+			int quantity,
+			string shoppingCartID)
 		{
-			this.ShoppingCartID = shoppingCartID.ToString();
-			this.Quantity = quantity.ToInt();
-			this.ProductID = productID.ToInt();
 			this.DateCreated = dateCreated.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string shoppingCartID;
-
-		[Required]
-		public string ShoppingCartID
-		{
-			get
-			{
-				return this.shoppingCartID;
-			}
-
-			set
-			{
-				this.shoppingCartID = value;
-			}
-		}
-
-		private int quantity;
-
-		[Required]
-		public int Quantity
-		{
-			get
-			{
-				return this.quantity;
-			}
-
-			set
-			{
-				this.quantity = value;
-			}
-		}
-
-		private int productID;
-
-		[Required]
-		public int ProductID
-		{
-			get
-			{
-				return this.productID;
-			}
-
-			set
-			{
-				this.productID = value;
-			}
+			this.ProductID = productID.ToInt();
+			this.Quantity = quantity.ToInt();
+			this.ShoppingCartID = shoppingCartID.ToString();
 		}
 
 		private DateTime dateCreated;
@@ -103,9 +55,57 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private int productID;
+
+		[Required]
+		public int ProductID
+		{
+			get
+			{
+				return this.productID;
+			}
+
+			set
+			{
+				this.productID = value;
+			}
+		}
+
+		private int quantity;
+
+		[Required]
+		public int Quantity
+		{
+			get
+			{
+				return this.quantity;
+			}
+
+			set
+			{
+				this.quantity = value;
+			}
+		}
+
+		private string shoppingCartID;
+
+		[Required]
+		public string ShoppingCartID
+		{
+			get
+			{
+				return this.shoppingCartID;
+			}
+
+			set
+			{
+				this.shoppingCartID = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbe75340a0bdae78883b722110882a03</Hash>
+    <Hash>23689f8d75d19a0692d38e46c33df4a8</Hash>
 </Codenesium>*/

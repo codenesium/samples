@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/workOrderRoutings/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/WorkOrderRoutings/{result.Id.ToString()}");
 				POCOWorkOrderRouting response = this.workOrderRoutingManager.GetById(result.Id).WorkOrderRoutings.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByWorkOrderID/{id}")]
-		[ReadOnly]
-		[Route("~/api/WorkOrders/{id}/WorkOrderRoutings")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
-		public virtual IActionResult ByWorkOrderID(int id)
-		{
-			ApiResponse response = this.workOrderRoutingManager.GetWhere(x => x.WorkOrderID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.WorkOrderRoutings);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByLocationID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Locations/{id}/WorkOrderRoutings")]
@@ -215,9 +195,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.WorkOrderRoutings);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByWorkOrderID/{id}")]
+		[ReadOnly]
+		[Route("~/api/WorkOrders/{id}/WorkOrderRoutings")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
+		public virtual IActionResult ByWorkOrderID(int id)
+		{
+			ApiResponse response = this.workOrderRoutingManager.GetWhere(x => x.WorkOrderID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.WorkOrderRoutings);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d49e2a940cc6c09bfc80728e61aa72d1</Hash>
+    <Hash>c0b6ba71f4214eb22bbf5240ec39c7aa</Hash>
 </Codenesium>*/

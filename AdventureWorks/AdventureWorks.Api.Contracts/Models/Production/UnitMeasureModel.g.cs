@@ -11,27 +11,11 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public UnitMeasureModel(
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
+			this.Name = name.ToString();
 		}
 
 		private DateTime modifiedDate;
@@ -49,9 +33,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ccdea1500e8ba548f9d238f51b2b00aa</Hash>
+    <Hash>a57c24996a836abcea0b2665c2d76540</Hash>
 </Codenesium>*/

@@ -10,25 +10,25 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOWorkOrder(
-			int workOrderID,
-			int productID,
-			int orderQty,
-			int stockedQty,
-			short scrappedQty,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
 			DateTime dueDate,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
+			int orderQty,
+			int productID,
+			short scrappedQty,
 			Nullable<short> scrapReasonID,
-			DateTime modifiedDate)
+			DateTime startDate,
+			int stockedQty,
+			int workOrderID)
 		{
-			this.WorkOrderID = workOrderID.ToInt();
+			this.DueDate = dueDate.ToDateTime();
+			this.EndDate = endDate.ToNullableDateTime();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty.ToInt();
-			this.StockedQty = stockedQty.ToInt();
 			this.ScrappedQty = scrappedQty;
 			this.StartDate = startDate.ToDateTime();
-			this.EndDate = endDate.ToNullableDateTime();
-			this.DueDate = dueDate.ToDateTime();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.StockedQty = stockedQty.ToInt();
+			this.WorkOrderID = workOrderID.ToInt();
 
 			this.ProductID = new ReferenceEntity<int>(productID,
 			                                          nameof(ApiResponse.Products));
@@ -36,63 +36,23 @@ namespace AdventureWorksNS.Api.Contracts
 			                                                          nameof(ApiResponse.ScrapReasons));
 		}
 
-		public int WorkOrderID { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
-		public int OrderQty { get; set; }
-		public int StockedQty { get; set; }
-		public short ScrappedQty { get; set; }
-		public DateTime StartDate { get; set; }
-		public Nullable<DateTime> EndDate { get; set; }
 		public DateTime DueDate { get; set; }
-		public ReferenceEntity<Nullable<short>> ScrapReasonID { get; set; }
+		public Nullable<DateTime> EndDate { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public int OrderQty { get; set; }
+		public ReferenceEntity<int> ProductID { get; set; }
+		public short ScrappedQty { get; set; }
+		public ReferenceEntity<Nullable<short>> ScrapReasonID { get; set; }
+		public DateTime StartDate { get; set; }
+		public int StockedQty { get; set; }
+		public int WorkOrderID { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeWorkOrderIDValue { get; set; } = true;
+		public bool ShouldSerializeDueDateValue { get; set; } = true;
 
-		public bool ShouldSerializeWorkOrderID()
+		public bool ShouldSerializeDueDate()
 		{
-			return this.ShouldSerializeWorkOrderIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeOrderQtyValue { get; set; } = true;
-
-		public bool ShouldSerializeOrderQty()
-		{
-			return this.ShouldSerializeOrderQtyValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStockedQtyValue { get; set; } = true;
-
-		public bool ShouldSerializeStockedQty()
-		{
-			return this.ShouldSerializeStockedQtyValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeScrappedQtyValue { get; set; } = true;
-
-		public bool ShouldSerializeScrappedQty()
-		{
-			return this.ShouldSerializeScrappedQtyValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
+			return this.ShouldSerializeDueDateValue;
 		}
 
 		[JsonIgnore]
@@ -104,11 +64,35 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDueDateValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeDueDate()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeDueDateValue;
+			return this.ShouldSerializeModifiedDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeOrderQtyValue { get; set; } = true;
+
+		public bool ShouldSerializeOrderQty()
+		{
+			return this.ShouldSerializeOrderQtyValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductID()
+		{
+			return this.ShouldSerializeProductIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeScrappedQtyValue { get; set; } = true;
+
+		public bool ShouldSerializeScrappedQty()
+		{
+			return this.ShouldSerializeScrappedQtyValue;
 		}
 
 		[JsonIgnore]
@@ -120,29 +104,45 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeStartDate()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeStartDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStockedQtyValue { get; set; } = true;
+
+		public bool ShouldSerializeStockedQty()
+		{
+			return this.ShouldSerializeStockedQtyValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeWorkOrderIDValue { get; set; } = true;
+
+		public bool ShouldSerializeWorkOrderID()
+		{
+			return this.ShouldSerializeWorkOrderIDValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeWorkOrderIDValue = false;
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeOrderQtyValue = false;
-			this.ShouldSerializeStockedQtyValue = false;
-			this.ShouldSerializeScrappedQtyValue = false;
-			this.ShouldSerializeStartDateValue = false;
-			this.ShouldSerializeEndDateValue = false;
 			this.ShouldSerializeDueDateValue = false;
-			this.ShouldSerializeScrapReasonIDValue = false;
+			this.ShouldSerializeEndDateValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeOrderQtyValue = false;
+			this.ShouldSerializeProductIDValue = false;
+			this.ShouldSerializeScrappedQtyValue = false;
+			this.ShouldSerializeScrapReasonIDValue = false;
+			this.ShouldSerializeStartDateValue = false;
+			this.ShouldSerializeStockedQtyValue = false;
+			this.ShouldSerializeWorkOrderIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7d545371d354d2c25a7760e201d7829</Hash>
+    <Hash>d3ba2d35a67450bde35c9ea1fb925444</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/businessEntityAddresses/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/BusinessEntityAddresses/{result.Id.ToString()}");
 				POCOBusinessEntityAddress response = this.businessEntityAddressManager.GetById(result.Id).BusinessEntityAddresses.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[ReadOnly]
-		[Route("~/api/BusinessEntities/{id}/BusinessEntityAddresses")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityAddress>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.BusinessEntityID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BusinessEntityAddresses);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByAddressID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Addresses/{id}/BusinessEntityAddresses")]
@@ -235,9 +215,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.BusinessEntityAddresses);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByBusinessEntityID/{id}")]
+		[ReadOnly]
+		[Route("~/api/BusinessEntities/{id}/BusinessEntityAddresses")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOBusinessEntityAddress>), 200)]
+		public virtual IActionResult ByBusinessEntityID(int id)
+		{
+			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.BusinessEntityID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.BusinessEntityAddresses);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>22c608597b4102ecbb1007820bfaa619</Hash>
+    <Hash>5dd8daeafc9dc849b3c975573665aa43</Hash>
 </Codenesium>*/

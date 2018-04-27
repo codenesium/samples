@@ -21,6 +21,18 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public IStudioRepository StudioRepository { get; set; }
+		public virtual void NotesRules()
+		{
+			this.RuleFor(x => x.Notes).NotNull();
+			this.RuleFor(x => x.Notes).Length(0, 2147483647);
+		}
+
+		public virtual void PcEmailRules()
+		{
+			this.RuleFor(x => x.PcEmail).NotNull();
+			this.RuleFor(x => x.PcEmail).Length(0, 128);
+		}
+
 		public virtual void PcFirstNameRules()
 		{
 			this.RuleFor(x => x.PcFirstName).NotNull();
@@ -39,18 +51,6 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.RuleFor(x => x.PcPhone).Length(0, 128);
 		}
 
-		public virtual void PcEmailRules()
-		{
-			this.RuleFor(x => x.PcEmail).NotNull();
-			this.RuleFor(x => x.PcEmail).Length(0, 128);
-		}
-
-		public virtual void NotesRules()
-		{
-			this.RuleFor(x => x.Notes).NotNull();
-			this.RuleFor(x => x.Notes).Length(0, 2147483647);
-		}
-
 		public virtual void StudioIdRules()
 		{
 			this.RuleFor(x => x.StudioId).NotNull();
@@ -65,5 +65,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1138bc85ab8833838dca58b478b07b8d</Hash>
+    <Hash>c5179461769eaced111194a78a3ee9dd</Hash>
 </Codenesium>*/

@@ -11,30 +11,30 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductSubcategoryModel(
-			int productCategoryID,
+			DateTime modifiedDate,
 			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			int productCategoryID,
+			Guid rowguid)
 		{
-			this.ProductCategoryID = productCategoryID.ToInt();
-			this.Name = name.ToString();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ProductCategoryID = productCategoryID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
-		private int productCategoryID;
+		private DateTime modifiedDate;
 
 		[Required]
-		public int ProductCategoryID
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.productCategoryID;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.productCategoryID = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -54,6 +54,22 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
+		private int productCategoryID;
+
+		[Required]
+		public int ProductCategoryID
+		{
+			get
+			{
+				return this.productCategoryID;
+			}
+
+			set
+			{
+				this.productCategoryID = value;
+			}
+		}
+
 		private Guid rowguid;
 
 		[Required]
@@ -69,25 +85,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.rowguid = value;
 			}
 		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>77fcc8371314212c0f0e3765530fc4b6</Hash>
+    <Hash>eb2692445644c69f98a47a15e32bfa54</Hash>
 </Codenesium>*/

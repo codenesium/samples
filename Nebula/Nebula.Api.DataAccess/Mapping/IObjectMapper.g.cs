@@ -94,9 +94,18 @@ namespace NebulaNS.Api.DataAccess
 		void TeamMapEFToPOCO(
 			EFTeam efTeam,
 			ApiResponse response);
+
+		void VersionInfoMapModelToEF(
+			long version,
+			VersionInfoModel model,
+			EFVersionInfo efVersionInfo);
+
+		void VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo,
+			ApiResponse response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c5b8d36fcd105f4d8a6fdddefcb0b17</Hash>
+    <Hash>ac49840ba132800638a9829a38c66015</Hash>
 </Codenesium>*/

@@ -22,16 +22,13 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public ILessonStatusRepository LessonStatusRepository { get; set; }
 		public IStudioRepository StudioRepository { get; set; }
-		public virtual void ScheduledStartDateRules()
-		{                       }
-
-		public virtual void ScheduledEndDateRules()
+		public virtual void ActualEndDateRules()
 		{                       }
 
 		public virtual void ActualStartDateRules()
 		{                       }
 
-		public virtual void ActualEndDateRules()
+		public virtual void BillAmountRules()
 		{                       }
 
 		public virtual void LessonStatusIdRules()
@@ -40,23 +37,26 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.RuleFor(x => x.LessonStatusId).Must(this.BeValidLessonStatus).When(x => x ?.LessonStatusId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void TeacherNotesRules()
-		{
-			this.RuleFor(x => x.TeacherNotes).Length(0, 2147483647);
-		}
+		public virtual void ScheduledEndDateRules()
+		{                       }
+
+		public virtual void ScheduledStartDateRules()
+		{                       }
 
 		public virtual void StudentNotesRules()
 		{
 			this.RuleFor(x => x.StudentNotes).Length(0, 2147483647);
 		}
 
-		public virtual void BillAmountRules()
-		{                       }
-
 		public virtual void StudioIdRules()
 		{
 			this.RuleFor(x => x.StudioId).NotNull();
 			this.RuleFor(x => x.StudioId).Must(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void TeacherNotesRules()
+		{
+			this.RuleFor(x => x.TeacherNotes).Length(0, 2147483647);
 		}
 
 		private bool BeValidLessonStatus(int id)
@@ -72,5 +72,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>95bd6753393c70b18ac123895bfc5f51</Hash>
+    <Hash>a0a017230b34e5c166b12381c6a3bbf9</Hash>
 </Codenesium>*/

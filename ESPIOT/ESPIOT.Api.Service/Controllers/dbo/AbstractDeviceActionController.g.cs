@@ -88,7 +88,7 @@ namespace ESPIOTNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/deviceActions/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Id.ToString()}");
 				POCODeviceAction response = this.deviceActionManager.GetById(result.Id).DeviceActions.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b11b6b02bcf741dd80efa0ba827543ff</Hash>
+    <Hash>6c3f6e7a688068ba6e5120b2b56dde39</Hash>
 </Codenesium>*/

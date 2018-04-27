@@ -11,17 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOBusinessEntity(
 			int businessEntityID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
 		public int BusinessEntityID { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public Guid Rowguid { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -32,14 +32,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -47,15 +39,23 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeRowguidValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ca8b6de9669c894c9a01dc13a24ac8a</Hash>
+    <Hash>150c53cb07243b1ce956f8808d533fce</Hash>
 </Codenesium>*/

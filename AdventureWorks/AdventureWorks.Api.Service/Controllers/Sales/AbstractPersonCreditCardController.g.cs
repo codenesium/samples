@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/personCreditCards/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PersonCreditCards/{result.Id.ToString()}");
 				POCOPersonCreditCard response = this.personCreditCardManager.GetById(result.Id).PersonCreditCards.First();
 				return this.Ok(response);
 			}
@@ -219,5 +219,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>be5d2e210b64431185be686223758e09</Hash>
+    <Hash>f7dc02cb4f3ea494b3a4d8d909b21ac0</Hash>
 </Codenesium>*/

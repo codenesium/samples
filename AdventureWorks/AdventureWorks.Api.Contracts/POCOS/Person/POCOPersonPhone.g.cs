@@ -11,12 +11,12 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOPersonPhone(
 			int businessEntityID,
+			DateTime modifiedDate,
 			string phoneNumber,
-			int phoneNumberTypeID,
-			DateTime modifiedDate)
+			int phoneNumberTypeID)
 		{
-			this.PhoneNumber = phoneNumber.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PhoneNumber = phoneNumber.ToString();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.People));
@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public DateTime ModifiedDate { get; set; }
 		public string PhoneNumber { get; set; }
 		public ReferenceEntity<int> PhoneNumberTypeID { get; set; }
-		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -35,6 +35,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBusinessEntityID()
 		{
 			return this.ShouldSerializeBusinessEntityIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -53,24 +61,16 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializePhoneNumberTypeIDValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
-
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializePhoneNumberValue = false;
 			this.ShouldSerializePhoneNumberTypeIDValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1fe7ba9057be40106028721db91c3b90</Hash>
+    <Hash>eeb39cef2ef0e1bbc4da5d9420f55d54</Hash>
 </Codenesium>*/

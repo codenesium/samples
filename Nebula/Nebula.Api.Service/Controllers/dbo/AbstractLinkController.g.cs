@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/links/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Links/{result.Id.ToString()}");
 				POCOLink response = this.linkManager.GetById(result.Id).Links.First();
 				return this.Ok(response);
 			}
@@ -177,14 +177,14 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByChainId/{id}")]
+		[Route("ByAssignedMachineId/{id}")]
 		[ReadOnly]
-		[Route("~/api/Chains/{id}/Links")]
+		[Route("~/api/Machines/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOLink>), 200)]
-		public virtual IActionResult ByChainId(int id)
+		public virtual IActionResult ByAssignedMachineId(int id)
 		{
-			ApiResponse response = this.linkManager.GetWhere(x => x.ChainId == id);
+			ApiResponse response = this.linkManager.GetWhere(x => x.AssignedMachineId == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -197,14 +197,14 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByAssignedMachineId/{id}")]
+		[Route("ByChainId/{id}")]
 		[ReadOnly]
-		[Route("~/api/Machines/{id}/Links")]
+		[Route("~/api/Chains/{id}/Links")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOLink>), 200)]
-		public virtual IActionResult ByAssignedMachineId(int id)
+		public virtual IActionResult ByChainId(int id)
 		{
-			ApiResponse response = this.linkManager.GetWhere(x => x.AssignedMachineId == id);
+			ApiResponse response = this.linkManager.GetWhere(x => x.ChainId == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -239,5 +239,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f6f24b1aaa1ce80ac7cc9609ffbcafcc</Hash>
+    <Hash>4e8c2b20cb2a20f458401537470eb850</Hash>
 </Codenesium>*/

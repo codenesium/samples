@@ -31,9 +31,18 @@ namespace FileServiceNS.Api.DataAccess
 		void FileTypeMapEFToPOCO(
 			EFFileType efFileType,
 			ApiResponse response);
+
+		void VersionInfoMapModelToEF(
+			long version,
+			VersionInfoModel model,
+			EFVersionInfo efVersionInfo);
+
+		void VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo,
+			ApiResponse response);
 	}
 }
 
 /*<Codenesium>
-    <Hash>44f0765c20dd6536756fcd70e0a2c5ce</Hash>
+    <Hash>57046c0661ace6eba741ef35d137ab96</Hash>
 </Codenesium>*/

@@ -11,92 +11,74 @@ namespace FileServiceNS.Api.Contracts
 		{}
 
 		public FileModel(
-			Guid externalId,
-			string privateKey,
-			string publicKey,
-			string location,
+			Nullable<int> bucketId,
+			DateTime dateCreated,
+			string description,
 			DateTime expiration,
 			string extension,
-			DateTime dateCreated,
+			Guid externalId,
 			decimal fileSizeInBytes,
 			int fileTypeId,
-			Nullable<int> bucketId,
-			string description)
+			string location,
+			string privateKey,
+			string publicKey)
 		{
-			this.ExternalId = externalId.ToGuid();
-			this.PrivateKey = privateKey.ToString();
-			this.PublicKey = publicKey.ToString();
-			this.Location = location.ToString();
+			this.BucketId = bucketId.ToNullableInt();
+			this.DateCreated = dateCreated.ToDateTime();
+			this.Description = description.ToString();
 			this.Expiration = expiration.ToDateTime();
 			this.Extension = extension.ToString();
-			this.DateCreated = dateCreated.ToDateTime();
+			this.ExternalId = externalId.ToGuid();
 			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
 			this.FileTypeId = fileTypeId.ToInt();
-			this.BucketId = bucketId.ToNullableInt();
-			this.Description = description.ToString();
+			this.Location = location.ToString();
+			this.PrivateKey = privateKey.ToString();
+			this.PublicKey = publicKey.ToString();
 		}
 
-		private Guid externalId;
+		private Nullable<int> bucketId;
 
-		[Required]
-		public Guid ExternalId
+		public Nullable<int> BucketId
 		{
 			get
 			{
-				return this.externalId;
+				return this.bucketId.IsEmptyOrZeroOrNull() ? null : this.bucketId;
 			}
 
 			set
 			{
-				this.externalId = value;
+				this.bucketId = value;
 			}
 		}
 
-		private string privateKey;
+		private DateTime dateCreated;
 
 		[Required]
-		public string PrivateKey
+		public DateTime DateCreated
 		{
 			get
 			{
-				return this.privateKey;
+				return this.dateCreated;
 			}
 
 			set
 			{
-				this.privateKey = value;
+				this.dateCreated = value;
 			}
 		}
 
-		private string publicKey;
+		private string description;
 
-		[Required]
-		public string PublicKey
+		public string Description
 		{
 			get
 			{
-				return this.publicKey;
+				return this.description.IsEmptyOrZeroOrNull() ? null : this.description;
 			}
 
 			set
 			{
-				this.publicKey = value;
-			}
-		}
-
-		private string location;
-
-		[Required]
-		public string Location
-		{
-			get
-			{
-				return this.location;
-			}
-
-			set
-			{
-				this.location = value;
+				this.description = value;
 			}
 		}
 
@@ -132,19 +114,19 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
-		private DateTime dateCreated;
+		private Guid externalId;
 
 		[Required]
-		public DateTime DateCreated
+		public Guid ExternalId
 		{
 			get
 			{
-				return this.dateCreated;
+				return this.externalId;
 			}
 
 			set
 			{
-				this.dateCreated = value;
+				this.externalId = value;
 			}
 		}
 
@@ -180,38 +162,56 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
-		private Nullable<int> bucketId;
+		private string location;
 
-		public Nullable<int> BucketId
+		[Required]
+		public string Location
 		{
 			get
 			{
-				return this.bucketId.IsEmptyOrZeroOrNull() ? null : this.bucketId;
+				return this.location;
 			}
 
 			set
 			{
-				this.bucketId = value;
+				this.location = value;
 			}
 		}
 
-		private string description;
+		private string privateKey;
 
-		public string Description
+		[Required]
+		public string PrivateKey
 		{
 			get
 			{
-				return this.description.IsEmptyOrZeroOrNull() ? null : this.description;
+				return this.privateKey;
 			}
 
 			set
 			{
-				this.description = value;
+				this.privateKey = value;
+			}
+		}
+
+		private string publicKey;
+
+		[Required]
+		public string PublicKey
+		{
+			get
+			{
+				return this.publicKey;
+			}
+
+			set
+			{
+				this.publicKey = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e71389e2f188f5a8cb7b3088e4eee51</Hash>
+    <Hash>7dd0fae6296650f2ad1fd035c8f006c5</Hash>
 </Codenesium>*/

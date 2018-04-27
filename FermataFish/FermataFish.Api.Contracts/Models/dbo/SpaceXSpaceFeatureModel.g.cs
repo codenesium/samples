@@ -11,27 +11,11 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public SpaceXSpaceFeatureModel(
-			int spaceId,
-			int spaceFeatureId)
+			int spaceFeatureId,
+			int spaceId)
 		{
-			this.SpaceId = spaceId.ToInt();
 			this.SpaceFeatureId = spaceFeatureId.ToInt();
-		}
-
-		private int spaceId;
-
-		[Required]
-		public int SpaceId
-		{
-			get
-			{
-				return this.spaceId;
-			}
-
-			set
-			{
-				this.spaceId = value;
-			}
+			this.SpaceId = spaceId.ToInt();
 		}
 
 		private int spaceFeatureId;
@@ -49,9 +33,25 @@ namespace FermataFishNS.Api.Contracts
 				this.spaceFeatureId = value;
 			}
 		}
+
+		private int spaceId;
+
+		[Required]
+		public int SpaceId
+		{
+			get
+			{
+				return this.spaceId;
+			}
+
+			set
+			{
+				this.spaceId = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>06e17ecbcd4696c7918ab7e8f65e29c7</Hash>
+    <Hash>8fa79915f28a934c343e4f70f0851da7</Hash>
 </Codenesium>*/

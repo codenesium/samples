@@ -21,16 +21,16 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public IStudioRepository StudioRepository { get; set; }
-		public virtual void NameRules()
-		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
-		}
-
 		public virtual void DescriptionRules()
 		{
 			this.RuleFor(x => x.Description).NotNull();
 			this.RuleFor(x => x.Description).Length(0, 128);
+		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
 		public virtual void StudioIdRules()
@@ -47,5 +47,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c7ad00f6b77bc4b1167132a4f149823a</Hash>
+    <Hash>29bdf287dcf06d6db2f2941468719e1b</Hash>
 </Codenesium>*/

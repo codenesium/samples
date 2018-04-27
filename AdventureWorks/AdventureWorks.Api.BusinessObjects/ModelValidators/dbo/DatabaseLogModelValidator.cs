@@ -13,11 +13,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(DatabaseLogModel model)
 		{
-			this.PostTimeRules();
 			this.DatabaseUserRules();
 			this.@EventRules();
-			this.SchemaRules();
 			this.@ObjectRules();
+			this.PostTimeRules();
+			this.SchemaRules();
 			this.TSQLRules();
 			this.XmlEventRules();
 			return await this.ValidateAsync(model);
@@ -25,11 +25,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, DatabaseLogModel model)
 		{
-			this.PostTimeRules();
 			this.DatabaseUserRules();
 			this.@EventRules();
-			this.SchemaRules();
 			this.@ObjectRules();
+			this.PostTimeRules();
+			this.SchemaRules();
 			this.TSQLRules();
 			this.XmlEventRules();
 			return await this.ValidateAsync(model);
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>65567617d2d79832f10746ddc89c585f</Hash>
+    <Hash>859da26e1e6d9eefba3f3e1c4efb9fc8</Hash>
 </Codenesium>*/

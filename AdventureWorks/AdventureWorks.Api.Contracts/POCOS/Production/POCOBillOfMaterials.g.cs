@@ -11,39 +11,39 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOBillOfMaterials(
 			int billOfMaterialsID,
-			Nullable<int> productAssemblyID,
-			int componentID,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			string unitMeasureCode,
 			short bOMLevel,
+			int componentID,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
 			decimal perAssemblyQty,
-			DateTime modifiedDate)
+			Nullable<int> productAssemblyID,
+			DateTime startDate,
+			string unitMeasureCode)
 		{
 			this.BillOfMaterialsID = billOfMaterialsID.ToInt();
-			this.StartDate = startDate.ToDateTime();
-			this.EndDate = endDate.ToNullableDateTime();
 			this.BOMLevel = bOMLevel;
-			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
+			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
+			this.StartDate = startDate.ToDateTime();
 
-			this.ProductAssemblyID = new ReferenceEntity<Nullable<int>>(productAssemblyID,
-			                                                            nameof(ApiResponse.Products));
 			this.ComponentID = new ReferenceEntity<int>(componentID,
 			                                            nameof(ApiResponse.Products));
+			this.ProductAssemblyID = new ReferenceEntity<Nullable<int>>(productAssemblyID,
+			                                                            nameof(ApiResponse.Products));
 			this.UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
 			                                                   nameof(ApiResponse.UnitMeasures));
 		}
 
 		public int BillOfMaterialsID { get; set; }
-		public ReferenceEntity<Nullable<int>> ProductAssemblyID { get; set; }
-		public ReferenceEntity<int> ComponentID { get; set; }
-		public DateTime StartDate { get; set; }
-		public Nullable<DateTime> EndDate { get; set; }
-		public ReferenceEntity<string> UnitMeasureCode { get; set; }
 		public short BOMLevel { get; set; }
-		public decimal PerAssemblyQty { get; set; }
+		public ReferenceEntity<int> ComponentID { get; set; }
+		public Nullable<DateTime> EndDate { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public decimal PerAssemblyQty { get; set; }
+		public ReferenceEntity<Nullable<int>> ProductAssemblyID { get; set; }
+		public DateTime StartDate { get; set; }
+		public ReferenceEntity<string> UnitMeasureCode { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBillOfMaterialsIDValue { get; set; } = true;
@@ -51,46 +51,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBillOfMaterialsID()
 		{
 			return this.ShouldSerializeBillOfMaterialsIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductAssemblyIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductAssemblyID()
-		{
-			return this.ShouldSerializeProductAssemblyIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeComponentIDValue { get; set; } = true;
-
-		public bool ShouldSerializeComponentID()
-		{
-			return this.ShouldSerializeComponentIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeEndDateValue { get; set; } = true;
-
-		public bool ShouldSerializeEndDate()
-		{
-			return this.ShouldSerializeEndDateValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
-
-		public bool ShouldSerializeUnitMeasureCode()
-		{
-			return this.ShouldSerializeUnitMeasureCodeValue;
 		}
 
 		[JsonIgnore]
@@ -102,11 +62,19 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePerAssemblyQtyValue { get; set; } = true;
+		public bool ShouldSerializeComponentIDValue { get; set; } = true;
 
-		public bool ShouldSerializePerAssemblyQty()
+		public bool ShouldSerializeComponentID()
 		{
-			return this.ShouldSerializePerAssemblyQtyValue;
+			return this.ShouldSerializeComponentIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeEndDateValue { get; set; } = true;
+
+		public bool ShouldSerializeEndDate()
+		{
+			return this.ShouldSerializeEndDateValue;
 		}
 
 		[JsonIgnore]
@@ -117,21 +85,53 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializePerAssemblyQtyValue { get; set; } = true;
+
+		public bool ShouldSerializePerAssemblyQty()
+		{
+			return this.ShouldSerializePerAssemblyQtyValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeProductAssemblyIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductAssemblyID()
+		{
+			return this.ShouldSerializeProductAssemblyIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
+
+		public bool ShouldSerializeStartDate()
+		{
+			return this.ShouldSerializeStartDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
+
+		public bool ShouldSerializeUnitMeasureCode()
+		{
+			return this.ShouldSerializeUnitMeasureCodeValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBillOfMaterialsIDValue = false;
-			this.ShouldSerializeProductAssemblyIDValue = false;
-			this.ShouldSerializeComponentIDValue = false;
-			this.ShouldSerializeStartDateValue = false;
-			this.ShouldSerializeEndDateValue = false;
-			this.ShouldSerializeUnitMeasureCodeValue = false;
 			this.ShouldSerializeBOMLevelValue = false;
-			this.ShouldSerializePerAssemblyQtyValue = false;
+			this.ShouldSerializeComponentIDValue = false;
+			this.ShouldSerializeEndDateValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializePerAssemblyQtyValue = false;
+			this.ShouldSerializeProductAssemblyIDValue = false;
+			this.ShouldSerializeStartDateValue = false;
+			this.ShouldSerializeUnitMeasureCodeValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a59ae0cdef61ad72e7ac5e7d356937a</Hash>
+    <Hash>493edd12dde318c5569cb9a4ca462cfa</Hash>
 </Codenesium>*/

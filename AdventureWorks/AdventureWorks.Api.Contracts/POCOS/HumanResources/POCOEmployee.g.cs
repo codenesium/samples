@@ -10,107 +10,59 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOEmployee(
-			int businessEntityID,
-			string nationalIDNumber,
-			string loginID,
-			Nullable<Guid> organizationNode,
-			Nullable<short> organizationLevel,
-			string jobTitle,
 			DateTime birthDate,
-			string maritalStatus,
+			int businessEntityID,
+			bool currentFlag,
 			string gender,
 			DateTime hireDate,
-			bool salariedFlag,
-			short vacationHours,
-			short sickLeaveHours,
-			bool currentFlag,
+			string jobTitle,
+			string loginID,
+			string maritalStatus,
+			DateTime modifiedDate,
+			string nationalIDNumber,
+			Nullable<short> organizationLevel,
+			Nullable<Guid> organizationNode,
 			Guid rowguid,
-			DateTime modifiedDate)
+			bool salariedFlag,
+			short sickLeaveHours,
+			short vacationHours)
 		{
-			this.NationalIDNumber = nationalIDNumber.ToString();
-			this.LoginID = loginID.ToString();
-			this.OrganizationNode = organizationNode;
-			this.OrganizationLevel = organizationLevel;
-			this.JobTitle = jobTitle.ToString();
 			this.BirthDate = birthDate.ToDateTime();
-			this.MaritalStatus = maritalStatus.ToString();
+			this.CurrentFlag = currentFlag.ToBoolean();
 			this.Gender = gender.ToString();
 			this.HireDate = hireDate.ToDateTime();
-			this.SalariedFlag = salariedFlag.ToBoolean();
-			this.VacationHours = vacationHours;
-			this.SickLeaveHours = sickLeaveHours;
-			this.CurrentFlag = currentFlag.ToBoolean();
-			this.Rowguid = rowguid.ToGuid();
+			this.JobTitle = jobTitle.ToString();
+			this.LoginID = loginID.ToString();
+			this.MaritalStatus = maritalStatus.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.NationalIDNumber = nationalIDNumber.ToString();
+			this.OrganizationLevel = organizationLevel;
+			this.OrganizationNode = organizationNode;
+			this.Rowguid = rowguid.ToGuid();
+			this.SalariedFlag = salariedFlag.ToBoolean();
+			this.SickLeaveHours = sickLeaveHours;
+			this.VacationHours = vacationHours;
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.People));
 		}
 
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public string NationalIDNumber { get; set; }
-		public string LoginID { get; set; }
-		public Nullable<Guid> OrganizationNode { get; set; }
-		public Nullable<short> OrganizationLevel { get; set; }
-		public string JobTitle { get; set; }
 		public DateTime BirthDate { get; set; }
-		public string MaritalStatus { get; set; }
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public bool CurrentFlag { get; set; }
 		public string Gender { get; set; }
 		public DateTime HireDate { get; set; }
-		public bool SalariedFlag { get; set; }
-		public short VacationHours { get; set; }
-		public short SickLeaveHours { get; set; }
-		public bool CurrentFlag { get; set; }
-		public Guid Rowguid { get; set; }
+		public string JobTitle { get; set; }
+		public string LoginID { get; set; }
+		public string MaritalStatus { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-		public bool ShouldSerializeBusinessEntityID()
-		{
-			return this.ShouldSerializeBusinessEntityIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNationalIDNumberValue { get; set; } = true;
-
-		public bool ShouldSerializeNationalIDNumber()
-		{
-			return this.ShouldSerializeNationalIDNumberValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeLoginIDValue { get; set; } = true;
-
-		public bool ShouldSerializeLoginID()
-		{
-			return this.ShouldSerializeLoginIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeOrganizationNodeValue { get; set; } = true;
-
-		public bool ShouldSerializeOrganizationNode()
-		{
-			return this.ShouldSerializeOrganizationNodeValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeOrganizationLevelValue { get; set; } = true;
-
-		public bool ShouldSerializeOrganizationLevel()
-		{
-			return this.ShouldSerializeOrganizationLevelValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeJobTitleValue { get; set; } = true;
-
-		public bool ShouldSerializeJobTitle()
-		{
-			return this.ShouldSerializeJobTitleValue;
-		}
+		public string NationalIDNumber { get; set; }
+		public Nullable<short> OrganizationLevel { get; set; }
+		public Nullable<Guid> OrganizationNode { get; set; }
+		public Guid Rowguid { get; set; }
+		public bool SalariedFlag { get; set; }
+		public short SickLeaveHours { get; set; }
+		public short VacationHours { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBirthDateValue { get; set; } = true;
@@ -121,11 +73,19 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMaritalStatusValue { get; set; } = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
-		public bool ShouldSerializeMaritalStatus()
+		public bool ShouldSerializeBusinessEntityID()
 		{
-			return this.ShouldSerializeMaritalStatusValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeCurrentFlagValue { get; set; } = true;
+
+		public bool ShouldSerializeCurrentFlag()
+		{
+			return this.ShouldSerializeCurrentFlagValue;
 		}
 
 		[JsonIgnore]
@@ -145,35 +105,59 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalariedFlagValue { get; set; } = true;
+		public bool ShouldSerializeJobTitleValue { get; set; } = true;
 
-		public bool ShouldSerializeSalariedFlag()
+		public bool ShouldSerializeJobTitle()
 		{
-			return this.ShouldSerializeSalariedFlagValue;
+			return this.ShouldSerializeJobTitleValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVacationHoursValue { get; set; } = true;
+		public bool ShouldSerializeLoginIDValue { get; set; } = true;
 
-		public bool ShouldSerializeVacationHours()
+		public bool ShouldSerializeLoginID()
 		{
-			return this.ShouldSerializeVacationHoursValue;
+			return this.ShouldSerializeLoginIDValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSickLeaveHoursValue { get; set; } = true;
+		public bool ShouldSerializeMaritalStatusValue { get; set; } = true;
 
-		public bool ShouldSerializeSickLeaveHours()
+		public bool ShouldSerializeMaritalStatus()
 		{
-			return this.ShouldSerializeSickLeaveHoursValue;
+			return this.ShouldSerializeMaritalStatusValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrentFlagValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeCurrentFlag()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeCurrentFlagValue;
+			return this.ShouldSerializeModifiedDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeNationalIDNumberValue { get; set; } = true;
+
+		public bool ShouldSerializeNationalIDNumber()
+		{
+			return this.ShouldSerializeNationalIDNumberValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeOrganizationLevelValue { get; set; } = true;
+
+		public bool ShouldSerializeOrganizationLevel()
+		{
+			return this.ShouldSerializeOrganizationLevelValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeOrganizationNodeValue { get; set; } = true;
+
+		public bool ShouldSerializeOrganizationNode()
+		{
+			return this.ShouldSerializeOrganizationNodeValue;
 		}
 
 		[JsonIgnore]
@@ -185,35 +169,51 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeSalariedFlagValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeSalariedFlag()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeSalariedFlagValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeSickLeaveHoursValue { get; set; } = true;
+
+		public bool ShouldSerializeSickLeaveHours()
+		{
+			return this.ShouldSerializeSickLeaveHoursValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeVacationHoursValue { get; set; } = true;
+
+		public bool ShouldSerializeVacationHours()
+		{
+			return this.ShouldSerializeVacationHoursValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeNationalIDNumberValue = false;
-			this.ShouldSerializeLoginIDValue = false;
-			this.ShouldSerializeOrganizationNodeValue = false;
-			this.ShouldSerializeOrganizationLevelValue = false;
-			this.ShouldSerializeJobTitleValue = false;
 			this.ShouldSerializeBirthDateValue = false;
-			this.ShouldSerializeMaritalStatusValue = false;
+			this.ShouldSerializeBusinessEntityIDValue = false;
+			this.ShouldSerializeCurrentFlagValue = false;
 			this.ShouldSerializeGenderValue = false;
 			this.ShouldSerializeHireDateValue = false;
-			this.ShouldSerializeSalariedFlagValue = false;
-			this.ShouldSerializeVacationHoursValue = false;
-			this.ShouldSerializeSickLeaveHoursValue = false;
-			this.ShouldSerializeCurrentFlagValue = false;
-			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeJobTitleValue = false;
+			this.ShouldSerializeLoginIDValue = false;
+			this.ShouldSerializeMaritalStatusValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNationalIDNumberValue = false;
+			this.ShouldSerializeOrganizationLevelValue = false;
+			this.ShouldSerializeOrganizationNodeValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeSalariedFlagValue = false;
+			this.ShouldSerializeSickLeaveHoursValue = false;
+			this.ShouldSerializeVacationHoursValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c206908110c0d1f6f03985807e151d0</Hash>
+    <Hash>1e99cba99638e77d87718f786e458973</Hash>
 </Codenesium>*/

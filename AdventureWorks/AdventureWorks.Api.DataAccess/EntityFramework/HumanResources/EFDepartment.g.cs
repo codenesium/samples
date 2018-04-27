@@ -13,32 +13,31 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			short departmentID,
-			string name,
 			string groupName,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
 			this.DepartmentID = departmentID;
-			this.Name = name.ToString();
 			this.GroupName = groupName.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("DepartmentID", TypeName="smallint")]
 		public short DepartmentID { get; set; }
-
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
 
 		[Column("GroupName", TypeName="nvarchar(50)")]
 		public string GroupName { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9644844eca26c36a7f230debb940d95c</Hash>
+    <Hash>568b74de76d3a246434e217b74524371</Hash>
 </Codenesium>*/

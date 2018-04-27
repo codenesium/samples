@@ -13,23 +13,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(CurrencyRateModel model)
 		{
-			this.CurrencyRateDateRules();
-			this.FromCurrencyCodeRules();
-			this.ToCurrencyCodeRules();
 			this.AverageRateRules();
+			this.CurrencyRateDateRules();
 			this.EndOfDayRateRules();
+			this.FromCurrencyCodeRules();
 			this.ModifiedDateRules();
+			this.ToCurrencyCodeRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, CurrencyRateModel model)
 		{
-			this.CurrencyRateDateRules();
-			this.FromCurrencyCodeRules();
-			this.ToCurrencyCodeRules();
 			this.AverageRateRules();
+			this.CurrencyRateDateRules();
 			this.EndOfDayRateRules();
+			this.FromCurrencyCodeRules();
 			this.ModifiedDateRules();
+			this.ToCurrencyCodeRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -41,5 +41,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>6bd9ff5dede5ab4366d519ecb1a4ba52</Hash>
+    <Hash>251fb2fb743d5fdd3c466d60165412fa</Hash>
 </Codenesium>*/

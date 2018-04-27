@@ -20,13 +20,61 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
-		public IProductSubcategoryRepository ProductSubcategoryRepository { get; set; }
 		public IProductModelRepository ProductModelRepository { get; set; }
+		public IProductSubcategoryRepository ProductSubcategoryRepository { get; set; }
+		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
+		public virtual void @ClassRules()
+		{
+			this.RuleFor(x => x.@Class).Length(0, 2);
+		}
+
+		public virtual void ColorRules()
+		{
+			this.RuleFor(x => x.Color).Length(0, 15);
+		}
+
+		public virtual void DaysToManufactureRules()
+		{
+			this.RuleFor(x => x.DaysToManufacture).NotNull();
+		}
+
+		public virtual void DiscontinuedDateRules()
+		{                       }
+
+		public virtual void FinishedGoodsFlagRules()
+		{
+			this.RuleFor(x => x.FinishedGoodsFlag).NotNull();
+		}
+
+		public virtual void ListPriceRules()
+		{
+			this.RuleFor(x => x.ListPrice).NotNull();
+		}
+
+		public virtual void MakeFlagRules()
+		{
+			this.RuleFor(x => x.MakeFlag).NotNull();
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 50);
+		}
+
+		public virtual void ProductLineRules()
+		{
+			this.RuleFor(x => x.ProductLine).Length(0, 2);
+		}
+
+		public virtual void ProductModelIDRules()
+		{
+			this.RuleFor(x => x.ProductModelID).Must(this.BeValidProductModel).When(x => x ?.ProductModelID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ProductNumberRules()
@@ -35,24 +83,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ProductNumber).Length(0, 25);
 		}
 
-		public virtual void MakeFlagRules()
+		public virtual void ProductSubcategoryIDRules()
 		{
-			this.RuleFor(x => x.MakeFlag).NotNull();
-		}
-
-		public virtual void FinishedGoodsFlagRules()
-		{
-			this.RuleFor(x => x.FinishedGoodsFlag).NotNull();
-		}
-
-		public virtual void ColorRules()
-		{
-			this.RuleFor(x => x.Color).Length(0, 15);
-		}
-
-		public virtual void SafetyStockLevelRules()
-		{
-			this.RuleFor(x => x.SafetyStockLevel).NotNull();
+			this.RuleFor(x => x.ProductSubcategoryID).Must(this.BeValidProductSubcategory).When(x => x ?.ProductSubcategoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ReorderPointRules()
@@ -60,14 +93,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ReorderPoint).NotNull();
 		}
 
-		public virtual void StandardCostRules()
+		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x.StandardCost).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ListPriceRules()
+		public virtual void SafetyStockLevelRules()
 		{
-			this.RuleFor(x => x.ListPrice).NotNull();
+			this.RuleFor(x => x.SafetyStockLevel).NotNull();
+		}
+
+		public virtual void SellEndDateRules()
+		{                       }
+
+		public virtual void SellStartDateRules()
+		{
+			this.RuleFor(x => x.SellStartDate).NotNull();
 		}
 
 		public virtual void SizeRules()
@@ -81,28 +122,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.SizeUnitMeasureCode).Length(0, 3);
 		}
 
-		public virtual void WeightUnitMeasureCodeRules()
+		public virtual void StandardCostRules()
 		{
-			this.RuleFor(x => x.WeightUnitMeasureCode).Must(this.BeValidUnitMeasure).When(x => x ?.WeightUnitMeasureCode != null).WithMessage("Invalid reference");
-			this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3);
-		}
-
-		public virtual void WeightRules()
-		{                       }
-
-		public virtual void DaysToManufactureRules()
-		{
-			this.RuleFor(x => x.DaysToManufacture).NotNull();
-		}
-
-		public virtual void ProductLineRules()
-		{
-			this.RuleFor(x => x.ProductLine).Length(0, 2);
-		}
-
-		public virtual void @ClassRules()
-		{
-			this.RuleFor(x => x.@Class).Length(0, 2);
+			this.RuleFor(x => x.StandardCost).NotNull();
 		}
 
 		public virtual void StyleRules()
@@ -110,40 +132,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Style).Length(0, 2);
 		}
 
-		public virtual void ProductSubcategoryIDRules()
-		{
-			this.RuleFor(x => x.ProductSubcategoryID).Must(this.BeValidProductSubcategory).When(x => x ?.ProductSubcategoryID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void ProductModelIDRules()
-		{
-			this.RuleFor(x => x.ProductModelID).Must(this.BeValidProductModel).When(x => x ?.ProductModelID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void SellStartDateRules()
-		{
-			this.RuleFor(x => x.SellStartDate).NotNull();
-		}
-
-		public virtual void SellEndDateRules()
+		public virtual void WeightRules()
 		{                       }
 
-		public virtual void DiscontinuedDateRules()
-		{                       }
-
-		public virtual void RowguidRules()
+		public virtual void WeightUnitMeasureCodeRules()
 		{
-			this.RuleFor(x => x.Rowguid).NotNull();
+			this.RuleFor(x => x.WeightUnitMeasureCode).Must(this.BeValidUnitMeasure).When(x => x ?.WeightUnitMeasureCode != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3);
 		}
 
-		public virtual void ModifiedDateRules()
+		private bool BeValidProductModel(Nullable<int> id)
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
-		}
-
-		private bool BeValidUnitMeasure(string id)
-		{
-			return this.UnitMeasureRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.ProductModelRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
 		private bool BeValidProductSubcategory(Nullable<int> id)
@@ -151,13 +151,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return this.ProductSubcategoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		private bool BeValidProductModel(Nullable<int> id)
+		private bool BeValidUnitMeasure(string id)
 		{
-			return this.ProductModelRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.UnitMeasureRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e56da348bc3df4163cfa4fe7a5345e2</Hash>
+    <Hash>de6412e466efe4ab3962fbd87c90bdb9</Hash>
 </Codenesium>*/

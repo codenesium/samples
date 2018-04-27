@@ -16,18 +16,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			string diagram,
 			DateTime modifiedDate)
 		{
-			this.IllustrationID = illustrationID.ToInt();
 			this.Diagram = diagram;
+			this.IllustrationID = illustrationID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("IllustrationID", TypeName="int")]
-		public int IllustrationID { get; set; }
-
 		[Column("Diagram", TypeName="xml(-1)")]
 		public string Diagram { get; set; }
+
+		[Key]
+		[Column("IllustrationID", TypeName="int")]
+		public int IllustrationID { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d984c878b11c49515b368a31e636f8a0</Hash>
+    <Hash>0eeb391bfa0f13bfecb59f4cf405732c</Hash>
 </Codenesium>*/

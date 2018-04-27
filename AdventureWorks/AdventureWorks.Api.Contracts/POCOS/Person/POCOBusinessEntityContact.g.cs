@@ -11,27 +11,27 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOBusinessEntityContact(
 			int businessEntityID,
-			int personID,
 			int contactTypeID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int personID,
+			Guid rowguid)
 		{
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.BusinessEntities));
-			this.PersonID = new ReferenceEntity<int>(personID,
-			                                         nameof(ApiResponse.People));
 			this.ContactTypeID = new ReferenceEntity<int>(contactTypeID,
 			                                              nameof(ApiResponse.ContactTypes));
+			this.PersonID = new ReferenceEntity<int>(personID,
+			                                         nameof(ApiResponse.People));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public ReferenceEntity<int> PersonID { get; set; }
 		public ReferenceEntity<int> ContactTypeID { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public ReferenceEntity<int> PersonID { get; set; }
+		public Guid Rowguid { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -39,14 +39,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBusinessEntityID()
 		{
 			return this.ShouldSerializeBusinessEntityIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializePersonIDValue { get; set; } = true;
-
-		public bool ShouldSerializePersonID()
-		{
-			return this.ShouldSerializePersonIDValue;
 		}
 
 		[JsonIgnore]
@@ -58,14 +50,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -73,17 +57,33 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializePersonIDValue { get; set; } = true;
+
+		public bool ShouldSerializePersonID()
+		{
+			return this.ShouldSerializePersonIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializePersonIDValue = false;
 			this.ShouldSerializeContactTypeIDValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializePersonIDValue = false;
+			this.ShouldSerializeRowguidValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d65c34bc9b1b500aa05ffbd9c1382cff</Hash>
+    <Hash>8d33e8e1e0f0a73a3e8994a6b31ff1d2</Hash>
 </Codenesium>*/

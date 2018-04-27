@@ -21,34 +21,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IEmployeeRepository EmployeeRepository { get; set; }
-		public IVendorRepository VendorRepository { get; set; }
 		public IShipMethodRepository ShipMethodRepository { get; set; }
-		public virtual void RevisionNumberRules()
-		{
-			this.RuleFor(x => x.RevisionNumber).NotNull();
-		}
-
-		public virtual void StatusRules()
-		{
-			this.RuleFor(x => x.Status).NotNull();
-		}
-
+		public IVendorRepository VendorRepository { get; set; }
 		public virtual void EmployeeIDRules()
 		{
 			this.RuleFor(x => x.EmployeeID).NotNull();
 			this.RuleFor(x => x.EmployeeID).Must(this.BeValidEmployee).When(x => x ?.EmployeeID != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void VendorIDRules()
+		public virtual void FreightRules()
 		{
-			this.RuleFor(x => x.VendorID).NotNull();
-			this.RuleFor(x => x.VendorID).Must(this.BeValidVendor).When(x => x ?.VendorID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.Freight).NotNull();
 		}
 
-		public virtual void ShipMethodIDRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.ShipMethodID).NotNull();
-			this.RuleFor(x => x.ShipMethodID).Must(this.BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void OrderDateRules()
@@ -56,8 +44,24 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.OrderDate).NotNull();
 		}
 
+		public virtual void RevisionNumberRules()
+		{
+			this.RuleFor(x => x.RevisionNumber).NotNull();
+		}
+
 		public virtual void ShipDateRules()
 		{                       }
+
+		public virtual void ShipMethodIDRules()
+		{
+			this.RuleFor(x => x.ShipMethodID).NotNull();
+			this.RuleFor(x => x.ShipMethodID).Must(this.BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void StatusRules()
+		{
+			this.RuleFor(x => x.Status).NotNull();
+		}
 
 		public virtual void SubTotalRules()
 		{
@@ -69,19 +73,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.TaxAmt).NotNull();
 		}
 
-		public virtual void FreightRules()
-		{
-			this.RuleFor(x => x.Freight).NotNull();
-		}
-
 		public virtual void TotalDueRules()
 		{
 			this.RuleFor(x => x.TotalDue).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void VendorIDRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.VendorID).NotNull();
+			this.RuleFor(x => x.VendorID).Must(this.BeValidVendor).When(x => x ?.VendorID != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidEmployee(int id)
@@ -89,18 +89,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return this.EmployeeRepository.GetByIdDirect(id) != null;
 		}
 
-		private bool BeValidVendor(int id)
-		{
-			return this.VendorRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidShipMethod(int id)
 		{
 			return this.ShipMethodRepository.GetByIdDirect(id) != null;
+		}
+
+		private bool BeValidVendor(int id)
+		{
+			return this.VendorRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a61f0fd3b4770b805d4916ed7c2b79c</Hash>
+    <Hash>3786e5083a1b7979bfa8649f8b87692d</Hash>
 </Codenesium>*/

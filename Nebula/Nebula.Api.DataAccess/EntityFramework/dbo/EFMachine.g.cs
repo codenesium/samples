@@ -13,30 +13,26 @@ namespace NebulaNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
-			string name,
-			Guid machineGuid,
+			string description,
 			string jwtKey,
 			string lastIpAddress,
-			string description)
+			Guid machineGuid,
+			string name)
 		{
+			this.Description = description.ToString();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
-			this.MachineGuid = machineGuid.ToGuid();
 			this.JwtKey = jwtKey.ToString();
 			this.LastIpAddress = lastIpAddress.ToString();
-			this.Description = description.ToString();
+			this.MachineGuid = machineGuid.ToGuid();
+			this.Name = name.ToString();
 		}
 
+		[Column("description", TypeName="text(2147483647)")]
+		public string Description { get; set; }
+
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
-
-		[Column("name", TypeName="varchar(128)")]
-		public string Name { get; set; }
-
-		[Column("machineGuid", TypeName="uniqueidentifier")]
-		public Guid MachineGuid { get; set; }
 
 		[Column("jwtKey", TypeName="varchar(128)")]
 		public string JwtKey { get; set; }
@@ -44,11 +40,14 @@ namespace NebulaNS.Api.DataAccess
 		[Column("lastIpAddress", TypeName="varchar(128)")]
 		public string LastIpAddress { get; set; }
 
-		[Column("description", TypeName="text(2147483647)")]
-		public string Description { get; set; }
+		[Column("machineGuid", TypeName="uniqueidentifier")]
+		public Guid MachineGuid { get; set; }
+
+		[Column("name", TypeName="varchar(128)")]
+		public string Name { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>be2cf386adcc5f16b4fea4e571f9f3d6</Hash>
+    <Hash>e6ebd9dc6463530f026f8098522b954b</Hash>
 </Codenesium>*/

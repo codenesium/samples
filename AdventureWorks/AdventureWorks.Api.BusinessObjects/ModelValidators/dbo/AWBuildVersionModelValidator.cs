@@ -14,16 +14,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public async Task<ValidationResult> ValidateCreateAsync(AWBuildVersionModel model)
 		{
 			this.Database_VersionRules();
-			this.VersionDateRules();
 			this.ModifiedDateRules();
+			this.VersionDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, AWBuildVersionModel model)
 		{
 			this.Database_VersionRules();
-			this.VersionDateRules();
 			this.ModifiedDateRules();
+			this.VersionDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>25e450d4d40ebb7b957114d187393f6d</Hash>
+    <Hash>477e9acd1ff9edae04f3eac1be17ed3e</Hash>
 </Codenesium>*/

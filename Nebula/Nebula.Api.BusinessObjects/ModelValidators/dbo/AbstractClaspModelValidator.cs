@@ -21,16 +21,16 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public IChainRepository ChainRepository { get; set; }
-		public virtual void PreviousChainIdRules()
-		{
-			this.RuleFor(x => x.PreviousChainId).NotNull();
-			this.RuleFor(x => x.PreviousChainId).Must(this.BeValidChain).When(x => x ?.PreviousChainId != null).WithMessage("Invalid reference");
-		}
-
 		public virtual void NextChainIdRules()
 		{
 			this.RuleFor(x => x.NextChainId).NotNull();
 			this.RuleFor(x => x.NextChainId).Must(this.BeValidChain).When(x => x ?.NextChainId != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void PreviousChainIdRules()
+		{
+			this.RuleFor(x => x.PreviousChainId).NotNull();
+			this.RuleFor(x => x.PreviousChainId).Must(this.BeValidChain).When(x => x ?.PreviousChainId != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidChain(int id)
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>dfd340c37c91914733bdfddb5e8cfd1b</Hash>
+    <Hash>0182bc1c897a7505f3bc026de98234de</Hash>
 </Codenesium>*/

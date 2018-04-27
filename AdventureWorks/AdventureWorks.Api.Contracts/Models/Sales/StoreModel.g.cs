@@ -11,17 +11,48 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public StoreModel(
-			string name,
-			Nullable<int> salesPersonID,
 			string demographics,
+			DateTime modifiedDate,
+			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			Nullable<int> salesPersonID)
 		{
-			this.Name = name.ToString();
-			this.SalesPersonID = salesPersonID.ToNullableInt();
 			this.Demographics = demographics;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesPersonID = salesPersonID.ToNullableInt();
+		}
+
+		private string demographics;
+
+		public string Demographics
+		{
+			get
+			{
+				return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
+			}
+
+			set
+			{
+				this.demographics = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private string name;
@@ -37,36 +68,6 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.name = value;
-			}
-		}
-
-		private Nullable<int> salesPersonID;
-
-		public Nullable<int> SalesPersonID
-		{
-			get
-			{
-				return this.salesPersonID.IsEmptyOrZeroOrNull() ? null : this.salesPersonID;
-			}
-
-			set
-			{
-				this.salesPersonID = value;
-			}
-		}
-
-		private string demographics;
-
-		public string Demographics
-		{
-			get
-			{
-				return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
-			}
-
-			set
-			{
-				this.demographics = value;
 			}
 		}
 
@@ -86,24 +87,23 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private Nullable<int> salesPersonID;
 
-		[Required]
-		public DateTime ModifiedDate
+		public Nullable<int> SalesPersonID
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.salesPersonID.IsEmptyOrZeroOrNull() ? null : this.salesPersonID;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.salesPersonID = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab58d97e632677b98f7be834447d18f0</Hash>
+    <Hash>3d0f452b46e52638544cf8a5c961cad9</Hash>
 </Codenesium>*/

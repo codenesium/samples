@@ -12,10 +12,10 @@ namespace NebulaNS.Api.DataAccess
 		{
 			efChain.SetProperties(
 				id,
-				model.Name,
-				model.TeamId,
 				model.ChainStatusId,
-				model.ExternalId);
+				model.ExternalId,
+				model.Name,
+				model.TeamId);
 		}
 
 		public virtual void ChainMapEFToPOCO(
@@ -27,11 +27,11 @@ namespace NebulaNS.Api.DataAccess
 				return;
 			}
 
-			response.AddChain(new POCOChain(efChain.Id, efChain.Name, efChain.TeamId, efChain.ChainStatusId, efChain.ExternalId));
-
-			this.TeamMapEFToPOCO(efChain.Team, response);
+			response.AddChain(new POCOChain(efChain.ChainStatusId, efChain.ExternalId, efChain.Id, efChain.Name, efChain.TeamId));
 
 			this.ChainStatusMapEFToPOCO(efChain.ChainStatus, response);
+
+			this.TeamMapEFToPOCO(efChain.Team, response);
 		}
 
 		public virtual void ChainStatusMapModelToEF(
@@ -63,8 +63,8 @@ namespace NebulaNS.Api.DataAccess
 		{
 			efClasp.SetProperties(
 				id,
-				model.PreviousChainId,
-				model.NextChainId);
+				model.NextChainId,
+				model.PreviousChainId);
 		}
 
 		public virtual void ClaspMapEFToPOCO(
@@ -76,7 +76,7 @@ namespace NebulaNS.Api.DataAccess
 				return;
 			}
 
-			response.AddClasp(new POCOClasp(efClasp.Id, efClasp.PreviousChainId, efClasp.NextChainId));
+			response.AddClasp(new POCOClasp(efClasp.Id, efClasp.NextChainId, efClasp.PreviousChainId));
 
 			this.ChainMapEFToPOCO(efClasp.Chain, response);
 
@@ -90,17 +90,18 @@ namespace NebulaNS.Api.DataAccess
 		{
 			efLink.SetProperties(
 				id,
-				model.Name,
-				model.DynamicParameters,
-				model.StaticParameters,
-				model.ChainId,
 				model.AssignedMachineId,
-				model.LinkStatusId,
-				model.Order,
-				model.DateStarted,
+				model.ChainId,
 				model.DateCompleted,
+				model.DateStarted,
+				model.DynamicParameters,
+				model.ExternalId,
+				model.LinkStatusId,
+				model.Name,
+				model.Order,
 				model.Response,
-				model.ExternalId);
+				model.StaticParameters,
+				model.TimeoutInSeconds);
 		}
 
 		public virtual void LinkMapEFToPOCO(
@@ -112,11 +113,11 @@ namespace NebulaNS.Api.DataAccess
 				return;
 			}
 
-			response.AddLink(new POCOLink(efLink.Id, efLink.Name, efLink.DynamicParameters, efLink.StaticParameters, efLink.ChainId, efLink.AssignedMachineId, efLink.LinkStatusId, efLink.Order, efLink.DateStarted, efLink.DateCompleted, efLink.Response, efLink.ExternalId));
-
-			this.ChainMapEFToPOCO(efLink.Chain, response);
+			response.AddLink(new POCOLink(efLink.AssignedMachineId, efLink.ChainId, efLink.DateCompleted, efLink.DateStarted, efLink.DynamicParameters, efLink.ExternalId, efLink.Id, efLink.LinkStatusId, efLink.Name, efLink.Order, efLink.Response, efLink.StaticParameters, efLink.TimeoutInSeconds));
 
 			this.MachineMapEFToPOCO(efLink.Machine, response);
+
+			this.ChainMapEFToPOCO(efLink.Chain, response);
 
 			this.LinkStatusMapEFToPOCO(efLink.LinkStatus, response);
 		}
@@ -128,9 +129,9 @@ namespace NebulaNS.Api.DataAccess
 		{
 			efLinkLog.SetProperties(
 				id,
+				model.DateEntered,
 				model.LinkId,
-				model.Log,
-				model.DateEntered);
+				model.Log);
 		}
 
 		public virtual void LinkLogMapEFToPOCO(
@@ -142,7 +143,7 @@ namespace NebulaNS.Api.DataAccess
 				return;
 			}
 
-			response.AddLinkLog(new POCOLinkLog(efLinkLog.Id, efLinkLog.LinkId, efLinkLog.Log, efLinkLog.DateEntered));
+			response.AddLinkLog(new POCOLinkLog(efLinkLog.DateEntered, efLinkLog.Id, efLinkLog.LinkId, efLinkLog.Log));
 
 			this.LinkMapEFToPOCO(efLinkLog.Link, response);
 		}
@@ -176,11 +177,11 @@ namespace NebulaNS.Api.DataAccess
 		{
 			efMachine.SetProperties(
 				id,
-				model.Name,
-				model.MachineGuid,
+				model.Description,
 				model.JwtKey,
 				model.LastIpAddress,
-				model.Description);
+				model.MachineGuid,
+				model.Name);
 		}
 
 		public virtual void MachineMapEFToPOCO(
@@ -192,7 +193,7 @@ namespace NebulaNS.Api.DataAccess
 				return;
 			}
 
-			response.AddMachine(new POCOMachine(efMachine.Id, efMachine.Name, efMachine.MachineGuid, efMachine.JwtKey, efMachine.LastIpAddress, efMachine.Description));
+			response.AddMachine(new POCOMachine(efMachine.Description, efMachine.Id, efMachine.JwtKey, efMachine.LastIpAddress, efMachine.MachineGuid, efMachine.Name));
 		}
 
 		public virtual void MachineRefTeamMapModelToEF(
@@ -268,9 +269,32 @@ namespace NebulaNS.Api.DataAccess
 
 			this.OrganizationMapEFToPOCO(efTeam.Organization, response);
 		}
+
+		public virtual void VersionInfoMapModelToEF(
+			long version,
+			VersionInfoModel model,
+			EFVersionInfo efVersionInfo)
+		{
+			efVersionInfo.SetProperties(
+				version,
+				model.AppliedOn,
+				model.Description);
+		}
+
+		public virtual void VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo,
+			ApiResponse response)
+		{
+			if (efVersionInfo == null)
+			{
+				return;
+			}
+
+			response.AddVersionInfo(new POCOVersionInfo(efVersionInfo.AppliedOn, efVersionInfo.Description, efVersionInfo.Version));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e9a4388fc8e5f8a5cf23aa835a10acd</Hash>
+    <Hash>8f94b5638626e4f471be7cac53e71663</Hash>
 </Codenesium>*/

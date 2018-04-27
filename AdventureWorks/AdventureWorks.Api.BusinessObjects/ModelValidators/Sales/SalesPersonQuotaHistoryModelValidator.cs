@@ -13,19 +13,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(SalesPersonQuotaHistoryModel model)
 		{
-			this.QuotaDateRules();
-			this.SalesQuotaRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.QuotaDateRules();
+			this.RowguidRules();
+			this.SalesQuotaRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, SalesPersonQuotaHistoryModel model)
 		{
-			this.QuotaDateRules();
-			this.SalesQuotaRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.QuotaDateRules();
+			this.RowguidRules();
+			this.SalesQuotaRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cf9ac5ecebeb80a037f65b9af007c78b</Hash>
+    <Hash>ec804277fc8c3e58a00be30c13e6ae55</Hash>
 </Codenesium>*/

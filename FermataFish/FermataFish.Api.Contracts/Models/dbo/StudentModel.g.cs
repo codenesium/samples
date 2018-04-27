@@ -11,27 +11,43 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public StudentModel(
+			DateTime birthday,
 			string email,
+			bool emailRemindersEnabled,
+			int familyId,
 			string firstName,
+			bool isAdult,
 			string lastName,
 			string phone,
-			bool isAdult,
-			DateTime birthday,
-			int familyId,
-			int studioId,
 			bool smsRemindersEnabled,
-			bool emailRemindersEnabled)
+			int studioId)
 		{
+			this.Birthday = birthday.ToDateTime();
 			this.Email = email.ToString();
+			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
+			this.FamilyId = familyId.ToInt();
 			this.FirstName = firstName.ToString();
+			this.IsAdult = isAdult.ToBoolean();
 			this.LastName = lastName.ToString();
 			this.Phone = phone.ToString();
-			this.IsAdult = isAdult.ToBoolean();
-			this.Birthday = birthday.ToDateTime();
-			this.FamilyId = familyId.ToInt();
-			this.StudioId = studioId.ToInt();
 			this.SmsRemindersEnabled = smsRemindersEnabled.ToBoolean();
-			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
+			this.StudioId = studioId.ToInt();
+		}
+
+		private DateTime birthday;
+
+		[Required]
+		public DateTime Birthday
+		{
+			get
+			{
+				return this.birthday;
+			}
+
+			set
+			{
+				this.birthday = value;
+			}
 		}
 
 		private string email;
@@ -50,6 +66,38 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
+		private bool emailRemindersEnabled;
+
+		[Required]
+		public bool EmailRemindersEnabled
+		{
+			get
+			{
+				return this.emailRemindersEnabled;
+			}
+
+			set
+			{
+				this.emailRemindersEnabled = value;
+			}
+		}
+
+		private int familyId;
+
+		[Required]
+		public int FamilyId
+		{
+			get
+			{
+				return this.familyId;
+			}
+
+			set
+			{
+				this.familyId = value;
+			}
+		}
+
 		private string firstName;
 
 		[Required]
@@ -63,6 +111,22 @@ namespace FermataFishNS.Api.Contracts
 			set
 			{
 				this.firstName = value;
+			}
+		}
+
+		private bool isAdult;
+
+		[Required]
+		public bool IsAdult
+		{
+			get
+			{
+				return this.isAdult;
+			}
+
+			set
+			{
+				this.isAdult = value;
 			}
 		}
 
@@ -98,51 +162,19 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private bool isAdult;
+		private bool smsRemindersEnabled;
 
 		[Required]
-		public bool IsAdult
+		public bool SmsRemindersEnabled
 		{
 			get
 			{
-				return this.isAdult;
+				return this.smsRemindersEnabled;
 			}
 
 			set
 			{
-				this.isAdult = value;
-			}
-		}
-
-		private DateTime birthday;
-
-		[Required]
-		public DateTime Birthday
-		{
-			get
-			{
-				return this.birthday;
-			}
-
-			set
-			{
-				this.birthday = value;
-			}
-		}
-
-		private int familyId;
-
-		[Required]
-		public int FamilyId
-		{
-			get
-			{
-				return this.familyId;
-			}
-
-			set
-			{
-				this.familyId = value;
+				this.smsRemindersEnabled = value;
 			}
 		}
 
@@ -161,41 +193,9 @@ namespace FermataFishNS.Api.Contracts
 				this.studioId = value;
 			}
 		}
-
-		private bool smsRemindersEnabled;
-
-		[Required]
-		public bool SmsRemindersEnabled
-		{
-			get
-			{
-				return this.smsRemindersEnabled;
-			}
-
-			set
-			{
-				this.smsRemindersEnabled = value;
-			}
-		}
-
-		private bool emailRemindersEnabled;
-
-		[Required]
-		public bool EmailRemindersEnabled
-		{
-			get
-			{
-				return this.emailRemindersEnabled;
-			}
-
-			set
-			{
-				this.emailRemindersEnabled = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ee4fcd3dccd0570beb43b65d8fb5223f</Hash>
+    <Hash>8598df9e2b3a9f8fa957332faabeab9e</Hash>
 </Codenesium>*/

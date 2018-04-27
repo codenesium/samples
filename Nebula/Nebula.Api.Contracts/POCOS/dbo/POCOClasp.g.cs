@@ -11,20 +11,20 @@ namespace NebulaNS.Api.Contracts
 
 		public POCOClasp(
 			int id,
-			int previousChainId,
-			int nextChainId)
+			int nextChainId,
+			int previousChainId)
 		{
 			this.Id = id.ToInt();
 
-			this.PreviousChainId = new ReferenceEntity<int>(previousChainId,
-			                                                nameof(ApiResponse.Chains));
 			this.NextChainId = new ReferenceEntity<int>(nextChainId,
 			                                            nameof(ApiResponse.Chains));
+			this.PreviousChainId = new ReferenceEntity<int>(previousChainId,
+			                                                nameof(ApiResponse.Chains));
 		}
 
 		public int Id { get; set; }
-		public ReferenceEntity<int> PreviousChainId { get; set; }
 		public ReferenceEntity<int> NextChainId { get; set; }
+		public ReferenceEntity<int> PreviousChainId { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue { get; set; } = true;
@@ -35,14 +35,6 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePreviousChainIdValue { get; set; } = true;
-
-		public bool ShouldSerializePreviousChainId()
-		{
-			return this.ShouldSerializePreviousChainIdValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeNextChainIdValue { get; set; } = true;
 
 		public bool ShouldSerializeNextChainId()
@@ -50,15 +42,23 @@ namespace NebulaNS.Api.Contracts
 			return this.ShouldSerializeNextChainIdValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializePreviousChainIdValue { get; set; } = true;
+
+		public bool ShouldSerializePreviousChainId()
+		{
+			return this.ShouldSerializePreviousChainIdValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializePreviousChainIdValue = false;
 			this.ShouldSerializeNextChainIdValue = false;
+			this.ShouldSerializePreviousChainIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d919eec645870e512acb3a0c2358145</Hash>
+    <Hash>a3bcce6e11f3f7c0428f0e3d28142dce</Hash>
 </Codenesium>*/

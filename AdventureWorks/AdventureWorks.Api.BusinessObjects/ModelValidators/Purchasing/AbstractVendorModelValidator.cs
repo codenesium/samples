@@ -27,10 +27,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.AccountNumber).Length(0, 15);
 		}
 
-		public virtual void NameRules()
+		public virtual void ActiveFlagRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 50);
+			this.RuleFor(x => x.ActiveFlag).NotNull();
 		}
 
 		public virtual void CreditRatingRules()
@@ -38,24 +37,25 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.CreditRating).NotNull();
 		}
 
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
+		}
+
 		public virtual void PreferredVendorStatusRules()
 		{
 			this.RuleFor(x => x.PreferredVendorStatus).NotNull();
 		}
 
-		public virtual void ActiveFlagRules()
-		{
-			this.RuleFor(x => x.ActiveFlag).NotNull();
-		}
-
 		public virtual void PurchasingWebServiceURLRules()
 		{
 			this.RuleFor(x => x.PurchasingWebServiceURL).Length(0, 1024);
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidBusinessEntity(int id)
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>2c0ef57c7568eeb9825523e0fffecee4</Hash>
+    <Hash>7e3ea37da458b89db229a23bf4f27bc0</Hash>
 </Codenesium>*/

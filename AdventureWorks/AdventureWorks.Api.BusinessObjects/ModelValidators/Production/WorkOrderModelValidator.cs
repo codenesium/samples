@@ -13,29 +13,29 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(WorkOrderModel model)
 		{
-			this.ProductIDRules();
-			this.OrderQtyRules();
-			this.StockedQtyRules();
-			this.ScrappedQtyRules();
-			this.StartDateRules();
-			this.EndDateRules();
 			this.DueDateRules();
-			this.ScrapReasonIDRules();
+			this.EndDateRules();
 			this.ModifiedDateRules();
+			this.OrderQtyRules();
+			this.ProductIDRules();
+			this.ScrappedQtyRules();
+			this.ScrapReasonIDRules();
+			this.StartDateRules();
+			this.StockedQtyRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, WorkOrderModel model)
 		{
-			this.ProductIDRules();
-			this.OrderQtyRules();
-			this.StockedQtyRules();
-			this.ScrappedQtyRules();
-			this.StartDateRules();
-			this.EndDateRules();
 			this.DueDateRules();
-			this.ScrapReasonIDRules();
+			this.EndDateRules();
 			this.ModifiedDateRules();
+			this.OrderQtyRules();
+			this.ProductIDRules();
+			this.ScrappedQtyRules();
+			this.ScrapReasonIDRules();
+			this.StartDateRules();
+			this.StockedQtyRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>37a3c3cf2bbbe286a27949bd55e57d1e</Hash>
+    <Hash>7bbfe2ff646a58349f7f236dcd372d0c</Hash>
 </Codenesium>*/

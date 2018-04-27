@@ -13,13 +13,16 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int salesOrderID,
-			int salesReasonID,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int salesReasonID)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.SalesOrderID = salesOrderID.ToInt();
 			this.SalesReasonID = salesReasonID.ToInt();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Key]
 		[Column("SalesOrderID", TypeName="int")]
@@ -27,9 +30,6 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("SalesReasonID", TypeName="int")]
 		public int SalesReasonID { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("SalesOrderID")]
 		public virtual EFSalesOrderHeader SalesOrderHeader { get; set; }
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d5f4952d587813f52c9be76eeb2665f2</Hash>
+    <Hash>7653e23e9a21e697c12d7b5152459ff2</Hash>
 </Codenesium>*/

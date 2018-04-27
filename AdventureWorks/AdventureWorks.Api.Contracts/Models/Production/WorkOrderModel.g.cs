@@ -11,40 +11,71 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public WorkOrderModel(
-			int productID,
-			int orderQty,
-			int stockedQty,
-			short scrappedQty,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
 			DateTime dueDate,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
+			int orderQty,
+			int productID,
+			short scrappedQty,
 			Nullable<short> scrapReasonID,
-			DateTime modifiedDate)
+			DateTime startDate,
+			int stockedQty)
 		{
-			this.ProductID = productID.ToInt();
-			this.OrderQty = orderQty.ToInt();
-			this.StockedQty = stockedQty.ToInt();
-			this.ScrappedQty = scrappedQty;
-			this.StartDate = startDate.ToDateTime();
-			this.EndDate = endDate.ToNullableDateTime();
 			this.DueDate = dueDate.ToDateTime();
-			this.ScrapReasonID = scrapReasonID;
+			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.OrderQty = orderQty.ToInt();
+			this.ProductID = productID.ToInt();
+			this.ScrappedQty = scrappedQty;
+			this.ScrapReasonID = scrapReasonID;
+			this.StartDate = startDate.ToDateTime();
+			this.StockedQty = stockedQty.ToInt();
 		}
 
-		private int productID;
+		private DateTime dueDate;
 
 		[Required]
-		public int ProductID
+		public DateTime DueDate
 		{
 			get
 			{
-				return this.productID;
+				return this.dueDate;
 			}
 
 			set
 			{
-				this.productID = value;
+				this.dueDate = value;
+			}
+		}
+
+		private Nullable<DateTime> endDate;
+
+		public Nullable<DateTime> EndDate
+		{
+			get
+			{
+				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+			}
+
+			set
+			{
+				this.endDate = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
 			}
 		}
 
@@ -64,19 +95,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private int stockedQty;
+		private int productID;
 
 		[Required]
-		public int StockedQty
+		public int ProductID
 		{
 			get
 			{
-				return this.stockedQty;
+				return this.productID;
 			}
 
 			set
 			{
-				this.stockedQty = value;
+				this.productID = value;
 			}
 		}
 
@@ -96,6 +127,21 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
+		private Nullable<short> scrapReasonID;
+
+		public Nullable<short> ScrapReasonID
+		{
+			get
+			{
+				return this.scrapReasonID.IsEmptyOrZeroOrNull() ? null : this.scrapReasonID;
+			}
+
+			set
+			{
+				this.scrapReasonID = value;
+			}
+		}
+
 		private DateTime startDate;
 
 		[Required]
@@ -112,70 +158,24 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private Nullable<DateTime> endDate;
-
-		public Nullable<DateTime> EndDate
-		{
-			get
-			{
-				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
-			}
-
-			set
-			{
-				this.endDate = value;
-			}
-		}
-
-		private DateTime dueDate;
+		private int stockedQty;
 
 		[Required]
-		public DateTime DueDate
+		public int StockedQty
 		{
 			get
 			{
-				return this.dueDate;
+				return this.stockedQty;
 			}
 
 			set
 			{
-				this.dueDate = value;
-			}
-		}
-
-		private Nullable<short> scrapReasonID;
-
-		public Nullable<short> ScrapReasonID
-		{
-			get
-			{
-				return this.scrapReasonID.IsEmptyOrZeroOrNull() ? null : this.scrapReasonID;
-			}
-
-			set
-			{
-				this.scrapReasonID = value;
-			}
-		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
+				this.stockedQty = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0312ff9790950a785b2a09ff7907d1f</Hash>
+    <Hash>a703eaf8629bf1ba90ceccb79b17948d</Hash>
 </Codenesium>*/

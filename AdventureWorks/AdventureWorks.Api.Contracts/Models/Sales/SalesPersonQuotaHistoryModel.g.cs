@@ -11,15 +11,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public SalesPersonQuotaHistoryModel(
+			DateTime modifiedDate,
 			DateTime quotaDate,
-			decimal salesQuota,
 			Guid rowguid,
-			DateTime modifiedDate)
+			decimal salesQuota)
 		{
-			this.QuotaDate = quotaDate.ToDateTime();
-			this.SalesQuota = salesQuota.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.QuotaDate = quotaDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesQuota = salesQuota.ToDecimal();
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private DateTime quotaDate;
@@ -35,22 +51,6 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.quotaDate = value;
-			}
-		}
-
-		private decimal salesQuota;
-
-		[Required]
-		public decimal SalesQuota
-		{
-			get
-			{
-				return this.salesQuota;
-			}
-
-			set
-			{
-				this.salesQuota = value;
 			}
 		}
 
@@ -70,24 +70,24 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private decimal salesQuota;
 
 		[Required]
-		public DateTime ModifiedDate
+		public decimal SalesQuota
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.salesQuota;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.salesQuota = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7199e515744d1bf582434547b091e6fa</Hash>
+    <Hash>cae326d2ddf9fd7eee0de0a665500bca</Hash>
 </Codenesium>*/

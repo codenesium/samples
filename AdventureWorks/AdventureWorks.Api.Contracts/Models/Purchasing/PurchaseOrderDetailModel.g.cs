@@ -11,43 +11,27 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public PurchaseOrderDetailModel(
-			int purchaseOrderDetailID,
 			DateTime dueDate,
+			decimal lineTotal,
+			DateTime modifiedDate,
 			short orderQty,
 			int productID,
-			decimal unitPrice,
-			decimal lineTotal,
+			int purchaseOrderDetailID,
 			decimal receivedQty,
 			decimal rejectedQty,
 			decimal stockedQty,
-			DateTime modifiedDate)
+			decimal unitPrice)
 		{
-			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
 			this.DueDate = dueDate.ToDateTime();
+			this.LineTotal = lineTotal.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty;
 			this.ProductID = productID.ToInt();
-			this.UnitPrice = unitPrice.ToDecimal();
-			this.LineTotal = lineTotal.ToDecimal();
+			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
 			this.ReceivedQty = receivedQty.ToDecimal();
 			this.RejectedQty = rejectedQty.ToDecimal();
 			this.StockedQty = stockedQty.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private int purchaseOrderDetailID;
-
-		[Required]
-		public int PurchaseOrderDetailID
-		{
-			get
-			{
-				return this.purchaseOrderDetailID;
-			}
-
-			set
-			{
-				this.purchaseOrderDetailID = value;
-			}
+			this.UnitPrice = unitPrice.ToDecimal();
 		}
 
 		private DateTime dueDate;
@@ -63,6 +47,38 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.dueDate = value;
+			}
+		}
+
+		private decimal lineTotal;
+
+		[Required]
+		public decimal LineTotal
+		{
+			get
+			{
+				return this.lineTotal;
+			}
+
+			set
+			{
+				this.lineTotal = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
 			}
 		}
 
@@ -98,35 +114,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private decimal unitPrice;
+		private int purchaseOrderDetailID;
 
 		[Required]
-		public decimal UnitPrice
+		public int PurchaseOrderDetailID
 		{
 			get
 			{
-				return this.unitPrice;
+				return this.purchaseOrderDetailID;
 			}
 
 			set
 			{
-				this.unitPrice = value;
-			}
-		}
-
-		private decimal lineTotal;
-
-		[Required]
-		public decimal LineTotal
-		{
-			get
-			{
-				return this.lineTotal;
-			}
-
-			set
-			{
-				this.lineTotal = value;
+				this.purchaseOrderDetailID = value;
 			}
 		}
 
@@ -178,24 +178,24 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private decimal unitPrice;
 
 		[Required]
-		public DateTime ModifiedDate
+		public decimal UnitPrice
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.unitPrice;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.unitPrice = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>59ded216510bfd455675b741b95a123a</Hash>
+    <Hash>09851129b6ef274cb6f4bdde51ce7ac9</Hash>
 </Codenesium>*/

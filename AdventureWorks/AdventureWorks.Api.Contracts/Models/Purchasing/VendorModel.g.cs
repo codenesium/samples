@@ -12,20 +12,20 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public VendorModel(
 			string accountNumber,
-			string name,
-			int creditRating,
-			bool preferredVendorStatus,
 			bool activeFlag,
-			string purchasingWebServiceURL,
-			DateTime modifiedDate)
+			int creditRating,
+			DateTime modifiedDate,
+			string name,
+			bool preferredVendorStatus,
+			string purchasingWebServiceURL)
 		{
 			this.AccountNumber = accountNumber.ToString();
-			this.Name = name.ToString();
-			this.CreditRating = creditRating.ToInt();
-			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
 			this.ActiveFlag = activeFlag.ToBoolean();
-			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
+			this.CreditRating = creditRating.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
+			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
 		}
 
 		private string accountNumber;
@@ -41,54 +41,6 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.accountNumber = value;
-			}
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
-		}
-
-		private int creditRating;
-
-		[Required]
-		public int CreditRating
-		{
-			get
-			{
-				return this.creditRating;
-			}
-
-			set
-			{
-				this.creditRating = value;
-			}
-		}
-
-		private bool preferredVendorStatus;
-
-		[Required]
-		public bool PreferredVendorStatus
-		{
-			get
-			{
-				return this.preferredVendorStatus;
-			}
-
-			set
-			{
-				this.preferredVendorStatus = value;
 			}
 		}
 
@@ -108,18 +60,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string purchasingWebServiceURL;
+		private int creditRating;
 
-		public string PurchasingWebServiceURL
+		[Required]
+		public int CreditRating
 		{
 			get
 			{
-				return this.purchasingWebServiceURL.IsEmptyOrZeroOrNull() ? null : this.purchasingWebServiceURL;
+				return this.creditRating;
 			}
 
 			set
 			{
-				this.purchasingWebServiceURL = value;
+				this.creditRating = value;
 			}
 		}
 
@@ -138,9 +91,56 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
+
+		private bool preferredVendorStatus;
+
+		[Required]
+		public bool PreferredVendorStatus
+		{
+			get
+			{
+				return this.preferredVendorStatus;
+			}
+
+			set
+			{
+				this.preferredVendorStatus = value;
+			}
+		}
+
+		private string purchasingWebServiceURL;
+
+		public string PurchasingWebServiceURL
+		{
+			get
+			{
+				return this.purchasingWebServiceURL.IsEmptyOrZeroOrNull() ? null : this.purchasingWebServiceURL;
+			}
+
+			set
+			{
+				this.purchasingWebServiceURL = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c19b6bb0d1371ca36bbc4157c7676376</Hash>
+    <Hash>0b47280cea2636623fca017f345efed4</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		public void SetProperties(
 			int businessEntityID,
 			short departmentID,
-			int shiftID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int shiftID,
+			DateTime startDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.DepartmentID = departmentID;
-			this.ShiftID = shiftID.ToInt();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ShiftID = shiftID.ToInt();
+			this.StartDate = startDate.ToDateTime();
 		}
 
 		[Key]
@@ -34,17 +34,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("DepartmentID", TypeName="smallint")]
 		public short DepartmentID { get; set; }
 
-		[Column("ShiftID", TypeName="tinyint")]
-		public int ShiftID { get; set; }
-
-		[Column("StartDate", TypeName="date")]
-		public DateTime StartDate { get; set; }
-
 		[Column("EndDate", TypeName="date")]
 		public Nullable<DateTime> EndDate { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("ShiftID", TypeName="tinyint")]
+		public int ShiftID { get; set; }
+
+		[Column("StartDate", TypeName="date")]
+		public DateTime StartDate { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFEmployee Employee { get; set; }
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be2ee6220c9b00755b87b4a8cfb28586</Hash>
+    <Hash>7604478bf1688b0153f4c8199c5a5458</Hash>
 </Codenesium>*/

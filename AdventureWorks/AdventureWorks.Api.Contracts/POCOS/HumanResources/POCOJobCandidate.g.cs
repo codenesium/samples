@@ -10,31 +10,23 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOJobCandidate(
-			int jobCandidateID,
 			Nullable<int> businessEntityID,
-			string resume,
-			DateTime modifiedDate)
+			int jobCandidateID,
+			DateTime modifiedDate,
+			string resume)
 		{
 			this.JobCandidateID = jobCandidateID.ToInt();
-			this.Resume = resume;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Resume = resume;
 
 			this.BusinessEntityID = new ReferenceEntity<Nullable<int>>(businessEntityID,
 			                                                           nameof(ApiResponse.Employees));
 		}
 
-		public int JobCandidateID { get; set; }
 		public ReferenceEntity<Nullable<int>> BusinessEntityID { get; set; }
-		public string Resume { get; set; }
+		public int JobCandidateID { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeJobCandidateIDValue { get; set; } = true;
-
-		public bool ShouldSerializeJobCandidateID()
-		{
-			return this.ShouldSerializeJobCandidateIDValue;
-		}
+		public string Resume { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -45,11 +37,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeResumeValue { get; set; } = true;
+		public bool ShouldSerializeJobCandidateIDValue { get; set; } = true;
 
-		public bool ShouldSerializeResume()
+		public bool ShouldSerializeJobCandidateID()
 		{
-			return this.ShouldSerializeResumeValue;
+			return this.ShouldSerializeJobCandidateIDValue;
 		}
 
 		[JsonIgnore]
@@ -60,16 +52,24 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeResumeValue { get; set; } = true;
+
+		public bool ShouldSerializeResume()
+		{
+			return this.ShouldSerializeResumeValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeJobCandidateIDValue = false;
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeResumeValue = false;
+			this.ShouldSerializeJobCandidateIDValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeResumeValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5415230081104d6e77c31f72caef02eb</Hash>
+    <Hash>bf77e11c99542155131cad34d3a54a92</Hash>
 </Codenesium>*/

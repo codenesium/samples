@@ -21,6 +21,11 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public ILinkRepository LinkRepository { get; set; }
+		public virtual void DateEnteredRules()
+		{
+			this.RuleFor(x => x.DateEntered).NotNull();
+		}
+
 		public virtual void LinkIdRules()
 		{
 			this.RuleFor(x => x.LinkId).NotNull();
@@ -33,11 +38,6 @@ namespace NebulaNS.Api.BusinessObjects
 			this.RuleFor(x => x.Log).Length(0, 2147483647);
 		}
 
-		public virtual void DateEnteredRules()
-		{
-			this.RuleFor(x => x.DateEntered).NotNull();
-		}
-
 		private bool BeValidLink(int id)
 		{
 			return this.LinkRepository.GetByIdDirect(id) != null;
@@ -46,5 +46,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>83802bce40757a258ce66e2109614bd1</Hash>
+    <Hash>e7a53f1ddf3a232b9b2efdba1b4f4b79</Hash>
 </Codenesium>*/

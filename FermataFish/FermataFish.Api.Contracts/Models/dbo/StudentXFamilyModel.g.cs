@@ -11,27 +11,11 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public StudentXFamilyModel(
-			int studentId,
-			int familyId)
+			int familyId,
+			int studentId)
 		{
-			this.StudentId = studentId.ToInt();
 			this.FamilyId = familyId.ToInt();
-		}
-
-		private int studentId;
-
-		[Required]
-		public int StudentId
-		{
-			get
-			{
-				return this.studentId;
-			}
-
-			set
-			{
-				this.studentId = value;
-			}
+			this.StudentId = studentId.ToInt();
 		}
 
 		private int familyId;
@@ -49,9 +33,25 @@ namespace FermataFishNS.Api.Contracts
 				this.familyId = value;
 			}
 		}
+
+		private int studentId;
+
+		[Required]
+		public int StudentId
+		{
+			get
+			{
+				return this.studentId;
+			}
+
+			set
+			{
+				this.studentId = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e699eedf569c73b7b42277a8eb4bcc71</Hash>
+    <Hash>531e0d1d81594aaeaf5bf0d188e459ab</Hash>
 </Codenesium>*/

@@ -13,21 +13,24 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
+			DateTime modifiedDate,
 			string passwordHash,
 			string passwordSalt,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Guid rowguid)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PasswordHash = passwordHash.ToString();
 			this.PasswordSalt = passwordSalt.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("PasswordHash", TypeName="varchar(128)")]
 		public string PasswordHash { get; set; }
@@ -35,11 +38,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("PasswordSalt", TypeName="varchar(10)")]
 		public string PasswordSalt { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFPerson Person { get; set; }
@@ -47,5 +48,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d0ff03f529ff450323c310a5b543f35d</Hash>
+    <Hash>23829894b6d063d66b30d09b2d60a288</Hash>
 </Codenesium>*/

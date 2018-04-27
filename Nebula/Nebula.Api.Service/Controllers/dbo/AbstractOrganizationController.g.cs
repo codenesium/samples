@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/organizations/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Organizations/{result.Id.ToString()}");
 				POCOOrganization response = this.organizationManager.GetById(result.Id).Organizations.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>19a4601e3317110ac2f506b0c66b24e9</Hash>
+    <Hash>a487ba9ff74aac873565e9e679b69377</Hash>
 </Codenesium>*/

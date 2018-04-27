@@ -10,43 +10,27 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductModel(
-			int productModelID,
-			string name,
 			string catalogDescription,
 			string instructions,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name,
+			int productModelID,
+			Guid rowguid)
 		{
-			this.ProductModelID = productModelID.ToInt();
-			this.Name = name.ToString();
 			this.CatalogDescription = catalogDescription;
 			this.Instructions = instructions;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ProductModelID = productModelID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
-		public int ProductModelID { get; set; }
-		public string Name { get; set; }
 		public string CatalogDescription { get; set; }
 		public string Instructions { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductModelIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductModelID()
-		{
-			return this.ShouldSerializeProductModelIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
+		public string Name { get; set; }
+		public int ProductModelID { get; set; }
+		public Guid Rowguid { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeCatalogDescriptionValue { get; set; } = true;
@@ -65,14 +49,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -80,18 +56,42 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeProductModelIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductModelID()
+		{
+			return this.ShouldSerializeProductModelIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductModelIDValue = false;
-			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeCatalogDescriptionValue = false;
 			this.ShouldSerializeInstructionsValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeProductModelIDValue = false;
+			this.ShouldSerializeRowguidValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14795d99f4d5c2332ac5f16c6e199a5f</Hash>
+    <Hash>1c40e7124b5ba8ca78c02ce4aa7c2918</Hash>
 </Codenesium>*/

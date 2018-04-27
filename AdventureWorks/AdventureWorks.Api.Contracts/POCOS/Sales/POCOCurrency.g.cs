@@ -11,17 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOCurrency(
 			string currencyCode,
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
 			this.CurrencyCode = currencyCode.ToString();
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
 		public string CurrencyCode { get; set; }
-		public string Name { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeCurrencyCodeValue { get; set; } = true;
@@ -32,14 +32,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -47,15 +39,23 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeCurrencyCodeValue = false;
-			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7052962f4481e132335b28c9d5ffef32</Hash>
+    <Hash>5129daaad1d9200782592fea824244e7</Hash>
 </Codenesium>*/

@@ -13,15 +13,15 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(ClaspModel model)
 		{
-			this.PreviousChainIdRules();
 			this.NextChainIdRules();
+			this.PreviousChainIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ClaspModel model)
 		{
-			this.PreviousChainIdRules();
 			this.NextChainIdRules();
+			this.PreviousChainIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -33,5 +33,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7cd0ba938fd73c6fa4580d32db991ec8</Hash>
+    <Hash>33d0eb86020b169ddb542b47c97b73b5</Hash>
 </Codenesium>*/

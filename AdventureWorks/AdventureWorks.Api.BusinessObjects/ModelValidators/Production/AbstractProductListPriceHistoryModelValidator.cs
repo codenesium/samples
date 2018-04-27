@@ -21,11 +21,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IProductRepository ProductRepository { get; set; }
-		public virtual void StartDateRules()
-		{
-			this.RuleFor(x => x.StartDate).NotNull();
-		}
-
 		public virtual void EndDateRules()
 		{                       }
 
@@ -39,6 +34,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
+		public virtual void StartDateRules()
+		{
+			this.RuleFor(x => x.StartDate).NotNull();
+		}
+
 		private bool BeValidProduct(int id)
 		{
 			return this.ProductRepository.GetByIdDirect(id) != null;
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>be891e4630146ab2102c56cfdfcfd257</Hash>
+    <Hash>5a75a2cf184a6c367407b30882ebeec3</Hash>
 </Codenesium>*/

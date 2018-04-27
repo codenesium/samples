@@ -11,17 +11,17 @@ namespace ESPIOTNS.Api.Contracts
 
 		public POCODevice(
 			int id,
-			Guid publicId,
-			string name)
+			string name,
+			Guid publicId)
 		{
 			this.Id = id.ToInt();
-			this.PublicId = publicId.ToGuid();
 			this.Name = name.ToString();
+			this.PublicId = publicId.ToGuid();
 		}
 
 		public int Id { get; set; }
-		public Guid PublicId { get; set; }
 		public string Name { get; set; }
+		public Guid PublicId { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue { get; set; } = true;
@@ -32,14 +32,6 @@ namespace ESPIOTNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePublicIdValue { get; set; } = true;
-
-		public bool ShouldSerializePublicId()
-		{
-			return this.ShouldSerializePublicIdValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
@@ -47,15 +39,23 @@ namespace ESPIOTNS.Api.Contracts
 			return this.ShouldSerializeNameValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializePublicIdValue { get; set; } = true;
+
+		public bool ShouldSerializePublicId()
+		{
+			return this.ShouldSerializePublicIdValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializePublicIdValue = false;
 			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializePublicIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd7fd9c70017b6ab0da82c51986a6614</Hash>
+    <Hash>83dc28e09920033270cf977d5e3736cf</Hash>
 </Codenesium>*/

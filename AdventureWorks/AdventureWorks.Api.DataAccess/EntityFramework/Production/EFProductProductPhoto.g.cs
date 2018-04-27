@@ -13,15 +13,21 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int productID,
-			int productPhotoID,
+			DateTime modifiedDate,
 			bool primary,
-			DateTime modifiedDate)
+			int productPhotoID)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Primary = primary.ToBoolean();
 			this.ProductID = productID.ToInt();
 			this.ProductPhotoID = productPhotoID.ToInt();
-			this.Primary = primary.ToBoolean();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[Column("Primary", TypeName="bit")]
+		public bool Primary { get; set; }
 
 		[Key]
 		[Column("ProductID", TypeName="int")]
@@ -29,12 +35,6 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("ProductPhotoID", TypeName="int")]
 		public int ProductPhotoID { get; set; }
-
-		[Column("Primary", TypeName="bit")]
-		public bool Primary { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9e81631623fae4d182d5c449ade644e8</Hash>
+    <Hash>899c097645fadbf9eab32e6fbc8f6cff</Hash>
 </Codenesium>*/

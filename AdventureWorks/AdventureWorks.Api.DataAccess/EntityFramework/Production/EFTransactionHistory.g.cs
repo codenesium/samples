@@ -13,33 +13,37 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int transactionID,
+			decimal actualCost,
+			DateTime modifiedDate,
 			int productID,
+			int quantity,
 			int referenceOrderID,
 			int referenceOrderLineID,
 			DateTime transactionDate,
-			string transactionType,
-			int quantity,
-			decimal actualCost,
-			DateTime modifiedDate)
+			string transactionType)
 		{
-			this.TransactionID = transactionID.ToInt();
+			this.ActualCost = actualCost.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
+			this.Quantity = quantity.ToInt();
 			this.ReferenceOrderID = referenceOrderID.ToInt();
 			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
 			this.TransactionDate = transactionDate.ToDateTime();
+			this.TransactionID = transactionID.ToInt();
 			this.TransactionType = transactionType.ToString();
-			this.Quantity = quantity.ToInt();
-			this.ActualCost = actualCost.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("TransactionID", TypeName="int")]
-		public int TransactionID { get; set; }
+		[Column("ActualCost", TypeName="money")]
+		public decimal ActualCost { get; set; }
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("ProductID", TypeName="int")]
 		public int ProductID { get; set; }
+
+		[Column("Quantity", TypeName="int")]
+		public int Quantity { get; set; }
 
 		[Column("ReferenceOrderID", TypeName="int")]
 		public int ReferenceOrderID { get; set; }
@@ -50,17 +54,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("TransactionDate", TypeName="datetime")]
 		public DateTime TransactionDate { get; set; }
 
+		[Key]
+		[Column("TransactionID", TypeName="int")]
+		public int TransactionID { get; set; }
+
 		[Column("TransactionType", TypeName="nchar(1)")]
 		public string TransactionType { get; set; }
-
-		[Column("Quantity", TypeName="int")]
-		public int Quantity { get; set; }
-
-		[Column("ActualCost", TypeName="money")]
-		public decimal ActualCost { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2adb2fee16bacac15895a6d8e2779f38</Hash>
+    <Hash>f20be3144b541f612f0dba99251cbc58</Hash>
 </Codenesium>*/

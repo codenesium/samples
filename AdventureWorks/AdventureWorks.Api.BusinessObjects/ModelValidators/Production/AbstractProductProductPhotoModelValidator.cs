@@ -22,10 +22,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public IProductRepository ProductRepository { get; set; }
 		public IProductPhotoRepository ProductPhotoRepository { get; set; }
-		public virtual void ProductPhotoIDRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.ProductPhotoID).NotNull();
-			this.RuleFor(x => x.ProductPhotoID).Must(this.BeValidProductPhoto).When(x => x ?.ProductPhotoID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void PrimaryRules()
@@ -33,9 +32,10 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Primary).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void ProductPhotoIDRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.ProductPhotoID).NotNull();
+			this.RuleFor(x => x.ProductPhotoID).Must(this.BeValidProductPhoto).When(x => x ?.ProductPhotoID != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidProduct(int id)
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>74a51175568b497c21947e02984264df</Hash>
+    <Hash>4b64280e8f4712a940d62731544b98f6</Hash>
 </Codenesium>*/

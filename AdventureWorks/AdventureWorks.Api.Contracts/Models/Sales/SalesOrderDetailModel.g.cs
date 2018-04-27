@@ -11,43 +11,27 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public SalesOrderDetailModel(
-			int salesOrderDetailID,
 			string carrierTrackingNumber,
+			decimal lineTotal,
+			DateTime modifiedDate,
 			short orderQty,
 			int productID,
+			Guid rowguid,
+			int salesOrderDetailID,
 			int specialOfferID,
 			decimal unitPrice,
-			decimal unitPriceDiscount,
-			decimal lineTotal,
-			Guid rowguid,
-			DateTime modifiedDate)
+			decimal unitPriceDiscount)
 		{
-			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
 			this.CarrierTrackingNumber = carrierTrackingNumber.ToString();
+			this.LineTotal = lineTotal.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty;
 			this.ProductID = productID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
 			this.SpecialOfferID = specialOfferID.ToInt();
 			this.UnitPrice = unitPrice.ToDecimal();
 			this.UnitPriceDiscount = unitPriceDiscount.ToDecimal();
-			this.LineTotal = lineTotal.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private int salesOrderDetailID;
-
-		[Required]
-		public int SalesOrderDetailID
-		{
-			get
-			{
-				return this.salesOrderDetailID;
-			}
-
-			set
-			{
-				this.salesOrderDetailID = value;
-			}
 		}
 
 		private string carrierTrackingNumber;
@@ -62,6 +46,38 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.carrierTrackingNumber = value;
+			}
+		}
+
+		private decimal lineTotal;
+
+		[Required]
+		public decimal LineTotal
+		{
+			get
+			{
+				return this.lineTotal;
+			}
+
+			set
+			{
+				this.lineTotal = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
 			}
 		}
 
@@ -94,6 +110,38 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.productID = value;
+			}
+		}
+
+		private Guid rowguid;
+
+		[Required]
+		public Guid Rowguid
+		{
+			get
+			{
+				return this.rowguid;
+			}
+
+			set
+			{
+				this.rowguid = value;
+			}
+		}
+
+		private int salesOrderDetailID;
+
+		[Required]
+		public int SalesOrderDetailID
+		{
+			get
+			{
+				return this.salesOrderDetailID;
+			}
+
+			set
+			{
+				this.salesOrderDetailID = value;
 			}
 		}
 
@@ -144,57 +192,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.unitPriceDiscount = value;
 			}
 		}
-
-		private decimal lineTotal;
-
-		[Required]
-		public decimal LineTotal
-		{
-			get
-			{
-				return this.lineTotal;
-			}
-
-			set
-			{
-				this.lineTotal = value;
-			}
-		}
-
-		private Guid rowguid;
-
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
-
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ab0b9567b613371e99c932c10ecc394</Hash>
+    <Hash>abaeba6deff41c39d64fb3efbab1787a</Hash>
 </Codenesium>*/

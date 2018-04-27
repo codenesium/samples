@@ -13,78 +13,79 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			Guid documentNode,
-			Nullable<short> documentLevel,
-			string title,
-			int owner,
-			bool folderFlag,
-			string fileName,
-			string fileExtension,
-			string revision,
 			int changeNumber,
-			int status,
-			string documentSummary,
 			byte[] document1,
+			Nullable<short> documentLevel,
+			string documentSummary,
+			string fileExtension,
+			string fileName,
+			bool folderFlag,
+			DateTime modifiedDate,
+			int owner,
+			string revision,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int status,
+			string title)
 		{
-			this.DocumentNode = documentNode;
-			this.DocumentLevel = documentLevel;
-			this.Title = title.ToString();
-			this.Owner = owner.ToInt();
-			this.FolderFlag = folderFlag.ToBoolean();
-			this.FileName = fileName.ToString();
-			this.FileExtension = fileExtension.ToString();
-			this.Revision = revision.ToString();
 			this.ChangeNumber = changeNumber.ToInt();
-			this.Status = status.ToInt();
-			this.DocumentSummary = documentSummary.ToString();
 			this.Document1 = document1;
-			this.Rowguid = rowguid.ToGuid();
+			this.DocumentLevel = documentLevel;
+			this.DocumentNode = documentNode;
+			this.DocumentSummary = documentSummary.ToString();
+			this.FileExtension = fileExtension.ToString();
+			this.FileName = fileName.ToString();
+			this.FolderFlag = folderFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Owner = owner.ToInt();
+			this.Revision = revision.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.Status = status.ToInt();
+			this.Title = title.ToString();
 		}
+
+		[Column("ChangeNumber", TypeName="int")]
+		public int ChangeNumber { get; set; }
+
+		[Column("Document", TypeName="varbinary(-1)")]
+		public byte[] Document1 { get; set; }
+
+		[Column("DocumentLevel", TypeName="smallint")]
+		public Nullable<short> DocumentLevel { get; set; }
 
 		[Key]
 		[Column("DocumentNode", TypeName="hierarchyid(892)")]
 		public Guid DocumentNode { get; set; }
 
-		[Column("DocumentLevel", TypeName="smallint")]
-		public Nullable<short> DocumentLevel { get; set; }
-
-		[Column("Title", TypeName="nvarchar(50)")]
-		public string Title { get; set; }
-
-		[Column("Owner", TypeName="int")]
-		public int Owner { get; set; }
-
-		[Column("FolderFlag", TypeName="bit")]
-		public bool FolderFlag { get; set; }
-
-		[Column("FileName", TypeName="nvarchar(400)")]
-		public string FileName { get; set; }
+		[Column("DocumentSummary", TypeName="nvarchar(-1)")]
+		public string DocumentSummary { get; set; }
 
 		[Column("FileExtension", TypeName="nvarchar(8)")]
 		public string FileExtension { get; set; }
 
+		[Column("FileName", TypeName="nvarchar(400)")]
+		public string FileName { get; set; }
+
+		[Column("FolderFlag", TypeName="bit")]
+		public bool FolderFlag { get; set; }
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[Column("Owner", TypeName="int")]
+		public int Owner { get; set; }
+
 		[Column("Revision", TypeName="nchar(5)")]
 		public string Revision { get; set; }
 
-		[Column("ChangeNumber", TypeName="int")]
-		public int ChangeNumber { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 
 		[Column("Status", TypeName="tinyint")]
 		public int Status { get; set; }
 
-		[Column("DocumentSummary", TypeName="nvarchar(-1)")]
-		public string DocumentSummary { get; set; }
-
-		[Column("Document", TypeName="varbinary(-1)")]
-		public byte[] Document1 { get; set; }
-
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("Title", TypeName="nvarchar(50)")]
+		public string Title { get; set; }
 
 		[ForeignKey("Owner")]
 		public virtual EFEmployee Employee { get; set; }
@@ -92,5 +93,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0a304c73db5675dd7dffee31681b8a20</Hash>
+    <Hash>14ad68521c874a0275259efa1e2d0b99</Hash>
 </Codenesium>*/

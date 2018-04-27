@@ -20,23 +20,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository { get; set; }
 		public IVendorRepository VendorRepository { get; set; }
+		public IProductRepository ProductRepository { get; set; }
 		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
-		public virtual void BusinessEntityIDRules()
-		{
-			this.RuleFor(x => x.BusinessEntityID).NotNull();
-			this.RuleFor(x => x.BusinessEntityID).Must(this.BeValidVendor).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
-		}
-
 		public virtual void AverageLeadTimeRules()
 		{
 			this.RuleFor(x => x.AverageLeadTime).NotNull();
 		}
 
-		public virtual void StandardPriceRules()
+		public virtual void BusinessEntityIDRules()
 		{
-			this.RuleFor(x => x.StandardPrice).NotNull();
+			this.RuleFor(x => x.BusinessEntityID).NotNull();
+			this.RuleFor(x => x.BusinessEntityID).Must(this.BeValidVendor).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LastReceiptCostRules()
@@ -45,18 +40,28 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void LastReceiptDateRules()
 		{                       }
 
-		public virtual void MinOrderQtyRules()
-		{
-			this.RuleFor(x => x.MinOrderQty).NotNull();
-		}
-
 		public virtual void MaxOrderQtyRules()
 		{
 			this.RuleFor(x => x.MaxOrderQty).NotNull();
 		}
 
+		public virtual void MinOrderQtyRules()
+		{
+			this.RuleFor(x => x.MinOrderQty).NotNull();
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void OnOrderQtyRules()
 		{                       }
+
+		public virtual void StandardPriceRules()
+		{
+			this.RuleFor(x => x.StandardPrice).NotNull();
+		}
 
 		public virtual void UnitMeasureCodeRules()
 		{
@@ -65,19 +70,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
 		}
 
-		public virtual void ModifiedDateRules()
+		private bool BeValidVendor(int id)
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			return this.VendorRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidProduct(int id)
 		{
 			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidVendor(int id)
-		{
-			return this.VendorRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidUnitMeasure(string id)
@@ -88,5 +88,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f31eba0dbd76da3242b5496060c739c4</Hash>
+    <Hash>0bfa4e01b8e7ad35f7fa13ddff58c356</Hash>
 </Codenesium>*/

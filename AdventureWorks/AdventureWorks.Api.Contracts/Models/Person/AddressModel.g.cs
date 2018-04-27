@@ -14,20 +14,20 @@ namespace AdventureWorksNS.Api.Contracts
 			string addressLine1,
 			string addressLine2,
 			string city,
-			int stateProvinceID,
+			DateTime modifiedDate,
 			string postalCode,
-			object spatialLocation,
 			Guid rowguid,
-			DateTime modifiedDate)
+			object spatialLocation,
+			int stateProvinceID)
 		{
 			this.AddressLine1 = addressLine1.ToString();
 			this.AddressLine2 = addressLine2.ToString();
 			this.City = city.ToString();
-			this.StateProvinceID = stateProvinceID.ToInt();
-			this.PostalCode = postalCode.ToString();
-			this.SpatialLocation = spatialLocation;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PostalCode = postalCode.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.SpatialLocation = spatialLocation;
+			this.StateProvinceID = stateProvinceID.ToInt();
 		}
 
 		private string addressLine1;
@@ -77,19 +77,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private int stateProvinceID;
+		private DateTime modifiedDate;
 
 		[Required]
-		public int StateProvinceID
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.stateProvinceID;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.stateProvinceID = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -109,21 +109,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private object spatialLocation;
-
-		public object SpatialLocation
-		{
-			get
-			{
-				return this.spatialLocation.IsEmptyOrZeroOrNull() ? null : this.spatialLocation;
-			}
-
-			set
-			{
-				this.spatialLocation = value;
-			}
-		}
-
 		private Guid rowguid;
 
 		[Required]
@@ -140,24 +125,39 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private object spatialLocation;
 
-		[Required]
-		public DateTime ModifiedDate
+		public object SpatialLocation
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.spatialLocation.IsEmptyOrZeroOrNull() ? null : this.spatialLocation;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.spatialLocation = value;
+			}
+		}
+
+		private int stateProvinceID;
+
+		[Required]
+		public int StateProvinceID
+		{
+			get
+			{
+				return this.stateProvinceID;
+			}
+
+			set
+			{
+				this.stateProvinceID = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e90647f51a4495b410ba585a258c1ba</Hash>
+    <Hash>0d80f89c72f72ab8c663a819a750dc3c</Hash>
 </Codenesium>*/

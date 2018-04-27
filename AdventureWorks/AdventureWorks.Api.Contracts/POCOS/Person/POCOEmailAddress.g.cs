@@ -11,25 +11,25 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOEmailAddress(
 			int businessEntityID,
-			int emailAddressID,
 			string emailAddress1,
-			Guid rowguid,
-			DateTime modifiedDate)
+			int emailAddressID,
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
-			this.EmailAddressID = emailAddressID.ToInt();
 			this.EmailAddress1 = emailAddress1.ToString();
-			this.Rowguid = rowguid.ToGuid();
+			this.EmailAddressID = emailAddressID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.People));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public int EmailAddressID { get; set; }
 		public string EmailAddress1 { get; set; }
-		public Guid Rowguid { get; set; }
+		public int EmailAddressID { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public Guid Rowguid { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -37,14 +37,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBusinessEntityID()
 		{
 			return this.ShouldSerializeBusinessEntityIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeEmailAddressIDValue { get; set; } = true;
-
-		public bool ShouldSerializeEmailAddressID()
-		{
-			return this.ShouldSerializeEmailAddressIDValue;
 		}
 
 		[JsonIgnore]
@@ -56,11 +48,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
+		public bool ShouldSerializeEmailAddressIDValue { get; set; } = true;
 
-		public bool ShouldSerializeRowguid()
+		public bool ShouldSerializeEmailAddressID()
 		{
-			return this.ShouldSerializeRowguidValue;
+			return this.ShouldSerializeEmailAddressIDValue;
 		}
 
 		[JsonIgnore]
@@ -71,17 +63,25 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeEmailAddressIDValue = false;
 			this.ShouldSerializeEmailAddress1Value = false;
-			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeEmailAddressIDValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeRowguidValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>543daa04bd005f9e8bf85a11349843b2</Hash>
+    <Hash>7b31595932eac956d5b6e7f9a686a1f9</Hash>
 </Codenesium>*/

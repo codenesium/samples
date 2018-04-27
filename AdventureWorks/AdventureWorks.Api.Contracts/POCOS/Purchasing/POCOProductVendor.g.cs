@@ -10,62 +10,46 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductVendor(
-			int productID,
-			int businessEntityID,
 			int averageLeadTime,
-			decimal standardPrice,
+			int businessEntityID,
 			Nullable<decimal> lastReceiptCost,
 			Nullable<DateTime> lastReceiptDate,
-			int minOrderQty,
 			int maxOrderQty,
+			int minOrderQty,
+			DateTime modifiedDate,
 			Nullable<int> onOrderQty,
-			string unitMeasureCode,
-			DateTime modifiedDate)
+			int productID,
+			decimal standardPrice,
+			string unitMeasureCode)
 		{
 			this.AverageLeadTime = averageLeadTime.ToInt();
-			this.StandardPrice = standardPrice.ToDecimal();
 			this.LastReceiptCost = lastReceiptCost.ToNullableDecimal();
 			this.LastReceiptDate = lastReceiptDate.ToNullableDateTime();
-			this.MinOrderQty = minOrderQty.ToInt();
 			this.MaxOrderQty = maxOrderQty.ToInt();
-			this.OnOrderQty = onOrderQty.ToNullableInt();
+			this.MinOrderQty = minOrderQty.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.OnOrderQty = onOrderQty.ToNullableInt();
+			this.StandardPrice = standardPrice.ToDecimal();
 
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.Vendors));
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          nameof(ApiResponse.Products));
 			this.UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
 			                                                   nameof(ApiResponse.UnitMeasures));
 		}
 
-		public ReferenceEntity<int> ProductID { get; set; }
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
 		public int AverageLeadTime { get; set; }
-		public decimal StandardPrice { get; set; }
+		public ReferenceEntity<int> BusinessEntityID { get; set; }
 		public Nullable<decimal> LastReceiptCost { get; set; }
 		public Nullable<DateTime> LastReceiptDate { get; set; }
-		public int MinOrderQty { get; set; }
 		public int MaxOrderQty { get; set; }
-		public Nullable<int> OnOrderQty { get; set; }
-		public ReferenceEntity<string> UnitMeasureCode { get; set; }
+		public int MinOrderQty { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
-
-		public bool ShouldSerializeBusinessEntityID()
-		{
-			return this.ShouldSerializeBusinessEntityIDValue;
-		}
+		public Nullable<int> OnOrderQty { get; set; }
+		public ReferenceEntity<int> ProductID { get; set; }
+		public decimal StandardPrice { get; set; }
+		public ReferenceEntity<string> UnitMeasureCode { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeAverageLeadTimeValue { get; set; } = true;
@@ -76,11 +60,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStandardPriceValue { get; set; } = true;
+		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
 
-		public bool ShouldSerializeStandardPrice()
+		public bool ShouldSerializeBusinessEntityID()
 		{
-			return this.ShouldSerializeStandardPriceValue;
+			return this.ShouldSerializeBusinessEntityIDValue;
 		}
 
 		[JsonIgnore]
@@ -100,6 +84,14 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeMaxOrderQtyValue { get; set; } = true;
+
+		public bool ShouldSerializeMaxOrderQty()
+		{
+			return this.ShouldSerializeMaxOrderQtyValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeMinOrderQtyValue { get; set; } = true;
 
 		public bool ShouldSerializeMinOrderQty()
@@ -108,11 +100,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMaxOrderQtyValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeMaxOrderQty()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeMaxOrderQtyValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -124,6 +116,22 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductID()
+		{
+			return this.ShouldSerializeProductIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStandardPriceValue { get; set; } = true;
+
+		public bool ShouldSerializeStandardPrice()
+		{
+			return this.ShouldSerializeStandardPriceValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
 
 		public bool ShouldSerializeUnitMeasureCode()
@@ -131,31 +139,23 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeUnitMeasureCodeValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
-
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeBusinessEntityIDValue = false;
 			this.ShouldSerializeAverageLeadTimeValue = false;
-			this.ShouldSerializeStandardPriceValue = false;
+			this.ShouldSerializeBusinessEntityIDValue = false;
 			this.ShouldSerializeLastReceiptCostValue = false;
 			this.ShouldSerializeLastReceiptDateValue = false;
-			this.ShouldSerializeMinOrderQtyValue = false;
 			this.ShouldSerializeMaxOrderQtyValue = false;
-			this.ShouldSerializeOnOrderQtyValue = false;
-			this.ShouldSerializeUnitMeasureCodeValue = false;
+			this.ShouldSerializeMinOrderQtyValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeOnOrderQtyValue = false;
+			this.ShouldSerializeProductIDValue = false;
+			this.ShouldSerializeStandardPriceValue = false;
+			this.ShouldSerializeUnitMeasureCodeValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ac642ffa4a74280efb5ff9371c359001</Hash>
+    <Hash>5abdae033f2f60934702b9026f28e42a</Hash>
 </Codenesium>*/

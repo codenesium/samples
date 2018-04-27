@@ -22,14 +22,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public IEmployeeRepository EmployeeRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
-		public virtual void TerritoryIDRules()
-		{
-			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void SalesQuotaRules()
-		{                       }
-
 		public virtual void BonusRules()
 		{
 			this.RuleFor(x => x.Bonus).NotNull();
@@ -40,14 +32,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.CommissionPct).NotNull();
 		}
 
-		public virtual void SalesYTDRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.SalesYTD).NotNull();
-		}
-
-		public virtual void SalesLastYearRules()
-		{
-			this.RuleFor(x => x.SalesLastYear).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void RowguidRules()
@@ -55,9 +42,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void SalesLastYearRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.SalesLastYear).NotNull();
+		}
+
+		public virtual void SalesQuotaRules()
+		{                       }
+
+		public virtual void SalesYTDRules()
+		{
+			this.RuleFor(x => x.SalesYTD).NotNull();
+		}
+
+		public virtual void TerritoryIDRules()
+		{
+			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidEmployee(int id)
@@ -73,5 +73,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8623eaba9c80612ef9adf3e974c2daf8</Hash>
+    <Hash>013866b5bb16de3a44f44e06c9ed12de</Hash>
 </Codenesium>*/

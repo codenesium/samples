@@ -22,12 +22,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public ICountryRegionRepository CountryRegionRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
-		public virtual void StateProvinceCodeRules()
-		{
-			this.RuleFor(x => x.StateProvinceCode).NotNull();
-			this.RuleFor(x => x.StateProvinceCode).Length(0, 3);
-		}
-
 		public virtual void CountryRegionCodeRules()
 		{
 			this.RuleFor(x => x.CountryRegionCode).NotNull();
@@ -40,16 +34,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.IsOnlyStateProvinceFlag).NotNull();
 		}
 
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 50);
-		}
-
-		public virtual void TerritoryIDRules()
-		{
-			this.RuleFor(x => x.TerritoryID).NotNull();
-			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RowguidRules()
@@ -57,9 +50,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void StateProvinceCodeRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.StateProvinceCode).NotNull();
+			this.RuleFor(x => x.StateProvinceCode).Length(0, 3);
+		}
+
+		public virtual void TerritoryIDRules()
+		{
+			this.RuleFor(x => x.TerritoryID).NotNull();
+			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidCountryRegion(string id)
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7e0efbe62d0b0bfbc4a262f10a92974e</Hash>
+    <Hash>76cdadcd2def893edd62b6db414d1390</Hash>
 </Codenesium>*/

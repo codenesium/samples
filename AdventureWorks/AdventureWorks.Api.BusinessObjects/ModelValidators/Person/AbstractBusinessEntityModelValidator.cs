@@ -20,18 +20,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void RowguidRules()
-		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void RowguidRules()
+		{
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>81dd82838a7ed4418b9ce993d16118aa</Hash>
+    <Hash>8a871ee2126547ce342ea9bdfc9611c7</Hash>
 </Codenesium>*/

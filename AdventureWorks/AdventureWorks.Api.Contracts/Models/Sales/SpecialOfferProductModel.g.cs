@@ -11,13 +11,29 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public SpecialOfferProductModel(
+			DateTime modifiedDate,
 			int productID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Guid rowguid)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private int productID;
@@ -51,25 +67,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.rowguid = value;
 			}
 		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab87c759d4635697551aedfe0938cd14</Hash>
+    <Hash>e841859e9167f4a8616b36821bee9c07</Hash>
 </Codenesium>*/

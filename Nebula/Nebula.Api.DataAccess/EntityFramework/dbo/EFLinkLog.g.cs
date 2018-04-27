@@ -13,18 +13,20 @@ namespace NebulaNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
+			DateTime dateEntered,
 			int linkId,
-			string log,
-			DateTime dateEntered)
+			string log)
 		{
+			this.DateEntered = dateEntered.ToDateTime();
 			this.Id = id.ToInt();
 			this.LinkId = linkId.ToInt();
 			this.Log = log.ToString();
-			this.DateEntered = dateEntered.ToDateTime();
 		}
 
+		[Column("dateEntered", TypeName="datetime")]
+		public DateTime DateEntered { get; set; }
+
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
 
@@ -34,14 +36,11 @@ namespace NebulaNS.Api.DataAccess
 		[Column("log", TypeName="text(2147483647)")]
 		public string Log { get; set; }
 
-		[Column("dateEntered", TypeName="datetime")]
-		public DateTime DateEntered { get; set; }
-
 		[ForeignKey("LinkId")]
 		public virtual EFLink Link { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>3e73099da547ca2575166c5576f70e17</Hash>
+    <Hash>eaf2a62551402b8a9266cef587789c92</Hash>
 </Codenesium>*/

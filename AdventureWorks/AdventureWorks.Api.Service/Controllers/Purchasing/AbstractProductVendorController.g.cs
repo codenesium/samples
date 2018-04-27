@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/productVendors/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductVendors/{result.Id.ToString()}");
 				POCOProductVendor response = this.productVendorManager.GetById(result.Id).ProductVendors.First();
 				return this.Ok(response);
 			}
@@ -177,14 +177,14 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductID/{id}")]
+		[Route("ByBusinessEntityID/{id}")]
 		[ReadOnly]
-		[Route("~/api/Products/{id}/ProductVendors")]
+		[Route("~/api/Vendors/{id}/ProductVendors")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
-		public virtual IActionResult ByProductID(int id)
+		public virtual IActionResult ByBusinessEntityID(int id)
 		{
-			ApiResponse response = this.productVendorManager.GetWhere(x => x.ProductID == id);
+			ApiResponse response = this.productVendorManager.GetWhere(x => x.BusinessEntityID == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -197,14 +197,14 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
+		[Route("ByProductID/{id}")]
 		[ReadOnly]
-		[Route("~/api/Vendors/{id}/ProductVendors")]
+		[Route("~/api/Products/{id}/ProductVendors")]
 		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
+		public virtual IActionResult ByProductID(int id)
 		{
-			ApiResponse response = this.productVendorManager.GetWhere(x => x.BusinessEntityID == id);
+			ApiResponse response = this.productVendorManager.GetWhere(x => x.ProductID == id);
 
 			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
 			{
@@ -239,5 +239,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>020f03ff1aad1144eaf43a967e360e06</Hash>
+    <Hash>2aeb2bc1ab1062ada164fa04357ad400</Hash>
 </Codenesium>*/

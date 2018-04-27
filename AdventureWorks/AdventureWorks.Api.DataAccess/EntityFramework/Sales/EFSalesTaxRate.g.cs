@@ -13,44 +13,44 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int salesTaxRateID,
-			int stateProvinceID,
-			int taxType,
-			decimal taxRate,
+			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int stateProvinceID,
+			decimal taxRate,
+			int taxType)
 		{
-			this.SalesTaxRateID = salesTaxRateID.ToInt();
-			this.StateProvinceID = stateProvinceID.ToInt();
-			this.TaxType = taxType.ToInt();
-			this.TaxRate = taxRate.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.SalesTaxRateID = salesTaxRateID.ToInt();
+			this.StateProvinceID = stateProvinceID.ToInt();
+			this.TaxRate = taxRate.ToDecimal();
+			this.TaxType = taxType.ToInt();
 		}
 
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
+
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("SalesTaxRateID", TypeName="int")]
 		public int SalesTaxRateID { get; set; }
 
 		[Column("StateProvinceID", TypeName="int")]
 		public int StateProvinceID { get; set; }
 
-		[Column("TaxType", TypeName="tinyint")]
-		public int TaxType { get; set; }
-
 		[Column("TaxRate", TypeName="smallmoney")]
 		public decimal TaxRate { get; set; }
 
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
-
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("TaxType", TypeName="tinyint")]
+		public int TaxType { get; set; }
 
 		[ForeignKey("StateProvinceID")]
 		public virtual EFStateProvince StateProvince { get; set; }
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3b3f1f22f39ebfe2c965db7542d16e68</Hash>
+    <Hash>ba8c1a7d91cbefafd3b471342933c8be</Hash>
 </Codenesium>*/

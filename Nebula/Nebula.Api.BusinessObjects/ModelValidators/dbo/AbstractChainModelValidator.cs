@@ -20,8 +20,19 @@ namespace NebulaNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ITeamRepository TeamRepository { get; set; }
 		public IChainStatusRepository ChainStatusRepository { get; set; }
+		public ITeamRepository TeamRepository { get; set; }
+		public virtual void ChainStatusIdRules()
+		{
+			this.RuleFor(x => x.ChainStatusId).NotNull();
+			this.RuleFor(x => x.ChainStatusId).Must(this.BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void ExternalIdRules()
+		{
+			this.RuleFor(x => x.ExternalId).NotNull();
+		}
+
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
@@ -34,29 +45,18 @@ namespace NebulaNS.Api.BusinessObjects
 			this.RuleFor(x => x.TeamId).Must(this.BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void ChainStatusIdRules()
+		private bool BeValidChainStatus(int id)
 		{
-			this.RuleFor(x => x.ChainStatusId).NotNull();
-			this.RuleFor(x => x.ChainStatusId).Must(this.BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void ExternalIdRules()
-		{
-			this.RuleFor(x => x.ExternalId).NotNull();
+			return this.ChainStatusRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidTeam(int id)
 		{
 			return this.TeamRepository.GetByIdDirect(id) != null;
 		}
-
-		private bool BeValidChainStatus(int id)
-		{
-			return this.ChainStatusRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf780672598de28a8bb8d0e36fd251af</Hash>
+    <Hash>29189986eb59a2e1dfcdb314819daae9</Hash>
 </Codenesium>*/

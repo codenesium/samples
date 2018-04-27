@@ -21,24 +21,24 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IEmployeeRepository EmployeeRepository { get; set; }
+		public virtual void ChangeNumberRules()
+		{
+			this.RuleFor(x => x.ChangeNumber).NotNull();
+		}
+
+		public virtual void Document1Rules()
+		{                       }
+
 		public virtual void DocumentLevelRules()
 		{                       }
 
-		public virtual void TitleRules()
-		{
-			this.RuleFor(x => x.Title).NotNull();
-			this.RuleFor(x => x.Title).Length(0, 50);
-		}
+		public virtual void DocumentSummaryRules()
+		{                       }
 
-		public virtual void OwnerRules()
+		public virtual void FileExtensionRules()
 		{
-			this.RuleFor(x => x.Owner).NotNull();
-			this.RuleFor(x => x.Owner).Must(this.BeValidEmployee).When(x => x ?.Owner != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void FolderFlagRules()
-		{
-			this.RuleFor(x => x.FolderFlag).NotNull();
+			this.RuleFor(x => x.FileExtension).NotNull();
+			this.RuleFor(x => x.FileExtension).Length(0, 8);
 		}
 
 		public virtual void FileNameRules()
@@ -47,10 +47,20 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.FileName).Length(0, 400);
 		}
 
-		public virtual void FileExtensionRules()
+		public virtual void FolderFlagRules()
 		{
-			this.RuleFor(x => x.FileExtension).NotNull();
-			this.RuleFor(x => x.FileExtension).Length(0, 8);
+			this.RuleFor(x => x.FolderFlag).NotNull();
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void OwnerRules()
+		{
+			this.RuleFor(x => x.Owner).NotNull();
+			this.RuleFor(x => x.Owner).Must(this.BeValidEmployee).When(x => x ?.Owner != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RevisionRules()
@@ -59,9 +69,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Revision).Length(0, 5);
 		}
 
-		public virtual void ChangeNumberRules()
+		public virtual void RowguidRules()
 		{
-			this.RuleFor(x => x.ChangeNumber).NotNull();
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void StatusRules()
@@ -69,20 +79,10 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Status).NotNull();
 		}
 
-		public virtual void DocumentSummaryRules()
-		{                       }
-
-		public virtual void Document1Rules()
-		{                       }
-
-		public virtual void RowguidRules()
+		public virtual void TitleRules()
 		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.Title).NotNull();
+			this.RuleFor(x => x.Title).Length(0, 50);
 		}
 
 		private bool BeValidEmployee(int id)
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>70bd3108877dae4ca9b57b990d33cfa4</Hash>
+    <Hash>c49454b9e8706824b80011552ed69705</Hash>
 </Codenesium>*/

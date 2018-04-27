@@ -11,27 +11,11 @@ namespace ESPIOTNS.Api.Contracts
 		{}
 
 		public DeviceModel(
-			Guid publicId,
-			string name)
+			string name,
+			Guid publicId)
 		{
-			this.PublicId = publicId.ToGuid();
 			this.Name = name.ToString();
-		}
-
-		private Guid publicId;
-
-		[Required]
-		public Guid PublicId
-		{
-			get
-			{
-				return this.publicId;
-			}
-
-			set
-			{
-				this.publicId = value;
-			}
+			this.PublicId = publicId.ToGuid();
 		}
 
 		private string name;
@@ -49,9 +33,25 @@ namespace ESPIOTNS.Api.Contracts
 				this.name = value;
 			}
 		}
+
+		private Guid publicId;
+
+		[Required]
+		public Guid PublicId
+		{
+			get
+			{
+				return this.publicId;
+			}
+
+			set
+			{
+				this.publicId = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ff16663bc8d64edc3c1955dd22c1bf5</Hash>
+    <Hash>4ead78a1527137d21365115d430110b5</Hash>
 </Codenesium>*/

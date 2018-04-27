@@ -11,43 +11,27 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductVendorModel(
-			int businessEntityID,
 			int averageLeadTime,
-			decimal standardPrice,
+			int businessEntityID,
 			Nullable<decimal> lastReceiptCost,
 			Nullable<DateTime> lastReceiptDate,
-			int minOrderQty,
 			int maxOrderQty,
+			int minOrderQty,
+			DateTime modifiedDate,
 			Nullable<int> onOrderQty,
-			string unitMeasureCode,
-			DateTime modifiedDate)
+			decimal standardPrice,
+			string unitMeasureCode)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
 			this.AverageLeadTime = averageLeadTime.ToInt();
-			this.StandardPrice = standardPrice.ToDecimal();
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.LastReceiptCost = lastReceiptCost.ToNullableDecimal();
 			this.LastReceiptDate = lastReceiptDate.ToNullableDateTime();
-			this.MinOrderQty = minOrderQty.ToInt();
 			this.MaxOrderQty = maxOrderQty.ToInt();
-			this.OnOrderQty = onOrderQty.ToNullableInt();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.MinOrderQty = minOrderQty.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private int businessEntityID;
-
-		[Required]
-		public int BusinessEntityID
-		{
-			get
-			{
-				return this.businessEntityID;
-			}
-
-			set
-			{
-				this.businessEntityID = value;
-			}
+			this.OnOrderQty = onOrderQty.ToNullableInt();
+			this.StandardPrice = standardPrice.ToDecimal();
+			this.UnitMeasureCode = unitMeasureCode.ToString();
 		}
 
 		private int averageLeadTime;
@@ -66,19 +50,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private decimal standardPrice;
+		private int businessEntityID;
 
 		[Required]
-		public decimal StandardPrice
+		public int BusinessEntityID
 		{
 			get
 			{
-				return this.standardPrice;
+				return this.businessEntityID;
 			}
 
 			set
 			{
-				this.standardPrice = value;
+				this.businessEntityID = value;
 			}
 		}
 
@@ -112,22 +96,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private int minOrderQty;
-
-		[Required]
-		public int MinOrderQty
-		{
-			get
-			{
-				return this.minOrderQty;
-			}
-
-			set
-			{
-				this.minOrderQty = value;
-			}
-		}
-
 		private int maxOrderQty;
 
 		[Required]
@@ -144,34 +112,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private Nullable<int> onOrderQty;
-
-		public Nullable<int> OnOrderQty
-		{
-			get
-			{
-				return this.onOrderQty.IsEmptyOrZeroOrNull() ? null : this.onOrderQty;
-			}
-
-			set
-			{
-				this.onOrderQty = value;
-			}
-		}
-
-		private string unitMeasureCode;
+		private int minOrderQty;
 
 		[Required]
-		public string UnitMeasureCode
+		public int MinOrderQty
 		{
 			get
 			{
-				return this.unitMeasureCode;
+				return this.minOrderQty;
 			}
 
 			set
 			{
-				this.unitMeasureCode = value;
+				this.minOrderQty = value;
 			}
 		}
 
@@ -190,9 +143,56 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private Nullable<int> onOrderQty;
+
+		public Nullable<int> OnOrderQty
+		{
+			get
+			{
+				return this.onOrderQty.IsEmptyOrZeroOrNull() ? null : this.onOrderQty;
+			}
+
+			set
+			{
+				this.onOrderQty = value;
+			}
+		}
+
+		private decimal standardPrice;
+
+		[Required]
+		public decimal StandardPrice
+		{
+			get
+			{
+				return this.standardPrice;
+			}
+
+			set
+			{
+				this.standardPrice = value;
+			}
+		}
+
+		private string unitMeasureCode;
+
+		[Required]
+		public string UnitMeasureCode
+		{
+			get
+			{
+				return this.unitMeasureCode;
+			}
+
+			set
+			{
+				this.unitMeasureCode = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>11ddf45b25def02ab55a5fbcc776c326</Hash>
+    <Hash>04fd3f90a566fe41bf6f88e050fa27ae</Hash>
 </Codenesium>*/

@@ -15,8 +15,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.AddressIDRules();
 			this.AddressTypeIDRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.RowguidRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.AddressIDRules();
 			this.AddressTypeIDRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.RowguidRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>541049f250f94e987f2887c3faa30e1d</Hash>
+    <Hash>c4f1944b49bd6abfae52189fc9a29378</Hash>
 </Codenesium>*/

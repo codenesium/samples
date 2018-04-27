@@ -11,25 +11,25 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOPassword(
 			int businessEntityID,
+			DateTime modifiedDate,
 			string passwordHash,
 			string passwordSalt,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Guid rowguid)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PasswordHash = passwordHash.ToString();
 			this.PasswordSalt = passwordSalt.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.People));
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public DateTime ModifiedDate { get; set; }
 		public string PasswordHash { get; set; }
 		public string PasswordSalt { get; set; }
 		public Guid Rowguid { get; set; }
-		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -37,6 +37,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBusinessEntityID()
 		{
 			return this.ShouldSerializeBusinessEntityIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -63,25 +71,17 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeRowguidValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
-
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializePasswordHashValue = false;
 			this.ShouldSerializePasswordSaltValue = false;
 			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e6bec0abbf77820ac72f22a19f44bbe</Hash>
+    <Hash>8904ad8a48d0af2dd101346887b32835</Hash>
 </Codenesium>*/

@@ -11,17 +11,33 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ShipMethodModel(
+			DateTime modifiedDate,
 			string name,
-			decimal shipBase,
-			decimal shipRate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			decimal shipBase,
+			decimal shipRate)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
 			this.ShipBase = shipBase.ToDecimal();
 			this.ShipRate = shipRate.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private string name;
@@ -37,6 +53,22 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.name = value;
+			}
+		}
+
+		private Guid rowguid;
+
+		[Required]
+		public Guid Rowguid
+		{
+			get
+			{
+				return this.rowguid;
+			}
+
+			set
+			{
+				this.rowguid = value;
 			}
 		}
 
@@ -71,41 +103,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.shipRate = value;
 			}
 		}
-
-		private Guid rowguid;
-
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
-
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f3e7d031f48f751781c1e6055828427d</Hash>
+    <Hash>538e722bf8a4b7b3c4e03c678b5cbead</Hash>
 </Codenesium>*/

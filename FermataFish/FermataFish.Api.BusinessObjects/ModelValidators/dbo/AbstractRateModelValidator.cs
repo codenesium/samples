@@ -20,17 +20,11 @@ namespace FermataFishNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ITeacherSkillRepository TeacherSkillRepository { get; set; }
 		public ITeacherRepository TeacherRepository { get; set; }
+		public ITeacherSkillRepository TeacherSkillRepository { get; set; }
 		public virtual void AmountPerMinuteRules()
 		{
 			this.RuleFor(x => x.AmountPerMinute).NotNull();
-		}
-
-		public virtual void TeacherSkillIdRules()
-		{
-			this.RuleFor(x => x.TeacherSkillId).NotNull();
-			this.RuleFor(x => x.TeacherSkillId).Must(this.BeValidTeacherSkill).When(x => x ?.TeacherSkillId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TeacherIdRules()
@@ -39,18 +33,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.RuleFor(x => x.TeacherId).Must(this.BeValidTeacher).When(x => x ?.TeacherId != null).WithMessage("Invalid reference");
 		}
 
-		private bool BeValidTeacherSkill(int id)
+		public virtual void TeacherSkillIdRules()
 		{
-			return this.TeacherSkillRepository.GetByIdDirect(id) != null;
+			this.RuleFor(x => x.TeacherSkillId).NotNull();
+			this.RuleFor(x => x.TeacherSkillId).Must(this.BeValidTeacherSkill).When(x => x ?.TeacherSkillId != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidTeacher(int id)
 		{
 			return this.TeacherRepository.GetByIdDirect(id) != null;
 		}
+
+		private bool BeValidTeacherSkill(int id)
+		{
+			return this.TeacherSkillRepository.GetByIdDirect(id) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>902b35780faff6f546f07d8e7ee7c5ae</Hash>
+    <Hash>16a2e22c71f3b181bdc81b32a052e9d2</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/teams/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Teams/{result.Id.ToString()}");
 				POCOTeam response = this.teamManager.GetById(result.Id).Teams.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2ccd4781c3abcea6c6a553bd6a71f9f0</Hash>
+    <Hash>75612d2266941d3cd327fe483c6920bd</Hash>
 </Codenesium>*/

@@ -13,33 +13,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
+			DateTime modifiedDate,
 			DateTime quotaDate,
-			decimal salesQuota,
 			Guid rowguid,
-			DateTime modifiedDate)
+			decimal salesQuota)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.QuotaDate = quotaDate.ToDateTime();
-			this.SalesQuota = salesQuota.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.QuotaDate = quotaDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesQuota = salesQuota.ToDecimal();
 		}
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
 		[Column("QuotaDate", TypeName="datetime")]
 		public DateTime QuotaDate { get; set; }
 
-		[Column("SalesQuota", TypeName="money")]
-		public decimal SalesQuota { get; set; }
-
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("SalesQuota", TypeName="money")]
+		public decimal SalesQuota { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFSalesPerson SalesPerson { get; set; }
@@ -47,5 +48,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3009deeb226719c57fda9ebb698285a8</Hash>
+    <Hash>066b73968a9086d052ed6c03d75fca69</Hash>
 </Codenesium>*/

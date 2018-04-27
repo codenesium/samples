@@ -13,13 +13,13 @@ namespace AdventureWorksNS.Api.Contracts
 		public BusinessEntityAddressModel(
 			int addressID,
 			int addressTypeID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
 			this.AddressID = addressID.ToInt();
 			this.AddressTypeID = addressTypeID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
 		private int addressID;
@@ -54,22 +54,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private Guid rowguid;
-
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
-
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-
 		private DateTime modifiedDate;
 
 		[Required]
@@ -85,9 +69,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private Guid rowguid;
+
+		[Required]
+		public Guid Rowguid
+		{
+			get
+			{
+				return this.rowguid;
+			}
+
+			set
+			{
+				this.rowguid = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>423b098e4be3bdbb28cc335564cd1ae3</Hash>
+    <Hash>742219715fb7de4d5c7e75c05ebc1a28</Hash>
 </Codenesium>*/

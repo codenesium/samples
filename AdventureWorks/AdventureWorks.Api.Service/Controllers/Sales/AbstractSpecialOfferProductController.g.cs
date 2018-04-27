@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/specialOfferProducts/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SpecialOfferProducts/{result.Id.ToString()}");
 				POCOSpecialOfferProduct response = this.specialOfferProductManager.GetById(result.Id).SpecialOfferProducts.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("BySpecialOfferID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SpecialOffers/{id}/SpecialOfferProducts")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
-		public virtual IActionResult BySpecialOfferID(int id)
-		{
-			ApiResponse response = this.specialOfferProductManager.GetWhere(x => x.SpecialOfferID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpecialOfferProducts);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByProductID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Products/{id}/SpecialOfferProducts")]
@@ -215,9 +195,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.SpecialOfferProducts);
 			}
 		}
+
+		[HttpGet]
+		[Route("BySpecialOfferID/{id}")]
+		[ReadOnly]
+		[Route("~/api/SpecialOffers/{id}/SpecialOfferProducts")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
+		public virtual IActionResult BySpecialOfferID(int id)
+		{
+			ApiResponse response = this.specialOfferProductManager.GetWhere(x => x.SpecialOfferID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.SpecialOfferProducts);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>50eaa3578d1329d2f74723f24a6bd4c6</Hash>
+    <Hash>a9302630d73713e4ec98b555dd65ec55</Hash>
 </Codenesium>*/

@@ -7,3 +7,5 @@ script:
    -  dotnet build Nebula/Nebula.Api.Service/Nebula.Api.Service.csproj
    -  dotnet build AdventureWorks/AdventureWorks.Api.Service/AdventureWorks.Api.Service.csproj
    -  dotnet build FermataFish/FermataFish.Api.Service/FermataFish.Api.Service.csproj
+   -  dotnet build PetShipping/PetShipping.Api.Service/PetShipping.Api.Service.csproj
+   -  dotnet build PetStore/PetStore.Api.Service/PetStore.Api.Service.csproj

@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/machines/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Id.ToString()}");
 				POCOMachine response = this.machineManager.GetById(result.Id).Machines.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e9e2da21d49e36ffe27e14ee953412aa</Hash>
+    <Hash>37a290a06eaf1a2d12ca1bcae47711e3</Hash>
 </Codenesium>*/

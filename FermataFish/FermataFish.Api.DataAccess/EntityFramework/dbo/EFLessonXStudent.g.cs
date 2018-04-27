@@ -16,21 +16,20 @@ namespace FermataFishNS.Api.DataAccess
 			int lessonId,
 			int studentId)
 		{
+			this.Id = id.ToInt();
 			this.LessonId = lessonId.ToInt();
 			this.StudentId = studentId.ToInt();
-			this.Id = id.ToInt();
 		}
+
+		[Key]
+		[Column("id", TypeName="int")]
+		public int Id { get; set; }
 
 		[Column("lessonId", TypeName="int")]
 		public int LessonId { get; set; }
 
 		[Column("studentId", TypeName="int")]
 		public int StudentId { get; set; }
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id", TypeName="int")]
-		public int Id { get; set; }
 
 		[ForeignKey("LessonId")]
 		public virtual EFLesson Lesson { get; set; }
@@ -41,5 +40,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0105bbf70d1c1471c93aced0e9a492c3</Hash>
+    <Hash>5843a6eca0fee8a9bb8fbd6aab7cb286</Hash>
 </Codenesium>*/

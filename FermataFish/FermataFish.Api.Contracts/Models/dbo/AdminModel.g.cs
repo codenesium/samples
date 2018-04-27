@@ -11,19 +11,34 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public AdminModel(
+			Nullable<DateTime> birthday,
 			string email,
 			string firstName,
 			string lastName,
 			string phone,
-			Nullable<DateTime> birthday,
 			int studioId)
 		{
+			this.Birthday = birthday.ToNullableDateTime();
 			this.Email = email.ToString();
 			this.FirstName = firstName.ToString();
 			this.LastName = lastName.ToString();
 			this.Phone = phone.ToString();
-			this.Birthday = birthday.ToNullableDateTime();
 			this.StudioId = studioId.ToInt();
+		}
+
+		private Nullable<DateTime> birthday;
+
+		public Nullable<DateTime> Birthday
+		{
+			get
+			{
+				return this.birthday.IsEmptyOrZeroOrNull() ? null : this.birthday;
+			}
+
+			set
+			{
+				this.birthday = value;
+			}
 		}
 
 		private string email;
@@ -90,21 +105,6 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private Nullable<DateTime> birthday;
-
-		public Nullable<DateTime> Birthday
-		{
-			get
-			{
-				return this.birthday.IsEmptyOrZeroOrNull() ? null : this.birthday;
-			}
-
-			set
-			{
-				this.birthday = value;
-			}
-		}
-
 		private int studioId;
 
 		[Required]
@@ -124,5 +124,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0f2da4835b4e215d8d365a9c392af7ea</Hash>
+    <Hash>18430c63e40c0244b67080855bf7c9a3</Hash>
 </Codenesium>*/

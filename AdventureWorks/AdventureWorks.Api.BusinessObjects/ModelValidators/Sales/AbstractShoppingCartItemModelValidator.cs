@@ -21,23 +21,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IProductRepository ProductRepository { get; set; }
-		public virtual void ShoppingCartIDRules()
-		{
-			this.RuleFor(x => x.ShoppingCartID).NotNull();
-			this.RuleFor(x => x.ShoppingCartID).Length(0, 50);
-		}
-
-		public virtual void QuantityRules()
-		{
-			this.RuleFor(x => x.Quantity).NotNull();
-		}
-
-		public virtual void ProductIDRules()
-		{
-			this.RuleFor(x => x.ProductID).NotNull();
-			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
-		}
-
 		public virtual void DateCreatedRules()
 		{
 			this.RuleFor(x => x.DateCreated).NotNull();
@@ -48,6 +31,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
+		public virtual void ProductIDRules()
+		{
+			this.RuleFor(x => x.ProductID).NotNull();
+			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void QuantityRules()
+		{
+			this.RuleFor(x => x.Quantity).NotNull();
+		}
+
+		public virtual void ShoppingCartIDRules()
+		{
+			this.RuleFor(x => x.ShoppingCartID).NotNull();
+			this.RuleFor(x => x.ShoppingCartID).Length(0, 50);
+		}
+
 		private bool BeValidProduct(int id)
 		{
 			return this.ProductRepository.GetByIdDirect(id) != null;
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a6f321e7062a547341af647a13e1cdaf</Hash>
+    <Hash>6374669c726cf2c55906aa462f7a5756</Hash>
 </Codenesium>*/

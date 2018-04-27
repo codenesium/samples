@@ -13,38 +13,39 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
-			string name,
-			Nullable<int> salesPersonID,
 			string demographics,
+			DateTime modifiedDate,
+			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			Nullable<int> salesPersonID)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.Name = name.ToString();
-			this.SalesPersonID = salesPersonID.ToNullableInt();
 			this.Demographics = demographics;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesPersonID = salesPersonID.ToNullableInt();
 		}
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
-
-		[Column("SalesPersonID", TypeName="int")]
-		public Nullable<int> SalesPersonID { get; set; }
-
 		[Column("Demographics", TypeName="xml(-1)")]
 		public string Demographics { get; set; }
 
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("SalesPersonID", TypeName="int")]
+		public Nullable<int> SalesPersonID { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFBusinessEntity BusinessEntity { get; set; }
@@ -55,5 +56,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4826f5ef734923ee016d5cb2dbfbea15</Hash>
+    <Hash>8c5f2bb3a28c65326f29fc2d47940d01</Hash>
 </Codenesium>*/

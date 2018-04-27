@@ -13,48 +13,40 @@ namespace FileServiceNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
-			Guid externalId,
-			string privateKey,
-			string publicKey,
-			string location,
+			Nullable<int> bucketId,
+			DateTime dateCreated,
+			string description,
 			DateTime expiration,
 			string extension,
-			DateTime dateCreated,
+			Guid externalId,
 			decimal fileSizeInBytes,
 			int fileTypeId,
-			Nullable<int> bucketId,
-			string description)
+			string location,
+			string privateKey,
+			string publicKey)
 		{
-			this.Id = id.ToInt();
-			this.ExternalId = externalId.ToGuid();
-			this.PrivateKey = privateKey.ToString();
-			this.PublicKey = publicKey.ToString();
-			this.Location = location.ToString();
+			this.BucketId = bucketId.ToNullableInt();
+			this.DateCreated = dateCreated.ToDateTime();
+			this.Description = description.ToString();
 			this.Expiration = expiration.ToDateTime();
 			this.Extension = extension.ToString();
-			this.DateCreated = dateCreated.ToDateTime();
+			this.ExternalId = externalId.ToGuid();
 			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
 			this.FileTypeId = fileTypeId.ToInt();
-			this.BucketId = bucketId.ToNullableInt();
-			this.Description = description.ToString();
+			this.Id = id.ToInt();
+			this.Location = location.ToString();
+			this.PrivateKey = privateKey.ToString();
+			this.PublicKey = publicKey.ToString();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id", TypeName="int")]
-		public int Id { get; set; }
+		[Column("bucketId", TypeName="int")]
+		public Nullable<int> BucketId { get; set; }
 
-		[Column("externalId", TypeName="uniqueidentifier")]
-		public Guid ExternalId { get; set; }
+		[Column("dateCreated", TypeName="datetime")]
+		public DateTime DateCreated { get; set; }
 
-		[Column("privateKey", TypeName="varchar(64)")]
-		public string PrivateKey { get; set; }
-
-		[Column("publicKey", TypeName="varchar(64)")]
-		public string PublicKey { get; set; }
-
-		[Column("location", TypeName="varchar(255)")]
-		public string Location { get; set; }
+		[Column("description", TypeName="nvarchar(255)")]
+		public string Description { get; set; }
 
 		[Column("expiration", TypeName="datetime")]
 		public DateTime Expiration { get; set; }
@@ -62,8 +54,8 @@ namespace FileServiceNS.Api.DataAccess
 		[Column("extension", TypeName="varchar(32)")]
 		public string Extension { get; set; }
 
-		[Column("dateCreated", TypeName="datetime")]
-		public DateTime DateCreated { get; set; }
+		[Column("externalId", TypeName="uniqueidentifier")]
+		public Guid ExternalId { get; set; }
 
 		[Column("fileSizeInBytes", TypeName="decimal")]
 		public decimal FileSizeInBytes { get; set; }
@@ -71,20 +63,27 @@ namespace FileServiceNS.Api.DataAccess
 		[Column("fileTypeId", TypeName="int")]
 		public int FileTypeId { get; set; }
 
-		[Column("bucketId", TypeName="int")]
-		public Nullable<int> BucketId { get; set; }
+		[Key]
+		[Column("id", TypeName="int")]
+		public int Id { get; set; }
 
-		[Column("description", TypeName="nvarchar(255)")]
-		public string Description { get; set; }
+		[Column("location", TypeName="varchar(255)")]
+		public string Location { get; set; }
 
-		[ForeignKey("FileTypeId")]
-		public virtual EFFileType FileType { get; set; }
+		[Column("privateKey", TypeName="varchar(64)")]
+		public string PrivateKey { get; set; }
+
+		[Column("publicKey", TypeName="varchar(64)")]
+		public string PublicKey { get; set; }
 
 		[ForeignKey("BucketId")]
 		public virtual EFBucket Bucket { get; set; }
+
+		[ForeignKey("FileTypeId")]
+		public virtual EFFileType FileType { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>aef2874d86e849bbd5c05855e565f7b6</Hash>
+    <Hash>650c85fef4acbca998e1f508d1794fd6</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/salesOrderDetails/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesOrderDetails/{result.Id.ToString()}");
 				POCOSalesOrderDetail response = this.salesOrderDetailManager.GetById(result.Id).SalesOrderDetails.First();
 				return this.Ok(response);
 			}
@@ -177,6 +177,26 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[ReadOnly]
+		[Route("~/api/SpecialOfferProducts/{id}/SalesOrderDetails")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOSalesOrderDetail>), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			ApiResponse response = this.salesOrderDetailManager.GetWhere(x => x.ProductID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.SalesOrderDetails);
+			}
+		}
+
+		[HttpGet]
 		[Route("BySalesOrderID/{id}")]
 		[ReadOnly]
 		[Route("~/api/SalesOrderHeaders/{id}/SalesOrderDetails")]
@@ -219,5 +239,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9dde050a26ffda243e01037ecdd0ff34</Hash>
+    <Hash>7d58ee981f361fbe5539b130a2ddbc3c</Hash>
 </Codenesium>*/

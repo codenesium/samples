@@ -10,48 +10,24 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOShift(
-			int shiftID,
-			string name,
-			TimeSpan startTime,
 			TimeSpan endTime,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name,
+			int shiftID,
+			TimeSpan startTime)
 		{
-			this.ShiftID = shiftID.ToInt();
-			this.Name = name.ToString();
-			this.StartTime = startTime;
 			this.EndTime = endTime;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ShiftID = shiftID.ToInt();
+			this.StartTime = startTime;
 		}
 
-		public int ShiftID { get; set; }
-		public string Name { get; set; }
-		public TimeSpan StartTime { get; set; }
 		public TimeSpan EndTime { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeShiftIDValue { get; set; } = true;
-
-		public bool ShouldSerializeShiftID()
-		{
-			return this.ShouldSerializeShiftIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStartTimeValue { get; set; } = true;
-
-		public bool ShouldSerializeStartTime()
-		{
-			return this.ShouldSerializeStartTimeValue;
-		}
+		public string Name { get; set; }
+		public int ShiftID { get; set; }
+		public TimeSpan StartTime { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeEndTimeValue { get; set; } = true;
@@ -69,17 +45,41 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeShiftIDValue { get; set; } = true;
+
+		public bool ShouldSerializeShiftID()
+		{
+			return this.ShouldSerializeShiftIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStartTimeValue { get; set; } = true;
+
+		public bool ShouldSerializeStartTime()
+		{
+			return this.ShouldSerializeStartTimeValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeShiftIDValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeStartTimeValue = false;
 			this.ShouldSerializeEndTimeValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeShiftIDValue = false;
+			this.ShouldSerializeStartTimeValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4c5b388284aa765e419844ab1b236ef</Hash>
+    <Hash>6133d9ea9d7e5b8089a160f3ebf2006b</Hash>
 </Codenesium>*/

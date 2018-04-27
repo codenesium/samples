@@ -10,117 +10,53 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCODocument(
-			Guid documentNode,
-			Nullable<short> documentLevel,
-			string title,
-			int owner,
-			bool folderFlag,
-			string fileName,
-			string fileExtension,
-			string revision,
 			int changeNumber,
-			int status,
-			string documentSummary,
 			byte[] document1,
+			Nullable<short> documentLevel,
+			Guid documentNode,
+			string documentSummary,
+			string fileExtension,
+			string fileName,
+			bool folderFlag,
+			DateTime modifiedDate,
+			int owner,
+			string revision,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int status,
+			string title)
 		{
-			this.DocumentNode = documentNode;
-			this.DocumentLevel = documentLevel;
-			this.Title = title.ToString();
-			this.FolderFlag = folderFlag.ToBoolean();
-			this.FileName = fileName.ToString();
-			this.FileExtension = fileExtension.ToString();
-			this.Revision = revision.ToString();
 			this.ChangeNumber = changeNumber.ToInt();
-			this.Status = status.ToInt();
-			this.DocumentSummary = documentSummary.ToString();
 			this.Document1 = document1;
-			this.Rowguid = rowguid.ToGuid();
+			this.DocumentLevel = documentLevel;
+			this.DocumentNode = documentNode;
+			this.DocumentSummary = documentSummary.ToString();
+			this.FileExtension = fileExtension.ToString();
+			this.FileName = fileName.ToString();
+			this.FolderFlag = folderFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Revision = revision.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.Status = status.ToInt();
+			this.Title = title.ToString();
 
 			this.Owner = new ReferenceEntity<int>(owner,
 			                                      nameof(ApiResponse.Employees));
 		}
 
-		public Guid DocumentNode { get; set; }
-		public Nullable<short> DocumentLevel { get; set; }
-		public string Title { get; set; }
-		public ReferenceEntity<int> Owner { get; set; }
-		public bool FolderFlag { get; set; }
-		public string FileName { get; set; }
-		public string FileExtension { get; set; }
-		public string Revision { get; set; }
 		public int ChangeNumber { get; set; }
-		public int Status { get; set; }
-		public string DocumentSummary { get; set; }
 		public byte[] Document1 { get; set; }
-		public Guid Rowguid { get; set; }
+		public Nullable<short> DocumentLevel { get; set; }
+		public Guid DocumentNode { get; set; }
+		public string DocumentSummary { get; set; }
+		public string FileExtension { get; set; }
+		public string FileName { get; set; }
+		public bool FolderFlag { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeDocumentNodeValue { get; set; } = true;
-
-		public bool ShouldSerializeDocumentNode()
-		{
-			return this.ShouldSerializeDocumentNodeValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeDocumentLevelValue { get; set; } = true;
-
-		public bool ShouldSerializeDocumentLevel()
-		{
-			return this.ShouldSerializeDocumentLevelValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeTitleValue { get; set; } = true;
-
-		public bool ShouldSerializeTitle()
-		{
-			return this.ShouldSerializeTitleValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeOwnerValue { get; set; } = true;
-
-		public bool ShouldSerializeOwner()
-		{
-			return this.ShouldSerializeOwnerValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeFolderFlagValue { get; set; } = true;
-
-		public bool ShouldSerializeFolderFlag()
-		{
-			return this.ShouldSerializeFolderFlagValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeFileNameValue { get; set; } = true;
-
-		public bool ShouldSerializeFileName()
-		{
-			return this.ShouldSerializeFileNameValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeFileExtensionValue { get; set; } = true;
-
-		public bool ShouldSerializeFileExtension()
-		{
-			return this.ShouldSerializeFileExtensionValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeRevisionValue { get; set; } = true;
-
-		public bool ShouldSerializeRevision()
-		{
-			return this.ShouldSerializeRevisionValue;
-		}
+		public ReferenceEntity<int> Owner { get; set; }
+		public string Revision { get; set; }
+		public Guid Rowguid { get; set; }
+		public int Status { get; set; }
+		public string Title { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeChangeNumberValue { get; set; } = true;
@@ -128,22 +64,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeChangeNumber()
 		{
 			return this.ShouldSerializeChangeNumberValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStatusValue { get; set; } = true;
-
-		public bool ShouldSerializeStatus()
-		{
-			return this.ShouldSerializeStatusValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeDocumentSummaryValue { get; set; } = true;
-
-		public bool ShouldSerializeDocumentSummary()
-		{
-			return this.ShouldSerializeDocumentSummaryValue;
 		}
 
 		[JsonIgnore]
@@ -155,11 +75,51 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
+		public bool ShouldSerializeDocumentLevelValue { get; set; } = true;
 
-		public bool ShouldSerializeRowguid()
+		public bool ShouldSerializeDocumentLevel()
 		{
-			return this.ShouldSerializeRowguidValue;
+			return this.ShouldSerializeDocumentLevelValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeDocumentNodeValue { get; set; } = true;
+
+		public bool ShouldSerializeDocumentNode()
+		{
+			return this.ShouldSerializeDocumentNodeValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeDocumentSummaryValue { get; set; } = true;
+
+		public bool ShouldSerializeDocumentSummary()
+		{
+			return this.ShouldSerializeDocumentSummaryValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeFileExtensionValue { get; set; } = true;
+
+		public bool ShouldSerializeFileExtension()
+		{
+			return this.ShouldSerializeFileExtensionValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeFileNameValue { get; set; } = true;
+
+		public bool ShouldSerializeFileName()
+		{
+			return this.ShouldSerializeFileNameValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeFolderFlagValue { get; set; } = true;
+
+		public bool ShouldSerializeFolderFlag()
+		{
+			return this.ShouldSerializeFolderFlagValue;
 		}
 
 		[JsonIgnore]
@@ -170,26 +130,66 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeOwnerValue { get; set; } = true;
+
+		public bool ShouldSerializeOwner()
+		{
+			return this.ShouldSerializeOwnerValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeRevisionValue { get; set; } = true;
+
+		public bool ShouldSerializeRevision()
+		{
+			return this.ShouldSerializeRevisionValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStatusValue { get; set; } = true;
+
+		public bool ShouldSerializeStatus()
+		{
+			return this.ShouldSerializeStatusValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeTitleValue { get; set; } = true;
+
+		public bool ShouldSerializeTitle()
+		{
+			return this.ShouldSerializeTitleValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeDocumentNodeValue = false;
-			this.ShouldSerializeDocumentLevelValue = false;
-			this.ShouldSerializeTitleValue = false;
-			this.ShouldSerializeOwnerValue = false;
-			this.ShouldSerializeFolderFlagValue = false;
-			this.ShouldSerializeFileNameValue = false;
-			this.ShouldSerializeFileExtensionValue = false;
-			this.ShouldSerializeRevisionValue = false;
 			this.ShouldSerializeChangeNumberValue = false;
-			this.ShouldSerializeStatusValue = false;
-			this.ShouldSerializeDocumentSummaryValue = false;
 			this.ShouldSerializeDocument1Value = false;
-			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeDocumentLevelValue = false;
+			this.ShouldSerializeDocumentNodeValue = false;
+			this.ShouldSerializeDocumentSummaryValue = false;
+			this.ShouldSerializeFileExtensionValue = false;
+			this.ShouldSerializeFileNameValue = false;
+			this.ShouldSerializeFolderFlagValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeOwnerValue = false;
+			this.ShouldSerializeRevisionValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeStatusValue = false;
+			this.ShouldSerializeTitleValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>72a52ed5d26c8a0cdeaecb75148cb82c</Hash>
+    <Hash>94a2bc986043cd70ddb4e16c3061f822</Hash>
 </Codenesium>*/

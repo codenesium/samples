@@ -10,49 +10,49 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOSpecialOffer(
-			int specialOfferID,
+			string category,
 			string description,
 			decimal discountPct,
-			string type,
-			string category,
-			DateTime startDate,
 			DateTime endDate,
-			int minQty,
 			Nullable<int> maxQty,
+			int minQty,
+			DateTime modifiedDate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int specialOfferID,
+			DateTime startDate,
+			string type)
 		{
-			this.SpecialOfferID = specialOfferID.ToInt();
+			this.Category = category.ToString();
 			this.Description = description.ToString();
 			this.DiscountPct = discountPct.ToDecimal();
-			this.Type = type.ToString();
-			this.Category = category.ToString();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToDateTime();
-			this.MinQty = minQty.ToInt();
 			this.MaxQty = maxQty.ToNullableInt();
-			this.Rowguid = rowguid.ToGuid();
+			this.MinQty = minQty.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.SpecialOfferID = specialOfferID.ToInt();
+			this.StartDate = startDate.ToDateTime();
+			this.Type = type.ToString();
 		}
 
-		public int SpecialOfferID { get; set; }
+		public string Category { get; set; }
 		public string Description { get; set; }
 		public decimal DiscountPct { get; set; }
-		public string Type { get; set; }
-		public string Category { get; set; }
-		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
-		public int MinQty { get; set; }
 		public Nullable<int> MaxQty { get; set; }
-		public Guid Rowguid { get; set; }
+		public int MinQty { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public Guid Rowguid { get; set; }
+		public int SpecialOfferID { get; set; }
+		public DateTime StartDate { get; set; }
+		public string Type { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpecialOfferIDValue { get; set; } = true;
+		public bool ShouldSerializeCategoryValue { get; set; } = true;
 
-		public bool ShouldSerializeSpecialOfferID()
+		public bool ShouldSerializeCategory()
 		{
-			return this.ShouldSerializeSpecialOfferIDValue;
+			return this.ShouldSerializeCategoryValue;
 		}
 
 		[JsonIgnore]
@@ -72,43 +72,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTypeValue { get; set; } = true;
-
-		public bool ShouldSerializeType()
-		{
-			return this.ShouldSerializeTypeValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeCategoryValue { get; set; } = true;
-
-		public bool ShouldSerializeCategory()
-		{
-			return this.ShouldSerializeCategoryValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeEndDateValue { get; set; } = true;
 
 		public bool ShouldSerializeEndDate()
 		{
 			return this.ShouldSerializeEndDateValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeMinQtyValue { get; set; } = true;
-
-		public bool ShouldSerializeMinQty()
-		{
-			return this.ShouldSerializeMinQtyValue;
 		}
 
 		[JsonIgnore]
@@ -120,11 +88,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
+		public bool ShouldSerializeMinQtyValue { get; set; } = true;
 
-		public bool ShouldSerializeRowguid()
+		public bool ShouldSerializeMinQty()
 		{
-			return this.ShouldSerializeRowguidValue;
+			return this.ShouldSerializeMinQtyValue;
 		}
 
 		[JsonIgnore]
@@ -135,23 +103,55 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeSpecialOfferIDValue { get; set; } = true;
+
+		public bool ShouldSerializeSpecialOfferID()
+		{
+			return this.ShouldSerializeSpecialOfferIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
+
+		public bool ShouldSerializeStartDate()
+		{
+			return this.ShouldSerializeStartDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeTypeValue { get; set; } = true;
+
+		public bool ShouldSerializeType()
+		{
+			return this.ShouldSerializeTypeValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeSpecialOfferIDValue = false;
+			this.ShouldSerializeCategoryValue = false;
 			this.ShouldSerializeDescriptionValue = false;
 			this.ShouldSerializeDiscountPctValue = false;
-			this.ShouldSerializeTypeValue = false;
-			this.ShouldSerializeCategoryValue = false;
-			this.ShouldSerializeStartDateValue = false;
 			this.ShouldSerializeEndDateValue = false;
-			this.ShouldSerializeMinQtyValue = false;
 			this.ShouldSerializeMaxQtyValue = false;
-			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeMinQtyValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeSpecialOfferIDValue = false;
+			this.ShouldSerializeStartDateValue = false;
+			this.ShouldSerializeTypeValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74ba9e2ebec58e9b595d91216177d24c</Hash>
+    <Hash>2b57c0ba280e510693e9d08ace4d608b</Hash>
 </Codenesium>*/

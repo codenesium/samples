@@ -13,33 +13,19 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int shoppingCartItemID,
-			string shoppingCartID,
-			int quantity,
-			int productID,
 			DateTime dateCreated,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productID,
+			int quantity,
+			string shoppingCartID)
 		{
-			this.ShoppingCartItemID = shoppingCartItemID.ToInt();
-			this.ShoppingCartID = shoppingCartID.ToString();
-			this.Quantity = quantity.ToInt();
-			this.ProductID = productID.ToInt();
 			this.DateCreated = dateCreated.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
+			this.Quantity = quantity.ToInt();
+			this.ShoppingCartID = shoppingCartID.ToString();
+			this.ShoppingCartItemID = shoppingCartItemID.ToInt();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("ShoppingCartItemID", TypeName="int")]
-		public int ShoppingCartItemID { get; set; }
-
-		[Column("ShoppingCartID", TypeName="nvarchar(50)")]
-		public string ShoppingCartID { get; set; }
-
-		[Column("Quantity", TypeName="int")]
-		public int Quantity { get; set; }
-
-		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
 
 		[Column("DateCreated", TypeName="datetime")]
 		public DateTime DateCreated { get; set; }
@@ -47,11 +33,24 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
+		[Column("ProductID", TypeName="int")]
+		public int ProductID { get; set; }
+
+		[Column("Quantity", TypeName="int")]
+		public int Quantity { get; set; }
+
+		[Column("ShoppingCartID", TypeName="nvarchar(50)")]
+		public string ShoppingCartID { get; set; }
+
+		[Key]
+		[Column("ShoppingCartItemID", TypeName="int")]
+		public int ShoppingCartItemID { get; set; }
+
 		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>273fce55603897fca61ac8ced3ec5669</Hash>
+    <Hash>185bf3570a352e94db467c3027aaee83</Hash>
 </Codenesium>*/

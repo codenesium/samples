@@ -20,19 +20,19 @@ namespace ESPIOTNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void PublicIdRules()
-		{
-			this.RuleFor(x => x.PublicId).NotNull();
-		}
-
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 90);
 		}
+
+		public virtual void PublicIdRules()
+		{
+			this.RuleFor(x => x.PublicId).NotNull();
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>85041d6c09322b2cfea59fd4d781ea17</Hash>
+    <Hash>491b6303160139b50cad2544748924fb</Hash>
 </Codenesium>*/

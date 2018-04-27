@@ -20,30 +20,30 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void NameRules()
-		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 50);
-		}
-
 		public virtual void CatalogDescriptionRules()
 		{                       }
 
 		public virtual void InstructionsRules()
 		{                       }
 
-		public virtual void RowguidRules()
-		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
+		}
+
+		public virtual void RowguidRules()
+		{
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d83781480c3dcc90f1cc7711887ebd8a</Hash>
+    <Hash>a2a3f5784b13938c4876e202c312519e</Hash>
 </Codenesium>*/

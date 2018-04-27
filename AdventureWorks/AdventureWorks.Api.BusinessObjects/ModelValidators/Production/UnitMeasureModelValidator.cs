@@ -13,15 +13,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(UnitMeasureModel model)
 		{
-			this.NameRules();
 			this.ModifiedDateRules();
+			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(string id, UnitMeasureModel model)
 		{
-			this.NameRules();
 			this.ModifiedDateRules();
+			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a70f0f19b4b152f56e056c12de866c50</Hash>
+    <Hash>624ddb65f92377e67712099a017e1461</Hash>
 </Codenesium>*/

@@ -13,27 +13,26 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			short scrapReasonID,
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
-			this.ScrapReasonID = scrapReasonID;
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ScrapReasonID = scrapReasonID;
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("ScrapReasonID", TypeName="smallint")]
-		public short ScrapReasonID { get; set; }
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
 		public string Name { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Key]
+		[Column("ScrapReasonID", TypeName="smallint")]
+		public short ScrapReasonID { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>12cddfbd9b3c412482b9a92f26cec70e</Hash>
+    <Hash>b39d5f14ad4ecab2b20252cac11e0ad1</Hash>
 </Codenesium>*/

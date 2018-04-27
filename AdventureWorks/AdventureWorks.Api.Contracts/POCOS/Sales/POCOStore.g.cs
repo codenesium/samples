@@ -11,16 +11,16 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOStore(
 			int businessEntityID,
-			string name,
-			Nullable<int> salesPersonID,
 			string demographics,
+			DateTime modifiedDate,
+			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			Nullable<int> salesPersonID)
 		{
-			this.Name = name.ToString();
 			this.Demographics = demographics;
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.BusinessEntities));
@@ -29,11 +29,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public string Name { get; set; }
-		public ReferenceEntity<Nullable<int>> SalesPersonID { get; set; }
 		public string Demographics { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
+		public Guid Rowguid { get; set; }
+		public ReferenceEntity<Nullable<int>> SalesPersonID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -41,22 +41,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBusinessEntityID()
 		{
 			return this.ShouldSerializeBusinessEntityIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeSalesPersonIDValue { get; set; } = true;
-
-		public bool ShouldSerializeSalesPersonID()
-		{
-			return this.ShouldSerializeSalesPersonIDValue;
 		}
 
 		[JsonIgnore]
@@ -68,6 +52,22 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
@@ -76,25 +76,25 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeSalesPersonIDValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeSalesPersonID()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeSalesPersonIDValue;
 		}
 
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeSalesPersonIDValue = false;
 			this.ShouldSerializeDemographicsValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeSalesPersonIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7db2ecfa55afd4fb4dd010180a9b31a9</Hash>
+    <Hash>db72ff578ae7ffe9e9bd4bed4ca38636</Hash>
 </Codenesium>*/

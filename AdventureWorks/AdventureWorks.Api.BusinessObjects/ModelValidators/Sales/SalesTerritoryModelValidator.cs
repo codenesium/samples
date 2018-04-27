@@ -13,29 +13,29 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(SalesTerritoryModel model)
 		{
-			this.NameRules();
+			this.CostLastYearRules();
+			this.CostYTDRules();
 			this.CountryRegionCodeRules();
 			this.@GroupRules();
-			this.SalesYTDRules();
-			this.SalesLastYearRules();
-			this.CostYTDRules();
-			this.CostLastYearRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.RowguidRules();
+			this.SalesLastYearRules();
+			this.SalesYTDRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, SalesTerritoryModel model)
 		{
-			this.NameRules();
+			this.CostLastYearRules();
+			this.CostYTDRules();
 			this.CountryRegionCodeRules();
 			this.@GroupRules();
-			this.SalesYTDRules();
-			this.SalesLastYearRules();
-			this.CostYTDRules();
-			this.CostLastYearRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.RowguidRules();
+			this.SalesLastYearRules();
+			this.SalesYTDRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a45a0b00ee632374e35f8bc71a1b725f</Hash>
+    <Hash>8a3f6e8ca6c5801db9da5c8399a51178</Hash>
 </Codenesium>*/

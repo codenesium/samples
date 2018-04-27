@@ -20,15 +20,10 @@ namespace NebulaNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public virtual void NameRules()
+		public virtual void DescriptionRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 128);
-		}
-
-		public virtual void MachineGuidRules()
-		{
-			this.RuleFor(x => x.MachineGuid).NotNull();
+			this.RuleFor(x => x.Description).NotNull();
+			this.RuleFor(x => x.Description).Length(0, 2147483647);
 		}
 
 		public virtual void JwtKeyRules()
@@ -43,14 +38,19 @@ namespace NebulaNS.Api.BusinessObjects
 			this.RuleFor(x => x.LastIpAddress).Length(0, 128);
 		}
 
-		public virtual void DescriptionRules()
+		public virtual void MachineGuidRules()
 		{
-			this.RuleFor(x => x.Description).NotNull();
-			this.RuleFor(x => x.Description).Length(0, 2147483647);
+			this.RuleFor(x => x.MachineGuid).NotNull();
+		}
+
+		public virtual void NameRules()
+		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5afe8bb20bf84b306aee16c584570b5a</Hash>
+    <Hash>a36b4b575c37a0ded51f41f96351cbe4</Hash>
 </Codenesium>*/

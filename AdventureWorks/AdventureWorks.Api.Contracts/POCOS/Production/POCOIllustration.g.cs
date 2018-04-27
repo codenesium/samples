@@ -10,26 +10,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOIllustration(
-			int illustrationID,
 			string diagram,
+			int illustrationID,
 			DateTime modifiedDate)
 		{
-			this.IllustrationID = illustrationID.ToInt();
 			this.Diagram = diagram;
+			this.IllustrationID = illustrationID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		public int IllustrationID { get; set; }
 		public string Diagram { get; set; }
+		public int IllustrationID { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeIllustrationIDValue { get; set; } = true;
-
-		public bool ShouldSerializeIllustrationID()
-		{
-			return this.ShouldSerializeIllustrationIDValue;
-		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeDiagramValue { get; set; } = true;
@@ -37,6 +29,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeDiagram()
 		{
 			return this.ShouldSerializeDiagramValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeIllustrationIDValue { get; set; } = true;
+
+		public bool ShouldSerializeIllustrationID()
+		{
+			return this.ShouldSerializeIllustrationIDValue;
 		}
 
 		[JsonIgnore]
@@ -49,13 +49,13 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeIllustrationIDValue = false;
 			this.ShouldSerializeDiagramValue = false;
+			this.ShouldSerializeIllustrationIDValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>821428e62f6adcd71c2f9b04d08e9d7b</Hash>
+    <Hash>ccb46243bd82f2814bd06e4a1196f3bd</Hash>
 </Codenesium>*/

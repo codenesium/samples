@@ -13,37 +13,38 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int specialOfferID,
+			DateTime modifiedDate,
 			int productID,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Guid rowguid)
 		{
-			this.SpecialOfferID = specialOfferID.ToInt();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.SpecialOfferID = specialOfferID.ToInt();
 		}
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
+		[Column("ProductID", TypeName="int")]
+		public int ProductID { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 
 		[Key]
 		[Column("SpecialOfferID", TypeName="int")]
 		public int SpecialOfferID { get; set; }
 
-		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
-
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[ForeignKey("ProductID")]
+		public virtual EFProduct Product { get; set; }
 
 		[ForeignKey("SpecialOfferID")]
 		public virtual EFSpecialOffer SpecialOffer { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a14cc7c23425f348cbf11a5581fb03d0</Hash>
+    <Hash>0e859b61b17fd68542adaf26dff3860b</Hash>
 </Codenesium>*/

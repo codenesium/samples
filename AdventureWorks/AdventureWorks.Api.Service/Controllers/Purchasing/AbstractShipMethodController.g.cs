@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/shipMethods/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ShipMethods/{result.Id.ToString()}");
 				POCOShipMethod response = this.shipMethodManager.GetById(result.Id).ShipMethods.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>78c435814cc49ec5dfd1797bdf45977b</Hash>
+    <Hash>e2e94e9b4c7521a27f8924a447539936</Hash>
 </Codenesium>*/

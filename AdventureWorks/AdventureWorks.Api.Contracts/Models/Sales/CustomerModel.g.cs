@@ -11,19 +11,51 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public CustomerModel(
-			Nullable<int> personID,
-			Nullable<int> storeID,
-			Nullable<int> territoryID,
 			string accountNumber,
+			DateTime modifiedDate,
+			Nullable<int> personID,
 			Guid rowguid,
-			DateTime modifiedDate)
+			Nullable<int> storeID,
+			Nullable<int> territoryID)
 		{
+			this.AccountNumber = accountNumber.ToString();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PersonID = personID.ToNullableInt();
+			this.Rowguid = rowguid.ToGuid();
 			this.StoreID = storeID.ToNullableInt();
 			this.TerritoryID = territoryID.ToNullableInt();
-			this.AccountNumber = accountNumber.ToString();
-			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
+
+		private string accountNumber;
+
+		[Required]
+		public string AccountNumber
+		{
+			get
+			{
+				return this.accountNumber;
+			}
+
+			set
+			{
+				this.accountNumber = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private Nullable<int> personID;
@@ -38,6 +70,22 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.personID = value;
+			}
+		}
+
+		private Guid rowguid;
+
+		[Required]
+		public Guid Rowguid
+		{
+			get
+			{
+				return this.rowguid;
+			}
+
+			set
+			{
+				this.rowguid = value;
 			}
 		}
 
@@ -70,57 +118,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.territoryID = value;
 			}
 		}
-
-		private string accountNumber;
-
-		[Required]
-		public string AccountNumber
-		{
-			get
-			{
-				return this.accountNumber;
-			}
-
-			set
-			{
-				this.accountNumber = value;
-			}
-		}
-
-		private Guid rowguid;
-
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
-
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>426456a30294e37269ccfc36c685c6f4</Hash>
+    <Hash>9ccbf79d9e75f50c6b531008be84e542</Hash>
 </Codenesium>*/

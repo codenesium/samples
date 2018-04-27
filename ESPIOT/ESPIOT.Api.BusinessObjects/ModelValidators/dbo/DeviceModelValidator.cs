@@ -13,15 +13,15 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(DeviceModel model)
 		{
-			this.PublicIdRules();
 			this.NameRules();
+			this.PublicIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, DeviceModel model)
 		{
-			this.PublicIdRules();
 			this.NameRules();
+			this.PublicIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -33,5 +33,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>6cb408a74b60ca82626766aa66faa2f2</Hash>
+    <Hash>c51762d7254ce4fd4ec66b2213440d0e</Hash>
 </Codenesium>*/

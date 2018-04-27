@@ -11,37 +11,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public DatabaseLogModel(
-			DateTime postTime,
 			string databaseUser,
 			string @event,
-			string schema,
 			string @object,
+			DateTime postTime,
+			string schema,
 			string tSQL,
 			string xmlEvent)
 		{
-			this.PostTime = postTime.ToDateTime();
 			this.DatabaseUser = databaseUser.ToString();
 			this.@Event = @event.ToString();
-			this.Schema = schema.ToString();
 			this.@Object = @object.ToString();
+			this.PostTime = postTime.ToDateTime();
+			this.Schema = schema.ToString();
 			this.TSQL = tSQL.ToString();
 			this.XmlEvent = xmlEvent;
-		}
-
-		private DateTime postTime;
-
-		[Required]
-		public DateTime PostTime
-		{
-			get
-			{
-				return this.postTime;
-			}
-
-			set
-			{
-				this.postTime = value;
-			}
 		}
 
 		private string databaseUser;
@@ -76,21 +60,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string schema;
-
-		public string Schema
-		{
-			get
-			{
-				return this.schema.IsEmptyOrZeroOrNull() ? null : this.schema;
-			}
-
-			set
-			{
-				this.schema = value;
-			}
-		}
-
 		private string @object;
 
 		public string @Object
@@ -103,6 +72,37 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.@object = value;
+			}
+		}
+
+		private DateTime postTime;
+
+		[Required]
+		public DateTime PostTime
+		{
+			get
+			{
+				return this.postTime;
+			}
+
+			set
+			{
+				this.postTime = value;
+			}
+		}
+
+		private string schema;
+
+		public string Schema
+		{
+			get
+			{
+				return this.schema.IsEmptyOrZeroOrNull() ? null : this.schema;
+			}
+
+			set
+			{
+				this.schema = value;
 			}
 		}
 
@@ -141,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1ca5d388c97e2d5c35eeef287d0de63c</Hash>
+    <Hash>506b1fcac44ab45eb025551867dc6729</Hash>
 </Codenesium>*/

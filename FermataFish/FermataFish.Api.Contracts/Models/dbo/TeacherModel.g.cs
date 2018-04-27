@@ -11,19 +11,51 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public TeacherModel(
+			DateTime birthday,
+			string email,
 			string firstName,
 			string lastName,
-			string email,
 			string phone,
-			DateTime birthday,
 			int studioId)
 		{
+			this.Birthday = birthday.ToDateTime();
+			this.Email = email.ToString();
 			this.FirstName = firstName.ToString();
 			this.LastName = lastName.ToString();
-			this.Email = email.ToString();
 			this.Phone = phone.ToString();
-			this.Birthday = birthday.ToDateTime();
 			this.StudioId = studioId.ToInt();
+		}
+
+		private DateTime birthday;
+
+		[Required]
+		public DateTime Birthday
+		{
+			get
+			{
+				return this.birthday;
+			}
+
+			set
+			{
+				this.birthday = value;
+			}
+		}
+
+		private string email;
+
+		[Required]
+		public string Email
+		{
+			get
+			{
+				return this.email;
+			}
+
+			set
+			{
+				this.email = value;
+			}
 		}
 
 		private string firstName;
@@ -58,22 +90,6 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private string email;
-
-		[Required]
-		public string Email
-		{
-			get
-			{
-				return this.email;
-			}
-
-			set
-			{
-				this.email = value;
-			}
-		}
-
 		private string phone;
 
 		[Required]
@@ -87,22 +103,6 @@ namespace FermataFishNS.Api.Contracts
 			set
 			{
 				this.phone = value;
-			}
-		}
-
-		private DateTime birthday;
-
-		[Required]
-		public DateTime Birthday
-		{
-			get
-			{
-				return this.birthday;
-			}
-
-			set
-			{
-				this.birthday = value;
 			}
 		}
 
@@ -125,5 +125,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cfb1da7fc6088a6dfc36e34b1b61f363</Hash>
+    <Hash>9500660ac8e7df5f759863d5a90641a1</Hash>
 </Codenesium>*/

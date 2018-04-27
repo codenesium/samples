@@ -11,13 +11,29 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		public LinkLogModel(
+			DateTime dateEntered,
 			int linkId,
-			string log,
-			DateTime dateEntered)
+			string log)
 		{
+			this.DateEntered = dateEntered.ToDateTime();
 			this.LinkId = linkId.ToInt();
 			this.Log = log.ToString();
-			this.DateEntered = dateEntered.ToDateTime();
+		}
+
+		private DateTime dateEntered;
+
+		[Required]
+		public DateTime DateEntered
+		{
+			get
+			{
+				return this.dateEntered;
+			}
+
+			set
+			{
+				this.dateEntered = value;
+			}
 		}
 
 		private int linkId;
@@ -51,25 +67,9 @@ namespace NebulaNS.Api.Contracts
 				this.log = value;
 			}
 		}
-
-		private DateTime dateEntered;
-
-		[Required]
-		public DateTime DateEntered
-		{
-			get
-			{
-				return this.dateEntered;
-			}
-
-			set
-			{
-				this.dateEntered = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d393ad427dee9dca586f3843c58089bd</Hash>
+    <Hash>c371e4ec8a2ea4bc5167b00e076abf5a</Hash>
 </Codenesium>*/

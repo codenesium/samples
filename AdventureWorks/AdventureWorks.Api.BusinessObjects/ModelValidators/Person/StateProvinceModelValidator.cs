@@ -13,25 +13,25 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(StateProvinceModel model)
 		{
-			this.StateProvinceCodeRules();
 			this.CountryRegionCodeRules();
 			this.IsOnlyStateProvinceFlagRules();
-			this.NameRules();
-			this.TerritoryIDRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.RowguidRules();
+			this.StateProvinceCodeRules();
+			this.TerritoryIDRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, StateProvinceModel model)
 		{
-			this.StateProvinceCodeRules();
 			this.CountryRegionCodeRules();
 			this.IsOnlyStateProvinceFlagRules();
-			this.NameRules();
-			this.TerritoryIDRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.NameRules();
+			this.RowguidRules();
+			this.StateProvinceCodeRules();
+			this.TerritoryIDRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>2e6ccd79e3ac407df631229e62209950</Hash>
+    <Hash>63ad2b5e640ce2e5fd5f668f9d26a21b</Hash>
 </Codenesium>*/

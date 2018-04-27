@@ -16,14 +16,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			Guid documentNode,
 			DateTime modifiedDate)
 		{
-			this.ProductID = productID.ToInt();
 			this.DocumentNode = documentNode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
 		}
-
-		[Key]
-		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
 
 		[Column("DocumentNode", TypeName="hierarchyid(892)")]
 		public Guid DocumentNode { get; set; }
@@ -31,14 +27,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
+		[Key]
+		[Column("ProductID", TypeName="int")]
+		public int ProductID { get; set; }
 
 		[ForeignKey("DocumentNode")]
 		public virtual EFDocument Document { get; set; }
+
+		[ForeignKey("ProductID")]
+		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0046690432808e60037f099723aa473e</Hash>
+    <Hash>f54a612683206f172ee00384b3ef5b6e</Hash>
 </Codenesium>*/

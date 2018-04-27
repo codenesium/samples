@@ -13,44 +13,44 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int customerID,
-			Nullable<int> personID,
-			Nullable<int> storeID,
-			Nullable<int> territoryID,
 			string accountNumber,
+			DateTime modifiedDate,
+			Nullable<int> personID,
 			Guid rowguid,
-			DateTime modifiedDate)
+			Nullable<int> storeID,
+			Nullable<int> territoryID)
 		{
+			this.AccountNumber = accountNumber.ToString();
 			this.CustomerID = customerID.ToInt();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PersonID = personID.ToNullableInt();
+			this.Rowguid = rowguid.ToGuid();
 			this.StoreID = storeID.ToNullableInt();
 			this.TerritoryID = territoryID.ToNullableInt();
-			this.AccountNumber = accountNumber.ToString();
-			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
+		[Column("AccountNumber", TypeName="varchar(10)")]
+		public string AccountNumber { get; set; }
+
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("CustomerID", TypeName="int")]
 		public int CustomerID { get; set; }
 
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
 		[Column("PersonID", TypeName="int")]
 		public Nullable<int> PersonID { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
 
 		[Column("StoreID", TypeName="int")]
 		public Nullable<int> StoreID { get; set; }
 
 		[Column("TerritoryID", TypeName="int")]
 		public Nullable<int> TerritoryID { get; set; }
-
-		[Column("AccountNumber", TypeName="varchar(10)")]
-		public string AccountNumber { get; set; }
-
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("PersonID")]
 		public virtual EFPerson Person { get; set; }
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>93a8ae112daf5f8662b2e4c23f5bd827</Hash>
+    <Hash>8cdacbc1d931a5ff20d60da83a226e2e</Hash>
 </Codenesium>*/

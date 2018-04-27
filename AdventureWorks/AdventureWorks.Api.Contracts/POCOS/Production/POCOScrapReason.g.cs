@@ -10,25 +10,25 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOScrapReason(
-			short scrapReasonID,
+			DateTime modifiedDate,
 			string name,
-			DateTime modifiedDate)
+			short scrapReasonID)
 		{
-			this.ScrapReasonID = scrapReasonID;
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ScrapReasonID = scrapReasonID;
 		}
 
-		public short ScrapReasonID { get; set; }
-		public string Name { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
+		public short ScrapReasonID { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeScrapReasonIDValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeScrapReasonID()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeScrapReasonIDValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -40,22 +40,22 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeScrapReasonIDValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeScrapReasonID()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeScrapReasonIDValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeScrapReasonIDValue = false;
-			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeScrapReasonIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>efe000416cef93b361ea2dfa1efa7925</Hash>
+    <Hash>75c3d77fedf218ae0d2f174863904e47</Hash>
 </Codenesium>*/

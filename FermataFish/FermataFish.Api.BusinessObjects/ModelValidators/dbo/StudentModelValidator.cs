@@ -13,31 +13,31 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(StudentModel model)
 		{
+			this.BirthdayRules();
 			this.EmailRules();
+			this.EmailRemindersEnabledRules();
+			this.FamilyIdRules();
 			this.FirstNameRules();
+			this.IsAdultRules();
 			this.LastNameRules();
 			this.PhoneRules();
-			this.IsAdultRules();
-			this.BirthdayRules();
-			this.FamilyIdRules();
-			this.StudioIdRules();
 			this.SmsRemindersEnabledRules();
-			this.EmailRemindersEnabledRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, StudentModel model)
 		{
+			this.BirthdayRules();
 			this.EmailRules();
+			this.EmailRemindersEnabledRules();
+			this.FamilyIdRules();
 			this.FirstNameRules();
+			this.IsAdultRules();
 			this.LastNameRules();
 			this.PhoneRules();
-			this.IsAdultRules();
-			this.BirthdayRules();
-			this.FamilyIdRules();
-			this.StudioIdRules();
 			this.SmsRemindersEnabledRules();
-			this.EmailRemindersEnabledRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -49,5 +49,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>877089d6137c6a3705b71aa4842a714b</Hash>
+    <Hash>4a1a158ba878a69453ee6588521e811d</Hash>
 </Codenesium>*/

@@ -11,17 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOCountryRegion(
 			string countryRegionCode,
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
 			this.CountryRegionCode = countryRegionCode.ToString();
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
 		public string CountryRegionCode { get; set; }
-		public string Name { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
@@ -32,14 +32,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -47,15 +39,23 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeCountryRegionCodeValue = false;
-			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>17da2f16e0dedb0130770cdb6d6f9339</Hash>
+    <Hash>722e85ca7e9be28245413e56fde693b0</Hash>
 </Codenesium>*/

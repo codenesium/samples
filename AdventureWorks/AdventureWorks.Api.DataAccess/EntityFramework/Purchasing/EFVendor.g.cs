@@ -14,47 +14,47 @@ namespace AdventureWorksNS.Api.DataAccess
 		public void SetProperties(
 			int businessEntityID,
 			string accountNumber,
-			string name,
-			int creditRating,
-			bool preferredVendorStatus,
 			bool activeFlag,
-			string purchasingWebServiceURL,
-			DateTime modifiedDate)
+			int creditRating,
+			DateTime modifiedDate,
+			string name,
+			bool preferredVendorStatus,
+			string purchasingWebServiceURL)
 		{
-			this.BusinessEntityID = businessEntityID.ToInt();
 			this.AccountNumber = accountNumber.ToString();
-			this.Name = name.ToString();
-			this.CreditRating = creditRating.ToInt();
-			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
 			this.ActiveFlag = activeFlag.ToBoolean();
-			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
+			this.BusinessEntityID = businessEntityID.ToInt();
+			this.CreditRating = creditRating.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
+			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
 		}
+
+		[Column("AccountNumber", TypeName="nvarchar(15)")]
+		public string AccountNumber { get; set; }
+
+		[Column("ActiveFlag", TypeName="bit")]
+		public bool ActiveFlag { get; set; }
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
-		[Column("AccountNumber", TypeName="nvarchar(15)")]
-		public string AccountNumber { get; set; }
+		[Column("CreditRating", TypeName="tinyint")]
+		public int CreditRating { get; set; }
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
 		public string Name { get; set; }
 
-		[Column("CreditRating", TypeName="tinyint")]
-		public int CreditRating { get; set; }
-
 		[Column("PreferredVendorStatus", TypeName="bit")]
 		public bool PreferredVendorStatus { get; set; }
 
-		[Column("ActiveFlag", TypeName="bit")]
-		public bool ActiveFlag { get; set; }
-
 		[Column("PurchasingWebServiceURL", TypeName="nvarchar(1024)")]
 		public string PurchasingWebServiceURL { get; set; }
-
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFBusinessEntity BusinessEntity { get; set; }
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58d0719b1a55c384762cea35ddaaded0</Hash>
+    <Hash>ee9b3590ad1df3c284615af65c551bed</Hash>
 </Codenesium>*/

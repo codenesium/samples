@@ -10,29 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductDescription(
-			int productDescriptionID,
 			string description,
-			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productDescriptionID,
+			Guid rowguid)
 		{
-			this.ProductDescriptionID = productDescriptionID.ToInt();
 			this.Description = description.ToString();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductDescriptionID = productDescriptionID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
 		}
 
-		public int ProductDescriptionID { get; set; }
 		public string Description { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductDescriptionIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductDescriptionID()
-		{
-			return this.ShouldSerializeProductDescriptionIDValue;
-		}
+		public int ProductDescriptionID { get; set; }
+		public Guid Rowguid { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeDescriptionValue { get; set; } = true;
@@ -43,14 +35,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -58,16 +42,32 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeProductDescriptionIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductDescriptionID()
+		{
+			return this.ShouldSerializeProductDescriptionIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductDescriptionIDValue = false;
 			this.ShouldSerializeDescriptionValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeProductDescriptionIDValue = false;
+			this.ShouldSerializeRowguidValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>59f198c0ac1f8a095826f8fafed5aaf2</Hash>
+    <Hash>0f7fafde61b147d31542e9fbb50f7bc6</Hash>
 </Codenesium>*/

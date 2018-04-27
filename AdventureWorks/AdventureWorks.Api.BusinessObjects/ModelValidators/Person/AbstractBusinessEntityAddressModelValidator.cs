@@ -20,9 +20,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
 		public IAddressRepository AddressRepository { get; set; }
 		public IAddressTypeRepository AddressTypeRepository { get; set; }
+		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
 		public virtual void AddressIDRules()
 		{
 			this.RuleFor(x => x.AddressID).NotNull();
@@ -35,19 +35,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.AddressTypeID).Must(this.BeValidAddressType).When(x => x ?.AddressTypeID != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void RowguidRules()
-		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		private bool BeValidBusinessEntity(int id)
+		public virtual void RowguidRules()
 		{
-			return this.BusinessEntityRepository.GetByIdDirect(id) != null;
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		private bool BeValidAddress(int id)
@@ -59,9 +54,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			return this.AddressTypeRepository.GetByIdDirect(id) != null;
 		}
+
+		private bool BeValidBusinessEntity(int id)
+		{
+			return this.BusinessEntityRepository.GetByIdDirect(id) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>831915045c91c352cb815b535fd662d3</Hash>
+    <Hash>0d2ebf30917bfb82f98b96102f6e393e</Hash>
 </Codenesium>*/

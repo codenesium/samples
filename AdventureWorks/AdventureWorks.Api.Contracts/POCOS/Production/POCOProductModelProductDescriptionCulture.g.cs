@@ -10,41 +10,25 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductModelProductDescriptionCulture(
-			int productModelID,
-			int productDescriptionID,
 			string cultureID,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productDescriptionID,
+			int productModelID)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
-			this.ProductModelID = new ReferenceEntity<int>(productModelID,
-			                                               nameof(ApiResponse.ProductModels));
-			this.ProductDescriptionID = new ReferenceEntity<int>(productDescriptionID,
-			                                                     nameof(ApiResponse.ProductDescriptions));
 			this.CultureID = new ReferenceEntity<string>(cultureID,
 			                                             nameof(ApiResponse.Cultures));
+			this.ProductDescriptionID = new ReferenceEntity<int>(productDescriptionID,
+			                                                     nameof(ApiResponse.ProductDescriptions));
+			this.ProductModelID = new ReferenceEntity<int>(productModelID,
+			                                               nameof(ApiResponse.ProductModels));
 		}
 
-		public ReferenceEntity<int> ProductModelID { get; set; }
-		public ReferenceEntity<int> ProductDescriptionID { get; set; }
 		public ReferenceEntity<string> CultureID { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductModelIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductModelID()
-		{
-			return this.ShouldSerializeProductModelIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductDescriptionIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductDescriptionID()
-		{
-			return this.ShouldSerializeProductDescriptionIDValue;
-		}
+		public ReferenceEntity<int> ProductDescriptionID { get; set; }
+		public ReferenceEntity<int> ProductModelID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeCultureIDValue { get; set; } = true;
@@ -62,16 +46,32 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeProductDescriptionIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductDescriptionID()
+		{
+			return this.ShouldSerializeProductDescriptionIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeProductModelIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductModelID()
+		{
+			return this.ShouldSerializeProductModelIDValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductModelIDValue = false;
-			this.ShouldSerializeProductDescriptionIDValue = false;
 			this.ShouldSerializeCultureIDValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeProductDescriptionIDValue = false;
+			this.ShouldSerializeProductModelIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1faacc213abeecfc40af15d40cd3e59c</Hash>
+    <Hash>430f7952f02b912722bfcca6ebe245a8</Hash>
 </Codenesium>*/

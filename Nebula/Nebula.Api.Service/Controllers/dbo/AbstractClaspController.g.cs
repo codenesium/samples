@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/clasps/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Clasps/{result.Id.ToString()}");
 				POCOClasp response = this.claspManager.GetById(result.Id).Clasps.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByPreviousChainId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Chains/{id}/Clasps")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
-		public virtual IActionResult ByPreviousChainId(int id)
-		{
-			ApiResponse response = this.claspManager.GetWhere(x => x.PreviousChainId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Clasps);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByNextChainId/{id}")]
 		[ReadOnly]
 		[Route("~/api/Chains/{id}/Clasps")]
@@ -215,9 +195,29 @@ namespace NebulaNS.Api.Service
 				return this.Ok(response.Clasps);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByPreviousChainId/{id}")]
+		[ReadOnly]
+		[Route("~/api/Chains/{id}/Clasps")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
+		public virtual IActionResult ByPreviousChainId(int id)
+		{
+			ApiResponse response = this.claspManager.GetWhere(x => x.PreviousChainId == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Clasps);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>53babf96fbc6f6ffda0027fd60f52094</Hash>
+    <Hash>8b1ed0cb3368fe5499484055720cc559</Hash>
 </Codenesium>*/

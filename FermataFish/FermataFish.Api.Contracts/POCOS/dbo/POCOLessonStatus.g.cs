@@ -10,8 +10,8 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public POCOLessonStatus(
-			string name,
 			int id,
+			string name,
 			int studioId)
 		{
 			this.Name = name.ToString();
@@ -22,17 +22,9 @@ namespace FermataFishNS.Api.Contracts
 			                                         nameof(ApiResponse.Studios));
 		}
 
-		public string Name { get; set; }
 		public ReferenceEntity<int> Id { get; set; }
+		public string Name { get; set; }
 		public ReferenceEntity<int> StudioId { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue { get; set; } = true;
@@ -40,6 +32,14 @@ namespace FermataFishNS.Api.Contracts
 		public bool ShouldSerializeId()
 		{
 			return this.ShouldSerializeIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
@@ -52,13 +52,13 @@ namespace FermataFishNS.Api.Contracts
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeStudioIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1764c754ff681a69dfa59229cd81036</Hash>
+    <Hash>51a6d0ad304ba3f95f038a2b97340d14</Hash>
 </Codenesium>*/

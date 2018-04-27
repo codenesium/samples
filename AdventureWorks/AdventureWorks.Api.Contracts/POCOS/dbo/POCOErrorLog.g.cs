@@ -10,36 +10,44 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOErrorLog(
+			Nullable<int> errorLine,
 			int errorLogID,
-			DateTime errorTime,
-			string userName,
+			string errorMessage,
 			int errorNumber,
+			string errorProcedure,
 			Nullable<int> errorSeverity,
 			Nullable<int> errorState,
-			string errorProcedure,
-			Nullable<int> errorLine,
-			string errorMessage)
+			DateTime errorTime,
+			string userName)
 		{
+			this.ErrorLine = errorLine.ToNullableInt();
 			this.ErrorLogID = errorLogID.ToInt();
-			this.ErrorTime = errorTime.ToDateTime();
-			this.UserName = userName.ToString();
+			this.ErrorMessage = errorMessage.ToString();
 			this.ErrorNumber = errorNumber.ToInt();
+			this.ErrorProcedure = errorProcedure.ToString();
 			this.ErrorSeverity = errorSeverity.ToNullableInt();
 			this.ErrorState = errorState.ToNullableInt();
-			this.ErrorProcedure = errorProcedure.ToString();
-			this.ErrorLine = errorLine.ToNullableInt();
-			this.ErrorMessage = errorMessage.ToString();
+			this.ErrorTime = errorTime.ToDateTime();
+			this.UserName = userName.ToString();
 		}
 
+		public Nullable<int> ErrorLine { get; set; }
 		public int ErrorLogID { get; set; }
-		public DateTime ErrorTime { get; set; }
-		public string UserName { get; set; }
+		public string ErrorMessage { get; set; }
 		public int ErrorNumber { get; set; }
+		public string ErrorProcedure { get; set; }
 		public Nullable<int> ErrorSeverity { get; set; }
 		public Nullable<int> ErrorState { get; set; }
-		public string ErrorProcedure { get; set; }
-		public Nullable<int> ErrorLine { get; set; }
-		public string ErrorMessage { get; set; }
+		public DateTime ErrorTime { get; set; }
+		public string UserName { get; set; }
+
+		[JsonIgnore]
+		public bool ShouldSerializeErrorLineValue { get; set; } = true;
+
+		public bool ShouldSerializeErrorLine()
+		{
+			return this.ShouldSerializeErrorLineValue;
+		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeErrorLogIDValue { get; set; } = true;
@@ -50,19 +58,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorTimeValue { get; set; } = true;
+		public bool ShouldSerializeErrorMessageValue { get; set; } = true;
 
-		public bool ShouldSerializeErrorTime()
+		public bool ShouldSerializeErrorMessage()
 		{
-			return this.ShouldSerializeErrorTimeValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeUserNameValue { get; set; } = true;
-
-		public bool ShouldSerializeUserName()
-		{
-			return this.ShouldSerializeUserNameValue;
+			return this.ShouldSerializeErrorMessageValue;
 		}
 
 		[JsonIgnore]
@@ -71,6 +71,14 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeErrorNumber()
 		{
 			return this.ShouldSerializeErrorNumberValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeErrorProcedureValue { get; set; } = true;
+
+		public bool ShouldSerializeErrorProcedure()
+		{
+			return this.ShouldSerializeErrorProcedureValue;
 		}
 
 		[JsonIgnore]
@@ -90,44 +98,36 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorProcedureValue { get; set; } = true;
+		public bool ShouldSerializeErrorTimeValue { get; set; } = true;
 
-		public bool ShouldSerializeErrorProcedure()
+		public bool ShouldSerializeErrorTime()
 		{
-			return this.ShouldSerializeErrorProcedureValue;
+			return this.ShouldSerializeErrorTimeValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorLineValue { get; set; } = true;
+		public bool ShouldSerializeUserNameValue { get; set; } = true;
 
-		public bool ShouldSerializeErrorLine()
+		public bool ShouldSerializeUserName()
 		{
-			return this.ShouldSerializeErrorLineValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeErrorMessageValue { get; set; } = true;
-
-		public bool ShouldSerializeErrorMessage()
-		{
-			return this.ShouldSerializeErrorMessageValue;
+			return this.ShouldSerializeUserNameValue;
 		}
 
 		public void DisableAllFields()
 		{
+			this.ShouldSerializeErrorLineValue = false;
 			this.ShouldSerializeErrorLogIDValue = false;
-			this.ShouldSerializeErrorTimeValue = false;
-			this.ShouldSerializeUserNameValue = false;
+			this.ShouldSerializeErrorMessageValue = false;
 			this.ShouldSerializeErrorNumberValue = false;
+			this.ShouldSerializeErrorProcedureValue = false;
 			this.ShouldSerializeErrorSeverityValue = false;
 			this.ShouldSerializeErrorStateValue = false;
-			this.ShouldSerializeErrorProcedureValue = false;
-			this.ShouldSerializeErrorLineValue = false;
-			this.ShouldSerializeErrorMessageValue = false;
+			this.ShouldSerializeErrorTimeValue = false;
+			this.ShouldSerializeUserNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c37053531c8f6ebf22a2eaff599180fb</Hash>
+    <Hash>8829738e2fedeed8a1c6821c0047540b</Hash>
 </Codenesium>*/

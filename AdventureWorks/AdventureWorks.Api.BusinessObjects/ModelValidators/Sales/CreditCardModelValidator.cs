@@ -13,8 +13,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(CreditCardModel model)
 		{
-			this.CardTypeRules();
 			this.CardNumberRules();
+			this.CardTypeRules();
 			this.ExpMonthRules();
 			this.ExpYearRules();
 			this.ModifiedDateRules();
@@ -23,8 +23,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, CreditCardModel model)
 		{
-			this.CardTypeRules();
 			this.CardNumberRules();
+			this.CardTypeRules();
 			this.ExpMonthRules();
 			this.ExpYearRules();
 			this.ModifiedDateRules();
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>380bed728ea823c4ff296d6d598d7f73</Hash>
+    <Hash>5626cb605b7d9fcaa601f112e28805e5</Hash>
 </Codenesium>*/

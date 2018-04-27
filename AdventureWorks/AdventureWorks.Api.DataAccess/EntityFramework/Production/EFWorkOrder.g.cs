@@ -13,59 +13,58 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int workOrderID,
-			int productID,
-			int orderQty,
-			int stockedQty,
-			short scrappedQty,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
 			DateTime dueDate,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
+			int orderQty,
+			int productID,
+			short scrappedQty,
 			Nullable<short> scrapReasonID,
-			DateTime modifiedDate)
+			DateTime startDate,
+			int stockedQty)
 		{
-			this.WorkOrderID = workOrderID.ToInt();
-			this.ProductID = productID.ToInt();
-			this.OrderQty = orderQty.ToInt();
-			this.StockedQty = stockedQty.ToInt();
-			this.ScrappedQty = scrappedQty;
-			this.StartDate = startDate.ToDateTime();
-			this.EndDate = endDate.ToNullableDateTime();
 			this.DueDate = dueDate.ToDateTime();
-			this.ScrapReasonID = scrapReasonID;
+			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.OrderQty = orderQty.ToInt();
+			this.ProductID = productID.ToInt();
+			this.ScrappedQty = scrappedQty;
+			this.ScrapReasonID = scrapReasonID;
+			this.StartDate = startDate.ToDateTime();
+			this.StockedQty = stockedQty.ToInt();
+			this.WorkOrderID = workOrderID.ToInt();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("WorkOrderID", TypeName="int")]
-		public int WorkOrderID { get; set; }
-
-		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
-
-		[Column("OrderQty", TypeName="int")]
-		public int OrderQty { get; set; }
-
-		[Column("StockedQty", TypeName="int")]
-		public int StockedQty { get; set; }
-
-		[Column("ScrappedQty", TypeName="smallint")]
-		public short ScrappedQty { get; set; }
-
-		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
-
-		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate { get; set; }
 
 		[Column("DueDate", TypeName="datetime")]
 		public DateTime DueDate { get; set; }
 
-		[Column("ScrapReasonID", TypeName="smallint")]
-		public Nullable<short> ScrapReasonID { get; set; }
+		[Column("EndDate", TypeName="datetime")]
+		public Nullable<DateTime> EndDate { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("OrderQty", TypeName="int")]
+		public int OrderQty { get; set; }
+
+		[Column("ProductID", TypeName="int")]
+		public int ProductID { get; set; }
+
+		[Column("ScrappedQty", TypeName="smallint")]
+		public short ScrappedQty { get; set; }
+
+		[Column("ScrapReasonID", TypeName="smallint")]
+		public Nullable<short> ScrapReasonID { get; set; }
+
+		[Column("StartDate", TypeName="datetime")]
+		public DateTime StartDate { get; set; }
+
+		[Column("StockedQty", TypeName="int")]
+		public int StockedQty { get; set; }
+
+		[Key]
+		[Column("WorkOrderID", TypeName="int")]
+		public int WorkOrderID { get; set; }
 
 		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
@@ -76,5 +75,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb59ff24c029ba8d620fbe41286bab58</Hash>
+    <Hash>d46879f3473d6d283d08e3b49f19319c</Hash>
 </Codenesium>*/

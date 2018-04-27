@@ -11,28 +11,28 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductProductPhotoModel(
-			int productPhotoID,
+			DateTime modifiedDate,
 			bool primary,
-			DateTime modifiedDate)
+			int productPhotoID)
 		{
-			this.ProductPhotoID = productPhotoID.ToInt();
-			this.Primary = primary.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Primary = primary.ToBoolean();
+			this.ProductPhotoID = productPhotoID.ToInt();
 		}
 
-		private int productPhotoID;
+		private DateTime modifiedDate;
 
 		[Required]
-		public int ProductPhotoID
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.productPhotoID;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.productPhotoID = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -52,24 +52,24 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private int productPhotoID;
 
 		[Required]
-		public DateTime ModifiedDate
+		public int ProductPhotoID
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.productPhotoID;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.productPhotoID = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b57bb4ab5ab41465795cb44a0503615</Hash>
+    <Hash>dde9c90bb0676f43a5f6555943c27ceb</Hash>
 </Codenesium>*/

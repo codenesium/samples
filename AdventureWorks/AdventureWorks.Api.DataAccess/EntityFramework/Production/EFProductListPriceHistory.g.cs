@@ -13,24 +13,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int productID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
 			decimal listPrice,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			DateTime startDate)
 		{
-			this.ProductID = productID.ToInt();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ListPrice = listPrice.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
+			this.StartDate = startDate.ToDateTime();
 		}
-
-		[Key]
-		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
-
-		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
 
 		[Column("EndDate", TypeName="datetime")]
 		public Nullable<DateTime> EndDate { get; set; }
@@ -41,11 +34,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
+		[Key]
+		[Column("ProductID", TypeName="int")]
+		public int ProductID { get; set; }
+
+		[Column("StartDate", TypeName="datetime")]
+		public DateTime StartDate { get; set; }
+
 		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>be9708a4c2b12c363dbbef365d545a1a</Hash>
+    <Hash>01acc767235b3891904d6776e2710470</Hash>
 </Codenesium>*/

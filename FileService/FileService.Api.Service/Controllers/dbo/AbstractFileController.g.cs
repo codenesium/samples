@@ -88,7 +88,7 @@ namespace FileServiceNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/files/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Files/{result.Id.ToString()}");
 				POCOFile response = this.fileManager.GetById(result.Id).Files.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace FileServiceNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByFileTypeId/{id}")]
-		[ReadOnly]
-		[Route("~/api/FileTypes/{id}/Files")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOFile>), 200)]
-		public virtual IActionResult ByFileTypeId(int id)
-		{
-			ApiResponse response = this.fileManager.GetWhere(x => x.FileTypeId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Files);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByBucketId/{id}")]
 		[ReadOnly]
 		[Route("~/api/Buckets/{id}/Files")]
@@ -215,9 +195,29 @@ namespace FileServiceNS.Api.Service
 				return this.Ok(response.Files);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByFileTypeId/{id}")]
+		[ReadOnly]
+		[Route("~/api/FileTypes/{id}/Files")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOFile>), 200)]
+		public virtual IActionResult ByFileTypeId(int id)
+		{
+			ApiResponse response = this.fileManager.GetWhere(x => x.FileTypeId == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Files);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>00597d67e4d9f96dad9eda78305a48fc</Hash>
+    <Hash>20d58cb726620883b0b40a7e2a64e4d6</Hash>
 </Codenesium>*/

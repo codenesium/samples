@@ -11,37 +11,38 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public BillOfMaterialsModel(
-			Nullable<int> productAssemblyID,
-			int componentID,
-			DateTime startDate,
-			Nullable<DateTime> endDate,
-			string unitMeasureCode,
 			short bOMLevel,
+			int componentID,
+			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
 			decimal perAssemblyQty,
-			DateTime modifiedDate)
+			Nullable<int> productAssemblyID,
+			DateTime startDate,
+			string unitMeasureCode)
 		{
-			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
-			this.ComponentID = componentID.ToInt();
-			this.StartDate = startDate.ToDateTime();
-			this.EndDate = endDate.ToNullableDateTime();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
 			this.BOMLevel = bOMLevel;
-			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
+			this.ComponentID = componentID.ToInt();
+			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
+			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
+			this.StartDate = startDate.ToDateTime();
+			this.UnitMeasureCode = unitMeasureCode.ToString();
 		}
 
-		private Nullable<int> productAssemblyID;
+		private short bOMLevel;
 
-		public Nullable<int> ProductAssemblyID
+		[Required]
+		public short BOMLevel
 		{
 			get
 			{
-				return this.productAssemblyID.IsEmptyOrZeroOrNull() ? null : this.productAssemblyID;
+				return this.bOMLevel;
 			}
 
 			set
 			{
-				this.productAssemblyID = value;
+				this.bOMLevel = value;
 			}
 		}
 
@@ -61,22 +62,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime startDate;
-
-		[Required]
-		public DateTime StartDate
-		{
-			get
-			{
-				return this.startDate;
-			}
-
-			set
-			{
-				this.startDate = value;
-			}
-		}
-
 		private Nullable<DateTime> endDate;
 
 		public Nullable<DateTime> EndDate
@@ -92,35 +77,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string unitMeasureCode;
+		private DateTime modifiedDate;
 
 		[Required]
-		public string UnitMeasureCode
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.unitMeasureCode;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.unitMeasureCode = value;
-			}
-		}
-
-		private short bOMLevel;
-
-		[Required]
-		public short BOMLevel
-		{
-			get
-			{
-				return this.bOMLevel;
-			}
-
-			set
-			{
-				this.bOMLevel = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -140,24 +109,55 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private Nullable<int> productAssemblyID;
 
-		[Required]
-		public DateTime ModifiedDate
+		public Nullable<int> ProductAssemblyID
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.productAssemblyID.IsEmptyOrZeroOrNull() ? null : this.productAssemblyID;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.productAssemblyID = value;
+			}
+		}
+
+		private DateTime startDate;
+
+		[Required]
+		public DateTime StartDate
+		{
+			get
+			{
+				return this.startDate;
+			}
+
+			set
+			{
+				this.startDate = value;
+			}
+		}
+
+		private string unitMeasureCode;
+
+		[Required]
+		public string UnitMeasureCode
+		{
+			get
+			{
+				return this.unitMeasureCode;
+			}
+
+			set
+			{
+				this.unitMeasureCode = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>03af6eaf4ab55dd92f05cabaeccb8cf8</Hash>
+    <Hash>3a925805916847e458d09fe4875e0501</Hash>
 </Codenesium>*/

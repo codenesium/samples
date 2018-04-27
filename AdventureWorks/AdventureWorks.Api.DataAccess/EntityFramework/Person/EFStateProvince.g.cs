@@ -13,31 +13,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int stateProvinceID,
-			string stateProvinceCode,
 			string countryRegionCode,
 			bool isOnlyStateProvinceFlag,
+			DateTime modifiedDate,
 			string name,
-			int territoryID,
 			Guid rowguid,
-			DateTime modifiedDate)
+			string stateProvinceCode,
+			int territoryID)
 		{
-			this.StateProvinceID = stateProvinceID.ToInt();
-			this.StateProvinceCode = stateProvinceCode.ToString();
 			this.CountryRegionCode = countryRegionCode.ToString();
 			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag.ToBoolean();
-			this.Name = name.ToString();
-			this.TerritoryID = territoryID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.StateProvinceCode = stateProvinceCode.ToString();
+			this.StateProvinceID = stateProvinceID.ToInt();
+			this.TerritoryID = territoryID.ToInt();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("StateProvinceID", TypeName="int")]
-		public int StateProvinceID { get; set; }
-
-		[Column("StateProvinceCode", TypeName="nchar(3)")]
-		public string StateProvinceCode { get; set; }
 
 		[Column("CountryRegionCode", TypeName="nvarchar(3)")]
 		public string CountryRegionCode { get; set; }
@@ -45,17 +37,25 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("IsOnlyStateProvinceFlag", TypeName="bit")]
 		public bool IsOnlyStateProvinceFlag { get; set; }
 
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
+
 		[Column("Name", TypeName="nvarchar(50)")]
 		public string Name { get; set; }
 
-		[Column("TerritoryID", TypeName="int")]
-		public int TerritoryID { get; set; }
-
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("StateProvinceCode", TypeName="nchar(3)")]
+		public string StateProvinceCode { get; set; }
+
+		[Key]
+		[Column("StateProvinceID", TypeName="int")]
+		public int StateProvinceID { get; set; }
+
+		[Column("TerritoryID", TypeName="int")]
+		public int TerritoryID { get; set; }
 
 		[ForeignKey("CountryRegionCode")]
 		public virtual EFCountryRegion CountryRegion { get; set; }
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>34e00d96a1168e53a50f52fdd5175490</Hash>
+    <Hash>1412b9f37b0551bfe0042974324a4430</Hash>
 </Codenesium>*/

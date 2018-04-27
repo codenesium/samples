@@ -11,13 +11,29 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductCategoryModel(
+			DateTime modifiedDate,
 			string name,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Guid rowguid)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private string name;
@@ -51,25 +67,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.rowguid = value;
 			}
 		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>42f5bd62f17f1294a65da5ba0e580a3a</Hash>
+    <Hash>ff99cde77671d8cc841ee00e19dfb2c3</Hash>
 </Codenesium>*/

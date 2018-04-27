@@ -10,27 +10,43 @@ namespace NebulaNS.Api.Contracts
 		{}
 
 		public POCOChain(
+			int chainStatusId,
+			Guid externalId,
 			int id,
 			string name,
-			int teamId,
-			int chainStatusId,
-			Guid externalId)
+			int teamId)
 		{
+			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
 			this.Name = name.ToString();
-			this.ExternalId = externalId.ToGuid();
 
-			this.TeamId = new ReferenceEntity<int>(teamId,
-			                                       nameof(ApiResponse.Teams));
 			this.ChainStatusId = new ReferenceEntity<int>(chainStatusId,
 			                                              nameof(ApiResponse.ChainStatus));
+			this.TeamId = new ReferenceEntity<int>(teamId,
+			                                       nameof(ApiResponse.Teams));
 		}
 
+		public ReferenceEntity<int> ChainStatusId { get; set; }
+		public Guid ExternalId { get; set; }
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public ReferenceEntity<int> TeamId { get; set; }
-		public ReferenceEntity<int> ChainStatusId { get; set; }
-		public Guid ExternalId { get; set; }
+
+		[JsonIgnore]
+		public bool ShouldSerializeChainStatusIdValue { get; set; } = true;
+
+		public bool ShouldSerializeChainStatusId()
+		{
+			return this.ShouldSerializeChainStatusIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeExternalIdValue { get; set; } = true;
+
+		public bool ShouldSerializeExternalId()
+		{
+			return this.ShouldSerializeExternalIdValue;
+		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue { get; set; } = true;
@@ -56,33 +72,17 @@ namespace NebulaNS.Api.Contracts
 			return this.ShouldSerializeTeamIdValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeChainStatusIdValue { get; set; } = true;
-
-		public bool ShouldSerializeChainStatusId()
-		{
-			return this.ShouldSerializeChainStatusIdValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeExternalIdValue { get; set; } = true;
-
-		public bool ShouldSerializeExternalId()
-		{
-			return this.ShouldSerializeExternalIdValue;
-		}
-
 		public void DisableAllFields()
 		{
+			this.ShouldSerializeChainStatusIdValue = false;
+			this.ShouldSerializeExternalIdValue = false;
 			this.ShouldSerializeIdValue = false;
 			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeTeamIdValue = false;
-			this.ShouldSerializeChainStatusIdValue = false;
-			this.ShouldSerializeExternalIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3079044dd8ef1051dd5e1deb394f93c</Hash>
+    <Hash>8114fca92e720dc2e83833201a7c3f1a</Hash>
 </Codenesium>*/

@@ -11,19 +11,35 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductInventoryModel(
-			short locationID,
-			string shelf,
 			int bin,
+			short locationID,
+			DateTime modifiedDate,
 			short quantity,
 			Guid rowguid,
-			DateTime modifiedDate)
+			string shelf)
 		{
-			this.LocationID = locationID;
-			this.Shelf = shelf.ToString();
 			this.Bin = bin.ToInt();
+			this.LocationID = locationID;
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Quantity = quantity;
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Shelf = shelf.ToString();
+		}
+
+		private int bin;
+
+		[Required]
+		public int Bin
+		{
+			get
+			{
+				return this.bin;
+			}
+
+			set
+			{
+				this.bin = value;
+			}
 		}
 
 		private short locationID;
@@ -42,35 +58,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string shelf;
+		private DateTime modifiedDate;
 
 		[Required]
-		public string Shelf
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.shelf;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.shelf = value;
-			}
-		}
-
-		private int bin;
-
-		[Required]
-		public int Bin
-		{
-			get
-			{
-				return this.bin;
-			}
-
-			set
-			{
-				this.bin = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -106,24 +106,24 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private string shelf;
 
 		[Required]
-		public DateTime ModifiedDate
+		public string Shelf
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.shelf;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.shelf = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ca43495d3e3f62be44875285ac2041a</Hash>
+    <Hash>5c5c1bd62bb73709ecc21b4c8f10fb6d</Hash>
 </Codenesium>*/

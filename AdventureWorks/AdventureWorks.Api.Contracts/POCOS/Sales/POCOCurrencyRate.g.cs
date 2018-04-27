@@ -10,17 +10,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOCurrencyRate(
-			int currencyRateID,
-			DateTime currencyRateDate,
-			string fromCurrencyCode,
-			string toCurrencyCode,
 			decimal averageRate,
+			DateTime currencyRateDate,
+			int currencyRateID,
 			decimal endOfDayRate,
-			DateTime modifiedDate)
+			string fromCurrencyCode,
+			DateTime modifiedDate,
+			string toCurrencyCode)
 		{
-			this.CurrencyRateID = currencyRateID.ToInt();
-			this.CurrencyRateDate = currencyRateDate.ToDateTime();
 			this.AverageRate = averageRate.ToDecimal();
+			this.CurrencyRateDate = currencyRateDate.ToDateTime();
+			this.CurrencyRateID = currencyRateID.ToInt();
 			this.EndOfDayRate = endOfDayRate.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 
@@ -30,20 +30,20 @@ namespace AdventureWorksNS.Api.Contracts
 			                                                  nameof(ApiResponse.Currencies));
 		}
 
-		public int CurrencyRateID { get; set; }
-		public DateTime CurrencyRateDate { get; set; }
-		public ReferenceEntity<string> FromCurrencyCode { get; set; }
-		public ReferenceEntity<string> ToCurrencyCode { get; set; }
 		public decimal AverageRate { get; set; }
+		public DateTime CurrencyRateDate { get; set; }
+		public int CurrencyRateID { get; set; }
 		public decimal EndOfDayRate { get; set; }
+		public ReferenceEntity<string> FromCurrencyCode { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public ReferenceEntity<string> ToCurrencyCode { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRateIDValue { get; set; } = true;
+		public bool ShouldSerializeAverageRateValue { get; set; } = true;
 
-		public bool ShouldSerializeCurrencyRateID()
+		public bool ShouldSerializeAverageRate()
 		{
-			return this.ShouldSerializeCurrencyRateIDValue;
+			return this.ShouldSerializeAverageRateValue;
 		}
 
 		[JsonIgnore]
@@ -55,27 +55,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFromCurrencyCodeValue { get; set; } = true;
+		public bool ShouldSerializeCurrencyRateIDValue { get; set; } = true;
 
-		public bool ShouldSerializeFromCurrencyCode()
+		public bool ShouldSerializeCurrencyRateID()
 		{
-			return this.ShouldSerializeFromCurrencyCodeValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeToCurrencyCodeValue { get; set; } = true;
-
-		public bool ShouldSerializeToCurrencyCode()
-		{
-			return this.ShouldSerializeToCurrencyCodeValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeAverageRateValue { get; set; } = true;
-
-		public bool ShouldSerializeAverageRate()
-		{
-			return this.ShouldSerializeAverageRateValue;
+			return this.ShouldSerializeCurrencyRateIDValue;
 		}
 
 		[JsonIgnore]
@@ -87,6 +71,14 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeFromCurrencyCodeValue { get; set; } = true;
+
+		public bool ShouldSerializeFromCurrencyCode()
+		{
+			return this.ShouldSerializeFromCurrencyCodeValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -94,19 +86,27 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeToCurrencyCodeValue { get; set; } = true;
+
+		public bool ShouldSerializeToCurrencyCode()
+		{
+			return this.ShouldSerializeToCurrencyCodeValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeCurrencyRateIDValue = false;
-			this.ShouldSerializeCurrencyRateDateValue = false;
-			this.ShouldSerializeFromCurrencyCodeValue = false;
-			this.ShouldSerializeToCurrencyCodeValue = false;
 			this.ShouldSerializeAverageRateValue = false;
+			this.ShouldSerializeCurrencyRateDateValue = false;
+			this.ShouldSerializeCurrencyRateIDValue = false;
 			this.ShouldSerializeEndOfDayRateValue = false;
+			this.ShouldSerializeFromCurrencyCodeValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeToCurrencyCodeValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>171e68d965f9e78ffa43c8d0b8a4deb9</Hash>
+    <Hash>af60de63f9afac0e99382db14f30a126</Hash>
 </Codenesium>*/

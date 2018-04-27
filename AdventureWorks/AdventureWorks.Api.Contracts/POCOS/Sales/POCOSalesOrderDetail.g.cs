@@ -10,61 +10,46 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOSalesOrderDetail(
-			int salesOrderID,
-			int salesOrderDetailID,
 			string carrierTrackingNumber,
+			decimal lineTotal,
+			DateTime modifiedDate,
 			short orderQty,
 			int productID,
+			Guid rowguid,
+			int salesOrderDetailID,
+			int salesOrderID,
 			int specialOfferID,
 			decimal unitPrice,
-			decimal unitPriceDiscount,
-			decimal lineTotal,
-			Guid rowguid,
-			DateTime modifiedDate)
+			decimal unitPriceDiscount)
 		{
-			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
 			this.CarrierTrackingNumber = carrierTrackingNumber.ToString();
+			this.LineTotal = lineTotal.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty;
-			this.ProductID = productID.ToInt();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
 			this.UnitPrice = unitPrice.ToDecimal();
 			this.UnitPriceDiscount = unitPriceDiscount.ToDecimal();
-			this.LineTotal = lineTotal.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 
+			this.ProductID = new ReferenceEntity<int>(productID,
+			                                          nameof(ApiResponse.SpecialOfferProducts));
 			this.SalesOrderID = new ReferenceEntity<int>(salesOrderID,
 			                                             nameof(ApiResponse.SalesOrderHeaders));
 			this.SpecialOfferID = new ReferenceEntity<int>(specialOfferID,
 			                                               nameof(ApiResponse.SpecialOfferProducts));
 		}
 
-		public ReferenceEntity<int> SalesOrderID { get; set; }
-		public int SalesOrderDetailID { get; set; }
 		public string CarrierTrackingNumber { get; set; }
+		public decimal LineTotal { get; set; }
+		public DateTime ModifiedDate { get; set; }
 		public short OrderQty { get; set; }
-		public int ProductID { get; set; }
+		public ReferenceEntity<int> ProductID { get; set; }
+		public Guid Rowguid { get; set; }
+		public int SalesOrderDetailID { get; set; }
+		public ReferenceEntity<int> SalesOrderID { get; set; }
 		public ReferenceEntity<int> SpecialOfferID { get; set; }
 		public decimal UnitPrice { get; set; }
 		public decimal UnitPriceDiscount { get; set; }
-		public decimal LineTotal { get; set; }
-		public Guid Rowguid { get; set; }
-		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderIDValue { get; set; } = true;
-
-		public bool ShouldSerializeSalesOrderID()
-		{
-			return this.ShouldSerializeSalesOrderIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderDetailIDValue { get; set; } = true;
-
-		public bool ShouldSerializeSalesOrderDetailID()
-		{
-			return this.ShouldSerializeSalesOrderDetailIDValue;
-		}
 
 		[JsonIgnore]
 		public bool ShouldSerializeCarrierTrackingNumberValue { get; set; } = true;
@@ -72,6 +57,22 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeCarrierTrackingNumber()
 		{
 			return this.ShouldSerializeCarrierTrackingNumberValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeLineTotalValue { get; set; } = true;
+
+		public bool ShouldSerializeLineTotal()
+		{
+			return this.ShouldSerializeLineTotalValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -88,6 +89,30 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeProductID()
 		{
 			return this.ShouldSerializeProductIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+		public bool ShouldSerializeRowguid()
+		{
+			return this.ShouldSerializeRowguidValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeSalesOrderDetailIDValue { get; set; } = true;
+
+		public bool ShouldSerializeSalesOrderDetailID()
+		{
+			return this.ShouldSerializeSalesOrderDetailIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeSalesOrderIDValue { get; set; } = true;
+
+		public bool ShouldSerializeSalesOrderID()
+		{
+			return this.ShouldSerializeSalesOrderIDValue;
 		}
 
 		[JsonIgnore]
@@ -114,47 +139,23 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeUnitPriceDiscountValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeLineTotalValue { get; set; } = true;
-
-		public bool ShouldSerializeLineTotal()
-		{
-			return this.ShouldSerializeLineTotalValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
-
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
-
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeSalesOrderIDValue = false;
-			this.ShouldSerializeSalesOrderDetailIDValue = false;
 			this.ShouldSerializeCarrierTrackingNumberValue = false;
+			this.ShouldSerializeLineTotalValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializeOrderQtyValue = false;
 			this.ShouldSerializeProductIDValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeSalesOrderDetailIDValue = false;
+			this.ShouldSerializeSalesOrderIDValue = false;
 			this.ShouldSerializeSpecialOfferIDValue = false;
 			this.ShouldSerializeUnitPriceValue = false;
 			this.ShouldSerializeUnitPriceDiscountValue = false;
-			this.ShouldSerializeLineTotalValue = false;
-			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>52350ffe5efeec68bf2bd6774787349e</Hash>
+    <Hash>7a0772851a35fa2df592f1ed4fb22e32</Hash>
 </Codenesium>*/

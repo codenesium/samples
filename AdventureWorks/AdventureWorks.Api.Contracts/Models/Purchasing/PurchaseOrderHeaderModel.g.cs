@@ -11,63 +11,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public PurchaseOrderHeaderModel(
-			int revisionNumber,
-			int status,
 			int employeeID,
-			int vendorID,
-			int shipMethodID,
+			decimal freight,
+			DateTime modifiedDate,
 			DateTime orderDate,
+			int revisionNumber,
 			Nullable<DateTime> shipDate,
+			int shipMethodID,
+			int status,
 			decimal subTotal,
 			decimal taxAmt,
-			decimal freight,
 			decimal totalDue,
-			DateTime modifiedDate)
+			int vendorID)
 		{
-			this.RevisionNumber = revisionNumber.ToInt();
-			this.Status = status.ToInt();
 			this.EmployeeID = employeeID.ToInt();
-			this.VendorID = vendorID.ToInt();
-			this.ShipMethodID = shipMethodID.ToInt();
+			this.Freight = freight.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderDate = orderDate.ToDateTime();
+			this.RevisionNumber = revisionNumber.ToInt();
 			this.ShipDate = shipDate.ToNullableDateTime();
+			this.ShipMethodID = shipMethodID.ToInt();
+			this.Status = status.ToInt();
 			this.SubTotal = subTotal.ToDecimal();
 			this.TaxAmt = taxAmt.ToDecimal();
-			this.Freight = freight.ToDecimal();
 			this.TotalDue = totalDue.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private int revisionNumber;
-
-		[Required]
-		public int RevisionNumber
-		{
-			get
-			{
-				return this.revisionNumber;
-			}
-
-			set
-			{
-				this.revisionNumber = value;
-			}
-		}
-
-		private int status;
-
-		[Required]
-		public int Status
-		{
-			get
-			{
-				return this.status;
-			}
-
-			set
-			{
-				this.status = value;
-			}
+			this.VendorID = vendorID.ToInt();
 		}
 
 		private int employeeID;
@@ -86,35 +54,35 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private int vendorID;
+		private decimal freight;
 
 		[Required]
-		public int VendorID
+		public decimal Freight
 		{
 			get
 			{
-				return this.vendorID;
+				return this.freight;
 			}
 
 			set
 			{
-				this.vendorID = value;
+				this.freight = value;
 			}
 		}
 
-		private int shipMethodID;
+		private DateTime modifiedDate;
 
 		[Required]
-		public int ShipMethodID
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.shipMethodID;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.shipMethodID = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -134,6 +102,22 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
+		private int revisionNumber;
+
+		[Required]
+		public int RevisionNumber
+		{
+			get
+			{
+				return this.revisionNumber;
+			}
+
+			set
+			{
+				this.revisionNumber = value;
+			}
+		}
+
 		private Nullable<DateTime> shipDate;
 
 		public Nullable<DateTime> ShipDate
@@ -146,6 +130,38 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.shipDate = value;
+			}
+		}
+
+		private int shipMethodID;
+
+		[Required]
+		public int ShipMethodID
+		{
+			get
+			{
+				return this.shipMethodID;
+			}
+
+			set
+			{
+				this.shipMethodID = value;
+			}
+		}
+
+		private int status;
+
+		[Required]
+		public int Status
+		{
+			get
+			{
+				return this.status;
+			}
+
+			set
+			{
+				this.status = value;
 			}
 		}
 
@@ -181,22 +197,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private decimal freight;
-
-		[Required]
-		public decimal Freight
-		{
-			get
-			{
-				return this.freight;
-			}
-
-			set
-			{
-				this.freight = value;
-			}
-		}
-
 		private decimal totalDue;
 
 		[Required]
@@ -213,24 +213,24 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private int vendorID;
 
 		[Required]
-		public DateTime ModifiedDate
+		public int VendorID
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.vendorID;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.vendorID = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76169092e0305d797a1d3f089916ebe4</Hash>
+    <Hash>ab3f0aba4c8d163b1d7c63ab0d57871f</Hash>
 </Codenesium>*/

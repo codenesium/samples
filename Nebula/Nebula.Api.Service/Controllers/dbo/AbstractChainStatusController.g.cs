@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/chainStatus/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ChainStatus/{result.Id.ToString()}");
 				POCOChainStatus response = this.chainStatusManager.GetById(result.Id).ChainStatus.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>89d522c8c40d61dfc4aef6909123faa9</Hash>
+    <Hash>c5a9ba9795187485dd773c27cb83256c</Hash>
 </Codenesium>*/

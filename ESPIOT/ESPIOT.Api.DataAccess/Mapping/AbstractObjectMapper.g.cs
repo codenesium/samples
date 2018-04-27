@@ -12,8 +12,8 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			efDevice.SetProperties(
 				id,
-				model.PublicId,
-				model.Name);
+				model.Name,
+				model.PublicId);
 		}
 
 		public virtual void DeviceMapEFToPOCO(
@@ -25,7 +25,7 @@ namespace ESPIOTNS.Api.DataAccess
 				return;
 			}
 
-			response.AddDevice(new POCODevice(efDevice.Id, efDevice.PublicId, efDevice.Name));
+			response.AddDevice(new POCODevice(efDevice.Id, efDevice.Name, efDevice.PublicId));
 		}
 
 		public virtual void DeviceActionMapModelToEF(
@@ -49,7 +49,7 @@ namespace ESPIOTNS.Api.DataAccess
 				return;
 			}
 
-			response.AddDeviceAction(new POCODeviceAction(efDeviceAction.Id, efDeviceAction.DeviceId, efDeviceAction.Name, efDeviceAction.@Value));
+			response.AddDeviceAction(new POCODeviceAction(efDeviceAction.DeviceId, efDeviceAction.Id, efDeviceAction.Name, efDeviceAction.@Value));
 
 			this.DeviceMapEFToPOCO(efDeviceAction.Device, response);
 		}
@@ -57,5 +57,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d70a388057992ffd884a79b37d31934d</Hash>
+    <Hash>c62fc90f379b1a1dacccbd05405bc3b6</Hash>
 </Codenesium>*/

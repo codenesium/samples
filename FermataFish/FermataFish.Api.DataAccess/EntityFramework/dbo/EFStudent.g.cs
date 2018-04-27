@@ -13,40 +13,51 @@ namespace FermataFishNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
+			DateTime birthday,
 			string email,
+			bool emailRemindersEnabled,
+			int familyId,
 			string firstName,
+			bool isAdult,
 			string lastName,
 			string phone,
-			bool isAdult,
-			DateTime birthday,
-			int familyId,
-			int studioId,
 			bool smsRemindersEnabled,
-			bool emailRemindersEnabled)
+			int studioId)
 		{
-			this.Id = id.ToInt();
+			this.Birthday = birthday.ToDateTime();
 			this.Email = email.ToString();
+			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
+			this.FamilyId = familyId.ToInt();
 			this.FirstName = firstName.ToString();
+			this.Id = id.ToInt();
+			this.IsAdult = isAdult.ToBoolean();
 			this.LastName = lastName.ToString();
 			this.Phone = phone.ToString();
-			this.IsAdult = isAdult.ToBoolean();
-			this.Birthday = birthday.ToDateTime();
-			this.FamilyId = familyId.ToInt();
-			this.StudioId = studioId.ToInt();
 			this.SmsRemindersEnabled = smsRemindersEnabled.ToBoolean();
-			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
+			this.StudioId = studioId.ToInt();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id", TypeName="int")]
-		public int Id { get; set; }
+		[Column("birthday", TypeName="date")]
+		public DateTime Birthday { get; set; }
 
 		[Column("email", TypeName="varchar(128)")]
 		public string Email { get; set; }
 
+		[Column("emailRemindersEnabled", TypeName="bit")]
+		public bool EmailRemindersEnabled { get; set; }
+
+		[Column("familyId", TypeName="int")]
+		public int FamilyId { get; set; }
+
 		[Column("firstName", TypeName="varchar(128)")]
 		public string FirstName { get; set; }
+
+		[Key]
+		[Column("id", TypeName="int")]
+		public int Id { get; set; }
+
+		[Column("isAdult", TypeName="bit")]
+		public bool IsAdult { get; set; }
 
 		[Column("lastName", TypeName="varchar(128)")]
 		public string LastName { get; set; }
@@ -54,23 +65,11 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("phone", TypeName="varchar(128)")]
 		public string Phone { get; set; }
 
-		[Column("isAdult", TypeName="bit")]
-		public bool IsAdult { get; set; }
-
-		[Column("birthday", TypeName="date")]
-		public DateTime Birthday { get; set; }
-
-		[Column("familyId", TypeName="int")]
-		public int FamilyId { get; set; }
-
-		[Column("studioId", TypeName="int")]
-		public int StudioId { get; set; }
-
 		[Column("smsRemindersEnabled", TypeName="bit")]
 		public bool SmsRemindersEnabled { get; set; }
 
-		[Column("emailRemindersEnabled", TypeName="bit")]
-		public bool EmailRemindersEnabled { get; set; }
+		[Column("studioId", TypeName="int")]
+		public int StudioId { get; set; }
 
 		[ForeignKey("FamilyId")]
 		public virtual EFFamily Family { get; set; }
@@ -81,5 +80,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>40227a01c403bb512e3b0fd3ce390ce5</Hash>
+    <Hash>f99fdf5fc24744244bc0ee6fc131ac86</Hash>
 </Codenesium>*/

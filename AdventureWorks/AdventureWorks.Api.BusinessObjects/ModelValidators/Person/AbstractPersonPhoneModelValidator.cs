@@ -22,6 +22,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public IPersonRepository PersonRepository { get; set; }
 		public IPhoneNumberTypeRepository PhoneNumberTypeRepository { get; set; }
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void PhoneNumberRules()
 		{
 			this.RuleFor(x => x.PhoneNumber).NotNull();
@@ -32,11 +37,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.PhoneNumberTypeID).NotNull();
 			this.RuleFor(x => x.PhoneNumberTypeID).Must(this.BeValidPhoneNumberType).When(x => x ?.PhoneNumberTypeID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidPerson(int id)
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b88296c8921e9f92f3a2fb32b5a41afe</Hash>
+    <Hash>d91322f5f0f83b06c9a2f123c5621aa9</Hash>
 </Codenesium>*/

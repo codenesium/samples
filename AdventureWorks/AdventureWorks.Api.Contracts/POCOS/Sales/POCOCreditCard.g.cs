@@ -10,34 +10,34 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOCreditCard(
-			int creditCardID,
-			string cardType,
 			string cardNumber,
+			string cardType,
+			int creditCardID,
 			int expMonth,
 			short expYear,
 			DateTime modifiedDate)
 		{
-			this.CreditCardID = creditCardID.ToInt();
-			this.CardType = cardType.ToString();
 			this.CardNumber = cardNumber.ToString();
+			this.CardType = cardType.ToString();
+			this.CreditCardID = creditCardID.ToInt();
 			this.ExpMonth = expMonth.ToInt();
 			this.ExpYear = expYear;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
-		public int CreditCardID { get; set; }
-		public string CardType { get; set; }
 		public string CardNumber { get; set; }
+		public string CardType { get; set; }
+		public int CreditCardID { get; set; }
 		public int ExpMonth { get; set; }
 		public short ExpYear { get; set; }
 		public DateTime ModifiedDate { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeCreditCardIDValue { get; set; } = true;
+		public bool ShouldSerializeCardNumberValue { get; set; } = true;
 
-		public bool ShouldSerializeCreditCardID()
+		public bool ShouldSerializeCardNumber()
 		{
-			return this.ShouldSerializeCreditCardIDValue;
+			return this.ShouldSerializeCardNumberValue;
 		}
 
 		[JsonIgnore]
@@ -49,11 +49,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCardNumberValue { get; set; } = true;
+		public bool ShouldSerializeCreditCardIDValue { get; set; } = true;
 
-		public bool ShouldSerializeCardNumber()
+		public bool ShouldSerializeCreditCardID()
 		{
-			return this.ShouldSerializeCardNumberValue;
+			return this.ShouldSerializeCreditCardIDValue;
 		}
 
 		[JsonIgnore]
@@ -82,9 +82,9 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeCreditCardIDValue = false;
-			this.ShouldSerializeCardTypeValue = false;
 			this.ShouldSerializeCardNumberValue = false;
+			this.ShouldSerializeCardTypeValue = false;
+			this.ShouldSerializeCreditCardIDValue = false;
 			this.ShouldSerializeExpMonthValue = false;
 			this.ShouldSerializeExpYearValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7c311ca98914946d63f1199f5f6aa794</Hash>
+    <Hash>1db47e704c41bd4456c95f177723efce</Hash>
 </Codenesium>*/

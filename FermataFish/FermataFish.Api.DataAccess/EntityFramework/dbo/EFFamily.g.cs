@@ -13,26 +13,31 @@ namespace FermataFishNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
+			string notes,
+			string pcEmail,
 			string pcFirstName,
 			string pcLastName,
 			string pcPhone,
-			string pcEmail,
-			string notes,
 			int studioId)
 		{
 			this.Id = id.ToInt();
+			this.Notes = notes.ToString();
+			this.PcEmail = pcEmail.ToString();
 			this.PcFirstName = pcFirstName.ToString();
 			this.PcLastName = pcLastName.ToString();
 			this.PcPhone = pcPhone.ToString();
-			this.PcEmail = pcEmail.ToString();
-			this.Notes = notes.ToString();
 			this.StudioId = studioId.ToInt();
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
+
+		[Column("notes", TypeName="text(2147483647)")]
+		public string Notes { get; set; }
+
+		[Column("pcEmail", TypeName="varchar(128)")]
+		public string PcEmail { get; set; }
 
 		[Column("pcFirstName", TypeName="varchar(128)")]
 		public string PcFirstName { get; set; }
@@ -42,12 +47,6 @@ namespace FermataFishNS.Api.DataAccess
 
 		[Column("pcPhone", TypeName="varchar(128)")]
 		public string PcPhone { get; set; }
-
-		[Column("pcEmail", TypeName="varchar(128)")]
-		public string PcEmail { get; set; }
-
-		[Column("notes", TypeName="text(2147483647)")]
-		public string Notes { get; set; }
 
 		[Column("studioId", TypeName="int")]
 		public int StudioId { get; set; }
@@ -61,5 +60,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5b9269545fa9231114428f4b127642a8</Hash>
+    <Hash>68c9091e996d7a2d520be349528dd18c</Hash>
 </Codenesium>*/

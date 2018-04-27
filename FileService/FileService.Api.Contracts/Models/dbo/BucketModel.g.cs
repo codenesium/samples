@@ -11,27 +11,11 @@ namespace FileServiceNS.Api.Contracts
 		{}
 
 		public BucketModel(
-			string name,
-			Guid externalId)
+			Guid externalId,
+			string name)
 		{
-			this.Name = name.ToString();
 			this.ExternalId = externalId.ToGuid();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
+			this.Name = name.ToString();
 		}
 
 		private Guid externalId;
@@ -49,9 +33,25 @@ namespace FileServiceNS.Api.Contracts
 				this.externalId = value;
 			}
 		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>02c4be5a8f9119f3665b75fcb439ee83</Hash>
+    <Hash>076e3531924617314569c6292b124f1e</Hash>
 </Codenesium>*/

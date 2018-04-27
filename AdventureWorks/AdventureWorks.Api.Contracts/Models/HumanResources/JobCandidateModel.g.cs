@@ -12,12 +12,12 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public JobCandidateModel(
 			Nullable<int> businessEntityID,
-			string resume,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string resume)
 		{
 			this.BusinessEntityID = businessEntityID.ToNullableInt();
-			this.Resume = resume;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Resume = resume;
 		}
 
 		private Nullable<int> businessEntityID;
@@ -32,21 +32,6 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.businessEntityID = value;
-			}
-		}
-
-		private string resume;
-
-		public string Resume
-		{
-			get
-			{
-				return this.resume.IsEmptyOrZeroOrNull() ? null : this.resume;
-			}
-
-			set
-			{
-				this.resume = value;
 			}
 		}
 
@@ -65,9 +50,24 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string resume;
+
+		public string Resume
+		{
+			get
+			{
+				return this.resume.IsEmptyOrZeroOrNull() ? null : this.resume;
+			}
+
+			set
+			{
+				this.resume = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>73c9566d9a7c21ecee1b30918c5468b2</Hash>
+    <Hash>0fa2d839d49c999a0e7c78c7c67f551f</Hash>
 </Codenesium>*/

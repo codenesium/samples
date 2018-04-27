@@ -11,68 +11,35 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ProductReviewModel(
-			int productID,
-			string reviewerName,
-			DateTime reviewDate,
-			string emailAddress,
-			int rating,
 			string comments,
-			DateTime modifiedDate)
+			string emailAddress,
+			DateTime modifiedDate,
+			int productID,
+			int rating,
+			DateTime reviewDate,
+			string reviewerName)
 		{
-			this.ProductID = productID.ToInt();
-			this.ReviewerName = reviewerName.ToString();
-			this.ReviewDate = reviewDate.ToDateTime();
-			this.EmailAddress = emailAddress.ToString();
-			this.Rating = rating.ToInt();
 			this.Comments = comments.ToString();
+			this.EmailAddress = emailAddress.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
+			this.Rating = rating.ToInt();
+			this.ReviewDate = reviewDate.ToDateTime();
+			this.ReviewerName = reviewerName.ToString();
 		}
 
-		private int productID;
+		private string comments;
 
-		[Required]
-		public int ProductID
+		public string Comments
 		{
 			get
 			{
-				return this.productID;
+				return this.comments.IsEmptyOrZeroOrNull() ? null : this.comments;
 			}
 
 			set
 			{
-				this.productID = value;
-			}
-		}
-
-		private string reviewerName;
-
-		[Required]
-		public string ReviewerName
-		{
-			get
-			{
-				return this.reviewerName;
-			}
-
-			set
-			{
-				this.reviewerName = value;
-			}
-		}
-
-		private DateTime reviewDate;
-
-		[Required]
-		public DateTime ReviewDate
-		{
-			get
-			{
-				return this.reviewDate;
-			}
-
-			set
-			{
-				this.reviewDate = value;
+				this.comments = value;
 			}
 		}
 
@@ -92,6 +59,38 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
+		}
+
+		private int productID;
+
+		[Required]
+		public int ProductID
+		{
+			get
+			{
+				return this.productID;
+			}
+
+			set
+			{
+				this.productID = value;
+			}
+		}
+
 		private int rating;
 
 		[Required]
@@ -108,39 +107,40 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string comments;
+		private DateTime reviewDate;
 
-		public string Comments
+		[Required]
+		public DateTime ReviewDate
 		{
 			get
 			{
-				return this.comments.IsEmptyOrZeroOrNull() ? null : this.comments;
+				return this.reviewDate;
 			}
 
 			set
 			{
-				this.comments = value;
+				this.reviewDate = value;
 			}
 		}
 
-		private DateTime modifiedDate;
+		private string reviewerName;
 
 		[Required]
-		public DateTime ModifiedDate
+		public string ReviewerName
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.reviewerName;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.reviewerName = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b7c3642ae786b07149f1f9bb023655d</Hash>
+    <Hash>1a7ad81462f1cd60d45b882865978524</Hash>
 </Codenesium>*/

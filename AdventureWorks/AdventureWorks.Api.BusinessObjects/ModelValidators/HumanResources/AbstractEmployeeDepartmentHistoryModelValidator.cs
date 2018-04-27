@@ -29,6 +29,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.DepartmentID).Must(this.BeValidDepartment).When(x => x ?.DepartmentID != null).WithMessage("Invalid reference");
 		}
 
+		public virtual void EndDateRules()
+		{                       }
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void ShiftIDRules()
 		{
 			this.RuleFor(x => x.ShiftID).NotNull();
@@ -38,14 +46,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void StartDateRules()
 		{
 			this.RuleFor(x => x.StartDate).NotNull();
-		}
-
-		public virtual void EndDateRules()
-		{                       }
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidEmployee(int id)
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>55fc147e06b6f01109069baf84580352</Hash>
+    <Hash>13e015914c79c18aa590eab6daf749f3</Hash>
 </Codenesium>*/

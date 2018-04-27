@@ -21,20 +21,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IStateProvinceRepository StateProvinceRepository { get; set; }
-		public virtual void StateProvinceIDRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.StateProvinceID).NotNull();
-			this.RuleFor(x => x.StateProvinceID).Must(this.BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void TaxTypeRules()
-		{
-			this.RuleFor(x => x.TaxType).NotNull();
-		}
-
-		public virtual void TaxRateRules()
-		{
-			this.RuleFor(x => x.TaxRate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void NameRules()
@@ -48,9 +37,20 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void StateProvinceIDRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.StateProvinceID).NotNull();
+			this.RuleFor(x => x.StateProvinceID).Must(this.BeValidStateProvince).When(x => x ?.StateProvinceID != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void TaxRateRules()
+		{
+			this.RuleFor(x => x.TaxRate).NotNull();
+		}
+
+		public virtual void TaxTypeRules()
+		{
+			this.RuleFor(x => x.TaxType).NotNull();
 		}
 
 		private bool BeValidStateProvince(int id)
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1838633863f06e6d7e08e6dc68453fde</Hash>
+    <Hash>94d638af2422f85ad69db9463d4c6d9f</Hash>
 </Codenesium>*/

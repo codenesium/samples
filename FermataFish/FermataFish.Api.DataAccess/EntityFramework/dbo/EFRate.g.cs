@@ -14,37 +14,36 @@ namespace FermataFishNS.Api.DataAccess
 		public void SetProperties(
 			int id,
 			decimal amountPerMinute,
-			int teacherSkillId,
-			int teacherId)
+			int teacherId,
+			int teacherSkillId)
 		{
-			this.Id = id.ToInt();
 			this.AmountPerMinute = amountPerMinute.ToDecimal();
-			this.TeacherSkillId = teacherSkillId.ToInt();
+			this.Id = id.ToInt();
 			this.TeacherId = teacherId.ToInt();
+			this.TeacherSkillId = teacherSkillId.ToInt();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id", TypeName="int")]
-		public int Id { get; set; }
 
 		[Column("amountPerMinute", TypeName="money")]
 		public decimal AmountPerMinute { get; set; }
 
-		[Column("teacherSkillId", TypeName="int")]
-		public int TeacherSkillId { get; set; }
+		[Key]
+		[Column("id", TypeName="int")]
+		public int Id { get; set; }
 
 		[Column("teacherId", TypeName="int")]
 		public int TeacherId { get; set; }
 
-		[ForeignKey("TeacherSkillId")]
-		public virtual EFTeacherSkill TeacherSkill { get; set; }
+		[Column("teacherSkillId", TypeName="int")]
+		public int TeacherSkillId { get; set; }
 
 		[ForeignKey("TeacherId")]
 		public virtual EFTeacher Teacher { get; set; }
+
+		[ForeignKey("TeacherSkillId")]
+		public virtual EFTeacherSkill TeacherSkill { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae2a1754f7e86efb365cc5542bd486a9</Hash>
+    <Hash>db9511f3e209a95e0f5e27d763d3fa09</Hash>
 </Codenesium>*/

@@ -13,33 +13,33 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(WorkOrderRoutingModel model)
 		{
-			this.ProductIDRules();
-			this.OperationSequenceRules();
-			this.LocationIDRules();
-			this.ScheduledStartDateRules();
-			this.ScheduledEndDateRules();
-			this.ActualStartDateRules();
+			this.ActualCostRules();
 			this.ActualEndDateRules();
 			this.ActualResourceHrsRules();
-			this.PlannedCostRules();
-			this.ActualCostRules();
+			this.ActualStartDateRules();
+			this.LocationIDRules();
 			this.ModifiedDateRules();
+			this.OperationSequenceRules();
+			this.PlannedCostRules();
+			this.ProductIDRules();
+			this.ScheduledEndDateRules();
+			this.ScheduledStartDateRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, WorkOrderRoutingModel model)
 		{
-			this.ProductIDRules();
-			this.OperationSequenceRules();
-			this.LocationIDRules();
-			this.ScheduledStartDateRules();
-			this.ScheduledEndDateRules();
-			this.ActualStartDateRules();
+			this.ActualCostRules();
 			this.ActualEndDateRules();
 			this.ActualResourceHrsRules();
-			this.PlannedCostRules();
-			this.ActualCostRules();
+			this.ActualStartDateRules();
+			this.LocationIDRules();
 			this.ModifiedDateRules();
+			this.OperationSequenceRules();
+			this.PlannedCostRules();
+			this.ProductIDRules();
+			this.ScheduledEndDateRules();
+			this.ScheduledStartDateRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0ae5bb3f71017ec7a83b03ce328eb57a</Hash>
+    <Hash>6abbd80e32df4f0012403ac508f5a942</Hash>
 </Codenesium>*/

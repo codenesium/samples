@@ -12,11 +12,11 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efAdmin.SetProperties(
 				id,
+				model.Birthday,
 				model.Email,
 				model.FirstName,
 				model.LastName,
 				model.Phone,
-				model.Birthday,
 				model.StudioId);
 		}
 
@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddAdmin(new POCOAdmin(efAdmin.Id, efAdmin.Email, efAdmin.FirstName, efAdmin.LastName, efAdmin.Phone, efAdmin.Birthday, efAdmin.StudioId));
+			response.AddAdmin(new POCOAdmin(efAdmin.Birthday, efAdmin.Email, efAdmin.FirstName, efAdmin.Id, efAdmin.LastName, efAdmin.Phone, efAdmin.StudioId));
 
 			this.StudioMapEFToPOCO(efAdmin.Studio, response);
 		}
@@ -41,11 +41,11 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efFamily.SetProperties(
 				id,
+				model.Notes,
+				model.PcEmail,
 				model.PcFirstName,
 				model.PcLastName,
 				model.PcPhone,
-				model.PcEmail,
-				model.Notes,
 				model.StudioId);
 		}
 
@@ -58,7 +58,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddFamily(new POCOFamily(efFamily.Id, efFamily.PcFirstName, efFamily.PcLastName, efFamily.PcPhone, efFamily.PcEmail, efFamily.Notes, efFamily.StudioId));
+			response.AddFamily(new POCOFamily(efFamily.Id, efFamily.Notes, efFamily.PcEmail, efFamily.PcFirstName, efFamily.PcLastName, efFamily.PcPhone, efFamily.StudioId));
 
 			this.StudioMapEFToPOCO(efFamily.Studio, response);
 
@@ -72,15 +72,15 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efLesson.SetProperties(
 				id,
-				model.ScheduledStartDate,
-				model.ScheduledEndDate,
-				model.ActualStartDate,
 				model.ActualEndDate,
-				model.LessonStatusId,
-				model.TeacherNotes,
-				model.StudentNotes,
+				model.ActualStartDate,
 				model.BillAmount,
-				model.StudioId);
+				model.LessonStatusId,
+				model.ScheduledEndDate,
+				model.ScheduledStartDate,
+				model.StudentNotes,
+				model.StudioId,
+				model.TeacherNotes);
 		}
 
 		public virtual void LessonMapEFToPOCO(
@@ -92,7 +92,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddLesson(new POCOLesson(efLesson.Id, efLesson.ScheduledStartDate, efLesson.ScheduledEndDate, efLesson.ActualStartDate, efLesson.ActualEndDate, efLesson.LessonStatusId, efLesson.TeacherNotes, efLesson.StudentNotes, efLesson.BillAmount, efLesson.StudioId));
+			response.AddLesson(new POCOLesson(efLesson.ActualEndDate, efLesson.ActualStartDate, efLesson.BillAmount, efLesson.Id, efLesson.LessonStatusId, efLesson.ScheduledEndDate, efLesson.ScheduledStartDate, efLesson.StudentNotes, efLesson.StudioId, efLesson.TeacherNotes));
 
 			this.LessonStatusMapEFToPOCO(efLesson.LessonStatus, response);
 
@@ -119,7 +119,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddLessonStatus(new POCOLessonStatus(efLessonStatus.Name, efLessonStatus.Id, efLessonStatus.StudioId));
+			response.AddLessonStatus(new POCOLessonStatus(efLessonStatus.Id, efLessonStatus.Name, efLessonStatus.StudioId));
 
 			this.StudioMapEFToPOCO(efLessonStatus.Studio, response);
 
@@ -146,7 +146,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddLessonXStudent(new POCOLessonXStudent(efLessonXStudent.LessonId, efLessonXStudent.StudentId, efLessonXStudent.Id));
+			response.AddLessonXStudent(new POCOLessonXStudent(efLessonXStudent.Id, efLessonXStudent.LessonId, efLessonXStudent.StudentId));
 
 			this.LessonMapEFToPOCO(efLessonXStudent.Lesson, response);
 
@@ -188,8 +188,8 @@ namespace FermataFishNS.Api.DataAccess
 			efRate.SetProperties(
 				id,
 				model.AmountPerMinute,
-				model.TeacherSkillId,
-				model.TeacherId);
+				model.TeacherId,
+				model.TeacherSkillId);
 		}
 
 		public virtual void RateMapEFToPOCO(
@@ -201,11 +201,11 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddRate(new POCORate(efRate.Id, efRate.AmountPerMinute, efRate.TeacherSkillId, efRate.TeacherId));
-
-			this.TeacherSkillMapEFToPOCO(efRate.TeacherSkill, response);
+			response.AddRate(new POCORate(efRate.AmountPerMinute, efRate.Id, efRate.TeacherId, efRate.TeacherSkillId));
 
 			this.TeacherMapEFToPOCO(efRate.Teacher, response);
+
+			this.TeacherSkillMapEFToPOCO(efRate.TeacherSkill, response);
 		}
 
 		public virtual void SpaceMapModelToEF(
@@ -215,8 +215,8 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efSpace.SetProperties(
 				id,
-				model.Name,
 				model.Description,
+				model.Name,
 				model.StudioId);
 		}
 
@@ -229,7 +229,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddSpace(new POCOSpace(efSpace.Id, efSpace.Name, efSpace.Description, efSpace.StudioId));
+			response.AddSpace(new POCOSpace(efSpace.Description, efSpace.Id, efSpace.Name, efSpace.StudioId));
 
 			this.StudioMapEFToPOCO(efSpace.Studio, response);
 		}
@@ -266,8 +266,8 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efSpaceXSpaceFeature.SetProperties(
 				id,
-				model.SpaceId,
-				model.SpaceFeatureId);
+				model.SpaceFeatureId,
+				model.SpaceId);
 		}
 
 		public virtual void SpaceXSpaceFeatureMapEFToPOCO(
@@ -279,11 +279,11 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddSpaceXSpaceFeature(new POCOSpaceXSpaceFeature(efSpaceXSpaceFeature.Id, efSpaceXSpaceFeature.SpaceId, efSpaceXSpaceFeature.SpaceFeatureId));
-
-			this.SpaceMapEFToPOCO(efSpaceXSpaceFeature.Space, response);
+			response.AddSpaceXSpaceFeature(new POCOSpaceXSpaceFeature(efSpaceXSpaceFeature.Id, efSpaceXSpaceFeature.SpaceFeatureId, efSpaceXSpaceFeature.SpaceId));
 
 			this.SpaceFeatureMapEFToPOCO(efSpaceXSpaceFeature.SpaceFeature, response);
+
+			this.SpaceMapEFToPOCO(efSpaceXSpaceFeature.Space, response);
 		}
 
 		public virtual void StateMapModelToEF(
@@ -315,16 +315,16 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efStudent.SetProperties(
 				id,
+				model.Birthday,
 				model.Email,
+				model.EmailRemindersEnabled,
+				model.FamilyId,
 				model.FirstName,
+				model.IsAdult,
 				model.LastName,
 				model.Phone,
-				model.IsAdult,
-				model.Birthday,
-				model.FamilyId,
-				model.StudioId,
 				model.SmsRemindersEnabled,
-				model.EmailRemindersEnabled);
+				model.StudioId);
 		}
 
 		public virtual void StudentMapEFToPOCO(
@@ -336,7 +336,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddStudent(new POCOStudent(efStudent.Id, efStudent.Email, efStudent.FirstName, efStudent.LastName, efStudent.Phone, efStudent.IsAdult, efStudent.Birthday, efStudent.FamilyId, efStudent.StudioId, efStudent.SmsRemindersEnabled, efStudent.EmailRemindersEnabled));
+			response.AddStudent(new POCOStudent(efStudent.Birthday, efStudent.Email, efStudent.EmailRemindersEnabled, efStudent.FamilyId, efStudent.FirstName, efStudent.Id, efStudent.IsAdult, efStudent.LastName, efStudent.Phone, efStudent.SmsRemindersEnabled, efStudent.StudioId));
 
 			this.FamilyMapEFToPOCO(efStudent.Family, response);
 
@@ -350,8 +350,8 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efStudentXFamily.SetProperties(
 				id,
-				model.StudentId,
-				model.FamilyId);
+				model.FamilyId,
+				model.StudentId);
 		}
 
 		public virtual void StudentXFamilyMapEFToPOCO(
@@ -363,11 +363,11 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddStudentXFamily(new POCOStudentXFamily(efStudentXFamily.Id, efStudentXFamily.StudentId, efStudentXFamily.FamilyId));
-
-			this.StudentMapEFToPOCO(efStudentXFamily.Student, response);
+			response.AddStudentXFamily(new POCOStudentXFamily(efStudentXFamily.FamilyId, efStudentXFamily.Id, efStudentXFamily.StudentId));
 
 			this.FamilyMapEFToPOCO(efStudentXFamily.Family, response);
+
+			this.StudentMapEFToPOCO(efStudentXFamily.Student, response);
 		}
 
 		public virtual void StudioMapModelToEF(
@@ -377,12 +377,12 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efStudio.SetProperties(
 				id,
-				model.Name,
-				model.Website,
 				model.Address1,
 				model.Address2,
 				model.City,
+				model.Name,
 				model.StateId,
+				model.Website,
 				model.Zip);
 		}
 
@@ -395,7 +395,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddStudio(new POCOStudio(efStudio.Id, efStudio.Name, efStudio.Website, efStudio.Address1, efStudio.Address2, efStudio.City, efStudio.StateId, efStudio.Zip));
+			response.AddStudio(new POCOStudio(efStudio.Address1, efStudio.Address2, efStudio.City, efStudio.Id, efStudio.Name, efStudio.StateId, efStudio.Website, efStudio.Zip));
 
 			this.StateMapEFToPOCO(efStudio.State, response);
 		}
@@ -407,11 +407,11 @@ namespace FermataFishNS.Api.DataAccess
 		{
 			efTeacher.SetProperties(
 				id,
+				model.Birthday,
+				model.Email,
 				model.FirstName,
 				model.LastName,
-				model.Email,
 				model.Phone,
-				model.Birthday,
 				model.StudioId);
 		}
 
@@ -424,7 +424,7 @@ namespace FermataFishNS.Api.DataAccess
 				return;
 			}
 
-			response.AddTeacher(new POCOTeacher(efTeacher.Id, efTeacher.FirstName, efTeacher.LastName, efTeacher.Email, efTeacher.Phone, efTeacher.Birthday, efTeacher.StudioId));
+			response.AddTeacher(new POCOTeacher(efTeacher.Birthday, efTeacher.Email, efTeacher.FirstName, efTeacher.Id, efTeacher.LastName, efTeacher.Phone, efTeacher.StudioId));
 
 			this.StudioMapEFToPOCO(efTeacher.Studio, response);
 		}
@@ -484,5 +484,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>757572d61c9d7abeddcdf377234390c4</Hash>
+    <Hash>a4a14f388d886c6c02a49ebfb2275da9</Hash>
 </Codenesium>*/

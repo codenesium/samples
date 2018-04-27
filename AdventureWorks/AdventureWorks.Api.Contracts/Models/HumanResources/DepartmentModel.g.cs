@@ -11,29 +11,13 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public DepartmentModel(
-			string name,
 			string groupName,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
-			this.Name = name.ToString();
 			this.GroupName = groupName.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
+			this.Name = name.ToString();
 		}
 
 		private string groupName;
@@ -67,9 +51,25 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e1cf0e80397b360f89868f02f7f6b3a</Hash>
+    <Hash>2738641c578e338ff3284471085bf74b</Hash>
 </Codenesium>*/

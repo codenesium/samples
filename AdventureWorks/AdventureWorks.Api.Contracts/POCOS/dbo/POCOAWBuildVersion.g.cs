@@ -10,29 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOAWBuildVersion(
-			int systemInformationID,
 			string database_Version,
-			DateTime versionDate,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int systemInformationID,
+			DateTime versionDate)
 		{
-			this.SystemInformationID = systemInformationID.ToInt();
 			this.Database_Version = database_Version.ToString();
-			this.VersionDate = versionDate.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.SystemInformationID = systemInformationID.ToInt();
+			this.VersionDate = versionDate.ToDateTime();
 		}
 
-		public int SystemInformationID { get; set; }
 		public string Database_Version { get; set; }
-		public DateTime VersionDate { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeSystemInformationIDValue { get; set; } = true;
-
-		public bool ShouldSerializeSystemInformationID()
-		{
-			return this.ShouldSerializeSystemInformationIDValue;
-		}
+		public int SystemInformationID { get; set; }
+		public DateTime VersionDate { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeDatabase_VersionValue { get; set; } = true;
@@ -43,14 +35,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVersionDateValue { get; set; } = true;
-
-		public bool ShouldSerializeVersionDate()
-		{
-			return this.ShouldSerializeVersionDateValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -58,16 +42,32 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeSystemInformationIDValue { get; set; } = true;
+
+		public bool ShouldSerializeSystemInformationID()
+		{
+			return this.ShouldSerializeSystemInformationIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeVersionDateValue { get; set; } = true;
+
+		public bool ShouldSerializeVersionDate()
+		{
+			return this.ShouldSerializeVersionDateValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeSystemInformationIDValue = false;
 			this.ShouldSerializeDatabase_VersionValue = false;
-			this.ShouldSerializeVersionDateValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeSystemInformationIDValue = false;
+			this.ShouldSerializeVersionDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9433d712558ffbedc61c84f3adc52326</Hash>
+    <Hash>f817f8b8dfc083ffee8e735e5bbabfd4</Hash>
 </Codenesium>*/

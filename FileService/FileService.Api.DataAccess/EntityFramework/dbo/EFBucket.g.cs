@@ -13,27 +13,26 @@ namespace FileServiceNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
-			string name,
-			Guid externalId)
+			Guid externalId,
+			string name)
 		{
+			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
 			this.Name = name.ToString();
-			this.ExternalId = externalId.ToGuid();
 		}
 
+		[Column("externalId", TypeName="uniqueidentifier")]
+		public Guid ExternalId { get; set; }
+
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
 
 		[Column("name", TypeName="nvarchar(255)")]
 		public string Name { get; set; }
-
-		[Column("externalId", TypeName="uniqueidentifier")]
-		public Guid ExternalId { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>07218ceaf9b07a8263aa98df98437e92</Hash>
+    <Hash>83f06c04ddc49b73baf251c03fd9fa4b</Hash>
 </Codenesium>*/

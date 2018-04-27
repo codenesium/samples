@@ -10,87 +10,71 @@ namespace FileServiceNS.Api.Contracts
 		{}
 
 		public POCOFile(
-			int id,
-			Guid externalId,
-			string privateKey,
-			string publicKey,
-			string location,
+			Nullable<int> bucketId,
+			DateTime dateCreated,
+			string description,
 			DateTime expiration,
 			string extension,
-			DateTime dateCreated,
+			Guid externalId,
 			decimal fileSizeInBytes,
 			int fileTypeId,
-			Nullable<int> bucketId,
-			string description)
+			int id,
+			string location,
+			string privateKey,
+			string publicKey)
 		{
-			this.Id = id.ToInt();
-			this.ExternalId = externalId.ToGuid();
-			this.PrivateKey = privateKey.ToString();
-			this.PublicKey = publicKey.ToString();
-			this.Location = location.ToString();
+			this.DateCreated = dateCreated.ToDateTime();
+			this.Description = description.ToString();
 			this.Expiration = expiration.ToDateTime();
 			this.Extension = extension.ToString();
-			this.DateCreated = dateCreated.ToDateTime();
+			this.ExternalId = externalId.ToGuid();
 			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
-			this.Description = description.ToString();
+			this.Id = id.ToInt();
+			this.Location = location.ToString();
+			this.PrivateKey = privateKey.ToString();
+			this.PublicKey = publicKey.ToString();
 
-			this.FileTypeId = new ReferenceEntity<int>(fileTypeId,
-			                                           nameof(ApiResponse.FileTypes));
 			this.BucketId = new ReferenceEntity<Nullable<int>>(bucketId,
 			                                                   nameof(ApiResponse.Buckets));
+			this.FileTypeId = new ReferenceEntity<int>(fileTypeId,
+			                                           nameof(ApiResponse.FileTypes));
 		}
 
-		public int Id { get; set; }
-		public Guid ExternalId { get; set; }
-		public string PrivateKey { get; set; }
-		public string PublicKey { get; set; }
-		public string Location { get; set; }
+		public ReferenceEntity<Nullable<int>> BucketId { get; set; }
+		public DateTime DateCreated { get; set; }
+		public string Description { get; set; }
 		public DateTime Expiration { get; set; }
 		public string Extension { get; set; }
-		public DateTime DateCreated { get; set; }
+		public Guid ExternalId { get; set; }
 		public decimal FileSizeInBytes { get; set; }
 		public ReferenceEntity<int> FileTypeId { get; set; }
-		public ReferenceEntity<Nullable<int>> BucketId { get; set; }
-		public string Description { get; set; }
+		public int Id { get; set; }
+		public string Location { get; set; }
+		public string PrivateKey { get; set; }
+		public string PublicKey { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+		public bool ShouldSerializeBucketIdValue { get; set; } = true;
 
-		public bool ShouldSerializeId()
+		public bool ShouldSerializeBucketId()
 		{
-			return this.ShouldSerializeIdValue;
+			return this.ShouldSerializeBucketIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeExternalIdValue { get; set; } = true;
+		public bool ShouldSerializeDateCreatedValue { get; set; } = true;
 
-		public bool ShouldSerializeExternalId()
+		public bool ShouldSerializeDateCreated()
 		{
-			return this.ShouldSerializeExternalIdValue;
+			return this.ShouldSerializeDateCreatedValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePrivateKeyValue { get; set; } = true;
+		public bool ShouldSerializeDescriptionValue { get; set; } = true;
 
-		public bool ShouldSerializePrivateKey()
+		public bool ShouldSerializeDescription()
 		{
-			return this.ShouldSerializePrivateKeyValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializePublicKeyValue { get; set; } = true;
-
-		public bool ShouldSerializePublicKey()
-		{
-			return this.ShouldSerializePublicKeyValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeLocationValue { get; set; } = true;
-
-		public bool ShouldSerializeLocation()
-		{
-			return this.ShouldSerializeLocationValue;
+			return this.ShouldSerializeDescriptionValue;
 		}
 
 		[JsonIgnore]
@@ -110,11 +94,11 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDateCreatedValue { get; set; } = true;
+		public bool ShouldSerializeExternalIdValue { get; set; } = true;
 
-		public bool ShouldSerializeDateCreated()
+		public bool ShouldSerializeExternalId()
 		{
-			return this.ShouldSerializeDateCreatedValue;
+			return this.ShouldSerializeExternalIdValue;
 		}
 
 		[JsonIgnore]
@@ -134,39 +118,55 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBucketIdValue { get; set; } = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
-		public bool ShouldSerializeBucketId()
+		public bool ShouldSerializeId()
 		{
-			return this.ShouldSerializeBucketIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDescriptionValue { get; set; } = true;
+		public bool ShouldSerializeLocationValue { get; set; } = true;
 
-		public bool ShouldSerializeDescription()
+		public bool ShouldSerializeLocation()
 		{
-			return this.ShouldSerializeDescriptionValue;
+			return this.ShouldSerializeLocationValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializePrivateKeyValue { get; set; } = true;
+
+		public bool ShouldSerializePrivateKey()
+		{
+			return this.ShouldSerializePrivateKeyValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializePublicKeyValue { get; set; } = true;
+
+		public bool ShouldSerializePublicKey()
+		{
+			return this.ShouldSerializePublicKeyValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeExternalIdValue = false;
-			this.ShouldSerializePrivateKeyValue = false;
-			this.ShouldSerializePublicKeyValue = false;
-			this.ShouldSerializeLocationValue = false;
+			this.ShouldSerializeBucketIdValue = false;
+			this.ShouldSerializeDateCreatedValue = false;
+			this.ShouldSerializeDescriptionValue = false;
 			this.ShouldSerializeExpirationValue = false;
 			this.ShouldSerializeExtensionValue = false;
-			this.ShouldSerializeDateCreatedValue = false;
+			this.ShouldSerializeExternalIdValue = false;
 			this.ShouldSerializeFileSizeInBytesValue = false;
 			this.ShouldSerializeFileTypeIdValue = false;
-			this.ShouldSerializeBucketIdValue = false;
-			this.ShouldSerializeDescriptionValue = false;
+			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeLocationValue = false;
+			this.ShouldSerializePrivateKeyValue = false;
+			this.ShouldSerializePublicKeyValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c22a08160d78c3b5d5b6c77711fd71dd</Hash>
+    <Hash>cc15c64a1968d9a78d88f248ffce7c41</Hash>
 </Codenesium>*/

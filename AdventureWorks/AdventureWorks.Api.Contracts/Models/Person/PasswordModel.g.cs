@@ -11,15 +11,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public PasswordModel(
+			DateTime modifiedDate,
 			string passwordHash,
 			string passwordSalt,
-			Guid rowguid,
-			DateTime modifiedDate)
+			Guid rowguid)
 		{
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PasswordHash = passwordHash.ToString();
 			this.PasswordSalt = passwordSalt.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private string passwordHash;
@@ -69,25 +85,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.rowguid = value;
 			}
 		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7362d628a630fb2f2b7244b10a4bdaea</Hash>
+    <Hash>0f93c0f10abde06286a8918932828ed6</Hash>
 </Codenesium>*/

@@ -13,21 +13,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(SalesTerritoryHistoryModel model)
 		{
-			this.TerritoryIDRules();
-			this.StartDateRules();
 			this.EndDateRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.RowguidRules();
+			this.StartDateRules();
+			this.TerritoryIDRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, SalesTerritoryHistoryModel model)
 		{
-			this.TerritoryIDRules();
-			this.StartDateRules();
 			this.EndDateRules();
-			this.RowguidRules();
 			this.ModifiedDateRules();
+			this.RowguidRules();
+			this.StartDateRules();
+			this.TerritoryIDRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>eee60d7bf8b96f68adf53914aa962028</Hash>
+    <Hash>683faacac87c050258e0a56d2bf62ad1</Hash>
 </Codenesium>*/

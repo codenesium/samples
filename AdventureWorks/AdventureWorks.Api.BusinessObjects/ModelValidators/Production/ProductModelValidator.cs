@@ -13,59 +13,59 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(ProductModel model)
 		{
-			this.NameRules();
-			this.ProductNumberRules();
-			this.MakeFlagRules();
-			this.FinishedGoodsFlagRules();
+			this.@ClassRules();
 			this.ColorRules();
-			this.SafetyStockLevelRules();
-			this.ReorderPointRules();
-			this.StandardCostRules();
+			this.DaysToManufactureRules();
+			this.DiscontinuedDateRules();
+			this.FinishedGoodsFlagRules();
 			this.ListPriceRules();
+			this.MakeFlagRules();
+			this.ModifiedDateRules();
+			this.NameRules();
+			this.ProductLineRules();
+			this.ProductModelIDRules();
+			this.ProductNumberRules();
+			this.ProductSubcategoryIDRules();
+			this.ReorderPointRules();
+			this.RowguidRules();
+			this.SafetyStockLevelRules();
+			this.SellEndDateRules();
+			this.SellStartDateRules();
 			this.SizeRules();
 			this.SizeUnitMeasureCodeRules();
-			this.WeightUnitMeasureCodeRules();
-			this.WeightRules();
-			this.DaysToManufactureRules();
-			this.ProductLineRules();
-			this.@ClassRules();
+			this.StandardCostRules();
 			this.StyleRules();
-			this.ProductSubcategoryIDRules();
-			this.ProductModelIDRules();
-			this.SellStartDateRules();
-			this.SellEndDateRules();
-			this.DiscontinuedDateRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
+			this.WeightRules();
+			this.WeightUnitMeasureCodeRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ProductModel model)
 		{
-			this.NameRules();
-			this.ProductNumberRules();
-			this.MakeFlagRules();
-			this.FinishedGoodsFlagRules();
+			this.@ClassRules();
 			this.ColorRules();
-			this.SafetyStockLevelRules();
-			this.ReorderPointRules();
-			this.StandardCostRules();
+			this.DaysToManufactureRules();
+			this.DiscontinuedDateRules();
+			this.FinishedGoodsFlagRules();
 			this.ListPriceRules();
+			this.MakeFlagRules();
+			this.ModifiedDateRules();
+			this.NameRules();
+			this.ProductLineRules();
+			this.ProductModelIDRules();
+			this.ProductNumberRules();
+			this.ProductSubcategoryIDRules();
+			this.ReorderPointRules();
+			this.RowguidRules();
+			this.SafetyStockLevelRules();
+			this.SellEndDateRules();
+			this.SellStartDateRules();
 			this.SizeRules();
 			this.SizeUnitMeasureCodeRules();
-			this.WeightUnitMeasureCodeRules();
-			this.WeightRules();
-			this.DaysToManufactureRules();
-			this.ProductLineRules();
-			this.@ClassRules();
+			this.StandardCostRules();
 			this.StyleRules();
-			this.ProductSubcategoryIDRules();
-			this.ProductModelIDRules();
-			this.SellStartDateRules();
-			this.SellEndDateRules();
-			this.DiscontinuedDateRules();
-			this.RowguidRules();
-			this.ModifiedDateRules();
+			this.WeightRules();
+			this.WeightUnitMeasureCodeRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5ba5959f878fe5cbbdf85351df2f611f</Hash>
+    <Hash>0514b0b9a826f8110944aa6549c70f17</Hash>
 </Codenesium>*/

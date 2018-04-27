@@ -10,63 +10,39 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOSalesTaxRate(
-			int salesTaxRateID,
-			int stateProvinceID,
-			int taxType,
-			decimal taxRate,
+			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int salesTaxRateID,
+			int stateProvinceID,
+			decimal taxRate,
+			int taxType)
 		{
-			this.SalesTaxRateID = salesTaxRateID.ToInt();
-			this.TaxType = taxType.ToInt();
-			this.TaxRate = taxRate.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.SalesTaxRateID = salesTaxRateID.ToInt();
+			this.TaxRate = taxRate.ToDecimal();
+			this.TaxType = taxType.ToInt();
 
 			this.StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
 			                                                nameof(ApiResponse.StateProvinces));
 		}
 
-		public int SalesTaxRateID { get; set; }
-		public ReferenceEntity<int> StateProvinceID { get; set; }
-		public int TaxType { get; set; }
-		public decimal TaxRate { get; set; }
+		public DateTime ModifiedDate { get; set; }
 		public string Name { get; set; }
 		public Guid Rowguid { get; set; }
-		public DateTime ModifiedDate { get; set; }
+		public int SalesTaxRateID { get; set; }
+		public ReferenceEntity<int> StateProvinceID { get; set; }
+		public decimal TaxRate { get; set; }
+		public int TaxType { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesTaxRateIDValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeSalesTaxRateID()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeSalesTaxRateIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStateProvinceIDValue { get; set; } = true;
-
-		public bool ShouldSerializeStateProvinceID()
-		{
-			return this.ShouldSerializeStateProvinceIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeTaxTypeValue { get; set; } = true;
-
-		public bool ShouldSerializeTaxType()
-		{
-			return this.ShouldSerializeTaxTypeValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeTaxRateValue { get; set; } = true;
-
-		public bool ShouldSerializeTaxRate()
-		{
-			return this.ShouldSerializeTaxRateValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -86,26 +62,50 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeSalesTaxRateIDValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeSalesTaxRateID()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeSalesTaxRateIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStateProvinceIDValue { get; set; } = true;
+
+		public bool ShouldSerializeStateProvinceID()
+		{
+			return this.ShouldSerializeStateProvinceIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeTaxRateValue { get; set; } = true;
+
+		public bool ShouldSerializeTaxRate()
+		{
+			return this.ShouldSerializeTaxRateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeTaxTypeValue { get; set; } = true;
+
+		public bool ShouldSerializeTaxType()
+		{
+			return this.ShouldSerializeTaxTypeValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeSalesTaxRateIDValue = false;
-			this.ShouldSerializeStateProvinceIDValue = false;
-			this.ShouldSerializeTaxTypeValue = false;
-			this.ShouldSerializeTaxRateValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeSalesTaxRateIDValue = false;
+			this.ShouldSerializeStateProvinceIDValue = false;
+			this.ShouldSerializeTaxRateValue = false;
+			this.ShouldSerializeTaxTypeValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f985d34c505af024ce4140f6337ab02</Hash>
+    <Hash>20a0a29aa0afe1d1351f8ed23da58034</Hash>
 </Codenesium>*/

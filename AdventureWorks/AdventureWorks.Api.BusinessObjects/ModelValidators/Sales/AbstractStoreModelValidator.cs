@@ -22,28 +22,28 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
 		public ISalesPersonRepository SalesPersonRepository { get; set; }
+		public virtual void DemographicsRules()
+		{                       }
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
-		public virtual void SalesPersonIDRules()
-		{
-			this.RuleFor(x => x.SalesPersonID).Must(this.BeValidSalesPerson).When(x => x ?.SalesPersonID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void DemographicsRules()
-		{                       }
-
 		public virtual void RowguidRules()
 		{
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void SalesPersonIDRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.SalesPersonID).Must(this.BeValidSalesPerson).When(x => x ?.SalesPersonID != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidBusinessEntity(int id)
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>81485de32eba5422c771489fa7523c40</Hash>
+    <Hash>cdde7b58442ceba4ef057a6ae2dfb8f1</Hash>
 </Codenesium>*/

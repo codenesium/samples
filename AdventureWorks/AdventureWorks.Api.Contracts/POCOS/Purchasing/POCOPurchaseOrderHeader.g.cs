@@ -10,52 +10,84 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOPurchaseOrderHeader(
+			int employeeID,
+			decimal freight,
+			DateTime modifiedDate,
+			DateTime orderDate,
 			int purchaseOrderID,
 			int revisionNumber,
-			int status,
-			int employeeID,
-			int vendorID,
-			int shipMethodID,
-			DateTime orderDate,
 			Nullable<DateTime> shipDate,
+			int shipMethodID,
+			int status,
 			decimal subTotal,
 			decimal taxAmt,
-			decimal freight,
 			decimal totalDue,
-			DateTime modifiedDate)
+			int vendorID)
 		{
+			this.Freight = freight.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.OrderDate = orderDate.ToDateTime();
 			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.RevisionNumber = revisionNumber.ToInt();
-			this.Status = status.ToInt();
-			this.OrderDate = orderDate.ToDateTime();
 			this.ShipDate = shipDate.ToNullableDateTime();
+			this.Status = status.ToInt();
 			this.SubTotal = subTotal.ToDecimal();
 			this.TaxAmt = taxAmt.ToDecimal();
-			this.Freight = freight.ToDecimal();
 			this.TotalDue = totalDue.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
 
 			this.EmployeeID = new ReferenceEntity<int>(employeeID,
 			                                           nameof(ApiResponse.Employees));
-			this.VendorID = new ReferenceEntity<int>(vendorID,
-			                                         nameof(ApiResponse.Vendors));
 			this.ShipMethodID = new ReferenceEntity<int>(shipMethodID,
 			                                             nameof(ApiResponse.ShipMethods));
+			this.VendorID = new ReferenceEntity<int>(vendorID,
+			                                         nameof(ApiResponse.Vendors));
 		}
 
+		public ReferenceEntity<int> EmployeeID { get; set; }
+		public decimal Freight { get; set; }
+		public DateTime ModifiedDate { get; set; }
+		public DateTime OrderDate { get; set; }
 		public int PurchaseOrderID { get; set; }
 		public int RevisionNumber { get; set; }
-		public int Status { get; set; }
-		public ReferenceEntity<int> EmployeeID { get; set; }
-		public ReferenceEntity<int> VendorID { get; set; }
-		public ReferenceEntity<int> ShipMethodID { get; set; }
-		public DateTime OrderDate { get; set; }
 		public Nullable<DateTime> ShipDate { get; set; }
+		public ReferenceEntity<int> ShipMethodID { get; set; }
+		public int Status { get; set; }
 		public decimal SubTotal { get; set; }
 		public decimal TaxAmt { get; set; }
-		public decimal Freight { get; set; }
 		public decimal TotalDue { get; set; }
-		public DateTime ModifiedDate { get; set; }
+		public ReferenceEntity<int> VendorID { get; set; }
+
+		[JsonIgnore]
+		public bool ShouldSerializeEmployeeIDValue { get; set; } = true;
+
+		public bool ShouldSerializeEmployeeID()
+		{
+			return this.ShouldSerializeEmployeeIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeFreightValue { get; set; } = true;
+
+		public bool ShouldSerializeFreight()
+		{
+			return this.ShouldSerializeFreightValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeOrderDateValue { get; set; } = true;
+
+		public bool ShouldSerializeOrderDate()
+		{
+			return this.ShouldSerializeOrderDateValue;
+		}
 
 		[JsonIgnore]
 		public bool ShouldSerializePurchaseOrderIDValue { get; set; } = true;
@@ -74,27 +106,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStatusValue { get; set; } = true;
+		public bool ShouldSerializeShipDateValue { get; set; } = true;
 
-		public bool ShouldSerializeStatus()
+		public bool ShouldSerializeShipDate()
 		{
-			return this.ShouldSerializeStatusValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeEmployeeIDValue { get; set; } = true;
-
-		public bool ShouldSerializeEmployeeID()
-		{
-			return this.ShouldSerializeEmployeeIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeVendorIDValue { get; set; } = true;
-
-		public bool ShouldSerializeVendorID()
-		{
-			return this.ShouldSerializeVendorIDValue;
+			return this.ShouldSerializeShipDateValue;
 		}
 
 		[JsonIgnore]
@@ -106,19 +122,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrderDateValue { get; set; } = true;
+		public bool ShouldSerializeStatusValue { get; set; } = true;
 
-		public bool ShouldSerializeOrderDate()
+		public bool ShouldSerializeStatus()
 		{
-			return this.ShouldSerializeOrderDateValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeShipDateValue { get; set; } = true;
-
-		public bool ShouldSerializeShipDate()
-		{
-			return this.ShouldSerializeShipDateValue;
+			return this.ShouldSerializeStatusValue;
 		}
 
 		[JsonIgnore]
@@ -138,14 +146,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFreightValue { get; set; } = true;
-
-		public bool ShouldSerializeFreight()
-		{
-			return this.ShouldSerializeFreightValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeTotalDueValue { get; set; } = true;
 
 		public bool ShouldSerializeTotalDue()
@@ -154,32 +154,32 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeVendorIDValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeVendorID()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeVendorIDValue;
 		}
 
 		public void DisableAllFields()
 		{
+			this.ShouldSerializeEmployeeIDValue = false;
+			this.ShouldSerializeFreightValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeOrderDateValue = false;
 			this.ShouldSerializePurchaseOrderIDValue = false;
 			this.ShouldSerializeRevisionNumberValue = false;
-			this.ShouldSerializeStatusValue = false;
-			this.ShouldSerializeEmployeeIDValue = false;
-			this.ShouldSerializeVendorIDValue = false;
-			this.ShouldSerializeShipMethodIDValue = false;
-			this.ShouldSerializeOrderDateValue = false;
 			this.ShouldSerializeShipDateValue = false;
+			this.ShouldSerializeShipMethodIDValue = false;
+			this.ShouldSerializeStatusValue = false;
 			this.ShouldSerializeSubTotalValue = false;
 			this.ShouldSerializeTaxAmtValue = false;
-			this.ShouldSerializeFreightValue = false;
 			this.ShouldSerializeTotalDueValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeVendorIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b758707b4c23d12a31bd35f1cb8a39ae</Hash>
+    <Hash>7b01181bc0188eccc734078b2232c6e9</Hash>
 </Codenesium>*/

@@ -21,10 +21,25 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IProductRepository ProductRepository { get; set; }
+		public virtual void ActualCostRules()
+		{
+			this.RuleFor(x => x.ActualCost).NotNull();
+		}
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void ProductIDRules()
 		{
 			this.RuleFor(x => x.ProductID).NotNull();
 			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+		}
+
+		public virtual void QuantityRules()
+		{
+			this.RuleFor(x => x.Quantity).NotNull();
 		}
 
 		public virtual void ReferenceOrderIDRules()
@@ -48,21 +63,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.TransactionType).Length(0, 1);
 		}
 
-		public virtual void QuantityRules()
-		{
-			this.RuleFor(x => x.Quantity).NotNull();
-		}
-
-		public virtual void ActualCostRules()
-		{
-			this.RuleFor(x => x.ActualCost).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
-		}
-
 		private bool BeValidProduct(int id)
 		{
 			return this.ProductRepository.GetByIdDirect(id) != null;
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>293dcc36e6d690f6fc1024de52bcda93</Hash>
+    <Hash>153d23cc0008eeef26d02c3f3a7fa74a</Hash>
 </Codenesium>*/

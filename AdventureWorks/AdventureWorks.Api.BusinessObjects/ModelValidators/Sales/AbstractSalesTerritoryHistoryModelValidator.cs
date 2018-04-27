@@ -22,10 +22,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public ISalesPersonRepository SalesPersonRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
-		public virtual void TerritoryIDRules()
+		public virtual void EndDateRules()
+		{                       }
+
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.TerritoryID).NotNull();
-			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void RowguidRules()
+		{
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
 		public virtual void StartDateRules()
@@ -33,17 +40,10 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.StartDate).NotNull();
 		}
 
-		public virtual void EndDateRules()
-		{                       }
-
-		public virtual void RowguidRules()
+		public virtual void TerritoryIDRules()
 		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.TerritoryID).NotNull();
+			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
 		private bool BeValidSalesPerson(int id)
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>10c3726b0ba86cd63b127b75cb6b0997</Hash>
+    <Hash>84f246f6183228c539c0e21eb0ab5268</Hash>
 </Codenesium>*/

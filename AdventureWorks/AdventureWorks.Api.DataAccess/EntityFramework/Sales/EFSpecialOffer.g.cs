@@ -13,34 +13,32 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int specialOfferID,
+			string category,
 			string description,
 			decimal discountPct,
-			string type,
-			string category,
-			DateTime startDate,
 			DateTime endDate,
-			int minQty,
 			Nullable<int> maxQty,
+			int minQty,
+			DateTime modifiedDate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime startDate,
+			string type)
 		{
-			this.SpecialOfferID = specialOfferID.ToInt();
+			this.Category = category.ToString();
 			this.Description = description.ToString();
 			this.DiscountPct = discountPct.ToDecimal();
-			this.Type = type.ToString();
-			this.Category = category.ToString();
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToDateTime();
-			this.MinQty = minQty.ToInt();
 			this.MaxQty = maxQty.ToNullableInt();
-			this.Rowguid = rowguid.ToGuid();
+			this.MinQty = minQty.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.SpecialOfferID = specialOfferID.ToInt();
+			this.StartDate = startDate.ToDateTime();
+			this.Type = type.ToString();
 		}
 
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("SpecialOfferID", TypeName="int")]
-		public int SpecialOfferID { get; set; }
+		[Column("Category", TypeName="nvarchar(50)")]
+		public string Category { get; set; }
 
 		[Column("Description", TypeName="nvarchar(255)")]
 		public string Description { get; set; }
@@ -48,32 +46,34 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("DiscountPct", TypeName="smallmoney")]
 		public decimal DiscountPct { get; set; }
 
-		[Column("Type", TypeName="nvarchar(50)")]
-		public string Type { get; set; }
-
-		[Column("Category", TypeName="nvarchar(50)")]
-		public string Category { get; set; }
-
-		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
-
 		[Column("EndDate", TypeName="datetime")]
 		public DateTime EndDate { get; set; }
-
-		[Column("MinQty", TypeName="int")]
-		public int MinQty { get; set; }
 
 		[Column("MaxQty", TypeName="int")]
 		public Nullable<int> MaxQty { get; set; }
 
-		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		[Column("MinQty", TypeName="int")]
+		public int MinQty { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[Column("rowguid", TypeName="uniqueidentifier")]
+		public Guid Rowguid { get; set; }
+
+		[Key]
+		[Column("SpecialOfferID", TypeName="int")]
+		public int SpecialOfferID { get; set; }
+
+		[Column("StartDate", TypeName="datetime")]
+		public DateTime StartDate { get; set; }
+
+		[Column("Type", TypeName="nvarchar(50)")]
+		public string Type { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>04002a623724602c63434e2c43c9b7e1</Hash>
+    <Hash>c73f0e4c050a9bfd5c4a8411e5fdb2b7</Hash>
 </Codenesium>*/

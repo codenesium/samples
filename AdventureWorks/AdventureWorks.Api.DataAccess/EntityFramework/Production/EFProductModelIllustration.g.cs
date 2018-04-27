@@ -16,14 +16,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			int illustrationID,
 			DateTime modifiedDate)
 		{
-			this.ProductModelID = productModelID.ToInt();
 			this.IllustrationID = illustrationID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductModelID = productModelID.ToInt();
 		}
-
-		[Key]
-		[Column("ProductModelID", TypeName="int")]
-		public int ProductModelID { get; set; }
 
 		[Column("IllustrationID", TypeName="int")]
 		public int IllustrationID { get; set; }
@@ -31,14 +27,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
-		[ForeignKey("ProductModelID")]
-		public virtual EFProductModel ProductModel { get; set; }
+		[Key]
+		[Column("ProductModelID", TypeName="int")]
+		public int ProductModelID { get; set; }
 
 		[ForeignKey("IllustrationID")]
 		public virtual EFIllustration Illustration { get; set; }
+
+		[ForeignKey("ProductModelID")]
+		public virtual EFProductModel ProductModel { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>02ad524b2560088efad688e2c55af2b5</Hash>
+    <Hash>82cbe0469194bfd1a7c0a4c9b87361de</Hash>
 </Codenesium>*/

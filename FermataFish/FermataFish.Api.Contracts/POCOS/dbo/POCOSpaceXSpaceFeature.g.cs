@@ -11,20 +11,20 @@ namespace FermataFishNS.Api.Contracts
 
 		public POCOSpaceXSpaceFeature(
 			int id,
-			int spaceId,
-			int spaceFeatureId)
+			int spaceFeatureId,
+			int spaceId)
 		{
 			this.Id = id.ToInt();
 
-			this.SpaceId = new ReferenceEntity<int>(spaceId,
-			                                        nameof(ApiResponse.Spaces));
 			this.SpaceFeatureId = new ReferenceEntity<int>(spaceFeatureId,
 			                                               nameof(ApiResponse.SpaceFeatures));
+			this.SpaceId = new ReferenceEntity<int>(spaceId,
+			                                        nameof(ApiResponse.Spaces));
 		}
 
 		public int Id { get; set; }
-		public ReferenceEntity<int> SpaceId { get; set; }
 		public ReferenceEntity<int> SpaceFeatureId { get; set; }
+		public ReferenceEntity<int> SpaceId { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeIdValue { get; set; } = true;
@@ -35,14 +35,6 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpaceIdValue { get; set; } = true;
-
-		public bool ShouldSerializeSpaceId()
-		{
-			return this.ShouldSerializeSpaceIdValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeSpaceFeatureIdValue { get; set; } = true;
 
 		public bool ShouldSerializeSpaceFeatureId()
@@ -50,15 +42,23 @@ namespace FermataFishNS.Api.Contracts
 			return this.ShouldSerializeSpaceFeatureIdValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeSpaceIdValue { get; set; } = true;
+
+		public bool ShouldSerializeSpaceId()
+		{
+			return this.ShouldSerializeSpaceIdValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeSpaceIdValue = false;
 			this.ShouldSerializeSpaceFeatureIdValue = false;
+			this.ShouldSerializeSpaceIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46f3338d699a93242c8fca2c7abb1c15</Hash>
+    <Hash>6c095c7933971b20163289869225416b</Hash>
 </Codenesium>*/

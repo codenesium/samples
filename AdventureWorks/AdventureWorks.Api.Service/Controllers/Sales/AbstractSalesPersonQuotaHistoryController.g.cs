@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/salesPersonQuotaHistories/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesPersonQuotaHistories/{result.Id.ToString()}");
 				POCOSalesPersonQuotaHistory response = this.salesPersonQuotaHistoryManager.GetById(result.Id).SalesPersonQuotaHistories.First();
 				return this.Ok(response);
 			}
@@ -199,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>870e381a156b7b0ba4d2ee353a621d4a</Hash>
+    <Hash>5cd7abe8ccb52d8c383e4faced0ad6c0</Hash>
 </Codenesium>*/

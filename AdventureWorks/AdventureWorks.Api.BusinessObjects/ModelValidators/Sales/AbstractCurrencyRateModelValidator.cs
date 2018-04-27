@@ -21,9 +21,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public ICurrencyRepository CurrencyRepository { get; set; }
+		public virtual void AverageRateRules()
+		{
+			this.RuleFor(x => x.AverageRate).NotNull();
+		}
+
 		public virtual void CurrencyRateDateRules()
 		{
 			this.RuleFor(x => x.CurrencyRateDate).NotNull();
+		}
+
+		public virtual void EndOfDayRateRules()
+		{
+			this.RuleFor(x => x.EndOfDayRate).NotNull();
 		}
 
 		public virtual void FromCurrencyCodeRules()
@@ -33,26 +43,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.FromCurrencyCode).Length(0, 3);
 		}
 
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void ToCurrencyCodeRules()
 		{
 			this.RuleFor(x => x.ToCurrencyCode).NotNull();
 			this.RuleFor(x => x.ToCurrencyCode).Must(this.BeValidCurrency).When(x => x ?.ToCurrencyCode != null).WithMessage("Invalid reference");
 			this.RuleFor(x => x.ToCurrencyCode).Length(0, 3);
-		}
-
-		public virtual void AverageRateRules()
-		{
-			this.RuleFor(x => x.AverageRate).NotNull();
-		}
-
-		public virtual void EndOfDayRateRules()
-		{
-			this.RuleFor(x => x.EndOfDayRate).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidCurrency(string id)
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>721884e093e75a88e49f8d3c4bb98200</Hash>
+    <Hash>157f00409fa8c053d3cbc98b7bee6115</Hash>
 </Codenesium>*/

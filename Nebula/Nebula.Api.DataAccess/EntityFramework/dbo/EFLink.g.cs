@@ -13,75 +13,79 @@ namespace NebulaNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
-			string name,
-			string dynamicParameters,
-			string staticParameters,
-			int chainId,
 			Nullable<int> assignedMachineId,
-			int linkStatusId,
-			int order,
-			Nullable<DateTime> dateStarted,
+			int chainId,
 			Nullable<DateTime> dateCompleted,
+			Nullable<DateTime> dateStarted,
+			string dynamicParameters,
+			Guid externalId,
+			int linkStatusId,
+			string name,
+			int order,
 			string response,
-			Guid externalId)
+			string staticParameters,
+			int timeoutInSeconds)
 		{
-			this.Id = id.ToInt();
-			this.Name = name.ToString();
-			this.DynamicParameters = dynamicParameters.ToString();
-			this.StaticParameters = staticParameters.ToString();
-			this.ChainId = chainId.ToInt();
 			this.AssignedMachineId = assignedMachineId.ToNullableInt();
-			this.LinkStatusId = linkStatusId.ToInt();
-			this.Order = order.ToInt();
-			this.DateStarted = dateStarted.ToNullableDateTime();
+			this.ChainId = chainId.ToInt();
 			this.DateCompleted = dateCompleted.ToNullableDateTime();
-			this.Response = response.ToString();
+			this.DateStarted = dateStarted.ToNullableDateTime();
+			this.DynamicParameters = dynamicParameters.ToString();
 			this.ExternalId = externalId.ToGuid();
+			this.Id = id.ToInt();
+			this.LinkStatusId = linkStatusId.ToInt();
+			this.Name = name.ToString();
+			this.Order = order.ToInt();
+			this.Response = response.ToString();
+			this.StaticParameters = staticParameters.ToString();
+			this.TimeoutInSeconds = timeoutInSeconds.ToInt();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id", TypeName="int")]
-		public int Id { get; set; }
-
-		[Column("name", TypeName="varchar(128)")]
-		public string Name { get; set; }
-
-		[Column("dynamicParameters", TypeName="text(2147483647)")]
-		public string DynamicParameters { get; set; }
-
-		[Column("staticParameters", TypeName="text(2147483647)")]
-		public string StaticParameters { get; set; }
-
-		[Column("chainId", TypeName="int")]
-		public int ChainId { get; set; }
 
 		[Column("assignedMachineId", TypeName="int")]
 		public Nullable<int> AssignedMachineId { get; set; }
 
-		[Column("linkStatusId", TypeName="int")]
-		public int LinkStatusId { get; set; }
-
-		[Column("order", TypeName="int")]
-		public int Order { get; set; }
-
-		[Column("dateStarted", TypeName="datetime")]
-		public Nullable<DateTime> DateStarted { get; set; }
+		[Column("chainId", TypeName="int")]
+		public int ChainId { get; set; }
 
 		[Column("dateCompleted", TypeName="datetime")]
 		public Nullable<DateTime> DateCompleted { get; set; }
 
-		[Column("response", TypeName="text(2147483647)")]
-		public string Response { get; set; }
+		[Column("dateStarted", TypeName="datetime")]
+		public Nullable<DateTime> DateStarted { get; set; }
+
+		[Column("dynamicParameters", TypeName="text(2147483647)")]
+		public string DynamicParameters { get; set; }
 
 		[Column("externalId", TypeName="uniqueidentifier")]
 		public Guid ExternalId { get; set; }
 
-		[ForeignKey("ChainId")]
-		public virtual EFChain Chain { get; set; }
+		[Key]
+		[Column("id", TypeName="int")]
+		public int Id { get; set; }
+
+		[Column("linkStatusId", TypeName="int")]
+		public int LinkStatusId { get; set; }
+
+		[Column("name", TypeName="varchar(128)")]
+		public string Name { get; set; }
+
+		[Column("order", TypeName="int")]
+		public int Order { get; set; }
+
+		[Column("response", TypeName="text(2147483647)")]
+		public string Response { get; set; }
+
+		[Column("staticParameters", TypeName="text(2147483647)")]
+		public string StaticParameters { get; set; }
+
+		[Column("timeoutInSeconds", TypeName="int")]
+		public int TimeoutInSeconds { get; set; }
 
 		[ForeignKey("AssignedMachineId")]
 		public virtual EFMachine Machine { get; set; }
+
+		[ForeignKey("ChainId")]
+		public virtual EFChain Chain { get; set; }
 
 		[ForeignKey("LinkStatusId")]
 		public virtual EFLinkStatus LinkStatus { get; set; }
@@ -89,5 +93,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>75b8f053d0b65a2298162caf93a60f36</Hash>
+    <Hash>e9ea9ae3958427f297f3191a1ad47d7e</Hash>
 </Codenesium>*/

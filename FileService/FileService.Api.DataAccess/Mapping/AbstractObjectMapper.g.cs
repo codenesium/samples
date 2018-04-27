@@ -12,8 +12,8 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			efBucket.SetProperties(
 				id,
-				model.Name,
-				model.ExternalId);
+				model.ExternalId,
+				model.Name);
 		}
 
 		public virtual void BucketMapEFToPOCO(
@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.DataAccess
 				return;
 			}
 
-			response.AddBucket(new POCOBucket(efBucket.Id, efBucket.Name, efBucket.ExternalId));
+			response.AddBucket(new POCOBucket(efBucket.ExternalId, efBucket.Id, efBucket.Name));
 		}
 
 		public virtual void FileMapModelToEF(
@@ -35,17 +35,17 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			efFile.SetProperties(
 				id,
-				model.ExternalId,
-				model.PrivateKey,
-				model.PublicKey,
-				model.Location,
+				model.BucketId,
+				model.DateCreated,
+				model.Description,
 				model.Expiration,
 				model.Extension,
-				model.DateCreated,
+				model.ExternalId,
 				model.FileSizeInBytes,
 				model.FileTypeId,
-				model.BucketId,
-				model.Description);
+				model.Location,
+				model.PrivateKey,
+				model.PublicKey);
 		}
 
 		public virtual void FileMapEFToPOCO(
@@ -57,11 +57,11 @@ namespace FileServiceNS.Api.DataAccess
 				return;
 			}
 
-			response.AddFile(new POCOFile(efFile.Id, efFile.ExternalId, efFile.PrivateKey, efFile.PublicKey, efFile.Location, efFile.Expiration, efFile.Extension, efFile.DateCreated, efFile.FileSizeInBytes, efFile.FileTypeId, efFile.BucketId, efFile.Description));
-
-			this.FileTypeMapEFToPOCO(efFile.FileType, response);
+			response.AddFile(new POCOFile(efFile.BucketId, efFile.DateCreated, efFile.Description, efFile.Expiration, efFile.Extension, efFile.ExternalId, efFile.FileSizeInBytes, efFile.FileTypeId, efFile.Id, efFile.Location, efFile.PrivateKey, efFile.PublicKey));
 
 			this.BucketMapEFToPOCO(efFile.Bucket, response);
+
+			this.FileTypeMapEFToPOCO(efFile.FileType, response);
 		}
 
 		public virtual void FileTypeMapModelToEF(
@@ -85,9 +85,32 @@ namespace FileServiceNS.Api.DataAccess
 
 			response.AddFileType(new POCOFileType(efFileType.Id, efFileType.Name));
 		}
+
+		public virtual void VersionInfoMapModelToEF(
+			long version,
+			VersionInfoModel model,
+			EFVersionInfo efVersionInfo)
+		{
+			efVersionInfo.SetProperties(
+				version,
+				model.AppliedOn,
+				model.Description);
+		}
+
+		public virtual void VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo,
+			ApiResponse response)
+		{
+			if (efVersionInfo == null)
+			{
+				return;
+			}
+
+			response.AddVersionInfo(new POCOVersionInfo(efVersionInfo.AppliedOn, efVersionInfo.Description, efVersionInfo.Version));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ee84ecf1935ac5d89b4e523564c24ab</Hash>
+    <Hash>434a65a65327d6d70e74014f4a109fab</Hash>
 </Codenesium>*/

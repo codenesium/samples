@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/productModelIllustrations/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductModelIllustrations/{result.Id.ToString()}");
 				POCOProductModelIllustration response = this.productModelIllustrationManager.GetById(result.Id).ProductModelIllustrations.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductModelID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductModels/{id}/ProductModelIllustrations")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductModelIllustration>), 200)]
-		public virtual IActionResult ByProductModelID(int id)
-		{
-			ApiResponse response = this.productModelIllustrationManager.GetWhere(x => x.ProductModelID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelIllustrations);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByIllustrationID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Illustrations/{id}/ProductModelIllustrations")]
@@ -215,9 +195,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.ProductModelIllustrations);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByProductModelID/{id}")]
+		[ReadOnly]
+		[Route("~/api/ProductModels/{id}/ProductModelIllustrations")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOProductModelIllustration>), 200)]
+		public virtual IActionResult ByProductModelID(int id)
+		{
+			ApiResponse response = this.productModelIllustrationManager.GetWhere(x => x.ProductModelID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.ProductModelIllustrations);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a91db66ccf90daa568dc1db455e659ab</Hash>
+    <Hash>6462f364e03479335025b7b982da268e</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/productDocuments/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductDocuments/{result.Id.ToString()}");
 				POCOProductDocument response = this.productDocumentManager.GetById(result.Id).ProductDocuments.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/ProductDocuments")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductDocument>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.productDocumentManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductDocuments);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByDocumentNode/{id}")]
 		[ReadOnly]
 		[Route("~/api/Documents/{id}/ProductDocuments")]
@@ -215,9 +195,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.ProductDocuments);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[ReadOnly]
+		[Route("~/api/Products/{id}/ProductDocuments")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOProductDocument>), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			ApiResponse response = this.productDocumentManager.GetWhere(x => x.ProductID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.ProductDocuments);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>268602339b3c005ce327e08a2b3fc1ef</Hash>
+    <Hash>c0ec6094c890699845cfbf3e4d1a416a</Hash>
 </Codenesium>*/

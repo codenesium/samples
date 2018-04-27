@@ -16,18 +16,17 @@ namespace FermataFishNS.Api.DataAccess
 			string name,
 			int studioId)
 		{
-			this.Name = name.ToString();
 			this.Id = id.ToInt();
+			this.Name = name.ToString();
 			this.StudioId = studioId.ToInt();
 		}
 
-		[Column("name", TypeName="varchar(128)")]
-		public string Name { get; set; }
-
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
+
+		[Column("name", TypeName="varchar(128)")]
+		public string Name { get; set; }
 
 		[Column("studioId", TypeName="int")]
 		public int StudioId { get; set; }
@@ -41,5 +40,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eb383d8d59831476081619f38a3ea93d</Hash>
+    <Hash>e1d5ebfd1fc661cf85ada75039c0c07a</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/purchaseOrderHeaders/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderHeaders/{result.Id.ToString()}");
 				POCOPurchaseOrderHeader response = this.purchaseOrderHeaderManager.GetById(result.Id).PurchaseOrderHeaders.First();
 				return this.Ok(response);
 			}
@@ -197,26 +197,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByVendorID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Vendors/{id}/PurchaseOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPurchaseOrderHeader>), 200)]
-		public virtual IActionResult ByVendorID(int id)
-		{
-			ApiResponse response = this.purchaseOrderHeaderManager.GetWhere(x => x.VendorID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PurchaseOrderHeaders);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByShipMethodID/{id}")]
 		[ReadOnly]
 		[Route("~/api/ShipMethods/{id}/PurchaseOrderHeaders")]
@@ -235,9 +215,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.PurchaseOrderHeaders);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByVendorID/{id}")]
+		[ReadOnly]
+		[Route("~/api/Vendors/{id}/PurchaseOrderHeaders")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOPurchaseOrderHeader>), 200)]
+		public virtual IActionResult ByVendorID(int id)
+		{
+			ApiResponse response = this.purchaseOrderHeaderManager.GetWhere(x => x.VendorID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.PurchaseOrderHeaders);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b868a5514096773a922cc2fcf058d11a</Hash>
+    <Hash>7417530d60b17b046486c3a19c2770a9</Hash>
 </Codenesium>*/

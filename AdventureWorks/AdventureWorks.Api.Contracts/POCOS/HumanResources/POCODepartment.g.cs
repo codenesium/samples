@@ -11,20 +11,20 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCODepartment(
 			short departmentID,
-			string name,
 			string groupName,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
 			this.DepartmentID = departmentID;
-			this.Name = name.ToString();
 			this.GroupName = groupName.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
 		public short DepartmentID { get; set; }
-		public string Name { get; set; }
 		public string GroupName { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeDepartmentIDValue { get; set; } = true;
@@ -32,14 +32,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeDepartmentID()
 		{
 			return this.ShouldSerializeDepartmentIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
 		}
 
 		[JsonIgnore]
@@ -58,16 +50,24 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeDepartmentIDValue = false;
-			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeGroupNameValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7c91e478e09d5854f53b8492b2a1fe4</Hash>
+    <Hash>0ddc2f2a215f51c73004c005c5dea884</Hash>
 </Codenesium>*/

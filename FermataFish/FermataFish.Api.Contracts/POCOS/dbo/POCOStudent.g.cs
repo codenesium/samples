@@ -10,27 +10,27 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public POCOStudent(
-			int id,
+			DateTime birthday,
 			string email,
+			bool emailRemindersEnabled,
+			int familyId,
 			string firstName,
+			int id,
+			bool isAdult,
 			string lastName,
 			string phone,
-			bool isAdult,
-			DateTime birthday,
-			int familyId,
-			int studioId,
 			bool smsRemindersEnabled,
-			bool emailRemindersEnabled)
+			int studioId)
 		{
-			this.Id = id.ToInt();
+			this.Birthday = birthday.ToDateTime();
 			this.Email = email.ToString();
+			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
 			this.FirstName = firstName.ToString();
+			this.Id = id.ToInt();
+			this.IsAdult = isAdult.ToBoolean();
 			this.LastName = lastName.ToString();
 			this.Phone = phone.ToString();
-			this.IsAdult = isAdult.ToBoolean();
-			this.Birthday = birthday.ToDateTime();
 			this.SmsRemindersEnabled = smsRemindersEnabled.ToBoolean();
-			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
 
 			this.FamilyId = new ReferenceEntity<int>(familyId,
 			                                         nameof(ApiResponse.Families));
@@ -38,24 +38,24 @@ namespace FermataFishNS.Api.Contracts
 			                                         nameof(ApiResponse.Studios));
 		}
 
-		public int Id { get; set; }
+		public DateTime Birthday { get; set; }
 		public string Email { get; set; }
+		public bool EmailRemindersEnabled { get; set; }
+		public ReferenceEntity<int> FamilyId { get; set; }
 		public string FirstName { get; set; }
+		public int Id { get; set; }
+		public bool IsAdult { get; set; }
 		public string LastName { get; set; }
 		public string Phone { get; set; }
-		public bool IsAdult { get; set; }
-		public DateTime Birthday { get; set; }
-		public ReferenceEntity<int> FamilyId { get; set; }
-		public ReferenceEntity<int> StudioId { get; set; }
 		public bool SmsRemindersEnabled { get; set; }
-		public bool EmailRemindersEnabled { get; set; }
+		public ReferenceEntity<int> StudioId { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+		public bool ShouldSerializeBirthdayValue { get; set; } = true;
 
-		public bool ShouldSerializeId()
+		public bool ShouldSerializeBirthday()
 		{
-			return this.ShouldSerializeIdValue;
+			return this.ShouldSerializeBirthdayValue;
 		}
 
 		[JsonIgnore]
@@ -67,11 +67,43 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeEmailRemindersEnabledValue { get; set; } = true;
+
+		public bool ShouldSerializeEmailRemindersEnabled()
+		{
+			return this.ShouldSerializeEmailRemindersEnabledValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeFamilyIdValue { get; set; } = true;
+
+		public bool ShouldSerializeFamilyId()
+		{
+			return this.ShouldSerializeFamilyIdValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeFirstNameValue { get; set; } = true;
 
 		public bool ShouldSerializeFirstName()
 		{
 			return this.ShouldSerializeFirstNameValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeIdValue { get; set; } = true;
+
+		public bool ShouldSerializeId()
+		{
+			return this.ShouldSerializeIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeIsAdultValue { get; set; } = true;
+
+		public bool ShouldSerializeIsAdult()
+		{
+			return this.ShouldSerializeIsAdultValue;
 		}
 
 		[JsonIgnore]
@@ -91,27 +123,11 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeIsAdultValue { get; set; } = true;
+		public bool ShouldSerializeSmsRemindersEnabledValue { get; set; } = true;
 
-		public bool ShouldSerializeIsAdult()
+		public bool ShouldSerializeSmsRemindersEnabled()
 		{
-			return this.ShouldSerializeIsAdultValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeBirthdayValue { get; set; } = true;
-
-		public bool ShouldSerializeBirthday()
-		{
-			return this.ShouldSerializeBirthdayValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeFamilyIdValue { get; set; } = true;
-
-		public bool ShouldSerializeFamilyId()
-		{
-			return this.ShouldSerializeFamilyIdValue;
+			return this.ShouldSerializeSmsRemindersEnabledValue;
 		}
 
 		[JsonIgnore]
@@ -122,39 +138,23 @@ namespace FermataFishNS.Api.Contracts
 			return this.ShouldSerializeStudioIdValue;
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeSmsRemindersEnabledValue { get; set; } = true;
-
-		public bool ShouldSerializeSmsRemindersEnabled()
-		{
-			return this.ShouldSerializeSmsRemindersEnabledValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeEmailRemindersEnabledValue { get; set; } = true;
-
-		public bool ShouldSerializeEmailRemindersEnabled()
-		{
-			return this.ShouldSerializeEmailRemindersEnabledValue;
-		}
-
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeBirthdayValue = false;
 			this.ShouldSerializeEmailValue = false;
+			this.ShouldSerializeEmailRemindersEnabledValue = false;
+			this.ShouldSerializeFamilyIdValue = false;
 			this.ShouldSerializeFirstNameValue = false;
+			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeIsAdultValue = false;
 			this.ShouldSerializeLastNameValue = false;
 			this.ShouldSerializePhoneValue = false;
-			this.ShouldSerializeIsAdultValue = false;
-			this.ShouldSerializeBirthdayValue = false;
-			this.ShouldSerializeFamilyIdValue = false;
-			this.ShouldSerializeStudioIdValue = false;
 			this.ShouldSerializeSmsRemindersEnabledValue = false;
-			this.ShouldSerializeEmailRemindersEnabledValue = false;
+			this.ShouldSerializeStudioIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7bcd2f49efbba6d946d6cf8034a9b41d</Hash>
+    <Hash>bb48596e1cccdb367a185f6bd8314b5b</Hash>
 </Codenesium>*/

@@ -11,47 +11,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public ShiftModel(
-			string name,
-			TimeSpan startTime,
 			TimeSpan endTime,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name,
+			TimeSpan startTime)
 		{
-			this.Name = name.ToString();
-			this.StartTime = startTime;
 			this.EndTime = endTime;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
-		}
-
-		private TimeSpan startTime;
-
-		[Required]
-		public TimeSpan StartTime
-		{
-			get
-			{
-				return this.startTime;
-			}
-
-			set
-			{
-				this.startTime = value;
-			}
+			this.Name = name.ToString();
+			this.StartTime = startTime;
 		}
 
 		private TimeSpan endTime;
@@ -85,9 +53,41 @@ namespace AdventureWorksNS.Api.Contracts
 				this.modifiedDate = value;
 			}
 		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
+
+		private TimeSpan startTime;
+
+		[Required]
+		public TimeSpan StartTime
+		{
+			get
+			{
+				return this.startTime;
+			}
+
+			set
+			{
+				this.startTime = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f7d66849dcb90fc9e1287c5b64a58ad2</Hash>
+    <Hash>e6212c5126036756cbe0a5ade6c3c808</Hash>
 </Codenesium>*/

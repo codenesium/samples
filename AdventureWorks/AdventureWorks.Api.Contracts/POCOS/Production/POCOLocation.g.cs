@@ -10,39 +10,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOLocation(
-			short locationID,
-			string name,
-			decimal costRate,
 			decimal availability,
-			DateTime modifiedDate)
+			decimal costRate,
+			short locationID,
+			DateTime modifiedDate,
+			string name)
 		{
-			this.LocationID = locationID;
-			this.Name = name.ToString();
-			this.CostRate = costRate.ToDecimal();
 			this.Availability = availability.ToDecimal();
+			this.CostRate = costRate.ToDecimal();
+			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
-		public short LocationID { get; set; }
-		public string Name { get; set; }
-		public decimal CostRate { get; set; }
 		public decimal Availability { get; set; }
+		public decimal CostRate { get; set; }
+		public short LocationID { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeLocationIDValue { get; set; } = true;
+		public bool ShouldSerializeAvailabilityValue { get; set; } = true;
 
-		public bool ShouldSerializeLocationID()
+		public bool ShouldSerializeAvailability()
 		{
-			return this.ShouldSerializeLocationIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
+			return this.ShouldSerializeAvailabilityValue;
 		}
 
 		[JsonIgnore]
@@ -54,11 +46,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAvailabilityValue { get; set; } = true;
+		public bool ShouldSerializeLocationIDValue { get; set; } = true;
 
-		public bool ShouldSerializeAvailability()
+		public bool ShouldSerializeLocationID()
 		{
-			return this.ShouldSerializeAvailabilityValue;
+			return this.ShouldSerializeLocationIDValue;
 		}
 
 		[JsonIgnore]
@@ -69,17 +61,25 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeLocationIDValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeCostRateValue = false;
 			this.ShouldSerializeAvailabilityValue = false;
+			this.ShouldSerializeCostRateValue = false;
+			this.ShouldSerializeLocationIDValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d91c905571ede00c96e080f44e7717e7</Hash>
+    <Hash>c6a38f64bf79a7ec76b5c9e8c0349d13</Hash>
 </Codenesium>*/

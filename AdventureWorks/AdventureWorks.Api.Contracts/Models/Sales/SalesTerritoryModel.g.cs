@@ -11,40 +11,56 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public SalesTerritoryModel(
-			string name,
+			decimal costLastYear,
+			decimal costYTD,
 			string countryRegionCode,
 			string @group,
-			decimal salesYTD,
-			decimal salesLastYear,
-			decimal costYTD,
-			decimal costLastYear,
+			DateTime modifiedDate,
+			string name,
 			Guid rowguid,
-			DateTime modifiedDate)
+			decimal salesLastYear,
+			decimal salesYTD)
 		{
-			this.Name = name.ToString();
+			this.CostLastYear = costLastYear.ToDecimal();
+			this.CostYTD = costYTD.ToDecimal();
 			this.CountryRegionCode = countryRegionCode.ToString();
 			this.@Group = @group.ToString();
-			this.SalesYTD = salesYTD.ToDecimal();
-			this.SalesLastYear = salesLastYear.ToDecimal();
-			this.CostYTD = costYTD.ToDecimal();
-			this.CostLastYear = costLastYear.ToDecimal();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.Rowguid = rowguid.ToGuid();
+			this.SalesLastYear = salesLastYear.ToDecimal();
+			this.SalesYTD = salesYTD.ToDecimal();
 		}
 
-		private string name;
+		private decimal costLastYear;
 
 		[Required]
-		public string Name
+		public decimal CostLastYear
 		{
 			get
 			{
-				return this.name;
+				return this.costLastYear;
 			}
 
 			set
 			{
-				this.name = value;
+				this.costLastYear = value;
+			}
+		}
+
+		private decimal costYTD;
+
+		[Required]
+		public decimal CostYTD
+		{
+			get
+			{
+				return this.costYTD;
+			}
+
+			set
+			{
+				this.costYTD = value;
 			}
 		}
 
@@ -80,67 +96,35 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private decimal salesYTD;
+		private DateTime modifiedDate;
 
 		[Required]
-		public decimal SalesYTD
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.salesYTD;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.salesYTD = value;
+				this.modifiedDate = value;
 			}
 		}
 
-		private decimal salesLastYear;
+		private string name;
 
 		[Required]
-		public decimal SalesLastYear
+		public string Name
 		{
 			get
 			{
-				return this.salesLastYear;
+				return this.name;
 			}
 
 			set
 			{
-				this.salesLastYear = value;
-			}
-		}
-
-		private decimal costYTD;
-
-		[Required]
-		public decimal CostYTD
-		{
-			get
-			{
-				return this.costYTD;
-			}
-
-			set
-			{
-				this.costYTD = value;
-			}
-		}
-
-		private decimal costLastYear;
-
-		[Required]
-		public decimal CostLastYear
-		{
-			get
-			{
-				return this.costLastYear;
-			}
-
-			set
-			{
-				this.costLastYear = value;
+				this.name = value;
 			}
 		}
 
@@ -160,24 +144,40 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private DateTime modifiedDate;
+		private decimal salesLastYear;
 
 		[Required]
-		public DateTime ModifiedDate
+		public decimal SalesLastYear
 		{
 			get
 			{
-				return this.modifiedDate;
+				return this.salesLastYear;
 			}
 
 			set
 			{
-				this.modifiedDate = value;
+				this.salesLastYear = value;
+			}
+		}
+
+		private decimal salesYTD;
+
+		[Required]
+		public decimal SalesYTD
+		{
+			get
+			{
+				return this.salesYTD;
+			}
+
+			set
+			{
+				this.salesYTD = value;
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d22006ec64472771442aae24eadcb5de</Hash>
+    <Hash>0b2cbfd152a01c4bf6c8932abba7fb94</Hash>
 </Codenesium>*/

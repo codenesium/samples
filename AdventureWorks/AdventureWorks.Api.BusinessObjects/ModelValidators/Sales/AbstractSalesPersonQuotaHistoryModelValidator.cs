@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public ISalesPersonRepository SalesPersonRepository { get; set; }
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void QuotaDateRules()
 		{
 			this.RuleFor(x => x.QuotaDate).NotNull();
-		}
-
-		public virtual void SalesQuotaRules()
-		{
-			this.RuleFor(x => x.SalesQuota).NotNull();
 		}
 
 		public virtual void RowguidRules()
@@ -36,9 +36,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void SalesQuotaRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.SalesQuota).NotNull();
 		}
 
 		private bool BeValidSalesPerson(int id)
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ebda3c7738a77e8b6ba23a15d23fabf0</Hash>
+    <Hash>3376776fd5cda5703a0f93b780f156e2</Hash>
 </Codenesium>*/

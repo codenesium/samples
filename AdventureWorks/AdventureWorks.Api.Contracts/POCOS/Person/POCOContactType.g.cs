@@ -11,17 +11,17 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOContactType(
 			int contactTypeID,
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
 			this.ContactTypeID = contactTypeID.ToInt();
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
 		public int ContactTypeID { get; set; }
-		public string Name { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public string Name { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeContactTypeIDValue { get; set; } = true;
@@ -32,14 +32,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
-
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
 		public bool ShouldSerializeModifiedDate()
@@ -47,15 +39,23 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeNameValue { get; set; } = true;
+
+		public bool ShouldSerializeName()
+		{
+			return this.ShouldSerializeNameValue;
+		}
+
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeContactTypeIDValue = false;
-			this.ShouldSerializeNameValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46cefdf34a4c99f2666dc648f3fab400</Hash>
+    <Hash>dc2e35f77ab2bd3de2824a106cf139aa</Hash>
 </Codenesium>*/

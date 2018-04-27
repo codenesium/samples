@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/cultures/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Cultures/{result.Id.ToString()}");
 				POCOCulture response = this.cultureManager.GetById(result.Id).Cultures.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b3c701a3c6d578844e1f46f2e3fbebbd</Hash>
+    <Hash>8a0e73330ac441e5e9b9663d7bc126ac</Hash>
 </Codenesium>*/

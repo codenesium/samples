@@ -13,27 +13,26 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
-			Guid publicId,
-			string name)
+			string name,
+			Guid publicId)
 		{
 			this.Id = id.ToInt();
-			this.PublicId = publicId.ToGuid();
 			this.Name = name.ToString();
+			this.PublicId = publicId.ToGuid();
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
 
-		[Column("publicId", TypeName="uniqueidentifier")]
-		public Guid PublicId { get; set; }
-
 		[Column("name", TypeName="varchar(90)")]
 		public string Name { get; set; }
+
+		[Column("publicId", TypeName="uniqueidentifier")]
+		public Guid PublicId { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e512dedfb730189d553c53dc3684ba0e</Hash>
+    <Hash>9c6f7ec387214f4cab9c5c21a25aa065</Hash>
 </Codenesium>*/

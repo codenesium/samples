@@ -49,9 +49,11 @@ namespace NebulaNS.Api.DataAccess
 		public virtual DbSet<EFOrganization> Organizations { get; set; }
 
 		public virtual DbSet<EFTeam> Teams { get; set; }
+
+		public virtual DbSet<EFVersionInfo> VersionInfoes { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b2a40b326c24151aaec77b1b85157c13</Hash>
+    <Hash>4e6585f55279212b2fdae7e947cec7fb</Hash>
 </Codenesium>*/

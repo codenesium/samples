@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/phoneNumberTypes/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PhoneNumberTypes/{result.Id.ToString()}");
 				POCOPhoneNumberType response = this.phoneNumberTypeManager.GetById(result.Id).PhoneNumberTypes.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>85930ce7aaa8518b7f57333993eff472</Hash>
+    <Hash>c04878be67a611312b44823f5a7bfe18</Hash>
 </Codenesium>*/

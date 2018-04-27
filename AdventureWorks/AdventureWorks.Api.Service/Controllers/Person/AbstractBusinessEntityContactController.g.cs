@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/businessEntityContacts/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/BusinessEntityContacts/{result.Id.ToString()}");
 				POCOBusinessEntityContact response = this.businessEntityContactManager.GetById(result.Id).BusinessEntityContacts.First();
 				return this.Ok(response);
 			}
@@ -197,26 +197,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByPersonID/{id}")]
-		[ReadOnly]
-		[Route("~/api/People/{id}/BusinessEntityContacts")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
-		public virtual IActionResult ByPersonID(int id)
-		{
-			ApiResponse response = this.businessEntityContactManager.GetWhere(x => x.PersonID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BusinessEntityContacts);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByContactTypeID/{id}")]
 		[ReadOnly]
 		[Route("~/api/ContactTypes/{id}/BusinessEntityContacts")]
@@ -235,9 +215,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.BusinessEntityContacts);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByPersonID/{id}")]
+		[ReadOnly]
+		[Route("~/api/People/{id}/BusinessEntityContacts")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
+		public virtual IActionResult ByPersonID(int id)
+		{
+			ApiResponse response = this.businessEntityContactManager.GetWhere(x => x.PersonID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.BusinessEntityContacts);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f36aa87debafe4fb5d2cf28274605931</Hash>
+    <Hash>41de033fc0d4a9883cfd87caf565d3df</Hash>
 </Codenesium>*/

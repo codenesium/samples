@@ -11,54 +11,39 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public LessonModel(
-			Nullable<DateTime> scheduledStartDate,
-			Nullable<DateTime> scheduledEndDate,
-			Nullable<DateTime> actualStartDate,
 			Nullable<DateTime> actualEndDate,
-			int lessonStatusId,
-			string teacherNotes,
-			string studentNotes,
+			Nullable<DateTime> actualStartDate,
 			Nullable<decimal> billAmount,
-			int studioId)
+			int lessonStatusId,
+			Nullable<DateTime> scheduledEndDate,
+			Nullable<DateTime> scheduledStartDate,
+			string studentNotes,
+			int studioId,
+			string teacherNotes)
 		{
-			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
-			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
-			this.ActualStartDate = actualStartDate.ToNullableDateTime();
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
-			this.LessonStatusId = lessonStatusId.ToInt();
-			this.TeacherNotes = teacherNotes.ToString();
-			this.StudentNotes = studentNotes.ToString();
+			this.ActualStartDate = actualStartDate.ToNullableDateTime();
 			this.BillAmount = billAmount.ToNullableDecimal();
+			this.LessonStatusId = lessonStatusId.ToInt();
+			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
+			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
+			this.StudentNotes = studentNotes.ToString();
 			this.StudioId = studioId.ToInt();
+			this.TeacherNotes = teacherNotes.ToString();
 		}
 
-		private Nullable<DateTime> scheduledStartDate;
+		private Nullable<DateTime> actualEndDate;
 
-		public Nullable<DateTime> ScheduledStartDate
+		public Nullable<DateTime> ActualEndDate
 		{
 			get
 			{
-				return this.scheduledStartDate.IsEmptyOrZeroOrNull() ? null : this.scheduledStartDate;
+				return this.actualEndDate.IsEmptyOrZeroOrNull() ? null : this.actualEndDate;
 			}
 
 			set
 			{
-				this.scheduledStartDate = value;
-			}
-		}
-
-		private Nullable<DateTime> scheduledEndDate;
-
-		public Nullable<DateTime> ScheduledEndDate
-		{
-			get
-			{
-				return this.scheduledEndDate.IsEmptyOrZeroOrNull() ? null : this.scheduledEndDate;
-			}
-
-			set
-			{
-				this.scheduledEndDate = value;
+				this.actualEndDate = value;
 			}
 		}
 
@@ -77,18 +62,18 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private Nullable<DateTime> actualEndDate;
+		private Nullable<decimal> billAmount;
 
-		public Nullable<DateTime> ActualEndDate
+		public Nullable<decimal> BillAmount
 		{
 			get
 			{
-				return this.actualEndDate.IsEmptyOrZeroOrNull() ? null : this.actualEndDate;
+				return this.billAmount.IsEmptyOrZeroOrNull() ? null : this.billAmount;
 			}
 
 			set
 			{
-				this.actualEndDate = value;
+				this.billAmount = value;
 			}
 		}
 
@@ -108,18 +93,33 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private string teacherNotes;
+		private Nullable<DateTime> scheduledEndDate;
 
-		public string TeacherNotes
+		public Nullable<DateTime> ScheduledEndDate
 		{
 			get
 			{
-				return this.teacherNotes.IsEmptyOrZeroOrNull() ? null : this.teacherNotes;
+				return this.scheduledEndDate.IsEmptyOrZeroOrNull() ? null : this.scheduledEndDate;
 			}
 
 			set
 			{
-				this.teacherNotes = value;
+				this.scheduledEndDate = value;
+			}
+		}
+
+		private Nullable<DateTime> scheduledStartDate;
+
+		public Nullable<DateTime> ScheduledStartDate
+		{
+			get
+			{
+				return this.scheduledStartDate.IsEmptyOrZeroOrNull() ? null : this.scheduledStartDate;
+			}
+
+			set
+			{
+				this.scheduledStartDate = value;
 			}
 		}
 
@@ -138,21 +138,6 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
-		private Nullable<decimal> billAmount;
-
-		public Nullable<decimal> BillAmount
-		{
-			get
-			{
-				return this.billAmount.IsEmptyOrZeroOrNull() ? null : this.billAmount;
-			}
-
-			set
-			{
-				this.billAmount = value;
-			}
-		}
-
 		private int studioId;
 
 		[Required]
@@ -168,9 +153,24 @@ namespace FermataFishNS.Api.Contracts
 				this.studioId = value;
 			}
 		}
+
+		private string teacherNotes;
+
+		public string TeacherNotes
+		{
+			get
+			{
+				return this.teacherNotes.IsEmptyOrZeroOrNull() ? null : this.teacherNotes;
+			}
+
+			set
+			{
+				this.teacherNotes = value;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8efeea9cf17c7346fd2bc773e05eda59</Hash>
+    <Hash>93f8d79f748a0ba4ef63c2615b7a87eb</Hash>
 </Codenesium>*/

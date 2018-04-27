@@ -13,17 +13,17 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(LinkLogModel model)
 		{
+			this.DateEnteredRules();
 			this.LinkIdRules();
 			this.LogRules();
-			this.DateEnteredRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, LinkLogModel model)
 		{
+			this.DateEnteredRules();
 			this.LinkIdRules();
 			this.LogRules();
-			this.DateEnteredRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>02c7d390cdec52a3ba717a0dbf930c8b</Hash>
+    <Hash>485156b064934b74aece7ed44c75e0a2</Hash>
 </Codenesium>*/

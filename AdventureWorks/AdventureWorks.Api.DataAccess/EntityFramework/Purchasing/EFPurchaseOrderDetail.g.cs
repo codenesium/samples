@@ -13,40 +13,38 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int purchaseOrderID,
-			int purchaseOrderDetailID,
 			DateTime dueDate,
+			decimal lineTotal,
+			DateTime modifiedDate,
 			short orderQty,
 			int productID,
-			decimal unitPrice,
-			decimal lineTotal,
+			int purchaseOrderDetailID,
 			decimal receivedQty,
 			decimal rejectedQty,
 			decimal stockedQty,
-			DateTime modifiedDate)
+			decimal unitPrice)
 		{
-			this.PurchaseOrderID = purchaseOrderID.ToInt();
-			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
 			this.DueDate = dueDate.ToDateTime();
+			this.LineTotal = lineTotal.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty;
 			this.ProductID = productID.ToInt();
-			this.UnitPrice = unitPrice.ToDecimal();
-			this.LineTotal = lineTotal.ToDecimal();
+			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
+			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.ReceivedQty = receivedQty.ToDecimal();
 			this.RejectedQty = rejectedQty.ToDecimal();
 			this.StockedQty = stockedQty.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.UnitPrice = unitPrice.ToDecimal();
 		}
-
-		[Key]
-		[Column("PurchaseOrderID", TypeName="int")]
-		public int PurchaseOrderID { get; set; }
-
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-		[Column("PurchaseOrderDetailID", TypeName="int")]
-		public int PurchaseOrderDetailID { get; set; }
 
 		[Column("DueDate", TypeName="datetime")]
 		public DateTime DueDate { get; set; }
+
+		[Column("LineTotal", TypeName="money")]
+		public decimal LineTotal { get; set; }
+
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("OrderQty", TypeName="smallint")]
 		public short OrderQty { get; set; }
@@ -54,11 +52,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ProductID", TypeName="int")]
 		public int ProductID { get; set; }
 
-		[Column("UnitPrice", TypeName="money")]
-		public decimal UnitPrice { get; set; }
+		[Column("PurchaseOrderDetailID", TypeName="int")]
+		public int PurchaseOrderDetailID { get; set; }
 
-		[Column("LineTotal", TypeName="money")]
-		public decimal LineTotal { get; set; }
+		[Key]
+		[Column("PurchaseOrderID", TypeName="int")]
+		public int PurchaseOrderID { get; set; }
 
 		[Column("ReceivedQty", TypeName="decimal")]
 		public decimal ReceivedQty { get; set; }
@@ -69,17 +68,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("StockedQty", TypeName="decimal")]
 		public decimal StockedQty { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
-
-		[ForeignKey("PurchaseOrderID")]
-		public virtual EFPurchaseOrderHeader PurchaseOrderHeader { get; set; }
+		[Column("UnitPrice", TypeName="money")]
+		public decimal UnitPrice { get; set; }
 
 		[ForeignKey("ProductID")]
 		public virtual EFProduct Product { get; set; }
+
+		[ForeignKey("PurchaseOrderID")]
+		public virtual EFPurchaseOrderHeader PurchaseOrderHeader { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8571e4c1b8561838e264fe15fffbe50a</Hash>
+    <Hash>271b5dd48ba17f27e61000c2dc2ea2c6</Hash>
 </Codenesium>*/

@@ -11,18 +11,18 @@ namespace FermataFishNS.Api.Contracts
 
 		public POCOFamily(
 			int id,
+			string notes,
+			string pcEmail,
 			string pcFirstName,
 			string pcLastName,
 			string pcPhone,
-			string pcEmail,
-			string notes,
 			int studioId)
 		{
+			this.Notes = notes.ToString();
+			this.PcEmail = pcEmail.ToString();
 			this.PcFirstName = pcFirstName.ToString();
 			this.PcLastName = pcLastName.ToString();
 			this.PcPhone = pcPhone.ToString();
-			this.PcEmail = pcEmail.ToString();
-			this.Notes = notes.ToString();
 
 			this.Id = new ReferenceEntity<int>(id,
 			                                   nameof(ApiResponse.Studios));
@@ -31,11 +31,11 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		public ReferenceEntity<int> Id { get; set; }
+		public string Notes { get; set; }
+		public string PcEmail { get; set; }
 		public string PcFirstName { get; set; }
 		public string PcLastName { get; set; }
 		public string PcPhone { get; set; }
-		public string PcEmail { get; set; }
-		public string Notes { get; set; }
 		public ReferenceEntity<int> StudioId { get; set; }
 
 		[JsonIgnore]
@@ -44,6 +44,22 @@ namespace FermataFishNS.Api.Contracts
 		public bool ShouldSerializeId()
 		{
 			return this.ShouldSerializeIdValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeNotesValue { get; set; } = true;
+
+		public bool ShouldSerializeNotes()
+		{
+			return this.ShouldSerializeNotesValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializePcEmailValue { get; set; } = true;
+
+		public bool ShouldSerializePcEmail()
+		{
+			return this.ShouldSerializePcEmailValue;
 		}
 
 		[JsonIgnore]
@@ -71,22 +87,6 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePcEmailValue { get; set; } = true;
-
-		public bool ShouldSerializePcEmail()
-		{
-			return this.ShouldSerializePcEmailValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeNotesValue { get; set; } = true;
-
-		public bool ShouldSerializeNotes()
-		{
-			return this.ShouldSerializeNotesValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeStudioIdValue { get; set; } = true;
 
 		public bool ShouldSerializeStudioId()
@@ -97,16 +97,16 @@ namespace FermataFishNS.Api.Contracts
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeNotesValue = false;
+			this.ShouldSerializePcEmailValue = false;
 			this.ShouldSerializePcFirstNameValue = false;
 			this.ShouldSerializePcLastNameValue = false;
 			this.ShouldSerializePcPhoneValue = false;
-			this.ShouldSerializePcEmailValue = false;
-			this.ShouldSerializeNotesValue = false;
 			this.ShouldSerializeStudioIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d56bebb7bb81379ee6a5c640f3d377ca</Hash>
+    <Hash>da76a7b9a4b1f4af45bf6845fbb35b47</Hash>
 </Codenesium>*/

@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/shifts/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Shifts/{result.Id.ToString()}");
 				POCOShift response = this.shiftManager.GetById(result.Id).Shifts.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>14e5726a83068c4240dfabc15ca4daa2</Hash>
+    <Hash>6ff82a75cb2c14b27645e104c8f18970</Hash>
 </Codenesium>*/

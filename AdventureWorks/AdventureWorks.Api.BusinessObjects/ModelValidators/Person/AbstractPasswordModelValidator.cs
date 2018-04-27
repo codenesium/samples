@@ -21,6 +21,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IPersonRepository PersonRepository { get; set; }
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void PasswordHashRules()
 		{
 			this.RuleFor(x => x.PasswordHash).NotNull();
@@ -38,11 +43,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
-		}
-
 		private bool BeValidPerson(int id)
 		{
 			return this.PersonRepository.GetByIdDirect(id) != null;
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cf0547b42d3a81e18b1f38568612dfea</Hash>
+    <Hash>501cfd7dcf568021f3c2b1e275dcd3b7</Hash>
 </Codenesium>*/

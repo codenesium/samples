@@ -13,33 +13,33 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int businessEntityID,
-			DateTime rateChangeDate,
-			decimal rate,
+			DateTime modifiedDate,
 			int payFrequency,
-			DateTime modifiedDate)
+			decimal rate,
+			DateTime rateChangeDate)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.RateChangeDate = rateChangeDate.ToDateTime();
-			this.Rate = rate.ToDecimal();
-			this.PayFrequency = payFrequency.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PayFrequency = payFrequency.ToInt();
+			this.Rate = rate.ToDecimal();
+			this.RateChangeDate = rateChangeDate.ToDateTime();
 		}
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
 		public int BusinessEntityID { get; set; }
 
-		[Column("RateChangeDate", TypeName="datetime")]
-		public DateTime RateChangeDate { get; set; }
-
-		[Column("Rate", TypeName="money")]
-		public decimal Rate { get; set; }
+		[Column("ModifiedDate", TypeName="datetime")]
+		public DateTime ModifiedDate { get; set; }
 
 		[Column("PayFrequency", TypeName="tinyint")]
 		public int PayFrequency { get; set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		[Column("Rate", TypeName="money")]
+		public decimal Rate { get; set; }
+
+		[Column("RateChangeDate", TypeName="datetime")]
+		public DateTime RateChangeDate { get; set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFEmployee Employee { get; set; }
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cf491a9da54ffe5d75304de5e16bf885</Hash>
+    <Hash>c0ad2aea1513d7983689441c135e23f6</Hash>
 </Codenesium>*/

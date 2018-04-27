@@ -11,29 +11,13 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public SpaceModel(
-			string name,
 			string description,
+			string name,
 			int studioId)
 		{
-			this.Name = name.ToString();
 			this.Description = description.ToString();
+			this.Name = name.ToString();
 			this.StudioId = studioId.ToInt();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
 		}
 
 		private string description;
@@ -49,6 +33,22 @@ namespace FermataFishNS.Api.Contracts
 			set
 			{
 				this.description = value;
+			}
+		}
+
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
 			}
 		}
 
@@ -71,5 +71,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b363557a94090f761715894fdaec4825</Hash>
+    <Hash>39b5b493544ba337fa8c4099bed9c0ed</Hash>
 </Codenesium>*/

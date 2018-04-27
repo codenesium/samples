@@ -30,6 +30,7 @@ namespace FileServiceNS.Api.Contracts
 			from.Buckets.ForEach(x => this.AddBucket(x));
 			from.Files.ForEach(x => this.AddFile(x));
 			from.FileTypes.ForEach(x => this.AddFileType(x));
+			from.VersionInfoes.ForEach(x => this.AddVersionInfo(x));
 		}
 
 		public List<POCOBucket> Buckets { get; private set; } = new List<POCOBucket>();
@@ -37,6 +38,8 @@ namespace FileServiceNS.Api.Contracts
 		public List<POCOFile> Files { get; private set; } = new List<POCOFile>();
 
 		public List<POCOFileType> FileTypes { get; private set; } = new List<POCOFileType>();
+
+		public List<POCOVersionInfo> VersionInfoes { get; private set; } = new List<POCOVersionInfo>();
 
 		[JsonIgnore]
 		public bool ShouldSerializeBucketsValue { get; set; } = true;
@@ -86,6 +89,22 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeVersionInfoesValue { get; set; } = true;
+
+		public bool ShouldSerializeVersionInfoes()
+		{
+			return this.ShouldSerializeVersionInfoesValue;
+		}
+
+		public void AddVersionInfo(POCOVersionInfo item)
+		{
+			if (!this.VersionInfoes.Any(x => x.Version == item.Version))
+			{
+				this.VersionInfoes.Add(item);
+			}
+		}
+
 		public void DisableSerializationOfEmptyFields()
 		{
 			if (this.Buckets.Count == 0)
@@ -102,10 +121,15 @@ namespace FileServiceNS.Api.Contracts
 			{
 				this.ShouldSerializeFileTypesValue = false;
 			}
+
+			if (this.VersionInfoes.Count == 0)
+			{
+				this.ShouldSerializeVersionInfoesValue = false;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>08ddfff912a46406c140c978a4fdd0e0</Hash>
+    <Hash>5dcc1e2962a2e7765892da95729c9ddc</Hash>
 </Codenesium>*/

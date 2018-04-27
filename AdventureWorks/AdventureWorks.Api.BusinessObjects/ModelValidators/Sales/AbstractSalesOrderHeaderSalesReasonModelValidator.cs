@@ -22,15 +22,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
 		public ISalesReasonRepository SalesReasonRepository { get; set; }
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
 		public virtual void SalesReasonIDRules()
 		{
 			this.RuleFor(x => x.SalesReasonID).NotNull();
 			this.RuleFor(x => x.SalesReasonID).Must(this.BeValidSalesReason).When(x => x ?.SalesReasonID != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		private bool BeValidSalesOrderHeader(int id)
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bf2854b8b5282eeb0fc45ba9645710ef</Hash>
+    <Hash>e3e31348f3d035c6151fecac433c402b</Hash>
 </Codenesium>*/

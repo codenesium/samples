@@ -10,21 +10,21 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOStateProvince(
-			int stateProvinceID,
-			string stateProvinceCode,
 			string countryRegionCode,
 			bool isOnlyStateProvinceFlag,
+			DateTime modifiedDate,
 			string name,
-			int territoryID,
 			Guid rowguid,
-			DateTime modifiedDate)
+			string stateProvinceCode,
+			int stateProvinceID,
+			int territoryID)
 		{
-			this.StateProvinceID = stateProvinceID.ToInt();
-			this.StateProvinceCode = stateProvinceCode.ToString();
 			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag.ToBoolean();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.StateProvinceCode = stateProvinceCode.ToString();
+			this.StateProvinceID = stateProvinceID.ToInt();
 
 			this.CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
 			                                                     nameof(ApiResponse.CountryRegions));
@@ -32,30 +32,14 @@ namespace AdventureWorksNS.Api.Contracts
 			                                            nameof(ApiResponse.SalesTerritories));
 		}
 
-		public int StateProvinceID { get; set; }
-		public string StateProvinceCode { get; set; }
 		public ReferenceEntity<string> CountryRegionCode { get; set; }
 		public bool IsOnlyStateProvinceFlag { get; set; }
-		public string Name { get; set; }
-		public ReferenceEntity<int> TerritoryID { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeStateProvinceIDValue { get; set; } = true;
-
-		public bool ShouldSerializeStateProvinceID()
-		{
-			return this.ShouldSerializeStateProvinceIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStateProvinceCodeValue { get; set; } = true;
-
-		public bool ShouldSerializeStateProvinceCode()
-		{
-			return this.ShouldSerializeStateProvinceCodeValue;
-		}
+		public string Name { get; set; }
+		public Guid Rowguid { get; set; }
+		public string StateProvinceCode { get; set; }
+		public int StateProvinceID { get; set; }
+		public ReferenceEntity<int> TerritoryID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
@@ -74,19 +58,19 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeNameValue { get; set; } = true;
 
 		public bool ShouldSerializeName()
 		{
 			return this.ShouldSerializeNameValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
-
-		public bool ShouldSerializeTerritoryID()
-		{
-			return this.ShouldSerializeTerritoryIDValue;
 		}
 
 		[JsonIgnore]
@@ -98,27 +82,43 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeStateProvinceCodeValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeStateProvinceCode()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeStateProvinceCodeValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStateProvinceIDValue { get; set; } = true;
+
+		public bool ShouldSerializeStateProvinceID()
+		{
+			return this.ShouldSerializeStateProvinceIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
+
+		public bool ShouldSerializeTerritoryID()
+		{
+			return this.ShouldSerializeTerritoryIDValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeStateProvinceIDValue = false;
-			this.ShouldSerializeStateProvinceCodeValue = false;
 			this.ShouldSerializeCountryRegionCodeValue = false;
 			this.ShouldSerializeIsOnlyStateProvinceFlagValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeTerritoryIDValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeNameValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeStateProvinceCodeValue = false;
+			this.ShouldSerializeStateProvinceIDValue = false;
+			this.ShouldSerializeTerritoryIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b06f5fa79bbc3f245b7f4689f13dda13</Hash>
+    <Hash>1e255f604fbb755739eecb5029fd3d12</Hash>
 </Codenesium>*/

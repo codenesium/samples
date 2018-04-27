@@ -88,7 +88,7 @@ namespace NebulaNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/chains/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Chains/{result.Id.ToString()}");
 				POCOChain response = this.chainManager.GetById(result.Id).Chains.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByTeamId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Teams/{id}/Chains")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOChain>), 200)]
-		public virtual IActionResult ByTeamId(int id)
-		{
-			ApiResponse response = this.chainManager.GetWhere(x => x.TeamId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Chains);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByChainStatusId/{id}")]
 		[ReadOnly]
 		[Route("~/api/ChainStatus/{id}/Chains")]
@@ -215,9 +195,29 @@ namespace NebulaNS.Api.Service
 				return this.Ok(response.Chains);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByTeamId/{id}")]
+		[ReadOnly]
+		[Route("~/api/Teams/{id}/Chains")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOChain>), 200)]
+		public virtual IActionResult ByTeamId(int id)
+		{
+			ApiResponse response = this.chainManager.GetWhere(x => x.TeamId == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Chains);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbe80522417d812c6c05b22190d6161e</Hash>
+    <Hash>41dc2f5eec62c9bc5dca9ac99374dcf6</Hash>
 </Codenesium>*/

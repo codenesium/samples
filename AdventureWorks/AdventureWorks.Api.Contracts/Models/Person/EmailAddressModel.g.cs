@@ -11,15 +11,30 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public EmailAddressModel(
-			int emailAddressID,
 			string emailAddress1,
-			Guid rowguid,
-			DateTime modifiedDate)
+			int emailAddressID,
+			DateTime modifiedDate,
+			Guid rowguid)
 		{
-			this.EmailAddressID = emailAddressID.ToInt();
 			this.EmailAddress1 = emailAddress1.ToString();
-			this.Rowguid = rowguid.ToGuid();
+			this.EmailAddressID = emailAddressID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+		}
+
+		private string emailAddress1;
+
+		public string EmailAddress1
+		{
+			get
+			{
+				return this.emailAddress1.IsEmptyOrZeroOrNull() ? null : this.emailAddress1;
+			}
+
+			set
+			{
+				this.emailAddress1 = value;
+			}
 		}
 
 		private int emailAddressID;
@@ -38,18 +53,19 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private string emailAddress1;
+		private DateTime modifiedDate;
 
-		public string EmailAddress1
+		[Required]
+		public DateTime ModifiedDate
 		{
 			get
 			{
-				return this.emailAddress1.IsEmptyOrZeroOrNull() ? null : this.emailAddress1;
+				return this.modifiedDate;
 			}
 
 			set
 			{
-				this.emailAddress1 = value;
+				this.modifiedDate = value;
 			}
 		}
 
@@ -68,25 +84,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.rowguid = value;
 			}
 		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f201e013c15f156283ab59ada413bba0</Hash>
+    <Hash>4e71598a231b8248c98f1ebe2d8d394b</Hash>
 </Codenesium>*/

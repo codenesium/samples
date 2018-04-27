@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/employeeDepartmentHistories/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/EmployeeDepartmentHistories/{result.Id.ToString()}");
 				POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.GetById(result.Id).EmployeeDepartmentHistories.First();
 				return this.Ok(response);
 			}
@@ -239,5 +239,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9d7bd0b23a46b370b81f82c02a55f27d</Hash>
+    <Hash>25c9d9b3ffbd9d8b57d517467843fb6b</Hash>
 </Codenesium>*/

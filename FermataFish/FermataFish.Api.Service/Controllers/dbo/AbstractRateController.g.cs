@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/rates/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Rates/{result.Id.ToString()}");
 				POCORate response = this.rateManager.GetById(result.Id).Rates.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace FermataFishNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByTeacherSkillId/{id}")]
-		[ReadOnly]
-		[Route("~/api/TeacherSkills/{id}/Rates")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCORate>), 200)]
-		public virtual IActionResult ByTeacherSkillId(int id)
-		{
-			ApiResponse response = this.rateManager.GetWhere(x => x.TeacherSkillId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Rates);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByTeacherId/{id}")]
 		[ReadOnly]
 		[Route("~/api/Teachers/{id}/Rates")]
@@ -215,9 +195,29 @@ namespace FermataFishNS.Api.Service
 				return this.Ok(response.Rates);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByTeacherSkillId/{id}")]
+		[ReadOnly]
+		[Route("~/api/TeacherSkills/{id}/Rates")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCORate>), 200)]
+		public virtual IActionResult ByTeacherSkillId(int id)
+		{
+			ApiResponse response = this.rateManager.GetWhere(x => x.TeacherSkillId == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.Rates);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>789e3f9836f2811ce2bf1365dc97ee1e</Hash>
+    <Hash>1a6a8dbf465fcb8d2dfd53b40cafad7e</Hash>
 </Codenesium>*/

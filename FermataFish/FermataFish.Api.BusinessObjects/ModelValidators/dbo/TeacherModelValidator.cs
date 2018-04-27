@@ -13,22 +13,22 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public async Task<ValidationResult> ValidateCreateAsync(TeacherModel model)
 		{
+			this.BirthdayRules();
+			this.EmailRules();
 			this.FirstNameRules();
 			this.LastNameRules();
-			this.EmailRules();
 			this.PhoneRules();
-			this.BirthdayRules();
 			this.StudioIdRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, TeacherModel model)
 		{
+			this.BirthdayRules();
+			this.EmailRules();
 			this.FirstNameRules();
 			this.LastNameRules();
-			this.EmailRules();
 			this.PhoneRules();
-			this.BirthdayRules();
 			this.StudioIdRules();
 			return await this.ValidateAsync(model);
 		}
@@ -41,5 +41,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>75a0a07f96557ee488468a8e4cbe2c40</Hash>
+    <Hash>be4ee5741dcec39accdbbbedbc0ecebc</Hash>
 </Codenesium>*/

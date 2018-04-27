@@ -88,7 +88,7 @@ namespace FileServiceNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/fileTypes/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/FileTypes/{result.Id.ToString()}");
 				POCOFileType response = this.fileTypeManager.GetById(result.Id).FileTypes.First();
 				return this.Ok(response);
 			}
@@ -179,5 +179,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ecc1acc3666af3aef77ffe9909a037e2</Hash>
+    <Hash>5db813b8f6cbf3e6cb14788421744fc3</Hash>
 </Codenesium>*/

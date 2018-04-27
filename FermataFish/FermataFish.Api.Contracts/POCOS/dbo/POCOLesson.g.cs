@@ -10,25 +10,25 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public POCOLesson(
-			int id,
-			Nullable<DateTime> scheduledStartDate,
-			Nullable<DateTime> scheduledEndDate,
-			Nullable<DateTime> actualStartDate,
 			Nullable<DateTime> actualEndDate,
-			int lessonStatusId,
-			string teacherNotes,
-			string studentNotes,
+			Nullable<DateTime> actualStartDate,
 			Nullable<decimal> billAmount,
-			int studioId)
+			int id,
+			int lessonStatusId,
+			Nullable<DateTime> scheduledEndDate,
+			Nullable<DateTime> scheduledStartDate,
+			string studentNotes,
+			int studioId,
+			string teacherNotes)
 		{
-			this.Id = id.ToInt();
-			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
-			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
-			this.ActualStartDate = actualStartDate.ToNullableDateTime();
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
-			this.TeacherNotes = teacherNotes.ToString();
-			this.StudentNotes = studentNotes.ToString();
+			this.ActualStartDate = actualStartDate.ToNullableDateTime();
 			this.BillAmount = billAmount.ToNullableDecimal();
+			this.Id = id.ToInt();
+			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
+			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
+			this.StudentNotes = studentNotes.ToString();
+			this.TeacherNotes = teacherNotes.ToString();
 
 			this.LessonStatusId = new ReferenceEntity<int>(lessonStatusId,
 			                                               nameof(ApiResponse.LessonStatus));
@@ -36,39 +36,23 @@ namespace FermataFishNS.Api.Contracts
 			                                         nameof(ApiResponse.Studios));
 		}
 
-		public int Id { get; set; }
-		public Nullable<DateTime> ScheduledStartDate { get; set; }
-		public Nullable<DateTime> ScheduledEndDate { get; set; }
-		public Nullable<DateTime> ActualStartDate { get; set; }
 		public Nullable<DateTime> ActualEndDate { get; set; }
-		public ReferenceEntity<int> LessonStatusId { get; set; }
-		public string TeacherNotes { get; set; }
-		public string StudentNotes { get; set; }
+		public Nullable<DateTime> ActualStartDate { get; set; }
 		public Nullable<decimal> BillAmount { get; set; }
+		public int Id { get; set; }
+		public ReferenceEntity<int> LessonStatusId { get; set; }
+		public Nullable<DateTime> ScheduledEndDate { get; set; }
+		public Nullable<DateTime> ScheduledStartDate { get; set; }
+		public string StudentNotes { get; set; }
 		public ReferenceEntity<int> StudioId { get; set; }
+		public string TeacherNotes { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+		public bool ShouldSerializeActualEndDateValue { get; set; } = true;
 
-		public bool ShouldSerializeId()
+		public bool ShouldSerializeActualEndDate()
 		{
-			return this.ShouldSerializeIdValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeScheduledStartDateValue { get; set; } = true;
-
-		public bool ShouldSerializeScheduledStartDate()
-		{
-			return this.ShouldSerializeScheduledStartDateValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeScheduledEndDateValue { get; set; } = true;
-
-		public bool ShouldSerializeScheduledEndDate()
-		{
-			return this.ShouldSerializeScheduledEndDateValue;
+			return this.ShouldSerializeActualEndDateValue;
 		}
 
 		[JsonIgnore]
@@ -80,11 +64,19 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeActualEndDateValue { get; set; } = true;
+		public bool ShouldSerializeBillAmountValue { get; set; } = true;
 
-		public bool ShouldSerializeActualEndDate()
+		public bool ShouldSerializeBillAmount()
 		{
-			return this.ShouldSerializeActualEndDateValue;
+			return this.ShouldSerializeBillAmountValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeIdValue { get; set; } = true;
+
+		public bool ShouldSerializeId()
+		{
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
@@ -96,11 +88,19 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeacherNotesValue { get; set; } = true;
+		public bool ShouldSerializeScheduledEndDateValue { get; set; } = true;
 
-		public bool ShouldSerializeTeacherNotes()
+		public bool ShouldSerializeScheduledEndDate()
 		{
-			return this.ShouldSerializeTeacherNotesValue;
+			return this.ShouldSerializeScheduledEndDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeScheduledStartDateValue { get; set; } = true;
+
+		public bool ShouldSerializeScheduledStartDate()
+		{
+			return this.ShouldSerializeScheduledStartDateValue;
 		}
 
 		[JsonIgnore]
@@ -112,14 +112,6 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBillAmountValue { get; set; } = true;
-
-		public bool ShouldSerializeBillAmount()
-		{
-			return this.ShouldSerializeBillAmountValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeStudioIdValue { get; set; } = true;
 
 		public bool ShouldSerializeStudioId()
@@ -127,22 +119,30 @@ namespace FermataFishNS.Api.Contracts
 			return this.ShouldSerializeStudioIdValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeTeacherNotesValue { get; set; } = true;
+
+		public bool ShouldSerializeTeacherNotes()
+		{
+			return this.ShouldSerializeTeacherNotesValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeScheduledStartDateValue = false;
-			this.ShouldSerializeScheduledEndDateValue = false;
-			this.ShouldSerializeActualStartDateValue = false;
 			this.ShouldSerializeActualEndDateValue = false;
-			this.ShouldSerializeLessonStatusIdValue = false;
-			this.ShouldSerializeTeacherNotesValue = false;
-			this.ShouldSerializeStudentNotesValue = false;
+			this.ShouldSerializeActualStartDateValue = false;
 			this.ShouldSerializeBillAmountValue = false;
+			this.ShouldSerializeIdValue = false;
+			this.ShouldSerializeLessonStatusIdValue = false;
+			this.ShouldSerializeScheduledEndDateValue = false;
+			this.ShouldSerializeScheduledStartDateValue = false;
+			this.ShouldSerializeStudentNotesValue = false;
 			this.ShouldSerializeStudioIdValue = false;
+			this.ShouldSerializeTeacherNotesValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>26189a3567d27e618c6297521e66a461</Hash>
+    <Hash>d554756907e4fed1c6d1fcf1287ae540</Hash>
 </Codenesium>*/

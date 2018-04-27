@@ -11,53 +11,21 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public StudioModel(
-			string name,
-			string website,
 			string address1,
 			string address2,
 			string city,
+			string name,
 			int stateId,
+			string website,
 			string zip)
 		{
-			this.Name = name.ToString();
-			this.Website = website.ToString();
 			this.Address1 = address1.ToString();
 			this.Address2 = address2.ToString();
 			this.City = city.ToString();
+			this.Name = name.ToString();
 			this.StateId = stateId.ToInt();
+			this.Website = website.ToString();
 			this.Zip = zip.ToString();
-		}
-
-		private string name;
-
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
-
-			set
-			{
-				this.name = value;
-			}
-		}
-
-		private string website;
-
-		[Required]
-		public string Website
-		{
-			get
-			{
-				return this.website;
-			}
-
-			set
-			{
-				this.website = value;
-			}
 		}
 
 		private string address1;
@@ -108,6 +76,22 @@ namespace FermataFishNS.Api.Contracts
 			}
 		}
 
+		private string name;
+
+		[Required]
+		public string Name
+		{
+			get
+			{
+				return this.name;
+			}
+
+			set
+			{
+				this.name = value;
+			}
+		}
+
 		private int stateId;
 
 		[Required]
@@ -121,6 +105,22 @@ namespace FermataFishNS.Api.Contracts
 			set
 			{
 				this.stateId = value;
+			}
+		}
+
+		private string website;
+
+		[Required]
+		public string Website
+		{
+			get
+			{
+				return this.website;
+			}
+
+			set
+			{
+				this.website = value;
 			}
 		}
 
@@ -143,5 +143,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dec608828d5e28b5ae00fc53e893144d</Hash>
+    <Hash>3404b3d326ac511bbede37ff347749dc</Hash>
 </Codenesium>*/

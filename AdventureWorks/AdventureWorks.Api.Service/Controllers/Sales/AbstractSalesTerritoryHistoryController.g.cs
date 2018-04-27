@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/salesTerritoryHistories/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesTerritoryHistories/{result.Id.ToString()}");
 				POCOSalesTerritoryHistory response = this.salesTerritoryHistoryManager.GetById(result.Id).SalesTerritoryHistories.First();
 				return this.Ok(response);
 			}
@@ -219,5 +219,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>58f3a9ebecc2a0647e2435daca003c29</Hash>
+    <Hash>5f0c990ee9cd0ff5f9bb5a02ce1fcabd</Hash>
 </Codenesium>*/

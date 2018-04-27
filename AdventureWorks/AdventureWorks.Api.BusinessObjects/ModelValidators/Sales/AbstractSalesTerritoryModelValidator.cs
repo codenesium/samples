@@ -21,10 +21,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public ICountryRegionRepository CountryRegionRepository { get; set; }
-		public virtual void NameRules()
+		public virtual void CostLastYearRules()
 		{
-			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x.Name).Length(0, 50);
+			this.RuleFor(x => x.CostLastYear).NotNull();
+		}
+
+		public virtual void CostYTDRules()
+		{
+			this.RuleFor(x => x.CostYTD).NotNull();
 		}
 
 		public virtual void CountryRegionCodeRules()
@@ -40,24 +44,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.@Group).Length(0, 50);
 		}
 
-		public virtual void SalesYTDRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.SalesYTD).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		public virtual void SalesLastYearRules()
+		public virtual void NameRules()
 		{
-			this.RuleFor(x => x.SalesLastYear).NotNull();
-		}
-
-		public virtual void CostYTDRules()
-		{
-			this.RuleFor(x => x.CostYTD).NotNull();
-		}
-
-		public virtual void CostLastYearRules()
-		{
-			this.RuleFor(x => x.CostLastYear).NotNull();
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void RowguidRules()
@@ -65,9 +60,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void SalesLastYearRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.SalesLastYear).NotNull();
+		}
+
+		public virtual void SalesYTDRules()
+		{
+			this.RuleFor(x => x.SalesYTD).NotNull();
 		}
 
 		private bool BeValidCountryRegion(string id)
@@ -78,5 +78,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>817f70b6836a46a12b64e29c996bc990</Hash>
+    <Hash>fdb3240b35472e1fe683074413028d9d</Hash>
 </Codenesium>*/

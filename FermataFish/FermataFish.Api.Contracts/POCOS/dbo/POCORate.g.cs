@@ -10,32 +10,24 @@ namespace FermataFishNS.Api.Contracts
 		{}
 
 		public POCORate(
-			int id,
 			decimal amountPerMinute,
-			int teacherSkillId,
-			int teacherId)
+			int id,
+			int teacherId,
+			int teacherSkillId)
 		{
-			this.Id = id.ToInt();
 			this.AmountPerMinute = amountPerMinute.ToDecimal();
+			this.Id = id.ToInt();
 
-			this.TeacherSkillId = new ReferenceEntity<int>(teacherSkillId,
-			                                               nameof(ApiResponse.TeacherSkills));
 			this.TeacherId = new ReferenceEntity<int>(teacherId,
 			                                          nameof(ApiResponse.Teachers));
+			this.TeacherSkillId = new ReferenceEntity<int>(teacherSkillId,
+			                                               nameof(ApiResponse.TeacherSkills));
 		}
 
-		public int Id { get; set; }
 		public decimal AmountPerMinute { get; set; }
-		public ReferenceEntity<int> TeacherSkillId { get; set; }
+		public int Id { get; set; }
 		public ReferenceEntity<int> TeacherId { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
-
-		public bool ShouldSerializeId()
-		{
-			return this.ShouldSerializeIdValue;
-		}
+		public ReferenceEntity<int> TeacherSkillId { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeAmountPerMinuteValue { get; set; } = true;
@@ -46,11 +38,11 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeacherSkillIdValue { get; set; } = true;
+		public bool ShouldSerializeIdValue { get; set; } = true;
 
-		public bool ShouldSerializeTeacherSkillId()
+		public bool ShouldSerializeId()
 		{
-			return this.ShouldSerializeTeacherSkillIdValue;
+			return this.ShouldSerializeIdValue;
 		}
 
 		[JsonIgnore]
@@ -61,16 +53,24 @@ namespace FermataFishNS.Api.Contracts
 			return this.ShouldSerializeTeacherIdValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeTeacherSkillIdValue { get; set; } = true;
+
+		public bool ShouldSerializeTeacherSkillId()
+		{
+			return this.ShouldSerializeTeacherSkillIdValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeIdValue = false;
 			this.ShouldSerializeAmountPerMinuteValue = false;
-			this.ShouldSerializeTeacherSkillIdValue = false;
+			this.ShouldSerializeIdValue = false;
 			this.ShouldSerializeTeacherIdValue = false;
+			this.ShouldSerializeTeacherSkillIdValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a12929495d407ec8687c52f7337ee29e</Hash>
+    <Hash>074c33340e05dd95e7ef66c13c712ddb</Hash>
 </Codenesium>*/

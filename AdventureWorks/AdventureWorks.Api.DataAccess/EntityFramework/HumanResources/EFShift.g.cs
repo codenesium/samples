@@ -13,37 +13,36 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int shiftID,
-			string name,
-			TimeSpan startTime,
 			TimeSpan endTime,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name,
+			TimeSpan startTime)
 		{
-			this.ShiftID = shiftID.ToInt();
-			this.Name = name.ToString();
-			this.StartTime = startTime;
 			this.EndTime = endTime;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
+			this.ShiftID = shiftID.ToInt();
+			this.StartTime = startTime;
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("ShiftID", TypeName="tinyint")]
-		public int ShiftID { get; set; }
-
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
-
-		[Column("StartTime", TypeName="time")]
-		public TimeSpan StartTime { get; set; }
 
 		[Column("EndTime", TypeName="time")]
 		public TimeSpan EndTime { get; set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
+
+		[Key]
+		[Column("ShiftID", TypeName="tinyint")]
+		public int ShiftID { get; set; }
+
+		[Column("StartTime", TypeName="time")]
+		public TimeSpan StartTime { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>430f5b8856666129a1f0b3dd8f9c5a51</Hash>
+    <Hash>6cd32afc0705a859a0b8a04b898cd524</Hash>
 </Codenesium>*/

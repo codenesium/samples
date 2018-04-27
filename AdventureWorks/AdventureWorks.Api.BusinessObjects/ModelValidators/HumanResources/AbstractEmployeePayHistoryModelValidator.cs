@@ -21,14 +21,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IEmployeeRepository EmployeeRepository { get; set; }
-		public virtual void RateChangeDateRules()
+		public virtual void ModifiedDateRules()
 		{
-			this.RuleFor(x => x.RateChangeDate).NotNull();
-		}
-
-		public virtual void RateRules()
-		{
-			this.RuleFor(x => x.Rate).NotNull();
+			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
 		public virtual void PayFrequencyRules()
@@ -36,9 +31,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.PayFrequency).NotNull();
 		}
 
-		public virtual void ModifiedDateRules()
+		public virtual void RateRules()
 		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			this.RuleFor(x => x.Rate).NotNull();
+		}
+
+		public virtual void RateChangeDateRules()
+		{
+			this.RuleFor(x => x.RateChangeDate).NotNull();
 		}
 
 		private bool BeValidEmployee(int id)
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c581077c9a759e4c908ef598e29e7d54</Hash>
+    <Hash>11428ba9aa480e8887d88fc5f58be4bb</Hash>
 </Codenesium>*/

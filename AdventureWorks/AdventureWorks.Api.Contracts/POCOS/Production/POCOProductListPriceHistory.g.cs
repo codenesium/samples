@@ -10,42 +10,26 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOProductListPriceHistory(
-			int productID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
 			decimal listPrice,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productID,
+			DateTime startDate)
 		{
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ListPrice = listPrice.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.StartDate = startDate.ToDateTime();
 
 			this.ProductID = new ReferenceEntity<int>(productID,
 			                                          nameof(ApiResponse.Products));
 		}
 
-		public ReferenceEntity<int> ProductID { get; set; }
-		public DateTime StartDate { get; set; }
 		public Nullable<DateTime> EndDate { get; set; }
 		public decimal ListPrice { get; set; }
 		public DateTime ModifiedDate { get; set; }
-
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
-		}
+		public ReferenceEntity<int> ProductID { get; set; }
+		public DateTime StartDate { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeEndDateValue { get; set; } = true;
@@ -71,17 +55,33 @@ namespace AdventureWorksNS.Api.Contracts
 			return this.ShouldSerializeModifiedDateValue;
 		}
 
+		[JsonIgnore]
+		public bool ShouldSerializeProductIDValue { get; set; } = true;
+
+		public bool ShouldSerializeProductID()
+		{
+			return this.ShouldSerializeProductIDValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
+
+		public bool ShouldSerializeStartDate()
+		{
+			return this.ShouldSerializeStartDateValue;
+		}
+
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeStartDateValue = false;
 			this.ShouldSerializeEndDateValue = false;
 			this.ShouldSerializeListPriceValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeProductIDValue = false;
+			this.ShouldSerializeStartDateValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc749c8cdd7e724da31e4f9a4d3ae003</Hash>
+    <Hash>6426c1c34e2c33f0ab9925e8922f4e8b</Hash>
 </Codenesium>*/

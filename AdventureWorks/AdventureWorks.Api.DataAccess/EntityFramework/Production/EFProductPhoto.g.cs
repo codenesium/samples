@@ -13,30 +13,19 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			int productPhotoID,
-			byte[] thumbNailPhoto,
-			string thumbnailPhotoFileName,
 			byte[] largePhoto,
 			string largePhotoFileName,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			byte[] thumbNailPhoto,
+			string thumbnailPhotoFileName)
 		{
-			this.ProductPhotoID = productPhotoID.ToInt();
-			this.ThumbNailPhoto = thumbNailPhoto;
-			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
 			this.LargePhoto = largePhoto;
 			this.LargePhotoFileName = largePhotoFileName.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductPhotoID = productPhotoID.ToInt();
+			this.ThumbNailPhoto = thumbNailPhoto;
+			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
 		}
-
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("ProductPhotoID", TypeName="int")]
-		public int ProductPhotoID { get; set; }
-
-		[Column("ThumbNailPhoto", TypeName="varbinary(-1)")]
-		public byte[] ThumbNailPhoto { get; set; }
-
-		[Column("ThumbnailPhotoFileName", TypeName="nvarchar(50)")]
-		public string ThumbnailPhotoFileName { get; set; }
 
 		[Column("LargePhoto", TypeName="varbinary(-1)")]
 		public byte[] LargePhoto { get; set; }
@@ -46,9 +35,19 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Key]
+		[Column("ProductPhotoID", TypeName="int")]
+		public int ProductPhotoID { get; set; }
+
+		[Column("ThumbNailPhoto", TypeName="varbinary(-1)")]
+		public byte[] ThumbNailPhoto { get; set; }
+
+		[Column("ThumbnailPhotoFileName", TypeName="nvarchar(50)")]
+		public string ThumbnailPhotoFileName { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4d1df2e5a0cddb4690b164ad4cd720f</Hash>
+    <Hash>56511555957096e951031e95750817cc</Hash>
 </Codenesium>*/

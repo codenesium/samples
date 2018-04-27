@@ -11,16 +11,16 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public POCOSalesTerritoryHistory(
 			int businessEntityID,
-			int territoryID,
-			DateTime startDate,
 			Nullable<DateTime> endDate,
+			DateTime modifiedDate,
 			Guid rowguid,
-			DateTime modifiedDate)
+			DateTime startDate,
+			int territoryID)
 		{
-			this.StartDate = startDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
+			this.StartDate = startDate.ToDateTime();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.SalesPersons));
@@ -29,11 +29,11 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public ReferenceEntity<int> TerritoryID { get; set; }
-		public DateTime StartDate { get; set; }
 		public Nullable<DateTime> EndDate { get; set; }
-		public Guid Rowguid { get; set; }
 		public DateTime ModifiedDate { get; set; }
+		public Guid Rowguid { get; set; }
+		public DateTime StartDate { get; set; }
+		public ReferenceEntity<int> TerritoryID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -41,22 +41,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public bool ShouldSerializeBusinessEntityID()
 		{
 			return this.ShouldSerializeBusinessEntityIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
-
-		public bool ShouldSerializeTerritoryID()
-		{
-			return this.ShouldSerializeTerritoryIDValue;
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
-
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
 		}
 
 		[JsonIgnore]
@@ -68,6 +52,14 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+		public bool ShouldSerializeModifiedDate()
+		{
+			return this.ShouldSerializeModifiedDateValue;
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeRowguidValue { get; set; } = true;
 
 		public bool ShouldSerializeRowguid()
@@ -76,25 +68,33 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeStartDateValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeStartDate()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeStartDateValue;
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
+
+		public bool ShouldSerializeTerritoryID()
+		{
+			return this.ShouldSerializeTerritoryIDValue;
 		}
 
 		public void DisableAllFields()
 		{
 			this.ShouldSerializeBusinessEntityIDValue = false;
-			this.ShouldSerializeTerritoryIDValue = false;
-			this.ShouldSerializeStartDateValue = false;
 			this.ShouldSerializeEndDateValue = false;
-			this.ShouldSerializeRowguidValue = false;
 			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeRowguidValue = false;
+			this.ShouldSerializeStartDateValue = false;
+			this.ShouldSerializeTerritoryIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fadeabadfc1d55b5de99d1541712cc54</Hash>
+    <Hash>956504586c69a401485b26ee3e6bbf50</Hash>
 </Codenesium>*/

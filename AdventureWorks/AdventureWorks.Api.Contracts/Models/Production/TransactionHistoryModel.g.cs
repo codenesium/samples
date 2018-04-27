@@ -11,23 +11,55 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public TransactionHistoryModel(
+			decimal actualCost,
+			DateTime modifiedDate,
 			int productID,
+			int quantity,
 			int referenceOrderID,
 			int referenceOrderLineID,
 			DateTime transactionDate,
-			string transactionType,
-			int quantity,
-			decimal actualCost,
-			DateTime modifiedDate)
+			string transactionType)
 		{
+			this.ActualCost = actualCost.ToDecimal();
+			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
+			this.Quantity = quantity.ToInt();
 			this.ReferenceOrderID = referenceOrderID.ToInt();
 			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
 			this.TransactionDate = transactionDate.ToDateTime();
 			this.TransactionType = transactionType.ToString();
-			this.Quantity = quantity.ToInt();
-			this.ActualCost = actualCost.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
+		}
+
+		private decimal actualCost;
+
+		[Required]
+		public decimal ActualCost
+		{
+			get
+			{
+				return this.actualCost;
+			}
+
+			set
+			{
+				this.actualCost = value;
+			}
+		}
+
+		private DateTime modifiedDate;
+
+		[Required]
+		public DateTime ModifiedDate
+		{
+			get
+			{
+				return this.modifiedDate;
+			}
+
+			set
+			{
+				this.modifiedDate = value;
+			}
 		}
 
 		private int productID;
@@ -43,6 +75,22 @@ namespace AdventureWorksNS.Api.Contracts
 			set
 			{
 				this.productID = value;
+			}
+		}
+
+		private int quantity;
+
+		[Required]
+		public int Quantity
+		{
+			get
+			{
+				return this.quantity;
+			}
+
+			set
+			{
+				this.quantity = value;
 			}
 		}
 
@@ -109,57 +157,9 @@ namespace AdventureWorksNS.Api.Contracts
 				this.transactionType = value;
 			}
 		}
-
-		private int quantity;
-
-		[Required]
-		public int Quantity
-		{
-			get
-			{
-				return this.quantity;
-			}
-
-			set
-			{
-				this.quantity = value;
-			}
-		}
-
-		private decimal actualCost;
-
-		[Required]
-		public decimal ActualCost
-		{
-			get
-			{
-				return this.actualCost;
-			}
-
-			set
-			{
-				this.actualCost = value;
-			}
-		}
-
-		private DateTime modifiedDate;
-
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
-
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2c44b14c5d74a4fb4bf2495958046299</Hash>
+    <Hash>1efb9ebb77fe25361e8c3b69122a8206</Hash>
 </Codenesium>*/

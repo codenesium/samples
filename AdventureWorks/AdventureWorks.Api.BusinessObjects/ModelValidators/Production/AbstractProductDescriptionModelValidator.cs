@@ -26,18 +26,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Description).Length(0, 400);
 		}
 
-		public virtual void RowguidRules()
-		{
-			this.RuleFor(x => x.Rowguid).NotNull();
-		}
-
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void RowguidRules()
+		{
+			this.RuleFor(x => x.Rowguid).NotNull();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>56ab56a28b8695ef847841ab243b8052</Hash>
+    <Hash>941806b299c718a66fa3cc909cdc5c23</Hash>
 </Codenesium>*/

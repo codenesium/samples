@@ -10,31 +10,31 @@ namespace AdventureWorksNS.Api.Contracts
 		{}
 
 		public POCOSpecialOfferProduct(
-			int specialOfferID,
+			DateTime modifiedDate,
 			int productID,
 			Guid rowguid,
-			DateTime modifiedDate)
+			int specialOfferID)
 		{
-			this.Rowguid = rowguid.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Rowguid = rowguid.ToGuid();
 
-			this.SpecialOfferID = new ReferenceEntity<int>(specialOfferID,
-			                                               nameof(ApiResponse.SpecialOffers));
 			this.ProductID = new ReferenceEntity<int>(productID,
 			                                          nameof(ApiResponse.Products));
+			this.SpecialOfferID = new ReferenceEntity<int>(specialOfferID,
+			                                               nameof(ApiResponse.SpecialOffers));
 		}
 
-		public ReferenceEntity<int> SpecialOfferID { get; set; }
+		public DateTime ModifiedDate { get; set; }
 		public ReferenceEntity<int> ProductID { get; set; }
 		public Guid Rowguid { get; set; }
-		public DateTime ModifiedDate { get; set; }
+		public ReferenceEntity<int> SpecialOfferID { get; set; }
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpecialOfferIDValue { get; set; } = true;
+		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeSpecialOfferID()
+		public bool ShouldSerializeModifiedDate()
 		{
-			return this.ShouldSerializeSpecialOfferIDValue;
+			return this.ShouldSerializeModifiedDateValue;
 		}
 
 		[JsonIgnore]
@@ -54,23 +54,23 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+		public bool ShouldSerializeSpecialOfferIDValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
+		public bool ShouldSerializeSpecialOfferID()
 		{
-			return this.ShouldSerializeModifiedDateValue;
+			return this.ShouldSerializeSpecialOfferIDValue;
 		}
 
 		public void DisableAllFields()
 		{
-			this.ShouldSerializeSpecialOfferIDValue = false;
+			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializeProductIDValue = false;
 			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
+			this.ShouldSerializeSpecialOfferIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a3a0d003067c10ef48abd6076805dd8</Hash>
+    <Hash>b475252123b88b7818e3e5b0d5330346</Hash>
 </Codenesium>*/

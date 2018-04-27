@@ -13,20 +13,25 @@ namespace NebulaNS.Api.DataAccess
 
 		public void SetProperties(
 			int id,
-			string name,
-			int teamId,
 			int chainStatusId,
-			Guid externalId)
+			Guid externalId,
+			string name,
+			int teamId)
 		{
+			this.ChainStatusId = chainStatusId.ToInt();
+			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
 			this.Name = name.ToString();
 			this.TeamId = teamId.ToInt();
-			this.ChainStatusId = chainStatusId.ToInt();
-			this.ExternalId = externalId.ToGuid();
 		}
 
+		[Column("chainStatusId", TypeName="int")]
+		public int ChainStatusId { get; set; }
+
+		[Column("externalId", TypeName="uniqueidentifier")]
+		public Guid ExternalId { get; set; }
+
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id", TypeName="int")]
 		public int Id { get; set; }
 
@@ -36,20 +41,14 @@ namespace NebulaNS.Api.DataAccess
 		[Column("teamId", TypeName="int")]
 		public int TeamId { get; set; }
 
-		[Column("chainStatusId", TypeName="int")]
-		public int ChainStatusId { get; set; }
-
-		[Column("externalId", TypeName="uniqueidentifier")]
-		public Guid ExternalId { get; set; }
+		[ForeignKey("ChainStatusId")]
+		public virtual EFChainStatus ChainStatus { get; set; }
 
 		[ForeignKey("TeamId")]
 		public virtual EFTeam Team { get; set; }
-
-		[ForeignKey("ChainStatusId")]
-		public virtual EFChainStatus ChainStatus { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7dcbd2a88758d270020f70dacf584d68</Hash>
+    <Hash>98b333b30cec11df2c99fdcbec7732f6</Hash>
 </Codenesium>*/

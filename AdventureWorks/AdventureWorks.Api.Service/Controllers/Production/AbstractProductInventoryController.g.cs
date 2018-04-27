@@ -88,7 +88,7 @@ namespace AdventureWorksNS.Api.Service
 			if (result.Success)
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/productInventories/{result.Id.ToString()}");
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductInventories/{result.Id.ToString()}");
 				POCOProductInventory response = this.productInventoryManager.GetById(result.Id).ProductInventories.First();
 				return this.Ok(response);
 			}
@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/ProductInventories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductInventory>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.productInventoryManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductInventories);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByLocationID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Locations/{id}/ProductInventories")]
@@ -215,9 +195,29 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.ProductInventories);
 			}
 		}
+
+		[HttpGet]
+		[Route("ByProductID/{id}")]
+		[ReadOnly]
+		[Route("~/api/Products/{id}/ProductInventories")]
+		[ProducesResponseType(typeof(ApiResponse), 200)]
+		[ProducesResponseType(typeof(List<POCOProductInventory>), 200)]
+		public virtual IActionResult ByProductID(int id)
+		{
+			ApiResponse response = this.productInventoryManager.GetWhere(x => x.ProductID == id);
+
+			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
+			{
+				return this.Ok(response);
+			}
+			else
+			{
+				return this.Ok(response.ProductInventories);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec22f2ae92fc34045df52da5e76561e9</Hash>
+    <Hash>45d52a23cd7c09537f2bed8d2ba48a9e</Hash>
 </Codenesium>*/

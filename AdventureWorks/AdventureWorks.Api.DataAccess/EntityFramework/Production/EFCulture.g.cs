@@ -13,26 +13,26 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public void SetProperties(
 			string cultureID,
-			string name,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			string name)
 		{
 			this.CultureID = cultureID.ToString();
-			this.Name = name.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Name = name.ToString();
 		}
 
 		[Key]
 		[Column("CultureID", TypeName="nchar(6)")]
 		public string CultureID { get; set; }
 
-		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
-
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
+
+		[Column("Name", TypeName="nvarchar(50)")]
+		public string Name { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>81afaf42c4c99a4135f55b81c38e9d86</Hash>
+    <Hash>b520387eeee6c8aeaea442361f4c7d90</Hash>
 </Codenesium>*/

@@ -22,9 +22,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public IProductRepository ProductRepository { get; set; }
 		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
-		public virtual void ProductAssemblyIDRules()
+		public virtual void BOMLevelRules()
 		{
-			this.RuleFor(x => x.ProductAssemblyID).Must(this.BeValidProduct).When(x => x ?.ProductAssemblyID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BOMLevel).NotNull();
 		}
 
 		public virtual void ComponentIDRules()
@@ -33,13 +33,28 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ComponentID).Must(this.BeValidProduct).When(x => x ?.ComponentID != null).WithMessage("Invalid reference");
 		}
 
+		public virtual void EndDateRules()
+		{                       }
+
+		public virtual void ModifiedDateRules()
+		{
+			this.RuleFor(x => x.ModifiedDate).NotNull();
+		}
+
+		public virtual void PerAssemblyQtyRules()
+		{
+			this.RuleFor(x => x.PerAssemblyQty).NotNull();
+		}
+
+		public virtual void ProductAssemblyIDRules()
+		{
+			this.RuleFor(x => x.ProductAssemblyID).Must(this.BeValidProduct).When(x => x ?.ProductAssemblyID != null).WithMessage("Invalid reference");
+		}
+
 		public virtual void StartDateRules()
 		{
 			this.RuleFor(x => x.StartDate).NotNull();
 		}
-
-		public virtual void EndDateRules()
-		{                       }
 
 		public virtual void UnitMeasureCodeRules()
 		{
@@ -48,29 +63,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
 		}
 
-		public virtual void BOMLevelRules()
+		private bool BeValidProduct(int id)
 		{
-			this.RuleFor(x => x.BOMLevel).NotNull();
-		}
-
-		public virtual void PerAssemblyQtyRules()
-		{
-			this.RuleFor(x => x.PerAssemblyQty).NotNull();
-		}
-
-		public virtual void ModifiedDateRules()
-		{
-			this.RuleFor(x => x.ModifiedDate).NotNull();
+			return this.ProductRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidProduct(Nullable<int> id)
 		{
 			return this.ProductRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
-		}
-
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
 		}
 
 		private bool BeValidUnitMeasure(string id)
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5c01f6513ec0b737f1b5bcb2e47d8cf2</Hash>
+    <Hash>9134a944f93c20fa3ae585cca2ba8584</Hash>
 </Codenesium>*/
