@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository { get; set; }
 		public IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; set; }
 		public virtual void DueDateRules()
 		{
@@ -45,7 +44,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ProductIDRules()
 		{
 			this.RuleFor(x => x.ProductID).NotNull();
-			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void PurchaseOrderDetailIDRules()
@@ -73,11 +71,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.UnitPrice).NotNull();
 		}
 
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidPurchaseOrderHeader(int id)
 		{
 			return this.PurchaseOrderHeaderRepository.GetByIdDirect(id) != null;
@@ -86,5 +79,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>6f4628cf3fac56d73ccb96f59bbed956</Hash>
+    <Hash>5b01c98286520380547dac7ee3c3d7dc</Hash>
 </Codenesium>*/

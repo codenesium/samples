@@ -31,14 +31,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFPerson Person { get; set; }
-
 		[ForeignKey("CreditCardID")]
 		public virtual EFCreditCard CreditCard { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>28ef0e103a4e869ecf89bc390f9542e5</Hash>
+    <Hash>e9227c6f2742c014b008152083d6f656</Hash>
 </Codenesium>*/

@@ -52,9 +52,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("TerritoryID", TypeName="int")]
 		public Nullable<int> TerritoryID { get; set; }
 
-		[ForeignKey("PersonID")]
-		public virtual EFPerson Person { get; set; }
-
 		[ForeignKey("StoreID")]
 		public virtual EFStore Store { get; set; }
 
@@ -64,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8cdacbc1d931a5ff20d60da83a226e2e</Hash>
+    <Hash>015626ae13e3bc3567788a30fd898c19</Hash>
 </Codenesium>*/

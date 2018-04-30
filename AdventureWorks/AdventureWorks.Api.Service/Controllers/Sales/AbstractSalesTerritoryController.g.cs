@@ -175,29 +175,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCountryRegionCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/CountryRegions/{id}/SalesTerritories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesTerritory>), 200)]
-		public virtual IActionResult ByCountryRegionCode(string id)
-		{
-			ApiResponse response = this.salesTerritoryManager.GetWhere(x => x.CountryRegionCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesTerritories);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4a563841d0f980a91ae9c34b3edb431</Hash>
+    <Hash>1eaf422f57408801e8f991916582d56f</Hash>
 </Codenesium>*/

@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByBillToAddressID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult ByBillToAddressID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.BillToAddressID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByCreditCardID/{id}")]
 		[ReadOnly]
 		[Route("~/api/CreditCards/{id}/SalesOrderHeaders")]
@@ -277,46 +257,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByShipMethodID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ShipMethods/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult ByShipMethodID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.ShipMethodID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByShipToAddressID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Addresses/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult ByShipToAddressID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.ShipToAddressID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByTerritoryID/{id}")]
 		[ReadOnly]
 		[Route("~/api/SalesTerritories/{id}/SalesOrderHeaders")]
@@ -339,5 +279,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>05ba3b6bbcca9500a7883e84b30c9343</Hash>
+    <Hash>adeafdfc13a866aa866bd618a8258560</Hash>
 </Codenesium>*/

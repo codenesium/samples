@@ -71,14 +71,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("UnitPrice", TypeName="money")]
 		public decimal UnitPrice { get; set; }
 
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
-
 		[ForeignKey("PurchaseOrderID")]
 		public virtual EFPurchaseOrderHeader PurchaseOrderHeader { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>271b5dd48ba17f27e61000c2dc2ea2c6</Hash>
+    <Hash>59ec6d5ee8b8e4583c19f3a110ff41f1</Hash>
 </Codenesium>*/

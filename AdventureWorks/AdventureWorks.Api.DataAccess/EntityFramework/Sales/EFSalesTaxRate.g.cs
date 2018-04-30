@@ -51,12 +51,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("TaxType", TypeName="tinyint")]
 		public int TaxType { get; set; }
-
-		[ForeignKey("StateProvinceID")]
-		public virtual EFStateProvince StateProvince { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ba8c1a7d91cbefafd3b471342933c8be</Hash>
+    <Hash>0ee01c579d4e0ce63efef19a1c6c21bc</Hash>
 </Codenesium>*/

@@ -24,6 +24,7 @@ namespace AdventureWorksNS.Api.Contracts
 			decimal totalDue,
 			int vendorID)
 		{
+			this.EmployeeID = employeeID.ToInt();
 			this.Freight = freight.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderDate = orderDate.ToDateTime();
@@ -35,15 +36,13 @@ namespace AdventureWorksNS.Api.Contracts
 			this.TaxAmt = taxAmt.ToDecimal();
 			this.TotalDue = totalDue.ToDecimal();
 
-			this.EmployeeID = new ReferenceEntity<int>(employeeID,
-			                                           nameof(ApiResponse.Employees));
 			this.ShipMethodID = new ReferenceEntity<int>(shipMethodID,
 			                                             nameof(ApiResponse.ShipMethods));
 			this.VendorID = new ReferenceEntity<int>(vendorID,
 			                                         nameof(ApiResponse.Vendors));
 		}
 
-		public ReferenceEntity<int> EmployeeID { get; set; }
+		public int EmployeeID { get; set; }
 		public decimal Freight { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public DateTime OrderDate { get; set; }
@@ -181,5 +180,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7b01181bc0188eccc734078b2232c6e9</Hash>
+    <Hash>1dab7b3ba665518888b854c079abd006</Hash>
 </Codenesium>*/

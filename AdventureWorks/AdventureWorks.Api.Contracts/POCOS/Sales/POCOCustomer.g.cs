@@ -21,10 +21,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.AccountNumber = accountNumber.ToString();
 			this.CustomerID = customerID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PersonID = personID.ToNullableInt();
 			this.Rowguid = rowguid.ToGuid();
 
-			this.PersonID = new ReferenceEntity<Nullable<int>>(personID,
-			                                                   nameof(ApiResponse.People));
 			this.StoreID = new ReferenceEntity<Nullable<int>>(storeID,
 			                                                  nameof(ApiResponse.Stores));
 			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
@@ -34,7 +33,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public string AccountNumber { get; set; }
 		public int CustomerID { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<Nullable<int>> PersonID { get; set; }
+		public Nullable<int> PersonID { get; set; }
 		public Guid Rowguid { get; set; }
 		public ReferenceEntity<Nullable<int>> StoreID { get; set; }
 		public ReferenceEntity<Nullable<int>> TerritoryID { get; set; }
@@ -109,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>59b804c9aa82b93ab62c2ea9e7dc6281</Hash>
+    <Hash>9f7c555207550efa0217a2bcb4ffbf0e</Hash>
 </Codenesium>*/

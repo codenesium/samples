@@ -21,6 +21,7 @@ namespace AdventureWorksNS.Api.Contracts
 			Nullable<int> territoryID)
 		{
 			this.Bonus = bonus.ToDecimal();
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.CommissionPct = commissionPct.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Rowguid = rowguid.ToGuid();
@@ -28,14 +29,12 @@ namespace AdventureWorksNS.Api.Contracts
 			this.SalesQuota = salesQuota.ToNullableDecimal();
 			this.SalesYTD = salesYTD.ToDecimal();
 
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.Employees));
 			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
 			                                                      nameof(ApiResponse.SalesTerritories));
 		}
 
 		public decimal Bonus { get; set; }
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public decimal CommissionPct { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public Guid Rowguid { get; set; }
@@ -132,5 +131,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ea4076e7e36a1466fcf99aba4cee0312</Hash>
+    <Hash>2fa3ee4849ad81d43cbd5001c704cabf</Hash>
 </Codenesium>*/

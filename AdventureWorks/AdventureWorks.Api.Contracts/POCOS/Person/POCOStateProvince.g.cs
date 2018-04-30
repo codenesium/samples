@@ -25,11 +25,10 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid.ToGuid();
 			this.StateProvinceCode = stateProvinceCode.ToString();
 			this.StateProvinceID = stateProvinceID.ToInt();
+			this.TerritoryID = territoryID.ToInt();
 
 			this.CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
 			                                                     nameof(ApiResponse.CountryRegions));
-			this.TerritoryID = new ReferenceEntity<int>(territoryID,
-			                                            nameof(ApiResponse.SalesTerritories));
 		}
 
 		public ReferenceEntity<string> CountryRegionCode { get; set; }
@@ -39,7 +38,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public Guid Rowguid { get; set; }
 		public string StateProvinceCode { get; set; }
 		public int StateProvinceID { get; set; }
-		public ReferenceEntity<int> TerritoryID { get; set; }
+		public int TerritoryID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
@@ -120,5 +119,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1e255f604fbb755739eecb5029fd3d12</Hash>
+    <Hash>709f5a2b2473f2177cfba85179a8183e</Hash>
 </Codenesium>*/

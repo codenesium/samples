@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByEmployeeID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Employees/{id}/PurchaseOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPurchaseOrderHeader>), 200)]
-		public virtual IActionResult ByEmployeeID(int id)
-		{
-			ApiResponse response = this.purchaseOrderHeaderManager.GetWhere(x => x.EmployeeID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PurchaseOrderHeaders);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByShipMethodID/{id}")]
 		[ReadOnly]
 		[Route("~/api/ShipMethods/{id}/PurchaseOrderHeaders")]
@@ -239,5 +219,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7417530d60b17b046486c3a19c2770a9</Hash>
+    <Hash>d9fd19d0afd823c56b0c21bc1a024635</Hash>
 </Codenesium>*/

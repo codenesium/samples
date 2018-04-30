@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/SpecialOfferProducts")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.specialOfferProductManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpecialOfferProducts);
-			}
-		}
-
-		[HttpGet]
 		[Route("BySpecialOfferID/{id}")]
 		[ReadOnly]
 		[Route("~/api/SpecialOffers/{id}/SpecialOfferProducts")]
@@ -219,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a9302630d73713e4ec98b555dd65ec55</Hash>
+    <Hash>f3c4e90a239bd61b174835a33d7fa1e1</Hash>
 </Codenesium>*/

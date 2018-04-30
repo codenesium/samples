@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void BonusRules()
 		{
@@ -60,11 +59,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
-		private bool BeValidEmployee(int id)
-		{
-			return this.EmployeeRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidSalesTerritory(Nullable<int> id)
 		{
 			return this.SalesTerritoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
@@ -73,5 +67,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>013866b5bb16de3a44f44e06c9ed12de</Hash>
+    <Hash>bf412599d7cc7b13afca369ebfca2b1a</Hash>
 </Codenesium>*/

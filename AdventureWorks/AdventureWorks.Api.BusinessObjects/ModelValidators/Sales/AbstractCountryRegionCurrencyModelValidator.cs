@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ICountryRegionRepository CountryRegionRepository { get; set; }
 		public ICurrencyRepository CurrencyRepository { get; set; }
 		public virtual void CurrencyCodeRules()
 		{
@@ -34,11 +33,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		private bool BeValidCountryRegion(string id)
-		{
-			return this.CountryRegionRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidCurrency(string id)
 		{
 			return this.CurrencyRepository.GetByIdDirect(id) != null;
@@ -47,5 +41,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fe44cd531834f2592fd0e48b42958615</Hash>
+    <Hash>e64edfa16fcfbd5878980050f1d5e0ee</Hash>
 </Codenesium>*/

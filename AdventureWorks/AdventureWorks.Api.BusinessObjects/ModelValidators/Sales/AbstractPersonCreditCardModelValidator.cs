@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository { get; set; }
 		public ICreditCardRepository CreditCardRepository { get; set; }
 		public virtual void CreditCardIDRules()
 		{
@@ -33,11 +32,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
 
-		private bool BeValidPerson(int id)
-		{
-			return this.PersonRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidCreditCard(int id)
 		{
 			return this.CreditCardRepository.GetByIdDirect(id) != null;
@@ -46,5 +40,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>27a3807e2415e38825f8d5d02bc09f4e</Hash>
+    <Hash>87148933e813bcc8526b86dbb342b2a3</Hash>
 </Codenesium>*/

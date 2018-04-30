@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
 		public ISalesPersonRepository SalesPersonRepository { get; set; }
 		public virtual void DemographicsRules()
 		{                       }
@@ -46,11 +45,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.SalesPersonID).Must(this.BeValidSalesPerson).When(x => x ?.SalesPersonID != null).WithMessage("Invalid reference");
 		}
 
-		private bool BeValidBusinessEntity(int id)
-		{
-			return this.BusinessEntityRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidSalesPerson(Nullable<int> id)
 		{
 			return this.SalesPersonRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
@@ -59,5 +53,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cdde7b58442ceba4ef057a6ae2dfb8f1</Hash>
+    <Hash>7ae7cec72003436e5dba1b035415d83b</Hash>
 </Codenesium>*/

@@ -38,6 +38,7 @@ namespace AdventureWorksNS.Api.Contracts
 			decimal totalDue)
 		{
 			this.AccountNumber = accountNumber.ToString();
+			this.BillToAddressID = billToAddressID.ToInt();
 			this.Comment = comment.ToString();
 			this.CreditCardApprovalCode = creditCardApprovalCode.ToString();
 			this.DueDate = dueDate.ToDateTime();
@@ -51,13 +52,13 @@ namespace AdventureWorksNS.Api.Contracts
 			this.SalesOrderID = salesOrderID.ToInt();
 			this.SalesOrderNumber = salesOrderNumber.ToString();
 			this.ShipDate = shipDate.ToNullableDateTime();
+			this.ShipMethodID = shipMethodID.ToInt();
+			this.ShipToAddressID = shipToAddressID.ToInt();
 			this.Status = status.ToInt();
 			this.SubTotal = subTotal.ToDecimal();
 			this.TaxAmt = taxAmt.ToDecimal();
 			this.TotalDue = totalDue.ToDecimal();
 
-			this.BillToAddressID = new ReferenceEntity<int>(billToAddressID,
-			                                                nameof(ApiResponse.Addresses));
 			this.CreditCardID = new ReferenceEntity<Nullable<int>>(creditCardID,
 			                                                       nameof(ApiResponse.CreditCards));
 			this.CurrencyRateID = new ReferenceEntity<Nullable<int>>(currencyRateID,
@@ -66,16 +67,12 @@ namespace AdventureWorksNS.Api.Contracts
 			                                           nameof(ApiResponse.Customers));
 			this.SalesPersonID = new ReferenceEntity<Nullable<int>>(salesPersonID,
 			                                                        nameof(ApiResponse.SalesPersons));
-			this.ShipMethodID = new ReferenceEntity<int>(shipMethodID,
-			                                             nameof(ApiResponse.ShipMethods));
-			this.ShipToAddressID = new ReferenceEntity<int>(shipToAddressID,
-			                                                nameof(ApiResponse.Addresses));
 			this.TerritoryID = new ReferenceEntity<Nullable<int>>(territoryID,
 			                                                      nameof(ApiResponse.SalesTerritories));
 		}
 
 		public string AccountNumber { get; set; }
-		public ReferenceEntity<int> BillToAddressID { get; set; }
+		public int BillToAddressID { get; set; }
 		public string Comment { get; set; }
 		public string CreditCardApprovalCode { get; set; }
 		public ReferenceEntity<Nullable<int>> CreditCardID { get; set; }
@@ -93,8 +90,8 @@ namespace AdventureWorksNS.Api.Contracts
 		public string SalesOrderNumber { get; set; }
 		public ReferenceEntity<Nullable<int>> SalesPersonID { get; set; }
 		public Nullable<DateTime> ShipDate { get; set; }
-		public ReferenceEntity<int> ShipMethodID { get; set; }
-		public ReferenceEntity<int> ShipToAddressID { get; set; }
+		public int ShipMethodID { get; set; }
+		public int ShipToAddressID { get; set; }
 		public int Status { get; set; }
 		public decimal SubTotal { get; set; }
 		public decimal TaxAmt { get; set; }
@@ -342,5 +339,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3da25cecd87fdc826c50c781d6c13cf5</Hash>
+    <Hash>f75e94790c543e8207dd6ac0609c5007</Hash>
 </Codenesium>*/

@@ -20,12 +20,10 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IAddressRepository AddressRepository { get; set; }
 		public ICreditCardRepository CreditCardRepository { get; set; }
 		public ICurrencyRateRepository CurrencyRateRepository { get; set; }
 		public ICustomerRepository CustomerRepository { get; set; }
 		public ISalesPersonRepository SalesPersonRepository { get; set; }
-		public IShipMethodRepository ShipMethodRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void AccountNumberRules()
 		{
@@ -35,7 +33,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void BillToAddressIDRules()
 		{
 			this.RuleFor(x => x.BillToAddressID).NotNull();
-			this.RuleFor(x => x.BillToAddressID).Must(this.BeValidAddress).When(x => x ?.BillToAddressID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void CommentRules()
@@ -121,13 +118,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ShipMethodIDRules()
 		{
 			this.RuleFor(x => x.ShipMethodID).NotNull();
-			this.RuleFor(x => x.ShipMethodID).Must(this.BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShipToAddressIDRules()
 		{
 			this.RuleFor(x => x.ShipToAddressID).NotNull();
-			this.RuleFor(x => x.ShipToAddressID).Must(this.BeValidAddress).When(x => x ?.ShipToAddressID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void StatusRules()
@@ -155,11 +150,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.TotalDue).NotNull();
 		}
 
-		private bool BeValidAddress(int id)
-		{
-			return this.AddressRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidCreditCard(Nullable<int> id)
 		{
 			return this.CreditCardRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
@@ -180,11 +170,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return this.SalesPersonRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 
-		private bool BeValidShipMethod(int id)
-		{
-			return this.ShipMethodRepository.GetByIdDirect(id) != null;
-		}
-
 		private bool BeValidSalesTerritory(Nullable<int> id)
 		{
 			return this.SalesTerritoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
@@ -193,5 +178,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1a98b3ac126fc08e49d91c703d843e91</Hash>
+    <Hash>c31844588b7b07dc91c8b1948da7d279</Hash>
 </Codenesium>*/

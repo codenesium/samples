@@ -26,14 +26,13 @@ namespace AdventureWorksNS.Api.Contracts
 			this.LineTotal = lineTotal.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty;
+			this.ProductID = productID.ToInt();
 			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
 			this.ReceivedQty = receivedQty.ToDecimal();
 			this.RejectedQty = rejectedQty.ToDecimal();
 			this.StockedQty = stockedQty.ToDecimal();
 			this.UnitPrice = unitPrice.ToDecimal();
 
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 			this.PurchaseOrderID = new ReferenceEntity<int>(purchaseOrderID,
 			                                                nameof(ApiResponse.PurchaseOrderHeaders));
 		}
@@ -42,7 +41,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public decimal LineTotal { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public short OrderQty { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 		public int PurchaseOrderDetailID { get; set; }
 		public ReferenceEntity<int> PurchaseOrderID { get; set; }
 		public decimal ReceivedQty { get; set; }
@@ -156,5 +155,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7212eff22ccd3bba030a0445ad397c55</Hash>
+    <Hash>5a8ff0d0e1ea31d86373a0f356d4cf3b</Hash>
 </Codenesium>*/

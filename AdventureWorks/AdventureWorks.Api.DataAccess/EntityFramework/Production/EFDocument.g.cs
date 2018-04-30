@@ -86,12 +86,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("Title", TypeName="nvarchar(50)")]
 		public string Title { get; set; }
-
-		[ForeignKey("Owner")]
-		public virtual EFEmployee Employee { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>14ad68521c874a0275259efa1e2d0b99</Hash>
+    <Hash>d17202bbea008814844de0a4602e40ae</Hash>
 </Codenesium>*/

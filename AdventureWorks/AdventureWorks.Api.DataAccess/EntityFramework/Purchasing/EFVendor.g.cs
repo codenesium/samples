@@ -55,12 +55,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("PurchasingWebServiceURL", TypeName="nvarchar(1024)")]
 		public string PurchasingWebServiceURL { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ee9b3590ad1df3c284615af65c551bed</Hash>
+    <Hash>be586bd4b1b09358abfab726b98ee982</Hash>
 </Codenesium>*/

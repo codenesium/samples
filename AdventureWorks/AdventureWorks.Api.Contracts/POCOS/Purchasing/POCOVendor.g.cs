@@ -21,19 +21,17 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.AccountNumber = accountNumber.ToString();
 			this.ActiveFlag = activeFlag.ToBoolean();
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.CreditRating = creditRating.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
 			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.BusinessEntities));
 		}
 
 		public string AccountNumber { get; set; }
 		public bool ActiveFlag { get; set; }
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public int CreditRating { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public string Name { get; set; }
@@ -119,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8b770f81467353a211ae9b1d8a3148a7</Hash>
+    <Hash>31811bae8d28f8a59ff7d9af746785b9</Hash>
 </Codenesium>*/

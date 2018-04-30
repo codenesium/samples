@@ -47,14 +47,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("SalesPersonID", TypeName="int")]
 		public Nullable<int> SalesPersonID { get; set; }
 
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntity { get; set; }
-
 		[ForeignKey("SalesPersonID")]
 		public virtual EFSalesPerson SalesPerson { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8c5f2bb3a28c65326f29fc2d47940d01</Hash>
+    <Hash>9c36ccbb5b60f0bd7314fc1eb0075f05</Hash>
 </Codenesium>*/

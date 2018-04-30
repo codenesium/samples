@@ -37,14 +37,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("SpecialOfferID", TypeName="int")]
 		public int SpecialOfferID { get; set; }
 
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
-
 		[ForeignKey("SpecialOfferID")]
 		public virtual EFSpecialOffer SpecialOffer { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e859b61b17fd68542adaf26dff3860b</Hash>
+    <Hash>bf790eb66bab3ee8627347618bd8d62b</Hash>
 </Codenesium>*/

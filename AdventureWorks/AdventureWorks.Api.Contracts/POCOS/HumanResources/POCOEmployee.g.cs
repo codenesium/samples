@@ -28,6 +28,7 @@ namespace AdventureWorksNS.Api.Contracts
 			short vacationHours)
 		{
 			this.BirthDate = birthDate.ToDateTime();
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.CurrentFlag = currentFlag.ToBoolean();
 			this.Gender = gender.ToString();
 			this.HireDate = hireDate.ToDateTime();
@@ -42,13 +43,10 @@ namespace AdventureWorksNS.Api.Contracts
 			this.SalariedFlag = salariedFlag.ToBoolean();
 			this.SickLeaveHours = sickLeaveHours;
 			this.VacationHours = vacationHours;
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.People));
 		}
 
 		public DateTime BirthDate { get; set; }
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public bool CurrentFlag { get; set; }
 		public string Gender { get; set; }
 		public DateTime HireDate { get; set; }
@@ -215,5 +213,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1e99cba99638e77d87718f786e458973</Hash>
+    <Hash>c0a37a76c2fa0bec49ef379f7596807e</Hash>
 </Codenesium>*/

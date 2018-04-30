@@ -31,14 +31,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
-		[ForeignKey("CountryRegionCode")]
-		public virtual EFCountryRegion CountryRegion { get; set; }
-
 		[ForeignKey("CurrencyCode")]
 		public virtual EFCurrency Currency { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a34fde827453f064a0e7d52b2eba17a9</Hash>
+    <Hash>8f9b1852e5d273aa7e53d3b4d8756ce8</Hash>
 </Codenesium>*/

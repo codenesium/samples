@@ -29,14 +29,12 @@ namespace AdventureWorksNS.Api.Contracts
 			this.MinOrderQty = minOrderQty.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OnOrderQty = onOrderQty.ToNullableInt();
+			this.ProductID = productID.ToInt();
 			this.StandardPrice = standardPrice.ToDecimal();
+			this.UnitMeasureCode = unitMeasureCode.ToString();
 
 			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
 			                                                 nameof(ApiResponse.Vendors));
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
-			this.UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
-			                                                   nameof(ApiResponse.UnitMeasures));
 		}
 
 		public int AverageLeadTime { get; set; }
@@ -47,9 +45,9 @@ namespace AdventureWorksNS.Api.Contracts
 		public int MinOrderQty { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public Nullable<int> OnOrderQty { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 		public decimal StandardPrice { get; set; }
-		public ReferenceEntity<string> UnitMeasureCode { get; set; }
+		public string UnitMeasureCode { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeAverageLeadTimeValue { get; set; } = true;
@@ -157,5 +155,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5abdae033f2f60934702b9026f28e42a</Hash>
+    <Hash>2979970c12bd6fa9e2ab5c6b89270047</Hash>
 </Codenesium>*/

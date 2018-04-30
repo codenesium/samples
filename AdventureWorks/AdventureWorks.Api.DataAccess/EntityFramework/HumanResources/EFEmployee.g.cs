@@ -96,12 +96,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("VacationHours", TypeName="smallint")]
 		public short VacationHours { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFPerson Person { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f80315fd4a3eeb004e4aa46f08ce8f00</Hash>
+    <Hash>5e04f506cc5fde364564e4af06b16322</Hash>
 </Codenesium>*/

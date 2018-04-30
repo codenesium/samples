@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByPersonID/{id}")]
-		[ReadOnly]
-		[Route("~/api/People/{id}/Customers")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOCustomer>), 200)]
-		public virtual IActionResult ByPersonID(int id)
-		{
-			ApiResponse response = this.customerManager.GetWhere(x => x.PersonID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Customers);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByStoreID/{id}")]
 		[ReadOnly]
 		[Route("~/api/Stores/{id}/Customers")]
@@ -239,5 +219,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>82cf937d51d054a00cc320f40905811f</Hash>
+    <Hash>71b95115b2c83a944eb03f8da849d564</Hash>
 </Codenesium>*/

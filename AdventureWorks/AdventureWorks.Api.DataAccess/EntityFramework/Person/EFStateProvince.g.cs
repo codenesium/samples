@@ -59,12 +59,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[ForeignKey("CountryRegionCode")]
 		public virtual EFCountryRegion CountryRegion { get; set; }
-
-		[ForeignKey("TerritoryID")]
-		public virtual EFSalesTerritory SalesTerritory { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1412b9f37b0551bfe0042974324a4430</Hash>
+    <Hash>058eeb5252c6dafd0928991bb4fac56b</Hash>
 </Codenesium>*/

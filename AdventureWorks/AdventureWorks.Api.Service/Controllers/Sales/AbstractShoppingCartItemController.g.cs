@@ -175,29 +175,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/ShoppingCartItems")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOShoppingCartItem>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.shoppingCartItemManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ShoppingCartItems);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ac931287143e56f11a527057100e9fc</Hash>
+    <Hash>7eb3f9121d29da0548c8e334069cb9cf</Hash>
 </Codenesium>*/

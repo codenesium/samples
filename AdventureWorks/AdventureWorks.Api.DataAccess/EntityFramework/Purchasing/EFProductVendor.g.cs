@@ -73,15 +73,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual EFVendor Vendor { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
-
-		[ForeignKey("UnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasure { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0fcaaf1b43245c23c373dee3dc8a87bf</Hash>
+    <Hash>772b180700ec97bf4579e283d8b79002</Hash>
 </Codenesium>*/

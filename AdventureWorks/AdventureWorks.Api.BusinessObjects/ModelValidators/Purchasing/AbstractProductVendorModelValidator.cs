@@ -21,8 +21,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public IVendorRepository VendorRepository { get; set; }
-		public IProductRepository ProductRepository { get; set; }
-		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
 		public virtual void AverageLeadTimeRules()
 		{
 			this.RuleFor(x => x.AverageLeadTime).NotNull();
@@ -66,7 +64,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void UnitMeasureCodeRules()
 		{
 			this.RuleFor(x => x.UnitMeasureCode).NotNull();
-			this.RuleFor(x => x.UnitMeasureCode).Must(this.BeValidUnitMeasure).When(x => x ?.UnitMeasureCode != null).WithMessage("Invalid reference");
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
 		}
 
@@ -74,19 +71,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			return this.VendorRepository.GetByIdDirect(id) != null;
 		}
-
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidUnitMeasure(string id)
-		{
-			return this.UnitMeasureRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0bfa4e01b8e7ad35f7fa13ddff58c356</Hash>
+    <Hash>82fa2d9fd9b4727cb36efd95d7ee578c</Hash>
 </Codenesium>*/

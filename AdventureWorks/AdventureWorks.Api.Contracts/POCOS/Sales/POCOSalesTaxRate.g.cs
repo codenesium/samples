@@ -22,18 +22,16 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
 			this.SalesTaxRateID = salesTaxRateID.ToInt();
+			this.StateProvinceID = stateProvinceID.ToInt();
 			this.TaxRate = taxRate.ToDecimal();
 			this.TaxType = taxType.ToInt();
-
-			this.StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
-			                                                nameof(ApiResponse.StateProvinces));
 		}
 
 		public DateTime ModifiedDate { get; set; }
 		public string Name { get; set; }
 		public Guid Rowguid { get; set; }
 		public int SalesTaxRateID { get; set; }
-		public ReferenceEntity<int> StateProvinceID { get; set; }
+		public int StateProvinceID { get; set; }
 		public decimal TaxRate { get; set; }
 		public int TaxType { get; set; }
 
@@ -107,5 +105,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>20a0a29aa0afe1d1351f8ed23da58034</Hash>
+    <Hash>9fb2c53dbd05a3e20f9ffd59ba648730</Hash>
 </Codenesium>*/

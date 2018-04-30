@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository { get; set; }
 		public IStoreRepository StoreRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void AccountNumberRules()
@@ -35,9 +34,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public virtual void PersonIDRules()
-		{
-			this.RuleFor(x => x.PersonID).Must(this.BeValidPerson).When(x => x ?.PersonID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void RowguidRules()
 		{
@@ -54,11 +51,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.TerritoryID).Must(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
-		private bool BeValidPerson(Nullable<int> id)
-		{
-			return this.PersonRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
-		}
-
 		private bool BeValidStore(Nullable<int> id)
 		{
 			return this.StoreRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
@@ -72,5 +64,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e468d9b53796c4335e0dd497a59dcc2e</Hash>
+    <Hash>bd19a954966cdf4162d4e99dc8b2defe</Hash>
 </Codenesium>*/

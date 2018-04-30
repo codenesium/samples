@@ -147,9 +147,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("TotalDue", TypeName="money")]
 		public decimal TotalDue { get; set; }
 
-		[ForeignKey("BillToAddressID")]
-		public virtual EFAddress Address { get; set; }
-
 		[ForeignKey("CreditCardID")]
 		public virtual EFCreditCard CreditCard { get; set; }
 
@@ -162,17 +159,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[ForeignKey("SalesPersonID")]
 		public virtual EFSalesPerson SalesPerson { get; set; }
 
-		[ForeignKey("ShipMethodID")]
-		public virtual EFShipMethod ShipMethod { get; set; }
-
-		[ForeignKey("ShipToAddressID")]
-		public virtual EFAddress Address1 { get; set; }
-
 		[ForeignKey("TerritoryID")]
 		public virtual EFSalesTerritory SalesTerritory { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>41c8d7a0aaabf92ea618db70dd2494ec</Hash>
+    <Hash>5a434a41c41170788c1129bffc763fde</Hash>
 </Codenesium>*/

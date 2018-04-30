@@ -66,12 +66,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("TerritoryID", TypeName="int")]
 		public int TerritoryID { get; set; }
-
-		[ForeignKey("CountryRegionCode")]
-		public virtual EFCountryRegion CountryRegion { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3edcb06fea3c6905e62d4a0dd8c059a</Hash>
+    <Hash>63501ee172b2b74364762e51e040543a</Hash>
 </Codenesium>*/

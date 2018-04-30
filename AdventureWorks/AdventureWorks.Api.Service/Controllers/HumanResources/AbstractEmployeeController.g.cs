@@ -175,29 +175,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[ReadOnly]
-		[Route("~/api/People/{id}/Employees")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			ApiResponse response = this.employeeManager.GetWhere(x => x.BusinessEntityID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Employees);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>61e02a524ff9f344b577334e11c5166d</Hash>
+    <Hash>e8a7d6370619aa47f72e41f5cf309b98</Hash>
 </Codenesium>*/

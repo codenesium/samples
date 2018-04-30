@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[ReadOnly]
-		[Route("~/api/People/{id}/PersonCreditCards")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPersonCreditCard>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			ApiResponse response = this.personCreditCardManager.GetWhere(x => x.BusinessEntityID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PersonCreditCards);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByCreditCardID/{id}")]
 		[ReadOnly]
 		[Route("~/api/CreditCards/{id}/PersonCreditCards")]
@@ -219,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f7dc02cb4f3ea494b3a4d8d909b21ac0</Hash>
+    <Hash>9eea280c020a16531b737187a5368a25</Hash>
 </Codenesium>*/

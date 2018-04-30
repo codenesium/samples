@@ -195,29 +195,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.StateProvinces);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByTerritoryID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SalesTerritories/{id}/StateProvinces")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOStateProvince>), 200)]
-		public virtual IActionResult ByTerritoryID(int id)
-		{
-			ApiResponse response = this.stateProvinceManager.GetWhere(x => x.TerritoryID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.StateProvinces);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67bfdcaeeef5a5849562a47f38890f27</Hash>
+    <Hash>2365f98fe413a426ce012fd3aea0048f</Hash>
 </Codenesium>*/

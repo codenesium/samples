@@ -45,12 +45,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("ShoppingCartItemID", TypeName="int")]
 		public int ShoppingCartItemID { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>185bf3570a352e94db467c3027aaee83</Hash>
+    <Hash>a2f13ea9649d4774e1107abe26ed739a</Hash>
 </Codenesium>*/

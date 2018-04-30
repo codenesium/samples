@@ -175,29 +175,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByOwner/{id}")]
-		[ReadOnly]
-		[Route("~/api/Employees/{id}/Documents")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCODocument>), 200)]
-		public virtual IActionResult ByOwner(int id)
-		{
-			ApiResponse response = this.documentManager.GetWhere(x => x.Owner == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Documents);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20ff0c0894dc259979ea2ac263acd64d</Hash>
+    <Hash>3a9a3af5825bb517dd2c284519b10796</Hash>
 </Codenesium>*/

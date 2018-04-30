@@ -175,29 +175,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByStateProvinceID/{id}")]
-		[ReadOnly]
-		[Route("~/api/StateProvinces/{id}/SalesTaxRates")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesTaxRate>), 200)]
-		public virtual IActionResult ByStateProvinceID(int id)
-		{
-			ApiResponse response = this.salesTaxRateManager.GetWhere(x => x.StateProvinceID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesTaxRates);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>57775bb0b6698ea9b406b9df9bac233a</Hash>
+    <Hash>6aff6701ba7492ecc84bb69013346a79</Hash>
 </Codenesium>*/

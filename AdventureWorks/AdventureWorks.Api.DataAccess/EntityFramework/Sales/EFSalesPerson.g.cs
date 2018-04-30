@@ -62,14 +62,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("TerritoryID", TypeName="int")]
 		public Nullable<int> TerritoryID { get; set; }
 
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFEmployee Employee { get; set; }
-
 		[ForeignKey("TerritoryID")]
 		public virtual EFSalesTerritory SalesTerritory { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4413f1a18f508c0ccdedaf8d6f144c4</Hash>
+    <Hash>f4abb2fd47f99cd0f781e0dbb45ee1ef</Hash>
 </Codenesium>*/

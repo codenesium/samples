@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository { get; set; }
 		public virtual void ChangeNumberRules()
 		{
 			this.RuleFor(x => x.ChangeNumber).NotNull();
@@ -60,7 +59,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void OwnerRules()
 		{
 			this.RuleFor(x => x.Owner).NotNull();
-			this.RuleFor(x => x.Owner).Must(this.BeValidEmployee).When(x => x ?.Owner != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RevisionRules()
@@ -84,14 +82,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.Title).NotNull();
 			this.RuleFor(x => x.Title).Length(0, 50);
 		}
-
-		private bool BeValidEmployee(int id)
-		{
-			return this.EmployeeRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c49454b9e8706824b80011552ed69705</Hash>
+    <Hash>ce82885d0babd61e01e52e26fdf6ad0a</Hash>
 </Codenesium>*/

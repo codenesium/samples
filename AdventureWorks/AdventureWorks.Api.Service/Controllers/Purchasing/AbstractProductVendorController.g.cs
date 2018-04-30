@@ -195,49 +195,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.Ok(response.ProductVendors);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/ProductVendors")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.productVendorManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductVendors);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByUnitMeasureCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/UnitMeasures/{id}/ProductVendors")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
-		public virtual IActionResult ByUnitMeasureCode(string id)
-		{
-			ApiResponse response = this.productVendorManager.GetWhere(x => x.UnitMeasureCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductVendors);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2aeb2bc1ab1062ada164fa04357ad400</Hash>
+    <Hash>d83c8b5ed1ce85d871c5fdc657aaa55b</Hash>
 </Codenesium>*/

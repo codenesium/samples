@@ -34,13 +34,11 @@ namespace AdventureWorksNS.Api.Contracts
 			this.FileName = fileName.ToString();
 			this.FolderFlag = folderFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.Owner = owner.ToInt();
 			this.Revision = revision.ToString();
 			this.Rowguid = rowguid.ToGuid();
 			this.Status = status.ToInt();
 			this.Title = title.ToString();
-
-			this.Owner = new ReferenceEntity<int>(owner,
-			                                      nameof(ApiResponse.Employees));
 		}
 
 		public int ChangeNumber { get; set; }
@@ -52,7 +50,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public string FileName { get; set; }
 		public bool FolderFlag { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> Owner { get; set; }
+		public int Owner { get; set; }
 		public string Revision { get; set; }
 		public Guid Rowguid { get; set; }
 		public int Status { get; set; }
@@ -191,5 +189,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>94a2bc986043cd70ddb4e16c3061f822</Hash>
+    <Hash>f755387e8d5e8a6e2a2cc7bd97daffd6</Hash>
 </Codenesium>*/

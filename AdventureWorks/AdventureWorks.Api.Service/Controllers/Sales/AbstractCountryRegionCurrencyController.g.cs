@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByCountryRegionCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/CountryRegions/{id}/CountryRegionCurrencies")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
-		public virtual IActionResult ByCountryRegionCode(string id)
-		{
-			ApiResponse response = this.countryRegionCurrencyManager.GetWhere(x => x.CountryRegionCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CountryRegionCurrencies);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByCurrencyCode/{id}")]
 		[ReadOnly]
 		[Route("~/api/Currencies/{id}/CountryRegionCurrencies")]
@@ -219,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0d5dd19bcac44e71aa225c633aa87142</Hash>
+    <Hash>63e88285c275706a0e891a30d5ca6b93</Hash>
 </Codenesium>*/

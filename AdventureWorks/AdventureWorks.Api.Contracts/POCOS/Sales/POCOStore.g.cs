@@ -17,18 +17,17 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid,
 			Nullable<int> salesPersonID)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.Demographics = demographics;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
 			this.Rowguid = rowguid.ToGuid();
 
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.BusinessEntities));
 			this.SalesPersonID = new ReferenceEntity<Nullable<int>>(salesPersonID,
 			                                                        nameof(ApiResponse.SalesPersons));
 		}
 
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public string Demographics { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public string Name { get; set; }
@@ -96,5 +95,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>db72ff578ae7ffe9e9bd4bed4ca38636</Hash>
+    <Hash>6a4a79f133d208d467a885b414c89b4d</Hash>
 </Codenesium>*/

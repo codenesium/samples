@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Employees/{id}/SalesPersons")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesPerson>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			ApiResponse response = this.salesPersonManager.GetWhere(x => x.BusinessEntityID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesPersons);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByTerritoryID/{id}")]
 		[ReadOnly]
 		[Route("~/api/SalesTerritories/{id}/SalesPersons")]
@@ -219,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>db73c244709b5ffd9274c5455c13421d</Hash>
+    <Hash>a2eee64f7aeded76ea9f0d6e2821afdd</Hash>
 </Codenesium>*/

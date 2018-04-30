@@ -19,17 +19,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.DateCreated = dateCreated.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
 			this.Quantity = quantity.ToInt();
 			this.ShoppingCartID = shoppingCartID.ToString();
 			this.ShoppingCartItemID = shoppingCartItemID.ToInt();
-
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 		}
 
 		public DateTime DateCreated { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 		public int Quantity { get; set; }
 		public string ShoppingCartID { get; set; }
 		public int ShoppingCartItemID { get; set; }
@@ -95,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5bd6e872d5b5e1a71c056f64865f2231</Hash>
+    <Hash>ba534228c1fcfc9c57ef186c91e73198</Hash>
 </Codenesium>*/

@@ -177,26 +177,6 @@ namespace AdventureWorksNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/PurchaseOrderDetails")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPurchaseOrderDetail>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.purchaseOrderDetailManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PurchaseOrderDetails);
-			}
-		}
-
-		[HttpGet]
 		[Route("ByPurchaseOrderID/{id}")]
 		[ReadOnly]
 		[Route("~/api/PurchaseOrderHeaders/{id}/PurchaseOrderDetails")]
@@ -219,5 +199,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>622400042f453f7660932133b20fa944</Hash>
+    <Hash>2a5faad726bd6bcdcc2f7fd0749ec80b</Hash>
 </Codenesium>*/

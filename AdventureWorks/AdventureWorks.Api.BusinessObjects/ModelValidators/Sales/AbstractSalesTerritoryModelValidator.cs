@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ICountryRegionRepository CountryRegionRepository { get; set; }
 		public virtual void CostLastYearRules()
 		{
 			this.RuleFor(x => x.CostLastYear).NotNull();
@@ -34,7 +33,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void CountryRegionCodeRules()
 		{
 			this.RuleFor(x => x.CountryRegionCode).NotNull();
-			this.RuleFor(x => x.CountryRegionCode).Must(this.BeValidCountryRegion).When(x => x ?.CountryRegionCode != null).WithMessage("Invalid reference");
 			this.RuleFor(x => x.CountryRegionCode).Length(0, 3);
 		}
 
@@ -69,14 +67,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.SalesYTD).NotNull();
 		}
-
-		private bool BeValidCountryRegion(string id)
-		{
-			return this.CountryRegionRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fdb3240b35472e1fe683074413028d9d</Hash>
+    <Hash>47b8310f48cd71fd9bb28c68fc0a5862</Hash>
 </Codenesium>*/

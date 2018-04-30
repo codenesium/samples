@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IPersonRepository PersonRepository { get; set; }
 		public virtual void BirthDateRules()
 		{
 			this.RuleFor(x => x.BirthDate).NotNull();
@@ -96,14 +95,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.VacationHours).NotNull();
 		}
-
-		private bool BeValidPerson(int id)
-		{
-			return this.PersonRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>563eaa636a147ce9e68be0666adb45d3</Hash>
+    <Hash>66ac7335bed7ad409a692acf18163af4</Hash>
 </Codenesium>*/
