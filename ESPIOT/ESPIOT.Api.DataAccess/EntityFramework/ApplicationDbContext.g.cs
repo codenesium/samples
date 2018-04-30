@@ -1,5 +1,8 @@
 using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 namespace ESPIOTNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
@@ -11,6 +14,11 @@ namespace ESPIOTNS.Api.DataAccess
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
+		{
+			base.OnConfiguring(options);
+		}
 
 		public void SetUserId(Guid userId)
 		{
@@ -34,8 +42,29 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual DbSet<EFDeviceAction> DeviceActions { get; set; }
 	}
+
+	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+	{
+		public ApplicationDbContext CreateDbContext(string[] args)
+		{
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Service");
+
+			IConfigurationRoot configuration = new ConfigurationBuilder()
+			                                   .SetBasePath(settingsDirectory)
+			                                   .AddJsonFile("appsettings.json")
+			                                   .Build();
+
+			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+
+			builder.UseSqlServer(connectionString);
+
+			return new ApplicationDbContext(builder.Options);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>0f9a4be7fc6f5949f0db0ba2cc04633d</Hash>
+    <Hash>9b05e51702a310f840776d70d0edd984</Hash>
 </Codenesium>*/

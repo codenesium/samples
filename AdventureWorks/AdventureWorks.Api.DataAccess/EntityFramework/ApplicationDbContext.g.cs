@@ -1,5 +1,8 @@
 using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
@@ -11,6 +14,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
+		{
+			base.OnConfiguring(options);
+		}
 
 		public void SetUserId(Guid userId)
 		{
@@ -172,8 +180,29 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual DbSet<EFStore> Stores { get; set; }
 	}
+
+	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+	{
+		public ApplicationDbContext CreateDbContext(string[] args)
+		{
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "AdventureWorks.Api.Service");
+
+			IConfigurationRoot configuration = new ConfigurationBuilder()
+			                                   .SetBasePath(settingsDirectory)
+			                                   .AddJsonFile("appsettings.json")
+			                                   .Build();
+
+			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+
+			builder.UseSqlServer(connectionString);
+
+			return new ApplicationDbContext(builder.Options);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>b6f59530c143f030cb3d8e16b00e5b15</Hash>
+    <Hash>393c80c2b1dd66852987bd39ef567460</Hash>
 </Codenesium>*/

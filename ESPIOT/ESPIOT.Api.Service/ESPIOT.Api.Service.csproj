@@ -23,7 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="../ESPIOT.Api.Contracts/ESPIOT.Api.Contracts.csproj" />
     <ProjectReference Include="../ESPIOT.Api.BusinessObjects/ESPIOT.Api.BusinessObjects.csproj" />
-    <ProjectReference Include="../ESPIOT.Api.DataAccess/ESPIOT.Api.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

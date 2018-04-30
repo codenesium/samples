@@ -201,10 +201,17 @@ namespace FermataFishNS.Api.Service
         public void Configure(
           IApplicationBuilder app,
           ILoggerFactory loggerFactory,
-          IApplicationLifetime appLifetime)
+          IApplicationLifetime appLifetime,
+		  ApplicationDbContext context)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+			// enable this setting in the config to migrate the database on application startup
+		    if (this.Configuration.GetValue<bool>("MigrateDatabase"))
+            {
+                context.Database.Migrate();
+            }
 
 			// app.UseAuthentication();
 

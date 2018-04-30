@@ -1,4 +1,21 @@
-IF NOT EXISTS(SELECT *
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using System.Collections.Generic;
+using ESPIOTNS.Api.DataAccess;
+
+namespace ESPIOTNS.Api.DataAccess.Migrations
+{
+	[DbContext(typeof(ApplicationDbContext))]
+    [Migration("00000000000000_InitialCreate")]
+	public partial class InitialCreate : Migration
+	{
+		protected override void Up(MigrationBuilder migrationBuilder)
+		{
+			migrationBuilder.Sql(@"IF NOT EXISTS(SELECT *
 FROM sys.schemas
 WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
@@ -55,3 +72,12 @@ GO
 ALTER TABLE[dbo].[DeviceAction] CHECK CONSTRAINT[FK_DeviceAction_Device]
 GO
 
+");
+		}
+
+		protected override void Down(MigrationBuilder migrationBuilder)
+		{
+          
+		}
+	}
+};

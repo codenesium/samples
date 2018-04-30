@@ -23,7 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="../FermataFish.Api.Contracts/FermataFish.Api.Contracts.csproj" />
     <ProjectReference Include="../FermataFish.Api.BusinessObjects/FermataFish.Api.BusinessObjects.csproj" />
-    <ProjectReference Include="../FermataFish.Api.DataAccess/FermataFish.Api.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

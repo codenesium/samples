@@ -1,5 +1,8 @@
 using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 namespace FermataFishNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
@@ -11,6 +14,11 @@ namespace FermataFishNS.Api.DataAccess
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
+		{
+			base.OnConfiguring(options);
+		}
 
 		public void SetUserId(Guid userId)
 		{
@@ -64,8 +72,29 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual DbSet<EFTeacherXTeacherSkill> TeacherXTeacherSkills { get; set; }
 	}
+
+	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+	{
+		public ApplicationDbContext CreateDbContext(string[] args)
+		{
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FermataFish.Api.Service");
+
+			IConfigurationRoot configuration = new ConfigurationBuilder()
+			                                   .SetBasePath(settingsDirectory)
+			                                   .AddJsonFile("appsettings.json")
+			                                   .Build();
+
+			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+
+			builder.UseSqlServer(connectionString);
+
+			return new ApplicationDbContext(builder.Options);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>566caac21b65bb98c84afd24923e706a</Hash>
+    <Hash>be4bf55e4852a64756ec825684429814</Hash>
 </Codenesium>*/

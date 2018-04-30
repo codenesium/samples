@@ -1,5 +1,8 @@
 using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 namespace PetStoreNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
@@ -11,6 +14,11 @@ namespace PetStoreNS.Api.DataAccess
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
+		{
+			base.OnConfiguring(options);
+		}
 
 		public void SetUserId(Guid userId)
 		{
@@ -42,8 +50,29 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual DbSet<EFSpecies> Species { get; set; }
 	}
+
+	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+	{
+		public ApplicationDbContext CreateDbContext(string[] args)
+		{
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "PetStore.Api.Service");
+
+			IConfigurationRoot configuration = new ConfigurationBuilder()
+			                                   .SetBasePath(settingsDirectory)
+			                                   .AddJsonFile("appsettings.json")
+			                                   .Build();
+
+			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+
+			builder.UseSqlServer(connectionString);
+
+			return new ApplicationDbContext(builder.Options);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>af2853014f966ddd79143f70a3ee2142</Hash>
+    <Hash>73f62ade3ecf9e7b40f754ca041ef08f</Hash>
 </Codenesium>*/

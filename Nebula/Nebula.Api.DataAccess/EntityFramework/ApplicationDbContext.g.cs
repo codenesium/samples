@@ -1,5 +1,8 @@
 using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 namespace NebulaNS.Api.DataAccess
 {
 	public partial class ApplicationDbContext: DbContext
@@ -11,6 +14,11 @@ namespace NebulaNS.Api.DataAccess
 		public ApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder options)
+		{
+			base.OnConfiguring(options);
+		}
 
 		public void SetUserId(Guid userId)
 		{
@@ -52,8 +60,29 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<EFVersionInfo> VersionInfoes { get; set; }
 	}
+
+	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+	{
+		public ApplicationDbContext CreateDbContext(string[] args)
+		{
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Nebula.Api.Service");
+
+			IConfigurationRoot configuration = new ConfigurationBuilder()
+			                                   .SetBasePath(settingsDirectory)
+			                                   .AddJsonFile("appsettings.json")
+			                                   .Build();
+
+			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+
+			builder.UseSqlServer(connectionString);
+
+			return new ApplicationDbContext(builder.Options);
+		}
+	}
 }
 
 /*<Codenesium>
-    <Hash>4e6585f55279212b2fdae7e947cec7fb</Hash>
+    <Hash>77229439acd23f39ae710e3327eed4ea</Hash>
 </Codenesium>*/

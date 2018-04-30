@@ -200,7 +200,8 @@ namespace AdventureWorksNS.Api.Service
         public void Configure(
           IApplicationBuilder app,
           ILoggerFactory loggerFactory,
-          IApplicationLifetime appLifetime)
+          IApplicationLifetime appLifetime,
+	      ApplicationDbContext context)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
