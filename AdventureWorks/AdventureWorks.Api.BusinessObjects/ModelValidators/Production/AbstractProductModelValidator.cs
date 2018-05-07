@@ -20,9 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductModelRepository ProductModelRepository { get; set; }
-		public IProductSubcategoryRepository ProductSubcategoryRepository { get; set; }
-		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
 		public virtual void @ClassRules()
 		{
 			this.RuleFor(x => x.@Class).Length(0, 2);
@@ -73,9 +70,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public virtual void ProductModelIDRules()
-		{
-			this.RuleFor(x => x.ProductModelID).Must(this.BeValidProductModel).When(x => x ?.ProductModelID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void ProductNumberRules()
 		{
@@ -84,9 +79,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public virtual void ProductSubcategoryIDRules()
-		{
-			this.RuleFor(x => x.ProductSubcategoryID).Must(this.BeValidProductSubcategory).When(x => x ?.ProductSubcategoryID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void ReorderPointRules()
 		{
@@ -118,7 +111,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public virtual void SizeUnitMeasureCodeRules()
 		{
-			this.RuleFor(x => x.SizeUnitMeasureCode).Must(this.BeValidUnitMeasure).When(x => x ?.SizeUnitMeasureCode != null).WithMessage("Invalid reference");
 			this.RuleFor(x => x.SizeUnitMeasureCode).Length(0, 3);
 		}
 
@@ -137,27 +129,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public virtual void WeightUnitMeasureCodeRules()
 		{
-			this.RuleFor(x => x.WeightUnitMeasureCode).Must(this.BeValidUnitMeasure).When(x => x ?.WeightUnitMeasureCode != null).WithMessage("Invalid reference");
 			this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3);
-		}
-
-		private bool BeValidProductModel(Nullable<int> id)
-		{
-			return this.ProductModelRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
-		}
-
-		private bool BeValidProductSubcategory(Nullable<int> id)
-		{
-			return this.ProductSubcategoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
-		}
-
-		private bool BeValidUnitMeasure(string id)
-		{
-			return this.UnitMeasureRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>de6412e466efe4ab3962fbd87c90bdb9</Hash>
+    <Hash>beb0c75ccaef067f4b835178650f6c4f</Hash>
 </Codenesium>*/

@@ -76,61 +76,55 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int businessEntityID)
+		public virtual POCOPersonCreditCard Get(int businessEntityID)
 		{
-			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID);
+			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
 		}
 
-		public virtual POCOPersonCreditCard GetByIdDirect(int businessEntityID)
+		public virtual List<POCOPersonCreditCard> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID).PersonCreditCards.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOPersonCreditCard> Where(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOPersonCreditCard> SearchLinqPOCO(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOPersonCreditCard> GetWhereDirect(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).PersonCreditCards;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOPersonCreditCard> response = new List<POCOPersonCreditCard>();
 			List<EFPersonCreditCard> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.PersonCreditCardMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.PersonCreditCardMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFPersonCreditCard> SearchLinqEF(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFPersonCreditCard> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.PersonCreditCardMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFPersonCreditCard>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonCreditCard>();
+			}
+			else
+			{
+				return this.Context.Set<EFPersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonCreditCard>();
+			}
 		}
 
-		protected virtual List<EFPersonCreditCard> SearchLinqEF(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFPersonCreditCard> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFPersonCreditCard> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFPersonCreditCard>().Where(predicate).AsQueryable().OrderBy("BusinessEntityID ASC").Skip(skip).Take(take).ToList<EFPersonCreditCard>();
+			}
+			else
+			{
+				return this.Context.Set<EFPersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPersonCreditCard>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cc98acb6a76e1617dea1176f534e6b35</Hash>
+    <Hash>9d37f8a408eed3524dd13ccf75ecc6be</Hash>
 </Codenesium>*/

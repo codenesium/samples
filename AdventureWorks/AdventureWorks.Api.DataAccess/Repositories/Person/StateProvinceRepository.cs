@@ -17,33 +17,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFStateProvince> SearchLinqEF(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFStateProvince>().Where(predicate).AsQueryable().OrderBy("StateProvinceID ASC").Skip(skip).Take(take).ToList<EFStateProvince>();
-			}
-			else
-			{
-				return this.Context.Set<EFStateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFStateProvince>();
-			}
-		}
-
-		protected override List<EFStateProvince> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFStateProvince>().Where(predicate).AsQueryable().OrderBy("StateProvinceID ASC").Skip(skip).Take(take).ToList<EFStateProvince>();
-			}
-			else
-			{
-				return this.Context.Set<EFStateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFStateProvince>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>86a990e2d4f8381563ff35576668caca</Hash>
+    <Hash>7b7642d57339e301d7b85b1884278776</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ namespace PetStoreNS.Api.BusinessObjects
 {
 	public interface IPenModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(PenModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, PenModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(PenModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, PenModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cfdb4febbb47a5f03c5953cf40c0220f</Hash>
+    <Hash>cc4ba567bee7ad46392566efa80896c0</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTaxRates")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class SalesTaxRateController: AbstractSalesTaxRateController
 	{
 		public SalesTaxRateController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8e345ede9af36467807f6e7e2e92d6fc</Hash>
+    <Hash>ba869428cf5db767a60763991f43f7b8</Hash>
 </Codenesium>*/

@@ -76,61 +76,55 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int salesOrderID)
+		public virtual POCOSalesOrderHeader Get(int salesOrderID)
 		{
-			return this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID);
+			return this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
 		}
 
-		public virtual POCOSalesOrderHeader GetByIdDirect(int salesOrderID)
+		public virtual List<POCOSalesOrderHeader> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID).SalesOrderHeaders.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSalesOrderHeader> Where(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSalesOrderHeader> SearchLinqPOCO(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSalesOrderHeader> GetWhereDirect(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).SalesOrderHeaders;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOSalesOrderHeader> response = new List<POCOSalesOrderHeader>();
 			List<EFSalesOrderHeader> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.SalesOrderHeaderMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.SalesOrderHeaderMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFSalesOrderHeader> SearchLinqEF(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFSalesOrderHeader> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.SalesOrderHeaderMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFSalesOrderHeader>().Where(predicate).AsQueryable().OrderBy("SalesOrderID ASC").Skip(skip).Take(take).ToList<EFSalesOrderHeader>();
+			}
+			else
+			{
+				return this.Context.Set<EFSalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesOrderHeader>();
+			}
 		}
 
-		protected virtual List<EFSalesOrderHeader> SearchLinqEF(Expression<Func<EFSalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFSalesOrderHeader> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFSalesOrderHeader> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFSalesOrderHeader>().Where(predicate).AsQueryable().OrderBy("SalesOrderID ASC").Skip(skip).Take(take).ToList<EFSalesOrderHeader>();
+			}
+			else
+			{
+				return this.Context.Set<EFSalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesOrderHeader>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5dc7cfbcde2d40305f3b89a73e849361</Hash>
+    <Hash>ba6e4c431861be511c6e54db70d413f2</Hash>
 </Codenesium>*/

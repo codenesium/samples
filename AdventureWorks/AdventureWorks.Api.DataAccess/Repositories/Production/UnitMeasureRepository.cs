@@ -17,33 +17,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFUnitMeasure> SearchLinqEF(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy("UnitMeasureCode ASC").Skip(skip).Take(take).ToList<EFUnitMeasure>();
-			}
-			else
-			{
-				return this.Context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFUnitMeasure>();
-			}
-		}
-
-		protected override List<EFUnitMeasure> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy("UnitMeasureCode ASC").Skip(skip).Take(take).ToList<EFUnitMeasure>();
-			}
-			else
-			{
-				return this.Context.Set<EFUnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFUnitMeasure>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>374598f1b62114e06c49137fd921ac62</Hash>
+    <Hash>adf12f870adee6d2cc12efbd28611d4d</Hash>
 </Codenesium>*/

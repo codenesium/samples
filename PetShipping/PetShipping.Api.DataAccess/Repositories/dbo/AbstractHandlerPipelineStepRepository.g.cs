@@ -76,61 +76,55 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOHandlerPipelineStep Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id);
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
 		}
 
-		public virtual POCOHandlerPipelineStep GetByIdDirect(int id)
+		public virtual List<POCOHandlerPipelineStep> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).HandlerPipelineSteps.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOHandlerPipelineStep> Where(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOHandlerPipelineStep> SearchLinqPOCO(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOHandlerPipelineStep> GetWhereDirect(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).HandlerPipelineSteps;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOHandlerPipelineStep> response = new List<POCOHandlerPipelineStep>();
 			List<EFHandlerPipelineStep> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.HandlerPipelineStepMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.HandlerPipelineStepMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFHandlerPipelineStep> SearchLinqEF(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFHandlerPipelineStep> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.HandlerPipelineStepMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
+			}
+			else
+			{
+				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
+			}
 		}
 
-		protected virtual List<EFHandlerPipelineStep> SearchLinqEF(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFHandlerPipelineStep> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFHandlerPipelineStep> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
+			}
+			else
+			{
+				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>55dd0cf803d2d5b5ad50a90ca1db1135</Hash>
+    <Hash>289d869a905c8557a79993a8c97a1321</Hash>
 </Codenesium>*/

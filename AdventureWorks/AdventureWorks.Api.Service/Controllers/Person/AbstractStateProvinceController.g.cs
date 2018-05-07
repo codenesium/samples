@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOStateProvince response = this.stateProvinceManager.GetById(id).StateProvinces.FirstOrDefault();
+			POCOStateProvince response = this.stateProvinceManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOStateProvince>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.stateProvinceManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.StateProvinces);
-			}
+			List<POCOStateProvince> response = this.stateProvinceManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/StateProvinces/{result.Id.ToString()}");
-				POCOStateProvince response = this.stateProvinceManager.GetById(result.Id).StateProvinces.First();
+				POCOStateProvince response = this.stateProvinceManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStateProvince response = this.stateProvinceManager.GetById(id).StateProvinces.First();
+					POCOStateProvince response = this.stateProvinceManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCountryRegionCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/CountryRegions/{id}/StateProvinces")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOStateProvince>), 200)]
-		public virtual IActionResult ByCountryRegionCode(string id)
-		{
-			ApiResponse response = this.stateProvinceManager.GetWhere(x => x.CountryRegionCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.StateProvinces);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2365f98fe413a426ce012fd3aea0048f</Hash>
+    <Hash>77a6f438b4a8edec71889262a65a6ea1</Hash>
 </Codenesium>*/

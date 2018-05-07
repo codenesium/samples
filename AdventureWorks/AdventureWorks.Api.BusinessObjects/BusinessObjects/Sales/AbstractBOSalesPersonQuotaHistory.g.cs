@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int businessEntityID)
+		public virtual POCOSalesPersonQuotaHistory Get(int businessEntityID)
 		{
-			return this.salesPersonQuotaHistoryRepository.GetById(businessEntityID);
+			return this.salesPersonQuotaHistoryRepository.Get(businessEntityID);
 		}
 
-		public virtual POCOSalesPersonQuotaHistory GetByIdDirect(int businessEntityID)
+		public virtual List<POCOSalesPersonQuotaHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesPersonQuotaHistoryRepository.GetByIdDirect(businessEntityID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesPersonQuotaHistoryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesPersonQuotaHistoryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSalesPersonQuotaHistory> GetWhereDirect(Expression<Func<EFSalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesPersonQuotaHistoryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.salesPersonQuotaHistoryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>01996732bbcd080211a911493068130a</Hash>
+    <Hash>280e5c6b3a051b4ca3f5e88f000a51cb</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/chainStatus")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ChainStatusController: AbstractChainStatusController
 	{
 		public ChainStatusController(
@@ -36,5 +35,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1146b0397d483f3b7fc83103467749e9</Hash>
+    <Hash>908c595ce07b412c87b4fe28199afad8</Hash>
 </Codenesium>*/

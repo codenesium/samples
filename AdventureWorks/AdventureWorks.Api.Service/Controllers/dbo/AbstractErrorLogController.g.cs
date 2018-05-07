@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOErrorLog response = this.errorLogManager.GetById(id).ErrorLogs.FirstOrDefault();
+			POCOErrorLog response = this.errorLogManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOErrorLog>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.errorLogManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ErrorLogs);
-			}
+			List<POCOErrorLog> response = this.errorLogManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ErrorLogs/{result.Id.ToString()}");
-				POCOErrorLog response = this.errorLogManager.GetById(result.Id).ErrorLogs.First();
+				POCOErrorLog response = this.errorLogManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOErrorLog response = this.errorLogManager.GetById(id).ErrorLogs.First();
+					POCOErrorLog response = this.errorLogManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -179,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>471b6e8bdd4fdea189009cd9ab1c88c8</Hash>
+    <Hash>d74b6e8c75659e40cd24ae577e0e9c47</Hash>
 </Codenesium>*/

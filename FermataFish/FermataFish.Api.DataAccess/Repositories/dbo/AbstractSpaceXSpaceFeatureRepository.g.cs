@@ -76,61 +76,55 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOSpaceXSpaceFeature Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id);
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
 		}
 
-		public virtual POCOSpaceXSpaceFeature GetByIdDirect(int id)
+		public virtual List<POCOSpaceXSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).SpaceXSpaceFeatures.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSpaceXSpaceFeature> Where(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSpaceXSpaceFeature> SearchLinqPOCO(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSpaceXSpaceFeature> GetWhereDirect(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).SpaceXSpaceFeatures;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOSpaceXSpaceFeature> response = new List<POCOSpaceXSpaceFeature>();
 			List<EFSpaceXSpaceFeature> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.SpaceXSpaceFeatureMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.SpaceXSpaceFeatureMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFSpaceXSpaceFeature> SearchLinqEF(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFSpaceXSpaceFeature> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.SpaceXSpaceFeatureMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+			}
+			else
+			{
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+			}
 		}
 
-		protected virtual List<EFSpaceXSpaceFeature> SearchLinqEF(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFSpaceXSpaceFeature> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFSpaceXSpaceFeature> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+			}
+			else
+			{
+				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cadaccf595c1c359f0f404212fbb6b2d</Hash>
+    <Hash>6fc1d0e75f1edac52ea6e00285c00fc3</Hash>
 </Codenesium>*/

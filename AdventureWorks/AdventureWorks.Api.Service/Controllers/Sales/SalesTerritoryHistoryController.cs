@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesTerritoryHistories")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class SalesTerritoryHistoryController: AbstractSalesTerritoryHistoryController
 	{
 		public SalesTerritoryHistoryController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d8aeca528c83a75ac390a0613c7bd1f3</Hash>
+    <Hash>7e8f67624a020562e9c9516dcb06d5a2</Hash>
 </Codenesium>*/

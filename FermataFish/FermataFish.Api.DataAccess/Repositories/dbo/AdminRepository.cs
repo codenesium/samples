@@ -17,33 +17,9 @@ namespace FermataFishNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFAdmin> SearchLinqEF(Expression<Func<EFAdmin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFAdmin>();
-			}
-			else
-			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAdmin>();
-			}
-		}
-
-		protected override List<EFAdmin> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFAdmin>();
-			}
-			else
-			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAdmin>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>499e3f684166a92da3f07365e8c95bee</Hash>
+    <Hash>c3d4505af06e46a0eca40b52c4bec624</Hash>
 </Codenesium>*/

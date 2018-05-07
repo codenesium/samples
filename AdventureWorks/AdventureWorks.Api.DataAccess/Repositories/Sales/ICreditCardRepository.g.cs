@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(int creditCardID);
 
-		ApiResponse GetById(int creditCardID);
+		POCOCreditCard Get(int creditCardID);
 
-		POCOCreditCard GetByIdDirect(int creditCardID);
-
-		ApiResponse GetWhere(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOCreditCard> GetWhereDirect(Expression<Func<EFCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOCreditCard> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab106c2a702824250109b701e8dff354</Hash>
+    <Hash>4c54258b4aa7e0a5f379aa78927abe23</Hash>
 </Codenesium>*/

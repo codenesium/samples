@@ -17,33 +17,9 @@ namespace NebulaNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
-			}
-			else
-			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
-			}
-		}
-
-		protected override List<EFClasp> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
-			}
-			else
-			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0c57aebc64d94f269e14ea535dacb83</Hash>
+    <Hash>2ba5582290c423381a005121f613ce8d</Hash>
 </Codenesium>*/

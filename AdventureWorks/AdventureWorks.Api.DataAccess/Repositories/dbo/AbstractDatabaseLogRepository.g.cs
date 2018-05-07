@@ -76,61 +76,55 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int databaseLogID)
+		public virtual POCODatabaseLog Get(int databaseLogID)
 		{
-			return this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID);
+			return this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID).FirstOrDefault();
 		}
 
-		public virtual POCODatabaseLog GetByIdDirect(int databaseLogID)
+		public virtual List<POCODatabaseLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.DatabaseLogID == databaseLogID).DatabaseLogs.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCODatabaseLog> Where(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCODatabaseLog> SearchLinqPOCO(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCODatabaseLog> GetWhereDirect(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).DatabaseLogs;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCODatabaseLog> response = new List<POCODatabaseLog>();
 			List<EFDatabaseLog> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.DatabaseLogMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.DatabaseLogMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFDatabaseLog> SearchLinqEF(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFDatabaseLog> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.DatabaseLogMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFDatabaseLog>().Where(predicate).AsQueryable().OrderBy("DatabaseLogID ASC").Skip(skip).Take(take).ToList<EFDatabaseLog>();
+			}
+			else
+			{
+				return this.Context.Set<EFDatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDatabaseLog>();
+			}
 		}
 
-		protected virtual List<EFDatabaseLog> SearchLinqEF(Expression<Func<EFDatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFDatabaseLog> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFDatabaseLog> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFDatabaseLog>().Where(predicate).AsQueryable().OrderBy("DatabaseLogID ASC").Skip(skip).Take(take).ToList<EFDatabaseLog>();
+			}
+			else
+			{
+				return this.Context.Set<EFDatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDatabaseLog>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>12fc0ec3f7986a215da9d43c634f7e52</Hash>
+    <Hash>a9bd1775d612096c99156ae7e71f065b</Hash>
 </Codenesium>*/

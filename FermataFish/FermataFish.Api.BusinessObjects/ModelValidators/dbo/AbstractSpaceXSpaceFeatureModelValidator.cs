@@ -36,16 +36,16 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		private bool BeValidSpaceFeature(int id)
 		{
-			return this.SpaceFeatureRepository.GetByIdDirect(id) != null;
+			return this.SpaceFeatureRepository.Get(id) != null;
 		}
 
 		private bool BeValidSpace(int id)
 		{
-			return this.SpaceRepository.GetByIdDirect(id) != null;
+			return this.SpaceRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9bc8fa03b732fa61745cd4a0b495b4da</Hash>
+    <Hash>125545cbae5ee82cbf04d253b3c66101</Hash>
 </Codenesium>*/

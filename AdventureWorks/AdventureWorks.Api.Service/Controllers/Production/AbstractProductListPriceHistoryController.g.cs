@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOProductListPriceHistory response = this.productListPriceHistoryManager.GetById(id).ProductListPriceHistories.FirstOrDefault();
+			POCOProductListPriceHistory response = this.productListPriceHistoryManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductListPriceHistory>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.productListPriceHistoryManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductListPriceHistories);
-			}
+			List<POCOProductListPriceHistory> response = this.productListPriceHistoryManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductListPriceHistories/{result.Id.ToString()}");
-				POCOProductListPriceHistory response = this.productListPriceHistoryManager.GetById(result.Id).ProductListPriceHistories.First();
+				POCOProductListPriceHistory response = this.productListPriceHistoryManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductListPriceHistory response = this.productListPriceHistoryManager.GetById(id).ProductListPriceHistories.First();
+					POCOProductListPriceHistory response = this.productListPriceHistoryManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/ProductListPriceHistories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductListPriceHistory>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.productListPriceHistoryManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductListPriceHistories);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b2759bbdb5b4059db772a4fc8f481fbd</Hash>
+    <Hash>b370f1cc9049865416fecbf27b9aaa9f</Hash>
 </Codenesium>*/

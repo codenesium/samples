@@ -17,33 +17,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFProductListPriceHistory> SearchLinqEF(Expression<Func<EFProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFProductListPriceHistory>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductListPriceHistory>();
-			}
-			else
-			{
-				return this.Context.Set<EFProductListPriceHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductListPriceHistory>();
-			}
-		}
-
-		protected override List<EFProductListPriceHistory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFProductListPriceHistory>().Where(predicate).AsQueryable().OrderBy("ProductID ASC").Skip(skip).Take(take).ToList<EFProductListPriceHistory>();
-			}
-			else
-			{
-				return this.Context.Set<EFProductListPriceHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFProductListPriceHistory>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>60c21604286fb45def49072dd8404986</Hash>
+    <Hash>d5d3d600d01498ae8fe57d34c6687131</Hash>
 </Codenesium>*/

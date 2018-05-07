@@ -17,18 +17,12 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOLessonXStudent Get(int id);
 
-		POCOLessonXStudent GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFLessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOLessonXStudent> GetWhereDirect(Expression<Func<EFLessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOLessonXStudent> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c733201d9eecbd9d4b145dfbe21c32b</Hash>
+    <Hash>a06ebd2bbaa247a2102cc9ec76c91677</Hash>
 </Codenesium>*/

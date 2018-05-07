@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOSpecialOffer response = this.specialOfferManager.GetById(id).SpecialOffers.FirstOrDefault();
+			POCOSpecialOffer response = this.specialOfferManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOSpecialOffer>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.specialOfferManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpecialOffers);
-			}
+			List<POCOSpecialOffer> response = this.specialOfferManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SpecialOffers/{result.Id.ToString()}");
-				POCOSpecialOffer response = this.specialOfferManager.GetById(result.Id).SpecialOffers.First();
+				POCOSpecialOffer response = this.specialOfferManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpecialOffer response = this.specialOfferManager.GetById(id).SpecialOffers.First();
+					POCOSpecialOffer response = this.specialOfferManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -179,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fa42d3b4bf57ada8ad793fc79554df20</Hash>
+    <Hash>28de885126a30f129d297992fd37fbf6</Hash>
 </Codenesium>*/

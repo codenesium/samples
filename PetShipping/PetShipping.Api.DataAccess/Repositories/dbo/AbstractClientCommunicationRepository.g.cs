@@ -76,61 +76,55 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOClientCommunication Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id);
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
 		}
 
-		public virtual POCOClientCommunication GetByIdDirect(int id)
+		public virtual List<POCOClientCommunication> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).ClientCommunications.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFClientCommunication, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOClientCommunication> Where(Expression<Func<EFClientCommunication, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOClientCommunication> SearchLinqPOCO(Expression<Func<EFClientCommunication, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOClientCommunication> GetWhereDirect(Expression<Func<EFClientCommunication, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).ClientCommunications;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFClientCommunication, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOClientCommunication> response = new List<POCOClientCommunication>();
 			List<EFClientCommunication> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.ClientCommunicationMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.ClientCommunicationMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFClientCommunication> SearchLinqEF(Expression<Func<EFClientCommunication, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFClientCommunication> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.ClientCommunicationMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFClientCommunication>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClientCommunication>();
+			}
+			else
+			{
+				return this.Context.Set<EFClientCommunication>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClientCommunication>();
+			}
 		}
 
-		protected virtual List<EFClientCommunication> SearchLinqEF(Expression<Func<EFClientCommunication, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFClientCommunication> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFClientCommunication> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFClientCommunication>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClientCommunication>();
+			}
+			else
+			{
+				return this.Context.Set<EFClientCommunication>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClientCommunication>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cff9be4747a4eb0ed83c19e884d62286</Hash>
+    <Hash>9510776536fcb35751166f5ad2d51f70</Hash>
 </Codenesium>*/

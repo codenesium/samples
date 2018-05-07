@@ -20,8 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IShipMethodRepository ShipMethodRepository { get; set; }
-		public IVendorRepository VendorRepository { get; set; }
 		public virtual void EmployeeIDRules()
 		{
 			this.RuleFor(x => x.EmployeeID).NotNull();
@@ -53,7 +51,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ShipMethodIDRules()
 		{
 			this.RuleFor(x => x.ShipMethodID).NotNull();
-			this.RuleFor(x => x.ShipMethodID).Must(this.BeValidShipMethod).When(x => x ?.ShipMethodID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void StatusRules()
@@ -79,21 +76,10 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void VendorIDRules()
 		{
 			this.RuleFor(x => x.VendorID).NotNull();
-			this.RuleFor(x => x.VendorID).Must(this.BeValidVendor).When(x => x ?.VendorID != null).WithMessage("Invalid reference");
-		}
-
-		private bool BeValidShipMethod(int id)
-		{
-			return this.ShipMethodRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidVendor(int id)
-		{
-			return this.VendorRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2fa3a661a8e449e435f8443b30c1edb</Hash>
+    <Hash>29c9eaafb9f52567dc14c7ce2ca95d77</Hash>
 </Codenesium>*/

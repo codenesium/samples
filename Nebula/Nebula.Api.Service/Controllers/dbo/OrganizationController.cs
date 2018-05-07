@@ -14,7 +14,6 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/organizations")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class OrganizationController: AbstractOrganizationController
 	{
 		public OrganizationController(
@@ -36,5 +35,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4cba1cd20cbaaf53984b040dfefd04c5</Hash>
+    <Hash>fcbedd9001c2246e65d66f142eb54c69</Hash>
 </Codenesium>*/

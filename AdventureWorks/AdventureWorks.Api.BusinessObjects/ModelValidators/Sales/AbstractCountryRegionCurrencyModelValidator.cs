@@ -35,11 +35,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidCurrency(string id)
 		{
-			return this.CurrencyRepository.GetByIdDirect(id) != null;
+			return this.CurrencyRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e64edfa16fcfbd5878980050f1d5e0ee</Hash>
+    <Hash>067f09d4d72e1cfe439a46ecc35117c5</Hash>
 </Codenesium>*/

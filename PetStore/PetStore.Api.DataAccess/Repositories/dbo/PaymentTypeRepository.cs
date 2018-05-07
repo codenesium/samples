@@ -17,33 +17,9 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFPaymentType> SearchLinqEF(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPaymentType>();
-			}
-			else
-			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPaymentType>();
-			}
-		}
-
-		protected override List<EFPaymentType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPaymentType>();
-			}
-			else
-			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPaymentType>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>667b24c8388227c6b9ea440b56e90b37</Hash>
+    <Hash>db4d00917d82cb6af9db720c755df972</Hash>
 </Codenesium>*/

@@ -34,11 +34,11 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		private bool BeValidPipelineStatus(int id)
 		{
-			return this.PipelineStatusRepository.GetByIdDirect(id) != null;
+			return this.PipelineStatusRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>230493d125256ef8d4a44c02d20484ad</Hash>
+    <Hash>696e46711c7c6008979d3768abf2d50e</Hash>
 </Codenesium>*/

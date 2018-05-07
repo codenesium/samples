@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOPipelineStepDestination response = this.pipelineStepDestinationManager.GetById(id).PipelineStepDestinations.FirstOrDefault();
+			POCOPipelineStepDestination response = this.pipelineStepDestinationManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetShippingNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOPipelineStepDestination>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.pipelineStepDestinationManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PipelineStepDestinations);
-			}
+			List<POCOPipelineStepDestination> response = this.pipelineStepDestinationManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetShippingNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PipelineStepDestinations/{result.Id.ToString()}");
-				POCOPipelineStepDestination response = this.pipelineStepDestinationManager.GetById(result.Id).PipelineStepDestinations.First();
+				POCOPipelineStepDestination response = this.pipelineStepDestinationManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPipelineStepDestination response = this.pipelineStepDestinationManager.GetById(id).PipelineStepDestinations.First();
+					POCOPipelineStepDestination response = this.pipelineStepDestinationManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByDestinationId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Destinations/{id}/PipelineStepDestinations")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPipelineStepDestination>), 200)]
-		public virtual IActionResult ByDestinationId(int id)
-		{
-			ApiResponse response = this.pipelineStepDestinationManager.GetWhere(x => x.DestinationId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PipelineStepDestinations);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByPipelineStepId/{id}")]
-		[ReadOnly]
-		[Route("~/api/PipelineSteps/{id}/PipelineStepDestinations")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPipelineStepDestination>), 200)]
-		public virtual IActionResult ByPipelineStepId(int id)
-		{
-			ApiResponse response = this.pipelineStepDestinationManager.GetWhere(x => x.PipelineStepId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PipelineStepDestinations);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e69a6ab4391d9c59fc8d1aa191b9af99</Hash>
+    <Hash>c89e98e1294baece68660af1d62c6a36</Hash>
 </Codenesium>*/

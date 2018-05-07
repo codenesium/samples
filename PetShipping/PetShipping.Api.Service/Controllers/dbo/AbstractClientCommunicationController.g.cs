@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOClientCommunication response = this.clientCommunicationManager.GetById(id).ClientCommunications.FirstOrDefault();
+			POCOClientCommunication response = this.clientCommunicationManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetShippingNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOClientCommunication>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.clientCommunicationManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ClientCommunications);
-			}
+			List<POCOClientCommunication> response = this.clientCommunicationManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetShippingNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ClientCommunications/{result.Id.ToString()}");
-				POCOClientCommunication response = this.clientCommunicationManager.GetById(result.Id).ClientCommunications.First();
+				POCOClientCommunication response = this.clientCommunicationManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOClientCommunication response = this.clientCommunicationManager.GetById(id).ClientCommunications.First();
+					POCOClientCommunication response = this.clientCommunicationManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByClientId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Clients/{id}/ClientCommunications")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOClientCommunication>), 200)]
-		public virtual IActionResult ByClientId(int id)
-		{
-			ApiResponse response = this.clientCommunicationManager.GetWhere(x => x.ClientId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ClientCommunications);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByEmployeeId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Employees/{id}/ClientCommunications")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOClientCommunication>), 200)]
-		public virtual IActionResult ByEmployeeId(int id)
-		{
-			ApiResponse response = this.clientCommunicationManager.GetWhere(x => x.EmployeeId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ClientCommunications);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1cdd8f4b34bed15b8848f156b6858c88</Hash>
+    <Hash>d309621ebd3f610c991a37d814f6b25b</Hash>
 </Codenesium>*/

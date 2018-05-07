@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/handlers")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class HandlerController: AbstractHandlerController
 	{
 		public HandlerController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>bb7547c741b79cd9db68ebf7fdeb277b</Hash>
+    <Hash>5593cad1382357a6be8371fddffbcd8a</Hash>
 </Codenesium>*/

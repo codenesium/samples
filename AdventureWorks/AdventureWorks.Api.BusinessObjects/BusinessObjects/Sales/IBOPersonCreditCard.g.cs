@@ -17,18 +17,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		ApiResponse GetById(int businessEntityID);
+		POCOPersonCreditCard Get(int businessEntityID);
 
-		POCOPersonCreditCard GetByIdDirect(int businessEntityID);
-
-		ApiResponse GetWhere(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOPersonCreditCard> GetWhereDirect(Expression<Func<EFPersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOPersonCreditCard> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>06e38298592330731920691843f4b7c8</Hash>
+    <Hash>e140b343f2e923227aafc020cdc8954e</Hash>
 </Codenesium>*/

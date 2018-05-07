@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOBillOfMaterials response = this.billOfMaterialsManager.GetById(id).BillOfMaterials.FirstOrDefault();
+			POCOBillOfMaterials response = this.billOfMaterialsManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.billOfMaterialsManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BillOfMaterials);
-			}
+			List<POCOBillOfMaterials> response = this.billOfMaterialsManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/BillOfMaterials/{result.Id.ToString()}");
-				POCOBillOfMaterials response = this.billOfMaterialsManager.GetById(result.Id).BillOfMaterials.First();
+				POCOBillOfMaterials response = this.billOfMaterialsManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBillOfMaterials response = this.billOfMaterialsManager.GetById(id).BillOfMaterials.First();
+					POCOBillOfMaterials response = this.billOfMaterialsManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,69 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByComponentID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
-		public virtual IActionResult ByComponentID(int id)
-		{
-			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ComponentID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BillOfMaterials);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByProductAssemblyID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
-		public virtual IActionResult ByProductAssemblyID(int id)
-		{
-			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.ProductAssemblyID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BillOfMaterials);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByUnitMeasureCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/UnitMeasures/{id}/BillOfMaterials")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
-		public virtual IActionResult ByUnitMeasureCode(string id)
-		{
-			ApiResponse response = this.billOfMaterialsManager.GetWhere(x => x.UnitMeasureCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BillOfMaterials);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b76282746d4ecc6ca9ee16dcb4f4c90e</Hash>
+    <Hash>3eb13a7e9f95606b4072beddf8b768cd</Hash>
 </Codenesium>*/

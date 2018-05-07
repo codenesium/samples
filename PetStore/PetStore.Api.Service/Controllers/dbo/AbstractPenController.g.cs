@@ -42,7 +42,7 @@ namespace PetStoreNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOPen response = this.penManager.GetById(id).Pens.FirstOrDefault();
+			POCOPen response = this.penManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOPen>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.penManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Pens);
-			}
+			List<POCOPen> response = this.penManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetStoreNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Pens/{result.Id.ToString()}");
-				POCOPen response = this.penManager.GetById(result.Id).Pens.First();
+				POCOPen response = this.penManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPen response = this.penManager.GetById(id).Pens.First();
+					POCOPen response = this.penManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -179,5 +170,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>07cd83e4bc75237ba324482f10aa424d</Hash>
+    <Hash>e3077052a703f7935357c34a4590d244</Hash>
 </Codenesium>*/

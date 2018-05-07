@@ -30,15 +30,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("ProductID", TypeName="int")]
 		public int ProductID { get; set; }
-
-		[ForeignKey("DocumentNode")]
-		public virtual EFDocument Document { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f54a612683206f172ee00384b3ef5b6e</Hash>
+    <Hash>4e0741f0ed3e09b8f50697b32aa6bcfe</Hash>
 </Codenesium>*/

@@ -15,16 +15,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void AirlineMapEFToPOCO(
-			EFAirline efAirline,
-			ApiResponse response)
+		public virtual POCOAirline AirlineMapEFToPOCO(
+			EFAirline efAirline)
 		{
 			if (efAirline == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddAirline(new POCOAirline(efAirline.Id, efAirline.Name));
+			return new POCOAirline(efAirline.Id, efAirline.Name);
 		}
 
 		public virtual void AirTransportMapModelToEF(
@@ -42,18 +41,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.TakeoffDate);
 		}
 
-		public virtual void AirTransportMapEFToPOCO(
-			EFAirTransport efAirTransport,
-			ApiResponse response)
+		public virtual POCOAirTransport AirTransportMapEFToPOCO(
+			EFAirTransport efAirTransport)
 		{
 			if (efAirTransport == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddAirTransport(new POCOAirTransport(efAirTransport.AirlineId, efAirTransport.FlightNumber, efAirTransport.HandlerId, efAirTransport.Id, efAirTransport.LandDate, efAirTransport.PipelineStepId, efAirTransport.TakeoffDate));
-
-			this.HandlerMapEFToPOCO(efAirTransport.Handler, response);
+			return new POCOAirTransport(efAirTransport.AirlineId, efAirTransport.FlightNumber, efAirTransport.HandlerId, efAirTransport.Id, efAirTransport.LandDate, efAirTransport.PipelineStepId, efAirTransport.TakeoffDate);
 		}
 
 		public virtual void BreedMapModelToEF(
@@ -67,18 +63,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.SpeciesId);
 		}
 
-		public virtual void BreedMapEFToPOCO(
-			EFBreed efBreed,
-			ApiResponse response)
+		public virtual POCOBreed BreedMapEFToPOCO(
+			EFBreed efBreed)
 		{
 			if (efBreed == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddBreed(new POCOBreed(efBreed.Id, efBreed.Name, efBreed.SpeciesId));
-
-			this.SpeciesMapEFToPOCO(efBreed.Species, response);
+			return new POCOBreed(efBreed.Id, efBreed.Name, efBreed.SpeciesId);
 		}
 
 		public virtual void ClientMapModelToEF(
@@ -95,16 +88,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Phone);
 		}
 
-		public virtual void ClientMapEFToPOCO(
-			EFClient efClient,
-			ApiResponse response)
+		public virtual POCOClient ClientMapEFToPOCO(
+			EFClient efClient)
 		{
 			if (efClient == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddClient(new POCOClient(efClient.Email, efClient.FirstName, efClient.Id, efClient.LastName, efClient.Notes, efClient.Phone));
+			return new POCOClient(efClient.Email, efClient.FirstName, efClient.Id, efClient.LastName, efClient.Notes, efClient.Phone);
 		}
 
 		public virtual void ClientCommunicationMapModelToEF(
@@ -120,20 +112,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Notes);
 		}
 
-		public virtual void ClientCommunicationMapEFToPOCO(
-			EFClientCommunication efClientCommunication,
-			ApiResponse response)
+		public virtual POCOClientCommunication ClientCommunicationMapEFToPOCO(
+			EFClientCommunication efClientCommunication)
 		{
 			if (efClientCommunication == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddClientCommunication(new POCOClientCommunication(efClientCommunication.ClientId, efClientCommunication.DateCreated, efClientCommunication.EmployeeId, efClientCommunication.Id, efClientCommunication.Notes));
-
-			this.ClientMapEFToPOCO(efClientCommunication.Client, response);
-
-			this.EmployeeMapEFToPOCO(efClientCommunication.Employee, response);
+			return new POCOClientCommunication(efClientCommunication.ClientId, efClientCommunication.DateCreated, efClientCommunication.EmployeeId, efClientCommunication.Id, efClientCommunication.Notes);
 		}
 
 		public virtual void CountryMapModelToEF(
@@ -146,16 +133,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void CountryMapEFToPOCO(
-			EFCountry efCountry,
-			ApiResponse response)
+		public virtual POCOCountry CountryMapEFToPOCO(
+			EFCountry efCountry)
 		{
 			if (efCountry == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCountry(new POCOCountry(efCountry.Id, efCountry.Name));
+			return new POCOCountry(efCountry.Id, efCountry.Name);
 		}
 
 		public virtual void CountryRequirementMapModelToEF(
@@ -169,18 +155,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Details);
 		}
 
-		public virtual void CountryRequirementMapEFToPOCO(
-			EFCountryRequirement efCountryRequirement,
-			ApiResponse response)
+		public virtual POCOCountryRequirement CountryRequirementMapEFToPOCO(
+			EFCountryRequirement efCountryRequirement)
 		{
 			if (efCountryRequirement == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCountryRequirement(new POCOCountryRequirement(efCountryRequirement.CountryId, efCountryRequirement.Details, efCountryRequirement.Id));
-
-			this.CountryMapEFToPOCO(efCountryRequirement.Country, response);
+			return new POCOCountryRequirement(efCountryRequirement.CountryId, efCountryRequirement.Details, efCountryRequirement.Id);
 		}
 
 		public virtual void DestinationMapModelToEF(
@@ -195,18 +178,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Order);
 		}
 
-		public virtual void DestinationMapEFToPOCO(
-			EFDestination efDestination,
-			ApiResponse response)
+		public virtual POCODestination DestinationMapEFToPOCO(
+			EFDestination efDestination)
 		{
 			if (efDestination == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddDestination(new POCODestination(efDestination.CountryId, efDestination.Id, efDestination.Name, efDestination.Order));
-
-			this.CountryMapEFToPOCO(efDestination.Country, response);
+			return new POCODestination(efDestination.CountryId, efDestination.Id, efDestination.Name, efDestination.Order);
 		}
 
 		public virtual void EmployeeMapModelToEF(
@@ -222,16 +202,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.LastName);
 		}
 
-		public virtual void EmployeeMapEFToPOCO(
-			EFEmployee efEmployee,
-			ApiResponse response)
+		public virtual POCOEmployee EmployeeMapEFToPOCO(
+			EFEmployee efEmployee)
 		{
 			if (efEmployee == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddEmployee(new POCOEmployee(efEmployee.FirstName, efEmployee.Id, efEmployee.IsSalesPerson, efEmployee.IsShipper, efEmployee.LastName));
+			return new POCOEmployee(efEmployee.FirstName, efEmployee.Id, efEmployee.IsSalesPerson, efEmployee.IsShipper, efEmployee.LastName);
 		}
 
 		public virtual void HandlerMapModelToEF(
@@ -248,16 +227,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Phone);
 		}
 
-		public virtual void HandlerMapEFToPOCO(
-			EFHandler efHandler,
-			ApiResponse response)
+		public virtual POCOHandler HandlerMapEFToPOCO(
+			EFHandler efHandler)
 		{
 			if (efHandler == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddHandler(new POCOHandler(efHandler.CountryId, efHandler.Email, efHandler.FirstName, efHandler.Id, efHandler.LastName, efHandler.Phone));
+			return new POCOHandler(efHandler.CountryId, efHandler.Email, efHandler.FirstName, efHandler.Id, efHandler.LastName, efHandler.Phone);
 		}
 
 		public virtual void HandlerPipelineStepMapModelToEF(
@@ -271,20 +249,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.PipelineStepId);
 		}
 
-		public virtual void HandlerPipelineStepMapEFToPOCO(
-			EFHandlerPipelineStep efHandlerPipelineStep,
-			ApiResponse response)
+		public virtual POCOHandlerPipelineStep HandlerPipelineStepMapEFToPOCO(
+			EFHandlerPipelineStep efHandlerPipelineStep)
 		{
 			if (efHandlerPipelineStep == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddHandlerPipelineStep(new POCOHandlerPipelineStep(efHandlerPipelineStep.HandlerId, efHandlerPipelineStep.Id, efHandlerPipelineStep.PipelineStepId));
-
-			this.HandlerMapEFToPOCO(efHandlerPipelineStep.Handler, response);
-
-			this.PipelineStepMapEFToPOCO(efHandlerPipelineStep.PipelineStep, response);
+			return new POCOHandlerPipelineStep(efHandlerPipelineStep.HandlerId, efHandlerPipelineStep.Id, efHandlerPipelineStep.PipelineStepId);
 		}
 
 		public virtual void OtherTransportMapModelToEF(
@@ -298,20 +271,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.PipelineStepId);
 		}
 
-		public virtual void OtherTransportMapEFToPOCO(
-			EFOtherTransport efOtherTransport,
-			ApiResponse response)
+		public virtual POCOOtherTransport OtherTransportMapEFToPOCO(
+			EFOtherTransport efOtherTransport)
 		{
 			if (efOtherTransport == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddOtherTransport(new POCOOtherTransport(efOtherTransport.HandlerId, efOtherTransport.Id, efOtherTransport.PipelineStepId));
-
-			this.HandlerMapEFToPOCO(efOtherTransport.Handler, response);
-
-			this.PipelineStepMapEFToPOCO(efOtherTransport.PipelineStep, response);
+			return new POCOOtherTransport(efOtherTransport.HandlerId, efOtherTransport.Id, efOtherTransport.PipelineStepId);
 		}
 
 		public virtual void PetMapModelToEF(
@@ -327,20 +295,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Weight);
 		}
 
-		public virtual void PetMapEFToPOCO(
-			EFPet efPet,
-			ApiResponse response)
+		public virtual POCOPet PetMapEFToPOCO(
+			EFPet efPet)
 		{
 			if (efPet == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPet(new POCOPet(efPet.BreedId, efPet.ClientId, efPet.Id, efPet.Name, efPet.Weight));
-
-			this.BreedMapEFToPOCO(efPet.Breed, response);
-
-			this.ClientMapEFToPOCO(efPet.Client, response);
+			return new POCOPet(efPet.BreedId, efPet.ClientId, efPet.Id, efPet.Name, efPet.Weight);
 		}
 
 		public virtual void PipelineMapModelToEF(
@@ -354,18 +317,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.SaleId);
 		}
 
-		public virtual void PipelineMapEFToPOCO(
-			EFPipeline efPipeline,
-			ApiResponse response)
+		public virtual POCOPipeline PipelineMapEFToPOCO(
+			EFPipeline efPipeline)
 		{
 			if (efPipeline == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPipeline(new POCOPipeline(efPipeline.Id, efPipeline.PipelineStatusId, efPipeline.SaleId));
-
-			this.PipelineStatusMapEFToPOCO(efPipeline.PipelineStatus, response);
+			return new POCOPipeline(efPipeline.Id, efPipeline.PipelineStatusId, efPipeline.SaleId);
 		}
 
 		public virtual void PipelineStatusMapModelToEF(
@@ -378,16 +338,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void PipelineStatusMapEFToPOCO(
-			EFPipelineStatus efPipelineStatus,
-			ApiResponse response)
+		public virtual POCOPipelineStatus PipelineStatusMapEFToPOCO(
+			EFPipelineStatus efPipelineStatus)
 		{
 			if (efPipelineStatus == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPipelineStatus(new POCOPipelineStatus(efPipelineStatus.Id, efPipelineStatus.Name));
+			return new POCOPipelineStatus(efPipelineStatus.Id, efPipelineStatus.Name);
 		}
 
 		public virtual void PipelineStepMapModelToEF(
@@ -402,20 +361,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.ShipperId);
 		}
 
-		public virtual void PipelineStepMapEFToPOCO(
-			EFPipelineStep efPipelineStep,
-			ApiResponse response)
+		public virtual POCOPipelineStep PipelineStepMapEFToPOCO(
+			EFPipelineStep efPipelineStep)
 		{
 			if (efPipelineStep == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPipelineStep(new POCOPipelineStep(efPipelineStep.Id, efPipelineStep.Name, efPipelineStep.PipelineStepStatusId, efPipelineStep.ShipperId));
-
-			this.PipelineStepStatusMapEFToPOCO(efPipelineStep.PipelineStepStatus, response);
-
-			this.EmployeeMapEFToPOCO(efPipelineStep.Employee, response);
+			return new POCOPipelineStep(efPipelineStep.Id, efPipelineStep.Name, efPipelineStep.PipelineStepStatusId, efPipelineStep.ShipperId);
 		}
 
 		public virtual void PipelineStepDestinationMapModelToEF(
@@ -429,20 +383,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.PipelineStepId);
 		}
 
-		public virtual void PipelineStepDestinationMapEFToPOCO(
-			EFPipelineStepDestination efPipelineStepDestination,
-			ApiResponse response)
+		public virtual POCOPipelineStepDestination PipelineStepDestinationMapEFToPOCO(
+			EFPipelineStepDestination efPipelineStepDestination)
 		{
 			if (efPipelineStepDestination == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPipelineStepDestination(new POCOPipelineStepDestination(efPipelineStepDestination.DestinationId, efPipelineStepDestination.Id, efPipelineStepDestination.PipelineStepId));
-
-			this.DestinationMapEFToPOCO(efPipelineStepDestination.Destination, response);
-
-			this.PipelineStepMapEFToPOCO(efPipelineStepDestination.PipelineStep, response);
+			return new POCOPipelineStepDestination(efPipelineStepDestination.DestinationId, efPipelineStepDestination.Id, efPipelineStepDestination.PipelineStepId);
 		}
 
 		public virtual void PipelineStepNoteMapModelToEF(
@@ -457,20 +406,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.PipelineStepId);
 		}
 
-		public virtual void PipelineStepNoteMapEFToPOCO(
-			EFPipelineStepNote efPipelineStepNote,
-			ApiResponse response)
+		public virtual POCOPipelineStepNote PipelineStepNoteMapEFToPOCO(
+			EFPipelineStepNote efPipelineStepNote)
 		{
 			if (efPipelineStepNote == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPipelineStepNote(new POCOPipelineStepNote(efPipelineStepNote.EmployeeId, efPipelineStepNote.Id, efPipelineStepNote.Note, efPipelineStepNote.PipelineStepId));
-
-			this.EmployeeMapEFToPOCO(efPipelineStepNote.Employee, response);
-
-			this.PipelineStepMapEFToPOCO(efPipelineStepNote.PipelineStep, response);
+			return new POCOPipelineStepNote(efPipelineStepNote.EmployeeId, efPipelineStepNote.Id, efPipelineStepNote.Note, efPipelineStepNote.PipelineStepId);
 		}
 
 		public virtual void PipelineStepStatusMapModelToEF(
@@ -483,16 +427,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void PipelineStepStatusMapEFToPOCO(
-			EFPipelineStepStatus efPipelineStepStatus,
-			ApiResponse response)
+		public virtual POCOPipelineStepStatus PipelineStepStatusMapEFToPOCO(
+			EFPipelineStepStatus efPipelineStepStatus)
 		{
 			if (efPipelineStepStatus == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPipelineStepStatus(new POCOPipelineStepStatus(efPipelineStepStatus.Id, efPipelineStepStatus.Name));
+			return new POCOPipelineStepStatus(efPipelineStepStatus.Id, efPipelineStepStatus.Name);
 		}
 
 		public virtual void PipelineStepStepRequirementMapModelToEF(
@@ -507,18 +450,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.RequirementMet);
 		}
 
-		public virtual void PipelineStepStepRequirementMapEFToPOCO(
-			EFPipelineStepStepRequirement efPipelineStepStepRequirement,
-			ApiResponse response)
+		public virtual POCOPipelineStepStepRequirement PipelineStepStepRequirementMapEFToPOCO(
+			EFPipelineStepStepRequirement efPipelineStepStepRequirement)
 		{
 			if (efPipelineStepStepRequirement == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPipelineStepStepRequirement(new POCOPipelineStepStepRequirement(efPipelineStepStepRequirement.Details, efPipelineStepStepRequirement.Id, efPipelineStepStepRequirement.PipelineStepId, efPipelineStepStepRequirement.RequirementMet));
-
-			this.PipelineStepMapEFToPOCO(efPipelineStepStepRequirement.PipelineStep, response);
+			return new POCOPipelineStepStepRequirement(efPipelineStepStepRequirement.Details, efPipelineStepStepRequirement.Id, efPipelineStepStepRequirement.PipelineStepId, efPipelineStepStepRequirement.RequirementMet);
 		}
 
 		public virtual void SaleMapModelToEF(
@@ -536,20 +476,15 @@ namespace PetShippingNS.Api.DataAccess
 				model.SalesPersonId);
 		}
 
-		public virtual void SaleMapEFToPOCO(
-			EFSale efSale,
-			ApiResponse response)
+		public virtual POCOSale SaleMapEFToPOCO(
+			EFSale efSale)
 		{
 			if (efSale == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSale(new POCOSale(efSale.Amount, efSale.ClientId, efSale.Id, efSale.Note, efSale.PetId, efSale.SaleDate, efSale.SalesPersonId));
-
-			this.ClientMapEFToPOCO(efSale.Client, response);
-
-			this.PetMapEFToPOCO(efSale.Pet, response);
+			return new POCOSale(efSale.Amount, efSale.ClientId, efSale.Id, efSale.Note, efSale.PetId, efSale.SaleDate, efSale.SalesPersonId);
 		}
 
 		public virtual void SpeciesMapModelToEF(
@@ -562,20 +497,19 @@ namespace PetShippingNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void SpeciesMapEFToPOCO(
-			EFSpecies efSpecies,
-			ApiResponse response)
+		public virtual POCOSpecies SpeciesMapEFToPOCO(
+			EFSpecies efSpecies)
 		{
 			if (efSpecies == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSpecies(new POCOSpecies(efSpecies.Id, efSpecies.Name));
+			return new POCOSpecies(efSpecies.Id, efSpecies.Name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3c2a8837abaeb0056da71ca938873ae1</Hash>
+    <Hash>14fe5ccca854dd5fc95237bd818288d7</Hash>
 </Codenesium>*/

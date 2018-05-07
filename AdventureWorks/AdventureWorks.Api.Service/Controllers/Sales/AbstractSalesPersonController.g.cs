@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOSalesPerson response = this.salesPersonManager.GetById(id).SalesPersons.FirstOrDefault();
+			POCOSalesPerson response = this.salesPersonManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOSalesPerson>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.salesPersonManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesPersons);
-			}
+			List<POCOSalesPerson> response = this.salesPersonManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesPersons/{result.Id.ToString()}");
-				POCOSalesPerson response = this.salesPersonManager.GetById(result.Id).SalesPersons.First();
+				POCOSalesPerson response = this.salesPersonManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesPerson response = this.salesPersonManager.GetById(id).SalesPersons.First();
+					POCOSalesPerson response = this.salesPersonManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByTerritoryID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SalesTerritories/{id}/SalesPersons")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesPerson>), 200)]
-		public virtual IActionResult ByTerritoryID(int id)
-		{
-			ApiResponse response = this.salesPersonManager.GetWhere(x => x.TerritoryID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesPersons);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2eee64f7aeded76ea9f0d6e2821afdd</Hash>
+    <Hash>f98fc745a93c321968b942ce04b4161d</Hash>
 </Codenesium>*/

@@ -65,15 +65,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("WorkOrderID", TypeName="int")]
 		public int WorkOrderID { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
-
-		[ForeignKey("ScrapReasonID")]
-		public virtual EFScrapReason ScrapReason { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d46879f3473d6d283d08e3b49f19319c</Hash>
+    <Hash>c19459040af34ee1d8a85854527dba76</Hash>
 </Codenesium>*/

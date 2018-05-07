@@ -68,33 +68,18 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOMachineRefTeam Get(int id)
 		{
-			return this.machineRefTeamRepository.GetById(id);
+			return this.machineRefTeamRepository.Get(id);
 		}
 
-		public virtual POCOMachineRefTeam GetByIdDirect(int id)
+		public virtual List<POCOMachineRefTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.machineRefTeamRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.machineRefTeamRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.machineRefTeamRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOMachineRefTeam> GetWhereDirect(Expression<Func<EFMachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.machineRefTeamRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.machineRefTeamRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d3b33e657d3e518e89c1618c1d7fb4a0</Hash>
+    <Hash>2e04f757865e030fe11b396697cc8870</Hash>
 </Codenesium>*/

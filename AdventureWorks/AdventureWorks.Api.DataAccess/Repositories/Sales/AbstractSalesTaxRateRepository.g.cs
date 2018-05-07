@@ -76,61 +76,55 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int salesTaxRateID)
+		public virtual POCOSalesTaxRate Get(int salesTaxRateID)
 		{
-			return this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID);
+			return this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
 		}
 
-		public virtual POCOSalesTaxRate GetByIdDirect(int salesTaxRateID)
+		public virtual List<POCOSalesTaxRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID).SalesTaxRates.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSalesTaxRate> Where(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSalesTaxRate> SearchLinqPOCO(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSalesTaxRate> GetWhereDirect(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).SalesTaxRates;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOSalesTaxRate> response = new List<POCOSalesTaxRate>();
 			List<EFSalesTaxRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.SalesTaxRateMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.SalesTaxRateMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFSalesTaxRate> SearchLinqEF(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFSalesTaxRate> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.SalesTaxRateMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy("SalesTaxRateID ASC").Skip(skip).Take(take).ToList<EFSalesTaxRate>();
+			}
+			else
+			{
+				return this.Context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesTaxRate>();
+			}
 		}
 
-		protected virtual List<EFSalesTaxRate> SearchLinqEF(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFSalesTaxRate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFSalesTaxRate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy("SalesTaxRateID ASC").Skip(skip).Take(take).ToList<EFSalesTaxRate>();
+			}
+			else
+			{
+				return this.Context.Set<EFSalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSalesTaxRate>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc862c386ec52e3bdd7cdec30b6b43d0</Hash>
+    <Hash>8212e7cd9f7719ff522fffefe7bb4df1</Hash>
 </Codenesium>*/

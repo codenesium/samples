@@ -68,33 +68,18 @@ namespace FileServiceNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(long version)
+		public virtual POCOVersionInfo Get(long version)
 		{
-			return this.versionInfoRepository.GetById(version);
+			return this.versionInfoRepository.Get(version);
 		}
 
-		public virtual POCOVersionInfo GetByIdDirect(long version)
+		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.versionInfoRepository.GetByIdDirect(version);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.versionInfoRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.versionInfoRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOVersionInfo> GetWhereDirect(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.versionInfoRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.versionInfoRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>04d1879b6d309323702a3fed04dc4802</Hash>
+    <Hash>122e6cb4fadabf52ee4ae60b0706ee21</Hash>
 </Codenesium>*/

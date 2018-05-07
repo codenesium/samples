@@ -28,9 +28,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PostalCode = postalCode.ToString();
 			this.Rowguid = rowguid.ToGuid();
 			this.SpatialLocation = spatialLocation;
-
-			this.StateProvinceID = new ReferenceEntity<int>(stateProvinceID,
-			                                                nameof(ApiResponse.StateProvinces));
+			this.StateProvinceID = stateProvinceID.ToInt();
 		}
 
 		public int AddressID { get; set; }
@@ -41,7 +39,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public string PostalCode { get; set; }
 		public Guid Rowguid { get; set; }
 		public object SpatialLocation { get; set; }
-		public ReferenceEntity<int> StateProvinceID { get; set; }
+		public int StateProvinceID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeAddressIDValue { get; set; } = true;
@@ -131,5 +129,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1722fbfb7de639d88c8dba31b6d0f16d</Hash>
+    <Hash>92915de0a072ec734809ba757aa9992c</Hash>
 </Codenesium>*/

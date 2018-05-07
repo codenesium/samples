@@ -35,11 +35,11 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		private bool BeValidSpecies(int id)
 		{
-			return this.SpeciesRepository.GetByIdDirect(id) != null;
+			return this.SpeciesRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0b84632f84d2f3454458c6fda925c778</Hash>
+    <Hash>185fd098117fef42d177363ee9f7b89b</Hash>
 </Codenesium>*/

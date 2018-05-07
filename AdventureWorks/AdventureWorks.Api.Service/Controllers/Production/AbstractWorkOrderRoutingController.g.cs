@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOWorkOrderRouting response = this.workOrderRoutingManager.GetById(id).WorkOrderRoutings.FirstOrDefault();
+			POCOWorkOrderRouting response = this.workOrderRoutingManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.workOrderRoutingManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.WorkOrderRoutings);
-			}
+			List<POCOWorkOrderRouting> response = this.workOrderRoutingManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/WorkOrderRoutings/{result.Id.ToString()}");
-				POCOWorkOrderRouting response = this.workOrderRoutingManager.GetById(result.Id).WorkOrderRoutings.First();
+				POCOWorkOrderRouting response = this.workOrderRoutingManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOWorkOrderRouting response = this.workOrderRoutingManager.GetById(id).WorkOrderRoutings.First();
+					POCOWorkOrderRouting response = this.workOrderRoutingManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByLocationID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Locations/{id}/WorkOrderRoutings")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
-		public virtual IActionResult ByLocationID(short id)
-		{
-			ApiResponse response = this.workOrderRoutingManager.GetWhere(x => x.LocationID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.WorkOrderRoutings);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByWorkOrderID/{id}")]
-		[ReadOnly]
-		[Route("~/api/WorkOrders/{id}/WorkOrderRoutings")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
-		public virtual IActionResult ByWorkOrderID(int id)
-		{
-			ApiResponse response = this.workOrderRoutingManager.GetWhere(x => x.WorkOrderID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.WorkOrderRoutings);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0b6ba71f4214eb22bbf5240ec39c7aa</Hash>
+    <Hash>4cd3b50bc95641a50d43f338afef3b75</Hash>
 </Codenesium>*/

@@ -17,18 +17,12 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOHandler Get(int id);
 
-		POCOHandler GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFHandler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOHandler> GetWhereDirect(Expression<Func<EFHandler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOHandler> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>45973e2c4b2e39a76fa19b655e539b2c</Hash>
+    <Hash>09e8884193330e9a9f6612f7d9c847dc</Hash>
 </Codenesium>*/

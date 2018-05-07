@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOProductModelIllustration response = this.productModelIllustrationManager.GetById(id).ProductModelIllustrations.FirstOrDefault();
+			POCOProductModelIllustration response = this.productModelIllustrationManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductModelIllustration>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.productModelIllustrationManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelIllustrations);
-			}
+			List<POCOProductModelIllustration> response = this.productModelIllustrationManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductModelIllustrations/{result.Id.ToString()}");
-				POCOProductModelIllustration response = this.productModelIllustrationManager.GetById(result.Id).ProductModelIllustrations.First();
+				POCOProductModelIllustration response = this.productModelIllustrationManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductModelIllustration response = this.productModelIllustrationManager.GetById(id).ProductModelIllustrations.First();
+					POCOProductModelIllustration response = this.productModelIllustrationManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByIllustrationID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Illustrations/{id}/ProductModelIllustrations")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductModelIllustration>), 200)]
-		public virtual IActionResult ByIllustrationID(int id)
-		{
-			ApiResponse response = this.productModelIllustrationManager.GetWhere(x => x.IllustrationID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelIllustrations);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByProductModelID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductModels/{id}/ProductModelIllustrations")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductModelIllustration>), 200)]
-		public virtual IActionResult ByProductModelID(int id)
-		{
-			ApiResponse response = this.productModelIllustrationManager.GetWhere(x => x.ProductModelID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelIllustrations);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6462f364e03479335025b7b982da268e</Hash>
+    <Hash>c1d1db5bf3160491baa6d82bb1484b80</Hash>
 </Codenesium>*/

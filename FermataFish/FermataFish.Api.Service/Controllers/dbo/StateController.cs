@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/states")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class StateController: AbstractStateController
 	{
 		public StateController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c031883478a517dfd06add840b8f98c1</Hash>
+    <Hash>0d9aa27ddc6877d1d27adbee67a95461</Hash>
 </Codenesium>*/

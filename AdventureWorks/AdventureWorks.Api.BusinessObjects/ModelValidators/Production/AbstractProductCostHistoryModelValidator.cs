@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository { get; set; }
 		public virtual void EndDateRules()
 		{                       }
 
@@ -38,14 +37,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.StartDate).NotNull();
 		}
-
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c91409078dceb26d5caa58bdabd1ea19</Hash>
+    <Hash>7fd9b5ae70975318e289261722b0d648</Hash>
 </Codenesium>*/

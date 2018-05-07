@@ -14,18 +14,12 @@ namespace PetShippingNS.Api.DataAccess
 
 		void Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOAirline Get(int id);
 
-		POCOAirline GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFAirline, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOAirline> GetWhereDirect(Expression<Func<EFAirline, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOAirline> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>270380c605a7e92dda05954948175a53</Hash>
+    <Hash>c919e826c89091b5b565f24bccfd3ced</Hash>
 </Codenesium>*/

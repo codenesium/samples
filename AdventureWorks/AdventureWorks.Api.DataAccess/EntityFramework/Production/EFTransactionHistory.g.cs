@@ -60,12 +60,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("TransactionType", TypeName="nchar(1)")]
 		public string TransactionType { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f20be3144b541f612f0dba99251cbc58</Hash>
+    <Hash>3e5ace9220355b81a5c9971b16c31a4d</Hash>
 </Codenesium>*/

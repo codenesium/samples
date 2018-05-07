@@ -43,11 +43,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidSalesPerson(int id)
 		{
-			return this.SalesPersonRepository.GetByIdDirect(id) != null;
+			return this.SalesPersonRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3376776fd5cda5703a0f93b780f156e2</Hash>
+    <Hash>b029e066ee49b88f5323eed5d7b874be</Hash>
 </Codenesium>*/

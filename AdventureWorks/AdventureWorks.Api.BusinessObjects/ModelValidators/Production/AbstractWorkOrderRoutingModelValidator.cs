@@ -20,8 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ILocationRepository LocationRepository { get; set; }
-		public IWorkOrderRepository WorkOrderRepository { get; set; }
 		public virtual void ActualCostRules()
 		{                       }
 
@@ -37,7 +35,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void LocationIDRules()
 		{
 			this.RuleFor(x => x.LocationID).NotNull();
-			this.RuleFor(x => x.LocationID).Must(this.BeValidLocation).When(x => x ?.LocationID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ModifiedDateRules()
@@ -69,19 +66,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.ScheduledStartDate).NotNull();
 		}
-
-		private bool BeValidLocation(short id)
-		{
-			return this.LocationRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidWorkOrder(int id)
-		{
-			return this.WorkOrderRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab9a729b143fee7af1f1c11b5478dd1b</Hash>
+    <Hash>dce859ab514ff0e4d8aa92585a9dfd17</Hash>
 </Codenesium>*/

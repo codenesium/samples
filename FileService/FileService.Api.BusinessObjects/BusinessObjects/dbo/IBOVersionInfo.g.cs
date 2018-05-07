@@ -17,18 +17,12 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(long version);
 
-		ApiResponse GetById(long version);
+		POCOVersionInfo Get(long version);
 
-		POCOVersionInfo GetByIdDirect(long version);
-
-		ApiResponse GetWhere(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOVersionInfo> GetWhereDirect(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e0611429cd7bbc7baced52552a7959fe</Hash>
+    <Hash>b7c9a18f5993c26222097e4eeb217e71</Hash>
 </Codenesium>*/

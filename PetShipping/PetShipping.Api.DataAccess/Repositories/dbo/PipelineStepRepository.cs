@@ -17,33 +17,9 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFPipelineStep> SearchLinqEF(Expression<Func<EFPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFPipelineStep>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPipelineStep>();
-			}
-			else
-			{
-				return this.Context.Set<EFPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPipelineStep>();
-			}
-		}
-
-		protected override List<EFPipelineStep> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFPipelineStep>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPipelineStep>();
-			}
-			else
-			{
-				return this.Context.Set<EFPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPipelineStep>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb759853ed34c622445834abc787b64b</Hash>
+    <Hash>185b3f48ce7e1a8fa76f450c22b18a24</Hash>
 </Codenesium>*/

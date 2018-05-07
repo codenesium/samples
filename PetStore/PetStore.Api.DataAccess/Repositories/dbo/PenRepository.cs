@@ -17,33 +17,9 @@ namespace PetStoreNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFPen> SearchLinqEF(Expression<Func<EFPen, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPen>();
-			}
-			else
-			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPen>();
-			}
-		}
-
-		protected override List<EFPen> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPen>();
-			}
-			else
-			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPen>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a39c97c1ed0bae7befc7bcb11a083b07</Hash>
+    <Hash>d24719a35b5b9945fe9e876953519ed8</Hash>
 </Codenesium>*/

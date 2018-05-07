@@ -75,15 +75,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("WorkOrderID", TypeName="int")]
 		public int WorkOrderID { get; set; }
-
-		[ForeignKey("LocationID")]
-		public virtual EFLocation Location { get; set; }
-
-		[ForeignKey("WorkOrderID")]
-		public virtual EFWorkOrder WorkOrder { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c49c817ec37dfd016f974530a1f70525</Hash>
+    <Hash>a5e6a61ee4c2551f82421951173bc7f7</Hash>
 </Codenesium>*/

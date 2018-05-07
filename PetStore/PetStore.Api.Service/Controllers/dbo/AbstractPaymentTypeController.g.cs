@@ -42,7 +42,7 @@ namespace PetStoreNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOPaymentType response = this.paymentTypeManager.GetById(id).PaymentTypes.FirstOrDefault();
+			POCOPaymentType response = this.paymentTypeManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOPaymentType>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.paymentTypeManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PaymentTypes);
-			}
+			List<POCOPaymentType> response = this.paymentTypeManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetStoreNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PaymentTypes/{result.Id.ToString()}");
-				POCOPaymentType response = this.paymentTypeManager.GetById(result.Id).PaymentTypes.First();
+				POCOPaymentType response = this.paymentTypeManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPaymentType response = this.paymentTypeManager.GetById(id).PaymentTypes.First();
+					POCOPaymentType response = this.paymentTypeManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -179,5 +170,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7e1a0d334b288335fbaec7512bbea9fa</Hash>
+    <Hash>1f91be7f6d4ce07dff5237cedafe4428</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IShoppingCartItemModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(ShoppingCartItemModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, ShoppingCartItemModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(ShoppingCartItemModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ShoppingCartItemModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>70a69db5beafdf4d44f957ce20f6123a</Hash>
+    <Hash>5530900f59fa34fc881ffd72834cdb9b</Hash>
 </Codenesium>*/

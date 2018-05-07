@@ -68,33 +68,18 @@ namespace PetShippingNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOPipelineStepStepRequirement Get(int id)
 		{
-			return this.pipelineStepStepRequirementRepository.GetById(id);
+			return this.pipelineStepStepRequirementRepository.Get(id);
 		}
 
-		public virtual POCOPipelineStepStepRequirement GetByIdDirect(int id)
+		public virtual List<POCOPipelineStepStepRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.pipelineStepStepRequirementRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFPipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.pipelineStepStepRequirementRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.pipelineStepStepRequirementRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOPipelineStepStepRequirement> GetWhereDirect(Expression<Func<EFPipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.pipelineStepStepRequirementRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.pipelineStepStepRequirementRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>68a656e5cc232c418aa35b1b4bfc7270</Hash>
+    <Hash>ef69e6b5b7330be3132011bb05508800</Hash>
 </Codenesium>*/

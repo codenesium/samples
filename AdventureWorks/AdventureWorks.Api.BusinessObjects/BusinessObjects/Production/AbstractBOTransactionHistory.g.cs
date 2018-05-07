@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int transactionID)
+		public virtual POCOTransactionHistory Get(int transactionID)
 		{
-			return this.transactionHistoryRepository.GetById(transactionID);
+			return this.transactionHistoryRepository.Get(transactionID);
 		}
 
-		public virtual POCOTransactionHistory GetByIdDirect(int transactionID)
+		public virtual List<POCOTransactionHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.transactionHistoryRepository.GetByIdDirect(transactionID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.transactionHistoryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.transactionHistoryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOTransactionHistory> GetWhereDirect(Expression<Func<EFTransactionHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.transactionHistoryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.transactionHistoryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4ba32011709569179d4a266b96ea2db</Hash>
+    <Hash>e4fff5cbc538096a86f7d7640d617a55</Hash>
 </Codenesium>*/

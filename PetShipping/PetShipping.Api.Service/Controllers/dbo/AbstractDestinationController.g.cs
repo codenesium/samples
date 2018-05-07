@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCODestination response = this.destinationManager.GetById(id).Destinations.FirstOrDefault();
+			POCODestination response = this.destinationManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetShippingNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCODestination>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.destinationManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Destinations);
-			}
+			List<POCODestination> response = this.destinationManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetShippingNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Destinations/{result.Id.ToString()}");
-				POCODestination response = this.destinationManager.GetById(result.Id).Destinations.First();
+				POCODestination response = this.destinationManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODestination response = this.destinationManager.GetById(id).Destinations.First();
+					POCODestination response = this.destinationManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCountryId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Countries/{id}/Destinations")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCODestination>), 200)]
-		public virtual IActionResult ByCountryId(int id)
-		{
-			ApiResponse response = this.destinationManager.GetWhere(x => x.CountryId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Destinations);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e2463467086609b5de48dd2307da3df</Hash>
+    <Hash>ec22e04f19634e8ab76388c78814e42f</Hash>
 </Codenesium>*/

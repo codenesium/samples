@@ -20,8 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository { get; set; }
-		public IUnitMeasureRepository UnitMeasureRepository { get; set; }
 		public virtual void BOMLevelRules()
 		{
 			this.RuleFor(x => x.BOMLevel).NotNull();
@@ -30,7 +28,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ComponentIDRules()
 		{
 			this.RuleFor(x => x.ComponentID).NotNull();
-			this.RuleFor(x => x.ComponentID).Must(this.BeValidProduct).When(x => x ?.ComponentID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void EndDateRules()
@@ -47,9 +44,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public virtual void ProductAssemblyIDRules()
-		{
-			this.RuleFor(x => x.ProductAssemblyID).Must(this.BeValidProduct).When(x => x ?.ProductAssemblyID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void StartDateRules()
 		{
@@ -59,27 +54,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void UnitMeasureCodeRules()
 		{
 			this.RuleFor(x => x.UnitMeasureCode).NotNull();
-			this.RuleFor(x => x.UnitMeasureCode).Must(this.BeValidUnitMeasure).When(x => x ?.UnitMeasureCode != null).WithMessage("Invalid reference");
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
-		}
-
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidProduct(Nullable<int> id)
-		{
-			return this.ProductRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
-		}
-
-		private bool BeValidUnitMeasure(string id)
-		{
-			return this.UnitMeasureRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9134a944f93c20fa3ae585cca2ba8584</Hash>
+    <Hash>3fa7e6ec708a1e45a3be4a5077e25d8f</Hash>
 </Codenesium>*/

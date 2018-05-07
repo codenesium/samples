@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(int currencyRateID);
 
-		ApiResponse GetById(int currencyRateID);
+		POCOCurrencyRate Get(int currencyRateID);
 
-		POCOCurrencyRate GetByIdDirect(int currencyRateID);
-
-		ApiResponse GetWhere(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOCurrencyRate> GetWhereDirect(Expression<Func<EFCurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOCurrencyRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2b8e60ed0157c41fc5e7b41341d425f</Hash>
+    <Hash>b3aa0eb29af180dabc7e0cb6e07e050f</Hash>
 </Codenesium>*/

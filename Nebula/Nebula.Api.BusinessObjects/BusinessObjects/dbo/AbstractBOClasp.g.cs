@@ -68,33 +68,18 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOClasp Get(int id)
 		{
-			return this.claspRepository.GetById(id);
+			return this.claspRepository.Get(id);
 		}
 
-		public virtual POCOClasp GetByIdDirect(int id)
+		public virtual List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.claspRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.claspRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.claspRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOClasp> GetWhereDirect(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.claspRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.claspRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>049bb14805854444fb27044f01348081</Hash>
+    <Hash>0afa214bd60a3de6a79d268d49bfd29d</Hash>
 </Codenesium>*/

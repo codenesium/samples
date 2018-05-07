@@ -17,33 +17,9 @@ namespace FileServiceNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFVersionInfo> SearchLinqEF(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy("Version ASC").Skip(skip).Take(take).ToList<EFVersionInfo>();
-			}
-			else
-			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFVersionInfo>();
-			}
-		}
-
-		protected override List<EFVersionInfo> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy("Version ASC").Skip(skip).Take(take).ToList<EFVersionInfo>();
-			}
-			else
-			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFVersionInfo>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f732e0afd4b6089f2cf2d5e3c38a032</Hash>
+    <Hash>16e334c09bb8328d9260093333955bb8</Hash>
 </Codenesium>*/

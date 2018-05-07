@@ -17,18 +17,12 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOCountryRequirement Get(int id);
 
-		POCOCountryRequirement GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFCountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOCountryRequirement> GetWhereDirect(Expression<Func<EFCountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOCountryRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>6f494ca1c68b92f3c18756e2c71656a9</Hash>
+    <Hash>45580cc5c7448042645e7a22ae854f78</Hash>
 </Codenesium>*/

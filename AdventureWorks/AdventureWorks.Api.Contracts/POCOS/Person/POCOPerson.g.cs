@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.Contracts
 			string title)
 		{
 			this.AdditionalContactInfo = additionalContactInfo;
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.Demographics = demographics;
 			this.EmailPromotion = emailPromotion.ToInt();
 			this.FirstName = firstName.ToString();
@@ -36,13 +37,10 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Rowguid = rowguid.ToGuid();
 			this.Suffix = suffix.ToString();
 			this.Title = title.ToString();
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.BusinessEntities));
 		}
 
 		public string AdditionalContactInfo { get; set; }
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public string Demographics { get; set; }
 		public int EmailPromotion { get; set; }
 		public string FirstName { get; set; }
@@ -179,5 +177,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>13c2e5c2337c5b7433fcf69e551aa9b6</Hash>
+    <Hash>8ecd7e9f9f9d9bb3f04b1d0fd14a7a6f</Hash>
 </Codenesium>*/

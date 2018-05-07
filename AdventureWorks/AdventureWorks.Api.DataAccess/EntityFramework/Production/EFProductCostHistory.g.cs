@@ -40,12 +40,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("StartDate", TypeName="datetime")]
 		public DateTime StartDate { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b93b178f4fca821a13a21096c7ee24d2</Hash>
+    <Hash>37097762badc36ef06edcc0fc944dbcb</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/rates")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class RateController: AbstractRateController
 	{
 		public RateController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a722064cccd653e8773171ccf6564d94</Hash>
+    <Hash>49e5415c5b262741f20f9ca1ffcbd121</Hash>
 </Codenesium>*/

@@ -14,17 +14,14 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			int productID)
 		{
+			this.DocumentNode = documentNode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			this.DocumentNode = new ReferenceEntity<Guid>(documentNode,
-			                                              nameof(ApiResponse.Documents));
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
+			this.ProductID = productID.ToInt();
 		}
 
-		public ReferenceEntity<Guid> DocumentNode { get; set; }
+		public Guid DocumentNode { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeDocumentNodeValue { get; set; } = true;
@@ -60,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d36b6ba71415d0ef272d91e23abdb493</Hash>
+    <Hash>de1a91ab43e32cd1de052d11487a403b</Hash>
 </Codenesium>*/

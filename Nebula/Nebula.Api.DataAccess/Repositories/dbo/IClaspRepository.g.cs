@@ -14,18 +14,12 @@ namespace NebulaNS.Api.DataAccess
 
 		void Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOClasp Get(int id);
 
-		POCOClasp GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOClasp> GetWhereDirect(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>d352f23a4160928e2e1364fb7fedb42a</Hash>
+    <Hash>28a40ba50d42c2a7fdbfea5311db7fbc</Hash>
 </Codenesium>*/

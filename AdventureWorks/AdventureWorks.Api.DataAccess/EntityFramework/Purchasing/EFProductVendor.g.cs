@@ -70,12 +70,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("UnitMeasureCode", TypeName="nchar(3)")]
 		public string UnitMeasureCode { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFVendor Vendor { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>772b180700ec97bf4579e283d8b79002</Hash>
+    <Hash>d1231d199b87484d02ee83872f08c3d1</Hash>
 </Codenesium>*/

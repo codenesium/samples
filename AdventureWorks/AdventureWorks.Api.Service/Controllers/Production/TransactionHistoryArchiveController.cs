@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/transactionHistoryArchives")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class TransactionHistoryArchiveController: AbstractTransactionHistoryArchiveController
 	{
 		public TransactionHistoryArchiveController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fb00ff54c1d79338bbb02ac9aa270d4d</Hash>
+    <Hash>8b27a8da5c0a5780cecdf2194ee493f8</Hash>
 </Codenesium>*/

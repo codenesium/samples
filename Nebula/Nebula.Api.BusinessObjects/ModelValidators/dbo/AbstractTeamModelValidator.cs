@@ -35,11 +35,11 @@ namespace NebulaNS.Api.BusinessObjects
 
 		private bool BeValidOrganization(int id)
 		{
-			return this.OrganizationRepository.GetByIdDirect(id) != null;
+			return this.OrganizationRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5afc130e1c608dc3503dff76f362256f</Hash>
+    <Hash>227cb40bf1fac2b15fc4d345e5fa3cb1</Hash>
 </Codenesium>*/

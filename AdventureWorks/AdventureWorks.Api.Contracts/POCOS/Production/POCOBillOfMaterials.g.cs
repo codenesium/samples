@@ -22,28 +22,24 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.BillOfMaterialsID = billOfMaterialsID.ToInt();
 			this.BOMLevel = bOMLevel;
+			this.ComponentID = componentID.ToInt();
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
+			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
 			this.StartDate = startDate.ToDateTime();
-
-			this.ComponentID = new ReferenceEntity<int>(componentID,
-			                                            nameof(ApiResponse.Products));
-			this.ProductAssemblyID = new ReferenceEntity<Nullable<int>>(productAssemblyID,
-			                                                            nameof(ApiResponse.Products));
-			this.UnitMeasureCode = new ReferenceEntity<string>(unitMeasureCode,
-			                                                   nameof(ApiResponse.UnitMeasures));
+			this.UnitMeasureCode = unitMeasureCode.ToString();
 		}
 
 		public int BillOfMaterialsID { get; set; }
 		public short BOMLevel { get; set; }
-		public ReferenceEntity<int> ComponentID { get; set; }
+		public int ComponentID { get; set; }
 		public Nullable<DateTime> EndDate { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public decimal PerAssemblyQty { get; set; }
-		public ReferenceEntity<Nullable<int>> ProductAssemblyID { get; set; }
+		public Nullable<int> ProductAssemblyID { get; set; }
 		public DateTime StartDate { get; set; }
-		public ReferenceEntity<string> UnitMeasureCode { get; set; }
+		public string UnitMeasureCode { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBillOfMaterialsIDValue { get; set; } = true;
@@ -133,5 +129,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>493edd12dde318c5569cb9a4ca462cfa</Hash>
+    <Hash>16517107fbba8a424f7e924705846649</Hash>
 </Codenesium>*/

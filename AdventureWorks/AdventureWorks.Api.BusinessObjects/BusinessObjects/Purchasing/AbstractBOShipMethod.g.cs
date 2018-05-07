@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int shipMethodID)
+		public virtual POCOShipMethod Get(int shipMethodID)
 		{
-			return this.shipMethodRepository.GetById(shipMethodID);
+			return this.shipMethodRepository.Get(shipMethodID);
 		}
 
-		public virtual POCOShipMethod GetByIdDirect(int shipMethodID)
+		public virtual List<POCOShipMethod> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.shipMethodRepository.GetByIdDirect(shipMethodID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.shipMethodRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.shipMethodRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOShipMethod> GetWhereDirect(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.shipMethodRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.shipMethodRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>db58dee7f9cd301cbad49ca89eac50ee</Hash>
+    <Hash>d942625dd710dbb0bafb6ebf41c7ce0a</Hash>
 </Codenesium>*/

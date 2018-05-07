@@ -55,12 +55,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("ReviewerName", TypeName="nvarchar(50)")]
 		public string ReviewerName { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4dc86d9fb9f793e6bdedb84ba5c9f1ab</Hash>
+    <Hash>b04e5e961f68761d1411f5200855517f</Hash>
 </Codenesium>*/

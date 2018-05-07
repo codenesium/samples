@@ -27,31 +27,28 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
 			this.ActualResourceHrs = actualResourceHrs.ToNullableDecimal();
 			this.ActualStartDate = actualStartDate.ToNullableDateTime();
+			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OperationSequence = operationSequence;
 			this.PlannedCost = plannedCost.ToDecimal();
 			this.ProductID = productID.ToInt();
 			this.ScheduledEndDate = scheduledEndDate.ToDateTime();
 			this.ScheduledStartDate = scheduledStartDate.ToDateTime();
-
-			this.LocationID = new ReferenceEntity<short>(locationID,
-			                                             nameof(ApiResponse.Locations));
-			this.WorkOrderID = new ReferenceEntity<int>(workOrderID,
-			                                            nameof(ApiResponse.WorkOrders));
+			this.WorkOrderID = workOrderID.ToInt();
 		}
 
 		public Nullable<decimal> ActualCost { get; set; }
 		public Nullable<DateTime> ActualEndDate { get; set; }
 		public Nullable<decimal> ActualResourceHrs { get; set; }
 		public Nullable<DateTime> ActualStartDate { get; set; }
-		public ReferenceEntity<short> LocationID { get; set; }
+		public short LocationID { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public short OperationSequence { get; set; }
 		public decimal PlannedCost { get; set; }
 		public int ProductID { get; set; }
 		public DateTime ScheduledEndDate { get; set; }
 		public DateTime ScheduledStartDate { get; set; }
-		public ReferenceEntity<int> WorkOrderID { get; set; }
+		public int WorkOrderID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeActualCostValue { get; set; } = true;
@@ -168,5 +165,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f8600539a05e1b9a9f7be30567120ebc</Hash>
+    <Hash>d770b121ed457ac893a75af9b5eb3514</Hash>
 </Codenesium>*/

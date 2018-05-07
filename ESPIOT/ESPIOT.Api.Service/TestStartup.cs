@@ -61,6 +61,7 @@ namespace ESPIOTNS.Api.Service
                  config.Filters.Add(new AuthorizeFilter(policy));
                  */
                  config.Filters.Add(new BenchmarkAttribute());
+				 config.Filters.Add(new NullModelValidaterAttribute());
             }).AddVersionedApiExplorer(
             o =>
             {
@@ -170,8 +171,9 @@ namespace ESPIOTNS.Api.Service
 
 		    var businessObjectsAssembly = typeof(ValidationError).Assembly;
             builder.RegisterAssemblyTypes(businessObjectsAssembly)
-                .Where(t => t.IsClass && !t.IsAbstract && (t.Name.StartsWith("BO") ||  t.Name.EndsWith("ModelValidator")))
-                .AsImplementedInterfaces();
+                .Where(t => t.IsClass && !t.IsAbstract && (t.Name.StartsWith("BO") || t.Name.EndsWith("ModelValidator")))
+                .AsImplementedInterfaces()
+				.PropertiesAutowired();
 
 
             var dataAccessAssembly = typeof(ObjectMapper).Assembly;

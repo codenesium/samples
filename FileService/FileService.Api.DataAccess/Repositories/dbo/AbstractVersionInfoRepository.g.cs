@@ -76,61 +76,55 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(long version)
+		public virtual POCOVersionInfo Get(long version)
 		{
-			return this.SearchLinqPOCO(x => x.Version == version);
+			return this.SearchLinqPOCO(x => x.Version == version).FirstOrDefault();
 		}
 
-		public virtual POCOVersionInfo GetByIdDirect(long version)
+		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.Version == version).VersionInfoes.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOVersionInfo> Where(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOVersionInfo> SearchLinqPOCO(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOVersionInfo> GetWhereDirect(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).VersionInfoes;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOVersionInfo> response = new List<POCOVersionInfo>();
 			List<EFVersionInfo> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.VersionInfoMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.VersionInfoMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFVersionInfo> SearchLinqEF(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFVersionInfo> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.VersionInfoMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy("Version ASC").Skip(skip).Take(take).ToList<EFVersionInfo>();
+			}
+			else
+			{
+				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFVersionInfo>();
+			}
 		}
 
-		protected virtual List<EFVersionInfo> SearchLinqEF(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFVersionInfo> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFVersionInfo> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy("Version ASC").Skip(skip).Take(take).ToList<EFVersionInfo>();
+			}
+			else
+			{
+				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFVersionInfo>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7fad492819bd687ce02131d5e47fe1ac</Hash>
+    <Hash>ef719a4cd0861269bdf7c434f6f7012f</Hash>
 </Codenesium>*/

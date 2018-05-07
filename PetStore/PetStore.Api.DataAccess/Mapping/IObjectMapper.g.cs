@@ -10,57 +10,51 @@ namespace PetStoreNS.Api.DataAccess
 			BreedModel model,
 			EFBreed efBreed);
 
-		void BreedMapEFToPOCO(
-			EFBreed efBreed,
-			ApiResponse response);
+		POCOBreed BreedMapEFToPOCO(
+			EFBreed efBreed);
 
 		void PaymentTypeMapModelToEF(
 			int id,
 			PaymentTypeModel model,
 			EFPaymentType efPaymentType);
 
-		void PaymentTypeMapEFToPOCO(
-			EFPaymentType efPaymentType,
-			ApiResponse response);
+		POCOPaymentType PaymentTypeMapEFToPOCO(
+			EFPaymentType efPaymentType);
 
 		void PenMapModelToEF(
 			int id,
 			PenModel model,
 			EFPen efPen);
 
-		void PenMapEFToPOCO(
-			EFPen efPen,
-			ApiResponse response);
+		POCOPen PenMapEFToPOCO(
+			EFPen efPen);
 
 		void PetMapModelToEF(
 			int id,
 			PetModel model,
 			EFPet efPet);
 
-		void PetMapEFToPOCO(
-			EFPet efPet,
-			ApiResponse response);
+		POCOPet PetMapEFToPOCO(
+			EFPet efPet);
 
 		void SaleMapModelToEF(
 			int id,
 			SaleModel model,
 			EFSale efSale);
 
-		void SaleMapEFToPOCO(
-			EFSale efSale,
-			ApiResponse response);
+		POCOSale SaleMapEFToPOCO(
+			EFSale efSale);
 
 		void SpeciesMapModelToEF(
 			int id,
 			SpeciesModel model,
 			EFSpecies efSpecies);
 
-		void SpeciesMapEFToPOCO(
-			EFSpecies efSpecies,
-			ApiResponse response);
+		POCOSpecies SpeciesMapEFToPOCO(
+			EFSpecies efSpecies);
 	}
 }
 
 /*<Codenesium>
-    <Hash>de3cf5885d0b00fb2cded06375f569a9</Hash>
+    <Hash>ac7719c1f2fcfa2a4c5750183be8df7b</Hash>
 </Codenesium>*/

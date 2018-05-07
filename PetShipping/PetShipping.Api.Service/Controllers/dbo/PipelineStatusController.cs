@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/pipelineStatus")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PipelineStatusController: AbstractPipelineStatusController
 	{
 		public PipelineStatusController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>048676af35b41a2a544af1d62726b4ff</Hash>
+    <Hash>a731658085778c9e3d66d9a195b973d4</Hash>
 </Codenesium>*/

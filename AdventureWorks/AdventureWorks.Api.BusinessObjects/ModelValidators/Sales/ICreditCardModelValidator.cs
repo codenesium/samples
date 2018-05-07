@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface ICreditCardModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(CreditCardModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, CreditCardModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(CreditCardModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, CreditCardModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4fa165953410e84b792fb7cdce71b6a</Hash>
+    <Hash>5c632b6b567a3019cffcf71b42b12bfa</Hash>
 </Codenesium>*/

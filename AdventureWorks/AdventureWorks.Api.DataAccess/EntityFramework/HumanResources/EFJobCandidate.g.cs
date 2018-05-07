@@ -35,12 +35,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("Resume", TypeName="xml(-1)")]
 		public string Resume { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFEmployee Employee { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>40e115d5e4ad2d30da2bb31f3d530b64</Hash>
+    <Hash>9e239fa50beb8d8b169521e66abcb730</Hash>
 </Codenesium>*/

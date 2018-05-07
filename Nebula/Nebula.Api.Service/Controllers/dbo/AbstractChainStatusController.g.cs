@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOChainStatus response = this.chainStatusManager.GetById(id).ChainStatus.FirstOrDefault();
+			POCOChainStatus response = this.chainStatusManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOChainStatus>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.chainStatusManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ChainStatus);
-			}
+			List<POCOChainStatus> response = this.chainStatusManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace NebulaNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ChainStatus/{result.Id.ToString()}");
-				POCOChainStatus response = this.chainStatusManager.GetById(result.Id).ChainStatus.First();
+				POCOChainStatus response = this.chainStatusManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOChainStatus response = this.chainStatusManager.GetById(id).ChainStatus.First();
+					POCOChainStatus response = this.chainStatusManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -179,5 +170,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c5a9ba9795187485dd773c27cb83256c</Hash>
+    <Hash>3f3428e093c29785e0dbceaba624f9d3</Hash>
 </Codenesium>*/

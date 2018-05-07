@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shoppingCartItems")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ShoppingCartItemController: AbstractShoppingCartItemController
 	{
 		public ShoppingCartItemController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b4a77a555015bd9bdb30f835a75b45c1</Hash>
+    <Hash>4062887227957d709fded65f207d91e3</Hash>
 </Codenesium>*/

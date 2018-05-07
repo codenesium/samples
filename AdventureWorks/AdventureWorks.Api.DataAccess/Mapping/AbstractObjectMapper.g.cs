@@ -17,16 +17,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.VersionDate);
 		}
 
-		public virtual void AWBuildVersionMapEFToPOCO(
-			EFAWBuildVersion efAWBuildVersion,
-			ApiResponse response)
+		public virtual POCOAWBuildVersion AWBuildVersionMapEFToPOCO(
+			EFAWBuildVersion efAWBuildVersion)
 		{
 			if (efAWBuildVersion == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddAWBuildVersion(new POCOAWBuildVersion(efAWBuildVersion.Database_Version, efAWBuildVersion.ModifiedDate, efAWBuildVersion.SystemInformationID, efAWBuildVersion.VersionDate));
+			return new POCOAWBuildVersion(efAWBuildVersion.Database_Version, efAWBuildVersion.ModifiedDate, efAWBuildVersion.SystemInformationID, efAWBuildVersion.VersionDate);
 		}
 
 		public virtual void DatabaseLogMapModelToEF(
@@ -45,16 +44,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.XmlEvent);
 		}
 
-		public virtual void DatabaseLogMapEFToPOCO(
-			EFDatabaseLog efDatabaseLog,
-			ApiResponse response)
+		public virtual POCODatabaseLog DatabaseLogMapEFToPOCO(
+			EFDatabaseLog efDatabaseLog)
 		{
 			if (efDatabaseLog == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddDatabaseLog(new POCODatabaseLog(efDatabaseLog.DatabaseLogID, efDatabaseLog.DatabaseUser, efDatabaseLog.@Event, efDatabaseLog.@Object, efDatabaseLog.PostTime, efDatabaseLog.Schema, efDatabaseLog.TSQL, efDatabaseLog.XmlEvent));
+			return new POCODatabaseLog(efDatabaseLog.DatabaseLogID, efDatabaseLog.DatabaseUser, efDatabaseLog.@Event, efDatabaseLog.@Object, efDatabaseLog.PostTime, efDatabaseLog.Schema, efDatabaseLog.TSQL, efDatabaseLog.XmlEvent);
 		}
 
 		public virtual void ErrorLogMapModelToEF(
@@ -74,16 +72,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.UserName);
 		}
 
-		public virtual void ErrorLogMapEFToPOCO(
-			EFErrorLog efErrorLog,
-			ApiResponse response)
+		public virtual POCOErrorLog ErrorLogMapEFToPOCO(
+			EFErrorLog efErrorLog)
 		{
 			if (efErrorLog == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddErrorLog(new POCOErrorLog(efErrorLog.ErrorLine, efErrorLog.ErrorLogID, efErrorLog.ErrorMessage, efErrorLog.ErrorNumber, efErrorLog.ErrorProcedure, efErrorLog.ErrorSeverity, efErrorLog.ErrorState, efErrorLog.ErrorTime, efErrorLog.UserName));
+			return new POCOErrorLog(efErrorLog.ErrorLine, efErrorLog.ErrorLogID, efErrorLog.ErrorMessage, efErrorLog.ErrorNumber, efErrorLog.ErrorProcedure, efErrorLog.ErrorSeverity, efErrorLog.ErrorState, efErrorLog.ErrorTime, efErrorLog.UserName);
 		}
 
 		public virtual void DepartmentMapModelToEF(
@@ -98,16 +95,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void DepartmentMapEFToPOCO(
-			EFDepartment efDepartment,
-			ApiResponse response)
+		public virtual POCODepartment DepartmentMapEFToPOCO(
+			EFDepartment efDepartment)
 		{
 			if (efDepartment == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddDepartment(new POCODepartment(efDepartment.DepartmentID, efDepartment.GroupName, efDepartment.ModifiedDate, efDepartment.Name));
+			return new POCODepartment(efDepartment.DepartmentID, efDepartment.GroupName, efDepartment.ModifiedDate, efDepartment.Name);
 		}
 
 		public virtual void EmployeeMapModelToEF(
@@ -134,16 +130,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.VacationHours);
 		}
 
-		public virtual void EmployeeMapEFToPOCO(
-			EFEmployee efEmployee,
-			ApiResponse response)
+		public virtual POCOEmployee EmployeeMapEFToPOCO(
+			EFEmployee efEmployee)
 		{
 			if (efEmployee == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddEmployee(new POCOEmployee(efEmployee.BirthDate, efEmployee.BusinessEntityID, efEmployee.CurrentFlag, efEmployee.Gender, efEmployee.HireDate, efEmployee.JobTitle, efEmployee.LoginID, efEmployee.MaritalStatus, efEmployee.ModifiedDate, efEmployee.NationalIDNumber, efEmployee.OrganizationLevel, efEmployee.OrganizationNode, efEmployee.Rowguid, efEmployee.SalariedFlag, efEmployee.SickLeaveHours, efEmployee.VacationHours));
+			return new POCOEmployee(efEmployee.BirthDate, efEmployee.BusinessEntityID, efEmployee.CurrentFlag, efEmployee.Gender, efEmployee.HireDate, efEmployee.JobTitle, efEmployee.LoginID, efEmployee.MaritalStatus, efEmployee.ModifiedDate, efEmployee.NationalIDNumber, efEmployee.OrganizationLevel, efEmployee.OrganizationNode, efEmployee.Rowguid, efEmployee.SalariedFlag, efEmployee.SickLeaveHours, efEmployee.VacationHours);
 		}
 
 		public virtual void EmployeeDepartmentHistoryMapModelToEF(
@@ -160,22 +155,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.StartDate);
 		}
 
-		public virtual void EmployeeDepartmentHistoryMapEFToPOCO(
-			EFEmployeeDepartmentHistory efEmployeeDepartmentHistory,
-			ApiResponse response)
+		public virtual POCOEmployeeDepartmentHistory EmployeeDepartmentHistoryMapEFToPOCO(
+			EFEmployeeDepartmentHistory efEmployeeDepartmentHistory)
 		{
 			if (efEmployeeDepartmentHistory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddEmployeeDepartmentHistory(new POCOEmployeeDepartmentHistory(efEmployeeDepartmentHistory.BusinessEntityID, efEmployeeDepartmentHistory.DepartmentID, efEmployeeDepartmentHistory.EndDate, efEmployeeDepartmentHistory.ModifiedDate, efEmployeeDepartmentHistory.ShiftID, efEmployeeDepartmentHistory.StartDate));
-
-			this.EmployeeMapEFToPOCO(efEmployeeDepartmentHistory.Employee, response);
-
-			this.DepartmentMapEFToPOCO(efEmployeeDepartmentHistory.Department, response);
-
-			this.ShiftMapEFToPOCO(efEmployeeDepartmentHistory.Shift, response);
+			return new POCOEmployeeDepartmentHistory(efEmployeeDepartmentHistory.BusinessEntityID, efEmployeeDepartmentHistory.DepartmentID, efEmployeeDepartmentHistory.EndDate, efEmployeeDepartmentHistory.ModifiedDate, efEmployeeDepartmentHistory.ShiftID, efEmployeeDepartmentHistory.StartDate);
 		}
 
 		public virtual void EmployeePayHistoryMapModelToEF(
@@ -191,18 +179,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.RateChangeDate);
 		}
 
-		public virtual void EmployeePayHistoryMapEFToPOCO(
-			EFEmployeePayHistory efEmployeePayHistory,
-			ApiResponse response)
+		public virtual POCOEmployeePayHistory EmployeePayHistoryMapEFToPOCO(
+			EFEmployeePayHistory efEmployeePayHistory)
 		{
 			if (efEmployeePayHistory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddEmployeePayHistory(new POCOEmployeePayHistory(efEmployeePayHistory.BusinessEntityID, efEmployeePayHistory.ModifiedDate, efEmployeePayHistory.PayFrequency, efEmployeePayHistory.Rate, efEmployeePayHistory.RateChangeDate));
-
-			this.EmployeeMapEFToPOCO(efEmployeePayHistory.Employee, response);
+			return new POCOEmployeePayHistory(efEmployeePayHistory.BusinessEntityID, efEmployeePayHistory.ModifiedDate, efEmployeePayHistory.PayFrequency, efEmployeePayHistory.Rate, efEmployeePayHistory.RateChangeDate);
 		}
 
 		public virtual void JobCandidateMapModelToEF(
@@ -217,18 +202,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Resume);
 		}
 
-		public virtual void JobCandidateMapEFToPOCO(
-			EFJobCandidate efJobCandidate,
-			ApiResponse response)
+		public virtual POCOJobCandidate JobCandidateMapEFToPOCO(
+			EFJobCandidate efJobCandidate)
 		{
 			if (efJobCandidate == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddJobCandidate(new POCOJobCandidate(efJobCandidate.BusinessEntityID, efJobCandidate.JobCandidateID, efJobCandidate.ModifiedDate, efJobCandidate.Resume));
-
-			this.EmployeeMapEFToPOCO(efJobCandidate.Employee, response);
+			return new POCOJobCandidate(efJobCandidate.BusinessEntityID, efJobCandidate.JobCandidateID, efJobCandidate.ModifiedDate, efJobCandidate.Resume);
 		}
 
 		public virtual void ShiftMapModelToEF(
@@ -244,16 +226,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.StartTime);
 		}
 
-		public virtual void ShiftMapEFToPOCO(
-			EFShift efShift,
-			ApiResponse response)
+		public virtual POCOShift ShiftMapEFToPOCO(
+			EFShift efShift)
 		{
 			if (efShift == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddShift(new POCOShift(efShift.EndTime, efShift.ModifiedDate, efShift.Name, efShift.ShiftID, efShift.StartTime));
+			return new POCOShift(efShift.EndTime, efShift.ModifiedDate, efShift.Name, efShift.ShiftID, efShift.StartTime);
 		}
 
 		public virtual void AddressMapModelToEF(
@@ -273,18 +254,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.StateProvinceID);
 		}
 
-		public virtual void AddressMapEFToPOCO(
-			EFAddress efAddress,
-			ApiResponse response)
+		public virtual POCOAddress AddressMapEFToPOCO(
+			EFAddress efAddress)
 		{
 			if (efAddress == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddAddress(new POCOAddress(efAddress.AddressID, efAddress.AddressLine1, efAddress.AddressLine2, efAddress.City, efAddress.ModifiedDate, efAddress.PostalCode, efAddress.Rowguid, efAddress.SpatialLocation, efAddress.StateProvinceID));
-
-			this.StateProvinceMapEFToPOCO(efAddress.StateProvince, response);
+			return new POCOAddress(efAddress.AddressID, efAddress.AddressLine1, efAddress.AddressLine2, efAddress.City, efAddress.ModifiedDate, efAddress.PostalCode, efAddress.Rowguid, efAddress.SpatialLocation, efAddress.StateProvinceID);
 		}
 
 		public virtual void AddressTypeMapModelToEF(
@@ -299,16 +277,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void AddressTypeMapEFToPOCO(
-			EFAddressType efAddressType,
-			ApiResponse response)
+		public virtual POCOAddressType AddressTypeMapEFToPOCO(
+			EFAddressType efAddressType)
 		{
 			if (efAddressType == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddAddressType(new POCOAddressType(efAddressType.AddressTypeID, efAddressType.ModifiedDate, efAddressType.Name, efAddressType.Rowguid));
+			return new POCOAddressType(efAddressType.AddressTypeID, efAddressType.ModifiedDate, efAddressType.Name, efAddressType.Rowguid);
 		}
 
 		public virtual void BusinessEntityMapModelToEF(
@@ -322,16 +299,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void BusinessEntityMapEFToPOCO(
-			EFBusinessEntity efBusinessEntity,
-			ApiResponse response)
+		public virtual POCOBusinessEntity BusinessEntityMapEFToPOCO(
+			EFBusinessEntity efBusinessEntity)
 		{
 			if (efBusinessEntity == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddBusinessEntity(new POCOBusinessEntity(efBusinessEntity.BusinessEntityID, efBusinessEntity.ModifiedDate, efBusinessEntity.Rowguid));
+			return new POCOBusinessEntity(efBusinessEntity.BusinessEntityID, efBusinessEntity.ModifiedDate, efBusinessEntity.Rowguid);
 		}
 
 		public virtual void BusinessEntityAddressMapModelToEF(
@@ -347,22 +323,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void BusinessEntityAddressMapEFToPOCO(
-			EFBusinessEntityAddress efBusinessEntityAddress,
-			ApiResponse response)
+		public virtual POCOBusinessEntityAddress BusinessEntityAddressMapEFToPOCO(
+			EFBusinessEntityAddress efBusinessEntityAddress)
 		{
 			if (efBusinessEntityAddress == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddBusinessEntityAddress(new POCOBusinessEntityAddress(efBusinessEntityAddress.AddressID, efBusinessEntityAddress.AddressTypeID, efBusinessEntityAddress.BusinessEntityID, efBusinessEntityAddress.ModifiedDate, efBusinessEntityAddress.Rowguid));
-
-			this.AddressMapEFToPOCO(efBusinessEntityAddress.Address, response);
-
-			this.AddressTypeMapEFToPOCO(efBusinessEntityAddress.AddressType, response);
-
-			this.BusinessEntityMapEFToPOCO(efBusinessEntityAddress.BusinessEntity, response);
+			return new POCOBusinessEntityAddress(efBusinessEntityAddress.AddressID, efBusinessEntityAddress.AddressTypeID, efBusinessEntityAddress.BusinessEntityID, efBusinessEntityAddress.ModifiedDate, efBusinessEntityAddress.Rowguid);
 		}
 
 		public virtual void BusinessEntityContactMapModelToEF(
@@ -378,22 +347,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void BusinessEntityContactMapEFToPOCO(
-			EFBusinessEntityContact efBusinessEntityContact,
-			ApiResponse response)
+		public virtual POCOBusinessEntityContact BusinessEntityContactMapEFToPOCO(
+			EFBusinessEntityContact efBusinessEntityContact)
 		{
 			if (efBusinessEntityContact == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddBusinessEntityContact(new POCOBusinessEntityContact(efBusinessEntityContact.BusinessEntityID, efBusinessEntityContact.ContactTypeID, efBusinessEntityContact.ModifiedDate, efBusinessEntityContact.PersonID, efBusinessEntityContact.Rowguid));
-
-			this.BusinessEntityMapEFToPOCO(efBusinessEntityContact.BusinessEntity, response);
-
-			this.ContactTypeMapEFToPOCO(efBusinessEntityContact.ContactType, response);
-
-			this.PersonMapEFToPOCO(efBusinessEntityContact.Person, response);
+			return new POCOBusinessEntityContact(efBusinessEntityContact.BusinessEntityID, efBusinessEntityContact.ContactTypeID, efBusinessEntityContact.ModifiedDate, efBusinessEntityContact.PersonID, efBusinessEntityContact.Rowguid);
 		}
 
 		public virtual void ContactTypeMapModelToEF(
@@ -407,16 +369,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void ContactTypeMapEFToPOCO(
-			EFContactType efContactType,
-			ApiResponse response)
+		public virtual POCOContactType ContactTypeMapEFToPOCO(
+			EFContactType efContactType)
 		{
 			if (efContactType == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddContactType(new POCOContactType(efContactType.ContactTypeID, efContactType.ModifiedDate, efContactType.Name));
+			return new POCOContactType(efContactType.ContactTypeID, efContactType.ModifiedDate, efContactType.Name);
 		}
 
 		public virtual void CountryRegionMapModelToEF(
@@ -430,16 +391,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void CountryRegionMapEFToPOCO(
-			EFCountryRegion efCountryRegion,
-			ApiResponse response)
+		public virtual POCOCountryRegion CountryRegionMapEFToPOCO(
+			EFCountryRegion efCountryRegion)
 		{
 			if (efCountryRegion == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCountryRegion(new POCOCountryRegion(efCountryRegion.CountryRegionCode, efCountryRegion.ModifiedDate, efCountryRegion.Name));
+			return new POCOCountryRegion(efCountryRegion.CountryRegionCode, efCountryRegion.ModifiedDate, efCountryRegion.Name);
 		}
 
 		public virtual void EmailAddressMapModelToEF(
@@ -455,18 +415,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void EmailAddressMapEFToPOCO(
-			EFEmailAddress efEmailAddress,
-			ApiResponse response)
+		public virtual POCOEmailAddress EmailAddressMapEFToPOCO(
+			EFEmailAddress efEmailAddress)
 		{
 			if (efEmailAddress == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddEmailAddress(new POCOEmailAddress(efEmailAddress.BusinessEntityID, efEmailAddress.EmailAddress1, efEmailAddress.EmailAddressID, efEmailAddress.ModifiedDate, efEmailAddress.Rowguid));
-
-			this.PersonMapEFToPOCO(efEmailAddress.Person, response);
+			return new POCOEmailAddress(efEmailAddress.BusinessEntityID, efEmailAddress.EmailAddress1, efEmailAddress.EmailAddressID, efEmailAddress.ModifiedDate, efEmailAddress.Rowguid);
 		}
 
 		public virtual void PasswordMapModelToEF(
@@ -482,18 +439,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void PasswordMapEFToPOCO(
-			EFPassword efPassword,
-			ApiResponse response)
+		public virtual POCOPassword PasswordMapEFToPOCO(
+			EFPassword efPassword)
 		{
 			if (efPassword == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPassword(new POCOPassword(efPassword.BusinessEntityID, efPassword.ModifiedDate, efPassword.PasswordHash, efPassword.PasswordSalt, efPassword.Rowguid));
-
-			this.PersonMapEFToPOCO(efPassword.Person, response);
+			return new POCOPassword(efPassword.BusinessEntityID, efPassword.ModifiedDate, efPassword.PasswordHash, efPassword.PasswordSalt, efPassword.Rowguid);
 		}
 
 		public virtual void PersonMapModelToEF(
@@ -517,18 +471,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Title);
 		}
 
-		public virtual void PersonMapEFToPOCO(
-			EFPerson efPerson,
-			ApiResponse response)
+		public virtual POCOPerson PersonMapEFToPOCO(
+			EFPerson efPerson)
 		{
 			if (efPerson == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPerson(new POCOPerson(efPerson.AdditionalContactInfo, efPerson.BusinessEntityID, efPerson.Demographics, efPerson.EmailPromotion, efPerson.FirstName, efPerson.LastName, efPerson.MiddleName, efPerson.ModifiedDate, efPerson.NameStyle, efPerson.PersonType, efPerson.Rowguid, efPerson.Suffix, efPerson.Title));
-
-			this.BusinessEntityMapEFToPOCO(efPerson.BusinessEntity, response);
+			return new POCOPerson(efPerson.AdditionalContactInfo, efPerson.BusinessEntityID, efPerson.Demographics, efPerson.EmailPromotion, efPerson.FirstName, efPerson.LastName, efPerson.MiddleName, efPerson.ModifiedDate, efPerson.NameStyle, efPerson.PersonType, efPerson.Rowguid, efPerson.Suffix, efPerson.Title);
 		}
 
 		public virtual void PersonPhoneMapModelToEF(
@@ -543,20 +494,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.PhoneNumberTypeID);
 		}
 
-		public virtual void PersonPhoneMapEFToPOCO(
-			EFPersonPhone efPersonPhone,
-			ApiResponse response)
+		public virtual POCOPersonPhone PersonPhoneMapEFToPOCO(
+			EFPersonPhone efPersonPhone)
 		{
 			if (efPersonPhone == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPersonPhone(new POCOPersonPhone(efPersonPhone.BusinessEntityID, efPersonPhone.ModifiedDate, efPersonPhone.PhoneNumber, efPersonPhone.PhoneNumberTypeID));
-
-			this.PersonMapEFToPOCO(efPersonPhone.Person, response);
-
-			this.PhoneNumberTypeMapEFToPOCO(efPersonPhone.PhoneNumberType, response);
+			return new POCOPersonPhone(efPersonPhone.BusinessEntityID, efPersonPhone.ModifiedDate, efPersonPhone.PhoneNumber, efPersonPhone.PhoneNumberTypeID);
 		}
 
 		public virtual void PhoneNumberTypeMapModelToEF(
@@ -570,16 +516,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void PhoneNumberTypeMapEFToPOCO(
-			EFPhoneNumberType efPhoneNumberType,
-			ApiResponse response)
+		public virtual POCOPhoneNumberType PhoneNumberTypeMapEFToPOCO(
+			EFPhoneNumberType efPhoneNumberType)
 		{
 			if (efPhoneNumberType == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPhoneNumberType(new POCOPhoneNumberType(efPhoneNumberType.ModifiedDate, efPhoneNumberType.Name, efPhoneNumberType.PhoneNumberTypeID));
+			return new POCOPhoneNumberType(efPhoneNumberType.ModifiedDate, efPhoneNumberType.Name, efPhoneNumberType.PhoneNumberTypeID);
 		}
 
 		public virtual void StateProvinceMapModelToEF(
@@ -598,18 +543,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TerritoryID);
 		}
 
-		public virtual void StateProvinceMapEFToPOCO(
-			EFStateProvince efStateProvince,
-			ApiResponse response)
+		public virtual POCOStateProvince StateProvinceMapEFToPOCO(
+			EFStateProvince efStateProvince)
 		{
 			if (efStateProvince == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddStateProvince(new POCOStateProvince(efStateProvince.CountryRegionCode, efStateProvince.IsOnlyStateProvinceFlag, efStateProvince.ModifiedDate, efStateProvince.Name, efStateProvince.Rowguid, efStateProvince.StateProvinceCode, efStateProvince.StateProvinceID, efStateProvince.TerritoryID));
-
-			this.CountryRegionMapEFToPOCO(efStateProvince.CountryRegion, response);
+			return new POCOStateProvince(efStateProvince.CountryRegionCode, efStateProvince.IsOnlyStateProvinceFlag, efStateProvince.ModifiedDate, efStateProvince.Name, efStateProvince.Rowguid, efStateProvince.StateProvinceCode, efStateProvince.StateProvinceID, efStateProvince.TerritoryID);
 		}
 
 		public virtual void BillOfMaterialsMapModelToEF(
@@ -629,22 +571,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.UnitMeasureCode);
 		}
 
-		public virtual void BillOfMaterialsMapEFToPOCO(
-			EFBillOfMaterials efBillOfMaterials,
-			ApiResponse response)
+		public virtual POCOBillOfMaterials BillOfMaterialsMapEFToPOCO(
+			EFBillOfMaterials efBillOfMaterials)
 		{
 			if (efBillOfMaterials == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddBillOfMaterials(new POCOBillOfMaterials(efBillOfMaterials.BillOfMaterialsID, efBillOfMaterials.BOMLevel, efBillOfMaterials.ComponentID, efBillOfMaterials.EndDate, efBillOfMaterials.ModifiedDate, efBillOfMaterials.PerAssemblyQty, efBillOfMaterials.ProductAssemblyID, efBillOfMaterials.StartDate, efBillOfMaterials.UnitMeasureCode));
-
-			this.ProductMapEFToPOCO(efBillOfMaterials.Product, response);
-
-			this.ProductMapEFToPOCO(efBillOfMaterials.Product1, response);
-
-			this.UnitMeasureMapEFToPOCO(efBillOfMaterials.UnitMeasure, response);
+			return new POCOBillOfMaterials(efBillOfMaterials.BillOfMaterialsID, efBillOfMaterials.BOMLevel, efBillOfMaterials.ComponentID, efBillOfMaterials.EndDate, efBillOfMaterials.ModifiedDate, efBillOfMaterials.PerAssemblyQty, efBillOfMaterials.ProductAssemblyID, efBillOfMaterials.StartDate, efBillOfMaterials.UnitMeasureCode);
 		}
 
 		public virtual void CultureMapModelToEF(
@@ -658,16 +593,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void CultureMapEFToPOCO(
-			EFCulture efCulture,
-			ApiResponse response)
+		public virtual POCOCulture CultureMapEFToPOCO(
+			EFCulture efCulture)
 		{
 			if (efCulture == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCulture(new POCOCulture(efCulture.CultureID, efCulture.ModifiedDate, efCulture.Name));
+			return new POCOCulture(efCulture.CultureID, efCulture.ModifiedDate, efCulture.Name);
 		}
 
 		public virtual void DocumentMapModelToEF(
@@ -692,16 +626,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Title);
 		}
 
-		public virtual void DocumentMapEFToPOCO(
-			EFDocument efDocument,
-			ApiResponse response)
+		public virtual POCODocument DocumentMapEFToPOCO(
+			EFDocument efDocument)
 		{
 			if (efDocument == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddDocument(new POCODocument(efDocument.ChangeNumber, efDocument.Document1, efDocument.DocumentLevel, efDocument.DocumentNode, efDocument.DocumentSummary, efDocument.FileExtension, efDocument.FileName, efDocument.FolderFlag, efDocument.ModifiedDate, efDocument.Owner, efDocument.Revision, efDocument.Rowguid, efDocument.Status, efDocument.Title));
+			return new POCODocument(efDocument.ChangeNumber, efDocument.Document1, efDocument.DocumentLevel, efDocument.DocumentNode, efDocument.DocumentSummary, efDocument.FileExtension, efDocument.FileName, efDocument.FolderFlag, efDocument.ModifiedDate, efDocument.Owner, efDocument.Revision, efDocument.Rowguid, efDocument.Status, efDocument.Title);
 		}
 
 		public virtual void IllustrationMapModelToEF(
@@ -715,16 +648,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ModifiedDate);
 		}
 
-		public virtual void IllustrationMapEFToPOCO(
-			EFIllustration efIllustration,
-			ApiResponse response)
+		public virtual POCOIllustration IllustrationMapEFToPOCO(
+			EFIllustration efIllustration)
 		{
 			if (efIllustration == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddIllustration(new POCOIllustration(efIllustration.Diagram, efIllustration.IllustrationID, efIllustration.ModifiedDate));
+			return new POCOIllustration(efIllustration.Diagram, efIllustration.IllustrationID, efIllustration.ModifiedDate);
 		}
 
 		public virtual void LocationMapModelToEF(
@@ -740,16 +672,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void LocationMapEFToPOCO(
-			EFLocation efLocation,
-			ApiResponse response)
+		public virtual POCOLocation LocationMapEFToPOCO(
+			EFLocation efLocation)
 		{
 			if (efLocation == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLocation(new POCOLocation(efLocation.Availability, efLocation.CostRate, efLocation.LocationID, efLocation.ModifiedDate, efLocation.Name));
+			return new POCOLocation(efLocation.Availability, efLocation.CostRate, efLocation.LocationID, efLocation.ModifiedDate, efLocation.Name);
 		}
 
 		public virtual void ProductMapModelToEF(
@@ -785,24 +716,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.WeightUnitMeasureCode);
 		}
 
-		public virtual void ProductMapEFToPOCO(
-			EFProduct efProduct,
-			ApiResponse response)
+		public virtual POCOProduct ProductMapEFToPOCO(
+			EFProduct efProduct)
 		{
 			if (efProduct == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProduct(new POCOProduct(efProduct.@Class, efProduct.Color, efProduct.DaysToManufacture, efProduct.DiscontinuedDate, efProduct.FinishedGoodsFlag, efProduct.ListPrice, efProduct.MakeFlag, efProduct.ModifiedDate, efProduct.Name, efProduct.ProductID, efProduct.ProductLine, efProduct.ProductModelID, efProduct.ProductNumber, efProduct.ProductSubcategoryID, efProduct.ReorderPoint, efProduct.Rowguid, efProduct.SafetyStockLevel, efProduct.SellEndDate, efProduct.SellStartDate, efProduct.Size, efProduct.SizeUnitMeasureCode, efProduct.StandardCost, efProduct.Style, efProduct.Weight, efProduct.WeightUnitMeasureCode));
-
-			this.ProductModelMapEFToPOCO(efProduct.ProductModel, response);
-
-			this.ProductSubcategoryMapEFToPOCO(efProduct.ProductSubcategory, response);
-
-			this.UnitMeasureMapEFToPOCO(efProduct.UnitMeasure, response);
-
-			this.UnitMeasureMapEFToPOCO(efProduct.UnitMeasure1, response);
+			return new POCOProduct(efProduct.@Class, efProduct.Color, efProduct.DaysToManufacture, efProduct.DiscontinuedDate, efProduct.FinishedGoodsFlag, efProduct.ListPrice, efProduct.MakeFlag, efProduct.ModifiedDate, efProduct.Name, efProduct.ProductID, efProduct.ProductLine, efProduct.ProductModelID, efProduct.ProductNumber, efProduct.ProductSubcategoryID, efProduct.ReorderPoint, efProduct.Rowguid, efProduct.SafetyStockLevel, efProduct.SellEndDate, efProduct.SellStartDate, efProduct.Size, efProduct.SizeUnitMeasureCode, efProduct.StandardCost, efProduct.Style, efProduct.Weight, efProduct.WeightUnitMeasureCode);
 		}
 
 		public virtual void ProductCategoryMapModelToEF(
@@ -817,16 +739,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void ProductCategoryMapEFToPOCO(
-			EFProductCategory efProductCategory,
-			ApiResponse response)
+		public virtual POCOProductCategory ProductCategoryMapEFToPOCO(
+			EFProductCategory efProductCategory)
 		{
 			if (efProductCategory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductCategory(new POCOProductCategory(efProductCategory.ModifiedDate, efProductCategory.Name, efProductCategory.ProductCategoryID, efProductCategory.Rowguid));
+			return new POCOProductCategory(efProductCategory.ModifiedDate, efProductCategory.Name, efProductCategory.ProductCategoryID, efProductCategory.Rowguid);
 		}
 
 		public virtual void ProductCostHistoryMapModelToEF(
@@ -842,18 +763,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.StartDate);
 		}
 
-		public virtual void ProductCostHistoryMapEFToPOCO(
-			EFProductCostHistory efProductCostHistory,
-			ApiResponse response)
+		public virtual POCOProductCostHistory ProductCostHistoryMapEFToPOCO(
+			EFProductCostHistory efProductCostHistory)
 		{
 			if (efProductCostHistory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductCostHistory(new POCOProductCostHistory(efProductCostHistory.EndDate, efProductCostHistory.ModifiedDate, efProductCostHistory.ProductID, efProductCostHistory.StandardCost, efProductCostHistory.StartDate));
-
-			this.ProductMapEFToPOCO(efProductCostHistory.Product, response);
+			return new POCOProductCostHistory(efProductCostHistory.EndDate, efProductCostHistory.ModifiedDate, efProductCostHistory.ProductID, efProductCostHistory.StandardCost, efProductCostHistory.StartDate);
 		}
 
 		public virtual void ProductDescriptionMapModelToEF(
@@ -868,16 +786,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void ProductDescriptionMapEFToPOCO(
-			EFProductDescription efProductDescription,
-			ApiResponse response)
+		public virtual POCOProductDescription ProductDescriptionMapEFToPOCO(
+			EFProductDescription efProductDescription)
 		{
 			if (efProductDescription == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductDescription(new POCOProductDescription(efProductDescription.Description, efProductDescription.ModifiedDate, efProductDescription.ProductDescriptionID, efProductDescription.Rowguid));
+			return new POCOProductDescription(efProductDescription.Description, efProductDescription.ModifiedDate, efProductDescription.ProductDescriptionID, efProductDescription.Rowguid);
 		}
 
 		public virtual void ProductDocumentMapModelToEF(
@@ -891,20 +808,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ModifiedDate);
 		}
 
-		public virtual void ProductDocumentMapEFToPOCO(
-			EFProductDocument efProductDocument,
-			ApiResponse response)
+		public virtual POCOProductDocument ProductDocumentMapEFToPOCO(
+			EFProductDocument efProductDocument)
 		{
 			if (efProductDocument == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductDocument(new POCOProductDocument(efProductDocument.DocumentNode, efProductDocument.ModifiedDate, efProductDocument.ProductID));
-
-			this.DocumentMapEFToPOCO(efProductDocument.Document, response);
-
-			this.ProductMapEFToPOCO(efProductDocument.Product, response);
+			return new POCOProductDocument(efProductDocument.DocumentNode, efProductDocument.ModifiedDate, efProductDocument.ProductID);
 		}
 
 		public virtual void ProductInventoryMapModelToEF(
@@ -922,20 +834,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Shelf);
 		}
 
-		public virtual void ProductInventoryMapEFToPOCO(
-			EFProductInventory efProductInventory,
-			ApiResponse response)
+		public virtual POCOProductInventory ProductInventoryMapEFToPOCO(
+			EFProductInventory efProductInventory)
 		{
 			if (efProductInventory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductInventory(new POCOProductInventory(efProductInventory.Bin, efProductInventory.LocationID, efProductInventory.ModifiedDate, efProductInventory.ProductID, efProductInventory.Quantity, efProductInventory.Rowguid, efProductInventory.Shelf));
-
-			this.LocationMapEFToPOCO(efProductInventory.Location, response);
-
-			this.ProductMapEFToPOCO(efProductInventory.Product, response);
+			return new POCOProductInventory(efProductInventory.Bin, efProductInventory.LocationID, efProductInventory.ModifiedDate, efProductInventory.ProductID, efProductInventory.Quantity, efProductInventory.Rowguid, efProductInventory.Shelf);
 		}
 
 		public virtual void ProductListPriceHistoryMapModelToEF(
@@ -951,18 +858,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.StartDate);
 		}
 
-		public virtual void ProductListPriceHistoryMapEFToPOCO(
-			EFProductListPriceHistory efProductListPriceHistory,
-			ApiResponse response)
+		public virtual POCOProductListPriceHistory ProductListPriceHistoryMapEFToPOCO(
+			EFProductListPriceHistory efProductListPriceHistory)
 		{
 			if (efProductListPriceHistory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductListPriceHistory(new POCOProductListPriceHistory(efProductListPriceHistory.EndDate, efProductListPriceHistory.ListPrice, efProductListPriceHistory.ModifiedDate, efProductListPriceHistory.ProductID, efProductListPriceHistory.StartDate));
-
-			this.ProductMapEFToPOCO(efProductListPriceHistory.Product, response);
+			return new POCOProductListPriceHistory(efProductListPriceHistory.EndDate, efProductListPriceHistory.ListPrice, efProductListPriceHistory.ModifiedDate, efProductListPriceHistory.ProductID, efProductListPriceHistory.StartDate);
 		}
 
 		public virtual void ProductModelMapModelToEF(
@@ -979,16 +883,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void ProductModelMapEFToPOCO(
-			EFProductModel efProductModel,
-			ApiResponse response)
+		public virtual POCOProductModel ProductModelMapEFToPOCO(
+			EFProductModel efProductModel)
 		{
 			if (efProductModel == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductModel(new POCOProductModel(efProductModel.CatalogDescription, efProductModel.Instructions, efProductModel.ModifiedDate, efProductModel.Name, efProductModel.ProductModelID, efProductModel.Rowguid));
+			return new POCOProductModel(efProductModel.CatalogDescription, efProductModel.Instructions, efProductModel.ModifiedDate, efProductModel.Name, efProductModel.ProductModelID, efProductModel.Rowguid);
 		}
 
 		public virtual void ProductModelIllustrationMapModelToEF(
@@ -1002,20 +905,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ModifiedDate);
 		}
 
-		public virtual void ProductModelIllustrationMapEFToPOCO(
-			EFProductModelIllustration efProductModelIllustration,
-			ApiResponse response)
+		public virtual POCOProductModelIllustration ProductModelIllustrationMapEFToPOCO(
+			EFProductModelIllustration efProductModelIllustration)
 		{
 			if (efProductModelIllustration == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductModelIllustration(new POCOProductModelIllustration(efProductModelIllustration.IllustrationID, efProductModelIllustration.ModifiedDate, efProductModelIllustration.ProductModelID));
-
-			this.IllustrationMapEFToPOCO(efProductModelIllustration.Illustration, response);
-
-			this.ProductModelMapEFToPOCO(efProductModelIllustration.ProductModel, response);
+			return new POCOProductModelIllustration(efProductModelIllustration.IllustrationID, efProductModelIllustration.ModifiedDate, efProductModelIllustration.ProductModelID);
 		}
 
 		public virtual void ProductModelProductDescriptionCultureMapModelToEF(
@@ -1030,22 +928,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ProductDescriptionID);
 		}
 
-		public virtual void ProductModelProductDescriptionCultureMapEFToPOCO(
-			EFProductModelProductDescriptionCulture efProductModelProductDescriptionCulture,
-			ApiResponse response)
+		public virtual POCOProductModelProductDescriptionCulture ProductModelProductDescriptionCultureMapEFToPOCO(
+			EFProductModelProductDescriptionCulture efProductModelProductDescriptionCulture)
 		{
 			if (efProductModelProductDescriptionCulture == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductModelProductDescriptionCulture(new POCOProductModelProductDescriptionCulture(efProductModelProductDescriptionCulture.CultureID, efProductModelProductDescriptionCulture.ModifiedDate, efProductModelProductDescriptionCulture.ProductDescriptionID, efProductModelProductDescriptionCulture.ProductModelID));
-
-			this.CultureMapEFToPOCO(efProductModelProductDescriptionCulture.Culture, response);
-
-			this.ProductDescriptionMapEFToPOCO(efProductModelProductDescriptionCulture.ProductDescription, response);
-
-			this.ProductModelMapEFToPOCO(efProductModelProductDescriptionCulture.ProductModel, response);
+			return new POCOProductModelProductDescriptionCulture(efProductModelProductDescriptionCulture.CultureID, efProductModelProductDescriptionCulture.ModifiedDate, efProductModelProductDescriptionCulture.ProductDescriptionID, efProductModelProductDescriptionCulture.ProductModelID);
 		}
 
 		public virtual void ProductPhotoMapModelToEF(
@@ -1062,16 +953,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ThumbnailPhotoFileName);
 		}
 
-		public virtual void ProductPhotoMapEFToPOCO(
-			EFProductPhoto efProductPhoto,
-			ApiResponse response)
+		public virtual POCOProductPhoto ProductPhotoMapEFToPOCO(
+			EFProductPhoto efProductPhoto)
 		{
 			if (efProductPhoto == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductPhoto(new POCOProductPhoto(efProductPhoto.LargePhoto, efProductPhoto.LargePhotoFileName, efProductPhoto.ModifiedDate, efProductPhoto.ProductPhotoID, efProductPhoto.ThumbNailPhoto, efProductPhoto.ThumbnailPhotoFileName));
+			return new POCOProductPhoto(efProductPhoto.LargePhoto, efProductPhoto.LargePhotoFileName, efProductPhoto.ModifiedDate, efProductPhoto.ProductPhotoID, efProductPhoto.ThumbNailPhoto, efProductPhoto.ThumbnailPhotoFileName);
 		}
 
 		public virtual void ProductProductPhotoMapModelToEF(
@@ -1086,20 +976,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ProductPhotoID);
 		}
 
-		public virtual void ProductProductPhotoMapEFToPOCO(
-			EFProductProductPhoto efProductProductPhoto,
-			ApiResponse response)
+		public virtual POCOProductProductPhoto ProductProductPhotoMapEFToPOCO(
+			EFProductProductPhoto efProductProductPhoto)
 		{
 			if (efProductProductPhoto == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductProductPhoto(new POCOProductProductPhoto(efProductProductPhoto.ModifiedDate, efProductProductPhoto.Primary, efProductProductPhoto.ProductID, efProductProductPhoto.ProductPhotoID));
-
-			this.ProductMapEFToPOCO(efProductProductPhoto.Product, response);
-
-			this.ProductPhotoMapEFToPOCO(efProductProductPhoto.ProductPhoto, response);
+			return new POCOProductProductPhoto(efProductProductPhoto.ModifiedDate, efProductProductPhoto.Primary, efProductProductPhoto.ProductID, efProductProductPhoto.ProductPhotoID);
 		}
 
 		public virtual void ProductReviewMapModelToEF(
@@ -1118,18 +1003,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ReviewerName);
 		}
 
-		public virtual void ProductReviewMapEFToPOCO(
-			EFProductReview efProductReview,
-			ApiResponse response)
+		public virtual POCOProductReview ProductReviewMapEFToPOCO(
+			EFProductReview efProductReview)
 		{
 			if (efProductReview == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductReview(new POCOProductReview(efProductReview.Comments, efProductReview.EmailAddress, efProductReview.ModifiedDate, efProductReview.ProductID, efProductReview.ProductReviewID, efProductReview.Rating, efProductReview.ReviewDate, efProductReview.ReviewerName));
-
-			this.ProductMapEFToPOCO(efProductReview.Product, response);
+			return new POCOProductReview(efProductReview.Comments, efProductReview.EmailAddress, efProductReview.ModifiedDate, efProductReview.ProductID, efProductReview.ProductReviewID, efProductReview.Rating, efProductReview.ReviewDate, efProductReview.ReviewerName);
 		}
 
 		public virtual void ProductSubcategoryMapModelToEF(
@@ -1145,18 +1027,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void ProductSubcategoryMapEFToPOCO(
-			EFProductSubcategory efProductSubcategory,
-			ApiResponse response)
+		public virtual POCOProductSubcategory ProductSubcategoryMapEFToPOCO(
+			EFProductSubcategory efProductSubcategory)
 		{
 			if (efProductSubcategory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductSubcategory(new POCOProductSubcategory(efProductSubcategory.ModifiedDate, efProductSubcategory.Name, efProductSubcategory.ProductCategoryID, efProductSubcategory.ProductSubcategoryID, efProductSubcategory.Rowguid));
-
-			this.ProductCategoryMapEFToPOCO(efProductSubcategory.ProductCategory, response);
+			return new POCOProductSubcategory(efProductSubcategory.ModifiedDate, efProductSubcategory.Name, efProductSubcategory.ProductCategoryID, efProductSubcategory.ProductSubcategoryID, efProductSubcategory.Rowguid);
 		}
 
 		public virtual void ScrapReasonMapModelToEF(
@@ -1170,16 +1049,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void ScrapReasonMapEFToPOCO(
-			EFScrapReason efScrapReason,
-			ApiResponse response)
+		public virtual POCOScrapReason ScrapReasonMapEFToPOCO(
+			EFScrapReason efScrapReason)
 		{
 			if (efScrapReason == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddScrapReason(new POCOScrapReason(efScrapReason.ModifiedDate, efScrapReason.Name, efScrapReason.ScrapReasonID));
+			return new POCOScrapReason(efScrapReason.ModifiedDate, efScrapReason.Name, efScrapReason.ScrapReasonID);
 		}
 
 		public virtual void TransactionHistoryMapModelToEF(
@@ -1199,18 +1077,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TransactionType);
 		}
 
-		public virtual void TransactionHistoryMapEFToPOCO(
-			EFTransactionHistory efTransactionHistory,
-			ApiResponse response)
+		public virtual POCOTransactionHistory TransactionHistoryMapEFToPOCO(
+			EFTransactionHistory efTransactionHistory)
 		{
 			if (efTransactionHistory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddTransactionHistory(new POCOTransactionHistory(efTransactionHistory.ActualCost, efTransactionHistory.ModifiedDate, efTransactionHistory.ProductID, efTransactionHistory.Quantity, efTransactionHistory.ReferenceOrderID, efTransactionHistory.ReferenceOrderLineID, efTransactionHistory.TransactionDate, efTransactionHistory.TransactionID, efTransactionHistory.TransactionType));
-
-			this.ProductMapEFToPOCO(efTransactionHistory.Product, response);
+			return new POCOTransactionHistory(efTransactionHistory.ActualCost, efTransactionHistory.ModifiedDate, efTransactionHistory.ProductID, efTransactionHistory.Quantity, efTransactionHistory.ReferenceOrderID, efTransactionHistory.ReferenceOrderLineID, efTransactionHistory.TransactionDate, efTransactionHistory.TransactionID, efTransactionHistory.TransactionType);
 		}
 
 		public virtual void TransactionHistoryArchiveMapModelToEF(
@@ -1230,16 +1105,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TransactionType);
 		}
 
-		public virtual void TransactionHistoryArchiveMapEFToPOCO(
-			EFTransactionHistoryArchive efTransactionHistoryArchive,
-			ApiResponse response)
+		public virtual POCOTransactionHistoryArchive TransactionHistoryArchiveMapEFToPOCO(
+			EFTransactionHistoryArchive efTransactionHistoryArchive)
 		{
 			if (efTransactionHistoryArchive == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddTransactionHistoryArchive(new POCOTransactionHistoryArchive(efTransactionHistoryArchive.ActualCost, efTransactionHistoryArchive.ModifiedDate, efTransactionHistoryArchive.ProductID, efTransactionHistoryArchive.Quantity, efTransactionHistoryArchive.ReferenceOrderID, efTransactionHistoryArchive.ReferenceOrderLineID, efTransactionHistoryArchive.TransactionDate, efTransactionHistoryArchive.TransactionID, efTransactionHistoryArchive.TransactionType));
+			return new POCOTransactionHistoryArchive(efTransactionHistoryArchive.ActualCost, efTransactionHistoryArchive.ModifiedDate, efTransactionHistoryArchive.ProductID, efTransactionHistoryArchive.Quantity, efTransactionHistoryArchive.ReferenceOrderID, efTransactionHistoryArchive.ReferenceOrderLineID, efTransactionHistoryArchive.TransactionDate, efTransactionHistoryArchive.TransactionID, efTransactionHistoryArchive.TransactionType);
 		}
 
 		public virtual void UnitMeasureMapModelToEF(
@@ -1253,16 +1127,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void UnitMeasureMapEFToPOCO(
-			EFUnitMeasure efUnitMeasure,
-			ApiResponse response)
+		public virtual POCOUnitMeasure UnitMeasureMapEFToPOCO(
+			EFUnitMeasure efUnitMeasure)
 		{
 			if (efUnitMeasure == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddUnitMeasure(new POCOUnitMeasure(efUnitMeasure.ModifiedDate, efUnitMeasure.Name, efUnitMeasure.UnitMeasureCode));
+			return new POCOUnitMeasure(efUnitMeasure.ModifiedDate, efUnitMeasure.Name, efUnitMeasure.UnitMeasureCode);
 		}
 
 		public virtual void WorkOrderMapModelToEF(
@@ -1283,20 +1156,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.StockedQty);
 		}
 
-		public virtual void WorkOrderMapEFToPOCO(
-			EFWorkOrder efWorkOrder,
-			ApiResponse response)
+		public virtual POCOWorkOrder WorkOrderMapEFToPOCO(
+			EFWorkOrder efWorkOrder)
 		{
 			if (efWorkOrder == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddWorkOrder(new POCOWorkOrder(efWorkOrder.DueDate, efWorkOrder.EndDate, efWorkOrder.ModifiedDate, efWorkOrder.OrderQty, efWorkOrder.ProductID, efWorkOrder.ScrappedQty, efWorkOrder.ScrapReasonID, efWorkOrder.StartDate, efWorkOrder.StockedQty, efWorkOrder.WorkOrderID));
-
-			this.ProductMapEFToPOCO(efWorkOrder.Product, response);
-
-			this.ScrapReasonMapEFToPOCO(efWorkOrder.ScrapReason, response);
+			return new POCOWorkOrder(efWorkOrder.DueDate, efWorkOrder.EndDate, efWorkOrder.ModifiedDate, efWorkOrder.OrderQty, efWorkOrder.ProductID, efWorkOrder.ScrappedQty, efWorkOrder.ScrapReasonID, efWorkOrder.StartDate, efWorkOrder.StockedQty, efWorkOrder.WorkOrderID);
 		}
 
 		public virtual void WorkOrderRoutingMapModelToEF(
@@ -1319,20 +1187,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ScheduledStartDate);
 		}
 
-		public virtual void WorkOrderRoutingMapEFToPOCO(
-			EFWorkOrderRouting efWorkOrderRouting,
-			ApiResponse response)
+		public virtual POCOWorkOrderRouting WorkOrderRoutingMapEFToPOCO(
+			EFWorkOrderRouting efWorkOrderRouting)
 		{
 			if (efWorkOrderRouting == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddWorkOrderRouting(new POCOWorkOrderRouting(efWorkOrderRouting.ActualCost, efWorkOrderRouting.ActualEndDate, efWorkOrderRouting.ActualResourceHrs, efWorkOrderRouting.ActualStartDate, efWorkOrderRouting.LocationID, efWorkOrderRouting.ModifiedDate, efWorkOrderRouting.OperationSequence, efWorkOrderRouting.PlannedCost, efWorkOrderRouting.ProductID, efWorkOrderRouting.ScheduledEndDate, efWorkOrderRouting.ScheduledStartDate, efWorkOrderRouting.WorkOrderID));
-
-			this.LocationMapEFToPOCO(efWorkOrderRouting.Location, response);
-
-			this.WorkOrderMapEFToPOCO(efWorkOrderRouting.WorkOrder, response);
+			return new POCOWorkOrderRouting(efWorkOrderRouting.ActualCost, efWorkOrderRouting.ActualEndDate, efWorkOrderRouting.ActualResourceHrs, efWorkOrderRouting.ActualStartDate, efWorkOrderRouting.LocationID, efWorkOrderRouting.ModifiedDate, efWorkOrderRouting.OperationSequence, efWorkOrderRouting.PlannedCost, efWorkOrderRouting.ProductID, efWorkOrderRouting.ScheduledEndDate, efWorkOrderRouting.ScheduledStartDate, efWorkOrderRouting.WorkOrderID);
 		}
 
 		public virtual void ProductVendorMapModelToEF(
@@ -1354,18 +1217,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.UnitMeasureCode);
 		}
 
-		public virtual void ProductVendorMapEFToPOCO(
-			EFProductVendor efProductVendor,
-			ApiResponse response)
+		public virtual POCOProductVendor ProductVendorMapEFToPOCO(
+			EFProductVendor efProductVendor)
 		{
 			if (efProductVendor == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddProductVendor(new POCOProductVendor(efProductVendor.AverageLeadTime, efProductVendor.BusinessEntityID, efProductVendor.LastReceiptCost, efProductVendor.LastReceiptDate, efProductVendor.MaxOrderQty, efProductVendor.MinOrderQty, efProductVendor.ModifiedDate, efProductVendor.OnOrderQty, efProductVendor.ProductID, efProductVendor.StandardPrice, efProductVendor.UnitMeasureCode));
-
-			this.VendorMapEFToPOCO(efProductVendor.Vendor, response);
+			return new POCOProductVendor(efProductVendor.AverageLeadTime, efProductVendor.BusinessEntityID, efProductVendor.LastReceiptCost, efProductVendor.LastReceiptDate, efProductVendor.MaxOrderQty, efProductVendor.MinOrderQty, efProductVendor.ModifiedDate, efProductVendor.OnOrderQty, efProductVendor.ProductID, efProductVendor.StandardPrice, efProductVendor.UnitMeasureCode);
 		}
 
 		public virtual void PurchaseOrderDetailMapModelToEF(
@@ -1387,18 +1247,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.UnitPrice);
 		}
 
-		public virtual void PurchaseOrderDetailMapEFToPOCO(
-			EFPurchaseOrderDetail efPurchaseOrderDetail,
-			ApiResponse response)
+		public virtual POCOPurchaseOrderDetail PurchaseOrderDetailMapEFToPOCO(
+			EFPurchaseOrderDetail efPurchaseOrderDetail)
 		{
 			if (efPurchaseOrderDetail == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPurchaseOrderDetail(new POCOPurchaseOrderDetail(efPurchaseOrderDetail.DueDate, efPurchaseOrderDetail.LineTotal, efPurchaseOrderDetail.ModifiedDate, efPurchaseOrderDetail.OrderQty, efPurchaseOrderDetail.ProductID, efPurchaseOrderDetail.PurchaseOrderDetailID, efPurchaseOrderDetail.PurchaseOrderID, efPurchaseOrderDetail.ReceivedQty, efPurchaseOrderDetail.RejectedQty, efPurchaseOrderDetail.StockedQty, efPurchaseOrderDetail.UnitPrice));
-
-			this.PurchaseOrderHeaderMapEFToPOCO(efPurchaseOrderDetail.PurchaseOrderHeader, response);
+			return new POCOPurchaseOrderDetail(efPurchaseOrderDetail.DueDate, efPurchaseOrderDetail.LineTotal, efPurchaseOrderDetail.ModifiedDate, efPurchaseOrderDetail.OrderQty, efPurchaseOrderDetail.ProductID, efPurchaseOrderDetail.PurchaseOrderDetailID, efPurchaseOrderDetail.PurchaseOrderID, efPurchaseOrderDetail.ReceivedQty, efPurchaseOrderDetail.RejectedQty, efPurchaseOrderDetail.StockedQty, efPurchaseOrderDetail.UnitPrice);
 		}
 
 		public virtual void PurchaseOrderHeaderMapModelToEF(
@@ -1422,20 +1279,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.VendorID);
 		}
 
-		public virtual void PurchaseOrderHeaderMapEFToPOCO(
-			EFPurchaseOrderHeader efPurchaseOrderHeader,
-			ApiResponse response)
+		public virtual POCOPurchaseOrderHeader PurchaseOrderHeaderMapEFToPOCO(
+			EFPurchaseOrderHeader efPurchaseOrderHeader)
 		{
 			if (efPurchaseOrderHeader == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPurchaseOrderHeader(new POCOPurchaseOrderHeader(efPurchaseOrderHeader.EmployeeID, efPurchaseOrderHeader.Freight, efPurchaseOrderHeader.ModifiedDate, efPurchaseOrderHeader.OrderDate, efPurchaseOrderHeader.PurchaseOrderID, efPurchaseOrderHeader.RevisionNumber, efPurchaseOrderHeader.ShipDate, efPurchaseOrderHeader.ShipMethodID, efPurchaseOrderHeader.Status, efPurchaseOrderHeader.SubTotal, efPurchaseOrderHeader.TaxAmt, efPurchaseOrderHeader.TotalDue, efPurchaseOrderHeader.VendorID));
-
-			this.ShipMethodMapEFToPOCO(efPurchaseOrderHeader.ShipMethod, response);
-
-			this.VendorMapEFToPOCO(efPurchaseOrderHeader.Vendor, response);
+			return new POCOPurchaseOrderHeader(efPurchaseOrderHeader.EmployeeID, efPurchaseOrderHeader.Freight, efPurchaseOrderHeader.ModifiedDate, efPurchaseOrderHeader.OrderDate, efPurchaseOrderHeader.PurchaseOrderID, efPurchaseOrderHeader.RevisionNumber, efPurchaseOrderHeader.ShipDate, efPurchaseOrderHeader.ShipMethodID, efPurchaseOrderHeader.Status, efPurchaseOrderHeader.SubTotal, efPurchaseOrderHeader.TaxAmt, efPurchaseOrderHeader.TotalDue, efPurchaseOrderHeader.VendorID);
 		}
 
 		public virtual void ShipMethodMapModelToEF(
@@ -1452,16 +1304,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ShipRate);
 		}
 
-		public virtual void ShipMethodMapEFToPOCO(
-			EFShipMethod efShipMethod,
-			ApiResponse response)
+		public virtual POCOShipMethod ShipMethodMapEFToPOCO(
+			EFShipMethod efShipMethod)
 		{
 			if (efShipMethod == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddShipMethod(new POCOShipMethod(efShipMethod.ModifiedDate, efShipMethod.Name, efShipMethod.Rowguid, efShipMethod.ShipBase, efShipMethod.ShipMethodID, efShipMethod.ShipRate));
+			return new POCOShipMethod(efShipMethod.ModifiedDate, efShipMethod.Name, efShipMethod.Rowguid, efShipMethod.ShipBase, efShipMethod.ShipMethodID, efShipMethod.ShipRate);
 		}
 
 		public virtual void VendorMapModelToEF(
@@ -1480,16 +1331,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.PurchasingWebServiceURL);
 		}
 
-		public virtual void VendorMapEFToPOCO(
-			EFVendor efVendor,
-			ApiResponse response)
+		public virtual POCOVendor VendorMapEFToPOCO(
+			EFVendor efVendor)
 		{
 			if (efVendor == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddVendor(new POCOVendor(efVendor.AccountNumber, efVendor.ActiveFlag, efVendor.BusinessEntityID, efVendor.CreditRating, efVendor.ModifiedDate, efVendor.Name, efVendor.PreferredVendorStatus, efVendor.PurchasingWebServiceURL));
+			return new POCOVendor(efVendor.AccountNumber, efVendor.ActiveFlag, efVendor.BusinessEntityID, efVendor.CreditRating, efVendor.ModifiedDate, efVendor.Name, efVendor.PreferredVendorStatus, efVendor.PurchasingWebServiceURL);
 		}
 
 		public virtual void CountryRegionCurrencyMapModelToEF(
@@ -1503,18 +1353,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ModifiedDate);
 		}
 
-		public virtual void CountryRegionCurrencyMapEFToPOCO(
-			EFCountryRegionCurrency efCountryRegionCurrency,
-			ApiResponse response)
+		public virtual POCOCountryRegionCurrency CountryRegionCurrencyMapEFToPOCO(
+			EFCountryRegionCurrency efCountryRegionCurrency)
 		{
 			if (efCountryRegionCurrency == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCountryRegionCurrency(new POCOCountryRegionCurrency(efCountryRegionCurrency.CountryRegionCode, efCountryRegionCurrency.CurrencyCode, efCountryRegionCurrency.ModifiedDate));
-
-			this.CurrencyMapEFToPOCO(efCountryRegionCurrency.Currency, response);
+			return new POCOCountryRegionCurrency(efCountryRegionCurrency.CountryRegionCode, efCountryRegionCurrency.CurrencyCode, efCountryRegionCurrency.ModifiedDate);
 		}
 
 		public virtual void CreditCardMapModelToEF(
@@ -1531,16 +1378,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ModifiedDate);
 		}
 
-		public virtual void CreditCardMapEFToPOCO(
-			EFCreditCard efCreditCard,
-			ApiResponse response)
+		public virtual POCOCreditCard CreditCardMapEFToPOCO(
+			EFCreditCard efCreditCard)
 		{
 			if (efCreditCard == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCreditCard(new POCOCreditCard(efCreditCard.CardNumber, efCreditCard.CardType, efCreditCard.CreditCardID, efCreditCard.ExpMonth, efCreditCard.ExpYear, efCreditCard.ModifiedDate));
+			return new POCOCreditCard(efCreditCard.CardNumber, efCreditCard.CardType, efCreditCard.CreditCardID, efCreditCard.ExpMonth, efCreditCard.ExpYear, efCreditCard.ModifiedDate);
 		}
 
 		public virtual void CurrencyMapModelToEF(
@@ -1554,16 +1400,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void CurrencyMapEFToPOCO(
-			EFCurrency efCurrency,
-			ApiResponse response)
+		public virtual POCOCurrency CurrencyMapEFToPOCO(
+			EFCurrency efCurrency)
 		{
 			if (efCurrency == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCurrency(new POCOCurrency(efCurrency.CurrencyCode, efCurrency.ModifiedDate, efCurrency.Name));
+			return new POCOCurrency(efCurrency.CurrencyCode, efCurrency.ModifiedDate, efCurrency.Name);
 		}
 
 		public virtual void CurrencyRateMapModelToEF(
@@ -1581,20 +1426,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ToCurrencyCode);
 		}
 
-		public virtual void CurrencyRateMapEFToPOCO(
-			EFCurrencyRate efCurrencyRate,
-			ApiResponse response)
+		public virtual POCOCurrencyRate CurrencyRateMapEFToPOCO(
+			EFCurrencyRate efCurrencyRate)
 		{
 			if (efCurrencyRate == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCurrencyRate(new POCOCurrencyRate(efCurrencyRate.AverageRate, efCurrencyRate.CurrencyRateDate, efCurrencyRate.CurrencyRateID, efCurrencyRate.EndOfDayRate, efCurrencyRate.FromCurrencyCode, efCurrencyRate.ModifiedDate, efCurrencyRate.ToCurrencyCode));
-
-			this.CurrencyMapEFToPOCO(efCurrencyRate.Currency, response);
-
-			this.CurrencyMapEFToPOCO(efCurrencyRate.Currency1, response);
+			return new POCOCurrencyRate(efCurrencyRate.AverageRate, efCurrencyRate.CurrencyRateDate, efCurrencyRate.CurrencyRateID, efCurrencyRate.EndOfDayRate, efCurrencyRate.FromCurrencyCode, efCurrencyRate.ModifiedDate, efCurrencyRate.ToCurrencyCode);
 		}
 
 		public virtual void CustomerMapModelToEF(
@@ -1612,20 +1452,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TerritoryID);
 		}
 
-		public virtual void CustomerMapEFToPOCO(
-			EFCustomer efCustomer,
-			ApiResponse response)
+		public virtual POCOCustomer CustomerMapEFToPOCO(
+			EFCustomer efCustomer)
 		{
 			if (efCustomer == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddCustomer(new POCOCustomer(efCustomer.AccountNumber, efCustomer.CustomerID, efCustomer.ModifiedDate, efCustomer.PersonID, efCustomer.Rowguid, efCustomer.StoreID, efCustomer.TerritoryID));
-
-			this.StoreMapEFToPOCO(efCustomer.Store, response);
-
-			this.SalesTerritoryMapEFToPOCO(efCustomer.SalesTerritory, response);
+			return new POCOCustomer(efCustomer.AccountNumber, efCustomer.CustomerID, efCustomer.ModifiedDate, efCustomer.PersonID, efCustomer.Rowguid, efCustomer.StoreID, efCustomer.TerritoryID);
 		}
 
 		public virtual void PersonCreditCardMapModelToEF(
@@ -1639,18 +1474,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ModifiedDate);
 		}
 
-		public virtual void PersonCreditCardMapEFToPOCO(
-			EFPersonCreditCard efPersonCreditCard,
-			ApiResponse response)
+		public virtual POCOPersonCreditCard PersonCreditCardMapEFToPOCO(
+			EFPersonCreditCard efPersonCreditCard)
 		{
 			if (efPersonCreditCard == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPersonCreditCard(new POCOPersonCreditCard(efPersonCreditCard.BusinessEntityID, efPersonCreditCard.CreditCardID, efPersonCreditCard.ModifiedDate));
-
-			this.CreditCardMapEFToPOCO(efPersonCreditCard.CreditCard, response);
+			return new POCOPersonCreditCard(efPersonCreditCard.BusinessEntityID, efPersonCreditCard.CreditCardID, efPersonCreditCard.ModifiedDate);
 		}
 
 		public virtual void SalesOrderDetailMapModelToEF(
@@ -1672,22 +1504,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.UnitPriceDiscount);
 		}
 
-		public virtual void SalesOrderDetailMapEFToPOCO(
-			EFSalesOrderDetail efSalesOrderDetail,
-			ApiResponse response)
+		public virtual POCOSalesOrderDetail SalesOrderDetailMapEFToPOCO(
+			EFSalesOrderDetail efSalesOrderDetail)
 		{
 			if (efSalesOrderDetail == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesOrderDetail(new POCOSalesOrderDetail(efSalesOrderDetail.CarrierTrackingNumber, efSalesOrderDetail.LineTotal, efSalesOrderDetail.ModifiedDate, efSalesOrderDetail.OrderQty, efSalesOrderDetail.ProductID, efSalesOrderDetail.Rowguid, efSalesOrderDetail.SalesOrderDetailID, efSalesOrderDetail.SalesOrderID, efSalesOrderDetail.SpecialOfferID, efSalesOrderDetail.UnitPrice, efSalesOrderDetail.UnitPriceDiscount));
-
-			this.SpecialOfferProductMapEFToPOCO(efSalesOrderDetail.SpecialOfferProduct, response);
-
-			this.SalesOrderHeaderMapEFToPOCO(efSalesOrderDetail.SalesOrderHeader, response);
-
-			this.SpecialOfferProductMapEFToPOCO(efSalesOrderDetail.SpecialOfferProduct1, response);
+			return new POCOSalesOrderDetail(efSalesOrderDetail.CarrierTrackingNumber, efSalesOrderDetail.LineTotal, efSalesOrderDetail.ModifiedDate, efSalesOrderDetail.OrderQty, efSalesOrderDetail.ProductID, efSalesOrderDetail.Rowguid, efSalesOrderDetail.SalesOrderDetailID, efSalesOrderDetail.SalesOrderID, efSalesOrderDetail.SpecialOfferID, efSalesOrderDetail.UnitPrice, efSalesOrderDetail.UnitPriceDiscount);
 		}
 
 		public virtual void SalesOrderHeaderMapModelToEF(
@@ -1724,26 +1549,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TotalDue);
 		}
 
-		public virtual void SalesOrderHeaderMapEFToPOCO(
-			EFSalesOrderHeader efSalesOrderHeader,
-			ApiResponse response)
+		public virtual POCOSalesOrderHeader SalesOrderHeaderMapEFToPOCO(
+			EFSalesOrderHeader efSalesOrderHeader)
 		{
 			if (efSalesOrderHeader == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesOrderHeader(new POCOSalesOrderHeader(efSalesOrderHeader.AccountNumber, efSalesOrderHeader.BillToAddressID, efSalesOrderHeader.Comment, efSalesOrderHeader.CreditCardApprovalCode, efSalesOrderHeader.CreditCardID, efSalesOrderHeader.CurrencyRateID, efSalesOrderHeader.CustomerID, efSalesOrderHeader.DueDate, efSalesOrderHeader.Freight, efSalesOrderHeader.ModifiedDate, efSalesOrderHeader.OnlineOrderFlag, efSalesOrderHeader.OrderDate, efSalesOrderHeader.PurchaseOrderNumber, efSalesOrderHeader.RevisionNumber, efSalesOrderHeader.Rowguid, efSalesOrderHeader.SalesOrderID, efSalesOrderHeader.SalesOrderNumber, efSalesOrderHeader.SalesPersonID, efSalesOrderHeader.ShipDate, efSalesOrderHeader.ShipMethodID, efSalesOrderHeader.ShipToAddressID, efSalesOrderHeader.Status, efSalesOrderHeader.SubTotal, efSalesOrderHeader.TaxAmt, efSalesOrderHeader.TerritoryID, efSalesOrderHeader.TotalDue));
-
-			this.CreditCardMapEFToPOCO(efSalesOrderHeader.CreditCard, response);
-
-			this.CurrencyRateMapEFToPOCO(efSalesOrderHeader.CurrencyRate, response);
-
-			this.CustomerMapEFToPOCO(efSalesOrderHeader.Customer, response);
-
-			this.SalesPersonMapEFToPOCO(efSalesOrderHeader.SalesPerson, response);
-
-			this.SalesTerritoryMapEFToPOCO(efSalesOrderHeader.SalesTerritory, response);
+			return new POCOSalesOrderHeader(efSalesOrderHeader.AccountNumber, efSalesOrderHeader.BillToAddressID, efSalesOrderHeader.Comment, efSalesOrderHeader.CreditCardApprovalCode, efSalesOrderHeader.CreditCardID, efSalesOrderHeader.CurrencyRateID, efSalesOrderHeader.CustomerID, efSalesOrderHeader.DueDate, efSalesOrderHeader.Freight, efSalesOrderHeader.ModifiedDate, efSalesOrderHeader.OnlineOrderFlag, efSalesOrderHeader.OrderDate, efSalesOrderHeader.PurchaseOrderNumber, efSalesOrderHeader.RevisionNumber, efSalesOrderHeader.Rowguid, efSalesOrderHeader.SalesOrderID, efSalesOrderHeader.SalesOrderNumber, efSalesOrderHeader.SalesPersonID, efSalesOrderHeader.ShipDate, efSalesOrderHeader.ShipMethodID, efSalesOrderHeader.ShipToAddressID, efSalesOrderHeader.Status, efSalesOrderHeader.SubTotal, efSalesOrderHeader.TaxAmt, efSalesOrderHeader.TerritoryID, efSalesOrderHeader.TotalDue);
 		}
 
 		public virtual void SalesOrderHeaderSalesReasonMapModelToEF(
@@ -1757,20 +1571,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.SalesReasonID);
 		}
 
-		public virtual void SalesOrderHeaderSalesReasonMapEFToPOCO(
-			EFSalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason,
-			ApiResponse response)
+		public virtual POCOSalesOrderHeaderSalesReason SalesOrderHeaderSalesReasonMapEFToPOCO(
+			EFSalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason)
 		{
 			if (efSalesOrderHeaderSalesReason == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesOrderHeaderSalesReason(new POCOSalesOrderHeaderSalesReason(efSalesOrderHeaderSalesReason.ModifiedDate, efSalesOrderHeaderSalesReason.SalesOrderID, efSalesOrderHeaderSalesReason.SalesReasonID));
-
-			this.SalesOrderHeaderMapEFToPOCO(efSalesOrderHeaderSalesReason.SalesOrderHeader, response);
-
-			this.SalesReasonMapEFToPOCO(efSalesOrderHeaderSalesReason.SalesReason, response);
+			return new POCOSalesOrderHeaderSalesReason(efSalesOrderHeaderSalesReason.ModifiedDate, efSalesOrderHeaderSalesReason.SalesOrderID, efSalesOrderHeaderSalesReason.SalesReasonID);
 		}
 
 		public virtual void SalesPersonMapModelToEF(
@@ -1790,18 +1599,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TerritoryID);
 		}
 
-		public virtual void SalesPersonMapEFToPOCO(
-			EFSalesPerson efSalesPerson,
-			ApiResponse response)
+		public virtual POCOSalesPerson SalesPersonMapEFToPOCO(
+			EFSalesPerson efSalesPerson)
 		{
 			if (efSalesPerson == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesPerson(new POCOSalesPerson(efSalesPerson.Bonus, efSalesPerson.BusinessEntityID, efSalesPerson.CommissionPct, efSalesPerson.ModifiedDate, efSalesPerson.Rowguid, efSalesPerson.SalesLastYear, efSalesPerson.SalesQuota, efSalesPerson.SalesYTD, efSalesPerson.TerritoryID));
-
-			this.SalesTerritoryMapEFToPOCO(efSalesPerson.SalesTerritory, response);
+			return new POCOSalesPerson(efSalesPerson.Bonus, efSalesPerson.BusinessEntityID, efSalesPerson.CommissionPct, efSalesPerson.ModifiedDate, efSalesPerson.Rowguid, efSalesPerson.SalesLastYear, efSalesPerson.SalesQuota, efSalesPerson.SalesYTD, efSalesPerson.TerritoryID);
 		}
 
 		public virtual void SalesPersonQuotaHistoryMapModelToEF(
@@ -1817,18 +1623,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.SalesQuota);
 		}
 
-		public virtual void SalesPersonQuotaHistoryMapEFToPOCO(
-			EFSalesPersonQuotaHistory efSalesPersonQuotaHistory,
-			ApiResponse response)
+		public virtual POCOSalesPersonQuotaHistory SalesPersonQuotaHistoryMapEFToPOCO(
+			EFSalesPersonQuotaHistory efSalesPersonQuotaHistory)
 		{
 			if (efSalesPersonQuotaHistory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesPersonQuotaHistory(new POCOSalesPersonQuotaHistory(efSalesPersonQuotaHistory.BusinessEntityID, efSalesPersonQuotaHistory.ModifiedDate, efSalesPersonQuotaHistory.QuotaDate, efSalesPersonQuotaHistory.Rowguid, efSalesPersonQuotaHistory.SalesQuota));
-
-			this.SalesPersonMapEFToPOCO(efSalesPersonQuotaHistory.SalesPerson, response);
+			return new POCOSalesPersonQuotaHistory(efSalesPersonQuotaHistory.BusinessEntityID, efSalesPersonQuotaHistory.ModifiedDate, efSalesPersonQuotaHistory.QuotaDate, efSalesPersonQuotaHistory.Rowguid, efSalesPersonQuotaHistory.SalesQuota);
 		}
 
 		public virtual void SalesReasonMapModelToEF(
@@ -1843,16 +1646,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ReasonType);
 		}
 
-		public virtual void SalesReasonMapEFToPOCO(
-			EFSalesReason efSalesReason,
-			ApiResponse response)
+		public virtual POCOSalesReason SalesReasonMapEFToPOCO(
+			EFSalesReason efSalesReason)
 		{
 			if (efSalesReason == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesReason(new POCOSalesReason(efSalesReason.ModifiedDate, efSalesReason.Name, efSalesReason.ReasonType, efSalesReason.SalesReasonID));
+			return new POCOSalesReason(efSalesReason.ModifiedDate, efSalesReason.Name, efSalesReason.ReasonType, efSalesReason.SalesReasonID);
 		}
 
 		public virtual void SalesTaxRateMapModelToEF(
@@ -1870,16 +1672,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TaxType);
 		}
 
-		public virtual void SalesTaxRateMapEFToPOCO(
-			EFSalesTaxRate efSalesTaxRate,
-			ApiResponse response)
+		public virtual POCOSalesTaxRate SalesTaxRateMapEFToPOCO(
+			EFSalesTaxRate efSalesTaxRate)
 		{
 			if (efSalesTaxRate == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesTaxRate(new POCOSalesTaxRate(efSalesTaxRate.ModifiedDate, efSalesTaxRate.Name, efSalesTaxRate.Rowguid, efSalesTaxRate.SalesTaxRateID, efSalesTaxRate.StateProvinceID, efSalesTaxRate.TaxRate, efSalesTaxRate.TaxType));
+			return new POCOSalesTaxRate(efSalesTaxRate.ModifiedDate, efSalesTaxRate.Name, efSalesTaxRate.Rowguid, efSalesTaxRate.SalesTaxRateID, efSalesTaxRate.StateProvinceID, efSalesTaxRate.TaxRate, efSalesTaxRate.TaxType);
 		}
 
 		public virtual void SalesTerritoryMapModelToEF(
@@ -1900,16 +1701,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.SalesYTD);
 		}
 
-		public virtual void SalesTerritoryMapEFToPOCO(
-			EFSalesTerritory efSalesTerritory,
-			ApiResponse response)
+		public virtual POCOSalesTerritory SalesTerritoryMapEFToPOCO(
+			EFSalesTerritory efSalesTerritory)
 		{
 			if (efSalesTerritory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesTerritory(new POCOSalesTerritory(efSalesTerritory.CostLastYear, efSalesTerritory.CostYTD, efSalesTerritory.CountryRegionCode, efSalesTerritory.@Group, efSalesTerritory.ModifiedDate, efSalesTerritory.Name, efSalesTerritory.Rowguid, efSalesTerritory.SalesLastYear, efSalesTerritory.SalesYTD, efSalesTerritory.TerritoryID));
+			return new POCOSalesTerritory(efSalesTerritory.CostLastYear, efSalesTerritory.CostYTD, efSalesTerritory.CountryRegionCode, efSalesTerritory.@Group, efSalesTerritory.ModifiedDate, efSalesTerritory.Name, efSalesTerritory.Rowguid, efSalesTerritory.SalesLastYear, efSalesTerritory.SalesYTD, efSalesTerritory.TerritoryID);
 		}
 
 		public virtual void SalesTerritoryHistoryMapModelToEF(
@@ -1926,20 +1726,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.TerritoryID);
 		}
 
-		public virtual void SalesTerritoryHistoryMapEFToPOCO(
-			EFSalesTerritoryHistory efSalesTerritoryHistory,
-			ApiResponse response)
+		public virtual POCOSalesTerritoryHistory SalesTerritoryHistoryMapEFToPOCO(
+			EFSalesTerritoryHistory efSalesTerritoryHistory)
 		{
 			if (efSalesTerritoryHistory == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSalesTerritoryHistory(new POCOSalesTerritoryHistory(efSalesTerritoryHistory.BusinessEntityID, efSalesTerritoryHistory.EndDate, efSalesTerritoryHistory.ModifiedDate, efSalesTerritoryHistory.Rowguid, efSalesTerritoryHistory.StartDate, efSalesTerritoryHistory.TerritoryID));
-
-			this.SalesPersonMapEFToPOCO(efSalesTerritoryHistory.SalesPerson, response);
-
-			this.SalesTerritoryMapEFToPOCO(efSalesTerritoryHistory.SalesTerritory, response);
+			return new POCOSalesTerritoryHistory(efSalesTerritoryHistory.BusinessEntityID, efSalesTerritoryHistory.EndDate, efSalesTerritoryHistory.ModifiedDate, efSalesTerritoryHistory.Rowguid, efSalesTerritoryHistory.StartDate, efSalesTerritoryHistory.TerritoryID);
 		}
 
 		public virtual void ShoppingCartItemMapModelToEF(
@@ -1956,16 +1751,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ShoppingCartID);
 		}
 
-		public virtual void ShoppingCartItemMapEFToPOCO(
-			EFShoppingCartItem efShoppingCartItem,
-			ApiResponse response)
+		public virtual POCOShoppingCartItem ShoppingCartItemMapEFToPOCO(
+			EFShoppingCartItem efShoppingCartItem)
 		{
 			if (efShoppingCartItem == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddShoppingCartItem(new POCOShoppingCartItem(efShoppingCartItem.DateCreated, efShoppingCartItem.ModifiedDate, efShoppingCartItem.ProductID, efShoppingCartItem.Quantity, efShoppingCartItem.ShoppingCartID, efShoppingCartItem.ShoppingCartItemID));
+			return new POCOShoppingCartItem(efShoppingCartItem.DateCreated, efShoppingCartItem.ModifiedDate, efShoppingCartItem.ProductID, efShoppingCartItem.Quantity, efShoppingCartItem.ShoppingCartID, efShoppingCartItem.ShoppingCartItemID);
 		}
 
 		public virtual void SpecialOfferMapModelToEF(
@@ -1987,16 +1781,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Type);
 		}
 
-		public virtual void SpecialOfferMapEFToPOCO(
-			EFSpecialOffer efSpecialOffer,
-			ApiResponse response)
+		public virtual POCOSpecialOffer SpecialOfferMapEFToPOCO(
+			EFSpecialOffer efSpecialOffer)
 		{
 			if (efSpecialOffer == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSpecialOffer(new POCOSpecialOffer(efSpecialOffer.Category, efSpecialOffer.Description, efSpecialOffer.DiscountPct, efSpecialOffer.EndDate, efSpecialOffer.MaxQty, efSpecialOffer.MinQty, efSpecialOffer.ModifiedDate, efSpecialOffer.Rowguid, efSpecialOffer.SpecialOfferID, efSpecialOffer.StartDate, efSpecialOffer.Type));
+			return new POCOSpecialOffer(efSpecialOffer.Category, efSpecialOffer.Description, efSpecialOffer.DiscountPct, efSpecialOffer.EndDate, efSpecialOffer.MaxQty, efSpecialOffer.MinQty, efSpecialOffer.ModifiedDate, efSpecialOffer.Rowguid, efSpecialOffer.SpecialOfferID, efSpecialOffer.StartDate, efSpecialOffer.Type);
 		}
 
 		public virtual void SpecialOfferProductMapModelToEF(
@@ -2011,18 +1804,15 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.Rowguid);
 		}
 
-		public virtual void SpecialOfferProductMapEFToPOCO(
-			EFSpecialOfferProduct efSpecialOfferProduct,
-			ApiResponse response)
+		public virtual POCOSpecialOfferProduct SpecialOfferProductMapEFToPOCO(
+			EFSpecialOfferProduct efSpecialOfferProduct)
 		{
 			if (efSpecialOfferProduct == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSpecialOfferProduct(new POCOSpecialOfferProduct(efSpecialOfferProduct.ModifiedDate, efSpecialOfferProduct.ProductID, efSpecialOfferProduct.Rowguid, efSpecialOfferProduct.SpecialOfferID));
-
-			this.SpecialOfferMapEFToPOCO(efSpecialOfferProduct.SpecialOffer, response);
+			return new POCOSpecialOfferProduct(efSpecialOfferProduct.ModifiedDate, efSpecialOfferProduct.ProductID, efSpecialOfferProduct.Rowguid, efSpecialOfferProduct.SpecialOfferID);
 		}
 
 		public virtual void StoreMapModelToEF(
@@ -2039,22 +1829,19 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.SalesPersonID);
 		}
 
-		public virtual void StoreMapEFToPOCO(
-			EFStore efStore,
-			ApiResponse response)
+		public virtual POCOStore StoreMapEFToPOCO(
+			EFStore efStore)
 		{
 			if (efStore == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddStore(new POCOStore(efStore.BusinessEntityID, efStore.Demographics, efStore.ModifiedDate, efStore.Name, efStore.Rowguid, efStore.SalesPersonID));
-
-			this.SalesPersonMapEFToPOCO(efStore.SalesPerson, response);
+			return new POCOStore(efStore.BusinessEntityID, efStore.Demographics, efStore.ModifiedDate, efStore.Name, efStore.Rowguid, efStore.SalesPersonID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0bdac39995ba681c7df7a78e2ed57c1f</Hash>
+    <Hash>5f96d77a84687588d898a7631145055e</Hash>
 </Codenesium>*/

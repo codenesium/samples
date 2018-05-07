@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/cultures")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class CultureController: AbstractCultureController
 	{
 		public CultureController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f9b9dea296f138aca662fb6a4d5b0d22</Hash>
+    <Hash>5fa0dd9b2040c06ee856a126720414a7</Hash>
 </Codenesium>*/

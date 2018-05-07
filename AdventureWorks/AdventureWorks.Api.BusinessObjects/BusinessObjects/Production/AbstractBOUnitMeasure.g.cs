@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(string unitMeasureCode)
+		public virtual POCOUnitMeasure Get(string unitMeasureCode)
 		{
-			return this.unitMeasureRepository.GetById(unitMeasureCode);
+			return this.unitMeasureRepository.Get(unitMeasureCode);
 		}
 
-		public virtual POCOUnitMeasure GetByIdDirect(string unitMeasureCode)
+		public virtual List<POCOUnitMeasure> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.unitMeasureRepository.GetByIdDirect(unitMeasureCode);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.unitMeasureRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.unitMeasureRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOUnitMeasure> GetWhereDirect(Expression<Func<EFUnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.unitMeasureRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.unitMeasureRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c93173c40cc45e4e63f2195322df6542</Hash>
+    <Hash>651049f4918889cc2b4f953cd3612123</Hash>
 </Codenesium>*/

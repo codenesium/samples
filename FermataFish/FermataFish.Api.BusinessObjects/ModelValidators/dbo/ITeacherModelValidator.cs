@@ -6,12 +6,12 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface ITeacherModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(TeacherModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, TeacherModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(TeacherModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, TeacherModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4459eaa55365b66776287e43f01a04bf</Hash>
+    <Hash>73bb5dd4311cdc4539432f1371e6e37c</Hash>
 </Codenesium>*/

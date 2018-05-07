@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOPersonCreditCard response = this.personCreditCardManager.GetById(id).PersonCreditCards.FirstOrDefault();
+			POCOPersonCreditCard response = this.personCreditCardManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOPersonCreditCard>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.personCreditCardManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PersonCreditCards);
-			}
+			List<POCOPersonCreditCard> response = this.personCreditCardManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PersonCreditCards/{result.Id.ToString()}");
-				POCOPersonCreditCard response = this.personCreditCardManager.GetById(result.Id).PersonCreditCards.First();
+				POCOPersonCreditCard response = this.personCreditCardManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPersonCreditCard response = this.personCreditCardManager.GetById(id).PersonCreditCards.First();
+					POCOPersonCreditCard response = this.personCreditCardManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCreditCardID/{id}")]
-		[ReadOnly]
-		[Route("~/api/CreditCards/{id}/PersonCreditCards")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPersonCreditCard>), 200)]
-		public virtual IActionResult ByCreditCardID(int id)
-		{
-			ApiResponse response = this.personCreditCardManager.GetWhere(x => x.CreditCardID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.PersonCreditCards);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9eea280c020a16531b737187a5368a25</Hash>
+    <Hash>a107133f9e0bfc3e0612a7cff6779d8b</Hash>
 </Codenesium>*/

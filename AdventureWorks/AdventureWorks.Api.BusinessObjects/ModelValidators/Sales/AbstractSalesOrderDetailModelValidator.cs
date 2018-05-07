@@ -76,16 +76,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidSpecialOfferProduct(int id)
 		{
-			return this.SpecialOfferProductRepository.GetByIdDirect(id) != null;
+			return this.SpecialOfferProductRepository.Get(id) != null;
 		}
 
 		private bool BeValidSalesOrderHeader(int id)
 		{
-			return this.SalesOrderHeaderRepository.GetByIdDirect(id) != null;
+			return this.SalesOrderHeaderRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b84e4113d0826dc8639fcc59856304a7</Hash>
+    <Hash>0e8fc67990e1738661e6ae0ddc0a6d49</Hash>
 </Codenesium>*/

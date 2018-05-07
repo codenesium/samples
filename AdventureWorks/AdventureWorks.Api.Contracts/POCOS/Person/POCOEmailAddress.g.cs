@@ -16,16 +16,14 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			Guid rowguid)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.EmailAddress1 = emailAddress1.ToString();
 			this.EmailAddressID = emailAddressID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Rowguid = rowguid.ToGuid();
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.People));
 		}
 
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public string EmailAddress1 { get; set; }
 		public int EmailAddressID { get; set; }
 		public DateTime ModifiedDate { get; set; }
@@ -83,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7b31595932eac956d5b6e7f9a686a1f9</Hash>
+    <Hash>ac9e0fc51ed5a5b8abb8295e37d4684c</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/machines")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class MachineController: AbstractMachineController
 	{
 		public MachineController(
@@ -36,5 +35,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>18788fda9fec8536ca024c316d0777c0</Hash>
+    <Hash>50b721cef802e827920eb8f3076b493b</Hash>
 </Codenesium>*/

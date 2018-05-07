@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; set; }
 		public virtual void DueDateRules()
 		{
 			this.RuleFor(x => x.DueDate).NotNull();
@@ -70,14 +69,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.UnitPrice).NotNull();
 		}
-
-		private bool BeValidPurchaseOrderHeader(int id)
-		{
-			return this.PurchaseOrderHeaderRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b01c98286520380547dac7ee3c3d7dc</Hash>
+    <Hash>6a894c42a3f14eb289c55cc3733806e8</Hash>
 </Codenesium>*/

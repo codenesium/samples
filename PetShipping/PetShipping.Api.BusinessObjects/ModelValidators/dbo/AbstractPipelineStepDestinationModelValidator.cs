@@ -36,16 +36,16 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		private bool BeValidDestination(int id)
 		{
-			return this.DestinationRepository.GetByIdDirect(id) != null;
+			return this.DestinationRepository.Get(id) != null;
 		}
 
 		private bool BeValidPipelineStep(int id)
 		{
-			return this.PipelineStepRepository.GetByIdDirect(id) != null;
+			return this.PipelineStepRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>93d8739aa069073e3bb890845c355933</Hash>
+    <Hash>0013462c49404e1e00cbe5f066d6e2db</Hash>
 </Codenesium>*/

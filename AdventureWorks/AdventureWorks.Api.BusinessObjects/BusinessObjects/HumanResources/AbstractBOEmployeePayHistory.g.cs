@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int businessEntityID)
+		public virtual POCOEmployeePayHistory Get(int businessEntityID)
 		{
-			return this.employeePayHistoryRepository.GetById(businessEntityID);
+			return this.employeePayHistoryRepository.Get(businessEntityID);
 		}
 
-		public virtual POCOEmployeePayHistory GetByIdDirect(int businessEntityID)
+		public virtual List<POCOEmployeePayHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.employeePayHistoryRepository.GetByIdDirect(businessEntityID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.employeePayHistoryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.employeePayHistoryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOEmployeePayHistory> GetWhereDirect(Expression<Func<EFEmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.employeePayHistoryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.employeePayHistoryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c43de16d5224828270cd55acdc342b54</Hash>
+    <Hash>f895d2a6b7f5fa2d1d916053ae1a449a</Hash>
 </Codenesium>*/

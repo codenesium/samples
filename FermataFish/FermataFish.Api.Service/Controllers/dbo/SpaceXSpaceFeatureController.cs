@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/spaceXSpaceFeatures")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class SpaceXSpaceFeatureController: AbstractSpaceXSpaceFeatureController
 	{
 		public SpaceXSpaceFeatureController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8df8865a29189d4e84e96a3eb6501f74</Hash>
+    <Hash>7810e77e7738a7dd71de8977d10f43b5</Hash>
 </Codenesium>*/

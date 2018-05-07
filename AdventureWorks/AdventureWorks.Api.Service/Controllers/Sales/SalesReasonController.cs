@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/salesReasons")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class SalesReasonController: AbstractSalesReasonController
 	{
 		public SalesReasonController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6d2981ed354b3af2f4f36e33e8eede35</Hash>
+    <Hash>d2ea915a31019b0244276bb29c0bef50</Hash>
 </Codenesium>*/

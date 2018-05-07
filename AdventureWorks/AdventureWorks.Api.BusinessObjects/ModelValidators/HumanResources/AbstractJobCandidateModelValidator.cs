@@ -20,11 +20,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IEmployeeRepository EmployeeRepository { get; set; }
 		public virtual void BusinessEntityIDRules()
-		{
-			this.RuleFor(x => x.BusinessEntityID).Must(this.BeValidEmployee).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
-		}
+		{                       }
 
 		public virtual void ModifiedDateRules()
 		{
@@ -33,14 +30,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public virtual void ResumeRules()
 		{                       }
-
-		private bool BeValidEmployee(Nullable<int> id)
-		{
-			return this.EmployeeRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>10d018e2ebe289b2d73154565d3d20c2</Hash>
+    <Hash>b643cbc57a827a5d79dafd63057d3178</Hash>
 </Codenesium>*/

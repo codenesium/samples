@@ -23,6 +23,7 @@ namespace AdventureWorksNS.Api.Contracts
 			string unitMeasureCode)
 		{
 			this.AverageLeadTime = averageLeadTime.ToInt();
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.LastReceiptCost = lastReceiptCost.ToNullableDecimal();
 			this.LastReceiptDate = lastReceiptDate.ToNullableDateTime();
 			this.MaxOrderQty = maxOrderQty.ToInt();
@@ -32,13 +33,10 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ProductID = productID.ToInt();
 			this.StandardPrice = standardPrice.ToDecimal();
 			this.UnitMeasureCode = unitMeasureCode.ToString();
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.Vendors));
 		}
 
 		public int AverageLeadTime { get; set; }
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public Nullable<decimal> LastReceiptCost { get; set; }
 		public Nullable<DateTime> LastReceiptDate { get; set; }
 		public int MaxOrderQty { get; set; }
@@ -155,5 +153,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2979970c12bd6fa9e2ab5c6b89270047</Hash>
+    <Hash>172a1058b414beefed2d6d675648b3ce</Hash>
 </Codenesium>*/

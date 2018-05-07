@@ -68,33 +68,18 @@ namespace PetStoreNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOPaymentType Get(int id)
 		{
-			return this.paymentTypeRepository.GetById(id);
+			return this.paymentTypeRepository.Get(id);
 		}
 
-		public virtual POCOPaymentType GetByIdDirect(int id)
+		public virtual List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.paymentTypeRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.paymentTypeRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.paymentTypeRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOPaymentType> GetWhereDirect(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.paymentTypeRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.paymentTypeRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3762e79ce2df8c3239f83f22e5ce545a</Hash>
+    <Hash>8fbfdbbe16f1b29ac05fe301f905f68e</Hash>
 </Codenesium>*/

@@ -47,25 +47,20 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Name = name.ToString();
 			this.ProductID = productID.ToInt();
 			this.ProductLine = productLine.ToString();
+			this.ProductModelID = productModelID.ToNullableInt();
 			this.ProductNumber = productNumber.ToString();
+			this.ProductSubcategoryID = productSubcategoryID.ToNullableInt();
 			this.ReorderPoint = reorderPoint;
 			this.Rowguid = rowguid.ToGuid();
 			this.SafetyStockLevel = safetyStockLevel;
 			this.SellEndDate = sellEndDate.ToNullableDateTime();
 			this.SellStartDate = sellStartDate.ToDateTime();
 			this.Size = size.ToString();
+			this.SizeUnitMeasureCode = sizeUnitMeasureCode.ToString();
 			this.StandardCost = standardCost.ToDecimal();
 			this.Style = style.ToString();
 			this.Weight = weight.ToNullableDecimal();
-
-			this.ProductModelID = new ReferenceEntity<Nullable<int>>(productModelID,
-			                                                         nameof(ApiResponse.ProductModels));
-			this.ProductSubcategoryID = new ReferenceEntity<Nullable<int>>(productSubcategoryID,
-			                                                               nameof(ApiResponse.ProductSubcategories));
-			this.SizeUnitMeasureCode = new ReferenceEntity<string>(sizeUnitMeasureCode,
-			                                                       nameof(ApiResponse.UnitMeasures));
-			this.WeightUnitMeasureCode = new ReferenceEntity<string>(weightUnitMeasureCode,
-			                                                         nameof(ApiResponse.UnitMeasures));
+			this.WeightUnitMeasureCode = weightUnitMeasureCode.ToString();
 		}
 
 		public string @Class { get; set; }
@@ -79,20 +74,20 @@ namespace AdventureWorksNS.Api.Contracts
 		public string Name { get; set; }
 		public int ProductID { get; set; }
 		public string ProductLine { get; set; }
-		public ReferenceEntity<Nullable<int>> ProductModelID { get; set; }
+		public Nullable<int> ProductModelID { get; set; }
 		public string ProductNumber { get; set; }
-		public ReferenceEntity<Nullable<int>> ProductSubcategoryID { get; set; }
+		public Nullable<int> ProductSubcategoryID { get; set; }
 		public short ReorderPoint { get; set; }
 		public Guid Rowguid { get; set; }
 		public short SafetyStockLevel { get; set; }
 		public Nullable<DateTime> SellEndDate { get; set; }
 		public DateTime SellStartDate { get; set; }
 		public string Size { get; set; }
-		public ReferenceEntity<string> SizeUnitMeasureCode { get; set; }
+		public string SizeUnitMeasureCode { get; set; }
 		public decimal StandardCost { get; set; }
 		public string Style { get; set; }
 		public Nullable<decimal> Weight { get; set; }
-		public ReferenceEntity<string> WeightUnitMeasureCode { get; set; }
+		public string WeightUnitMeasureCode { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeClassValue { get; set; } = true;
@@ -326,5 +321,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dcce845dbbd1b02caa086e8d8acaaea4</Hash>
+    <Hash>e33494d4ec227c4226f58e67f89fbc1f</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/aWBuildVersions")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class AWBuildVersionController: AbstractAWBuildVersionController
 	{
 		public AWBuildVersionController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d21f268a93dd128405fce26bff611a22</Hash>
+    <Hash>54cba5a6992bab137e072de044f1ad92</Hash>
 </Codenesium>*/

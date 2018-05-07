@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int stateProvinceID)
+		public virtual POCOStateProvince Get(int stateProvinceID)
 		{
-			return this.stateProvinceRepository.GetById(stateProvinceID);
+			return this.stateProvinceRepository.Get(stateProvinceID);
 		}
 
-		public virtual POCOStateProvince GetByIdDirect(int stateProvinceID)
+		public virtual List<POCOStateProvince> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.stateProvinceRepository.GetByIdDirect(stateProvinceID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.stateProvinceRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.stateProvinceRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOStateProvince> GetWhereDirect(Expression<Func<EFStateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.stateProvinceRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.stateProvinceRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e5f9ce87cac269873d187499cb45375</Hash>
+    <Hash>3f6f282a0222a2533732bc207284f071</Hash>
 </Codenesium>*/

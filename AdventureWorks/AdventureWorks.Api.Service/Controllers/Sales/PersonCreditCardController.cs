@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personCreditCards")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PersonCreditCardController: AbstractPersonCreditCardController
 	{
 		public PersonCreditCardController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>791081b3336c6acfb5a094048312039a</Hash>
+    <Hash>b6457234f5c2b32784f6c52612f5e8dd</Hash>
 </Codenesium>*/

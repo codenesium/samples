@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/contactTypes")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ContactTypeController: AbstractContactTypeController
 	{
 		public ContactTypeController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>186c81a250b47efa3276f7fce2aa4a95</Hash>
+    <Hash>97f039b3f599f11e78937eecb1cbe6dd</Hash>
 </Codenesium>*/

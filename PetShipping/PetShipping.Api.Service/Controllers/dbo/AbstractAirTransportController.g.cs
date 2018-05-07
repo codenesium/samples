@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOAirTransport response = this.airTransportManager.GetById(id).AirTransports.FirstOrDefault();
+			POCOAirTransport response = this.airTransportManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetShippingNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOAirTransport>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.airTransportManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.AirTransports);
-			}
+			List<POCOAirTransport> response = this.airTransportManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetShippingNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/AirTransports/{result.Id.ToString()}");
-				POCOAirTransport response = this.airTransportManager.GetById(result.Id).AirTransports.First();
+				POCOAirTransport response = this.airTransportManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOAirTransport response = this.airTransportManager.GetById(id).AirTransports.First();
+					POCOAirTransport response = this.airTransportManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByHandlerId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Handlers/{id}/AirTransports")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOAirTransport>), 200)]
-		public virtual IActionResult ByHandlerId(int id)
-		{
-			ApiResponse response = this.airTransportManager.GetWhere(x => x.HandlerId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.AirTransports);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1593b2de48dd1185ca5214f9912b262</Hash>
+    <Hash>7a3b02cb498058be8cce37b3ce3a56cf</Hash>
 </Codenesium>*/

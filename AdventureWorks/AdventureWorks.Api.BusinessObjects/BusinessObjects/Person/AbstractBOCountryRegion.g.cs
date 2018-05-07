@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(string countryRegionCode)
+		public virtual POCOCountryRegion Get(string countryRegionCode)
 		{
-			return this.countryRegionRepository.GetById(countryRegionCode);
+			return this.countryRegionRepository.Get(countryRegionCode);
 		}
 
-		public virtual POCOCountryRegion GetByIdDirect(string countryRegionCode)
+		public virtual List<POCOCountryRegion> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.countryRegionRepository.GetByIdDirect(countryRegionCode);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFCountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRegionRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRegionRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOCountryRegion> GetWhereDirect(Expression<Func<EFCountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRegionRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.countryRegionRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a7069ea331961846f2a34c32e1ca771</Hash>
+    <Hash>bdb82aaa1f5e545c1ea37475121c600d</Hash>
 </Codenesium>*/

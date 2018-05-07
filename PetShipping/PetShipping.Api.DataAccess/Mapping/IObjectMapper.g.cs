@@ -10,201 +10,179 @@ namespace PetShippingNS.Api.DataAccess
 			AirlineModel model,
 			EFAirline efAirline);
 
-		void AirlineMapEFToPOCO(
-			EFAirline efAirline,
-			ApiResponse response);
+		POCOAirline AirlineMapEFToPOCO(
+			EFAirline efAirline);
 
 		void AirTransportMapModelToEF(
 			int airlineId,
 			AirTransportModel model,
 			EFAirTransport efAirTransport);
 
-		void AirTransportMapEFToPOCO(
-			EFAirTransport efAirTransport,
-			ApiResponse response);
+		POCOAirTransport AirTransportMapEFToPOCO(
+			EFAirTransport efAirTransport);
 
 		void BreedMapModelToEF(
 			int id,
 			BreedModel model,
 			EFBreed efBreed);
 
-		void BreedMapEFToPOCO(
-			EFBreed efBreed,
-			ApiResponse response);
+		POCOBreed BreedMapEFToPOCO(
+			EFBreed efBreed);
 
 		void ClientMapModelToEF(
 			int id,
 			ClientModel model,
 			EFClient efClient);
 
-		void ClientMapEFToPOCO(
-			EFClient efClient,
-			ApiResponse response);
+		POCOClient ClientMapEFToPOCO(
+			EFClient efClient);
 
 		void ClientCommunicationMapModelToEF(
 			int id,
 			ClientCommunicationModel model,
 			EFClientCommunication efClientCommunication);
 
-		void ClientCommunicationMapEFToPOCO(
-			EFClientCommunication efClientCommunication,
-			ApiResponse response);
+		POCOClientCommunication ClientCommunicationMapEFToPOCO(
+			EFClientCommunication efClientCommunication);
 
 		void CountryMapModelToEF(
 			int id,
 			CountryModel model,
 			EFCountry efCountry);
 
-		void CountryMapEFToPOCO(
-			EFCountry efCountry,
-			ApiResponse response);
+		POCOCountry CountryMapEFToPOCO(
+			EFCountry efCountry);
 
 		void CountryRequirementMapModelToEF(
 			int id,
 			CountryRequirementModel model,
 			EFCountryRequirement efCountryRequirement);
 
-		void CountryRequirementMapEFToPOCO(
-			EFCountryRequirement efCountryRequirement,
-			ApiResponse response);
+		POCOCountryRequirement CountryRequirementMapEFToPOCO(
+			EFCountryRequirement efCountryRequirement);
 
 		void DestinationMapModelToEF(
 			int id,
 			DestinationModel model,
 			EFDestination efDestination);
 
-		void DestinationMapEFToPOCO(
-			EFDestination efDestination,
-			ApiResponse response);
+		POCODestination DestinationMapEFToPOCO(
+			EFDestination efDestination);
 
 		void EmployeeMapModelToEF(
 			int id,
 			EmployeeModel model,
 			EFEmployee efEmployee);
 
-		void EmployeeMapEFToPOCO(
-			EFEmployee efEmployee,
-			ApiResponse response);
+		POCOEmployee EmployeeMapEFToPOCO(
+			EFEmployee efEmployee);
 
 		void HandlerMapModelToEF(
 			int id,
 			HandlerModel model,
 			EFHandler efHandler);
 
-		void HandlerMapEFToPOCO(
-			EFHandler efHandler,
-			ApiResponse response);
+		POCOHandler HandlerMapEFToPOCO(
+			EFHandler efHandler);
 
 		void HandlerPipelineStepMapModelToEF(
 			int id,
 			HandlerPipelineStepModel model,
 			EFHandlerPipelineStep efHandlerPipelineStep);
 
-		void HandlerPipelineStepMapEFToPOCO(
-			EFHandlerPipelineStep efHandlerPipelineStep,
-			ApiResponse response);
+		POCOHandlerPipelineStep HandlerPipelineStepMapEFToPOCO(
+			EFHandlerPipelineStep efHandlerPipelineStep);
 
 		void OtherTransportMapModelToEF(
 			int id,
 			OtherTransportModel model,
 			EFOtherTransport efOtherTransport);
 
-		void OtherTransportMapEFToPOCO(
-			EFOtherTransport efOtherTransport,
-			ApiResponse response);
+		POCOOtherTransport OtherTransportMapEFToPOCO(
+			EFOtherTransport efOtherTransport);
 
 		void PetMapModelToEF(
 			int id,
 			PetModel model,
 			EFPet efPet);
 
-		void PetMapEFToPOCO(
-			EFPet efPet,
-			ApiResponse response);
+		POCOPet PetMapEFToPOCO(
+			EFPet efPet);
 
 		void PipelineMapModelToEF(
 			int id,
 			PipelineModel model,
 			EFPipeline efPipeline);
 
-		void PipelineMapEFToPOCO(
-			EFPipeline efPipeline,
-			ApiResponse response);
+		POCOPipeline PipelineMapEFToPOCO(
+			EFPipeline efPipeline);
 
 		void PipelineStatusMapModelToEF(
 			int id,
 			PipelineStatusModel model,
 			EFPipelineStatus efPipelineStatus);
 
-		void PipelineStatusMapEFToPOCO(
-			EFPipelineStatus efPipelineStatus,
-			ApiResponse response);
+		POCOPipelineStatus PipelineStatusMapEFToPOCO(
+			EFPipelineStatus efPipelineStatus);
 
 		void PipelineStepMapModelToEF(
 			int id,
 			PipelineStepModel model,
 			EFPipelineStep efPipelineStep);
 
-		void PipelineStepMapEFToPOCO(
-			EFPipelineStep efPipelineStep,
-			ApiResponse response);
+		POCOPipelineStep PipelineStepMapEFToPOCO(
+			EFPipelineStep efPipelineStep);
 
 		void PipelineStepDestinationMapModelToEF(
 			int id,
 			PipelineStepDestinationModel model,
 			EFPipelineStepDestination efPipelineStepDestination);
 
-		void PipelineStepDestinationMapEFToPOCO(
-			EFPipelineStepDestination efPipelineStepDestination,
-			ApiResponse response);
+		POCOPipelineStepDestination PipelineStepDestinationMapEFToPOCO(
+			EFPipelineStepDestination efPipelineStepDestination);
 
 		void PipelineStepNoteMapModelToEF(
 			int id,
 			PipelineStepNoteModel model,
 			EFPipelineStepNote efPipelineStepNote);
 
-		void PipelineStepNoteMapEFToPOCO(
-			EFPipelineStepNote efPipelineStepNote,
-			ApiResponse response);
+		POCOPipelineStepNote PipelineStepNoteMapEFToPOCO(
+			EFPipelineStepNote efPipelineStepNote);
 
 		void PipelineStepStatusMapModelToEF(
 			int id,
 			PipelineStepStatusModel model,
 			EFPipelineStepStatus efPipelineStepStatus);
 
-		void PipelineStepStatusMapEFToPOCO(
-			EFPipelineStepStatus efPipelineStepStatus,
-			ApiResponse response);
+		POCOPipelineStepStatus PipelineStepStatusMapEFToPOCO(
+			EFPipelineStepStatus efPipelineStepStatus);
 
 		void PipelineStepStepRequirementMapModelToEF(
 			int id,
 			PipelineStepStepRequirementModel model,
 			EFPipelineStepStepRequirement efPipelineStepStepRequirement);
 
-		void PipelineStepStepRequirementMapEFToPOCO(
-			EFPipelineStepStepRequirement efPipelineStepStepRequirement,
-			ApiResponse response);
+		POCOPipelineStepStepRequirement PipelineStepStepRequirementMapEFToPOCO(
+			EFPipelineStepStepRequirement efPipelineStepStepRequirement);
 
 		void SaleMapModelToEF(
 			int id,
 			SaleModel model,
 			EFSale efSale);
 
-		void SaleMapEFToPOCO(
-			EFSale efSale,
-			ApiResponse response);
+		POCOSale SaleMapEFToPOCO(
+			EFSale efSale);
 
 		void SpeciesMapModelToEF(
 			int id,
 			SpeciesModel model,
 			EFSpecies efSpecies);
 
-		void SpeciesMapEFToPOCO(
-			EFSpecies efSpecies,
-			ApiResponse response);
+		POCOSpecies SpeciesMapEFToPOCO(
+			EFSpecies efSpecies);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3c8c1cccd2c1470f9a882b8cf979a510</Hash>
+    <Hash>8ce178fe63dbfd225b2c0221e0917bee</Hash>
 </Codenesium>*/

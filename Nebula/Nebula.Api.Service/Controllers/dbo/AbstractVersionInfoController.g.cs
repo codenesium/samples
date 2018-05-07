@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(long id)
 		{
-			POCOVersionInfo response = this.versionInfoManager.GetById(id).VersionInfoes.FirstOrDefault();
+			POCOVersionInfo response = this.versionInfoManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.versionInfoManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.VersionInfoes);
-			}
+			List<POCOVersionInfo> response = this.versionInfoManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace NebulaNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Id.ToString()}");
-				POCOVersionInfo response = this.versionInfoManager.GetById(result.Id).VersionInfoes.First();
+				POCOVersionInfo response = this.versionInfoManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOVersionInfo response = this.versionInfoManager.GetById(id).VersionInfoes.First();
+					POCOVersionInfo response = this.versionInfoManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -179,5 +170,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2099be3785c149e38444519ef3e8971b</Hash>
+    <Hash>eec97721b7a3754e57b48978016e2eb1</Hash>
 </Codenesium>*/

@@ -47,16 +47,16 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		private bool BeValidBreed(int id)
 		{
-			return this.BreedRepository.GetByIdDirect(id) != null;
+			return this.BreedRepository.Get(id) != null;
 		}
 
 		private bool BeValidClient(int id)
 		{
-			return this.ClientRepository.GetByIdDirect(id) != null;
+			return this.ClientRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e02dc5e39cf616c1d8399dfe1b08b3d</Hash>
+    <Hash>71b824657749fe3ad388d1793ba2f7cb</Hash>
 </Codenesium>*/

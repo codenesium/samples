@@ -14,7 +14,6 @@ namespace PetStoreNS.Api.Service
 {
 	[Route("api/paymentTypes")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PaymentTypeController: AbstractPaymentTypeController
 	{
 		public PaymentTypeController(
@@ -36,5 +35,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d34736783b66b582fc7cbd4a543fed68</Hash>
+    <Hash>da795e85f0fcce1a78896dcd74fcbcd3</Hash>
 </Codenesium>*/

@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int productID)
+		public virtual POCOProductInventory Get(int productID)
 		{
-			return this.productInventoryRepository.GetById(productID);
+			return this.productInventoryRepository.Get(productID);
 		}
 
-		public virtual POCOProductInventory GetByIdDirect(int productID)
+		public virtual List<POCOProductInventory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productInventoryRepository.GetByIdDirect(productID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productInventoryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productInventoryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOProductInventory> GetWhereDirect(Expression<Func<EFProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productInventoryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.productInventoryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>89ec7b363ea097be304b61ad1a4d5fa3</Hash>
+    <Hash>05729b10b0706563d00130c4c66cdaf5</Hash>
 </Codenesium>*/

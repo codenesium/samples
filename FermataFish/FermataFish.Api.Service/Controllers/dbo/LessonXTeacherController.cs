@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/lessonXTeachers")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class LessonXTeacherController: AbstractLessonXTeacherController
 	{
 		public LessonXTeacherController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>688cab8f06140af31c9c6fc1d5728fdf</Hash>
+    <Hash>a4c2105c6f11c2656ba014df89fed4a2</Hash>
 </Codenesium>*/

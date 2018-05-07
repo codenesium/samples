@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/countryRequirements")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class CountryRequirementController: AbstractCountryRequirementController
 	{
 		public CountryRequirementController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>be7b392bb039688a76bee7f0a2a3234d</Hash>
+    <Hash>66e654c2e56aa75c359666047f03c6e2</Hash>
 </Codenesium>*/

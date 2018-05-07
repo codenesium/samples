@@ -14,7 +14,6 @@ namespace PetStoreNS.Api.Service
 {
 	[Route("api/pens")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PenController: AbstractPenController
 	{
 		public PenController(
@@ -36,5 +35,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e4631bc5eaf5eb4374961230840bea90</Hash>
+    <Hash>b4f1c77ef43118ca1ed4b8b17830093f</Hash>
 </Codenesium>*/

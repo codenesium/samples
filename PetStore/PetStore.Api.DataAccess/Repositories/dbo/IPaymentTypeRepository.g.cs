@@ -14,18 +14,12 @@ namespace PetStoreNS.Api.DataAccess
 
 		void Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOPaymentType Get(int id);
 
-		POCOPaymentType GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOPaymentType> GetWhereDirect(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>74a9822c0be859f94f86e86b6e833575</Hash>
+    <Hash>a95207e3354eaf50665d96e1ce101184</Hash>
 </Codenesium>*/

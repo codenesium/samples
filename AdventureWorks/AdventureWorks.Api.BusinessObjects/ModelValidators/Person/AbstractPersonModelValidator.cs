@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IBusinessEntityRepository BusinessEntityRepository { get; set; }
 		public virtual void AdditionalContactInfoRules()
 		{                       }
 
@@ -79,14 +78,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.Title).Length(0, 8);
 		}
-
-		private bool BeValidBusinessEntity(int id)
-		{
-			return this.BusinessEntityRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67097c739bae47826bb1a693513e6465</Hash>
+    <Hash>cb599a3ce59418c66d084d6c6cad4612</Hash>
 </Codenesium>*/

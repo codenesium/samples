@@ -71,15 +71,7 @@ namespace ESPIOTNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCODevice>> DeviceSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCODevice>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCODevice> DeviceGetByIdAsync(int id)
+		public virtual async Task<POCODevice> DeviceGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/{id}");
 
@@ -87,7 +79,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<POCODevice>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCODevice>> DeviceGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCODevice>> DeviceAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices?offset={offset}&limit={limit}");
 
@@ -126,15 +118,7 @@ namespace ESPIOTNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCODeviceAction>> DeviceActionSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCODeviceAction>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCODeviceAction> DeviceActionGetByIdAsync(int id)
+		public virtual async Task<POCODeviceAction> DeviceActionGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/{id}");
 
@@ -142,7 +126,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<POCODeviceAction>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCODeviceAction>> DeviceActionGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCODeviceAction>> DeviceActionAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions?offset={offset}&limit={limit}");
 
@@ -161,5 +145,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9f97c7c852e4892a1d0aebcbe838ab6b</Hash>
+    <Hash>480e955fc6bd591772e4e0aec17df93a</Hash>
 </Codenesium>*/

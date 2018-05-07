@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int purchaseOrderID)
+		public virtual POCOPurchaseOrderHeader Get(int purchaseOrderID)
 		{
-			return this.purchaseOrderHeaderRepository.GetById(purchaseOrderID);
+			return this.purchaseOrderHeaderRepository.Get(purchaseOrderID);
 		}
 
-		public virtual POCOPurchaseOrderHeader GetByIdDirect(int purchaseOrderID)
+		public virtual List<POCOPurchaseOrderHeader> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.purchaseOrderHeaderRepository.GetByIdDirect(purchaseOrderID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.purchaseOrderHeaderRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.purchaseOrderHeaderRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOPurchaseOrderHeader> GetWhereDirect(Expression<Func<EFPurchaseOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.purchaseOrderHeaderRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.purchaseOrderHeaderRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2708e8fd1a8f9bc5026810f58a933b78</Hash>
+    <Hash>7b9ac4a11e0b5fe6773c3a5ba9515211</Hash>
 </Codenesium>*/

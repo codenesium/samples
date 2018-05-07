@@ -137,8 +137,9 @@ namespace Codenesium.Foundation.CommonMVC
     /// <summary>
     /// The purpose of this filter is to throw an error when a client passes a null model to a controller
     /// from http://stackoverflow.com/questions/14517151/how-to-ensure-asp-net-web-api-controllers-parameter-is-not-null
+    /// and https://stackoverflow.com/questions/28835869/capture-exception-during-request-deserialization-in-webapi-c-sharp
     /// </summary>
-    public class ModelValidateAttribute : ActionFilterAttribute
+    public class NullModelValidaterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
@@ -146,13 +147,32 @@ namespace Codenesium.Foundation.CommonMVC
             {
                 actionContext.Result = new BadRequestObjectResult("model was null");
             }
-        }
+            else
+            {
+                if (actionContext.ModelState.IsValid)
+                {
+                    base.OnActionExecuting(actionContext);
+                }
+                else
+                {
+                    List<Exception> exceptions = new List<Exception>();
 
-        public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
-        {
-            base.OnActionExecuted(actionExecutedContext);
+                    foreach (var state in actionContext.ModelState)
+                    {
+                        if (state.Value.Errors.Count != 0)
+                        {
+                            exceptions.AddRange(state.Value.Errors.Select(error => error.Exception));
+                        }
+                    }
+
+                    if (exceptions.Count > 0)
+                    {
+                        actionContext.Result = new BadRequestObjectResult(exceptions);
+                    }
+                }
+            }
         }
-    }
+	}
 
     /// <summary>
     /// This attribute can be added to disable entity framework change tracking for read only scenarios. This can

@@ -20,18 +20,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void AdminMapEFToPOCO(
-			EFAdmin efAdmin,
-			ApiResponse response)
+		public virtual POCOAdmin AdminMapEFToPOCO(
+			EFAdmin efAdmin)
 		{
 			if (efAdmin == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddAdmin(new POCOAdmin(efAdmin.Birthday, efAdmin.Email, efAdmin.FirstName, efAdmin.Id, efAdmin.LastName, efAdmin.Phone, efAdmin.StudioId));
-
-			this.StudioMapEFToPOCO(efAdmin.Studio, response);
+			return new POCOAdmin(efAdmin.Birthday, efAdmin.Email, efAdmin.FirstName, efAdmin.Id, efAdmin.LastName, efAdmin.Phone, efAdmin.StudioId);
 		}
 
 		public virtual void FamilyMapModelToEF(
@@ -49,20 +46,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void FamilyMapEFToPOCO(
-			EFFamily efFamily,
-			ApiResponse response)
+		public virtual POCOFamily FamilyMapEFToPOCO(
+			EFFamily efFamily)
 		{
 			if (efFamily == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddFamily(new POCOFamily(efFamily.Id, efFamily.Notes, efFamily.PcEmail, efFamily.PcFirstName, efFamily.PcLastName, efFamily.PcPhone, efFamily.StudioId));
-
-			this.StudioMapEFToPOCO(efFamily.Studio, response);
-
-			this.StudioMapEFToPOCO(efFamily.Studio1, response);
+			return new POCOFamily(efFamily.Id, efFamily.Notes, efFamily.PcEmail, efFamily.PcFirstName, efFamily.PcLastName, efFamily.PcPhone, efFamily.StudioId);
 		}
 
 		public virtual void LessonMapModelToEF(
@@ -83,20 +75,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.TeacherNotes);
 		}
 
-		public virtual void LessonMapEFToPOCO(
-			EFLesson efLesson,
-			ApiResponse response)
+		public virtual POCOLesson LessonMapEFToPOCO(
+			EFLesson efLesson)
 		{
 			if (efLesson == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLesson(new POCOLesson(efLesson.ActualEndDate, efLesson.ActualStartDate, efLesson.BillAmount, efLesson.Id, efLesson.LessonStatusId, efLesson.ScheduledEndDate, efLesson.ScheduledStartDate, efLesson.StudentNotes, efLesson.StudioId, efLesson.TeacherNotes));
-
-			this.LessonStatusMapEFToPOCO(efLesson.LessonStatus, response);
-
-			this.StudioMapEFToPOCO(efLesson.Studio, response);
+			return new POCOLesson(efLesson.ActualEndDate, efLesson.ActualStartDate, efLesson.BillAmount, efLesson.Id, efLesson.LessonStatusId, efLesson.ScheduledEndDate, efLesson.ScheduledStartDate, efLesson.StudentNotes, efLesson.StudioId, efLesson.TeacherNotes);
 		}
 
 		public virtual void LessonStatusMapModelToEF(
@@ -110,20 +97,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void LessonStatusMapEFToPOCO(
-			EFLessonStatus efLessonStatus,
-			ApiResponse response)
+		public virtual POCOLessonStatus LessonStatusMapEFToPOCO(
+			EFLessonStatus efLessonStatus)
 		{
 			if (efLessonStatus == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLessonStatus(new POCOLessonStatus(efLessonStatus.Id, efLessonStatus.Name, efLessonStatus.StudioId));
-
-			this.StudioMapEFToPOCO(efLessonStatus.Studio, response);
-
-			this.StudioMapEFToPOCO(efLessonStatus.Studio1, response);
+			return new POCOLessonStatus(efLessonStatus.Id, efLessonStatus.Name, efLessonStatus.StudioId);
 		}
 
 		public virtual void LessonXStudentMapModelToEF(
@@ -137,20 +119,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudentId);
 		}
 
-		public virtual void LessonXStudentMapEFToPOCO(
-			EFLessonXStudent efLessonXStudent,
-			ApiResponse response)
+		public virtual POCOLessonXStudent LessonXStudentMapEFToPOCO(
+			EFLessonXStudent efLessonXStudent)
 		{
 			if (efLessonXStudent == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLessonXStudent(new POCOLessonXStudent(efLessonXStudent.Id, efLessonXStudent.LessonId, efLessonXStudent.StudentId));
-
-			this.LessonMapEFToPOCO(efLessonXStudent.Lesson, response);
-
-			this.StudentMapEFToPOCO(efLessonXStudent.Student, response);
+			return new POCOLessonXStudent(efLessonXStudent.Id, efLessonXStudent.LessonId, efLessonXStudent.StudentId);
 		}
 
 		public virtual void LessonXTeacherMapModelToEF(
@@ -164,20 +141,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudentId);
 		}
 
-		public virtual void LessonXTeacherMapEFToPOCO(
-			EFLessonXTeacher efLessonXTeacher,
-			ApiResponse response)
+		public virtual POCOLessonXTeacher LessonXTeacherMapEFToPOCO(
+			EFLessonXTeacher efLessonXTeacher)
 		{
 			if (efLessonXTeacher == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLessonXTeacher(new POCOLessonXTeacher(efLessonXTeacher.Id, efLessonXTeacher.LessonId, efLessonXTeacher.StudentId));
-
-			this.LessonMapEFToPOCO(efLessonXTeacher.Lesson, response);
-
-			this.StudentMapEFToPOCO(efLessonXTeacher.Student, response);
+			return new POCOLessonXTeacher(efLessonXTeacher.Id, efLessonXTeacher.LessonId, efLessonXTeacher.StudentId);
 		}
 
 		public virtual void RateMapModelToEF(
@@ -192,20 +164,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.TeacherSkillId);
 		}
 
-		public virtual void RateMapEFToPOCO(
-			EFRate efRate,
-			ApiResponse response)
+		public virtual POCORate RateMapEFToPOCO(
+			EFRate efRate)
 		{
 			if (efRate == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddRate(new POCORate(efRate.AmountPerMinute, efRate.Id, efRate.TeacherId, efRate.TeacherSkillId));
-
-			this.TeacherMapEFToPOCO(efRate.Teacher, response);
-
-			this.TeacherSkillMapEFToPOCO(efRate.TeacherSkill, response);
+			return new POCORate(efRate.AmountPerMinute, efRate.Id, efRate.TeacherId, efRate.TeacherSkillId);
 		}
 
 		public virtual void SpaceMapModelToEF(
@@ -220,18 +187,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void SpaceMapEFToPOCO(
-			EFSpace efSpace,
-			ApiResponse response)
+		public virtual POCOSpace SpaceMapEFToPOCO(
+			EFSpace efSpace)
 		{
 			if (efSpace == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSpace(new POCOSpace(efSpace.Description, efSpace.Id, efSpace.Name, efSpace.StudioId));
-
-			this.StudioMapEFToPOCO(efSpace.Studio, response);
+			return new POCOSpace(efSpace.Description, efSpace.Id, efSpace.Name, efSpace.StudioId);
 		}
 
 		public virtual void SpaceFeatureMapModelToEF(
@@ -245,18 +209,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void SpaceFeatureMapEFToPOCO(
-			EFSpaceFeature efSpaceFeature,
-			ApiResponse response)
+		public virtual POCOSpaceFeature SpaceFeatureMapEFToPOCO(
+			EFSpaceFeature efSpaceFeature)
 		{
 			if (efSpaceFeature == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSpaceFeature(new POCOSpaceFeature(efSpaceFeature.Id, efSpaceFeature.Name, efSpaceFeature.StudioId));
-
-			this.StudioMapEFToPOCO(efSpaceFeature.Studio, response);
+			return new POCOSpaceFeature(efSpaceFeature.Id, efSpaceFeature.Name, efSpaceFeature.StudioId);
 		}
 
 		public virtual void SpaceXSpaceFeatureMapModelToEF(
@@ -270,20 +231,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.SpaceId);
 		}
 
-		public virtual void SpaceXSpaceFeatureMapEFToPOCO(
-			EFSpaceXSpaceFeature efSpaceXSpaceFeature,
-			ApiResponse response)
+		public virtual POCOSpaceXSpaceFeature SpaceXSpaceFeatureMapEFToPOCO(
+			EFSpaceXSpaceFeature efSpaceXSpaceFeature)
 		{
 			if (efSpaceXSpaceFeature == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSpaceXSpaceFeature(new POCOSpaceXSpaceFeature(efSpaceXSpaceFeature.Id, efSpaceXSpaceFeature.SpaceFeatureId, efSpaceXSpaceFeature.SpaceId));
-
-			this.SpaceFeatureMapEFToPOCO(efSpaceXSpaceFeature.SpaceFeature, response);
-
-			this.SpaceMapEFToPOCO(efSpaceXSpaceFeature.Space, response);
+			return new POCOSpaceXSpaceFeature(efSpaceXSpaceFeature.Id, efSpaceXSpaceFeature.SpaceFeatureId, efSpaceXSpaceFeature.SpaceId);
 		}
 
 		public virtual void StateMapModelToEF(
@@ -296,16 +252,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void StateMapEFToPOCO(
-			EFState efState,
-			ApiResponse response)
+		public virtual POCOState StateMapEFToPOCO(
+			EFState efState)
 		{
 			if (efState == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddState(new POCOState(efState.Id, efState.Name));
+			return new POCOState(efState.Id, efState.Name);
 		}
 
 		public virtual void StudentMapModelToEF(
@@ -327,20 +282,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void StudentMapEFToPOCO(
-			EFStudent efStudent,
-			ApiResponse response)
+		public virtual POCOStudent StudentMapEFToPOCO(
+			EFStudent efStudent)
 		{
 			if (efStudent == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddStudent(new POCOStudent(efStudent.Birthday, efStudent.Email, efStudent.EmailRemindersEnabled, efStudent.FamilyId, efStudent.FirstName, efStudent.Id, efStudent.IsAdult, efStudent.LastName, efStudent.Phone, efStudent.SmsRemindersEnabled, efStudent.StudioId));
-
-			this.FamilyMapEFToPOCO(efStudent.Family, response);
-
-			this.StudioMapEFToPOCO(efStudent.Studio, response);
+			return new POCOStudent(efStudent.Birthday, efStudent.Email, efStudent.EmailRemindersEnabled, efStudent.FamilyId, efStudent.FirstName, efStudent.Id, efStudent.IsAdult, efStudent.LastName, efStudent.Phone, efStudent.SmsRemindersEnabled, efStudent.StudioId);
 		}
 
 		public virtual void StudentXFamilyMapModelToEF(
@@ -354,20 +304,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudentId);
 		}
 
-		public virtual void StudentXFamilyMapEFToPOCO(
-			EFStudentXFamily efStudentXFamily,
-			ApiResponse response)
+		public virtual POCOStudentXFamily StudentXFamilyMapEFToPOCO(
+			EFStudentXFamily efStudentXFamily)
 		{
 			if (efStudentXFamily == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddStudentXFamily(new POCOStudentXFamily(efStudentXFamily.FamilyId, efStudentXFamily.Id, efStudentXFamily.StudentId));
-
-			this.FamilyMapEFToPOCO(efStudentXFamily.Family, response);
-
-			this.StudentMapEFToPOCO(efStudentXFamily.Student, response);
+			return new POCOStudentXFamily(efStudentXFamily.FamilyId, efStudentXFamily.Id, efStudentXFamily.StudentId);
 		}
 
 		public virtual void StudioMapModelToEF(
@@ -386,18 +331,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.Zip);
 		}
 
-		public virtual void StudioMapEFToPOCO(
-			EFStudio efStudio,
-			ApiResponse response)
+		public virtual POCOStudio StudioMapEFToPOCO(
+			EFStudio efStudio)
 		{
 			if (efStudio == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddStudio(new POCOStudio(efStudio.Address1, efStudio.Address2, efStudio.City, efStudio.Id, efStudio.Name, efStudio.StateId, efStudio.Website, efStudio.Zip));
-
-			this.StateMapEFToPOCO(efStudio.State, response);
+			return new POCOStudio(efStudio.Address1, efStudio.Address2, efStudio.City, efStudio.Id, efStudio.Name, efStudio.StateId, efStudio.Website, efStudio.Zip);
 		}
 
 		public virtual void TeacherMapModelToEF(
@@ -415,18 +357,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void TeacherMapEFToPOCO(
-			EFTeacher efTeacher,
-			ApiResponse response)
+		public virtual POCOTeacher TeacherMapEFToPOCO(
+			EFTeacher efTeacher)
 		{
 			if (efTeacher == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddTeacher(new POCOTeacher(efTeacher.Birthday, efTeacher.Email, efTeacher.FirstName, efTeacher.Id, efTeacher.LastName, efTeacher.Phone, efTeacher.StudioId));
-
-			this.StudioMapEFToPOCO(efTeacher.Studio, response);
+			return new POCOTeacher(efTeacher.Birthday, efTeacher.Email, efTeacher.FirstName, efTeacher.Id, efTeacher.LastName, efTeacher.Phone, efTeacher.StudioId);
 		}
 
 		public virtual void TeacherSkillMapModelToEF(
@@ -440,18 +379,15 @@ namespace FermataFishNS.Api.DataAccess
 				model.StudioId);
 		}
 
-		public virtual void TeacherSkillMapEFToPOCO(
-			EFTeacherSkill efTeacherSkill,
-			ApiResponse response)
+		public virtual POCOTeacherSkill TeacherSkillMapEFToPOCO(
+			EFTeacherSkill efTeacherSkill)
 		{
 			if (efTeacherSkill == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddTeacherSkill(new POCOTeacherSkill(efTeacherSkill.Id, efTeacherSkill.Name, efTeacherSkill.StudioId));
-
-			this.StudioMapEFToPOCO(efTeacherSkill.Studio, response);
+			return new POCOTeacherSkill(efTeacherSkill.Id, efTeacherSkill.Name, efTeacherSkill.StudioId);
 		}
 
 		public virtual void TeacherXTeacherSkillMapModelToEF(
@@ -465,24 +401,19 @@ namespace FermataFishNS.Api.DataAccess
 				model.TeacherSkillId);
 		}
 
-		public virtual void TeacherXTeacherSkillMapEFToPOCO(
-			EFTeacherXTeacherSkill efTeacherXTeacherSkill,
-			ApiResponse response)
+		public virtual POCOTeacherXTeacherSkill TeacherXTeacherSkillMapEFToPOCO(
+			EFTeacherXTeacherSkill efTeacherXTeacherSkill)
 		{
 			if (efTeacherXTeacherSkill == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddTeacherXTeacherSkill(new POCOTeacherXTeacherSkill(efTeacherXTeacherSkill.Id, efTeacherXTeacherSkill.TeacherId, efTeacherXTeacherSkill.TeacherSkillId));
-
-			this.TeacherMapEFToPOCO(efTeacherXTeacherSkill.Teacher, response);
-
-			this.TeacherSkillMapEFToPOCO(efTeacherXTeacherSkill.TeacherSkill, response);
+			return new POCOTeacherXTeacherSkill(efTeacherXTeacherSkill.Id, efTeacherXTeacherSkill.TeacherId, efTeacherXTeacherSkill.TeacherSkillId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4a14f388d886c6c02a49ebfb2275da9</Hash>
+    <Hash>3c24d4095c50b0e48bba3c2583570f61</Hash>
 </Codenesium>*/

@@ -14,18 +14,12 @@ namespace ESPIOTNS.Api.DataAccess
 
 		void Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCODevice Get(int id);
 
-		POCODevice GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCODevice> GetWhereDirect(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>8c513571bc4a38284af4f37a1abcca4e</Hash>
+    <Hash>ad30e54e38510076423f51e8ba16ad1d</Hash>
 </Codenesium>*/

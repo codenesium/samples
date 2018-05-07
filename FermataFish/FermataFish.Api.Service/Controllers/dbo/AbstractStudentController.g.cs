@@ -42,7 +42,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOStudent response = this.studentManager.GetById(id).Students.FirstOrDefault();
+			POCOStudent response = this.studentManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.studentManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Students);
-			}
+			List<POCOStudent> response = this.studentManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace FermataFishNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Students/{result.Id.ToString()}");
-				POCOStudent response = this.studentManager.GetById(result.Id).Students.First();
+				POCOStudent response = this.studentManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStudent response = this.studentManager.GetById(id).Students.First();
+					POCOStudent response = this.studentManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace FermataFishNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByFamilyId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Families/{id}/Students")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
-		public virtual IActionResult ByFamilyId(int id)
-		{
-			ApiResponse response = this.studentManager.GetWhere(x => x.FamilyId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Students);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByStudioId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Studios/{id}/Students")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
-		public virtual IActionResult ByStudioId(int id)
-		{
-			ApiResponse response = this.studentManager.GetWhere(x => x.StudioId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Students);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4e95786e791796f0e4b50fd289dba7a</Hash>
+    <Hash>aa0d7717571d0f8895adb4df96a7174c</Hash>
 </Codenesium>*/

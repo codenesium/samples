@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/clients")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ClientController: AbstractClientController
 	{
 		public ClientController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>22ae5bc9329a381d8b47f35307a5994c</Hash>
+    <Hash>e6101e37a6d4a7370094f43dd91966f3</Hash>
 </Codenesium>*/

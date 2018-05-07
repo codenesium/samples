@@ -47,11 +47,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidSalesPerson(Nullable<int> id)
 		{
-			return this.SalesPersonRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.SalesPersonRepository.Get(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ae7cec72003436e5dba1b035415d83b</Hash>
+    <Hash>edda1f724078451e34c264b6347a6f2e</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/studios")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class StudioController: AbstractStudioController
 	{
 		public StudioController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9c8d808accccb592ba652f033fc16155</Hash>
+    <Hash>5ef85ed783c5b79c4dc4026de552aef1</Hash>
 </Codenesium>*/

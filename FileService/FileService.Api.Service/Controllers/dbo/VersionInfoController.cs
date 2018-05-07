@@ -14,7 +14,6 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/versionInfoes")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class VersionInfoController: AbstractVersionInfoController
 	{
 		public VersionInfoController(
@@ -36,5 +35,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dde06030ea71264b8f8de25f64f8f142</Hash>
+    <Hash>bd2b2b12f7fb30b3f66b32dbd6b9714d</Hash>
 </Codenesium>*/

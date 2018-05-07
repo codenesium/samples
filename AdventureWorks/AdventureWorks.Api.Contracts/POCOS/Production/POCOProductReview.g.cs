@@ -22,19 +22,17 @@ namespace AdventureWorksNS.Api.Contracts
 			this.Comments = comments.ToString();
 			this.EmailAddress = emailAddress.ToString();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
 			this.ProductReviewID = productReviewID.ToInt();
 			this.Rating = rating.ToInt();
 			this.ReviewDate = reviewDate.ToDateTime();
 			this.ReviewerName = reviewerName.ToString();
-
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 		}
 
 		public string Comments { get; set; }
 		public string EmailAddress { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 		public int ProductReviewID { get; set; }
 		public int Rating { get; set; }
 		public DateTime ReviewDate { get; set; }
@@ -119,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>640e8503ef4d233fd46826a7c19b5b34</Hash>
+    <Hash>a1dd8d573013d6a452759e56343301a7</Hash>
 </Codenesium>*/

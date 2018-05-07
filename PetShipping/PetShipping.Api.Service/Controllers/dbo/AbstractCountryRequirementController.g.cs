@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOCountryRequirement response = this.countryRequirementManager.GetById(id).CountryRequirements.FirstOrDefault();
+			POCOCountryRequirement response = this.countryRequirementManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetShippingNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOCountryRequirement>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.countryRequirementManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CountryRequirements);
-			}
+			List<POCOCountryRequirement> response = this.countryRequirementManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetShippingNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/CountryRequirements/{result.Id.ToString()}");
-				POCOCountryRequirement response = this.countryRequirementManager.GetById(result.Id).CountryRequirements.First();
+				POCOCountryRequirement response = this.countryRequirementManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCountryRequirement response = this.countryRequirementManager.GetById(id).CountryRequirements.First();
+					POCOCountryRequirement response = this.countryRequirementManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCountryId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Countries/{id}/CountryRequirements")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOCountryRequirement>), 200)]
-		public virtual IActionResult ByCountryId(int id)
-		{
-			ApiResponse response = this.countryRequirementManager.GetWhere(x => x.CountryId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CountryRequirements);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c0c698dadc42111ad2449b9f2003c57</Hash>
+    <Hash>201273edcf17288c1da1cc3c2e8d245a</Hash>
 </Codenesium>*/

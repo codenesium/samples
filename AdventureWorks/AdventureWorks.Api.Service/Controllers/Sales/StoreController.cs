@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/stores")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class StoreController: AbstractStoreController
 	{
 		public StoreController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cf3b7a9ad6be23c7fd99ccc8b8ee3e8e</Hash>
+    <Hash>f16d324cb328df9bb8ee0bbc069ae686</Hash>
 </Codenesium>*/

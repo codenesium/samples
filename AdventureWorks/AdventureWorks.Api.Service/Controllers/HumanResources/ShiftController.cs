@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/shifts")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ShiftController: AbstractShiftController
 	{
 		public ShiftController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f4973f533473048fbf379b806c06d566</Hash>
+    <Hash>54faae37b45f8292dce86dcf66748390</Hash>
 </Codenesium>*/

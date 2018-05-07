@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOSalesOrderHeaderSalesReason response = this.salesOrderHeaderSalesReasonManager.GetById(id).SalesOrderHeaderSalesReasons.FirstOrDefault();
+			POCOSalesOrderHeaderSalesReason response = this.salesOrderHeaderSalesReasonManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOSalesOrderHeaderSalesReason>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.salesOrderHeaderSalesReasonManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaderSalesReasons);
-			}
+			List<POCOSalesOrderHeaderSalesReason> response = this.salesOrderHeaderSalesReasonManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesOrderHeaderSalesReasons/{result.Id.ToString()}");
-				POCOSalesOrderHeaderSalesReason response = this.salesOrderHeaderSalesReasonManager.GetById(result.Id).SalesOrderHeaderSalesReasons.First();
+				POCOSalesOrderHeaderSalesReason response = this.salesOrderHeaderSalesReasonManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesOrderHeaderSalesReason response = this.salesOrderHeaderSalesReasonManager.GetById(id).SalesOrderHeaderSalesReasons.First();
+					POCOSalesOrderHeaderSalesReason response = this.salesOrderHeaderSalesReasonManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("BySalesOrderID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SalesOrderHeaders/{id}/SalesOrderHeaderSalesReasons")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeaderSalesReason>), 200)]
-		public virtual IActionResult BySalesOrderID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderSalesReasonManager.GetWhere(x => x.SalesOrderID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaderSalesReasons);
-			}
-		}
-
-		[HttpGet]
-		[Route("BySalesReasonID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SalesReasons/{id}/SalesOrderHeaderSalesReasons")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeaderSalesReason>), 200)]
-		public virtual IActionResult BySalesReasonID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderSalesReasonManager.GetWhere(x => x.SalesReasonID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaderSalesReasons);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d7fc01d951e7c678febbc6cb69fb1d91</Hash>
+    <Hash>d84eff3e45d2461c8ab26d87c1709948</Hash>
 </Codenesium>*/

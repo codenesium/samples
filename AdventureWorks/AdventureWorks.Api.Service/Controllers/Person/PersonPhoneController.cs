@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/personPhones")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PersonPhoneController: AbstractPersonPhoneController
 	{
 		public PersonPhoneController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a0b8eed692f2a53769f0b8cbfc32d628</Hash>
+    <Hash>6a0892891f8fa3ffaa8808a30ffc3fb2</Hash>
 </Codenesium>*/

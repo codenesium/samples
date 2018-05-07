@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/stateProvinces")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class StateProvinceController: AbstractStateProvinceController
 	{
 		public StateProvinceController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>afa87305d2431e8ac1e8e005fdf366e3</Hash>
+    <Hash>fe748d7826e60dd2bc45b65ddedbf1a9</Hash>
 </Codenesium>*/

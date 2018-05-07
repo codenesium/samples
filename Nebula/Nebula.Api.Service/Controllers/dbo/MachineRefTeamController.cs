@@ -14,7 +14,6 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/machineRefTeams")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class MachineRefTeamController: AbstractMachineRefTeamController
 	{
 		public MachineRefTeamController(
@@ -36,5 +35,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1526caa8fe35ca589da73092d7490b69</Hash>
+    <Hash>5f4e1792255aa2610fcd655b3d1f1217</Hash>
 </Codenesium>*/

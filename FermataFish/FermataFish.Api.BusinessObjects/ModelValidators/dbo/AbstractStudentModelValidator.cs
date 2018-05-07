@@ -80,16 +80,16 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		private bool BeValidFamily(int id)
 		{
-			return this.FamilyRepository.GetByIdDirect(id) != null;
+			return this.FamilyRepository.Get(id) != null;
 		}
 
 		private bool BeValidStudio(int id)
 		{
-			return this.StudioRepository.GetByIdDirect(id) != null;
+			return this.StudioRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e974dee20791f3bca62b41e1a4709f80</Hash>
+    <Hash>636c5206c88c8bf33c07b6067cbdc4c7</Hash>
 </Codenesium>*/

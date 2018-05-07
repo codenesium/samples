@@ -17,18 +17,12 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOBucket Get(int id);
 
-		POCOBucket GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOBucket> GetWhereDirect(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>24ecb1758d12a9f266e1e103a0a87829</Hash>
+    <Hash>7dd5e1db3b1bf506b8e38cc62cd398fe</Hash>
 </Codenesium>*/

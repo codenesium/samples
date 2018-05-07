@@ -68,33 +68,18 @@ namespace PetShippingNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOSale Get(int id)
 		{
-			return this.saleRepository.GetById(id);
+			return this.saleRepository.Get(id);
 		}
 
-		public virtual POCOSale GetByIdDirect(int id)
+		public virtual List<POCOSale> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.saleRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFSale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.saleRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.saleRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSale> GetWhereDirect(Expression<Func<EFSale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.saleRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.saleRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d7e5809427a36dd737cd246cb474a05e</Hash>
+    <Hash>953c8074009611a775c162d94c54353e</Hash>
 </Codenesium>*/

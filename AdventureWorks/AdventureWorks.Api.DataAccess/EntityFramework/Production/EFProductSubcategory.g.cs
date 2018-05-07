@@ -41,12 +41,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
-
-		[ForeignKey("ProductCategoryID")]
-		public virtual EFProductCategory ProductCategory { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>19a18cca3d5f338ea73e0f3210b2a341</Hash>
+    <Hash>4cb94733becfd704ab6b9b04867edd3a</Hash>
 </Codenesium>*/

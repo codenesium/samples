@@ -42,7 +42,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOFile response = this.fileManager.GetById(id).Files.FirstOrDefault();
+			POCOFile response = this.fileManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace FileServiceNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOFile>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.fileManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Files);
-			}
+			List<POCOFile> response = this.fileManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace FileServiceNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Files/{result.Id.ToString()}");
-				POCOFile response = this.fileManager.GetById(result.Id).Files.First();
+				POCOFile response = this.fileManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace FileServiceNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOFile response = this.fileManager.GetById(id).Files.First();
+					POCOFile response = this.fileManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace FileServiceNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByBucketId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Buckets/{id}/Files")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOFile>), 200)]
-		public virtual IActionResult ByBucketId(int id)
-		{
-			ApiResponse response = this.fileManager.GetWhere(x => x.BucketId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Files);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByFileTypeId/{id}")]
-		[ReadOnly]
-		[Route("~/api/FileTypes/{id}/Files")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOFile>), 200)]
-		public virtual IActionResult ByFileTypeId(int id)
-		{
-			ApiResponse response = this.fileManager.GetWhere(x => x.FileTypeId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Files);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20d58cb726620883b0b40a7e2a64e4d6</Hash>
+    <Hash>a72a91b8ae143695a4b4f9679c7b4c83</Hash>
 </Codenesium>*/

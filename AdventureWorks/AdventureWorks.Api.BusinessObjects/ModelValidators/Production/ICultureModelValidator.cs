@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface ICultureModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(CultureModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(string id, CultureModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(string id);
+		Task<ValidationResult> ValidateCreateAsync(CultureModel model);
+		Task<ValidationResult> ValidateUpdateAsync(string id, CultureModel model);
+		Task<ValidationResult> ValidateDeleteAsync(string id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a722218f47ea0a0ebd051ff9bd4fdc4</Hash>
+    <Hash>fa5bf6ecd59e8ee6ece71ebd3863c198</Hash>
 </Codenesium>*/

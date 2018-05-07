@@ -20,13 +20,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public ICultureRepository CultureRepository { get; set; }
-		public IProductDescriptionRepository ProductDescriptionRepository { get; set; }
-		public IProductModelRepository ProductModelRepository { get; set; }
 		public virtual void CultureIDRules()
 		{
 			this.RuleFor(x => x.CultureID).NotNull();
-			this.RuleFor(x => x.CultureID).Must(this.BeValidCulture).When(x => x ?.CultureID != null).WithMessage("Invalid reference");
 			this.RuleFor(x => x.CultureID).Length(0, 6);
 		}
 
@@ -38,26 +34,10 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ProductDescriptionIDRules()
 		{
 			this.RuleFor(x => x.ProductDescriptionID).NotNull();
-			this.RuleFor(x => x.ProductDescriptionID).Must(this.BeValidProductDescription).When(x => x ?.ProductDescriptionID != null).WithMessage("Invalid reference");
-		}
-
-		private bool BeValidCulture(string id)
-		{
-			return this.CultureRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidProductDescription(int id)
-		{
-			return this.ProductDescriptionRepository.GetByIdDirect(id) != null;
-		}
-
-		private bool BeValidProductModel(int id)
-		{
-			return this.ProductModelRepository.GetByIdDirect(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>70111ecfc9f7b49e0233f8a7e658e15c</Hash>
+    <Hash>5d5d86be4a6a71a553dc4c58847d3f14</Hash>
 </Codenesium>*/

@@ -17,18 +17,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int addressID);
 
-		ApiResponse GetById(int addressID);
+		POCOAddress Get(int addressID);
 
-		POCOAddress GetByIdDirect(int addressID);
-
-		ApiResponse GetWhere(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOAddress> GetWhereDirect(Expression<Func<EFAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>3bff2b2c4401ad0109e17c371dd98fed</Hash>
+    <Hash>a115cd7bf469daaded90649b5f1ca5c4</Hash>
 </Codenesium>*/

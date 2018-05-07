@@ -45,18 +45,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("StartDate", TypeName="date")]
 		public DateTime StartDate { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFEmployee Employee { get; set; }
-
-		[ForeignKey("DepartmentID")]
-		public virtual EFDepartment Department { get; set; }
-
-		[ForeignKey("ShiftID")]
-		public virtual EFShift Shift { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7604478bf1688b0153f4c8199c5a5458</Hash>
+    <Hash>28ff4f286381d5a90a7f455bd1a6226e</Hash>
 </Codenesium>*/

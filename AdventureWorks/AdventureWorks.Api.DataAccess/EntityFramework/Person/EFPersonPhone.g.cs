@@ -35,15 +35,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("PhoneNumberTypeID", TypeName="int")]
 		public int PhoneNumberTypeID { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFPerson Person { get; set; }
-
-		[ForeignKey("PhoneNumberTypeID")]
-		public virtual EFPhoneNumberType PhoneNumberType { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0375b6db73171f44b67bfafb8bd5900</Hash>
+    <Hash>c29f3885be875edf51f5f7917280d37b</Hash>
 </Codenesium>*/

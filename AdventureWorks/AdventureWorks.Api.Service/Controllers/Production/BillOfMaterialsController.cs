@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/billOfMaterials")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class BillOfMaterialsController: AbstractBillOfMaterialsController
 	{
 		public BillOfMaterialsController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6b5dea47f15d2919c8759b7c1aec1113</Hash>
+    <Hash>86eb2005e243d3c808e0fe9fccd28aed</Hash>
 </Codenesium>*/

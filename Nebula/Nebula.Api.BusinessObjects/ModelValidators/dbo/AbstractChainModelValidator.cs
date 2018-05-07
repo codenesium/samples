@@ -47,16 +47,16 @@ namespace NebulaNS.Api.BusinessObjects
 
 		private bool BeValidChainStatus(int id)
 		{
-			return this.ChainStatusRepository.GetByIdDirect(id) != null;
+			return this.ChainStatusRepository.Get(id) != null;
 		}
 
 		private bool BeValidTeam(int id)
 		{
-			return this.TeamRepository.GetByIdDirect(id) != null;
+			return this.TeamRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>29189986eb59a2e1dfcdb314819daae9</Hash>
+    <Hash>9cc946c0e3e99430474b369a82cacaf8</Hash>
 </Codenesium>*/

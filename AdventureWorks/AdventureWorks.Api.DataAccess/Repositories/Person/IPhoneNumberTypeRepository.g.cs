@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(int phoneNumberTypeID);
 
-		ApiResponse GetById(int phoneNumberTypeID);
+		POCOPhoneNumberType Get(int phoneNumberTypeID);
 
-		POCOPhoneNumberType GetByIdDirect(int phoneNumberTypeID);
-
-		ApiResponse GetWhere(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOPhoneNumberType> GetWhereDirect(Expression<Func<EFPhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOPhoneNumberType> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c59987ed5523e89a7aa9e2c2cf27a25</Hash>
+    <Hash>ce23381dea6c159b5f5be9bd942c1e7d</Hash>
 </Codenesium>*/

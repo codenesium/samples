@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/databaseLogs")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class DatabaseLogController: AbstractDatabaseLogController
 	{
 		public DatabaseLogController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>21e65defa340c2d761288b50c0264fba</Hash>
+    <Hash>3370a11374e8bdccbc02d508b9a28a0c</Hash>
 </Codenesium>*/

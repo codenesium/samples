@@ -141,21 +141,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("WeightUnitMeasureCode", TypeName="nchar(3)")]
 		public string WeightUnitMeasureCode { get; set; }
-
-		[ForeignKey("ProductModelID")]
-		public virtual EFProductModel ProductModel { get; set; }
-
-		[ForeignKey("ProductSubcategoryID")]
-		public virtual EFProductSubcategory ProductSubcategory { get; set; }
-
-		[ForeignKey("SizeUnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasure { get; set; }
-
-		[ForeignKey("WeightUnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasure1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb8c95183d74bef64b07afbabdd881ea</Hash>
+    <Hash>2491364d1d7dbc0298e58459aac50485</Hash>
 </Codenesium>*/

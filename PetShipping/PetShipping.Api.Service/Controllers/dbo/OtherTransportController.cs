@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/otherTransports")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class OtherTransportController: AbstractOtherTransportController
 	{
 		public OtherTransportController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>af2c22821867500410d701a250eee52c</Hash>
+    <Hash>e530adcd1d2d213d297dd2637abda537</Hash>
 </Codenesium>*/

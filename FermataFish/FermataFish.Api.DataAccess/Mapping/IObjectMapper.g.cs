@@ -10,156 +10,139 @@ namespace FermataFishNS.Api.DataAccess
 			AdminModel model,
 			EFAdmin efAdmin);
 
-		void AdminMapEFToPOCO(
-			EFAdmin efAdmin,
-			ApiResponse response);
+		POCOAdmin AdminMapEFToPOCO(
+			EFAdmin efAdmin);
 
 		void FamilyMapModelToEF(
 			int id,
 			FamilyModel model,
 			EFFamily efFamily);
 
-		void FamilyMapEFToPOCO(
-			EFFamily efFamily,
-			ApiResponse response);
+		POCOFamily FamilyMapEFToPOCO(
+			EFFamily efFamily);
 
 		void LessonMapModelToEF(
 			int id,
 			LessonModel model,
 			EFLesson efLesson);
 
-		void LessonMapEFToPOCO(
-			EFLesson efLesson,
-			ApiResponse response);
+		POCOLesson LessonMapEFToPOCO(
+			EFLesson efLesson);
 
 		void LessonStatusMapModelToEF(
 			int id,
 			LessonStatusModel model,
 			EFLessonStatus efLessonStatus);
 
-		void LessonStatusMapEFToPOCO(
-			EFLessonStatus efLessonStatus,
-			ApiResponse response);
+		POCOLessonStatus LessonStatusMapEFToPOCO(
+			EFLessonStatus efLessonStatus);
 
 		void LessonXStudentMapModelToEF(
 			int id,
 			LessonXStudentModel model,
 			EFLessonXStudent efLessonXStudent);
 
-		void LessonXStudentMapEFToPOCO(
-			EFLessonXStudent efLessonXStudent,
-			ApiResponse response);
+		POCOLessonXStudent LessonXStudentMapEFToPOCO(
+			EFLessonXStudent efLessonXStudent);
 
 		void LessonXTeacherMapModelToEF(
 			int id,
 			LessonXTeacherModel model,
 			EFLessonXTeacher efLessonXTeacher);
 
-		void LessonXTeacherMapEFToPOCO(
-			EFLessonXTeacher efLessonXTeacher,
-			ApiResponse response);
+		POCOLessonXTeacher LessonXTeacherMapEFToPOCO(
+			EFLessonXTeacher efLessonXTeacher);
 
 		void RateMapModelToEF(
 			int id,
 			RateModel model,
 			EFRate efRate);
 
-		void RateMapEFToPOCO(
-			EFRate efRate,
-			ApiResponse response);
+		POCORate RateMapEFToPOCO(
+			EFRate efRate);
 
 		void SpaceMapModelToEF(
 			int id,
 			SpaceModel model,
 			EFSpace efSpace);
 
-		void SpaceMapEFToPOCO(
-			EFSpace efSpace,
-			ApiResponse response);
+		POCOSpace SpaceMapEFToPOCO(
+			EFSpace efSpace);
 
 		void SpaceFeatureMapModelToEF(
 			int id,
 			SpaceFeatureModel model,
 			EFSpaceFeature efSpaceFeature);
 
-		void SpaceFeatureMapEFToPOCO(
-			EFSpaceFeature efSpaceFeature,
-			ApiResponse response);
+		POCOSpaceFeature SpaceFeatureMapEFToPOCO(
+			EFSpaceFeature efSpaceFeature);
 
 		void SpaceXSpaceFeatureMapModelToEF(
 			int id,
 			SpaceXSpaceFeatureModel model,
 			EFSpaceXSpaceFeature efSpaceXSpaceFeature);
 
-		void SpaceXSpaceFeatureMapEFToPOCO(
-			EFSpaceXSpaceFeature efSpaceXSpaceFeature,
-			ApiResponse response);
+		POCOSpaceXSpaceFeature SpaceXSpaceFeatureMapEFToPOCO(
+			EFSpaceXSpaceFeature efSpaceXSpaceFeature);
 
 		void StateMapModelToEF(
 			int id,
 			StateModel model,
 			EFState efState);
 
-		void StateMapEFToPOCO(
-			EFState efState,
-			ApiResponse response);
+		POCOState StateMapEFToPOCO(
+			EFState efState);
 
 		void StudentMapModelToEF(
 			int id,
 			StudentModel model,
 			EFStudent efStudent);
 
-		void StudentMapEFToPOCO(
-			EFStudent efStudent,
-			ApiResponse response);
+		POCOStudent StudentMapEFToPOCO(
+			EFStudent efStudent);
 
 		void StudentXFamilyMapModelToEF(
 			int id,
 			StudentXFamilyModel model,
 			EFStudentXFamily efStudentXFamily);
 
-		void StudentXFamilyMapEFToPOCO(
-			EFStudentXFamily efStudentXFamily,
-			ApiResponse response);
+		POCOStudentXFamily StudentXFamilyMapEFToPOCO(
+			EFStudentXFamily efStudentXFamily);
 
 		void StudioMapModelToEF(
 			int id,
 			StudioModel model,
 			EFStudio efStudio);
 
-		void StudioMapEFToPOCO(
-			EFStudio efStudio,
-			ApiResponse response);
+		POCOStudio StudioMapEFToPOCO(
+			EFStudio efStudio);
 
 		void TeacherMapModelToEF(
 			int id,
 			TeacherModel model,
 			EFTeacher efTeacher);
 
-		void TeacherMapEFToPOCO(
-			EFTeacher efTeacher,
-			ApiResponse response);
+		POCOTeacher TeacherMapEFToPOCO(
+			EFTeacher efTeacher);
 
 		void TeacherSkillMapModelToEF(
 			int id,
 			TeacherSkillModel model,
 			EFTeacherSkill efTeacherSkill);
 
-		void TeacherSkillMapEFToPOCO(
-			EFTeacherSkill efTeacherSkill,
-			ApiResponse response);
+		POCOTeacherSkill TeacherSkillMapEFToPOCO(
+			EFTeacherSkill efTeacherSkill);
 
 		void TeacherXTeacherSkillMapModelToEF(
 			int id,
 			TeacherXTeacherSkillModel model,
 			EFTeacherXTeacherSkill efTeacherXTeacherSkill);
 
-		void TeacherXTeacherSkillMapEFToPOCO(
-			EFTeacherXTeacherSkill efTeacherXTeacherSkill,
-			ApiResponse response);
+		POCOTeacherXTeacherSkill TeacherXTeacherSkillMapEFToPOCO(
+			EFTeacherXTeacherSkill efTeacherXTeacherSkill);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad4863c843e755630bc3c1790e85732e</Hash>
+    <Hash>ddb1728c57be6cc57a6e2e3bb0defb75</Hash>
 </Codenesium>*/

@@ -61,11 +61,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidSalesTerritory(Nullable<int> id)
 		{
-			return this.SalesTerritoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.SalesTerritoryRepository.Get(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf412599d7cc7b13afca369ebfca2b1a</Hash>
+    <Hash>4ac73d09c49199affa8c297c1416bc2b</Hash>
 </Codenesium>*/

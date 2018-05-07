@@ -17,18 +17,12 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(long version);
 
-		ApiResponse GetById(long version);
+		POCOVersionInfo Get(long version);
 
-		POCOVersionInfo GetByIdDirect(long version);
-
-		ApiResponse GetWhere(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOVersionInfo> GetWhereDirect(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>2cf0aca86fc6625f325bd4d269f438b6</Hash>
+    <Hash>b071bc114fe4f29f35a1fcf67c33418a</Hash>
 </Codenesium>*/

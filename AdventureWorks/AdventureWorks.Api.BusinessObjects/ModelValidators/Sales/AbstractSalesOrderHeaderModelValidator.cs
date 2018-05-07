@@ -152,31 +152,31 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidCreditCard(Nullable<int> id)
 		{
-			return this.CreditCardRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.CreditCardRepository.Get(id.GetValueOrDefault()) != null;
 		}
 
 		private bool BeValidCurrencyRate(Nullable<int> id)
 		{
-			return this.CurrencyRateRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.CurrencyRateRepository.Get(id.GetValueOrDefault()) != null;
 		}
 
 		private bool BeValidCustomer(int id)
 		{
-			return this.CustomerRepository.GetByIdDirect(id) != null;
+			return this.CustomerRepository.Get(id) != null;
 		}
 
 		private bool BeValidSalesPerson(Nullable<int> id)
 		{
-			return this.SalesPersonRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.SalesPersonRepository.Get(id.GetValueOrDefault()) != null;
 		}
 
 		private bool BeValidSalesTerritory(Nullable<int> id)
 		{
-			return this.SalesTerritoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.SalesTerritoryRepository.Get(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c31844588b7b07dc91c8b1948da7d279</Hash>
+    <Hash>11f7660b7329812b0a65a21bc2988eaf</Hash>
 </Codenesium>*/

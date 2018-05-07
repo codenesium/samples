@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface ICurrencyRateModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(CurrencyRateModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, CurrencyRateModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(CurrencyRateModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, CurrencyRateModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2013f72492b17f3d3686c36f8c0ece9e</Hash>
+    <Hash>debeec34efdb017620dcff8d9296d9a3</Hash>
 </Codenesium>*/

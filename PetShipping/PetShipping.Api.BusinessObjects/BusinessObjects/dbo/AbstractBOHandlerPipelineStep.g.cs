@@ -68,33 +68,18 @@ namespace PetShippingNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOHandlerPipelineStep Get(int id)
 		{
-			return this.handlerPipelineStepRepository.GetById(id);
+			return this.handlerPipelineStepRepository.Get(id);
 		}
 
-		public virtual POCOHandlerPipelineStep GetByIdDirect(int id)
+		public virtual List<POCOHandlerPipelineStep> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.handlerPipelineStepRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.handlerPipelineStepRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.handlerPipelineStepRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOHandlerPipelineStep> GetWhereDirect(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.handlerPipelineStepRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.handlerPipelineStepRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0c5a78aa50ce8448e05932806302cbb8</Hash>
+    <Hash>146977f958396c7ff4a04f9210b332a5</Hash>
 </Codenesium>*/

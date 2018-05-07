@@ -68,33 +68,18 @@ namespace ESPIOTNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCODeviceAction Get(int id)
 		{
-			return this.deviceActionRepository.GetById(id);
+			return this.deviceActionRepository.Get(id);
 		}
 
-		public virtual POCODeviceAction GetByIdDirect(int id)
+		public virtual List<POCODeviceAction> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.deviceActionRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.deviceActionRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.deviceActionRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCODeviceAction> GetWhereDirect(Expression<Func<EFDeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.deviceActionRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.deviceActionRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14c8b7913482fe0902c1978c15fe8738</Hash>
+    <Hash>4e6d2f67d1ed2299dd7663b7d21d8a31</Hash>
 </Codenesium>*/

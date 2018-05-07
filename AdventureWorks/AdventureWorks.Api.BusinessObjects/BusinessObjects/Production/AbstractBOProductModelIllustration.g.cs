@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int productModelID)
+		public virtual POCOProductModelIllustration Get(int productModelID)
 		{
-			return this.productModelIllustrationRepository.GetById(productModelID);
+			return this.productModelIllustrationRepository.Get(productModelID);
 		}
 
-		public virtual POCOProductModelIllustration GetByIdDirect(int productModelID)
+		public virtual List<POCOProductModelIllustration> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productModelIllustrationRepository.GetByIdDirect(productModelID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productModelIllustrationRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productModelIllustrationRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOProductModelIllustration> GetWhereDirect(Expression<Func<EFProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productModelIllustrationRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.productModelIllustrationRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46c23c0e0946688884ebc198a54399cf</Hash>
+    <Hash>ddc46e399e08e33aa4ae6684c5a9dad5</Hash>
 </Codenesium>*/

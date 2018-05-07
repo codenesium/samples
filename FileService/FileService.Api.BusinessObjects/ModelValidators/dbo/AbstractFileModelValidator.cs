@@ -84,16 +84,16 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		private bool BeValidBucket(Nullable<int> id)
 		{
-			return this.BucketRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.BucketRepository.Get(id.GetValueOrDefault()) != null;
 		}
 
 		private bool BeValidFileType(int id)
 		{
-			return this.FileTypeRepository.GetByIdDirect(id) != null;
+			return this.FileTypeRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>178b4f0aee45eb388105f25cd03b3444</Hash>
+    <Hash>41f7aca28529ce1c43436d2560e468cc</Hash>
 </Codenesium>*/

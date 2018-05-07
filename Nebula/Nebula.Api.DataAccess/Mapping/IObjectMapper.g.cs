@@ -10,102 +10,91 @@ namespace NebulaNS.Api.DataAccess
 			ChainModel model,
 			EFChain efChain);
 
-		void ChainMapEFToPOCO(
-			EFChain efChain,
-			ApiResponse response);
+		POCOChain ChainMapEFToPOCO(
+			EFChain efChain);
 
 		void ChainStatusMapModelToEF(
 			int id,
 			ChainStatusModel model,
 			EFChainStatus efChainStatus);
 
-		void ChainStatusMapEFToPOCO(
-			EFChainStatus efChainStatus,
-			ApiResponse response);
+		POCOChainStatus ChainStatusMapEFToPOCO(
+			EFChainStatus efChainStatus);
 
 		void ClaspMapModelToEF(
 			int id,
 			ClaspModel model,
 			EFClasp efClasp);
 
-		void ClaspMapEFToPOCO(
-			EFClasp efClasp,
-			ApiResponse response);
+		POCOClasp ClaspMapEFToPOCO(
+			EFClasp efClasp);
 
 		void LinkMapModelToEF(
 			int id,
 			LinkModel model,
 			EFLink efLink);
 
-		void LinkMapEFToPOCO(
-			EFLink efLink,
-			ApiResponse response);
+		POCOLink LinkMapEFToPOCO(
+			EFLink efLink);
 
 		void LinkLogMapModelToEF(
 			int id,
 			LinkLogModel model,
 			EFLinkLog efLinkLog);
 
-		void LinkLogMapEFToPOCO(
-			EFLinkLog efLinkLog,
-			ApiResponse response);
+		POCOLinkLog LinkLogMapEFToPOCO(
+			EFLinkLog efLinkLog);
 
 		void LinkStatusMapModelToEF(
 			int id,
 			LinkStatusModel model,
 			EFLinkStatus efLinkStatus);
 
-		void LinkStatusMapEFToPOCO(
-			EFLinkStatus efLinkStatus,
-			ApiResponse response);
+		POCOLinkStatus LinkStatusMapEFToPOCO(
+			EFLinkStatus efLinkStatus);
 
 		void MachineMapModelToEF(
 			int id,
 			MachineModel model,
 			EFMachine efMachine);
 
-		void MachineMapEFToPOCO(
-			EFMachine efMachine,
-			ApiResponse response);
+		POCOMachine MachineMapEFToPOCO(
+			EFMachine efMachine);
 
 		void MachineRefTeamMapModelToEF(
 			int id,
 			MachineRefTeamModel model,
 			EFMachineRefTeam efMachineRefTeam);
 
-		void MachineRefTeamMapEFToPOCO(
-			EFMachineRefTeam efMachineRefTeam,
-			ApiResponse response);
+		POCOMachineRefTeam MachineRefTeamMapEFToPOCO(
+			EFMachineRefTeam efMachineRefTeam);
 
 		void OrganizationMapModelToEF(
 			int id,
 			OrganizationModel model,
 			EFOrganization efOrganization);
 
-		void OrganizationMapEFToPOCO(
-			EFOrganization efOrganization,
-			ApiResponse response);
+		POCOOrganization OrganizationMapEFToPOCO(
+			EFOrganization efOrganization);
 
 		void TeamMapModelToEF(
 			int id,
 			TeamModel model,
 			EFTeam efTeam);
 
-		void TeamMapEFToPOCO(
-			EFTeam efTeam,
-			ApiResponse response);
+		POCOTeam TeamMapEFToPOCO(
+			EFTeam efTeam);
 
 		void VersionInfoMapModelToEF(
 			long version,
 			VersionInfoModel model,
 			EFVersionInfo efVersionInfo);
 
-		void VersionInfoMapEFToPOCO(
-			EFVersionInfo efVersionInfo,
-			ApiResponse response);
+		POCOVersionInfo VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ac49840ba132800638a9829a38c66015</Hash>
+    <Hash>26a30599edb044651d49beff60d8b150</Hash>
 </Codenesium>*/

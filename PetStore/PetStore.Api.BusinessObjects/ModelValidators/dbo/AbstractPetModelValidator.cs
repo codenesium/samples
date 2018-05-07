@@ -59,21 +59,21 @@ namespace PetStoreNS.Api.BusinessObjects
 
 		private bool BeValidBreed(int id)
 		{
-			return this.BreedRepository.GetByIdDirect(id) != null;
+			return this.BreedRepository.Get(id) != null;
 		}
 
 		private bool BeValidPen(int id)
 		{
-			return this.PenRepository.GetByIdDirect(id) != null;
+			return this.PenRepository.Get(id) != null;
 		}
 
 		private bool BeValidSpecies(int id)
 		{
-			return this.SpeciesRepository.GetByIdDirect(id) != null;
+			return this.SpeciesRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>932075feed02d065fd47bb0d23d3071d</Hash>
+    <Hash>91ec76aa1cf7ee899aff149aa5b348cb</Hash>
 </Codenesium>*/

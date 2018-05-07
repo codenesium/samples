@@ -34,11 +34,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidCreditCard(int id)
 		{
-			return this.CreditCardRepository.GetByIdDirect(id) != null;
+			return this.CreditCardRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>87148933e813bcc8526b86dbb342b2a3</Hash>
+    <Hash>97093f4b73a8715cb4e1a6da2d52376d</Hash>
 </Codenesium>*/

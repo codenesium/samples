@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int shoppingCartItemID)
+		public virtual POCOShoppingCartItem Get(int shoppingCartItemID)
 		{
-			return this.shoppingCartItemRepository.GetById(shoppingCartItemID);
+			return this.shoppingCartItemRepository.Get(shoppingCartItemID);
 		}
 
-		public virtual POCOShoppingCartItem GetByIdDirect(int shoppingCartItemID)
+		public virtual List<POCOShoppingCartItem> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.shoppingCartItemRepository.GetByIdDirect(shoppingCartItemID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.shoppingCartItemRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.shoppingCartItemRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOShoppingCartItem> GetWhereDirect(Expression<Func<EFShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.shoppingCartItemRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.shoppingCartItemRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a59e4556f68566892ba38230f95df5d</Hash>
+    <Hash>bcd94d74c52b831d95b8a26b5349e8d1</Hash>
 </Codenesium>*/

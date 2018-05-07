@@ -42,7 +42,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOLessonStatus response = this.lessonStatusManager.GetById(id).LessonStatus.FirstOrDefault();
+			POCOLessonStatus response = this.lessonStatusManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.lessonStatusManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.LessonStatus);
-			}
+			List<POCOLessonStatus> response = this.lessonStatusManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace FermataFishNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/LessonStatus/{result.Id.ToString()}");
-				POCOLessonStatus response = this.lessonStatusManager.GetById(result.Id).LessonStatus.First();
+				POCOLessonStatus response = this.lessonStatusManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLessonStatus response = this.lessonStatusManager.GetById(id).LessonStatus.First();
+					POCOLessonStatus response = this.lessonStatusManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace FermataFishNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ById/{id}")]
-		[ReadOnly]
-		[Route("~/api/Studios/{id}/LessonStatus")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
-		public virtual IActionResult ById(int id)
-		{
-			ApiResponse response = this.lessonStatusManager.GetWhere(x => x.Id == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.LessonStatus);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByStudioId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Studios/{id}/LessonStatus")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
-		public virtual IActionResult ByStudioId(int id)
-		{
-			ApiResponse response = this.lessonStatusManager.GetWhere(x => x.StudioId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.LessonStatus);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1bf4cfda2b5ee35e878622816fd3a8a</Hash>
+    <Hash>db87f71d7d98359a453bbde154d574ae</Hash>
 </Codenesium>*/

@@ -18,20 +18,15 @@ namespace NebulaNS.Api.DataAccess
 				model.TeamId);
 		}
 
-		public virtual void ChainMapEFToPOCO(
-			EFChain efChain,
-			ApiResponse response)
+		public virtual POCOChain ChainMapEFToPOCO(
+			EFChain efChain)
 		{
 			if (efChain == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddChain(new POCOChain(efChain.ChainStatusId, efChain.ExternalId, efChain.Id, efChain.Name, efChain.TeamId));
-
-			this.ChainStatusMapEFToPOCO(efChain.ChainStatus, response);
-
-			this.TeamMapEFToPOCO(efChain.Team, response);
+			return new POCOChain(efChain.ChainStatusId, efChain.ExternalId, efChain.Id, efChain.Name, efChain.TeamId);
 		}
 
 		public virtual void ChainStatusMapModelToEF(
@@ -44,16 +39,15 @@ namespace NebulaNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void ChainStatusMapEFToPOCO(
-			EFChainStatus efChainStatus,
-			ApiResponse response)
+		public virtual POCOChainStatus ChainStatusMapEFToPOCO(
+			EFChainStatus efChainStatus)
 		{
 			if (efChainStatus == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddChainStatus(new POCOChainStatus(efChainStatus.Id, efChainStatus.Name));
+			return new POCOChainStatus(efChainStatus.Id, efChainStatus.Name);
 		}
 
 		public virtual void ClaspMapModelToEF(
@@ -67,20 +61,15 @@ namespace NebulaNS.Api.DataAccess
 				model.PreviousChainId);
 		}
 
-		public virtual void ClaspMapEFToPOCO(
-			EFClasp efClasp,
-			ApiResponse response)
+		public virtual POCOClasp ClaspMapEFToPOCO(
+			EFClasp efClasp)
 		{
 			if (efClasp == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddClasp(new POCOClasp(efClasp.Id, efClasp.NextChainId, efClasp.PreviousChainId));
-
-			this.ChainMapEFToPOCO(efClasp.Chain, response);
-
-			this.ChainMapEFToPOCO(efClasp.Chain1, response);
+			return new POCOClasp(efClasp.Id, efClasp.NextChainId, efClasp.PreviousChainId);
 		}
 
 		public virtual void LinkMapModelToEF(
@@ -104,22 +93,15 @@ namespace NebulaNS.Api.DataAccess
 				model.TimeoutInSeconds);
 		}
 
-		public virtual void LinkMapEFToPOCO(
-			EFLink efLink,
-			ApiResponse response)
+		public virtual POCOLink LinkMapEFToPOCO(
+			EFLink efLink)
 		{
 			if (efLink == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLink(new POCOLink(efLink.AssignedMachineId, efLink.ChainId, efLink.DateCompleted, efLink.DateStarted, efLink.DynamicParameters, efLink.ExternalId, efLink.Id, efLink.LinkStatusId, efLink.Name, efLink.Order, efLink.Response, efLink.StaticParameters, efLink.TimeoutInSeconds));
-
-			this.MachineMapEFToPOCO(efLink.Machine, response);
-
-			this.ChainMapEFToPOCO(efLink.Chain, response);
-
-			this.LinkStatusMapEFToPOCO(efLink.LinkStatus, response);
+			return new POCOLink(efLink.AssignedMachineId, efLink.ChainId, efLink.DateCompleted, efLink.DateStarted, efLink.DynamicParameters, efLink.ExternalId, efLink.Id, efLink.LinkStatusId, efLink.Name, efLink.Order, efLink.Response, efLink.StaticParameters, efLink.TimeoutInSeconds);
 		}
 
 		public virtual void LinkLogMapModelToEF(
@@ -134,18 +116,15 @@ namespace NebulaNS.Api.DataAccess
 				model.Log);
 		}
 
-		public virtual void LinkLogMapEFToPOCO(
-			EFLinkLog efLinkLog,
-			ApiResponse response)
+		public virtual POCOLinkLog LinkLogMapEFToPOCO(
+			EFLinkLog efLinkLog)
 		{
 			if (efLinkLog == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLinkLog(new POCOLinkLog(efLinkLog.DateEntered, efLinkLog.Id, efLinkLog.LinkId, efLinkLog.Log));
-
-			this.LinkMapEFToPOCO(efLinkLog.Link, response);
+			return new POCOLinkLog(efLinkLog.DateEntered, efLinkLog.Id, efLinkLog.LinkId, efLinkLog.Log);
 		}
 
 		public virtual void LinkStatusMapModelToEF(
@@ -158,16 +137,15 @@ namespace NebulaNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void LinkStatusMapEFToPOCO(
-			EFLinkStatus efLinkStatus,
-			ApiResponse response)
+		public virtual POCOLinkStatus LinkStatusMapEFToPOCO(
+			EFLinkStatus efLinkStatus)
 		{
 			if (efLinkStatus == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddLinkStatus(new POCOLinkStatus(efLinkStatus.Id, efLinkStatus.Name));
+			return new POCOLinkStatus(efLinkStatus.Id, efLinkStatus.Name);
 		}
 
 		public virtual void MachineMapModelToEF(
@@ -184,16 +162,15 @@ namespace NebulaNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void MachineMapEFToPOCO(
-			EFMachine efMachine,
-			ApiResponse response)
+		public virtual POCOMachine MachineMapEFToPOCO(
+			EFMachine efMachine)
 		{
 			if (efMachine == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddMachine(new POCOMachine(efMachine.Description, efMachine.Id, efMachine.JwtKey, efMachine.LastIpAddress, efMachine.MachineGuid, efMachine.Name));
+			return new POCOMachine(efMachine.Description, efMachine.Id, efMachine.JwtKey, efMachine.LastIpAddress, efMachine.MachineGuid, efMachine.Name);
 		}
 
 		public virtual void MachineRefTeamMapModelToEF(
@@ -207,20 +184,15 @@ namespace NebulaNS.Api.DataAccess
 				model.TeamId);
 		}
 
-		public virtual void MachineRefTeamMapEFToPOCO(
-			EFMachineRefTeam efMachineRefTeam,
-			ApiResponse response)
+		public virtual POCOMachineRefTeam MachineRefTeamMapEFToPOCO(
+			EFMachineRefTeam efMachineRefTeam)
 		{
 			if (efMachineRefTeam == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddMachineRefTeam(new POCOMachineRefTeam(efMachineRefTeam.Id, efMachineRefTeam.MachineId, efMachineRefTeam.TeamId));
-
-			this.MachineMapEFToPOCO(efMachineRefTeam.Machine, response);
-
-			this.TeamMapEFToPOCO(efMachineRefTeam.Team, response);
+			return new POCOMachineRefTeam(efMachineRefTeam.Id, efMachineRefTeam.MachineId, efMachineRefTeam.TeamId);
 		}
 
 		public virtual void OrganizationMapModelToEF(
@@ -233,16 +205,15 @@ namespace NebulaNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void OrganizationMapEFToPOCO(
-			EFOrganization efOrganization,
-			ApiResponse response)
+		public virtual POCOOrganization OrganizationMapEFToPOCO(
+			EFOrganization efOrganization)
 		{
 			if (efOrganization == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddOrganization(new POCOOrganization(efOrganization.Id, efOrganization.Name));
+			return new POCOOrganization(efOrganization.Id, efOrganization.Name);
 		}
 
 		public virtual void TeamMapModelToEF(
@@ -256,18 +227,15 @@ namespace NebulaNS.Api.DataAccess
 				model.OrganizationId);
 		}
 
-		public virtual void TeamMapEFToPOCO(
-			EFTeam efTeam,
-			ApiResponse response)
+		public virtual POCOTeam TeamMapEFToPOCO(
+			EFTeam efTeam)
 		{
 			if (efTeam == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddTeam(new POCOTeam(efTeam.Id, efTeam.Name, efTeam.OrganizationId));
-
-			this.OrganizationMapEFToPOCO(efTeam.Organization, response);
+			return new POCOTeam(efTeam.Id, efTeam.Name, efTeam.OrganizationId);
 		}
 
 		public virtual void VersionInfoMapModelToEF(
@@ -281,20 +249,19 @@ namespace NebulaNS.Api.DataAccess
 				model.Description);
 		}
 
-		public virtual void VersionInfoMapEFToPOCO(
-			EFVersionInfo efVersionInfo,
-			ApiResponse response)
+		public virtual POCOVersionInfo VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo)
 		{
 			if (efVersionInfo == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddVersionInfo(new POCOVersionInfo(efVersionInfo.AppliedOn, efVersionInfo.Description, efVersionInfo.Version));
+			return new POCOVersionInfo(efVersionInfo.AppliedOn, efVersionInfo.Description, efVersionInfo.Version);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f94b5638626e4f471be7cac53e71663</Hash>
+    <Hash>6bc61e9ac22402813e25e2de20b5f771</Hash>
 </Codenesium>*/

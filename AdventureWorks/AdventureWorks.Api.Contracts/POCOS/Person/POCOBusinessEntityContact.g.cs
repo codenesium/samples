@@ -16,21 +16,17 @@ namespace AdventureWorksNS.Api.Contracts
 			int personID,
 			Guid rowguid)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
+			this.ContactTypeID = contactTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.PersonID = personID.ToInt();
 			this.Rowguid = rowguid.ToGuid();
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.BusinessEntities));
-			this.ContactTypeID = new ReferenceEntity<int>(contactTypeID,
-			                                              nameof(ApiResponse.ContactTypes));
-			this.PersonID = new ReferenceEntity<int>(personID,
-			                                         nameof(ApiResponse.People));
 		}
 
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
-		public ReferenceEntity<int> ContactTypeID { get; set; }
+		public int BusinessEntityID { get; set; }
+		public int ContactTypeID { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> PersonID { get; set; }
+		public int PersonID { get; set; }
 		public Guid Rowguid { get; set; }
 
 		[JsonIgnore]
@@ -85,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8d33e8e1e0f0a73a3e8994a6b31ff1d2</Hash>
+    <Hash>1e89bdc7c35f272d763bed9d6d8ab851</Hash>
 </Codenesium>*/

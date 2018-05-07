@@ -17,33 +17,9 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFAirTransport> SearchLinqEF(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy("AirlineId ASC").Skip(skip).Take(take).ToList<EFAirTransport>();
-			}
-			else
-			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAirTransport>();
-			}
-		}
-
-		protected override List<EFAirTransport> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy("AirlineId ASC").Skip(skip).Take(take).ToList<EFAirTransport>();
-			}
-			else
-			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAirTransport>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0179fc0e80427ceb1804be07442b6473</Hash>
+    <Hash>47d6efd4ad55183785d649ef7d349a02</Hash>
 </Codenesium>*/

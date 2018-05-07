@@ -42,7 +42,7 @@ namespace PetStoreNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOPet response = this.petManager.GetById(id).Pets.FirstOrDefault();
+			POCOPet response = this.petManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOPet>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.petManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Pets);
-			}
+			List<POCOPet> response = this.petManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetStoreNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Pets/{result.Id.ToString()}");
-				POCOPet response = this.petManager.GetById(result.Id).Pets.First();
+				POCOPet response = this.petManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPet response = this.petManager.GetById(id).Pets.First();
+					POCOPet response = this.petManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,69 +166,9 @@ namespace PetStoreNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByBreedId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Breeds/{id}/Pets")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPet>), 200)]
-		public virtual IActionResult ByBreedId(int id)
-		{
-			ApiResponse response = this.petManager.GetWhere(x => x.BreedId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Pets);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByPenId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Pens/{id}/Pets")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPet>), 200)]
-		public virtual IActionResult ByPenId(int id)
-		{
-			ApiResponse response = this.petManager.GetWhere(x => x.PenId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Pets);
-			}
-		}
-
-		[HttpGet]
-		[Route("BySpeciesId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Species/{id}/Pets")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOPet>), 200)]
-		public virtual IActionResult BySpeciesId(int id)
-		{
-			ApiResponse response = this.petManager.GetWhere(x => x.SpeciesId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Pets);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d56e30133b6e1bf9975623f30c49bdb4</Hash>
+    <Hash>9895b94782f63da79cdbefb52c4f9e82</Hash>
 </Codenesium>*/

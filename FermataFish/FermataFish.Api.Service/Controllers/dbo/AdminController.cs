@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/admins")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class AdminController: AbstractAdminController
 	{
 		public AdminController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>654313adffede132a1be8958ee2c9411</Hash>
+    <Hash>4432d57f28f9db8968a1f1a84345d3a1</Hash>
 </Codenesium>*/

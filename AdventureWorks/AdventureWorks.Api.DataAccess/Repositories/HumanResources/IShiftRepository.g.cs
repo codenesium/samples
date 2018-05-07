@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(int shiftID);
 
-		ApiResponse GetById(int shiftID);
+		POCOShift Get(int shiftID);
 
-		POCOShift GetByIdDirect(int shiftID);
-
-		ApiResponse GetWhere(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOShift> GetWhereDirect(Expression<Func<EFShift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOShift> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>11ad9a9561f3131259e6d54fe2cb5ca6</Hash>
+    <Hash>593d78eaf215debce594a4a9d829eff4</Hash>
 </Codenesium>*/

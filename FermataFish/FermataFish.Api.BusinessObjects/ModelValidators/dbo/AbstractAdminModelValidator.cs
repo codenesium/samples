@@ -56,11 +56,11 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		private bool BeValidStudio(int id)
 		{
-			return this.StudioRepository.GetByIdDirect(id) != null;
+			return this.StudioRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7f7259e54652c572b796936d5f264ae</Hash>
+    <Hash>8f185d143434634066704b7d2eba4916</Hash>
 </Codenesium>*/

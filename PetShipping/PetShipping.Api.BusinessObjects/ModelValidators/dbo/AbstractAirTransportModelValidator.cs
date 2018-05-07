@@ -55,11 +55,11 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		private bool BeValidHandler(int id)
 		{
-			return this.HandlerRepository.GetByIdDirect(id) != null;
+			return this.HandlerRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a25b252ee3fdef84b4ff7d979569fea</Hash>
+    <Hash>fb33df05f99a1f8c4735e144013e1a75</Hash>
 </Codenesium>*/

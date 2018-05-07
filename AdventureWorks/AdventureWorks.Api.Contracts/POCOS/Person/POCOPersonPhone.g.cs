@@ -15,19 +15,16 @@ namespace AdventureWorksNS.Api.Contracts
 			string phoneNumber,
 			int phoneNumberTypeID)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PhoneNumber = phoneNumber.ToString();
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.People));
-			this.PhoneNumberTypeID = new ReferenceEntity<int>(phoneNumberTypeID,
-			                                                  nameof(ApiResponse.PhoneNumberTypes));
+			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
 		}
 
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public string PhoneNumber { get; set; }
-		public ReferenceEntity<int> PhoneNumberTypeID { get; set; }
+		public int PhoneNumberTypeID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
@@ -72,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>eeb39cef2ef0e1bbc4da5d9420f55d54</Hash>
+    <Hash>c8e2aec76b65da77e60d2f1c03c4e85f</Hash>
 </Codenesium>*/

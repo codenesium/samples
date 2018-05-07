@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(string id)
 		{
-			POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.GetById(id).CountryRegionCurrencies.FirstOrDefault();
+			POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.countryRegionCurrencyManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CountryRegionCurrencies);
-			}
+			List<POCOCountryRegionCurrency> response = this.countryRegionCurrencyManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/CountryRegionCurrencies/{result.Id.ToString()}");
-				POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.GetById(result.Id).CountryRegionCurrencies.First();
+				POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.GetById(id).CountryRegionCurrencies.First();
+					POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCurrencyCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/Currencies/{id}/CountryRegionCurrencies")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
-		public virtual IActionResult ByCurrencyCode(string id)
-		{
-			ApiResponse response = this.countryRegionCurrencyManager.GetWhere(x => x.CurrencyCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CountryRegionCurrencies);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>63e88285c275706a0e891a30d5ca6b93</Hash>
+    <Hash>e21a5e8067d824b48f8826686408ee73</Hash>
 </Codenesium>*/

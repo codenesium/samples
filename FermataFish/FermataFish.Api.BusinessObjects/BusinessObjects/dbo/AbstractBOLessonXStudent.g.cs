@@ -68,33 +68,18 @@ namespace FermataFishNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOLessonXStudent Get(int id)
 		{
-			return this.lessonXStudentRepository.GetById(id);
+			return this.lessonXStudentRepository.Get(id);
 		}
 
-		public virtual POCOLessonXStudent GetByIdDirect(int id)
+		public virtual List<POCOLessonXStudent> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.lessonXStudentRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFLessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.lessonXStudentRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.lessonXStudentRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOLessonXStudent> GetWhereDirect(Expression<Func<EFLessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.lessonXStudentRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.lessonXStudentRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>07c109fbc33e04c686a7538d5f17a5c7</Hash>
+    <Hash>03a6d1246e27689e6ef9302792adaf4f</Hash>
 </Codenesium>*/

@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int salesTaxRateID)
+		public virtual POCOSalesTaxRate Get(int salesTaxRateID)
 		{
-			return this.salesTaxRateRepository.GetById(salesTaxRateID);
+			return this.salesTaxRateRepository.Get(salesTaxRateID);
 		}
 
-		public virtual POCOSalesTaxRate GetByIdDirect(int salesTaxRateID)
+		public virtual List<POCOSalesTaxRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesTaxRateRepository.GetByIdDirect(salesTaxRateID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTaxRateRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTaxRateRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSalesTaxRate> GetWhereDirect(Expression<Func<EFSalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTaxRateRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.salesTaxRateRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>89347409cca0d4368206149f31b1ab7c</Hash>
+    <Hash>52919c6fb13135b815e3302f58ae48c9</Hash>
 </Codenesium>*/

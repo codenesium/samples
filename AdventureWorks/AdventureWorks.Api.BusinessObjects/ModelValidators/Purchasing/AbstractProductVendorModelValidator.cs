@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IVendorRepository VendorRepository { get; set; }
 		public virtual void AverageLeadTimeRules()
 		{
 			this.RuleFor(x => x.AverageLeadTime).NotNull();
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void BusinessEntityIDRules()
 		{
 			this.RuleFor(x => x.BusinessEntityID).NotNull();
-			this.RuleFor(x => x.BusinessEntityID).Must(this.BeValidVendor).When(x => x ?.BusinessEntityID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LastReceiptCostRules()
@@ -66,14 +64,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.UnitMeasureCode).NotNull();
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
 		}
-
-		private bool BeValidVendor(int id)
-		{
-			return this.VendorRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>82fa2d9fd9b4727cb36efd95d7ee578c</Hash>
+    <Hash>b54a6d58dcb425dfd2e3b3c2fb183748</Hash>
 </Codenesium>*/

@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(Guid documentNode);
 
-		ApiResponse GetById(Guid documentNode);
+		POCODocument Get(Guid documentNode);
 
-		POCODocument GetByIdDirect(Guid documentNode);
-
-		ApiResponse GetWhere(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCODocument> GetWhereDirect(Expression<Func<EFDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCODocument> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>fdf068fdf015d3d96a0f8a24239e3b3d</Hash>
+    <Hash>4499b783541d926e15447ae47a165fe6</Hash>
 </Codenesium>*/

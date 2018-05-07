@@ -68,33 +68,18 @@ namespace PetStoreNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOSpecies Get(int id)
 		{
-			return this.speciesRepository.GetById(id);
+			return this.speciesRepository.Get(id);
 		}
 
-		public virtual POCOSpecies GetByIdDirect(int id)
+		public virtual List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.speciesRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFSpecies, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.speciesRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.speciesRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSpecies> GetWhereDirect(Expression<Func<EFSpecies, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.speciesRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.speciesRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd41d3468a4af2cb5c0a1f3bb12896d8</Hash>
+    <Hash>6eec0e9ed05a753cadd0554d27de7317</Hash>
 </Codenesium>*/

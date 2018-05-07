@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOProductProductPhoto response = this.productProductPhotoManager.GetById(id).ProductProductPhotoes.FirstOrDefault();
+			POCOProductProductPhoto response = this.productProductPhotoManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductProductPhoto>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.productProductPhotoManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductProductPhotoes);
-			}
+			List<POCOProductProductPhoto> response = this.productProductPhotoManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductProductPhotoes/{result.Id.ToString()}");
-				POCOProductProductPhoto response = this.productProductPhotoManager.GetById(result.Id).ProductProductPhotoes.First();
+				POCOProductProductPhoto response = this.productProductPhotoManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductProductPhoto response = this.productProductPhotoManager.GetById(id).ProductProductPhotoes.First();
+					POCOProductProductPhoto response = this.productProductPhotoManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/ProductProductPhotoes")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductProductPhoto>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.productProductPhotoManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductProductPhotoes);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByProductPhotoID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductPhotoes/{id}/ProductProductPhotoes")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductProductPhoto>), 200)]
-		public virtual IActionResult ByProductPhotoID(int id)
-		{
-			ApiResponse response = this.productProductPhotoManager.GetWhere(x => x.ProductPhotoID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductProductPhotoes);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d61d1f1145b5d135b2e07737e60c137</Hash>
+    <Hash>ac96d6fb9ff73d28bb8cf5b923c69846</Hash>
 </Codenesium>*/

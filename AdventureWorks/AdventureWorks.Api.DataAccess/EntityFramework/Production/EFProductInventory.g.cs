@@ -51,15 +51,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("Shelf", TypeName="nvarchar(10)")]
 		public string Shelf { get; set; }
-
-		[ForeignKey("LocationID")]
-		public virtual EFLocation Location { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e6b79232b77e5425f3201365175571d</Hash>
+    <Hash>90f3592325000a3fd9738b543748b420</Hash>
 </Codenesium>*/

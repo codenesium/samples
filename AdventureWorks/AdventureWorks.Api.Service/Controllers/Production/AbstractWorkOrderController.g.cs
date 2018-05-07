@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOWorkOrder response = this.workOrderManager.GetById(id).WorkOrders.FirstOrDefault();
+			POCOWorkOrder response = this.workOrderManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOWorkOrder>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.workOrderManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.WorkOrders);
-			}
+			List<POCOWorkOrder> response = this.workOrderManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/WorkOrders/{result.Id.ToString()}");
-				POCOWorkOrder response = this.workOrderManager.GetById(result.Id).WorkOrders.First();
+				POCOWorkOrder response = this.workOrderManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOWorkOrder response = this.workOrderManager.GetById(id).WorkOrders.First();
+					POCOWorkOrder response = this.workOrderManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Products/{id}/WorkOrders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOWorkOrder>), 200)]
-		public virtual IActionResult ByProductID(int id)
-		{
-			ApiResponse response = this.workOrderManager.GetWhere(x => x.ProductID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.WorkOrders);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByScrapReasonID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ScrapReasons/{id}/WorkOrders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOWorkOrder>), 200)]
-		public virtual IActionResult ByScrapReasonID(short id)
-		{
-			ApiResponse response = this.workOrderManager.GetWhere(x => x.ScrapReasonID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.WorkOrders);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>334995fc4965a9117714736dcedee999</Hash>
+    <Hash>15414f1defc1647f8e8e4f3047cc251c</Hash>
 </Codenesium>*/

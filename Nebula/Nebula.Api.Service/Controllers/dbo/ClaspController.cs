@@ -14,7 +14,6 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/clasps")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ClaspController: AbstractClaspController
 	{
 		public ClaspController(
@@ -36,5 +35,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cd6acfbd1b8ce3ee238bd685002c876d</Hash>
+    <Hash>e1e289b6e5ebba7c93975fce587f9ee3</Hash>
 </Codenesium>*/

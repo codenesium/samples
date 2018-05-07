@@ -10,39 +10,35 @@ namespace FileServiceNS.Api.DataAccess
 			BucketModel model,
 			EFBucket efBucket);
 
-		void BucketMapEFToPOCO(
-			EFBucket efBucket,
-			ApiResponse response);
+		POCOBucket BucketMapEFToPOCO(
+			EFBucket efBucket);
 
 		void FileMapModelToEF(
 			int id,
 			FileModel model,
 			EFFile efFile);
 
-		void FileMapEFToPOCO(
-			EFFile efFile,
-			ApiResponse response);
+		POCOFile FileMapEFToPOCO(
+			EFFile efFile);
 
 		void FileTypeMapModelToEF(
 			int id,
 			FileTypeModel model,
 			EFFileType efFileType);
 
-		void FileTypeMapEFToPOCO(
-			EFFileType efFileType,
-			ApiResponse response);
+		POCOFileType FileTypeMapEFToPOCO(
+			EFFileType efFileType);
 
 		void VersionInfoMapModelToEF(
 			long version,
 			VersionInfoModel model,
 			EFVersionInfo efVersionInfo);
 
-		void VersionInfoMapEFToPOCO(
-			EFVersionInfo efVersionInfo,
-			ApiResponse response);
+		POCOVersionInfo VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo);
 	}
 }
 
 /*<Codenesium>
-    <Hash>57046c0661ace6eba741ef35d137ab96</Hash>
+    <Hash>fa68e23cc0fe87c107195428dd74df26</Hash>
 </Codenesium>*/

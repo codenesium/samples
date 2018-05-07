@@ -14,18 +14,12 @@ namespace FermataFishNS.Api.DataAccess
 
 		void Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOStudentXFamily Get(int id);
 
-		POCOStudentXFamily GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFStudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOStudentXFamily> GetWhereDirect(Expression<Func<EFStudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOStudentXFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>6cecd0d93f90763990a6c79f13db97fc</Hash>
+    <Hash>ef8217943ae6edce831f6d0d1c3f711f</Hash>
 </Codenesium>*/

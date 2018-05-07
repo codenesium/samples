@@ -14,7 +14,6 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/buckets")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class BucketController: AbstractBucketController
 	{
 		public BucketController(
@@ -36,5 +35,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>449e1822ac43e898644e5eb1d626a364</Hash>
+    <Hash>92b2c62e7b7189ce97d33950c98984b7</Hash>
 </Codenesium>*/

@@ -76,61 +76,55 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public virtual ApiResponse GetById(int airlineId)
+		public virtual POCOAirTransport Get(int airlineId)
 		{
-			return this.SearchLinqPOCO(x => x.AirlineId == airlineId);
+			return this.SearchLinqPOCO(x => x.AirlineId == airlineId).FirstOrDefault();
 		}
 
-		public virtual POCOAirTransport GetByIdDirect(int airlineId)
+		public virtual List<POCOAirTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.AirlineId == airlineId).AirTransports.FirstOrDefault();
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhere(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOAirTransport> Where(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOAirTransport> SearchLinqPOCO(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCODynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOAirTransport> GetWhereDirect(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause).AirTransports;
-		}
-
-		private ApiResponse SearchLinqPOCO(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			ApiResponse response = new ApiResponse();
-
+			List<POCOAirTransport> response = new List<POCOAirTransport>();
 			List<EFAirTransport> records = this.SearchLinqEF(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.AirTransportMapEFToPOCO(x, response));
+			records.ForEach(x => response.Add(this.Mapper.AirTransportMapEFToPOCO(x)));
 			return response;
 		}
 
-		private ApiResponse SearchLinqPOCODynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFAirTransport> SearchLinqEF(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			ApiResponse response = new ApiResponse();
-
-			List<EFAirTransport> records = this.SearchLinqEFDynamic(predicate, skip, take, orderClause);
-			records.ForEach(x => this.Mapper.AirTransportMapEFToPOCO(x, response));
-			return response;
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy("AirlineId ASC").Skip(skip).Take(take).ToList<EFAirTransport>();
+			}
+			else
+			{
+				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAirTransport>();
+			}
 		}
 
-		protected virtual List<EFAirTransport> SearchLinqEF(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<EFAirTransport> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
-		}
-
-		protected virtual List<EFAirTransport> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			throw new NotImplementedException("This method should be implemented in a derived class");
+			if (string.IsNullOrEmpty(orderClause))
+			{
+				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy("AirlineId ASC").Skip(skip).Take(take).ToList<EFAirTransport>();
+			}
+			else
+			{
+				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAirTransport>();
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b4ee975b27547f081b87c58a009833e9</Hash>
+    <Hash>d39a1d15a840e4b8a083ba1cbecee39f</Hash>
 </Codenesium>*/

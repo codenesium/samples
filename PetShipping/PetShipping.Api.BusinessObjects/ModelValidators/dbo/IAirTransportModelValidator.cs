@@ -6,12 +6,12 @@ namespace PetShippingNS.Api.BusinessObjects
 {
 	public interface IAirTransportModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(AirTransportModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, AirTransportModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(AirTransportModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, AirTransportModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b4b6836a2d3fa5fe8f31327ab3d2e106</Hash>
+    <Hash>98339752c62525ccb436ac16a330025d</Hash>
 </Codenesium>*/

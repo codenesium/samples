@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOBusinessEntityAddress response = this.businessEntityAddressManager.GetById(id).BusinessEntityAddresses.FirstOrDefault();
+			POCOBusinessEntityAddress response = this.businessEntityAddressManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOBusinessEntityAddress>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.businessEntityAddressManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BusinessEntityAddresses);
-			}
+			List<POCOBusinessEntityAddress> response = this.businessEntityAddressManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/BusinessEntityAddresses/{result.Id.ToString()}");
-				POCOBusinessEntityAddress response = this.businessEntityAddressManager.GetById(result.Id).BusinessEntityAddresses.First();
+				POCOBusinessEntityAddress response = this.businessEntityAddressManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBusinessEntityAddress response = this.businessEntityAddressManager.GetById(id).BusinessEntityAddresses.First();
+					POCOBusinessEntityAddress response = this.businessEntityAddressManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,69 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByAddressID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Addresses/{id}/BusinessEntityAddresses")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityAddress>), 200)]
-		public virtual IActionResult ByAddressID(int id)
-		{
-			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.AddressID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BusinessEntityAddresses);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByAddressTypeID/{id}")]
-		[ReadOnly]
-		[Route("~/api/AddressTypes/{id}/BusinessEntityAddresses")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityAddress>), 200)]
-		public virtual IActionResult ByAddressTypeID(int id)
-		{
-			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.AddressTypeID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BusinessEntityAddresses);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[ReadOnly]
-		[Route("~/api/BusinessEntities/{id}/BusinessEntityAddresses")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityAddress>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			ApiResponse response = this.businessEntityAddressManager.GetWhere(x => x.BusinessEntityID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.BusinessEntityAddresses);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5dd8daeafc9dc849b3c975573665aa43</Hash>
+    <Hash>9952ffd0b55ae6c8f2a401a1e0333102</Hash>
 </Codenesium>*/

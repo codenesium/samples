@@ -68,33 +68,18 @@ namespace FileServiceNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOBucket Get(int id)
 		{
-			return this.bucketRepository.GetById(id);
+			return this.bucketRepository.Get(id);
 		}
 
-		public virtual POCOBucket GetByIdDirect(int id)
+		public virtual List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.bucketRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.bucketRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.bucketRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOBucket> GetWhereDirect(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.bucketRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.bucketRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6729f2f48772e6344df270cd27ccd558</Hash>
+    <Hash>42d1b302336f857569b20334df93db49</Hash>
 </Codenesium>*/

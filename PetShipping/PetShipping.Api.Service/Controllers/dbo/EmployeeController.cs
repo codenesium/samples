@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/employees")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class EmployeeController: AbstractEmployeeController
 	{
 		public EmployeeController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>26fee43bc476c67bd184bba8204da4b2</Hash>
+    <Hash>cd3f441d05da398576dc9f719670a6e3</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employeePayHistories")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class EmployeePayHistoryController: AbstractEmployeePayHistoryController
 	{
 		public EmployeePayHistoryController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>86d23c1f7dec6eaead4c691e2ec1834f</Hash>
+    <Hash>4ee54951bade2292e4e0e732b58f6a5c</Hash>
 </Codenesium>*/

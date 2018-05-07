@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOProduct response = this.productManager.GetById(id).Products.FirstOrDefault();
+			POCOProduct response = this.productManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.productManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Products);
-			}
+			List<POCOProduct> response = this.productManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Products/{result.Id.ToString()}");
-				POCOProduct response = this.productManager.GetById(result.Id).Products.First();
+				POCOProduct response = this.productManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProduct response = this.productManager.GetById(id).Products.First();
+					POCOProduct response = this.productManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,89 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductModelID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductModels/{id}/Products")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
-		public virtual IActionResult ByProductModelID(int id)
-		{
-			ApiResponse response = this.productManager.GetWhere(x => x.ProductModelID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Products);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByProductSubcategoryID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductSubcategories/{id}/Products")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
-		public virtual IActionResult ByProductSubcategoryID(int id)
-		{
-			ApiResponse response = this.productManager.GetWhere(x => x.ProductSubcategoryID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Products);
-			}
-		}
-
-		[HttpGet]
-		[Route("BySizeUnitMeasureCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/UnitMeasures/{id}/Products")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
-		public virtual IActionResult BySizeUnitMeasureCode(string id)
-		{
-			ApiResponse response = this.productManager.GetWhere(x => x.SizeUnitMeasureCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Products);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByWeightUnitMeasureCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/UnitMeasures/{id}/Products")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
-		public virtual IActionResult ByWeightUnitMeasureCode(string id)
-		{
-			ApiResponse response = this.productManager.GetWhere(x => x.WeightUnitMeasureCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Products);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>85360c334ec92cd1729fd1bb3db654ad</Hash>
+    <Hash>b119535b22cdda62ddea963261fabf47</Hash>
 </Codenesium>*/

@@ -80,15 +80,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("VendorID", TypeName="int")]
 		public int VendorID { get; set; }
-
-		[ForeignKey("ShipMethodID")]
-		public virtual EFShipMethod ShipMethod { get; set; }
-
-		[ForeignKey("VendorID")]
-		public virtual EFVendor Vendor { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b0607a89a114174bb84bd15ce8a2712f</Hash>
+    <Hash>d308fab79915c448c7b8b5e32d158512</Hash>
 </Codenesium>*/

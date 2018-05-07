@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(short scrapReasonID)
+		public virtual POCOScrapReason Get(short scrapReasonID)
 		{
-			return this.scrapReasonRepository.GetById(scrapReasonID);
+			return this.scrapReasonRepository.Get(scrapReasonID);
 		}
 
-		public virtual POCOScrapReason GetByIdDirect(short scrapReasonID)
+		public virtual List<POCOScrapReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.scrapReasonRepository.GetByIdDirect(scrapReasonID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.scrapReasonRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.scrapReasonRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.scrapReasonRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.scrapReasonRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>89b5c43e51a8d3e7f1464603c11f3d2d</Hash>
+    <Hash>423722a2dbf260a8547d06e2e3c1157a</Hash>
 </Codenesium>*/

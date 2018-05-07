@@ -16,16 +16,15 @@ namespace ESPIOTNS.Api.DataAccess
 				model.PublicId);
 		}
 
-		public virtual void DeviceMapEFToPOCO(
-			EFDevice efDevice,
-			ApiResponse response)
+		public virtual POCODevice DeviceMapEFToPOCO(
+			EFDevice efDevice)
 		{
 			if (efDevice == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddDevice(new POCODevice(efDevice.Id, efDevice.Name, efDevice.PublicId));
+			return new POCODevice(efDevice.Id, efDevice.Name, efDevice.PublicId);
 		}
 
 		public virtual void DeviceActionMapModelToEF(
@@ -40,22 +39,19 @@ namespace ESPIOTNS.Api.DataAccess
 				model.@Value);
 		}
 
-		public virtual void DeviceActionMapEFToPOCO(
-			EFDeviceAction efDeviceAction,
-			ApiResponse response)
+		public virtual POCODeviceAction DeviceActionMapEFToPOCO(
+			EFDeviceAction efDeviceAction)
 		{
 			if (efDeviceAction == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddDeviceAction(new POCODeviceAction(efDeviceAction.DeviceId, efDeviceAction.Id, efDeviceAction.Name, efDeviceAction.@Value));
-
-			this.DeviceMapEFToPOCO(efDeviceAction.Device, response);
+			return new POCODeviceAction(efDeviceAction.DeviceId, efDeviceAction.Id, efDeviceAction.Name, efDeviceAction.@Value);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c62fc90f379b1a1dacccbd05405bc3b6</Hash>
+    <Hash>ed4648a720d4da1fd5fddd63184302db</Hash>
 </Codenesium>*/

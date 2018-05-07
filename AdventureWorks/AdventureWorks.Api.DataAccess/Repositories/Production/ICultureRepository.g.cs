@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(string cultureID);
 
-		ApiResponse GetById(string cultureID);
+		POCOCulture Get(string cultureID);
 
-		POCOCulture GetByIdDirect(string cultureID);
-
-		ApiResponse GetWhere(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOCulture> GetWhereDirect(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOCulture> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>87f60383681764708b652e11d71c508a</Hash>
+    <Hash>132aef0ee9abed588a6cc9fefc9bd8f2</Hash>
 </Codenesium>*/

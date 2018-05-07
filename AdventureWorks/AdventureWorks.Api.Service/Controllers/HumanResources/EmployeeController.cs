@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/employees")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class EmployeeController: AbstractEmployeeController
 	{
 		public EmployeeController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5a13ca82215968c1f1352fe4962ac659</Hash>
+    <Hash>fb1fec43071e68d61b6e9707ccfc8bc1</Hash>
 </Codenesium>*/

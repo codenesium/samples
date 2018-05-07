@@ -42,7 +42,7 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCODeviceAction response = this.deviceActionManager.GetById(id).DeviceActions.FirstOrDefault();
+			POCODeviceAction response = this.deviceActionManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace ESPIOTNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCODeviceAction>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.deviceActionManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.DeviceActions);
-			}
+			List<POCODeviceAction> response = this.deviceActionManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace ESPIOTNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Id.ToString()}");
-				POCODeviceAction response = this.deviceActionManager.GetById(result.Id).DeviceActions.First();
+				POCODeviceAction response = this.deviceActionManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace ESPIOTNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODeviceAction response = this.deviceActionManager.GetById(id).DeviceActions.First();
+					POCODeviceAction response = this.deviceActionManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace ESPIOTNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByDeviceId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Devices/{id}/DeviceActions")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCODeviceAction>), 200)]
-		public virtual IActionResult ByDeviceId(int id)
-		{
-			ApiResponse response = this.deviceActionManager.GetWhere(x => x.DeviceId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.DeviceActions);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c3f6e7a688068ba6e5120b2b56dde39</Hash>
+    <Hash>8b13ddf3e3e6f5d100fd57880d66793e</Hash>
 </Codenesium>*/

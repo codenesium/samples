@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOCurrencyRate response = this.currencyRateManager.GetById(id).CurrencyRates.FirstOrDefault();
+			POCOCurrencyRate response = this.currencyRateManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOCurrencyRate>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.currencyRateManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CurrencyRates);
-			}
+			List<POCOCurrencyRate> response = this.currencyRateManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/CurrencyRates/{result.Id.ToString()}");
-				POCOCurrencyRate response = this.currencyRateManager.GetById(result.Id).CurrencyRates.First();
+				POCOCurrencyRate response = this.currencyRateManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCurrencyRate response = this.currencyRateManager.GetById(id).CurrencyRates.First();
+					POCOCurrencyRate response = this.currencyRateManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByFromCurrencyCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/Currencies/{id}/CurrencyRates")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOCurrencyRate>), 200)]
-		public virtual IActionResult ByFromCurrencyCode(string id)
-		{
-			ApiResponse response = this.currencyRateManager.GetWhere(x => x.FromCurrencyCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CurrencyRates);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByToCurrencyCode/{id}")]
-		[ReadOnly]
-		[Route("~/api/Currencies/{id}/CurrencyRates")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOCurrencyRate>), 200)]
-		public virtual IActionResult ByToCurrencyCode(string id)
-		{
-			ApiResponse response = this.currencyRateManager.GetWhere(x => x.ToCurrencyCode == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.CurrencyRates);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2194545949ce8ed7e4c043b8bb353a1e</Hash>
+    <Hash>eb532624914dc03eb80fe780cb631114</Hash>
 </Codenesium>*/

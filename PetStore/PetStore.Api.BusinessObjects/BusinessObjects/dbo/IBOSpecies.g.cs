@@ -17,18 +17,12 @@ namespace PetStoreNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOSpecies Get(int id);
 
-		POCOSpecies GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFSpecies, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOSpecies> GetWhereDirect(Expression<Func<EFSpecies, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>22c76c91a02f3a87e7e72eb1166c0e4c</Hash>
+    <Hash>cee21f316a1df3ae2b6eaa16996387c5</Hash>
 </Codenesium>*/

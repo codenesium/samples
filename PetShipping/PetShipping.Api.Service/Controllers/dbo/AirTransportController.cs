@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/airTransports")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class AirTransportController: AbstractAirTransportController
 	{
 		public AirTransportController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ab36dcebb2a2aba32079b8c9b28321b7</Hash>
+    <Hash>4a065e55f32d14a88358eed084c7e702</Hash>
 </Codenesium>*/

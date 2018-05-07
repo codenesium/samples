@@ -68,33 +68,18 @@ namespace PetShippingNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOCountry Get(int id)
 		{
-			return this.countryRepository.GetById(id);
+			return this.countryRepository.Get(id);
 		}
 
-		public virtual POCOCountry GetByIdDirect(int id)
+		public virtual List<POCOCountry> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.countryRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFCountry, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOCountry> GetWhereDirect(Expression<Func<EFCountry, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.countryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>116fc984cdbddb091ae349d3926b3d3a</Hash>
+    <Hash>3c47cf5e158cf831dbac684d0729c12d</Hash>
 </Codenesium>*/

@@ -10,21 +10,19 @@ namespace ESPIOTNS.Api.DataAccess
 			DeviceModel model,
 			EFDevice efDevice);
 
-		void DeviceMapEFToPOCO(
-			EFDevice efDevice,
-			ApiResponse response);
+		POCODevice DeviceMapEFToPOCO(
+			EFDevice efDevice);
 
 		void DeviceActionMapModelToEF(
 			int id,
 			DeviceActionModel model,
 			EFDeviceAction efDeviceAction);
 
-		void DeviceActionMapEFToPOCO(
-			EFDeviceAction efDeviceAction,
-			ApiResponse response);
+		POCODeviceAction DeviceActionMapEFToPOCO(
+			EFDeviceAction efDeviceAction);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e96321612881c47701b6a0b29767363</Hash>
+    <Hash>e4bd99235cd532aed049374a8a8cbb4c</Hash>
 </Codenesium>*/

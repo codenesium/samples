@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int systemInformationID)
+		public virtual POCOAWBuildVersion Get(int systemInformationID)
 		{
-			return this.aWBuildVersionRepository.GetById(systemInformationID);
+			return this.aWBuildVersionRepository.Get(systemInformationID);
 		}
 
-		public virtual POCOAWBuildVersion GetByIdDirect(int systemInformationID)
+		public virtual List<POCOAWBuildVersion> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.aWBuildVersionRepository.GetByIdDirect(systemInformationID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.aWBuildVersionRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.aWBuildVersionRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOAWBuildVersion> GetWhereDirect(Expression<Func<EFAWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.aWBuildVersionRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.aWBuildVersionRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>895726ab2ef557831b135db44ef29957</Hash>
+    <Hash>64de53aa99aab2fd7b2069f1dca0691b</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/documents")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class DocumentController: AbstractDocumentController
 	{
 		public DocumentController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>298243591ad6baedf2e8f29c1478a05c</Hash>
+    <Hash>5ebc5db0e2d9406d8eeeff3482b57ef3</Hash>
 </Codenesium>*/

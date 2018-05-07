@@ -19,6 +19,7 @@ namespace AdventureWorksNS.Api.Contracts
 			int stateProvinceID,
 			int territoryID)
 		{
+			this.CountryRegionCode = countryRegionCode.ToString();
 			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name.ToString();
@@ -26,12 +27,9 @@ namespace AdventureWorksNS.Api.Contracts
 			this.StateProvinceCode = stateProvinceCode.ToString();
 			this.StateProvinceID = stateProvinceID.ToInt();
 			this.TerritoryID = territoryID.ToInt();
-
-			this.CountryRegionCode = new ReferenceEntity<string>(countryRegionCode,
-			                                                     nameof(ApiResponse.CountryRegions));
 		}
 
-		public ReferenceEntity<string> CountryRegionCode { get; set; }
+		public string CountryRegionCode { get; set; }
 		public bool IsOnlyStateProvinceFlag { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public string Name { get; set; }
@@ -119,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>709f5a2b2473f2177cfba85179a8183e</Hash>
+    <Hash>dfd459a706722824ee6ea9ff42bc57ef</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/lessonStatus")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class LessonStatusController: AbstractLessonStatusController
 	{
 		public LessonStatusController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>418821af2c7a9a7473c3e7c98eaee061</Hash>
+    <Hash>0bb80c4758b7c631890f77c6a5f5f8cc</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IScrapReasonModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(ScrapReasonModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(short id, ScrapReasonModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(short id);
+		Task<ValidationResult> ValidateCreateAsync(ScrapReasonModel model);
+		Task<ValidationResult> ValidateUpdateAsync(short id, ScrapReasonModel model);
+		Task<ValidationResult> ValidateDeleteAsync(short id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>23dc4701e09ca2595c43bf4980d30182</Hash>
+    <Hash>b80f05a9cb4f48f2c3ba4cb2a059f85e</Hash>
 </Codenesium>*/

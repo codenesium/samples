@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(int productDescriptionID);
 
-		ApiResponse GetById(int productDescriptionID);
+		POCOProductDescription Get(int productDescriptionID);
 
-		POCOProductDescription GetByIdDirect(int productDescriptionID);
-
-		ApiResponse GetWhere(Expression<Func<EFProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOProductDescription> GetWhereDirect(Expression<Func<EFProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOProductDescription> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>937de0f1ac0961618f8cadf91c17d3b5</Hash>
+    <Hash>9a60c651b7e6d10099b309793ab4b4a4</Hash>
 </Codenesium>*/

@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int productModelID)
+		public virtual POCOProductModelProductDescriptionCulture Get(int productModelID)
 		{
-			return this.productModelProductDescriptionCultureRepository.GetById(productModelID);
+			return this.productModelProductDescriptionCultureRepository.Get(productModelID);
 		}
 
-		public virtual POCOProductModelProductDescriptionCulture GetByIdDirect(int productModelID)
+		public virtual List<POCOProductModelProductDescriptionCulture> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productModelProductDescriptionCultureRepository.GetByIdDirect(productModelID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productModelProductDescriptionCultureRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productModelProductDescriptionCultureRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOProductModelProductDescriptionCulture> GetWhereDirect(Expression<Func<EFProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productModelProductDescriptionCultureRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.productModelProductDescriptionCultureRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c4f1afe32bf0c7d3ed0e2c424ed178a8</Hash>
+    <Hash>8a25399e95f8e5db1e4e080edc86d275</Hash>
 </Codenesium>*/

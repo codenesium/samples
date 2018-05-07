@@ -68,33 +68,18 @@ namespace FermataFishNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOSpaceFeature Get(int id)
 		{
-			return this.spaceFeatureRepository.GetById(id);
+			return this.spaceFeatureRepository.Get(id);
 		}
 
-		public virtual POCOSpaceFeature GetByIdDirect(int id)
+		public virtual List<POCOSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.spaceFeatureRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.spaceFeatureRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.spaceFeatureRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSpaceFeature> GetWhereDirect(Expression<Func<EFSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.spaceFeatureRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.spaceFeatureRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d723514ceda7880c47194ee1599505cc</Hash>
+    <Hash>f303ff0eb5faef01bbd82e0803a2229d</Hash>
 </Codenesium>*/

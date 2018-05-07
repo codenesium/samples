@@ -35,11 +35,11 @@ namespace NebulaNS.Api.BusinessObjects
 
 		private bool BeValidChain(int id)
 		{
-			return this.ChainRepository.GetByIdDirect(id) != null;
+			return this.ChainRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0182bc1c897a7505f3bc026de98234de</Hash>
+    <Hash>073a6f04dc817c0f346f6068ec58a07a</Hash>
 </Codenesium>*/

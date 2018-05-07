@@ -14,7 +14,6 @@ namespace PetStoreNS.Api.Service
 {
 	[Route("api/pets")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PetController: AbstractPetController
 	{
 		public PetController(
@@ -36,5 +35,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>df0ef8d0ac96ca90accb8ed71fc50197</Hash>
+    <Hash>2818810fd74dfbe752d26dd6b66d4fa1</Hash>
 </Codenesium>*/

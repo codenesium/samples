@@ -41,18 +41,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
-
-		[ForeignKey("AddressID")]
-		public virtual EFAddress Address { get; set; }
-
-		[ForeignKey("AddressTypeID")]
-		public virtual EFAddressType AddressType { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2d7e2a99cdfdce9198b141361d7569cc</Hash>
+    <Hash>9790253654345a48f3b0535b7b99065e</Hash>
 </Codenesium>*/

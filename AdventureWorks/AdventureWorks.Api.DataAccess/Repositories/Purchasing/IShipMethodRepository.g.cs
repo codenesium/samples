@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(int shipMethodID);
 
-		ApiResponse GetById(int shipMethodID);
+		POCOShipMethod Get(int shipMethodID);
 
-		POCOShipMethod GetByIdDirect(int shipMethodID);
-
-		ApiResponse GetWhere(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOShipMethod> GetWhereDirect(Expression<Func<EFShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOShipMethod> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>0a0f908c2684aa7bf223a7925c44d321</Hash>
+    <Hash>b89e9707433905bb306e7b56e9fc4976</Hash>
 </Codenesium>*/

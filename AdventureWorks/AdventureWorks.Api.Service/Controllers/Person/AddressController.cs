@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/addresses")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class AddressController: AbstractAddressController
 	{
 		public AddressController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0c3e64096a1fb0f4010158f2ba4a4a72</Hash>
+    <Hash>b3b9b5213c414706beccac1fafaa86eb</Hash>
 </Codenesium>*/

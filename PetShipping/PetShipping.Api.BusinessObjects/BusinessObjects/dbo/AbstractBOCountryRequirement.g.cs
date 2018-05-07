@@ -68,33 +68,18 @@ namespace PetShippingNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOCountryRequirement Get(int id)
 		{
-			return this.countryRequirementRepository.GetById(id);
+			return this.countryRequirementRepository.Get(id);
 		}
 
-		public virtual POCOCountryRequirement GetByIdDirect(int id)
+		public virtual List<POCOCountryRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.countryRequirementRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFCountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRequirementRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRequirementRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOCountryRequirement> GetWhereDirect(Expression<Func<EFCountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRequirementRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.countryRequirementRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>db52ec359ae056366f3affbdedfc059e</Hash>
+    <Hash>66bcdc2c6954ba226d209c5c20a63054</Hash>
 </Codenesium>*/

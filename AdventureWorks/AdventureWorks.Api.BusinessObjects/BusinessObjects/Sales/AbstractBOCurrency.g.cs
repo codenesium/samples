@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(string currencyCode)
+		public virtual POCOCurrency Get(string currencyCode)
 		{
-			return this.currencyRepository.GetById(currencyCode);
+			return this.currencyRepository.Get(currencyCode);
 		}
 
-		public virtual POCOCurrency GetByIdDirect(string currencyCode)
+		public virtual List<POCOCurrency> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.currencyRepository.GetByIdDirect(currencyCode);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.currencyRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.currencyRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOCurrency> GetWhereDirect(Expression<Func<EFCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.currencyRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.currencyRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ef2e3df313bc01c402bd19c6c664ce2</Hash>
+    <Hash>b5c1d85b73cfb9c3d90010dbddea7da2</Hash>
 </Codenesium>*/

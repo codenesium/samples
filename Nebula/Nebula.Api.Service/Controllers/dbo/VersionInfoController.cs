@@ -14,7 +14,6 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/versionInfoes")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class VersionInfoController: AbstractVersionInfoController
 	{
 		public VersionInfoController(
@@ -36,5 +35,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2eb9f4d5f12e7066af3c40cc0710a60e</Hash>
+    <Hash>3afd3913d0b357b0bdb019e36185d402</Hash>
 </Codenesium>*/

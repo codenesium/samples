@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int territoryID)
+		public virtual POCOSalesTerritory Get(int territoryID)
 		{
-			return this.salesTerritoryRepository.GetById(territoryID);
+			return this.salesTerritoryRepository.Get(territoryID);
 		}
 
-		public virtual POCOSalesTerritory GetByIdDirect(int territoryID)
+		public virtual List<POCOSalesTerritory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesTerritoryRepository.GetByIdDirect(territoryID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTerritoryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTerritoryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSalesTerritory> GetWhereDirect(Expression<Func<EFSalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTerritoryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.salesTerritoryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>44e54165a607ac7d149fbbe75b516aa9</Hash>
+    <Hash>3f76a78f273acb2f6127de917c2ca29e</Hash>
 </Codenesium>*/

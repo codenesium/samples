@@ -31,15 +31,12 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PurchaseOrderID = purchaseOrderID.ToInt();
 			this.RevisionNumber = revisionNumber.ToInt();
 			this.ShipDate = shipDate.ToNullableDateTime();
+			this.ShipMethodID = shipMethodID.ToInt();
 			this.Status = status.ToInt();
 			this.SubTotal = subTotal.ToDecimal();
 			this.TaxAmt = taxAmt.ToDecimal();
 			this.TotalDue = totalDue.ToDecimal();
-
-			this.ShipMethodID = new ReferenceEntity<int>(shipMethodID,
-			                                             nameof(ApiResponse.ShipMethods));
-			this.VendorID = new ReferenceEntity<int>(vendorID,
-			                                         nameof(ApiResponse.Vendors));
+			this.VendorID = vendorID.ToInt();
 		}
 
 		public int EmployeeID { get; set; }
@@ -49,12 +46,12 @@ namespace AdventureWorksNS.Api.Contracts
 		public int PurchaseOrderID { get; set; }
 		public int RevisionNumber { get; set; }
 		public Nullable<DateTime> ShipDate { get; set; }
-		public ReferenceEntity<int> ShipMethodID { get; set; }
+		public int ShipMethodID { get; set; }
 		public int Status { get; set; }
 		public decimal SubTotal { get; set; }
 		public decimal TaxAmt { get; set; }
 		public decimal TotalDue { get; set; }
-		public ReferenceEntity<int> VendorID { get; set; }
+		public int VendorID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeEmployeeIDValue { get; set; } = true;
@@ -180,5 +177,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1dab7b3ba665518888b854c079abd006</Hash>
+    <Hash>9e9566797f6f2d62399b7ad8714dbe47</Hash>
 </Codenesium>*/

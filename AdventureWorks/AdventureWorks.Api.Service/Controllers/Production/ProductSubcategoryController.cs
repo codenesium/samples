@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productSubcategories")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ProductSubcategoryController: AbstractProductSubcategoryController
 	{
 		public ProductSubcategoryController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>466fee6e7709f02385553761163f23b5</Hash>
+    <Hash>dc16da8ff830d54f8dedd1402f73f4fd</Hash>
 </Codenesium>*/

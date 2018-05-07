@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IWorkOrderRoutingModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(WorkOrderRoutingModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, WorkOrderRoutingModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(WorkOrderRoutingModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, WorkOrderRoutingModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9b5963e24a72fd22b85aac6a656077b7</Hash>
+    <Hash>193c1d4d1b4ddb2ce66e639b16ef4590</Hash>
 </Codenesium>*/

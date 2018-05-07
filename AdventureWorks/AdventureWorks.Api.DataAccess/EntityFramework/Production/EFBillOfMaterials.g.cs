@@ -60,18 +60,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("UnitMeasureCode", TypeName="nchar(3)")]
 		public string UnitMeasureCode { get; set; }
-
-		[ForeignKey("ComponentID")]
-		public virtual EFProduct Product { get; set; }
-
-		[ForeignKey("ProductAssemblyID")]
-		public virtual EFProduct Product1 { get; set; }
-
-		[ForeignKey("UnitMeasureCode")]
-		public virtual EFUnitMeasure UnitMeasure { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3a45b4e2bf8952501edd124c6fba872</Hash>
+    <Hash>8828c40117b91ffdfec6e82220f8e500</Hash>
 </Codenesium>*/

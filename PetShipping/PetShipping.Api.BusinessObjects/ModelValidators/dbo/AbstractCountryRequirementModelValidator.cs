@@ -35,11 +35,11 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		private bool BeValidCountry(int id)
 		{
-			return this.CountryRepository.GetByIdDirect(id) != null;
+			return this.CountryRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6beb805b6164616c17799a067d68fb1</Hash>
+    <Hash>c37061bd1113caf896f5e7ca3fa53f5e</Hash>
 </Codenesium>*/

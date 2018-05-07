@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOChain response = this.chainManager.GetById(id).Chains.FirstOrDefault();
+			POCOChain response = this.chainManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOChain>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.chainManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Chains);
-			}
+			List<POCOChain> response = this.chainManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace NebulaNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Chains/{result.Id.ToString()}");
-				POCOChain response = this.chainManager.GetById(result.Id).Chains.First();
+				POCOChain response = this.chainManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOChain response = this.chainManager.GetById(id).Chains.First();
+					POCOChain response = this.chainManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace NebulaNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByChainStatusId/{id}")]
-		[ReadOnly]
-		[Route("~/api/ChainStatus/{id}/Chains")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOChain>), 200)]
-		public virtual IActionResult ByChainStatusId(int id)
-		{
-			ApiResponse response = this.chainManager.GetWhere(x => x.ChainStatusId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Chains);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByTeamId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Teams/{id}/Chains")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOChain>), 200)]
-		public virtual IActionResult ByTeamId(int id)
-		{
-			ApiResponse response = this.chainManager.GetWhere(x => x.TeamId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Chains);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>41dc2f5eec62c9bc5dca9ac99374dcf6</Hash>
+    <Hash>07297aa2b7892b7a753e849b1b5497df</Hash>
 </Codenesium>*/

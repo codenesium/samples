@@ -42,7 +42,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOClasp response = this.claspManager.GetById(id).Clasps.FirstOrDefault();
+			POCOClasp response = this.claspManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.claspManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Clasps);
-			}
+			List<POCOClasp> response = this.claspManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace NebulaNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Clasps/{result.Id.ToString()}");
-				POCOClasp response = this.claspManager.GetById(result.Id).Clasps.First();
+				POCOClasp response = this.claspManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOClasp response = this.claspManager.GetById(id).Clasps.First();
+					POCOClasp response = this.claspManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace NebulaNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByNextChainId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Chains/{id}/Clasps")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
-		public virtual IActionResult ByNextChainId(int id)
-		{
-			ApiResponse response = this.claspManager.GetWhere(x => x.NextChainId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Clasps);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByPreviousChainId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Chains/{id}/Clasps")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
-		public virtual IActionResult ByPreviousChainId(int id)
-		{
-			ApiResponse response = this.claspManager.GetWhere(x => x.PreviousChainId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Clasps);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b1ed0cb3368fe5499484055720cc559</Hash>
+    <Hash>c6ef54b26779a34f5bf6ee2a89ca8f7d</Hash>
 </Codenesium>*/

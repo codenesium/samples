@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int workOrderID)
+		public virtual POCOWorkOrderRouting Get(int workOrderID)
 		{
-			return this.workOrderRoutingRepository.GetById(workOrderID);
+			return this.workOrderRoutingRepository.Get(workOrderID);
 		}
 
-		public virtual POCOWorkOrderRouting GetByIdDirect(int workOrderID)
+		public virtual List<POCOWorkOrderRouting> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.workOrderRoutingRepository.GetByIdDirect(workOrderID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.workOrderRoutingRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.workOrderRoutingRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOWorkOrderRouting> GetWhereDirect(Expression<Func<EFWorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.workOrderRoutingRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.workOrderRoutingRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>56ba1c7f24bb08f54d81c8899ec3f2a7</Hash>
+    <Hash>6083c73d4ecdbd1201409d5c09ee6b73</Hash>
 </Codenesium>*/

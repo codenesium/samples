@@ -16,16 +16,15 @@ namespace FileServiceNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void BucketMapEFToPOCO(
-			EFBucket efBucket,
-			ApiResponse response)
+		public virtual POCOBucket BucketMapEFToPOCO(
+			EFBucket efBucket)
 		{
 			if (efBucket == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddBucket(new POCOBucket(efBucket.ExternalId, efBucket.Id, efBucket.Name));
+			return new POCOBucket(efBucket.ExternalId, efBucket.Id, efBucket.Name);
 		}
 
 		public virtual void FileMapModelToEF(
@@ -48,20 +47,15 @@ namespace FileServiceNS.Api.DataAccess
 				model.PublicKey);
 		}
 
-		public virtual void FileMapEFToPOCO(
-			EFFile efFile,
-			ApiResponse response)
+		public virtual POCOFile FileMapEFToPOCO(
+			EFFile efFile)
 		{
 			if (efFile == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddFile(new POCOFile(efFile.BucketId, efFile.DateCreated, efFile.Description, efFile.Expiration, efFile.Extension, efFile.ExternalId, efFile.FileSizeInBytes, efFile.FileTypeId, efFile.Id, efFile.Location, efFile.PrivateKey, efFile.PublicKey));
-
-			this.BucketMapEFToPOCO(efFile.Bucket, response);
-
-			this.FileTypeMapEFToPOCO(efFile.FileType, response);
+			return new POCOFile(efFile.BucketId, efFile.DateCreated, efFile.Description, efFile.Expiration, efFile.Extension, efFile.ExternalId, efFile.FileSizeInBytes, efFile.FileTypeId, efFile.Id, efFile.Location, efFile.PrivateKey, efFile.PublicKey);
 		}
 
 		public virtual void FileTypeMapModelToEF(
@@ -74,16 +68,15 @@ namespace FileServiceNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void FileTypeMapEFToPOCO(
-			EFFileType efFileType,
-			ApiResponse response)
+		public virtual POCOFileType FileTypeMapEFToPOCO(
+			EFFileType efFileType)
 		{
 			if (efFileType == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddFileType(new POCOFileType(efFileType.Id, efFileType.Name));
+			return new POCOFileType(efFileType.Id, efFileType.Name);
 		}
 
 		public virtual void VersionInfoMapModelToEF(
@@ -97,20 +90,19 @@ namespace FileServiceNS.Api.DataAccess
 				model.Description);
 		}
 
-		public virtual void VersionInfoMapEFToPOCO(
-			EFVersionInfo efVersionInfo,
-			ApiResponse response)
+		public virtual POCOVersionInfo VersionInfoMapEFToPOCO(
+			EFVersionInfo efVersionInfo)
 		{
 			if (efVersionInfo == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddVersionInfo(new POCOVersionInfo(efVersionInfo.AppliedOn, efVersionInfo.Description, efVersionInfo.Version));
+			return new POCOVersionInfo(efVersionInfo.AppliedOn, efVersionInfo.Description, efVersionInfo.Version);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>434a65a65327d6d70e74014f4a109fab</Hash>
+    <Hash>9e15e64a7daa02f3fbd70c1858fd112f</Hash>
 </Codenesium>*/

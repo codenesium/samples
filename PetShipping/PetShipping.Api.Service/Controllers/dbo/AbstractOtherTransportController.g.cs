@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOOtherTransport response = this.otherTransportManager.GetById(id).OtherTransports.FirstOrDefault();
+			POCOOtherTransport response = this.otherTransportManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace PetShippingNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOOtherTransport>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.otherTransportManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.OtherTransports);
-			}
+			List<POCOOtherTransport> response = this.otherTransportManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace PetShippingNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/OtherTransports/{result.Id.ToString()}");
-				POCOOtherTransport response = this.otherTransportManager.GetById(result.Id).OtherTransports.First();
+				POCOOtherTransport response = this.otherTransportManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOOtherTransport response = this.otherTransportManager.GetById(id).OtherTransports.First();
+					POCOOtherTransport response = this.otherTransportManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByHandlerId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Handlers/{id}/OtherTransports")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOOtherTransport>), 200)]
-		public virtual IActionResult ByHandlerId(int id)
-		{
-			ApiResponse response = this.otherTransportManager.GetWhere(x => x.HandlerId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.OtherTransports);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByPipelineStepId/{id}")]
-		[ReadOnly]
-		[Route("~/api/PipelineSteps/{id}/OtherTransports")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOOtherTransport>), 200)]
-		public virtual IActionResult ByPipelineStepId(int id)
-		{
-			ApiResponse response = this.otherTransportManager.GetWhere(x => x.PipelineStepId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.OtherTransports);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>28fe49088c979beeba9e4291cca52ee8</Hash>
+    <Hash>69ebe33452d5868e5cb04674ef601383</Hash>
 </Codenesium>*/

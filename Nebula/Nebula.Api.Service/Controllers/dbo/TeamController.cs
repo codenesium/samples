@@ -14,7 +14,6 @@ namespace NebulaNS.Api.Service
 {
 	[Route("api/teams")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class TeamController: AbstractTeamController
 	{
 		public TeamController(
@@ -36,5 +35,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>26b9c3eea2f658e3d45456cf007bd882</Hash>
+    <Hash>40e5ab9a0f6b99d583a2391a6a98a67b</Hash>
 </Codenesium>*/

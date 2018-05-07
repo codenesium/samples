@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.GetById(id).TransactionHistoryArchives.FirstOrDefault();
+			POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.transactionHistoryArchiveManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.TransactionHistoryArchives);
-			}
+			List<POCOTransactionHistoryArchive> response = this.transactionHistoryArchiveManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/TransactionHistoryArchives/{result.Id.ToString()}");
-				POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.GetById(result.Id).TransactionHistoryArchives.First();
+				POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.GetById(id).TransactionHistoryArchives.First();
+					POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -179,5 +170,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>152fb531c2ad451867518da169130404</Hash>
+    <Hash>9aa838e6d4fcf68c0a8da904c017c985</Hash>
 </Codenesium>*/

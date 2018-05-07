@@ -68,33 +68,18 @@ namespace FermataFishNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOState Get(int id)
 		{
-			return this.stateRepository.GetById(id);
+			return this.stateRepository.Get(id);
 		}
 
-		public virtual POCOState GetByIdDirect(int id)
+		public virtual List<POCOState> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.stateRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFState, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.stateRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.stateRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOState> GetWhereDirect(Expression<Func<EFState, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.stateRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.stateRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>878bb11c930da7921d0cc34aaa549f8a</Hash>
+    <Hash>b5226e7df731b14ee0f15e6bd2e9c382</Hash>
 </Codenesium>*/

@@ -14,17 +14,14 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			int productModelID)
 		{
+			this.IllustrationID = illustrationID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-
-			this.IllustrationID = new ReferenceEntity<int>(illustrationID,
-			                                               nameof(ApiResponse.Illustrations));
-			this.ProductModelID = new ReferenceEntity<int>(productModelID,
-			                                               nameof(ApiResponse.ProductModels));
+			this.ProductModelID = productModelID.ToInt();
 		}
 
-		public ReferenceEntity<int> IllustrationID { get; set; }
+		public int IllustrationID { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> ProductModelID { get; set; }
+		public int ProductModelID { get; set; }
 
 		[JsonIgnore]
 		public bool ShouldSerializeIllustrationIDValue { get; set; } = true;
@@ -60,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>98e477773f7f30ffae99f7e4b8099507</Hash>
+    <Hash>ff8e4b6d40a500d97ae55d04f2ea6f4c</Hash>
 </Codenesium>*/

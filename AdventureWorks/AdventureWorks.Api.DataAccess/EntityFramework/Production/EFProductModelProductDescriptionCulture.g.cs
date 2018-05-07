@@ -35,18 +35,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("ProductModelID", TypeName="int")]
 		public int ProductModelID { get; set; }
-
-		[ForeignKey("CultureID")]
-		public virtual EFCulture Culture { get; set; }
-
-		[ForeignKey("ProductDescriptionID")]
-		public virtual EFProductDescription ProductDescription { get; set; }
-
-		[ForeignKey("ProductModelID")]
-		public virtual EFProductModel ProductModel { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4286961b09968d201354dd9ce8fca0e</Hash>
+    <Hash>755cf386ede8714002b1344fab53be35</Hash>
 </Codenesium>*/

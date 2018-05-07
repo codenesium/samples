@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int transactionID)
+		public virtual POCOTransactionHistoryArchive Get(int transactionID)
 		{
-			return this.transactionHistoryArchiveRepository.GetById(transactionID);
+			return this.transactionHistoryArchiveRepository.Get(transactionID);
 		}
 
-		public virtual POCOTransactionHistoryArchive GetByIdDirect(int transactionID)
+		public virtual List<POCOTransactionHistoryArchive> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.transactionHistoryArchiveRepository.GetByIdDirect(transactionID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFTransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.transactionHistoryArchiveRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.transactionHistoryArchiveRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOTransactionHistoryArchive> GetWhereDirect(Expression<Func<EFTransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.transactionHistoryArchiveRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.transactionHistoryArchiveRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>157e489445bd13141361e1d17fcc8fc5</Hash>
+    <Hash>abbf50f421bd5e56d1e34e7f0fd39701</Hash>
 </Codenesium>*/

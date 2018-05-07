@@ -71,15 +71,7 @@ namespace PetStoreNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOBreed>> BreedSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOBreed>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOBreed> BreedGetByIdAsync(int id)
+		public virtual async Task<POCOBreed> BreedGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds/{id}");
 
@@ -87,7 +79,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOBreed>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOBreed>> BreedGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOBreed>> BreedAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds?offset={offset}&limit={limit}");
 
@@ -126,15 +118,7 @@ namespace PetStoreNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPaymentType>> PaymentTypeSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOPaymentType>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOPaymentType> PaymentTypeGetByIdAsync(int id)
+		public virtual async Task<POCOPaymentType> PaymentTypeGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes/{id}");
 
@@ -142,7 +126,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOPaymentType>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOPaymentType>> PaymentTypeGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOPaymentType>> PaymentTypeAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes?offset={offset}&limit={limit}");
 
@@ -181,15 +165,7 @@ namespace PetStoreNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPen>> PenSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pens?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOPen>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOPen> PenGetByIdAsync(int id)
+		public virtual async Task<POCOPen> PenGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pens/{id}");
 
@@ -197,7 +173,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOPen>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOPen>> PenGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOPen>> PenAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pens?offset={offset}&limit={limit}");
 
@@ -236,15 +212,7 @@ namespace PetStoreNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOPet>> PetSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pets?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOPet>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOPet> PetGetByIdAsync(int id)
+		public virtual async Task<POCOPet> PetGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pets/{id}");
 
@@ -252,7 +220,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOPet>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOPet>> PetGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOPet>> PetAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pets?offset={offset}&limit={limit}");
 
@@ -291,15 +259,7 @@ namespace PetStoreNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSale>> SaleSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sales?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOSale>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOSale> SaleGetByIdAsync(int id)
+		public virtual async Task<POCOSale> SaleGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sales/{id}");
 
@@ -307,7 +267,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOSale>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOSale>> SaleGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOSale>> SaleAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sales?offset={offset}&limit={limit}");
 
@@ -346,15 +306,7 @@ namespace PetStoreNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOSpecies>> SpeciesSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOSpecies>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOSpecies> SpeciesGetByIdAsync(int id)
+		public virtual async Task<POCOSpecies> SpeciesGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species/{id}");
 
@@ -362,7 +314,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOSpecies>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOSpecies>> SpeciesGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOSpecies>> SpeciesAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species?offset={offset}&limit={limit}");
 
@@ -381,5 +333,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>0040b523e1b18d196d5329021e8426b0</Hash>
+    <Hash>c2cad024fae218216e8bb61324fc2e2d</Hash>
 </Codenesium>*/

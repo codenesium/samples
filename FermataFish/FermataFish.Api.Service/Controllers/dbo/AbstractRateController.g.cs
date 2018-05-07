@@ -42,7 +42,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCORate response = this.rateManager.GetById(id).Rates.FirstOrDefault();
+			POCORate response = this.rateManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCORate>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.rateManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Rates);
-			}
+			List<POCORate> response = this.rateManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace FermataFishNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Rates/{result.Id.ToString()}");
-				POCORate response = this.rateManager.GetById(result.Id).Rates.First();
+				POCORate response = this.rateManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCORate response = this.rateManager.GetById(id).Rates.First();
+					POCORate response = this.rateManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,49 +166,9 @@ namespace FermataFishNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByTeacherId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Teachers/{id}/Rates")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCORate>), 200)]
-		public virtual IActionResult ByTeacherId(int id)
-		{
-			ApiResponse response = this.rateManager.GetWhere(x => x.TeacherId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Rates);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByTeacherSkillId/{id}")]
-		[ReadOnly]
-		[Route("~/api/TeacherSkills/{id}/Rates")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCORate>), 200)]
-		public virtual IActionResult ByTeacherSkillId(int id)
-		{
-			ApiResponse response = this.rateManager.GetWhere(x => x.TeacherSkillId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.Rates);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a6a8dbf465fcb8d2dfd53b40cafad7e</Hash>
+    <Hash>daa8dd2d054eb1879102a5f336e9f9ad</Hash>
 </Codenesium>*/

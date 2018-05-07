@@ -14,18 +14,12 @@ namespace FileServiceNS.Api.DataAccess
 
 		void Delete(long version);
 
-		ApiResponse GetById(long version);
+		POCOVersionInfo Get(long version);
 
-		POCOVersionInfo GetByIdDirect(long version);
-
-		ApiResponse GetWhere(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOVersionInfo> GetWhereDirect(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>af7a0958775e0ea8081e0da25b83f455</Hash>
+    <Hash>16940bfd2117c4772ea2e7b63d7e4e0c</Hash>
 </Codenesium>*/

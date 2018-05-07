@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOProductSubcategory response = this.productSubcategoryManager.GetById(id).ProductSubcategories.FirstOrDefault();
+			POCOProductSubcategory response = this.productSubcategoryManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductSubcategory>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.productSubcategoryManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductSubcategories);
-			}
+			List<POCOProductSubcategory> response = this.productSubcategoryManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductSubcategories/{result.Id.ToString()}");
-				POCOProductSubcategory response = this.productSubcategoryManager.GetById(result.Id).ProductSubcategories.First();
+				POCOProductSubcategory response = this.productSubcategoryManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductSubcategory response = this.productSubcategoryManager.GetById(id).ProductSubcategories.First();
+					POCOProductSubcategory response = this.productSubcategoryManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByProductCategoryID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductCategories/{id}/ProductSubcategories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductSubcategory>), 200)]
-		public virtual IActionResult ByProductCategoryID(int id)
-		{
-			ApiResponse response = this.productSubcategoryManager.GetWhere(x => x.ProductCategoryID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductSubcategories);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>813c03ed86a2088a1458d7891c9dccd4</Hash>
+    <Hash>44fa7facb1293580c9c938a558f91488</Hash>
 </Codenesium>*/

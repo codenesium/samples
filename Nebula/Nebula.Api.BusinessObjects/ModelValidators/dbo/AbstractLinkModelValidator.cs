@@ -84,21 +84,21 @@ namespace NebulaNS.Api.BusinessObjects
 
 		private bool BeValidMachine(Nullable<int> id)
 		{
-			return this.MachineRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.MachineRepository.Get(id.GetValueOrDefault()) != null;
 		}
 
 		private bool BeValidChain(int id)
 		{
-			return this.ChainRepository.GetByIdDirect(id) != null;
+			return this.ChainRepository.Get(id) != null;
 		}
 
 		private bool BeValidLinkStatus(int id)
 		{
-			return this.LinkStatusRepository.GetByIdDirect(id) != null;
+			return this.LinkStatusRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c28a635e57563fbb1c3be32b9177e609</Hash>
+    <Hash>88054b3821d91ba9ca9382c7a123cc59</Hash>
 </Codenesium>*/

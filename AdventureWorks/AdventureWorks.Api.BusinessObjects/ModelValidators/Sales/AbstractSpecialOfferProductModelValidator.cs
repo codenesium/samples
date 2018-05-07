@@ -38,11 +38,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidSpecialOffer(int id)
 		{
-			return this.SpecialOfferRepository.GetByIdDirect(id) != null;
+			return this.SpecialOfferRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>065754bd26b5ba0b29b75ee7841ab5de</Hash>
+    <Hash>b6b151a74c954d23e4496d857bae419c</Hash>
 </Codenesium>*/

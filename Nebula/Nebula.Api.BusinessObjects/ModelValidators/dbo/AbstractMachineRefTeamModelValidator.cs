@@ -36,16 +36,16 @@ namespace NebulaNS.Api.BusinessObjects
 
 		private bool BeValidMachine(int id)
 		{
-			return this.MachineRepository.GetByIdDirect(id) != null;
+			return this.MachineRepository.Get(id) != null;
 		}
 
 		private bool BeValidTeam(int id)
 		{
-			return this.TeamRepository.GetByIdDirect(id) != null;
+			return this.TeamRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4e8921f1449895c0908c2a130a49cb6</Hash>
+    <Hash>cc35dd74a7e48ca67d8e6b9baf7cc4d4</Hash>
 </Codenesium>*/

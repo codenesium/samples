@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int billOfMaterialsID)
+		public virtual POCOBillOfMaterials Get(int billOfMaterialsID)
 		{
-			return this.billOfMaterialsRepository.GetById(billOfMaterialsID);
+			return this.billOfMaterialsRepository.Get(billOfMaterialsID);
 		}
 
-		public virtual POCOBillOfMaterials GetByIdDirect(int billOfMaterialsID)
+		public virtual List<POCOBillOfMaterials> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.billOfMaterialsRepository.GetByIdDirect(billOfMaterialsID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.billOfMaterialsRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.billOfMaterialsRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOBillOfMaterials> GetWhereDirect(Expression<Func<EFBillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.billOfMaterialsRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.billOfMaterialsRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>618dd452c426df5c1a9fbfa6b4a124cf</Hash>
+    <Hash>5fd53a95f82f7026444a09de0ceb91ad</Hash>
 </Codenesium>*/

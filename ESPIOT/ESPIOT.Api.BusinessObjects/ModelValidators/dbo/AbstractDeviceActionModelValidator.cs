@@ -41,11 +41,11 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 		private bool BeValidDevice(int id)
 		{
-			return this.DeviceRepository.GetByIdDirect(id) != null;
+			return this.DeviceRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>18e9ae44e703e9b37e664ce296a7eae9</Hash>
+    <Hash>f09f0e8e10633d88ee75ff2df3fed9a5</Hash>
 </Codenesium>*/

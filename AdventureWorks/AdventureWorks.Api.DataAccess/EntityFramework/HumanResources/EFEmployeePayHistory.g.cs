@@ -40,12 +40,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("RateChangeDate", TypeName="datetime")]
 		public DateTime RateChangeDate { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFEmployee Employee { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0ad2aea1513d7983689441c135e23f6</Hash>
+    <Hash>6d36d1ff2ef23779eb5cc083457e8a4b</Hash>
 </Codenesium>*/

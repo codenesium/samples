@@ -61,12 +61,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("StateProvinceID", TypeName="int")]
 		public int StateProvinceID { get; set; }
-
-		[ForeignKey("StateProvinceID")]
-		public virtual EFStateProvince StateProvince { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>773f70501dd633fdefedf2e9621a2ab6</Hash>
+    <Hash>7c152771e05e28c7ce011e2062bb89d8</Hash>
 </Codenesium>*/

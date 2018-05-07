@@ -59,16 +59,16 @@ namespace PetStoreNS.Api.BusinessObjects
 
 		private bool BeValidPaymentType(int id)
 		{
-			return this.PaymentTypeRepository.GetByIdDirect(id) != null;
+			return this.PaymentTypeRepository.Get(id) != null;
 		}
 
 		private bool BeValidPet(int id)
 		{
-			return this.PetRepository.GetByIdDirect(id) != null;
+			return this.PetRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>adb7ca7b54df097860886ba288955dfe</Hash>
+    <Hash>aea871ae9897edda4a50583edc1cd041</Hash>
 </Codenesium>*/

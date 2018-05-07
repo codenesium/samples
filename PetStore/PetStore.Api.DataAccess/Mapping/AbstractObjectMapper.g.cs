@@ -15,16 +15,15 @@ namespace PetStoreNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void BreedMapEFToPOCO(
-			EFBreed efBreed,
-			ApiResponse response)
+		public virtual POCOBreed BreedMapEFToPOCO(
+			EFBreed efBreed)
 		{
 			if (efBreed == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddBreed(new POCOBreed(efBreed.Id, efBreed.Name));
+			return new POCOBreed(efBreed.Id, efBreed.Name);
 		}
 
 		public virtual void PaymentTypeMapModelToEF(
@@ -37,16 +36,15 @@ namespace PetStoreNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void PaymentTypeMapEFToPOCO(
-			EFPaymentType efPaymentType,
-			ApiResponse response)
+		public virtual POCOPaymentType PaymentTypeMapEFToPOCO(
+			EFPaymentType efPaymentType)
 		{
 			if (efPaymentType == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPaymentType(new POCOPaymentType(efPaymentType.Id, efPaymentType.Name));
+			return new POCOPaymentType(efPaymentType.Id, efPaymentType.Name);
 		}
 
 		public virtual void PenMapModelToEF(
@@ -59,16 +57,15 @@ namespace PetStoreNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void PenMapEFToPOCO(
-			EFPen efPen,
-			ApiResponse response)
+		public virtual POCOPen PenMapEFToPOCO(
+			EFPen efPen)
 		{
 			if (efPen == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPen(new POCOPen(efPen.Id, efPen.Name));
+			return new POCOPen(efPen.Id, efPen.Name);
 		}
 
 		public virtual void PetMapModelToEF(
@@ -86,22 +83,15 @@ namespace PetStoreNS.Api.DataAccess
 				model.SpeciesId);
 		}
 
-		public virtual void PetMapEFToPOCO(
-			EFPet efPet,
-			ApiResponse response)
+		public virtual POCOPet PetMapEFToPOCO(
+			EFPet efPet)
 		{
 			if (efPet == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddPet(new POCOPet(efPet.AcquiredDate, efPet.BreedId, efPet.Description, efPet.Id, efPet.PenId, efPet.Price, efPet.SpeciesId));
-
-			this.BreedMapEFToPOCO(efPet.Breed, response);
-
-			this.PenMapEFToPOCO(efPet.Pen, response);
-
-			this.SpeciesMapEFToPOCO(efPet.Species, response);
+			return new POCOPet(efPet.AcquiredDate, efPet.BreedId, efPet.Description, efPet.Id, efPet.PenId, efPet.Price, efPet.SpeciesId);
 		}
 
 		public virtual void SaleMapModelToEF(
@@ -119,20 +109,15 @@ namespace PetStoreNS.Api.DataAccess
 				model.Phone);
 		}
 
-		public virtual void SaleMapEFToPOCO(
-			EFSale efSale,
-			ApiResponse response)
+		public virtual POCOSale SaleMapEFToPOCO(
+			EFSale efSale)
 		{
 			if (efSale == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSale(new POCOSale(efSale.Amount, efSale.FirstName, efSale.Id, efSale.LastName, efSale.PaymentTypeId, efSale.PetId, efSale.Phone));
-
-			this.PaymentTypeMapEFToPOCO(efSale.PaymentType, response);
-
-			this.PetMapEFToPOCO(efSale.Pet, response);
+			return new POCOSale(efSale.Amount, efSale.FirstName, efSale.Id, efSale.LastName, efSale.PaymentTypeId, efSale.PetId, efSale.Phone);
 		}
 
 		public virtual void SpeciesMapModelToEF(
@@ -145,20 +130,19 @@ namespace PetStoreNS.Api.DataAccess
 				model.Name);
 		}
 
-		public virtual void SpeciesMapEFToPOCO(
-			EFSpecies efSpecies,
-			ApiResponse response)
+		public virtual POCOSpecies SpeciesMapEFToPOCO(
+			EFSpecies efSpecies)
 		{
 			if (efSpecies == null)
 			{
-				return;
+				return null;
 			}
 
-			response.AddSpecies(new POCOSpecies(efSpecies.Id, efSpecies.Name));
+			return new POCOSpecies(efSpecies.Id, efSpecies.Name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2b530e49c21681f4a1bba0baf081072</Hash>
+    <Hash>bd0c46afc91e99fa3fddfe756c19d2c3</Hash>
 </Codenesium>*/

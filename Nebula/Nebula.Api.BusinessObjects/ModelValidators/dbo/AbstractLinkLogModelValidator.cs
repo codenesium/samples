@@ -40,11 +40,11 @@ namespace NebulaNS.Api.BusinessObjects
 
 		private bool BeValidLink(int id)
 		{
-			return this.LinkRepository.GetByIdDirect(id) != null;
+			return this.LinkRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7a53f1ddf3a232b9b2efdba1b4f4b79</Hash>
+    <Hash>b84ff61f7c5e53df2ad5f874cf3191f6</Hash>
 </Codenesium>*/

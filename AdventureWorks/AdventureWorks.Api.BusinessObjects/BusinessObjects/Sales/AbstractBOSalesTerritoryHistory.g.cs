@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int businessEntityID)
+		public virtual POCOSalesTerritoryHistory Get(int businessEntityID)
 		{
-			return this.salesTerritoryHistoryRepository.GetById(businessEntityID);
+			return this.salesTerritoryHistoryRepository.Get(businessEntityID);
 		}
 
-		public virtual POCOSalesTerritoryHistory GetByIdDirect(int businessEntityID)
+		public virtual List<POCOSalesTerritoryHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesTerritoryHistoryRepository.GetByIdDirect(businessEntityID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTerritoryHistoryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTerritoryHistoryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOSalesTerritoryHistory> GetWhereDirect(Expression<Func<EFSalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.salesTerritoryHistoryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.salesTerritoryHistoryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ec2d933281343ab29eea26817a4b00c</Hash>
+    <Hash>1e3d7dc15718b4efdbed0a9885e22d98</Hash>
 </Codenesium>*/

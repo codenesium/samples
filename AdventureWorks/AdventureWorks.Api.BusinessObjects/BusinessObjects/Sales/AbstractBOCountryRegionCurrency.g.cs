@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(string countryRegionCode)
+		public virtual POCOCountryRegionCurrency Get(string countryRegionCode)
 		{
-			return this.countryRegionCurrencyRepository.GetById(countryRegionCode);
+			return this.countryRegionCurrencyRepository.Get(countryRegionCode);
 		}
 
-		public virtual POCOCountryRegionCurrency GetByIdDirect(string countryRegionCode)
+		public virtual List<POCOCountryRegionCurrency> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.countryRegionCurrencyRepository.GetByIdDirect(countryRegionCode);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRegionCurrencyRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRegionCurrencyRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOCountryRegionCurrency> GetWhereDirect(Expression<Func<EFCountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRegionCurrencyRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.countryRegionCurrencyRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4050f07e7f2e813f1ca691ac21cacbbe</Hash>
+    <Hash>4ff04a9f2bf258d41b9ed03c6a95a4cd</Hash>
 </Codenesium>*/

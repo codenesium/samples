@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IErrorLogModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(ErrorLogModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, ErrorLogModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(ErrorLogModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ErrorLogModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6818bce7080e4ff9e6242a66b50d8b24</Hash>
+    <Hash>3c6d9f68fb857703c46b7361039974dd</Hash>
 </Codenesium>*/

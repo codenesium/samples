@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/purchaseOrderDetails")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PurchaseOrderDetailController: AbstractPurchaseOrderDetailController
 	{
 		public PurchaseOrderDetailController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1114624d77f954745b36bee18ec75e40</Hash>
+    <Hash>48c031b476ba474971b81215cfa0a712</Hash>
 </Codenesium>*/

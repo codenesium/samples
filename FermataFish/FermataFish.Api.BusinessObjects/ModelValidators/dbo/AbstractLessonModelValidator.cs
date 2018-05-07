@@ -61,16 +61,16 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		private bool BeValidLessonStatus(int id)
 		{
-			return this.LessonStatusRepository.GetByIdDirect(id) != null;
+			return this.LessonStatusRepository.Get(id) != null;
 		}
 
 		private bool BeValidStudio(int id)
 		{
-			return this.StudioRepository.GetByIdDirect(id) != null;
+			return this.StudioRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0a017230b34e5c166b12381c6a3bbf9</Hash>
+    <Hash>e2a956f108d4e2c9c5d2aa201eee1a0c</Hash>
 </Codenesium>*/

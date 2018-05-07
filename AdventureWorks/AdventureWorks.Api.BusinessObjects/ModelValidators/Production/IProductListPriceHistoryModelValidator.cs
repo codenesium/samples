@@ -6,12 +6,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IProductListPriceHistoryModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(ProductListPriceHistoryModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, ProductListPriceHistoryModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(ProductListPriceHistoryModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ProductListPriceHistoryModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c38698e5e59b14d377073c51f109bc13</Hash>
+    <Hash>226f952891f575b7fd9fa13952b0f213</Hash>
 </Codenesium>*/

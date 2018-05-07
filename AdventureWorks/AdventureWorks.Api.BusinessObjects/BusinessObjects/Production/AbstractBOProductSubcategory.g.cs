@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int productSubcategoryID)
+		public virtual POCOProductSubcategory Get(int productSubcategoryID)
 		{
-			return this.productSubcategoryRepository.GetById(productSubcategoryID);
+			return this.productSubcategoryRepository.Get(productSubcategoryID);
 		}
 
-		public virtual POCOProductSubcategory GetByIdDirect(int productSubcategoryID)
+		public virtual List<POCOProductSubcategory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productSubcategoryRepository.GetByIdDirect(productSubcategoryID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productSubcategoryRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productSubcategoryRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOProductSubcategory> GetWhereDirect(Expression<Func<EFProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.productSubcategoryRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.productSubcategoryRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f7b77eddd26ee6b72b8797f90bc287b</Hash>
+    <Hash>ce33e9313afbd5ae0889ee6c2073ae47</Hash>
 </Codenesium>*/

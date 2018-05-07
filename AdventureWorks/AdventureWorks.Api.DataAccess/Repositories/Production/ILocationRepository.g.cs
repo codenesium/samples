@@ -14,18 +14,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		void Delete(short locationID);
 
-		ApiResponse GetById(short locationID);
+		POCOLocation Get(short locationID);
 
-		POCOLocation GetByIdDirect(short locationID);
-
-		ApiResponse GetWhere(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOLocation> GetWhereDirect(Expression<Func<EFLocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOLocation> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>62326acd186a796ca9d131209da823f9</Hash>
+    <Hash>75385155d585649f292a29750aba06ab</Hash>
 </Codenesium>*/

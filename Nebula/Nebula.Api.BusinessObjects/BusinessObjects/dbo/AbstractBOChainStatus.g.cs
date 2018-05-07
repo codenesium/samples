@@ -68,33 +68,18 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOChainStatus Get(int id)
 		{
-			return this.chainStatusRepository.GetById(id);
+			return this.chainStatusRepository.Get(id);
 		}
 
-		public virtual POCOChainStatus GetByIdDirect(int id)
+		public virtual List<POCOChainStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.chainStatusRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.chainStatusRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.chainStatusRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOChainStatus> GetWhereDirect(Expression<Func<EFChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.chainStatusRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.chainStatusRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c11f8edebe3b498a1bbff66758d8ee04</Hash>
+    <Hash>b626779e3486c23549e3fb115c2f7385</Hash>
 </Codenesium>*/

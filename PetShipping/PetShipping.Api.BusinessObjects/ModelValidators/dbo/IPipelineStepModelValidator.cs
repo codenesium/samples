@@ -6,12 +6,12 @@ namespace PetShippingNS.Api.BusinessObjects
 {
 	public interface IPipelineStepModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(PipelineStepModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, PipelineStepModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(PipelineStepModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, PipelineStepModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3087a0f805e0e967e3682818582178d7</Hash>
+    <Hash>35d9da84c73eb8b7f4b87a0f85686029</Hash>
 </Codenesium>*/

@@ -71,15 +71,7 @@ namespace FileServiceNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOBucket>> BucketSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOBucket>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOBucket> BucketGetByIdAsync(int id)
+		public virtual async Task<POCOBucket> BucketGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/{id}");
 
@@ -87,7 +79,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOBucket>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOBucket>> BucketGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOBucket>> BucketAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?offset={offset}&limit={limit}");
 
@@ -126,15 +118,7 @@ namespace FileServiceNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOFile>> FileSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOFile>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOFile> FileGetByIdAsync(int id)
+		public virtual async Task<POCOFile> FileGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files/{id}");
 
@@ -142,7 +126,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOFile>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOFile>> FileGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOFile>> FileAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?offset={offset}&limit={limit}");
 
@@ -181,15 +165,7 @@ namespace FileServiceNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOFileType>> FileTypeSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOFileType>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOFileType> FileTypeGetByIdAsync(int id)
+		public virtual async Task<POCOFileType> FileTypeGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes/{id}");
 
@@ -197,7 +173,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOFileType>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOFileType>> FileTypeGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOFileType>> FileTypeAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?offset={offset}&limit={limit}");
 
@@ -236,15 +212,7 @@ namespace FileServiceNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 		}
 
-		public virtual async Task<List<POCOVersionInfo>> VersionInfoSearchAsync(string query, int offset = 0, int limit = 250)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?{query}&offset={offset}&limit={limit}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOVersionInfo> VersionInfoGetByIdAsync(long id)
+		public virtual async Task<POCOVersionInfo> VersionInfoGetAsync(long id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/{id}");
 
@@ -252,7 +220,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOVersionInfo>> VersionInfoGetAllAsync(int offset = 0, int limit = 250)
+		public virtual async Task<List<POCOVersionInfo>> VersionInfoAllAsync(int offset = 0, int limit = 250)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?offset={offset}&limit={limit}");
 
@@ -271,5 +239,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ef5ded9b06995da04152d5b1c9a6fbd3</Hash>
+    <Hash>9ba741fe869db6e48a4a620843d31a0d</Hash>
 </Codenesium>*/

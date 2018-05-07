@@ -6,12 +6,12 @@ namespace FileServiceNS.Api.BusinessObjects
 {
 	public interface IBucketModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(BucketModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, BucketModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(BucketModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, BucketModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f65a88f28731ee8d18cf79cad4ebf263</Hash>
+    <Hash>9880a127f2a6bc1097ac3122b58d2f02</Hash>
 </Codenesium>*/

@@ -19,21 +19,18 @@ namespace AdventureWorksNS.Api.Contracts
 			string shelf)
 		{
 			this.Bin = bin.ToInt();
+			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
 			this.Quantity = quantity;
 			this.Rowguid = rowguid.ToGuid();
 			this.Shelf = shelf.ToString();
-
-			this.LocationID = new ReferenceEntity<short>(locationID,
-			                                             nameof(ApiResponse.Locations));
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 		}
 
 		public int Bin { get; set; }
-		public ReferenceEntity<short> LocationID { get; set; }
+		public short LocationID { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 		public short Quantity { get; set; }
 		public Guid Rowguid { get; set; }
 		public string Shelf { get; set; }
@@ -108,5 +105,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>acc81dbd66f8c8d7f056ca60a9ce6fc7</Hash>
+    <Hash>3f9ce1329d6230a1e2d38548b9a64f14</Hash>
 </Codenesium>*/

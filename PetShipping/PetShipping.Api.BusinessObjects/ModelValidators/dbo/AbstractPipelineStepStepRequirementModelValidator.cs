@@ -40,11 +40,11 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		private bool BeValidPipelineStep(int id)
 		{
-			return this.PipelineStepRepository.GetByIdDirect(id) != null;
+			return this.PipelineStepRepository.Get(id) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>612ec2029012dabe11dd53de3b9f21a2</Hash>
+    <Hash>a0fc32974340abc10c5bff6035d4fbce</Hash>
 </Codenesium>*/

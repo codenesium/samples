@@ -68,33 +68,18 @@ namespace PetShippingNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOPipelineStepNote Get(int id)
 		{
-			return this.pipelineStepNoteRepository.GetById(id);
+			return this.pipelineStepNoteRepository.Get(id);
 		}
 
-		public virtual POCOPipelineStepNote GetByIdDirect(int id)
+		public virtual List<POCOPipelineStepNote> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.pipelineStepNoteRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFPipelineStepNote, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.pipelineStepNoteRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.pipelineStepNoteRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOPipelineStepNote> GetWhereDirect(Expression<Func<EFPipelineStepNote, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.pipelineStepNoteRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.pipelineStepNoteRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bed54bcc9f326cc36990e6087ecb0b9c</Hash>
+    <Hash>eced7e0adb82684dda91c205788fdbce</Hash>
 </Codenesium>*/

@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int addressTypeID)
+		public virtual POCOAddressType Get(int addressTypeID)
 		{
-			return this.addressTypeRepository.GetById(addressTypeID);
+			return this.addressTypeRepository.Get(addressTypeID);
 		}
 
-		public virtual POCOAddressType GetByIdDirect(int addressTypeID)
+		public virtual List<POCOAddressType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.addressTypeRepository.GetByIdDirect(addressTypeID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.addressTypeRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.addressTypeRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOAddressType> GetWhereDirect(Expression<Func<EFAddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.addressTypeRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.addressTypeRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>515215f6753bdb49a8beca8c061b4483</Hash>
+    <Hash>cde15f910ff9504c398c7725b6499180</Hash>
 </Codenesium>*/

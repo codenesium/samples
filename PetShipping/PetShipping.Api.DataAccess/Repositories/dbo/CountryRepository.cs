@@ -17,33 +17,9 @@ namespace PetShippingNS.Api.DataAccess
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
 		{}
-
-		protected override List<EFCountry> SearchLinqEF(Expression<Func<EFCountry, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFCountry>();
-			}
-			else
-			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCountry>();
-			}
-		}
-
-		protected override List<EFCountry> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrEmpty(orderClause))
-			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFCountry>();
-			}
-			else
-			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCountry>();
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a4254143c93ee8ba52df12ed56c5b30</Hash>
+    <Hash>de5c138da9799f57b5587a1185f12d8d</Hash>
 </Codenesium>*/

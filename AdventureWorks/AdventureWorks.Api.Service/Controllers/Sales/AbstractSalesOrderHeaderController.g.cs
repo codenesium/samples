@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOSalesOrderHeader response = this.salesOrderHeaderManager.GetById(id).SalesOrderHeaders.FirstOrDefault();
+			POCOSalesOrderHeader response = this.salesOrderHeaderManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.salesOrderHeaderManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
+			List<POCOSalesOrderHeader> response = this.salesOrderHeaderManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesOrderHeaders/{result.Id.ToString()}");
-				POCOSalesOrderHeader response = this.salesOrderHeaderManager.GetById(result.Id).SalesOrderHeaders.First();
+				POCOSalesOrderHeader response = this.salesOrderHeaderManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesOrderHeader response = this.salesOrderHeaderManager.GetById(id).SalesOrderHeaders.First();
+					POCOSalesOrderHeader response = this.salesOrderHeaderManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,109 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCreditCardID/{id}")]
-		[ReadOnly]
-		[Route("~/api/CreditCards/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult ByCreditCardID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.CreditCardID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByCurrencyRateID/{id}")]
-		[ReadOnly]
-		[Route("~/api/CurrencyRates/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult ByCurrencyRateID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.CurrencyRateID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByCustomerID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Customers/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult ByCustomerID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.CustomerID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
-
-		[HttpGet]
-		[Route("BySalesPersonID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SalesPersons/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult BySalesPersonID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.SalesPersonID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByTerritoryID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SalesTerritories/{id}/SalesOrderHeaders")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		public virtual IActionResult ByTerritoryID(int id)
-		{
-			ApiResponse response = this.salesOrderHeaderManager.GetWhere(x => x.TerritoryID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesOrderHeaders);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>adeafdfc13a866aa866bd618a8258560</Hash>
+    <Hash>9635c606b4fd32e1af50c162661f5668</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/specialOffers")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class SpecialOfferController: AbstractSpecialOfferController
 	{
 		public SpecialOfferController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1600e7af2e1a2c341b08ee90c3739651</Hash>
+    <Hash>94e188c7b24a060c5dfaac50c123b79a</Hash>
 </Codenesium>*/

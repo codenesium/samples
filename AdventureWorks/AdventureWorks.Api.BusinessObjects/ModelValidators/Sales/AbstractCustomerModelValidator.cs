@@ -53,16 +53,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeValidStore(Nullable<int> id)
 		{
-			return this.StoreRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.StoreRepository.Get(id.GetValueOrDefault()) != null;
 		}
 
 		private bool BeValidSalesTerritory(Nullable<int> id)
 		{
-			return this.SalesTerritoryRepository.GetByIdDirect(id.GetValueOrDefault()) != null;
+			return this.SalesTerritoryRepository.Get(id.GetValueOrDefault()) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd19a954966cdf4162d4e99dc8b2defe</Hash>
+    <Hash>cdb61904e3d8bf8bbc2584946fb15549</Hash>
 </Codenesium>*/

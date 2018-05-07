@@ -35,15 +35,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("ProductPhotoID", TypeName="int")]
 		public int ProductPhotoID { get; set; }
-
-		[ForeignKey("ProductID")]
-		public virtual EFProduct Product { get; set; }
-
-		[ForeignKey("ProductPhotoID")]
-		public virtual EFProductPhoto ProductPhoto { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>899c097645fadbf9eab32e6fbc8f6cff</Hash>
+    <Hash>a3bfa007d9a508320825026038be9028</Hash>
 </Codenesium>*/

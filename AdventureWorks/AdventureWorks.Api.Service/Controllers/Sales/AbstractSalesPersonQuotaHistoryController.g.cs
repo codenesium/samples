@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOSalesPersonQuotaHistory response = this.salesPersonQuotaHistoryManager.GetById(id).SalesPersonQuotaHistories.FirstOrDefault();
+			POCOSalesPersonQuotaHistory response = this.salesPersonQuotaHistoryManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOSalesPersonQuotaHistory>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.salesPersonQuotaHistoryManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesPersonQuotaHistories);
-			}
+			List<POCOSalesPersonQuotaHistory> response = this.salesPersonQuotaHistoryManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesPersonQuotaHistories/{result.Id.ToString()}");
-				POCOSalesPersonQuotaHistory response = this.salesPersonQuotaHistoryManager.GetById(result.Id).SalesPersonQuotaHistories.First();
+				POCOSalesPersonQuotaHistory response = this.salesPersonQuotaHistoryManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesPersonQuotaHistory response = this.salesPersonQuotaHistoryManager.GetById(id).SalesPersonQuotaHistories.First();
+					POCOSalesPersonQuotaHistory response = this.salesPersonQuotaHistoryManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SalesPersons/{id}/SalesPersonQuotaHistories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSalesPersonQuotaHistory>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			ApiResponse response = this.salesPersonQuotaHistoryManager.GetWhere(x => x.BusinessEntityID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SalesPersonQuotaHistories);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5cd7abe8ccb52d8c383e4faced0ad6c0</Hash>
+    <Hash>040cfece42065745cc44d2ca034ad86e</Hash>
 </Codenesium>*/

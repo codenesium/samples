@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(string cultureID)
+		public virtual POCOCulture Get(string cultureID)
 		{
-			return this.cultureRepository.GetById(cultureID);
+			return this.cultureRepository.Get(cultureID);
 		}
 
-		public virtual POCOCulture GetByIdDirect(string cultureID)
+		public virtual List<POCOCulture> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.cultureRepository.GetByIdDirect(cultureID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.cultureRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.cultureRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOCulture> GetWhereDirect(Expression<Func<EFCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.cultureRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.cultureRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a73a50754b22bb5800478bea341f472</Hash>
+    <Hash>12e44d28d82d570ad3dc3cac62b2cef4</Hash>
 </Codenesium>*/

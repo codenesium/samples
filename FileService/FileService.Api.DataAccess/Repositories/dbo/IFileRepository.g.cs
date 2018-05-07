@@ -14,18 +14,12 @@ namespace FileServiceNS.Api.DataAccess
 
 		void Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCOFile Get(int id);
 
-		POCOFile GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOFile> GetWhereDirect(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOFile> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b58f1f3a5f3bb824e62a6780d8bf9a47</Hash>
+    <Hash>ade3dae9d65999eee8a2bfa4de3c1d53</Hash>
 </Codenesium>*/

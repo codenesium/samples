@@ -68,33 +68,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int businessEntityID)
+		public virtual POCOVendor Get(int businessEntityID)
 		{
-			return this.vendorRepository.GetById(businessEntityID);
+			return this.vendorRepository.Get(businessEntityID);
 		}
 
-		public virtual POCOVendor GetByIdDirect(int businessEntityID)
+		public virtual List<POCOVendor> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.vendorRepository.GetByIdDirect(businessEntityID);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.vendorRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.vendorRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOVendor> GetWhereDirect(Expression<Func<EFVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.vendorRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.vendorRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>848064ddb25b4fa8cd272a28abebcb11</Hash>
+    <Hash>2d60177052e8d4921e000d53292231f7</Hash>
 </Codenesium>*/

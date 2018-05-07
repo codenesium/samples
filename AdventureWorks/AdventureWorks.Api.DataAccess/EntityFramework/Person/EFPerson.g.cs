@@ -81,12 +81,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Column("Title", TypeName="nvarchar(8)")]
 		public string Title { get; set; }
-
-		[ForeignKey("BusinessEntityID")]
-		public virtual EFBusinessEntity BusinessEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>153e221fae80cdf7aef57d7b7ff70c0f</Hash>
+    <Hash>7dfff60e26898442b6e343eab3de0759</Hash>
 </Codenesium>*/

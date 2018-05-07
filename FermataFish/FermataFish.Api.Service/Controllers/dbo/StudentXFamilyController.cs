@@ -14,7 +14,6 @@ namespace FermataFishNS.Api.Service
 {
 	[Route("api/studentXFamilies")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class StudentXFamilyController: AbstractStudentXFamilyController
 	{
 		public StudentXFamilyController(
@@ -36,5 +35,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c62540248dce7d00b3cda664a3f51875</Hash>
+    <Hash>bfaed30732b7d5ba65a942d93b3f679b</Hash>
 </Codenesium>*/

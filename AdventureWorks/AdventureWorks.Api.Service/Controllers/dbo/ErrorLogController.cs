@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/errorLogs")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ErrorLogController: AbstractErrorLogController
 	{
 		public ErrorLogController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>56d8be79d9af5177d34c342bbde49e2d</Hash>
+    <Hash>d75c3d2263748f8347268b6a42e1ecaf</Hash>
 </Codenesium>*/

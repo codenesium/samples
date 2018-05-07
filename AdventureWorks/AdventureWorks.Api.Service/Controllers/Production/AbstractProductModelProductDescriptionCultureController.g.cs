@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOProductModelProductDescriptionCulture response = this.productModelProductDescriptionCultureManager.GetById(id).ProductModelProductDescriptionCultures.FirstOrDefault();
+			POCOProductModelProductDescriptionCulture response = this.productModelProductDescriptionCultureManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelProductDescriptionCultures);
-			}
+			List<POCOProductModelProductDescriptionCulture> response = this.productModelProductDescriptionCultureManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ProductModelProductDescriptionCultures/{result.Id.ToString()}");
-				POCOProductModelProductDescriptionCulture response = this.productModelProductDescriptionCultureManager.GetById(result.Id).ProductModelProductDescriptionCultures.First();
+				POCOProductModelProductDescriptionCulture response = this.productModelProductDescriptionCultureManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductModelProductDescriptionCulture response = this.productModelProductDescriptionCultureManager.GetById(id).ProductModelProductDescriptionCultures.First();
+					POCOProductModelProductDescriptionCulture response = this.productModelProductDescriptionCultureManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,69 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByCultureID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Cultures/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
-		public virtual IActionResult ByCultureID(string id)
-		{
-			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhere(x => x.CultureID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelProductDescriptionCultures);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByProductDescriptionID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductDescriptions/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
-		public virtual IActionResult ByProductDescriptionID(int id)
-		{
-			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhere(x => x.ProductDescriptionID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelProductDescriptionCultures);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByProductModelID/{id}")]
-		[ReadOnly]
-		[Route("~/api/ProductModels/{id}/ProductModelProductDescriptionCultures")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
-		public virtual IActionResult ByProductModelID(int id)
-		{
-			ApiResponse response = this.productModelProductDescriptionCultureManager.GetWhere(x => x.ProductModelID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.ProductModelProductDescriptionCultures);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>933a58b1bc4a9583821aef08e2301fd0</Hash>
+    <Hash>4e498e5f2a3618d2cb8fa2a146be4f1f</Hash>
 </Codenesium>*/

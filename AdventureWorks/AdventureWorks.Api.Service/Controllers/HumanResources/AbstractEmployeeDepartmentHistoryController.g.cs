@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.GetById(id).EmployeeDepartmentHistories.FirstOrDefault();
+			POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.EmployeeDepartmentHistories);
-			}
+			List<POCOEmployeeDepartmentHistory> response = this.employeeDepartmentHistoryManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/EmployeeDepartmentHistories/{result.Id.ToString()}");
-				POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.GetById(result.Id).EmployeeDepartmentHistories.First();
+				POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.GetById(id).EmployeeDepartmentHistories.First();
+					POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,69 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByBusinessEntityID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Employees/{id}/EmployeeDepartmentHistories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
-		public virtual IActionResult ByBusinessEntityID(int id)
-		{
-			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhere(x => x.BusinessEntityID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.EmployeeDepartmentHistories);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByDepartmentID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Departments/{id}/EmployeeDepartmentHistories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
-		public virtual IActionResult ByDepartmentID(short id)
-		{
-			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhere(x => x.DepartmentID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.EmployeeDepartmentHistories);
-			}
-		}
-
-		[HttpGet]
-		[Route("ByShiftID/{id}")]
-		[ReadOnly]
-		[Route("~/api/Shifts/{id}/EmployeeDepartmentHistories")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
-		public virtual IActionResult ByShiftID(int id)
-		{
-			ApiResponse response = this.employeeDepartmentHistoryManager.GetWhere(x => x.ShiftID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.EmployeeDepartmentHistories);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>25c9d9b3ffbd9d8b57d517467843fb6b</Hash>
+    <Hash>99c1ba4ea765fd99c61b0482fdd655ec</Hash>
 </Codenesium>*/

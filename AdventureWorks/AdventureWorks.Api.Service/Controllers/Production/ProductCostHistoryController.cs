@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/productCostHistories")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class ProductCostHistoryController: AbstractProductCostHistoryController
 	{
 		public ProductCostHistoryController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d0de4f81539a5afa4c25fddc2cb111de</Hash>
+    <Hash>18f0559f3b5d6ec02bf13e49e4f0a3f6</Hash>
 </Codenesium>*/

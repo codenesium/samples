@@ -17,18 +17,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(short scrapReasonID);
 
-		ApiResponse GetById(short scrapReasonID);
+		POCOScrapReason Get(short scrapReasonID);
 
-		POCOScrapReason GetByIdDirect(short scrapReasonID);
-
-		ApiResponse GetWhere(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCOScrapReason> GetWhereDirect(Expression<Func<EFScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCOScrapReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a7182450b482fc889dedb2889d302bf</Hash>
+    <Hash>effbc96be9cf3ccaeba685b744194572</Hash>
 </Codenesium>*/

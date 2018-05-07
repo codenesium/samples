@@ -42,7 +42,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOSpaceFeature response = this.spaceFeatureManager.GetById(id).SpaceFeatures.FirstOrDefault();
+			POCOSpaceFeature response = this.spaceFeatureManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOSpaceFeature>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.spaceFeatureManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpaceFeatures);
-			}
+			List<POCOSpaceFeature> response = this.spaceFeatureManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace FermataFishNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SpaceFeatures/{result.Id.ToString()}");
-				POCOSpaceFeature response = this.spaceFeatureManager.GetById(result.Id).SpaceFeatures.First();
+				POCOSpaceFeature response = this.spaceFeatureManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpaceFeature response = this.spaceFeatureManager.GetById(id).SpaceFeatures.First();
+					POCOSpaceFeature response = this.spaceFeatureManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace FermataFishNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("ByStudioId/{id}")]
-		[ReadOnly]
-		[Route("~/api/Studios/{id}/SpaceFeatures")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSpaceFeature>), 200)]
-		public virtual IActionResult ByStudioId(int id)
-		{
-			ApiResponse response = this.spaceFeatureManager.GetWhere(x => x.StudioId == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpaceFeatures);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f09d430beb7fbb84bd083c5fcb44ce7a</Hash>
+    <Hash>a5ca364ee10fffa3dfc572d95b84d19e</Hash>
 </Codenesium>*/

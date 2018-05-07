@@ -6,12 +6,12 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IMachineModelValidator
 	{
-		Task<ValidationResult>  ValidateCreateAsync(MachineModel model);
-		Task<ValidationResult>  ValidateUpdateAsync(int id, MachineModel model);
-		Task<ValidationResult>  ValidateDeleteAsync(int id);
+		Task<ValidationResult> ValidateCreateAsync(MachineModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, MachineModel model);
+		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3737ee0c2bf7bfd565f1677ca43a854c</Hash>
+    <Hash>f0628ad7d64d62f1c79958087fe98aa0</Hash>
 </Codenesium>*/

@@ -22,20 +22,18 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.ActualCost = actualCost.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
+			this.ProductID = productID.ToInt();
 			this.Quantity = quantity.ToInt();
 			this.ReferenceOrderID = referenceOrderID.ToInt();
 			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
 			this.TransactionDate = transactionDate.ToDateTime();
 			this.TransactionID = transactionID.ToInt();
 			this.TransactionType = transactionType.ToString();
-
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
 		}
 
 		public decimal ActualCost { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 		public int Quantity { get; set; }
 		public int ReferenceOrderID { get; set; }
 		public int ReferenceOrderLineID { get; set; }
@@ -131,5 +129,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7305c4733c8d47af300b09482965ef29</Hash>
+    <Hash>b8bebf0eee3c6968ed83fddb05b3192c</Hash>
 </Codenesium>*/

@@ -14,7 +14,6 @@ namespace FileServiceNS.Api.Service
 {
 	[Route("api/fileTypes")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class FileTypeController: AbstractFileTypeController
 	{
 		public FileTypeController(
@@ -36,5 +35,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f0f14b49e9cd92ce2ded692077fe89cd</Hash>
+    <Hash>2dc621bfde81c5b5937c5e2722ccbc7c</Hash>
 </Codenesium>*/

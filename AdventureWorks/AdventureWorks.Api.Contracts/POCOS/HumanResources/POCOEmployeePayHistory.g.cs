@@ -16,16 +16,14 @@ namespace AdventureWorksNS.Api.Contracts
 			decimal rate,
 			DateTime rateChangeDate)
 		{
+			this.BusinessEntityID = businessEntityID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PayFrequency = payFrequency.ToInt();
 			this.Rate = rate.ToDecimal();
 			this.RateChangeDate = rateChangeDate.ToDateTime();
-
-			this.BusinessEntityID = new ReferenceEntity<int>(businessEntityID,
-			                                                 nameof(ApiResponse.Employees));
 		}
 
-		public ReferenceEntity<int> BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public int PayFrequency { get; set; }
 		public decimal Rate { get; set; }
@@ -83,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6145324da6c70582c095019fa8e73b82</Hash>
+    <Hash>36f0a7cd0f6aaf820de63208a49a3cfc</Hash>
 </Codenesium>*/

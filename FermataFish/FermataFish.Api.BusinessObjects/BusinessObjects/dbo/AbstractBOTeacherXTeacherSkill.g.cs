@@ -68,33 +68,18 @@ namespace FermataFishNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual ApiResponse GetById(int id)
+		public virtual POCOTeacherXTeacherSkill Get(int id)
 		{
-			return this.teacherXTeacherSkillRepository.GetById(id);
+			return this.teacherXTeacherSkillRepository.Get(id);
 		}
 
-		public virtual POCOTeacherXTeacherSkill GetByIdDirect(int id)
+		public virtual List<POCOTeacherXTeacherSkill> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.teacherXTeacherSkillRepository.GetByIdDirect(id);
-		}
-
-		public virtual ApiResponse GetWhere(Expression<Func<EFTeacherXTeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.teacherXTeacherSkillRepository.GetWhere(predicate, skip, take, orderClause);
-		}
-
-		public virtual ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.teacherXTeacherSkillRepository.GetWhereDynamic(predicate, skip, take, orderClause);
-		}
-
-		public virtual List<POCOTeacherXTeacherSkill> GetWhereDirect(Expression<Func<EFTeacherXTeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.teacherXTeacherSkillRepository.GetWhereDirect(predicate, skip, take, orderClause);
+			return this.teacherXTeacherSkillRepository.All(skip, take, orderClause);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>327f88a0bed23bde245acfef40253d3b</Hash>
+    <Hash>d4e4d2089b1fc8644d6a3a644691b0ae</Hash>
 </Codenesium>*/

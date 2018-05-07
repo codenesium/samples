@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.Service
 		[ProducesResponseType(typeof(void), 404)]
 		public virtual IActionResult Get(int id)
 		{
-			POCOSpecialOfferProduct response = this.specialOfferProductManager.GetById(id).SpecialOfferProducts.FirstOrDefault();
+			POCOSpecialOfferProduct response = this.specialOfferProductManager.Get(id);
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -56,24 +56,15 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
 		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Search()
+		public virtual IActionResult All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			ApiResponse response = this.specialOfferProductManager.GetWhereDynamic(query.WhereClause, query.Offset, query.Limit);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpecialOfferProducts);
-			}
+			List<POCOSpecialOfferProduct> response = this.specialOfferProductManager.All(query.Offset, query.Limit);
+			return this.Ok(response);
 		}
 
 		[HttpPost]
@@ -89,7 +80,7 @@ namespace AdventureWorksNS.Api.Service
 			{
 				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
 				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SpecialOfferProducts/{result.Id.ToString()}");
-				POCOSpecialOfferProduct response = this.specialOfferProductManager.GetById(result.Id).SpecialOfferProducts.First();
+				POCOSpecialOfferProduct response = this.specialOfferProductManager.Get(result.Id);
 				return this.Ok(response);
 			}
 			else
@@ -143,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpecialOfferProduct response = this.specialOfferProductManager.GetById(id).SpecialOfferProducts.First();
+					POCOSpecialOfferProduct response = this.specialOfferProductManager.Get(id);
 					return this.Ok(response);
 				}
 				else
@@ -175,29 +166,9 @@ namespace AdventureWorksNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
-
-		[HttpGet]
-		[Route("BySpecialOfferID/{id}")]
-		[ReadOnly]
-		[Route("~/api/SpecialOffers/{id}/SpecialOfferProducts")]
-		[ProducesResponseType(typeof(ApiResponse), 200)]
-		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
-		public virtual IActionResult BySpecialOfferID(int id)
-		{
-			ApiResponse response = this.specialOfferProductManager.GetWhere(x => x.SpecialOfferID == id);
-
-			if (this.Request.HttpContext.Request.Headers.Any(x => x.Key == "x-include-references" && x.Value == "1"))
-			{
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.Ok(response.SpecialOfferProducts);
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f3c4e90a239bd61b174835a33d7fa1e1</Hash>
+    <Hash>e651ef3e4b4b0824b1bb342d43838119</Hash>
 </Codenesium>*/

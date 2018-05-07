@@ -14,7 +14,6 @@ namespace AdventureWorksNS.Api.Service
 {
 	[Route("api/currencyRates")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class CurrencyRateController: AbstractCurrencyRateController
 	{
 		public CurrencyRateController(
@@ -36,5 +35,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>166da6764abbab4c343454b49ce7c3d1</Hash>
+    <Hash>14813de1cc79e7a897243e88b09f054f</Hash>
 </Codenesium>*/

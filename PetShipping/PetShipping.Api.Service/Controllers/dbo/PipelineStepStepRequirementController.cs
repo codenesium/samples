@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/pipelineStepStepRequirements")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class PipelineStepStepRequirementController: AbstractPipelineStepStepRequirementController
 	{
 		public PipelineStepStepRequirementController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0e2990d4d961a1a1ab954f447d19ad94</Hash>
+    <Hash>3af8e8929a2f5d3ac8bdf82771ea912c</Hash>
 </Codenesium>*/

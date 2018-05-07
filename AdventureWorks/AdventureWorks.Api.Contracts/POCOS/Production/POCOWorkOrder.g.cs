@@ -25,24 +25,21 @@ namespace AdventureWorksNS.Api.Contracts
 			this.EndDate = endDate.ToNullableDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty.ToInt();
+			this.ProductID = productID.ToInt();
 			this.ScrappedQty = scrappedQty;
+			this.ScrapReasonID = scrapReasonID;
 			this.StartDate = startDate.ToDateTime();
 			this.StockedQty = stockedQty.ToInt();
 			this.WorkOrderID = workOrderID.ToInt();
-
-			this.ProductID = new ReferenceEntity<int>(productID,
-			                                          nameof(ApiResponse.Products));
-			this.ScrapReasonID = new ReferenceEntity<Nullable<short>>(scrapReasonID,
-			                                                          nameof(ApiResponse.ScrapReasons));
 		}
 
 		public DateTime DueDate { get; set; }
 		public Nullable<DateTime> EndDate { get; set; }
 		public DateTime ModifiedDate { get; set; }
 		public int OrderQty { get; set; }
-		public ReferenceEntity<int> ProductID { get; set; }
+		public int ProductID { get; set; }
 		public short ScrappedQty { get; set; }
-		public ReferenceEntity<Nullable<short>> ScrapReasonID { get; set; }
+		public Nullable<short> ScrapReasonID { get; set; }
 		public DateTime StartDate { get; set; }
 		public int StockedQty { get; set; }
 		public int WorkOrderID { get; set; }
@@ -144,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3ba2d35a67450bde35c9ea1fb925444</Hash>
+    <Hash>067555235b7b692a6a6355feef6fa80b</Hash>
 </Codenesium>*/

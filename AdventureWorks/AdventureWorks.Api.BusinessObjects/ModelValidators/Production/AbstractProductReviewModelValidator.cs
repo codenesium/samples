@@ -20,7 +20,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
-		public IProductRepository ProductRepository { get; set; }
 		public virtual void CommentsRules()
 		{
 			this.RuleFor(x => x.Comments).Length(0, 3850);
@@ -40,7 +39,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ProductIDRules()
 		{
 			this.RuleFor(x => x.ProductID).NotNull();
-			this.RuleFor(x => x.ProductID).Must(this.BeValidProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RatingRules()
@@ -58,14 +56,9 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.ReviewerName).NotNull();
 			this.RuleFor(x => x.ReviewerName).Length(0, 50);
 		}
-
-		private bool BeValidProduct(int id)
-		{
-			return this.ProductRepository.GetByIdDirect(id) != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>deb64dcac10dd24d15c6952d0110d00a</Hash>
+    <Hash>cb07d24c40eb63044a83ad4e94e4a31c</Hash>
 </Codenesium>*/

@@ -17,18 +17,12 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		ApiResponse GetById(int id);
+		POCODevice Get(int id);
 
-		POCODevice GetByIdDirect(int id);
-
-		ApiResponse GetWhere(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		List<POCODevice> GetWhereDirect(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
-
-		ApiResponse GetWhereDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "");
+		List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b39dc6269cd7fd5c4367e317b889d8e</Hash>
+    <Hash>9e491ee935451d3fb4a5bb159a4fed84</Hash>
 </Codenesium>*/

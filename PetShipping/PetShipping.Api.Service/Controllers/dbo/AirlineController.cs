@@ -14,7 +14,6 @@ namespace PetShippingNS.Api.Service
 {
 	[Route("api/airlines")]
 	[ApiVersion("1.0")]
-	[Response]
 	public class AirlineController: AbstractAirlineController
 	{
 		public AirlineController(
@@ -36,5 +35,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e66d75e0b029f4d42687845889be3bc8</Hash>
+    <Hash>52c17153a9f937fa48766c8e9b82f4c9</Hash>
 </Codenesium>*/
