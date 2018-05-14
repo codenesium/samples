@@ -9,7 +9,7 @@ namespace PetShippingNS.Api.BusinessObjects
 {
 	public interface IBOPipelineStatus
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOPipelineStatus>> Create(
 			PipelineStatusModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bbdf8c9ed55c712be25c52d5071f3af9</Hash>
+    <Hash>0cc1ee75be61526f97e793a3234967ab</Hash>
 </Codenesium>*/

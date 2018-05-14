@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Chain", Schema="dbo")]
-	public partial class EFChain: AbstractEntityFrameworkPOCO
+	public partial class Chain:AbstractEntityFrameworkPOCO
 	{
-		public EFChain()
+		public Chain()
 		{}
 
 		public void SetProperties(
@@ -42,13 +42,13 @@ namespace NebulaNS.Api.DataAccess
 		public int TeamId { get; set; }
 
 		[ForeignKey("ChainStatusId")]
-		public virtual EFChainStatus ChainStatus { get; set; }
+		public virtual ChainStatus ChainStatus { get; set; }
 
 		[ForeignKey("TeamId")]
-		public virtual EFTeam Team { get; set; }
+		public virtual Team Team { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>98b333b30cec11df2c99fdcbec7732f6</Hash>
+    <Hash>042d4049a06ffe35efde1dc19ca1d8e3</Hash>
 </Codenesium>*/

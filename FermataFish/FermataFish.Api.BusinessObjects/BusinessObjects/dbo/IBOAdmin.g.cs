@@ -9,7 +9,7 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface IBOAdmin
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOAdmin>> Create(
 			AdminModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d6a124c8b408259cf51e8d0d2f93d5ef</Hash>
+    <Hash>7e4b0866cfa00f45103cc65170fd630e</Hash>
 </Codenesium>*/

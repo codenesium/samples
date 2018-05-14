@@ -7,7 +7,7 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public interface IPenRepository
 	{
-		int Create(PenModel model);
+		POCOPen Create(PenModel model);
 
 		void Update(int id,
 		            PenModel model);
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c1ef96d92e5fb2317c062838179b1b50</Hash>
+    <Hash>26cef5f06d5bc0b59c21df3e5f1dc8b1</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual void DeviceMapModelToEF(
 			int id,
 			DeviceModel model,
-			EFDevice efDevice)
+			Device efDevice)
 		{
 			efDevice.SetProperties(
 				id,
@@ -17,7 +17,7 @@ namespace ESPIOTNS.Api.DataAccess
 		}
 
 		public virtual POCODevice DeviceMapEFToPOCO(
-			EFDevice efDevice)
+			Device efDevice)
 		{
 			if (efDevice == null)
 			{
@@ -30,7 +30,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual void DeviceActionMapModelToEF(
 			int id,
 			DeviceActionModel model,
-			EFDeviceAction efDeviceAction)
+			DeviceAction efDeviceAction)
 		{
 			efDeviceAction.SetProperties(
 				id,
@@ -40,7 +40,7 @@ namespace ESPIOTNS.Api.DataAccess
 		}
 
 		public virtual POCODeviceAction DeviceActionMapEFToPOCO(
-			EFDeviceAction efDeviceAction)
+			DeviceAction efDeviceAction)
 		{
 			if (efDeviceAction == null)
 			{
@@ -53,5 +53,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed4648a720d4da1fd5fddd63184302db</Hash>
+    <Hash>65696931e6b7dae3cb9a22c96af9a40c</Hash>
 </Codenesium>*/

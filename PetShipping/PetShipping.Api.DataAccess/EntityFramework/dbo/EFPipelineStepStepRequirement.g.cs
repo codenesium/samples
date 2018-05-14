@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetShippingNS.Api.DataAccess
 {
 	[Table("PipelineStepStepRequirement", Schema="dbo")]
-	public partial class EFPipelineStepStepRequirement: AbstractEntityFrameworkPOCO
+	public partial class PipelineStepStepRequirement: AbstractEntityFrameworkPOCO
 	{
-		public EFPipelineStepStepRequirement()
+		public PipelineStepStepRequirement()
 		{}
 
 		public void SetProperties(
@@ -37,10 +37,10 @@ namespace PetShippingNS.Api.DataAccess
 		public bool RequirementMet { get; set; }
 
 		[ForeignKey("PipelineStepId")]
-		public virtual EFPipelineStep PipelineStep { get; set; }
+		public virtual PipelineStep PipelineStep { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce2c14672c025de237777017a2076ab0</Hash>
+    <Hash>4c4f477280ea977fb626e7f16b25dde9</Hash>
 </Codenesium>*/

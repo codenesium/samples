@@ -26,26 +26,36 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOBucket Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOBucket Create(
 			BucketModel model)
 		{
-			EFBucket record = new EFBucket();
+			Bucket record = new Bucket();
 
 			this.Mapper.BucketMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFBucket>().Add(record);
+			this.Context.Set<Bucket>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.BucketMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			BucketModel model)
 		{
-			EFBucket record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Bucket record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFBucket record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Bucket record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,55 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFBucket>().Remove(record);
+				this.Context.Set<Bucket>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOBucket Get(int id)
+		public POCOBucket Name(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
 		}
 
-		public virtual List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public POCOBucket ExternalId(Guid externalId)
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqPOCO(x => x.ExternalId == externalId).FirstOrDefault();
 		}
 
-		private List<POCOBucket> Where(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOBucket> Where(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOBucket> SearchLinqPOCO(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOBucket> SearchLinqPOCO(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOBucket> response = new List<POCOBucket>();
-			List<EFBucket> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Bucket> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.BucketMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFBucket> SearchLinqEF(Expression<Func<EFBucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Bucket> SearchLinqEF(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBucket>();
+				orderClause = $"{nameof(Bucket.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBucket>();
-			}
+			return this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Bucket>();
 		}
 
-		private List<EFBucket> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Bucket> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBucket>();
+				orderClause = $"{nameof(Bucket.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFBucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBucket>();
-			}
+
+			return this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Bucket>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>049852d6f311869360d2a6522c2d4bf1</Hash>
+    <Hash>aeef61a4bffee20ed4b17cdcfeb00df9</Hash>
 </Codenesium>*/

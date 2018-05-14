@@ -38,9 +38,9 @@ namespace ESPIOTNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<EFDevice> Devices { get; set; }
+		public virtual DbSet<Device> Devices { get; set; }
 
-		public virtual DbSet<EFDeviceAction> DeviceActions { get; set; }
+		public virtual DbSet<DeviceAction> DeviceActions { get; set; }
 	}
 
 	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -49,9 +49,11 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Service");
 
+			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile("appsettings.json")
+			                                   .AddJsonFile($"appsettings.{environment}.json")
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -66,5 +68,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b05e51702a310f840776d70d0edd984</Hash>
+    <Hash>78f883357d3b1c9f8608afefd4850e59</Hash>
 </Codenesium>*/

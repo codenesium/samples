@@ -1,3 +1,0 @@
-alter database user7303b0f5161f4149bf2959a488d359feAdventureWorksDev set offline with rollback immediate
-drop database user7303b0f5161f4149bf2959a488d359feAdventureWorksDev
-create database user7303b0f5161f4149bf2959a488d359feAdventureWorksDev

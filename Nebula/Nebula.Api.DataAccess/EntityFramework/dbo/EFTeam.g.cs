@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Team", Schema="dbo")]
-	public partial class EFTeam:AbstractEntityFrameworkPOCO
+	public partial class Team:AbstractEntityFrameworkPOCO
 	{
-		public EFTeam()
+		public Team()
 		{}
 
 		public void SetProperties(
@@ -32,10 +32,10 @@ namespace NebulaNS.Api.DataAccess
 		public int OrganizationId { get; set; }
 
 		[ForeignKey("OrganizationId")]
-		public virtual EFOrganization Organization { get; set; }
+		public virtual Organization Organization { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>35b5d4af4138b7a9902a30fc8edd0849</Hash>
+    <Hash>bf13c75e14f7a3d2fc03a4a1ca5a8306</Hash>
 </Codenesium>*/

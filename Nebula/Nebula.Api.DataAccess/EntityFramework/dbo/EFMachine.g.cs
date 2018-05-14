@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Machine", Schema="dbo")]
-	public partial class EFMachine: AbstractEntityFrameworkPOCO
+	public partial class Machine: AbstractEntityFrameworkPOCO
 	{
-		public EFMachine()
+		public Machine()
 		{}
 
 		public void SetProperties(
@@ -49,5 +49,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e6ebd9dc6463530f026f8098522b954b</Hash>
+    <Hash>bd3f10a02c2d830c54a7fb705bd9ab83</Hash>
 </Codenesium>*/

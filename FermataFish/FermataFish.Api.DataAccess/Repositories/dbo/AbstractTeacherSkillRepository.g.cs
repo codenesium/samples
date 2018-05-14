@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOTeacherSkill> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOTeacherSkill Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOTeacherSkill Create(
 			TeacherSkillModel model)
 		{
-			EFTeacherSkill record = new EFTeacherSkill();
+			TeacherSkill record = new TeacherSkill();
 
 			this.Mapper.TeacherSkillMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFTeacherSkill>().Add(record);
+			this.Context.Set<TeacherSkill>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.TeacherSkillMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			TeacherSkillModel model)
 		{
-			EFTeacherSkill record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			TeacherSkill record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFTeacherSkill record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			TeacherSkill record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFTeacherSkill>().Remove(record);
+				this.Context.Set<TeacherSkill>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOTeacherSkill Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOTeacherSkill> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOTeacherSkill> Where(Expression<Func<EFTeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOTeacherSkill> Where(Expression<Func<TeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOTeacherSkill> SearchLinqPOCO(Expression<Func<EFTeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOTeacherSkill> SearchLinqPOCO(Expression<Func<TeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOTeacherSkill> response = new List<POCOTeacherSkill>();
-			List<EFTeacherSkill> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<TeacherSkill> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.TeacherSkillMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFTeacherSkill> SearchLinqEF(Expression<Func<EFTeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<TeacherSkill> SearchLinqEF(Expression<Func<TeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFTeacherSkill>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeacherSkill>();
+				orderClause = $"{nameof(TeacherSkill.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFTeacherSkill>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTeacherSkill>();
-			}
+			return this.Context.Set<TeacherSkill>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<TeacherSkill>();
 		}
 
-		private List<EFTeacherSkill> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<TeacherSkill> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFTeacherSkill>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFTeacherSkill>();
+				orderClause = $"{nameof(TeacherSkill.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFTeacherSkill>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFTeacherSkill>();
-			}
+
+			return this.Context.Set<TeacherSkill>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<TeacherSkill>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d5ea4aabf61e48d98924d8808122979</Hash>
+    <Hash>b5e59f454994420fffe63da8f233655b</Hash>
 </Codenesium>*/

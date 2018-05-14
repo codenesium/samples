@@ -38,49 +38,49 @@ namespace PetShippingNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<EFAirline> Airlines { get; set; }
+		public virtual DbSet<Airline> Airlines { get; set; }
 
-		public virtual DbSet<EFAirTransport> AirTransports { get; set; }
+		public virtual DbSet<AirTransport> AirTransports { get; set; }
 
-		public virtual DbSet<EFBreed> Breeds { get; set; }
+		public virtual DbSet<Breed> Breeds { get; set; }
 
-		public virtual DbSet<EFClient> Clients { get; set; }
+		public virtual DbSet<Client> Clients { get; set; }
 
-		public virtual DbSet<EFClientCommunication> ClientCommunications { get; set; }
+		public virtual DbSet<ClientCommunication> ClientCommunications { get; set; }
 
-		public virtual DbSet<EFCountry> Countries { get; set; }
+		public virtual DbSet<Country> Countries { get; set; }
 
-		public virtual DbSet<EFCountryRequirement> CountryRequirements { get; set; }
+		public virtual DbSet<CountryRequirement> CountryRequirements { get; set; }
 
-		public virtual DbSet<EFDestination> Destinations { get; set; }
+		public virtual DbSet<Destination> Destinations { get; set; }
 
-		public virtual DbSet<EFEmployee> Employees { get; set; }
+		public virtual DbSet<Employee> Employees { get; set; }
 
-		public virtual DbSet<EFHandler> Handlers { get; set; }
+		public virtual DbSet<Handler> Handlers { get; set; }
 
-		public virtual DbSet<EFHandlerPipelineStep> HandlerPipelineSteps { get; set; }
+		public virtual DbSet<HandlerPipelineStep> HandlerPipelineSteps { get; set; }
 
-		public virtual DbSet<EFOtherTransport> OtherTransports { get; set; }
+		public virtual DbSet<OtherTransport> OtherTransports { get; set; }
 
-		public virtual DbSet<EFPet> Pets { get; set; }
+		public virtual DbSet<Pet> Pets { get; set; }
 
-		public virtual DbSet<EFPipeline> Pipelines { get; set; }
+		public virtual DbSet<Pipeline> Pipelines { get; set; }
 
-		public virtual DbSet<EFPipelineStatus> PipelineStatus { get; set; }
+		public virtual DbSet<PipelineStatus> PipelineStatus { get; set; }
 
-		public virtual DbSet<EFPipelineStep> PipelineSteps { get; set; }
+		public virtual DbSet<PipelineStep> PipelineSteps { get; set; }
 
-		public virtual DbSet<EFPipelineStepDestination> PipelineStepDestinations { get; set; }
+		public virtual DbSet<PipelineStepDestination> PipelineStepDestinations { get; set; }
 
-		public virtual DbSet<EFPipelineStepNote> PipelineStepNotes { get; set; }
+		public virtual DbSet<PipelineStepNote> PipelineStepNotes { get; set; }
 
-		public virtual DbSet<EFPipelineStepStatus> PipelineStepStatus { get; set; }
+		public virtual DbSet<PipelineStepStatus> PipelineStepStatus { get; set; }
 
-		public virtual DbSet<EFPipelineStepStepRequirement> PipelineStepStepRequirements { get; set; }
+		public virtual DbSet<PipelineStepStepRequirement> PipelineStepStepRequirements { get; set; }
 
-		public virtual DbSet<EFSale> Sales { get; set; }
+		public virtual DbSet<Sale> Sales { get; set; }
 
-		public virtual DbSet<EFSpecies> Species { get; set; }
+		public virtual DbSet<Species> Species { get; set; }
 	}
 
 	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -89,9 +89,11 @@ namespace PetShippingNS.Api.DataAccess
 		{
 			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "PetShipping.Api.Service");
 
+			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile("appsettings.json")
+			                                   .AddJsonFile($"appsettings.{environment}.json")
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -106,5 +108,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>30162e8926d93ddfe440e0dd517655a4</Hash>
+    <Hash>f253bea925b96f7a8e3d7409453cc9d4</Hash>
 </Codenesium>*/

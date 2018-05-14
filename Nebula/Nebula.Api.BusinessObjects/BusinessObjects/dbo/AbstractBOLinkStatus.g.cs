@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOLinkStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.linkStatusRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOLinkStatus Get(int id)
+		{
+			return this.linkStatusRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOLinkStatus>> Create(
 			LinkStatusModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.linkStatusModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOLinkStatus> response = new CreateResponse<POCOLinkStatus>(await this.linkStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.linkStatusRepository.Create(model);
-				response.SetId(id);
+				POCOLinkStatus record = this.linkStatusRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOLinkStatus Get(int id)
+		public POCOLinkStatus Name(string name)
 		{
-			return this.linkStatusRepository.Get(id);
-		}
-
-		public virtual List<POCOLinkStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.linkStatusRepository.All(skip, take, orderClause);
+			return this.linkStatusRepository.Name(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b195ccd60b2dc57f5edcd55a2ef155e</Hash>
+    <Hash>d02107e8d75babd6a7dfd87ed7ebddaf</Hash>
 </Codenesium>*/

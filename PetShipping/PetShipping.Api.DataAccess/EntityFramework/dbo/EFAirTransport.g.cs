@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetShippingNS.Api.DataAccess
 {
 	[Table("AirTransport", Schema="dbo")]
-	public partial class EFAirTransport: AbstractEntityFrameworkPOCO
+	public partial class AirTransport: AbstractEntityFrameworkPOCO
 	{
-		public EFAirTransport()
+		public AirTransport()
 		{}
 
 		public void SetProperties(
@@ -52,10 +52,10 @@ namespace PetShippingNS.Api.DataAccess
 		public DateTime TakeoffDate { get; set; }
 
 		[ForeignKey("HandlerId")]
-		public virtual EFHandler Handler { get; set; }
+		public virtual Handler Handler { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d22f1d9f37f4eddcb82aeaa9586b1b0</Hash>
+    <Hash>51f684bd106ba4f6537a938b32aed0eb</Hash>
 </Codenesium>*/

@@ -26,26 +26,36 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOSpecies Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOSpecies Create(
 			SpeciesModel model)
 		{
-			EFSpecies record = new EFSpecies();
+			Species record = new Species();
 
 			this.Mapper.SpeciesMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFSpecies>().Add(record);
+			this.Context.Set<Species>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.SpeciesMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			SpeciesModel model)
 		{
-			EFSpecies record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Species record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFSpecies record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Species record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetStoreNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFSpecies>().Remove(record);
+				this.Context.Set<Species>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOSpecies Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOSpecies> Where(Expression<Func<EFSpecies, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOSpecies> Where(Expression<Func<Species, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOSpecies> SearchLinqPOCO(Expression<Func<EFSpecies, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSpecies> SearchLinqPOCO(Expression<Func<Species, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOSpecies> response = new List<POCOSpecies>();
-			List<EFSpecies> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Species> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.SpeciesMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFSpecies> SearchLinqEF(Expression<Func<EFSpecies, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Species> SearchLinqEF(Expression<Func<Species, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFSpecies>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpecies>();
+				orderClause = $"{nameof(Species.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFSpecies>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpecies>();
-			}
+			return this.Context.Set<Species>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Species>();
 		}
 
-		private List<EFSpecies> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Species> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFSpecies>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpecies>();
+				orderClause = $"{nameof(Species.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFSpecies>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpecies>();
-			}
+
+			return this.Context.Set<Species>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Species>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>09a157ec7b6c1020f8a9b8efd88b01bd</Hash>
+    <Hash>eb914ab0288a57ea5edb0e4e88ecb07b</Hash>
 </Codenesium>*/

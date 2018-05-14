@@ -7,7 +7,7 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IPipelineStepStepRequirementRepository
 	{
-		int Create(PipelineStepStepRequirementModel model);
+		POCOPipelineStepStepRequirement Create(PipelineStepStepRequirementModel model);
 
 		void Update(int id,
 		            PipelineStepStepRequirementModel model);
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>27a6840cae29bee63f04596327d7c712</Hash>
+    <Hash>fea2a272dceb845acef1aba1bf64726f</Hash>
 </Codenesium>*/

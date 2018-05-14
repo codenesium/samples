@@ -9,7 +9,7 @@ namespace PetShippingNS.Api.BusinessObjects
 {
 	public interface IBOCountry
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOCountry>> Create(
 			CountryModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>60a7878eead2964951c89915956fcd1e</Hash>
+    <Hash>bb7a44097d69fac2f3d00035facbdbfe</Hash>
 </Codenesium>*/

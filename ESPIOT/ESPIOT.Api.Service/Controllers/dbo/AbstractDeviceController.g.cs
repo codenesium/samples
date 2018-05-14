@@ -36,6 +36,28 @@ namespace ESPIOTNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCODevice>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult All()
+		{
+			SearchQuery query = new SearchQuery();
+
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<POCODevice> response = this.deviceManager.All(query.Offset, query.Limit);
+
+			if (response.Count == 0)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODevice), 200)]
@@ -53,20 +75,6 @@ namespace ESPIOTNS.Api.Service
 			}
 		}
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCODevice>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
-		{
-			SearchQuery query = new SearchQuery();
-
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODevice> response = this.deviceManager.All(query.Offset, query.Limit);
-			return this.Ok(response);
-		}
-
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
@@ -74,14 +82,13 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] DeviceModel model)
 		{
-			CreateResponse<int> result = await this.deviceManager.Create(model);
+			CreateResponse<POCODevice> result = await this.deviceManager.Create(model);
 
 			if (result.Success)
 			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Devices/{result.Id.ToString()}");
-				POCODevice response = this.deviceManager.Get(result.Id);
-				return this.Ok(response);
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Devices/{result.Record.Id.ToString()}");
+				return this.Ok(result.Record);
 			}
 			else
 			{
@@ -92,7 +99,7 @@ namespace ESPIOTNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<int>), 200)]
+		[ProducesResponseType(typeof(List<POCODevice>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<DeviceModel> models)
@@ -102,14 +109,14 @@ namespace ESPIOTNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<int> ids = new List<int>();
+			List<POCODevice> records = new List<POCODevice>();
 			foreach (var model in models)
 			{
-				CreateResponse<int> result = await this.deviceManager.Create(model);
+				CreateResponse<POCODevice> result = await this.deviceManager.Create(model);
 
 				if(result.Success)
 				{
-					ids.Add(result.Id);
+					records.Add(result.Record);
 				}
 				else
 				{
@@ -117,7 +124,7 @@ namespace ESPIOTNS.Api.Service
 				}
 			}
 
-			return this.Ok(ids);
+			return this.Ok(records);
 		}
 
 		[HttpPut]
@@ -166,9 +173,27 @@ namespace ESPIOTNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
+
+		[HttpGet]
+		[Route("publicId/{publicId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(POCODevice), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult PublicId(Guid publicId)
+		{
+			POCODevice response = this.deviceManager.PublicId(publicId);
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3613f9d32d8f3a51925387caedb34932</Hash>
+    <Hash>09171c24d1a8fbda947560cb3131ced2</Hash>
 </Codenesium>*/

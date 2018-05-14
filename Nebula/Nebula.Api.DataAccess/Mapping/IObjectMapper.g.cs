@@ -8,93 +8,93 @@ namespace NebulaNS.Api.DataAccess
 		void ChainMapModelToEF(
 			int id,
 			ChainModel model,
-			EFChain efChain);
+			Chain efChain);
 
 		POCOChain ChainMapEFToPOCO(
-			EFChain efChain);
+			Chain efChain);
 
 		void ChainStatusMapModelToEF(
 			int id,
 			ChainStatusModel model,
-			EFChainStatus efChainStatus);
+			ChainStatus efChainStatus);
 
 		POCOChainStatus ChainStatusMapEFToPOCO(
-			EFChainStatus efChainStatus);
+			ChainStatus efChainStatus);
 
 		void ClaspMapModelToEF(
 			int id,
 			ClaspModel model,
-			EFClasp efClasp);
+			Clasp efClasp);
 
 		POCOClasp ClaspMapEFToPOCO(
-			EFClasp efClasp);
+			Clasp efClasp);
 
 		void LinkMapModelToEF(
 			int id,
 			LinkModel model,
-			EFLink efLink);
+			Link efLink);
 
 		POCOLink LinkMapEFToPOCO(
-			EFLink efLink);
+			Link efLink);
 
 		void LinkLogMapModelToEF(
 			int id,
 			LinkLogModel model,
-			EFLinkLog efLinkLog);
+			LinkLog efLinkLog);
 
 		POCOLinkLog LinkLogMapEFToPOCO(
-			EFLinkLog efLinkLog);
+			LinkLog efLinkLog);
 
 		void LinkStatusMapModelToEF(
 			int id,
 			LinkStatusModel model,
-			EFLinkStatus efLinkStatus);
+			LinkStatus efLinkStatus);
 
 		POCOLinkStatus LinkStatusMapEFToPOCO(
-			EFLinkStatus efLinkStatus);
+			LinkStatus efLinkStatus);
 
 		void MachineMapModelToEF(
 			int id,
 			MachineModel model,
-			EFMachine efMachine);
+			Machine efMachine);
 
 		POCOMachine MachineMapEFToPOCO(
-			EFMachine efMachine);
+			Machine efMachine);
 
 		void MachineRefTeamMapModelToEF(
 			int id,
 			MachineRefTeamModel model,
-			EFMachineRefTeam efMachineRefTeam);
+			MachineRefTeam efMachineRefTeam);
 
 		POCOMachineRefTeam MachineRefTeamMapEFToPOCO(
-			EFMachineRefTeam efMachineRefTeam);
+			MachineRefTeam efMachineRefTeam);
 
 		void OrganizationMapModelToEF(
 			int id,
 			OrganizationModel model,
-			EFOrganization efOrganization);
+			Organization efOrganization);
 
 		POCOOrganization OrganizationMapEFToPOCO(
-			EFOrganization efOrganization);
+			Organization efOrganization);
 
 		void TeamMapModelToEF(
 			int id,
 			TeamModel model,
-			EFTeam efTeam);
+			Team efTeam);
 
 		POCOTeam TeamMapEFToPOCO(
-			EFTeam efTeam);
+			Team efTeam);
 
 		void VersionInfoMapModelToEF(
 			long version,
 			VersionInfoModel model,
-			EFVersionInfo efVersionInfo);
+			VersionInfo efVersionInfo);
 
 		POCOVersionInfo VersionInfoMapEFToPOCO(
-			EFVersionInfo efVersionInfo);
+			VersionInfo efVersionInfo);
 	}
 }
 
 /*<Codenesium>
-    <Hash>26a30599edb044651d49beff60d8b150</Hash>
+    <Hash>ccb7b728b090d3638f36bf6487944176</Hash>
 </Codenesium>*/

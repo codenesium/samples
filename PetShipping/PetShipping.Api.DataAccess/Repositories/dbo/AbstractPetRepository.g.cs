@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOPet> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOPet Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOPet Create(
 			PetModel model)
 		{
-			EFPet record = new EFPet();
+			Pet record = new Pet();
 
 			this.Mapper.PetMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFPet>().Add(record);
+			this.Context.Set<Pet>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.PetMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			PetModel model)
 		{
-			EFPet record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Pet record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFPet record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Pet record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFPet>().Remove(record);
+				this.Context.Set<Pet>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOPet Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOPet> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOPet> Where(Expression<Func<EFPet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOPet> Where(Expression<Func<Pet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOPet> SearchLinqPOCO(Expression<Func<EFPet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOPet> SearchLinqPOCO(Expression<Func<Pet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOPet> response = new List<POCOPet>();
-			List<EFPet> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Pet> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.PetMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFPet> SearchLinqEF(Expression<Func<EFPet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Pet> SearchLinqEF(Expression<Func<Pet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFPet>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPet>();
+				orderClause = $"{nameof(Pet.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFPet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPet>();
-			}
+			return this.Context.Set<Pet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Pet>();
 		}
 
-		private List<EFPet> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Pet> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFPet>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPet>();
+				orderClause = $"{nameof(Pet.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFPet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPet>();
-			}
+
+			return this.Context.Set<Pet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Pet>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ffb9c4bdcb1b824698112f402ac8cd9a</Hash>
+    <Hash>f31e86deb17e4bcb2cf9f0c1332a3c7a</Hash>
 </Codenesium>*/

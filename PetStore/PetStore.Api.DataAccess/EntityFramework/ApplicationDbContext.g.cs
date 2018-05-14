@@ -38,17 +38,17 @@ namespace PetStoreNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<EFBreed> Breeds { get; set; }
+		public virtual DbSet<Breed> Breeds { get; set; }
 
-		public virtual DbSet<EFPaymentType> PaymentTypes { get; set; }
+		public virtual DbSet<PaymentType> PaymentTypes { get; set; }
 
-		public virtual DbSet<EFPen> Pens { get; set; }
+		public virtual DbSet<Pen> Pens { get; set; }
 
-		public virtual DbSet<EFPet> Pets { get; set; }
+		public virtual DbSet<Pet> Pets { get; set; }
 
-		public virtual DbSet<EFSale> Sales { get; set; }
+		public virtual DbSet<Sale> Sales { get; set; }
 
-		public virtual DbSet<EFSpecies> Species { get; set; }
+		public virtual DbSet<Species> Species { get; set; }
 	}
 
 	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -57,9 +57,11 @@ namespace PetStoreNS.Api.DataAccess
 		{
 			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "PetStore.Api.Service");
 
+			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile("appsettings.json")
+			                                   .AddJsonFile($"appsettings.{environment}.json")
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -74,5 +76,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>73f62ade3ecf9e7b40f754ca041ef08f</Hash>
+    <Hash>823c1ef2fde6f2875f4157d3e7e8abee</Hash>
 </Codenesium>*/

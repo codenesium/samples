@@ -29,14 +29,24 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOPet> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.petRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOPet Get(int id)
+		{
+			return this.petRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOPet>> Create(
 			PetModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.petModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOPet> response = new CreateResponse<POCOPet>(await this.petModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.petRepository.Create(model);
-				response.SetId(id);
+				POCOPet record = this.petRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetStoreNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOPet Get(int id)
-		{
-			return this.petRepository.Get(id);
-		}
-
-		public virtual List<POCOPet> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.petRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d5e46add2f725364b6c3bd75898e3ab6</Hash>
+    <Hash>1be0f5039fb7e325a7a4c002e253dde3</Hash>
 </Codenesium>*/

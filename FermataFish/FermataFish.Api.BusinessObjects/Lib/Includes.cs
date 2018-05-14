@@ -23,15 +23,15 @@ namespace FermataFishNS.Api.BusinessObjects
 
     public class CreateResponse<T> : ActionResponse
     {
-        public T Id { get; private set; }
+        public T Record { get; private set; }
         public CreateResponse(FluentValidation.Results.ValidationResult result)
             : base(result)
         {
         }
 
-        public void SetId(T id)
+        public void SetRecord(T record)
         {
-            this.Id = id;
+            this.Record = record;
         }
     }
 

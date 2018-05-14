@@ -7,7 +7,7 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface ISaleRepository
 	{
-		int Create(SaleModel model);
+		POCOSale Create(SaleModel model);
 
 		void Update(int id,
 		            SaleModel model);
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b86167c55b00cb36d1e601d89b5b8a1a</Hash>
+    <Hash>078a0353c4b65dda96f3e125f49b197d</Hash>
 </Codenesium>*/

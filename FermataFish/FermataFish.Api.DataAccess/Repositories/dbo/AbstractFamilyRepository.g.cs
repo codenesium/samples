@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOFamily Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOFamily Create(
 			FamilyModel model)
 		{
-			EFFamily record = new EFFamily();
+			Family record = new Family();
 
 			this.Mapper.FamilyMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFFamily>().Add(record);
+			this.Context.Set<Family>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.FamilyMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			FamilyModel model)
 		{
-			EFFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Family record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Family record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFFamily>().Remove(record);
+				this.Context.Set<Family>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOFamily Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOFamily> Where(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOFamily> Where(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOFamily> SearchLinqPOCO(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOFamily> SearchLinqPOCO(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOFamily> response = new List<POCOFamily>();
-			List<EFFamily> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Family> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.FamilyMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFFamily> SearchLinqEF(Expression<Func<EFFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Family> SearchLinqEF(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFFamily>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFamily>();
+				orderClause = $"{nameof(Family.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFamily>();
-			}
+			return this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Family>();
 		}
 
-		private List<EFFamily> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Family> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFFamily>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFamily>();
+				orderClause = $"{nameof(Family.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFamily>();
-			}
+
+			return this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Family>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>853fea4d10f7ffc5f6a25276fcf02148</Hash>
+    <Hash>9ed04d13ab95ddce88d589b1b3c20085</Hash>
 </Codenesium>*/

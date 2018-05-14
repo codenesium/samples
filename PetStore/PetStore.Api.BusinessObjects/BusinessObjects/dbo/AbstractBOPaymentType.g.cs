@@ -29,14 +29,24 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.paymentTypeRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOPaymentType Get(int id)
+		{
+			return this.paymentTypeRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOPaymentType>> Create(
 			PaymentTypeModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOPaymentType> response = new CreateResponse<POCOPaymentType>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.paymentTypeRepository.Create(model);
-				response.SetId(id);
+				POCOPaymentType record = this.paymentTypeRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetStoreNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOPaymentType Get(int id)
-		{
-			return this.paymentTypeRepository.Get(id);
-		}
-
-		public virtual List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.paymentTypeRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8fbfdbbe16f1b29ac05fe301f905f68e</Hash>
+    <Hash>ee2140d8dacf3529047fbfa38b413504</Hash>
 </Codenesium>*/

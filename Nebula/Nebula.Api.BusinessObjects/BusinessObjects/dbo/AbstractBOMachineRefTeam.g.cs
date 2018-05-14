@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOMachineRefTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.machineRefTeamRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOMachineRefTeam Get(int id)
+		{
+			return this.machineRefTeamRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOMachineRefTeam>> Create(
 			MachineRefTeamModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOMachineRefTeam> response = new CreateResponse<POCOMachineRefTeam>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.machineRefTeamRepository.Create(model);
-				response.SetId(id);
+				POCOMachineRefTeam record = this.machineRefTeamRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace NebulaNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOMachineRefTeam Get(int id)
-		{
-			return this.machineRefTeamRepository.Get(id);
-		}
-
-		public virtual List<POCOMachineRefTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.machineRefTeamRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e04f757865e030fe11b396697cc8870</Hash>
+    <Hash>ce237c4582d73e11727215771e980289</Hash>
 </Codenesium>*/

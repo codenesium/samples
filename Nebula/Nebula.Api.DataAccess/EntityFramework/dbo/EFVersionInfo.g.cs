@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("VersionInfo", Schema="dbo")]
-	public partial class EFVersionInfo: AbstractEntityFrameworkPOCO
+	public partial class VersionInfo: AbstractEntityFrameworkPOCO
 	{
-		public EFVersionInfo()
+		public VersionInfo()
 		{}
 
 		public void SetProperties(
@@ -34,5 +34,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd634db786e948ba3983ca21c2389c4f</Hash>
+    <Hash>7b082bf65bb9434bf3e2e3b52a457e59</Hash>
 </Codenesium>*/

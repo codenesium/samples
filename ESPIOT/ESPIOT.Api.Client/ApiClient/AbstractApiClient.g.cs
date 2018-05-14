@@ -87,12 +87,12 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCODevice>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> DeviceBulkInsertAsync(List<DeviceModel> items)
+		public virtual async Task<List<POCODevice>> DeviceBulkInsertAsync(List<DeviceModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCODevice>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCODeviceAction> DeviceActionCreateAsync(DeviceActionModel item)
@@ -134,16 +134,16 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCODeviceAction>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> DeviceActionBulkInsertAsync(List<DeviceActionModel> items)
+		public virtual async Task<List<POCODeviceAction>> DeviceActionBulkInsertAsync(List<DeviceActionModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCODeviceAction>>(httpResponse.Content.ContentToString());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>480e955fc6bd591772e4e0aec17df93a</Hash>
+    <Hash>75621ab24e76ab9e3759835218b69b30</Hash>
 </Codenesium>*/

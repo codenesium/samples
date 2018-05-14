@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ITeamRepository
 	{
-		int Create(TeamModel model);
+		POCOTeam Create(TeamModel model);
 
 		void Update(int id,
 		            TeamModel model);
@@ -17,9 +17,11 @@ namespace NebulaNS.Api.DataAccess
 		POCOTeam Get(int id);
 
 		List<POCOTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOTeam Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5fa4256d2418a4fac9ab95ced8ecf1d0</Hash>
+    <Hash>2b0cda60579f64edc7e63bc2fc86d117</Hash>
 </Codenesium>*/

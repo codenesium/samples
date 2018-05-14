@@ -29,14 +29,24 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOCountryRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.countryRequirementRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOCountryRequirement Get(int id)
+		{
+			return this.countryRequirementRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOCountryRequirement>> Create(
 			CountryRequirementModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.countryRequirementModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOCountryRequirement> response = new CreateResponse<POCOCountryRequirement>(await this.countryRequirementModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.countryRequirementRepository.Create(model);
-				response.SetId(id);
+				POCOCountryRequirement record = this.countryRequirementRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetShippingNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOCountryRequirement Get(int id)
-		{
-			return this.countryRequirementRepository.Get(id);
-		}
-
-		public virtual List<POCOCountryRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.countryRequirementRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>66bcdc2c6954ba226d209c5c20a63054</Hash>
+    <Hash>486a2bb95d8afc83d52fd1cfd8176167</Hash>
 </Codenesium>*/

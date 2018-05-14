@@ -36,6 +36,28 @@ namespace PetShippingNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCOPipelineStep>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult All()
+		{
+			SearchQuery query = new SearchQuery();
+
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<POCOPipelineStep> response = this.pipelineStepManager.All(query.Offset, query.Limit);
+
+			if (response.Count == 0)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOPipelineStep), 200)]
@@ -53,20 +75,6 @@ namespace PetShippingNS.Api.Service
 			}
 		}
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPipelineStep>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
-		{
-			SearchQuery query = new SearchQuery();
-
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPipelineStep> response = this.pipelineStepManager.All(query.Offset, query.Limit);
-			return this.Ok(response);
-		}
-
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
@@ -74,14 +82,13 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] PipelineStepModel model)
 		{
-			CreateResponse<int> result = await this.pipelineStepManager.Create(model);
+			CreateResponse<POCOPipelineStep> result = await this.pipelineStepManager.Create(model);
 
 			if (result.Success)
 			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PipelineSteps/{result.Id.ToString()}");
-				POCOPipelineStep response = this.pipelineStepManager.Get(result.Id);
-				return this.Ok(response);
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PipelineSteps/{result.Record.Id.ToString()}");
+				return this.Ok(result.Record);
 			}
 			else
 			{
@@ -92,7 +99,7 @@ namespace PetShippingNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<int>), 200)]
+		[ProducesResponseType(typeof(List<POCOPipelineStep>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<PipelineStepModel> models)
@@ -102,14 +109,14 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<int> ids = new List<int>();
+			List<POCOPipelineStep> records = new List<POCOPipelineStep>();
 			foreach (var model in models)
 			{
-				CreateResponse<int> result = await this.pipelineStepManager.Create(model);
+				CreateResponse<POCOPipelineStep> result = await this.pipelineStepManager.Create(model);
 
 				if(result.Success)
 				{
-					ids.Add(result.Id);
+					records.Add(result.Record);
 				}
 				else
 				{
@@ -117,7 +124,7 @@ namespace PetShippingNS.Api.Service
 				}
 			}
 
-			return this.Ok(ids);
+			return this.Ok(records);
 		}
 
 		[HttpPut]
@@ -170,5 +177,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>57701ff253cbc12a6a21f1835b25b8ea</Hash>
+    <Hash>52aa383758d0197dcc30e57c74955868</Hash>
 </Codenesium>*/

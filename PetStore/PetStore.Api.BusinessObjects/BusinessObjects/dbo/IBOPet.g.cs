@@ -9,7 +9,7 @@ namespace PetStoreNS.Api.BusinessObjects
 {
 	public interface IBOPet
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOPet>> Create(
 			PetModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ac4790829efcd5dde0d0cea3d0649b80</Hash>
+    <Hash>42f1b0a0888a4e58abf1522c6b2d6180</Hash>
 </Codenesium>*/

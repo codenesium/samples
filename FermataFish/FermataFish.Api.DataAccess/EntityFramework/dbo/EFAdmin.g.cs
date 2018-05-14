@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	[Table("Admin", Schema="dbo")]
-	public partial class EFAdmin: AbstractEntityFrameworkPOCO
+	public partial class Admin:AbstractEntityFrameworkPOCO
 	{
-		public EFAdmin()
+		public Admin()
 		{}
 
 		public void SetProperties(
@@ -52,10 +52,10 @@ namespace FermataFishNS.Api.DataAccess
 		public int StudioId { get; set; }
 
 		[ForeignKey("StudioId")]
-		public virtual EFStudio Studio { get; set; }
+		public virtual Studio Studio { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9aac30a53d371f02950618c11d5fff4b</Hash>
+    <Hash>1f7636b6f9b2a5d9d6eed56d53a4a9f2</Hash>
 </Codenesium>*/

@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOCountry> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOCountry Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOCountry Create(
 			CountryModel model)
 		{
-			EFCountry record = new EFCountry();
+			Country record = new Country();
 
 			this.Mapper.CountryMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFCountry>().Add(record);
+			this.Context.Set<Country>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.CountryMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			CountryModel model)
 		{
-			EFCountry record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Country record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFCountry record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Country record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFCountry>().Remove(record);
+				this.Context.Set<Country>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOCountry Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOCountry> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOCountry> Where(Expression<Func<EFCountry, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOCountry> Where(Expression<Func<Country, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOCountry> SearchLinqPOCO(Expression<Func<EFCountry, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOCountry> SearchLinqPOCO(Expression<Func<Country, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOCountry> response = new List<POCOCountry>();
-			List<EFCountry> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Country> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.CountryMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFCountry> SearchLinqEF(Expression<Func<EFCountry, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Country> SearchLinqEF(Expression<Func<Country, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFCountry>();
+				orderClause = $"{nameof(Country.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCountry>();
-			}
+			return this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Country>();
 		}
 
-		private List<EFCountry> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Country> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFCountry>();
+				orderClause = $"{nameof(Country.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFCountry>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCountry>();
-			}
+
+			return this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Country>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a003d5132ce8f1753427cd22ef62a3b</Hash>
+    <Hash>1fb2e94f5092fb17c943606a2172695a</Hash>
 </Codenesium>*/

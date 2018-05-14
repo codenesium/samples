@@ -9,7 +9,7 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOChainStatus
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOChainStatus>> Create(
 			ChainStatusModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -20,9 +20,11 @@ namespace NebulaNS.Api.BusinessObjects
 		POCOChainStatus Get(int id);
 
 		List<POCOChainStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOChainStatus Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d7b5361fe767cc9865324e09d1417704</Hash>
+    <Hash>9217845c77628c5b3d55401ff2177f8a</Hash>
 </Codenesium>*/

@@ -29,14 +29,24 @@ namespace ESPIOTNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.deviceRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCODevice Get(int id)
+		{
+			return this.deviceRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCODevice>> Create(
 			DeviceModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.deviceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCODevice> response = new CreateResponse<POCODevice>(await this.deviceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.deviceRepository.Create(model);
-				response.SetId(id);
+				POCODevice record = this.deviceRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace ESPIOTNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCODevice Get(int id)
+		public POCODevice PublicId(Guid publicId)
 		{
-			return this.deviceRepository.Get(id);
-		}
-
-		public virtual List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.deviceRepository.All(skip, take, orderClause);
+			return this.deviceRepository.PublicId(publicId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7d9774d067f0e85290ad4f2130fa5db</Hash>
+    <Hash>e8f0ffa7dff808e1b2ca2ca4041eaedd</Hash>
 </Codenesium>*/

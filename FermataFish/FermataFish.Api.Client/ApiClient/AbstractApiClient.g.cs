@@ -87,12 +87,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOAdmin>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> AdminBulkInsertAsync(List<AdminModel> items)
+		public virtual async Task<List<POCOAdmin>> AdminBulkInsertAsync(List<AdminModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Admins/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOAdmin>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOFamily> FamilyCreateAsync(FamilyModel item)
@@ -134,12 +134,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOFamily>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> FamilyBulkInsertAsync(List<FamilyModel> items)
+		public virtual async Task<List<POCOFamily>> FamilyBulkInsertAsync(List<FamilyModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Families/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOFamily>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOLesson> LessonCreateAsync(LessonModel item)
@@ -181,12 +181,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLesson>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> LessonBulkInsertAsync(List<LessonModel> items)
+		public virtual async Task<List<POCOLesson>> LessonBulkInsertAsync(List<LessonModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Lessons/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOLesson>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOLessonStatus> LessonStatusCreateAsync(LessonStatusModel item)
@@ -228,12 +228,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLessonStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> LessonStatusBulkInsertAsync(List<LessonStatusModel> items)
+		public virtual async Task<List<POCOLessonStatus>> LessonStatusBulkInsertAsync(List<LessonStatusModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LessonStatus/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOLessonStatus>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOLessonXStudent> LessonXStudentCreateAsync(LessonXStudentModel item)
@@ -275,12 +275,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLessonXStudent>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> LessonXStudentBulkInsertAsync(List<LessonXStudentModel> items)
+		public virtual async Task<List<POCOLessonXStudent>> LessonXStudentBulkInsertAsync(List<LessonXStudentModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LessonXStudents/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOLessonXStudent>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOLessonXTeacher> LessonXTeacherCreateAsync(LessonXTeacherModel item)
@@ -322,12 +322,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLessonXTeacher>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> LessonXTeacherBulkInsertAsync(List<LessonXTeacherModel> items)
+		public virtual async Task<List<POCOLessonXTeacher>> LessonXTeacherBulkInsertAsync(List<LessonXTeacherModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LessonXTeachers/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOLessonXTeacher>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCORate> RateCreateAsync(RateModel item)
@@ -369,12 +369,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCORate>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> RateBulkInsertAsync(List<RateModel> items)
+		public virtual async Task<List<POCORate>> RateBulkInsertAsync(List<RateModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Rates/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCORate>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOSpace> SpaceCreateAsync(SpaceModel item)
@@ -416,12 +416,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSpace>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> SpaceBulkInsertAsync(List<SpaceModel> items)
+		public virtual async Task<List<POCOSpace>> SpaceBulkInsertAsync(List<SpaceModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Spaces/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOSpace>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOSpaceFeature> SpaceFeatureCreateAsync(SpaceFeatureModel item)
@@ -463,12 +463,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSpaceFeature>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> SpaceFeatureBulkInsertAsync(List<SpaceFeatureModel> items)
+		public virtual async Task<List<POCOSpaceFeature>> SpaceFeatureBulkInsertAsync(List<SpaceFeatureModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SpaceFeatures/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOSpaceFeature>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOSpaceXSpaceFeature> SpaceXSpaceFeatureCreateAsync(SpaceXSpaceFeatureModel item)
@@ -510,12 +510,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSpaceXSpaceFeature>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> SpaceXSpaceFeatureBulkInsertAsync(List<SpaceXSpaceFeatureModel> items)
+		public virtual async Task<List<POCOSpaceXSpaceFeature>> SpaceXSpaceFeatureBulkInsertAsync(List<SpaceXSpaceFeatureModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SpaceXSpaceFeatures/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOSpaceXSpaceFeature>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOState> StateCreateAsync(StateModel item)
@@ -557,12 +557,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOState>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> StateBulkInsertAsync(List<StateModel> items)
+		public virtual async Task<List<POCOState>> StateBulkInsertAsync(List<StateModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/States/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOState>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOStudent> StudentCreateAsync(StudentModel item)
@@ -604,12 +604,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOStudent>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> StudentBulkInsertAsync(List<StudentModel> items)
+		public virtual async Task<List<POCOStudent>> StudentBulkInsertAsync(List<StudentModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Students/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOStudent>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOStudentXFamily> StudentXFamilyCreateAsync(StudentXFamilyModel item)
@@ -651,12 +651,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOStudentXFamily>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> StudentXFamilyBulkInsertAsync(List<StudentXFamilyModel> items)
+		public virtual async Task<List<POCOStudentXFamily>> StudentXFamilyBulkInsertAsync(List<StudentXFamilyModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/StudentXFamilies/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOStudentXFamily>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOStudio> StudioCreateAsync(StudioModel item)
@@ -698,12 +698,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOStudio>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> StudioBulkInsertAsync(List<StudioModel> items)
+		public virtual async Task<List<POCOStudio>> StudioBulkInsertAsync(List<StudioModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Studios/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOStudio>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOTeacher> TeacherCreateAsync(TeacherModel item)
@@ -745,12 +745,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOTeacher>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> TeacherBulkInsertAsync(List<TeacherModel> items)
+		public virtual async Task<List<POCOTeacher>> TeacherBulkInsertAsync(List<TeacherModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teachers/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOTeacher>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOTeacherSkill> TeacherSkillCreateAsync(TeacherSkillModel item)
@@ -792,12 +792,12 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOTeacherSkill>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> TeacherSkillBulkInsertAsync(List<TeacherSkillModel> items)
+		public virtual async Task<List<POCOTeacherSkill>> TeacherSkillBulkInsertAsync(List<TeacherSkillModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TeacherSkills/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOTeacherSkill>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOTeacherXTeacherSkill> TeacherXTeacherSkillCreateAsync(TeacherXTeacherSkillModel item)
@@ -839,16 +839,16 @@ namespace FermataFishNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOTeacherXTeacherSkill>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> TeacherXTeacherSkillBulkInsertAsync(List<TeacherXTeacherSkillModel> items)
+		public virtual async Task<List<POCOTeacherXTeacherSkill>> TeacherXTeacherSkillBulkInsertAsync(List<TeacherXTeacherSkillModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TeacherXTeacherSkills/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOTeacherXTeacherSkill>>(httpResponse.Content.ContentToString());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e5e06499d5cda339e1ce5c4293ca3f3</Hash>
+    <Hash>3b93e0c8ec2726f4949319dc0233cc38</Hash>
 </Codenesium>*/

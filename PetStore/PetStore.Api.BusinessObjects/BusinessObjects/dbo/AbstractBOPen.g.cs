@@ -29,14 +29,24 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOPen> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.penRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOPen Get(int id)
+		{
+			return this.penRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOPen>> Create(
 			PenModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.penModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOPen> response = new CreateResponse<POCOPen>(await this.penModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.penRepository.Create(model);
-				response.SetId(id);
+				POCOPen record = this.penRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetStoreNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOPen Get(int id)
-		{
-			return this.penRepository.Get(id);
-		}
-
-		public virtual List<POCOPen> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.penRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6bb05df1a732c9e7b735403665dae495</Hash>
+    <Hash>6d140fe8c09c871ea8d63eab2e121500</Hash>
 </Codenesium>*/

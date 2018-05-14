@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Link", Schema="dbo")]
-	public partial class EFLink:AbstractEntityFrameworkPOCO
+	public partial class Link:AbstractEntityFrameworkPOCO
 	{
-		public EFLink()
+		public Link()
 		{}
 
 		public void SetProperties(
@@ -82,16 +82,16 @@ namespace NebulaNS.Api.DataAccess
 		public int TimeoutInSeconds { get; set; }
 
 		[ForeignKey("AssignedMachineId")]
-		public virtual EFMachine Machine { get; set; }
+		public virtual Machine Machine { get; set; }
 
 		[ForeignKey("ChainId")]
-		public virtual EFChain Chain { get; set; }
+		public virtual Chain Chain { get; set; }
 
 		[ForeignKey("LinkStatusId")]
-		public virtual EFLinkStatus LinkStatus { get; set; }
+		public virtual LinkStatus LinkStatus { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9ea9ae3958427f297f3191a1ad47d7e</Hash>
+    <Hash>5beeee15cd5235163782e372c7019f95</Hash>
 </Codenesium>*/

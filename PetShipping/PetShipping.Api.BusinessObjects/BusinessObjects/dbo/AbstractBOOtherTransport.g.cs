@@ -29,14 +29,24 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOOtherTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.otherTransportRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOOtherTransport Get(int id)
+		{
+			return this.otherTransportRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOOtherTransport>> Create(
 			OtherTransportModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOOtherTransport> response = new CreateResponse<POCOOtherTransport>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.otherTransportRepository.Create(model);
-				response.SetId(id);
+				POCOOtherTransport record = this.otherTransportRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetShippingNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOOtherTransport Get(int id)
-		{
-			return this.otherTransportRepository.Get(id);
-		}
-
-		public virtual List<POCOOtherTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.otherTransportRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c2b764eb78c6b26fc300099c09c51ad2</Hash>
+    <Hash>3864699035a8519e555c40169be85e3e</Hash>
 </Codenesium>*/

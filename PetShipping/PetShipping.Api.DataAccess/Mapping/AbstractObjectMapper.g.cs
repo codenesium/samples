@@ -8,7 +8,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void AirlineMapModelToEF(
 			int id,
 			AirlineModel model,
-			EFAirline efAirline)
+			Airline efAirline)
 		{
 			efAirline.SetProperties(
 				id,
@@ -16,7 +16,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOAirline AirlineMapEFToPOCO(
-			EFAirline efAirline)
+			Airline efAirline)
 		{
 			if (efAirline == null)
 			{
@@ -29,7 +29,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void AirTransportMapModelToEF(
 			int airlineId,
 			AirTransportModel model,
-			EFAirTransport efAirTransport)
+			AirTransport efAirTransport)
 		{
 			efAirTransport.SetProperties(
 				airlineId,
@@ -42,7 +42,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOAirTransport AirTransportMapEFToPOCO(
-			EFAirTransport efAirTransport)
+			AirTransport efAirTransport)
 		{
 			if (efAirTransport == null)
 			{
@@ -55,7 +55,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void BreedMapModelToEF(
 			int id,
 			BreedModel model,
-			EFBreed efBreed)
+			Breed efBreed)
 		{
 			efBreed.SetProperties(
 				id,
@@ -64,7 +64,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOBreed BreedMapEFToPOCO(
-			EFBreed efBreed)
+			Breed efBreed)
 		{
 			if (efBreed == null)
 			{
@@ -77,7 +77,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void ClientMapModelToEF(
 			int id,
 			ClientModel model,
-			EFClient efClient)
+			Client efClient)
 		{
 			efClient.SetProperties(
 				id,
@@ -89,7 +89,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOClient ClientMapEFToPOCO(
-			EFClient efClient)
+			Client efClient)
 		{
 			if (efClient == null)
 			{
@@ -102,7 +102,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void ClientCommunicationMapModelToEF(
 			int id,
 			ClientCommunicationModel model,
-			EFClientCommunication efClientCommunication)
+			ClientCommunication efClientCommunication)
 		{
 			efClientCommunication.SetProperties(
 				id,
@@ -113,7 +113,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOClientCommunication ClientCommunicationMapEFToPOCO(
-			EFClientCommunication efClientCommunication)
+			ClientCommunication efClientCommunication)
 		{
 			if (efClientCommunication == null)
 			{
@@ -126,7 +126,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void CountryMapModelToEF(
 			int id,
 			CountryModel model,
-			EFCountry efCountry)
+			Country efCountry)
 		{
 			efCountry.SetProperties(
 				id,
@@ -134,7 +134,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOCountry CountryMapEFToPOCO(
-			EFCountry efCountry)
+			Country efCountry)
 		{
 			if (efCountry == null)
 			{
@@ -147,7 +147,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void CountryRequirementMapModelToEF(
 			int id,
 			CountryRequirementModel model,
-			EFCountryRequirement efCountryRequirement)
+			CountryRequirement efCountryRequirement)
 		{
 			efCountryRequirement.SetProperties(
 				id,
@@ -156,7 +156,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOCountryRequirement CountryRequirementMapEFToPOCO(
-			EFCountryRequirement efCountryRequirement)
+			CountryRequirement efCountryRequirement)
 		{
 			if (efCountryRequirement == null)
 			{
@@ -169,7 +169,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void DestinationMapModelToEF(
 			int id,
 			DestinationModel model,
-			EFDestination efDestination)
+			Destination efDestination)
 		{
 			efDestination.SetProperties(
 				id,
@@ -179,7 +179,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCODestination DestinationMapEFToPOCO(
-			EFDestination efDestination)
+			Destination efDestination)
 		{
 			if (efDestination == null)
 			{
@@ -192,7 +192,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void EmployeeMapModelToEF(
 			int id,
 			EmployeeModel model,
-			EFEmployee efEmployee)
+			Employee efEmployee)
 		{
 			efEmployee.SetProperties(
 				id,
@@ -203,7 +203,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOEmployee EmployeeMapEFToPOCO(
-			EFEmployee efEmployee)
+			Employee efEmployee)
 		{
 			if (efEmployee == null)
 			{
@@ -216,7 +216,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void HandlerMapModelToEF(
 			int id,
 			HandlerModel model,
-			EFHandler efHandler)
+			Handler efHandler)
 		{
 			efHandler.SetProperties(
 				id,
@@ -228,7 +228,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOHandler HandlerMapEFToPOCO(
-			EFHandler efHandler)
+			Handler efHandler)
 		{
 			if (efHandler == null)
 			{
@@ -241,7 +241,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void HandlerPipelineStepMapModelToEF(
 			int id,
 			HandlerPipelineStepModel model,
-			EFHandlerPipelineStep efHandlerPipelineStep)
+			HandlerPipelineStep efHandlerPipelineStep)
 		{
 			efHandlerPipelineStep.SetProperties(
 				id,
@@ -250,7 +250,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOHandlerPipelineStep HandlerPipelineStepMapEFToPOCO(
-			EFHandlerPipelineStep efHandlerPipelineStep)
+			HandlerPipelineStep efHandlerPipelineStep)
 		{
 			if (efHandlerPipelineStep == null)
 			{
@@ -263,7 +263,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void OtherTransportMapModelToEF(
 			int id,
 			OtherTransportModel model,
-			EFOtherTransport efOtherTransport)
+			OtherTransport efOtherTransport)
 		{
 			efOtherTransport.SetProperties(
 				id,
@@ -272,7 +272,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOOtherTransport OtherTransportMapEFToPOCO(
-			EFOtherTransport efOtherTransport)
+			OtherTransport efOtherTransport)
 		{
 			if (efOtherTransport == null)
 			{
@@ -285,7 +285,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PetMapModelToEF(
 			int id,
 			PetModel model,
-			EFPet efPet)
+			Pet efPet)
 		{
 			efPet.SetProperties(
 				id,
@@ -296,7 +296,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPet PetMapEFToPOCO(
-			EFPet efPet)
+			Pet efPet)
 		{
 			if (efPet == null)
 			{
@@ -309,7 +309,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PipelineMapModelToEF(
 			int id,
 			PipelineModel model,
-			EFPipeline efPipeline)
+			Pipeline efPipeline)
 		{
 			efPipeline.SetProperties(
 				id,
@@ -318,7 +318,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipeline PipelineMapEFToPOCO(
-			EFPipeline efPipeline)
+			Pipeline efPipeline)
 		{
 			if (efPipeline == null)
 			{
@@ -331,7 +331,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PipelineStatusMapModelToEF(
 			int id,
 			PipelineStatusModel model,
-			EFPipelineStatus efPipelineStatus)
+			PipelineStatus efPipelineStatus)
 		{
 			efPipelineStatus.SetProperties(
 				id,
@@ -339,7 +339,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStatus PipelineStatusMapEFToPOCO(
-			EFPipelineStatus efPipelineStatus)
+			PipelineStatus efPipelineStatus)
 		{
 			if (efPipelineStatus == null)
 			{
@@ -352,7 +352,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PipelineStepMapModelToEF(
 			int id,
 			PipelineStepModel model,
-			EFPipelineStep efPipelineStep)
+			PipelineStep efPipelineStep)
 		{
 			efPipelineStep.SetProperties(
 				id,
@@ -362,7 +362,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStep PipelineStepMapEFToPOCO(
-			EFPipelineStep efPipelineStep)
+			PipelineStep efPipelineStep)
 		{
 			if (efPipelineStep == null)
 			{
@@ -375,7 +375,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PipelineStepDestinationMapModelToEF(
 			int id,
 			PipelineStepDestinationModel model,
-			EFPipelineStepDestination efPipelineStepDestination)
+			PipelineStepDestination efPipelineStepDestination)
 		{
 			efPipelineStepDestination.SetProperties(
 				id,
@@ -384,7 +384,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStepDestination PipelineStepDestinationMapEFToPOCO(
-			EFPipelineStepDestination efPipelineStepDestination)
+			PipelineStepDestination efPipelineStepDestination)
 		{
 			if (efPipelineStepDestination == null)
 			{
@@ -397,7 +397,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PipelineStepNoteMapModelToEF(
 			int id,
 			PipelineStepNoteModel model,
-			EFPipelineStepNote efPipelineStepNote)
+			PipelineStepNote efPipelineStepNote)
 		{
 			efPipelineStepNote.SetProperties(
 				id,
@@ -407,7 +407,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStepNote PipelineStepNoteMapEFToPOCO(
-			EFPipelineStepNote efPipelineStepNote)
+			PipelineStepNote efPipelineStepNote)
 		{
 			if (efPipelineStepNote == null)
 			{
@@ -420,7 +420,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PipelineStepStatusMapModelToEF(
 			int id,
 			PipelineStepStatusModel model,
-			EFPipelineStepStatus efPipelineStepStatus)
+			PipelineStepStatus efPipelineStepStatus)
 		{
 			efPipelineStepStatus.SetProperties(
 				id,
@@ -428,7 +428,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStepStatus PipelineStepStatusMapEFToPOCO(
-			EFPipelineStepStatus efPipelineStepStatus)
+			PipelineStepStatus efPipelineStepStatus)
 		{
 			if (efPipelineStepStatus == null)
 			{
@@ -441,7 +441,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void PipelineStepStepRequirementMapModelToEF(
 			int id,
 			PipelineStepStepRequirementModel model,
-			EFPipelineStepStepRequirement efPipelineStepStepRequirement)
+			PipelineStepStepRequirement efPipelineStepStepRequirement)
 		{
 			efPipelineStepStepRequirement.SetProperties(
 				id,
@@ -451,7 +451,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStepStepRequirement PipelineStepStepRequirementMapEFToPOCO(
-			EFPipelineStepStepRequirement efPipelineStepStepRequirement)
+			PipelineStepStepRequirement efPipelineStepStepRequirement)
 		{
 			if (efPipelineStepStepRequirement == null)
 			{
@@ -464,7 +464,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void SaleMapModelToEF(
 			int id,
 			SaleModel model,
-			EFSale efSale)
+			Sale efSale)
 		{
 			efSale.SetProperties(
 				id,
@@ -477,7 +477,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOSale SaleMapEFToPOCO(
-			EFSale efSale)
+			Sale efSale)
 		{
 			if (efSale == null)
 			{
@@ -490,7 +490,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void SpeciesMapModelToEF(
 			int id,
 			SpeciesModel model,
-			EFSpecies efSpecies)
+			Species efSpecies)
 		{
 			efSpecies.SetProperties(
 				id,
@@ -498,7 +498,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOSpecies SpeciesMapEFToPOCO(
-			EFSpecies efSpecies)
+			Species efSpecies)
 		{
 			if (efSpecies == null)
 			{
@@ -511,5 +511,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>14fe5ccca854dd5fc95237bd818288d7</Hash>
+    <Hash>7c8cafa555312ea6c6349ac9b0711626</Hash>
 </Codenesium>*/

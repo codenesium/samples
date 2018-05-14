@@ -7,7 +7,7 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public interface IDeviceRepository
 	{
-		int Create(DeviceModel model);
+		POCODevice Create(DeviceModel model);
 
 		void Update(int id,
 		            DeviceModel model);
@@ -17,9 +17,11 @@ namespace ESPIOTNS.Api.DataAccess
 		POCODevice Get(int id);
 
 		List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCODevice PublicId(Guid publicId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad30e54e38510076423f51e8ba16ad1d</Hash>
+    <Hash>dd735532c9aacb996fc383ee1ebf6b90</Hash>
 </Codenesium>*/

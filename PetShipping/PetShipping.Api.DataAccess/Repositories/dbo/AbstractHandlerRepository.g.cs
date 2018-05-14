@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOHandler> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOHandler Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOHandler Create(
 			HandlerModel model)
 		{
-			EFHandler record = new EFHandler();
+			Handler record = new Handler();
 
 			this.Mapper.HandlerMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFHandler>().Add(record);
+			this.Context.Set<Handler>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.HandlerMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			HandlerModel model)
 		{
-			EFHandler record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Handler record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFHandler record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Handler record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFHandler>().Remove(record);
+				this.Context.Set<Handler>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOHandler Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOHandler> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOHandler> Where(Expression<Func<EFHandler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOHandler> Where(Expression<Func<Handler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOHandler> SearchLinqPOCO(Expression<Func<EFHandler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOHandler> SearchLinqPOCO(Expression<Func<Handler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOHandler> response = new List<POCOHandler>();
-			List<EFHandler> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Handler> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.HandlerMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFHandler> SearchLinqEF(Expression<Func<EFHandler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Handler> SearchLinqEF(Expression<Func<Handler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFHandler>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFHandler>();
+				orderClause = $"{nameof(Handler.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFHandler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFHandler>();
-			}
+			return this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Handler>();
 		}
 
-		private List<EFHandler> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Handler> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFHandler>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFHandler>();
+				orderClause = $"{nameof(Handler.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFHandler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFHandler>();
-			}
+
+			return this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Handler>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>854debeac6b9f9e2975ad346fb8d20c5</Hash>
+    <Hash>b081f47b50f23f6c818352a1ec5085f3</Hash>
 </Codenesium>*/

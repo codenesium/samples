@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetStoreNS.Api.DataAccess
 {
 	[Table("Sale", Schema="dbo")]
-	public partial class EFSale:AbstractEntityFrameworkPOCO
+	public partial class Sale:AbstractEntityFrameworkPOCO
 	{
-		public EFSale()
+		public Sale()
 		{}
 
 		public void SetProperties(
@@ -52,13 +52,13 @@ namespace PetStoreNS.Api.DataAccess
 		public string Phone { get; set; }
 
 		[ForeignKey("PaymentTypeId")]
-		public virtual EFPaymentType PaymentType { get; set; }
+		public virtual PaymentType PaymentType { get; set; }
 
 		[ForeignKey("PetId")]
-		public virtual EFPet Pet { get; set; }
+		public virtual Pet Pet { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c865832e087d111f7c7db3534e0e1af</Hash>
+    <Hash>55361ec44cd6b0d3530ee07af51a096f</Hash>
 </Codenesium>*/

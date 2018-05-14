@@ -36,6 +36,28 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult All()
+		{
+			SearchQuery query = new SearchQuery();
+
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<POCOLink> response = this.linkManager.All(query.Offset, query.Limit);
+
+			if (response.Count == 0)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLink), 200)]
@@ -53,20 +75,6 @@ namespace NebulaNS.Api.Service
 			}
 		}
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLink>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
-		{
-			SearchQuery query = new SearchQuery();
-
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLink> response = this.linkManager.All(query.Offset, query.Limit);
-			return this.Ok(response);
-		}
-
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
@@ -74,14 +82,13 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] LinkModel model)
 		{
-			CreateResponse<int> result = await this.linkManager.Create(model);
+			CreateResponse<POCOLink> result = await this.linkManager.Create(model);
 
 			if (result.Success)
 			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Links/{result.Id.ToString()}");
-				POCOLink response = this.linkManager.Get(result.Id);
-				return this.Ok(response);
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Links/{result.Record.Id.ToString()}");
+				return this.Ok(result.Record);
 			}
 			else
 			{
@@ -92,7 +99,7 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<int>), 200)]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<LinkModel> models)
@@ -102,14 +109,14 @@ namespace NebulaNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<int> ids = new List<int>();
+			List<POCOLink> records = new List<POCOLink>();
 			foreach (var model in models)
 			{
-				CreateResponse<int> result = await this.linkManager.Create(model);
+				CreateResponse<POCOLink> result = await this.linkManager.Create(model);
 
 				if(result.Success)
 				{
-					ids.Add(result.Id);
+					records.Add(result.Record);
 				}
 				else
 				{
@@ -117,7 +124,7 @@ namespace NebulaNS.Api.Service
 				}
 			}
 
-			return this.Ok(ids);
+			return this.Ok(records);
 		}
 
 		[HttpPut]
@@ -166,9 +173,45 @@ namespace NebulaNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
+
+		[HttpGet]
+		[Route("chainId/{chainId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult ChainId(int chainId)
+		{
+			List<POCOLink> response = this.linkManager.ChainId(chainId);
+			if (response.Count == 0)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
+		[Route("externalId/{externalId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(POCOLink), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult ExternalId(Guid externalId)
+		{
+			POCOLink response = this.linkManager.ExternalId(externalId);
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>806e48dcab9ebabddba831f8bc5eb1e3</Hash>
+    <Hash>089585889237392b89106f6321a9a655</Hash>
 </Codenesium>*/

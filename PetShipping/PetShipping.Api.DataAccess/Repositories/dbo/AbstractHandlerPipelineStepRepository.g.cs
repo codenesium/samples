@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOHandlerPipelineStep> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOHandlerPipelineStep Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOHandlerPipelineStep Create(
 			HandlerPipelineStepModel model)
 		{
-			EFHandlerPipelineStep record = new EFHandlerPipelineStep();
+			HandlerPipelineStep record = new HandlerPipelineStep();
 
 			this.Mapper.HandlerPipelineStepMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFHandlerPipelineStep>().Add(record);
+			this.Context.Set<HandlerPipelineStep>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.HandlerPipelineStepMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			HandlerPipelineStepModel model)
 		{
-			EFHandlerPipelineStep record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			HandlerPipelineStep record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFHandlerPipelineStep record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			HandlerPipelineStep record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFHandlerPipelineStep>().Remove(record);
+				this.Context.Set<HandlerPipelineStep>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOHandlerPipelineStep Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOHandlerPipelineStep> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOHandlerPipelineStep> Where(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOHandlerPipelineStep> Where(Expression<Func<HandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOHandlerPipelineStep> SearchLinqPOCO(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOHandlerPipelineStep> SearchLinqPOCO(Expression<Func<HandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOHandlerPipelineStep> response = new List<POCOHandlerPipelineStep>();
-			List<EFHandlerPipelineStep> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<HandlerPipelineStep> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.HandlerPipelineStepMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFHandlerPipelineStep> SearchLinqEF(Expression<Func<EFHandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<HandlerPipelineStep> SearchLinqEF(Expression<Func<HandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
+				orderClause = $"{nameof(HandlerPipelineStep.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
-			}
+			return this.Context.Set<HandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<HandlerPipelineStep>();
 		}
 
-		private List<EFHandlerPipelineStep> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<HandlerPipelineStep> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
+				orderClause = $"{nameof(HandlerPipelineStep.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFHandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFHandlerPipelineStep>();
-			}
+
+			return this.Context.Set<HandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<HandlerPipelineStep>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>289d869a905c8557a79993a8c97a1321</Hash>
+    <Hash>dcbe38cd97230cb83c8820c36d898248</Hash>
 </Codenesium>*/

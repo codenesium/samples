@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOSpaceXSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOSpaceXSpaceFeature Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOSpaceXSpaceFeature Create(
 			SpaceXSpaceFeatureModel model)
 		{
-			EFSpaceXSpaceFeature record = new EFSpaceXSpaceFeature();
+			SpaceXSpaceFeature record = new SpaceXSpaceFeature();
 
 			this.Mapper.SpaceXSpaceFeatureMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFSpaceXSpaceFeature>().Add(record);
+			this.Context.Set<SpaceXSpaceFeature>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.SpaceXSpaceFeatureMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			SpaceXSpaceFeatureModel model)
 		{
-			EFSpaceXSpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			SpaceXSpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFSpaceXSpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			SpaceXSpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFSpaceXSpaceFeature>().Remove(record);
+				this.Context.Set<SpaceXSpaceFeature>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOSpaceXSpaceFeature Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOSpaceXSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOSpaceXSpaceFeature> Where(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOSpaceXSpaceFeature> Where(Expression<Func<SpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOSpaceXSpaceFeature> SearchLinqPOCO(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOSpaceXSpaceFeature> SearchLinqPOCO(Expression<Func<SpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOSpaceXSpaceFeature> response = new List<POCOSpaceXSpaceFeature>();
-			List<EFSpaceXSpaceFeature> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<SpaceXSpaceFeature> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.SpaceXSpaceFeatureMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFSpaceXSpaceFeature> SearchLinqEF(Expression<Func<EFSpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<SpaceXSpaceFeature> SearchLinqEF(Expression<Func<SpaceXSpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+				orderClause = $"{nameof(SpaceXSpaceFeature.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
-			}
+			return this.Context.Set<SpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SpaceXSpaceFeature>();
 		}
 
-		private List<EFSpaceXSpaceFeature> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<SpaceXSpaceFeature> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
+				orderClause = $"{nameof(SpaceXSpaceFeature.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFSpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFSpaceXSpaceFeature>();
-			}
+
+			return this.Context.Set<SpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SpaceXSpaceFeature>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6fc1d0e75f1edac52ea6e00285c00fc3</Hash>
+    <Hash>00e85600b335e9b0566e7f5133a4e187</Hash>
 </Codenesium>*/

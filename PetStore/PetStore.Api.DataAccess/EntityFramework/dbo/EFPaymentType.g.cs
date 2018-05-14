@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetStoreNS.Api.DataAccess
 {
 	[Table("PaymentType", Schema="dbo")]
-	public partial class EFPaymentType: AbstractEntityFrameworkPOCO
+	public partial class PaymentType: AbstractEntityFrameworkPOCO
 	{
-		public EFPaymentType()
+		public PaymentType()
 		{}
 
 		public void SetProperties(
@@ -29,5 +29,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e32e365ba79cae0a3ce2c0f33d832464</Hash>
+    <Hash>7e601ee33d6af137235d5e5ef858f4c2</Hash>
 </Codenesium>*/

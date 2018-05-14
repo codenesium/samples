@@ -26,26 +26,36 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOPen> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOPen Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOPen Create(
 			PenModel model)
 		{
-			EFPen record = new EFPen();
+			Pen record = new Pen();
 
 			this.Mapper.PenMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFPen>().Add(record);
+			this.Context.Set<Pen>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.PenMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			PenModel model)
 		{
-			EFPen record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Pen record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFPen record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Pen record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetStoreNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFPen>().Remove(record);
+				this.Context.Set<Pen>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOPen Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOPen> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOPen> Where(Expression<Func<EFPen, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOPen> Where(Expression<Func<Pen, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOPen> SearchLinqPOCO(Expression<Func<EFPen, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOPen> SearchLinqPOCO(Expression<Func<Pen, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOPen> response = new List<POCOPen>();
-			List<EFPen> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Pen> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.PenMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFPen> SearchLinqEF(Expression<Func<EFPen, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Pen> SearchLinqEF(Expression<Func<Pen, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPen>();
+				orderClause = $"{nameof(Pen.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPen>();
-			}
+			return this.Context.Set<Pen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Pen>();
 		}
 
-		private List<EFPen> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Pen> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPen>();
+				orderClause = $"{nameof(Pen.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFPen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPen>();
-			}
+
+			return this.Context.Set<Pen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Pen>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>887c7dadd0c008ef2bafeffa9771c1a6</Hash>
+    <Hash>d48d3240e01a3b742a18cd9b362a7b4b</Hash>
 </Codenesium>*/

@@ -38,27 +38,27 @@ namespace NebulaNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<EFChain> Chains { get; set; }
+		public virtual DbSet<Chain> Chains { get; set; }
 
-		public virtual DbSet<EFChainStatus> ChainStatus { get; set; }
+		public virtual DbSet<ChainStatus> ChainStatus { get; set; }
 
-		public virtual DbSet<EFClasp> Clasps { get; set; }
+		public virtual DbSet<Clasp> Clasps { get; set; }
 
-		public virtual DbSet<EFLink> Links { get; set; }
+		public virtual DbSet<Link> Links { get; set; }
 
-		public virtual DbSet<EFLinkLog> LinkLogs { get; set; }
+		public virtual DbSet<LinkLog> LinkLogs { get; set; }
 
-		public virtual DbSet<EFLinkStatus> LinkStatus { get; set; }
+		public virtual DbSet<LinkStatus> LinkStatus { get; set; }
 
-		public virtual DbSet<EFMachine> Machines { get; set; }
+		public virtual DbSet<Machine> Machines { get; set; }
 
-		public virtual DbSet<EFMachineRefTeam> MachineRefTeams { get; set; }
+		public virtual DbSet<MachineRefTeam> MachineRefTeams { get; set; }
 
-		public virtual DbSet<EFOrganization> Organizations { get; set; }
+		public virtual DbSet<Organization> Organizations { get; set; }
 
-		public virtual DbSet<EFTeam> Teams { get; set; }
+		public virtual DbSet<Team> Teams { get; set; }
 
-		public virtual DbSet<EFVersionInfo> VersionInfoes { get; set; }
+		public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
 	}
 
 	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -67,9 +67,11 @@ namespace NebulaNS.Api.DataAccess
 		{
 			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Nebula.Api.Service");
 
+			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile("appsettings.json")
+			                                   .AddJsonFile($"appsettings.{environment}.json")
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -84,5 +86,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>77229439acd23f39ae710e3327eed4ea</Hash>
+    <Hash>768e4c7847a5290ac20925c392bd56b8</Hash>
 </Codenesium>*/

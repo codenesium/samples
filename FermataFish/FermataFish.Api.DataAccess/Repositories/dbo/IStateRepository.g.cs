@@ -7,7 +7,7 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStateRepository
 	{
-		int Create(StateModel model);
+		POCOState Create(StateModel model);
 
 		void Update(int id,
 		            StateModel model);
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>141536f9e6bea2d5a622a34dff70da6b</Hash>
+    <Hash>10a7c530114be78a038768b9a68aca38</Hash>
 </Codenesium>*/

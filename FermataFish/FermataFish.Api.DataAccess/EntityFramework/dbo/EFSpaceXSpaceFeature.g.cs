@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	[Table("SpaceXSpaceFeature", Schema="dbo")]
-	public partial class EFSpaceXSpaceFeature: AbstractEntityFrameworkPOCO
+	public partial class SpaceXSpaceFeature: AbstractEntityFrameworkPOCO
 	{
-		public EFSpaceXSpaceFeature()
+		public SpaceXSpaceFeature()
 		{}
 
 		public void SetProperties(
@@ -32,13 +32,13 @@ namespace FermataFishNS.Api.DataAccess
 		public int SpaceId { get; set; }
 
 		[ForeignKey("SpaceFeatureId")]
-		public virtual EFSpaceFeature SpaceFeature { get; set; }
+		public virtual SpaceFeature SpaceFeature { get; set; }
 
 		[ForeignKey("SpaceId")]
-		public virtual EFSpace Space { get; set; }
+		public virtual Space Space { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>915b75a4bd850b9e6a3a856e61993d4c</Hash>
+    <Hash>6c0d32ed00c264dbe4d67a2f9d0443fc</Hash>
 </Codenesium>*/

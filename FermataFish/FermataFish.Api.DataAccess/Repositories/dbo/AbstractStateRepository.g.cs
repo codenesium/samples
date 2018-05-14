@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOState> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOState Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOState Create(
 			StateModel model)
 		{
-			EFState record = new EFState();
+			State record = new State();
 
 			this.Mapper.StateMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFState>().Add(record);
+			this.Context.Set<State>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.StateMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			StateModel model)
 		{
-			EFState record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			State record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFState record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			State record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFState>().Remove(record);
+				this.Context.Set<State>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOState Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOState> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOState> Where(Expression<Func<EFState, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOState> Where(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOState> SearchLinqPOCO(Expression<Func<EFState, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOState> SearchLinqPOCO(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOState> response = new List<POCOState>();
-			List<EFState> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<State> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.StateMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFState> SearchLinqEF(Expression<Func<EFState, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<State> SearchLinqEF(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFState>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFState>();
+				orderClause = $"{nameof(State.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFState>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFState>();
-			}
+			return this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<State>();
 		}
 
-		private List<EFState> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<State> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFState>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFState>();
+				orderClause = $"{nameof(State.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFState>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFState>();
-			}
+
+			return this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<State>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2fb5d5d23776d3cc68c5d75c9099aa38</Hash>
+    <Hash>c6bc17c9c01d77e6fc05802d8c4469e3</Hash>
 </Codenesium>*/

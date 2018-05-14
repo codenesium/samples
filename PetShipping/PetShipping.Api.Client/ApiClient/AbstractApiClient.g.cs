@@ -87,12 +87,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOAirline>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> AirlineBulkInsertAsync(List<AirlineModel> items)
+		public virtual async Task<List<POCOAirline>> AirlineBulkInsertAsync(List<AirlineModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Airlines/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOAirline>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOAirTransport> AirTransportCreateAsync(AirTransportModel item)
@@ -134,12 +134,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOAirTransport>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> AirTransportBulkInsertAsync(List<AirTransportModel> items)
+		public virtual async Task<List<POCOAirTransport>> AirTransportBulkInsertAsync(List<AirTransportModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/AirTransports/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOAirTransport>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOBreed> BreedCreateAsync(BreedModel item)
@@ -181,12 +181,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOBreed>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> BreedBulkInsertAsync(List<BreedModel> items)
+		public virtual async Task<List<POCOBreed>> BreedBulkInsertAsync(List<BreedModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Breeds/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOBreed>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOClient> ClientCreateAsync(ClientModel item)
@@ -228,12 +228,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOClient>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> ClientBulkInsertAsync(List<ClientModel> items)
+		public virtual async Task<List<POCOClient>> ClientBulkInsertAsync(List<ClientModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clients/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOClient>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOClientCommunication> ClientCommunicationCreateAsync(ClientCommunicationModel item)
@@ -275,12 +275,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOClientCommunication>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> ClientCommunicationBulkInsertAsync(List<ClientCommunicationModel> items)
+		public virtual async Task<List<POCOClientCommunication>> ClientCommunicationBulkInsertAsync(List<ClientCommunicationModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ClientCommunications/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOClientCommunication>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOCountry> CountryCreateAsync(CountryModel item)
@@ -322,12 +322,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOCountry>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> CountryBulkInsertAsync(List<CountryModel> items)
+		public virtual async Task<List<POCOCountry>> CountryBulkInsertAsync(List<CountryModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Countries/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOCountry>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOCountryRequirement> CountryRequirementCreateAsync(CountryRequirementModel item)
@@ -369,12 +369,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOCountryRequirement>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> CountryRequirementBulkInsertAsync(List<CountryRequirementModel> items)
+		public virtual async Task<List<POCOCountryRequirement>> CountryRequirementBulkInsertAsync(List<CountryRequirementModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CountryRequirements/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOCountryRequirement>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCODestination> DestinationCreateAsync(DestinationModel item)
@@ -416,12 +416,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCODestination>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> DestinationBulkInsertAsync(List<DestinationModel> items)
+		public virtual async Task<List<POCODestination>> DestinationBulkInsertAsync(List<DestinationModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Destinations/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCODestination>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOEmployee> EmployeeCreateAsync(EmployeeModel item)
@@ -463,12 +463,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOEmployee>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> EmployeeBulkInsertAsync(List<EmployeeModel> items)
+		public virtual async Task<List<POCOEmployee>> EmployeeBulkInsertAsync(List<EmployeeModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Employees/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOEmployee>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOHandler> HandlerCreateAsync(HandlerModel item)
@@ -510,12 +510,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOHandler>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> HandlerBulkInsertAsync(List<HandlerModel> items)
+		public virtual async Task<List<POCOHandler>> HandlerBulkInsertAsync(List<HandlerModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Handlers/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOHandler>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOHandlerPipelineStep> HandlerPipelineStepCreateAsync(HandlerPipelineStepModel item)
@@ -557,12 +557,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOHandlerPipelineStep>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> HandlerPipelineStepBulkInsertAsync(List<HandlerPipelineStepModel> items)
+		public virtual async Task<List<POCOHandlerPipelineStep>> HandlerPipelineStepBulkInsertAsync(List<HandlerPipelineStepModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/HandlerPipelineSteps/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOHandlerPipelineStep>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOOtherTransport> OtherTransportCreateAsync(OtherTransportModel item)
@@ -604,12 +604,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOOtherTransport>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> OtherTransportBulkInsertAsync(List<OtherTransportModel> items)
+		public virtual async Task<List<POCOOtherTransport>> OtherTransportBulkInsertAsync(List<OtherTransportModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/OtherTransports/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOOtherTransport>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPet> PetCreateAsync(PetModel item)
@@ -651,12 +651,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPet>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PetBulkInsertAsync(List<PetModel> items)
+		public virtual async Task<List<POCOPet>> PetBulkInsertAsync(List<PetModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pets/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPet>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPipeline> PipelineCreateAsync(PipelineModel item)
@@ -698,12 +698,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPipeline>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PipelineBulkInsertAsync(List<PipelineModel> items)
+		public virtual async Task<List<POCOPipeline>> PipelineBulkInsertAsync(List<PipelineModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pipelines/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPipeline>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPipelineStatus> PipelineStatusCreateAsync(PipelineStatusModel item)
@@ -745,12 +745,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPipelineStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PipelineStatusBulkInsertAsync(List<PipelineStatusModel> items)
+		public virtual async Task<List<POCOPipelineStatus>> PipelineStatusBulkInsertAsync(List<PipelineStatusModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStatus/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPipelineStatus>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPipelineStep> PipelineStepCreateAsync(PipelineStepModel item)
@@ -792,12 +792,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPipelineStep>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PipelineStepBulkInsertAsync(List<PipelineStepModel> items)
+		public virtual async Task<List<POCOPipelineStep>> PipelineStepBulkInsertAsync(List<PipelineStepModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineSteps/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPipelineStep>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPipelineStepDestination> PipelineStepDestinationCreateAsync(PipelineStepDestinationModel item)
@@ -839,12 +839,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPipelineStepDestination>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PipelineStepDestinationBulkInsertAsync(List<PipelineStepDestinationModel> items)
+		public virtual async Task<List<POCOPipelineStepDestination>> PipelineStepDestinationBulkInsertAsync(List<PipelineStepDestinationModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepDestinations/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPipelineStepDestination>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPipelineStepNote> PipelineStepNoteCreateAsync(PipelineStepNoteModel item)
@@ -886,12 +886,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPipelineStepNote>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PipelineStepNoteBulkInsertAsync(List<PipelineStepNoteModel> items)
+		public virtual async Task<List<POCOPipelineStepNote>> PipelineStepNoteBulkInsertAsync(List<PipelineStepNoteModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepNotes/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPipelineStepNote>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPipelineStepStatus> PipelineStepStatusCreateAsync(PipelineStepStatusModel item)
@@ -933,12 +933,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPipelineStepStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PipelineStepStatusBulkInsertAsync(List<PipelineStepStatusModel> items)
+		public virtual async Task<List<POCOPipelineStepStatus>> PipelineStepStatusBulkInsertAsync(List<PipelineStepStatusModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStatus/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPipelineStepStatus>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOPipelineStepStepRequirement> PipelineStepStepRequirementCreateAsync(PipelineStepStepRequirementModel item)
@@ -980,12 +980,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPipelineStepStepRequirement>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> PipelineStepStepRequirementBulkInsertAsync(List<PipelineStepStepRequirementModel> items)
+		public virtual async Task<List<POCOPipelineStepStepRequirement>> PipelineStepStepRequirementBulkInsertAsync(List<PipelineStepStepRequirementModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStepRequirements/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOPipelineStepStepRequirement>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOSale> SaleCreateAsync(SaleModel item)
@@ -1027,12 +1027,12 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSale>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> SaleBulkInsertAsync(List<SaleModel> items)
+		public virtual async Task<List<POCOSale>> SaleBulkInsertAsync(List<SaleModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Sales/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOSale>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOSpecies> SpeciesCreateAsync(SpeciesModel item)
@@ -1074,16 +1074,16 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSpecies>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<int>> SpeciesBulkInsertAsync(List<SpeciesModel> items)
+		public virtual async Task<List<POCOSpecies>> SpeciesBulkInsertAsync(List<SpeciesModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Species/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<int>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<POCOSpecies>>(httpResponse.Content.ContentToString());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a801400f0ec34b2eb4fa8a784a6649d0</Hash>
+    <Hash>74261835e6f0253f57f714d9edd2114e</Hash>
 </Codenesium>*/

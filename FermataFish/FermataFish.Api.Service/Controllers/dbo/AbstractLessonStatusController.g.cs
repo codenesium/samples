@@ -36,6 +36,28 @@ namespace FermataFishNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult All()
+		{
+			SearchQuery query = new SearchQuery();
+
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<POCOLessonStatus> response = this.lessonStatusManager.All(query.Offset, query.Limit);
+
+			if (response.Count == 0)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLessonStatus), 200)]
@@ -53,20 +75,6 @@ namespace FermataFishNS.Api.Service
 			}
 		}
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
-		{
-			SearchQuery query = new SearchQuery();
-
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLessonStatus> response = this.lessonStatusManager.All(query.Offset, query.Limit);
-			return this.Ok(response);
-		}
-
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
@@ -74,14 +82,13 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] LessonStatusModel model)
 		{
-			CreateResponse<int> result = await this.lessonStatusManager.Create(model);
+			CreateResponse<POCOLessonStatus> result = await this.lessonStatusManager.Create(model);
 
 			if (result.Success)
 			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/LessonStatus/{result.Id.ToString()}");
-				POCOLessonStatus response = this.lessonStatusManager.Get(result.Id);
-				return this.Ok(response);
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/LessonStatus/{result.Record.Id.ToString()}");
+				return this.Ok(result.Record);
 			}
 			else
 			{
@@ -92,7 +99,7 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<int>), 200)]
+		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<LessonStatusModel> models)
@@ -102,14 +109,14 @@ namespace FermataFishNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<int> ids = new List<int>();
+			List<POCOLessonStatus> records = new List<POCOLessonStatus>();
 			foreach (var model in models)
 			{
-				CreateResponse<int> result = await this.lessonStatusManager.Create(model);
+				CreateResponse<POCOLessonStatus> result = await this.lessonStatusManager.Create(model);
 
 				if(result.Success)
 				{
-					ids.Add(result.Id);
+					records.Add(result.Record);
 				}
 				else
 				{
@@ -117,7 +124,7 @@ namespace FermataFishNS.Api.Service
 				}
 			}
 
-			return this.Ok(ids);
+			return this.Ok(records);
 		}
 
 		[HttpPut]
@@ -170,5 +177,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>db87f71d7d98359a453bbde154d574ae</Hash>
+    <Hash>592eb876f84693c11da5b345feb926f1</Hash>
 </Codenesium>*/

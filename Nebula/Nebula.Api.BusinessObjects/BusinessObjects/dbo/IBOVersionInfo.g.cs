@@ -9,7 +9,7 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOVersionInfo
 	{
-		Task<CreateResponse<long>> Create(
+		Task<CreateResponse<POCOVersionInfo>> Create(
 			VersionInfoModel model);
 
 		Task<ActionResponse> Update(long version,
@@ -20,9 +20,11 @@ namespace NebulaNS.Api.BusinessObjects
 		POCOVersionInfo Get(long version);
 
 		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOVersionInfo Version(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b071bc114fe4f29f35a1fcf67c33418a</Hash>
+    <Hash>441b48edcc4ee46e9de94b0eac2c7aca</Hash>
 </Codenesium>*/

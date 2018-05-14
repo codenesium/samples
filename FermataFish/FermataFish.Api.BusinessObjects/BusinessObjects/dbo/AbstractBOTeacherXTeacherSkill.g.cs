@@ -29,14 +29,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOTeacherXTeacherSkill> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.teacherXTeacherSkillRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOTeacherXTeacherSkill Get(int id)
+		{
+			return this.teacherXTeacherSkillRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOTeacherXTeacherSkill>> Create(
 			TeacherXTeacherSkillModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOTeacherXTeacherSkill> response = new CreateResponse<POCOTeacherXTeacherSkill>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.teacherXTeacherSkillRepository.Create(model);
-				response.SetId(id);
+				POCOTeacherXTeacherSkill record = this.teacherXTeacherSkillRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FermataFishNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOTeacherXTeacherSkill Get(int id)
-		{
-			return this.teacherXTeacherSkillRepository.Get(id);
-		}
-
-		public virtual List<POCOTeacherXTeacherSkill> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.teacherXTeacherSkillRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4e4d2089b1fc8644d6a3a644691b0ae</Hash>
+    <Hash>d7fafff214f3474add8ffe63fb9fe35e</Hash>
 </Codenesium>*/

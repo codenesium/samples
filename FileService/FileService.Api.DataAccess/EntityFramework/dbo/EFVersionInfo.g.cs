@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.DataAccess
 {
 	[Table("VersionInfo", Schema="dbo")]
-	public partial class EFVersionInfo: AbstractEntityFrameworkPOCO
+	public partial class VersionInfo: AbstractEntityFrameworkPOCO
 	{
-		public EFVersionInfo()
+		public VersionInfo()
 		{}
 
 		public void SetProperties(
@@ -34,5 +34,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa5ddf40e2dbc4812dfffaf99694f000</Hash>
+    <Hash>58f85690f269f8249897a983bc06e8da</Hash>
 </Codenesium>*/

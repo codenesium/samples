@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace NebulaNS.Api.DataAccess
 {
 	[Table("Clasp", Schema="dbo")]
-	public partial class EFClasp: AbstractEntityFrameworkPOCO
+	public partial class Clasp:AbstractEntityFrameworkPOCO
 	{
-		public EFClasp()
+		public Clasp()
 		{}
 
 		public void SetProperties(
@@ -32,13 +32,13 @@ namespace NebulaNS.Api.DataAccess
 		public int PreviousChainId { get; set; }
 
 		[ForeignKey("NextChainId")]
-		public virtual EFChain Chain { get; set; }
+		public virtual Chain Chain { get; set; }
 
 		[ForeignKey("PreviousChainId")]
-		public virtual EFChain Chain1 { get; set; }
+		public virtual Chain Chain1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c200f6029806bbff2216c4d08577114</Hash>
+    <Hash>edf044ffeb0cbc6436b6eda2dadc5efd</Hash>
 </Codenesium>*/

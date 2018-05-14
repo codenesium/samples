@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	[Table("Family", Schema="dbo")]
-	public partial class EFFamily: AbstractEntityFrameworkPOCO
+	public partial class Family:AbstractEntityFrameworkPOCO
 	{
-		public EFFamily()
+		public Family()
 		{}
 
 		public void SetProperties(
@@ -52,13 +52,13 @@ namespace FermataFishNS.Api.DataAccess
 		public int StudioId { get; set; }
 
 		[ForeignKey("Id")]
-		public virtual EFStudio Studio { get; set; }
+		public virtual Studio Studio { get; set; }
 
 		[ForeignKey("StudioId")]
-		public virtual EFStudio Studio1 { get; set; }
+		public virtual Studio Studio1 { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>68c9091e996d7a2d520be349528dd18c</Hash>
+    <Hash>b67a9710e3f89cc0ee9aff0d9e1255fb</Hash>
 </Codenesium>*/

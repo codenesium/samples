@@ -26,26 +26,36 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOMachine Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOMachine Create(
 			MachineModel model)
 		{
-			EFMachine record = new EFMachine();
+			Machine record = new Machine();
 
 			this.Mapper.MachineMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFMachine>().Add(record);
+			this.Context.Set<Machine>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.MachineMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			MachineModel model)
 		{
-			EFMachine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Machine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFMachine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Machine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,50 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFMachine>().Remove(record);
+				this.Context.Set<Machine>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOMachine Get(int id)
+		public POCOMachine MachineGuid(Guid machineGuid)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.MachineGuid == machineGuid).FirstOrDefault();
 		}
 
-		public virtual List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOMachine> Where(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOMachine> Where(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOMachine> SearchLinqPOCO(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOMachine> SearchLinqPOCO(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOMachine> response = new List<POCOMachine>();
-			List<EFMachine> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Machine> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.MachineMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFMachine> SearchLinqEF(Expression<Func<EFMachine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Machine> SearchLinqEF(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
+				orderClause = $"{nameof(Machine.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
-			}
+			return this.Context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Machine>();
 		}
 
-		private List<EFMachine> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Machine> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFMachine>();
+				orderClause = $"{nameof(Machine.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFMachine>();
-			}
+
+			return this.Context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Machine>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2565d88262b9b7864831f8b5fbce41df</Hash>
+    <Hash>a7cbbbc13ccf27fec79db7fcaffd6c5d</Hash>
 </Codenesium>*/

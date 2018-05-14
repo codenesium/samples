@@ -38,13 +38,13 @@ namespace FileServiceNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<EFBucket> Buckets { get; set; }
+		public virtual DbSet<Bucket> Buckets { get; set; }
 
-		public virtual DbSet<EFFile> Files { get; set; }
+		public virtual DbSet<File> Files { get; set; }
 
-		public virtual DbSet<EFFileType> FileTypes { get; set; }
+		public virtual DbSet<FileType> FileTypes { get; set; }
 
-		public virtual DbSet<EFVersionInfo> VersionInfoes { get; set; }
+		public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
 	}
 
 	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
@@ -53,9 +53,11 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FileService.Api.Service");
 
+			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile("appsettings.json")
+			                                   .AddJsonFile($"appsettings.{environment}.json")
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -70,5 +72,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c858871ece87337c6e9879a7eaa6641c</Hash>
+    <Hash>a7f3d5d3b7a2ce24f5f75247e20f17d8</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOOrganization
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOOrganization>> Create(
 			OrganizationModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -20,9 +20,11 @@ namespace NebulaNS.Api.BusinessObjects
 		POCOOrganization Get(int id);
 
 		List<POCOOrganization> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOOrganization Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f080d2de3b6e6abe625015a9902bb7a</Hash>
+    <Hash>ae028c28554340ae509026038a57129f</Hash>
 </Codenesium>*/

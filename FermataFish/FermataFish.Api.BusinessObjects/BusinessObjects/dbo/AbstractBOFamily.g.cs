@@ -29,14 +29,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.familyRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOFamily Get(int id)
+		{
+			return this.familyRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOFamily>> Create(
 			FamilyModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.familyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOFamily> response = new CreateResponse<POCOFamily>(await this.familyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.familyRepository.Create(model);
-				response.SetId(id);
+				POCOFamily record = this.familyRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FermataFishNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOFamily Get(int id)
-		{
-			return this.familyRepository.Get(id);
-		}
-
-		public virtual List<POCOFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.familyRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f8f22fb0189515ca95e90b06299ffbd</Hash>
+    <Hash>4fa37491b1d489a3b8891146551c97fd</Hash>
 </Codenesium>*/

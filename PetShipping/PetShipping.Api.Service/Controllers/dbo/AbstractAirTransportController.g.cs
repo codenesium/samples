@@ -36,6 +36,28 @@ namespace PetShippingNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCOAirTransport>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult All()
+		{
+			SearchQuery query = new SearchQuery();
+
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<POCOAirTransport> response = this.airTransportManager.All(query.Offset, query.Limit);
+
+			if (response.Count == 0)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOAirTransport), 200)]
@@ -53,20 +75,6 @@ namespace PetShippingNS.Api.Service
 			}
 		}
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOAirTransport>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
-		{
-			SearchQuery query = new SearchQuery();
-
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOAirTransport> response = this.airTransportManager.All(query.Offset, query.Limit);
-			return this.Ok(response);
-		}
-
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
@@ -74,14 +82,13 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] AirTransportModel model)
 		{
-			CreateResponse<int> result = await this.airTransportManager.Create(model);
+			CreateResponse<POCOAirTransport> result = await this.airTransportManager.Create(model);
 
 			if (result.Success)
 			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/AirTransports/{result.Id.ToString()}");
-				POCOAirTransport response = this.airTransportManager.Get(result.Id);
-				return this.Ok(response);
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.AirlineId.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/AirTransports/{result.Record.AirlineId.ToString()}");
+				return this.Ok(result.Record);
 			}
 			else
 			{
@@ -92,7 +99,7 @@ namespace PetShippingNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<int>), 200)]
+		[ProducesResponseType(typeof(List<POCOAirTransport>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<AirTransportModel> models)
@@ -102,14 +109,14 @@ namespace PetShippingNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<int> ids = new List<int>();
+			List<POCOAirTransport> records = new List<POCOAirTransport>();
 			foreach (var model in models)
 			{
-				CreateResponse<int> result = await this.airTransportManager.Create(model);
+				CreateResponse<POCOAirTransport> result = await this.airTransportManager.Create(model);
 
 				if(result.Success)
 				{
-					ids.Add(result.Id);
+					records.Add(result.Record);
 				}
 				else
 				{
@@ -117,7 +124,7 @@ namespace PetShippingNS.Api.Service
 				}
 			}
 
-			return this.Ok(ids);
+			return this.Ok(records);
 		}
 
 		[HttpPut]
@@ -170,5 +177,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7a3b02cb498058be8cce37b3ce3a56cf</Hash>
+    <Hash>b50687221f93087e72e163b160a65dc6</Hash>
 </Codenesium>*/

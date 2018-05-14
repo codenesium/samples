@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOStudentXFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOStudentXFamily Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOStudentXFamily Create(
 			StudentXFamilyModel model)
 		{
-			EFStudentXFamily record = new EFStudentXFamily();
+			StudentXFamily record = new StudentXFamily();
 
 			this.Mapper.StudentXFamilyMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFStudentXFamily>().Add(record);
+			this.Context.Set<StudentXFamily>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.StudentXFamilyMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			StudentXFamilyModel model)
 		{
-			EFStudentXFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			StudentXFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFStudentXFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			StudentXFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFStudentXFamily>().Remove(record);
+				this.Context.Set<StudentXFamily>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOStudentXFamily Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOStudentXFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOStudentXFamily> Where(Expression<Func<EFStudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOStudentXFamily> Where(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOStudentXFamily> SearchLinqPOCO(Expression<Func<EFStudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOStudentXFamily> SearchLinqPOCO(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOStudentXFamily> response = new List<POCOStudentXFamily>();
-			List<EFStudentXFamily> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<StudentXFamily> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.StudentXFamilyMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFStudentXFamily> SearchLinqEF(Expression<Func<EFStudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<StudentXFamily> SearchLinqEF(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFStudentXFamily>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFStudentXFamily>();
+				orderClause = $"{nameof(StudentXFamily.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFStudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFStudentXFamily>();
-			}
+			return this.Context.Set<StudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<StudentXFamily>();
 		}
 
-		private List<EFStudentXFamily> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<StudentXFamily> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFStudentXFamily>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFStudentXFamily>();
+				orderClause = $"{nameof(StudentXFamily.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFStudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFStudentXFamily>();
-			}
+
+			return this.Context.Set<StudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<StudentXFamily>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>19b2790d5fa59365b959325f2972068d</Hash>
+    <Hash>69172c0f836059970e6ebbdd403dcfb8</Hash>
 </Codenesium>*/

@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetShippingNS.Api.DataAccess
 {
 	[Table("PipelineStatus", Schema="dbo")]
-	public partial class EFPipelineStatus: AbstractEntityFrameworkPOCO
+	public partial class PipelineStatus: AbstractEntityFrameworkPOCO
 	{
-		public EFPipelineStatus()
+		public PipelineStatus()
 		{}
 
 		public void SetProperties(
@@ -29,5 +29,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b8fcb93c5e78e1b4788defad7062e360</Hash>
+    <Hash>cc309faf9c8e7c0d3926f089570839e0</Hash>
 </Codenesium>*/

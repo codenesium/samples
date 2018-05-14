@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.DataAccess
 {
 	[Table("File", Schema="dbo")]
-	public partial class EFFile:AbstractEntityFrameworkPOCO
+	public partial class File:AbstractEntityFrameworkPOCO
 	{
-		public EFFile()
+		public File()
 		{}
 
 		public void SetProperties(
@@ -77,13 +77,13 @@ namespace FileServiceNS.Api.DataAccess
 		public string PublicKey { get; set; }
 
 		[ForeignKey("BucketId")]
-		public virtual EFBucket Bucket { get; set; }
+		public virtual Bucket Bucket { get; set; }
 
 		[ForeignKey("FileTypeId")]
-		public virtual EFFileType FileType { get; set; }
+		public virtual FileType FileType { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>650c85fef4acbca998e1f508d1794fd6</Hash>
+    <Hash>459bcef5e744f889b888d66c5e65a274</Hash>
 </Codenesium>*/

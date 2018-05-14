@@ -29,14 +29,24 @@ namespace FileServiceNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<long>> Create(
+		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.versionInfoRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOVersionInfo Get(long version)
+		{
+			return this.versionInfoRepository.Get(version);
+		}
+
+		public virtual async Task<CreateResponse<POCOVersionInfo>> Create(
 			VersionInfoModel model)
 		{
-			CreateResponse<long> response = new CreateResponse<long>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOVersionInfo> response = new CreateResponse<POCOVersionInfo>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				long id = this.versionInfoRepository.Create(model);
-				response.SetId(id);
+				POCOVersionInfo record = this.versionInfoRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace FileServiceNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOVersionInfo Get(long version)
+		public POCOVersionInfo Version(long version)
 		{
-			return this.versionInfoRepository.Get(version);
-		}
-
-		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.versionInfoRepository.All(skip, take, orderClause);
+			return this.versionInfoRepository.Version(version);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>122e6cb4fadabf52ee4ae60b0706ee21</Hash>
+    <Hash>e4cb7902608b9f7020efbece4781d135</Hash>
 </Codenesium>*/

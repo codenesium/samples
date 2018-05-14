@@ -36,6 +36,28 @@ namespace FileServiceNS.Api.Service
 		}
 
 		[HttpGet]
+		[Route("")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult All()
+		{
+			SearchQuery query = new SearchQuery();
+
+			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			List<POCOVersionInfo> response = this.versionInfoManager.All(query.Offset, query.Limit);
+
+			if (response.Count == 0)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
@@ -53,20 +75,6 @@ namespace FileServiceNS.Api.Service
 			}
 		}
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
-		{
-			SearchQuery query = new SearchQuery();
-
-			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOVersionInfo> response = this.versionInfoManager.All(query.Offset, query.Limit);
-			return this.Ok(response);
-		}
-
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
@@ -74,14 +82,13 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(CreateResponse<long>), 422)]
 		public virtual async Task<IActionResult> Create([FromBody] VersionInfoModel model)
 		{
-			CreateResponse<long> result = await this.versionInfoManager.Create(model);
+			CreateResponse<POCOVersionInfo> result = await this.versionInfoManager.Create(model);
 
 			if (result.Success)
 			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Id.ToString()}");
-				POCOVersionInfo response = this.versionInfoManager.Get(result.Id);
-				return this.Ok(response);
+				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Version.ToString());
+				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version.ToString()}");
+				return this.Ok(result.Record);
 			}
 			else
 			{
@@ -92,7 +99,7 @@ namespace FileServiceNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<long>), 200)]
+		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> BulkInsert([FromBody] List<VersionInfoModel> models)
@@ -102,14 +109,14 @@ namespace FileServiceNS.Api.Service
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<long> ids = new List<long>();
+			List<POCOVersionInfo> records = new List<POCOVersionInfo>();
 			foreach (var model in models)
 			{
-				CreateResponse<long> result = await this.versionInfoManager.Create(model);
+				CreateResponse<POCOVersionInfo> result = await this.versionInfoManager.Create(model);
 
 				if(result.Success)
 				{
-					ids.Add(result.Id);
+					records.Add(result.Record);
 				}
 				else
 				{
@@ -117,7 +124,7 @@ namespace FileServiceNS.Api.Service
 				}
 			}
 
-			return this.Ok(ids);
+			return this.Ok(records);
 		}
 
 		[HttpPut]
@@ -166,9 +173,27 @@ namespace FileServiceNS.Api.Service
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
 		}
+
+		[HttpGet]
+		[Route("version/{version}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public virtual IActionResult Version(long version)
+		{
+			POCOVersionInfo response = this.versionInfoManager.Version(version);
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c7a7c7ce3f78506b3440d0628aa4fb1</Hash>
+    <Hash>9c4a1c7e8f504736ae5ce4bb597c6415</Hash>
 </Codenesium>*/

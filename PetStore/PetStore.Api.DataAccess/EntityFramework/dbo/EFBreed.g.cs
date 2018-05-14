@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetStoreNS.Api.DataAccess
 {
 	[Table("Breed", Schema="dbo")]
-	public partial class EFBreed: AbstractEntityFrameworkPOCO
+	public partial class Breed:AbstractEntityFrameworkPOCO
 	{
-		public EFBreed()
+		public Breed()
 		{}
 
 		public void SetProperties(
@@ -29,5 +29,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>09220d957dea64740646c495a771c041</Hash>
+    <Hash>00abbde3eed43fa12604042a576d2b99</Hash>
 </Codenesium>*/

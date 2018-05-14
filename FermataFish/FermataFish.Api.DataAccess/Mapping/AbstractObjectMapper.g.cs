@@ -8,7 +8,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void AdminMapModelToEF(
 			int id,
 			AdminModel model,
-			EFAdmin efAdmin)
+			Admin efAdmin)
 		{
 			efAdmin.SetProperties(
 				id,
@@ -21,7 +21,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOAdmin AdminMapEFToPOCO(
-			EFAdmin efAdmin)
+			Admin efAdmin)
 		{
 			if (efAdmin == null)
 			{
@@ -34,7 +34,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void FamilyMapModelToEF(
 			int id,
 			FamilyModel model,
-			EFFamily efFamily)
+			Family efFamily)
 		{
 			efFamily.SetProperties(
 				id,
@@ -47,7 +47,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOFamily FamilyMapEFToPOCO(
-			EFFamily efFamily)
+			Family efFamily)
 		{
 			if (efFamily == null)
 			{
@@ -60,7 +60,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void LessonMapModelToEF(
 			int id,
 			LessonModel model,
-			EFLesson efLesson)
+			Lesson efLesson)
 		{
 			efLesson.SetProperties(
 				id,
@@ -76,7 +76,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOLesson LessonMapEFToPOCO(
-			EFLesson efLesson)
+			Lesson efLesson)
 		{
 			if (efLesson == null)
 			{
@@ -89,7 +89,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void LessonStatusMapModelToEF(
 			int id,
 			LessonStatusModel model,
-			EFLessonStatus efLessonStatus)
+			LessonStatus efLessonStatus)
 		{
 			efLessonStatus.SetProperties(
 				id,
@@ -98,7 +98,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOLessonStatus LessonStatusMapEFToPOCO(
-			EFLessonStatus efLessonStatus)
+			LessonStatus efLessonStatus)
 		{
 			if (efLessonStatus == null)
 			{
@@ -111,7 +111,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void LessonXStudentMapModelToEF(
 			int id,
 			LessonXStudentModel model,
-			EFLessonXStudent efLessonXStudent)
+			LessonXStudent efLessonXStudent)
 		{
 			efLessonXStudent.SetProperties(
 				id,
@@ -120,7 +120,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOLessonXStudent LessonXStudentMapEFToPOCO(
-			EFLessonXStudent efLessonXStudent)
+			LessonXStudent efLessonXStudent)
 		{
 			if (efLessonXStudent == null)
 			{
@@ -133,7 +133,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void LessonXTeacherMapModelToEF(
 			int id,
 			LessonXTeacherModel model,
-			EFLessonXTeacher efLessonXTeacher)
+			LessonXTeacher efLessonXTeacher)
 		{
 			efLessonXTeacher.SetProperties(
 				id,
@@ -142,7 +142,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOLessonXTeacher LessonXTeacherMapEFToPOCO(
-			EFLessonXTeacher efLessonXTeacher)
+			LessonXTeacher efLessonXTeacher)
 		{
 			if (efLessonXTeacher == null)
 			{
@@ -155,7 +155,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void RateMapModelToEF(
 			int id,
 			RateModel model,
-			EFRate efRate)
+			Rate efRate)
 		{
 			efRate.SetProperties(
 				id,
@@ -165,7 +165,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCORate RateMapEFToPOCO(
-			EFRate efRate)
+			Rate efRate)
 		{
 			if (efRate == null)
 			{
@@ -178,7 +178,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void SpaceMapModelToEF(
 			int id,
 			SpaceModel model,
-			EFSpace efSpace)
+			Space efSpace)
 		{
 			efSpace.SetProperties(
 				id,
@@ -188,7 +188,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOSpace SpaceMapEFToPOCO(
-			EFSpace efSpace)
+			Space efSpace)
 		{
 			if (efSpace == null)
 			{
@@ -201,7 +201,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void SpaceFeatureMapModelToEF(
 			int id,
 			SpaceFeatureModel model,
-			EFSpaceFeature efSpaceFeature)
+			SpaceFeature efSpaceFeature)
 		{
 			efSpaceFeature.SetProperties(
 				id,
@@ -210,7 +210,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOSpaceFeature SpaceFeatureMapEFToPOCO(
-			EFSpaceFeature efSpaceFeature)
+			SpaceFeature efSpaceFeature)
 		{
 			if (efSpaceFeature == null)
 			{
@@ -223,7 +223,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void SpaceXSpaceFeatureMapModelToEF(
 			int id,
 			SpaceXSpaceFeatureModel model,
-			EFSpaceXSpaceFeature efSpaceXSpaceFeature)
+			SpaceXSpaceFeature efSpaceXSpaceFeature)
 		{
 			efSpaceXSpaceFeature.SetProperties(
 				id,
@@ -232,7 +232,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOSpaceXSpaceFeature SpaceXSpaceFeatureMapEFToPOCO(
-			EFSpaceXSpaceFeature efSpaceXSpaceFeature)
+			SpaceXSpaceFeature efSpaceXSpaceFeature)
 		{
 			if (efSpaceXSpaceFeature == null)
 			{
@@ -245,7 +245,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void StateMapModelToEF(
 			int id,
 			StateModel model,
-			EFState efState)
+			State efState)
 		{
 			efState.SetProperties(
 				id,
@@ -253,7 +253,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOState StateMapEFToPOCO(
-			EFState efState)
+			State efState)
 		{
 			if (efState == null)
 			{
@@ -266,7 +266,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void StudentMapModelToEF(
 			int id,
 			StudentModel model,
-			EFStudent efStudent)
+			Student efStudent)
 		{
 			efStudent.SetProperties(
 				id,
@@ -283,7 +283,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOStudent StudentMapEFToPOCO(
-			EFStudent efStudent)
+			Student efStudent)
 		{
 			if (efStudent == null)
 			{
@@ -296,7 +296,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void StudentXFamilyMapModelToEF(
 			int id,
 			StudentXFamilyModel model,
-			EFStudentXFamily efStudentXFamily)
+			StudentXFamily efStudentXFamily)
 		{
 			efStudentXFamily.SetProperties(
 				id,
@@ -305,7 +305,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOStudentXFamily StudentXFamilyMapEFToPOCO(
-			EFStudentXFamily efStudentXFamily)
+			StudentXFamily efStudentXFamily)
 		{
 			if (efStudentXFamily == null)
 			{
@@ -318,7 +318,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void StudioMapModelToEF(
 			int id,
 			StudioModel model,
-			EFStudio efStudio)
+			Studio efStudio)
 		{
 			efStudio.SetProperties(
 				id,
@@ -332,7 +332,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOStudio StudioMapEFToPOCO(
-			EFStudio efStudio)
+			Studio efStudio)
 		{
 			if (efStudio == null)
 			{
@@ -345,7 +345,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void TeacherMapModelToEF(
 			int id,
 			TeacherModel model,
-			EFTeacher efTeacher)
+			Teacher efTeacher)
 		{
 			efTeacher.SetProperties(
 				id,
@@ -358,7 +358,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOTeacher TeacherMapEFToPOCO(
-			EFTeacher efTeacher)
+			Teacher efTeacher)
 		{
 			if (efTeacher == null)
 			{
@@ -371,7 +371,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void TeacherSkillMapModelToEF(
 			int id,
 			TeacherSkillModel model,
-			EFTeacherSkill efTeacherSkill)
+			TeacherSkill efTeacherSkill)
 		{
 			efTeacherSkill.SetProperties(
 				id,
@@ -380,7 +380,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOTeacherSkill TeacherSkillMapEFToPOCO(
-			EFTeacherSkill efTeacherSkill)
+			TeacherSkill efTeacherSkill)
 		{
 			if (efTeacherSkill == null)
 			{
@@ -393,7 +393,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void TeacherXTeacherSkillMapModelToEF(
 			int id,
 			TeacherXTeacherSkillModel model,
-			EFTeacherXTeacherSkill efTeacherXTeacherSkill)
+			TeacherXTeacherSkill efTeacherXTeacherSkill)
 		{
 			efTeacherXTeacherSkill.SetProperties(
 				id,
@@ -402,7 +402,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOTeacherXTeacherSkill TeacherXTeacherSkillMapEFToPOCO(
-			EFTeacherXTeacherSkill efTeacherXTeacherSkill)
+			TeacherXTeacherSkill efTeacherXTeacherSkill)
 		{
 			if (efTeacherXTeacherSkill == null)
 			{
@@ -415,5 +415,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3c24d4095c50b0e48bba3c2583570f61</Hash>
+    <Hash>bae9b9e0d195697b16a695c884bbb1b6</Hash>
 </Codenesium>*/

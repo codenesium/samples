@@ -9,7 +9,7 @@ namespace PetStoreNS.Api.BusinessObjects
 {
 	public interface IBOPaymentType
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOPaymentType>> Create(
 			PaymentTypeModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>97405a52a437038509cbf35fa60fb679</Hash>
+    <Hash>ff203d5e110d1bbcf79359519cb16acc</Hash>
 </Codenesium>*/

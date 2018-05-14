@@ -7,7 +7,7 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ISpaceFeatureRepository
 	{
-		int Create(SpaceFeatureModel model);
+		POCOSpaceFeature Create(SpaceFeatureModel model);
 
 		void Update(int id,
 		            SpaceFeatureModel model);
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>494973259f72fdbedfd16ab39e9211d1</Hash>
+    <Hash>f64953db524cdaf31c7fa83901a82439</Hash>
 </Codenesium>*/

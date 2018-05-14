@@ -26,26 +26,36 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOClasp Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOClasp Create(
 			ClaspModel model)
 		{
-			EFClasp record = new EFClasp();
+			Clasp record = new Clasp();
 
 			this.Mapper.ClaspMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFClasp>().Add(record);
+			this.Context.Set<Clasp>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.ClaspMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			ClaspModel model)
 		{
-			EFClasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Clasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFClasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Clasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFClasp>().Remove(record);
+				this.Context.Set<Clasp>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOClasp Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOClasp> Where(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOClasp> Where(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOClasp> SearchLinqPOCO(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOClasp> SearchLinqPOCO(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOClasp> response = new List<POCOClasp>();
-			List<EFClasp> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Clasp> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.ClaspMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFClasp> SearchLinqEF(Expression<Func<EFClasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Clasp> SearchLinqEF(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
+				orderClause = $"{nameof(Clasp.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
-			}
+			return this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Clasp>();
 		}
 
-		private List<EFClasp> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Clasp> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClasp>();
+				orderClause = $"{nameof(Clasp.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFClasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClasp>();
-			}
+
+			return this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Clasp>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4558647bc1710b5aba1c12b6459e4597</Hash>
+    <Hash>203b2ab9434bdea89dc1aaf1999dfbad</Hash>
 </Codenesium>*/

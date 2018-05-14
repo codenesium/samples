@@ -9,7 +9,7 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOLink
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOLink>> Create(
 			LinkModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -20,9 +20,12 @@ namespace NebulaNS.Api.BusinessObjects
 		POCOLink Get(int id);
 
 		List<POCOLink> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		List<POCOLink> ChainId(int chainId);
+		POCOLink ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d3485927956a1f1568c8b9d148d3a67</Hash>
+    <Hash>ad49b30c9466d5e89bc314df283abb47</Hash>
 </Codenesium>*/

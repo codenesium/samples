@@ -9,7 +9,7 @@ namespace FileServiceNS.Api.BusinessObjects
 {
 	public interface IBOFileType
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOFileType>> Create(
 			FileTypeModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>982565672bbc02e2f60eb5b95fa84d24</Hash>
+    <Hash>f3fb7e9099341fb6f5ba5232902be1df</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IAirlineRepository
 	{
-		int Create(AirlineModel model);
+		POCOAirline Create(AirlineModel model);
 
 		void Update(int id,
 		            AirlineModel model);
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c919e826c89091b5b565f24bccfd3ced</Hash>
+    <Hash>09f3613eb6261c7e966262a1e9340628</Hash>
 </Codenesium>*/

@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOCountryRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOCountryRequirement Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOCountryRequirement Create(
 			CountryRequirementModel model)
 		{
-			EFCountryRequirement record = new EFCountryRequirement();
+			CountryRequirement record = new CountryRequirement();
 
 			this.Mapper.CountryRequirementMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFCountryRequirement>().Add(record);
+			this.Context.Set<CountryRequirement>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.CountryRequirementMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			CountryRequirementModel model)
 		{
-			EFCountryRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			CountryRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFCountryRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			CountryRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFCountryRequirement>().Remove(record);
+				this.Context.Set<CountryRequirement>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOCountryRequirement Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOCountryRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOCountryRequirement> Where(Expression<Func<EFCountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOCountryRequirement> Where(Expression<Func<CountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOCountryRequirement> SearchLinqPOCO(Expression<Func<EFCountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOCountryRequirement> SearchLinqPOCO(Expression<Func<CountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOCountryRequirement> response = new List<POCOCountryRequirement>();
-			List<EFCountryRequirement> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<CountryRequirement> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.CountryRequirementMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFCountryRequirement> SearchLinqEF(Expression<Func<EFCountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<CountryRequirement> SearchLinqEF(Expression<Func<CountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFCountryRequirement>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFCountryRequirement>();
+				orderClause = $"{nameof(CountryRequirement.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFCountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCountryRequirement>();
-			}
+			return this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CountryRequirement>();
 		}
 
-		private List<EFCountryRequirement> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<CountryRequirement> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFCountryRequirement>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFCountryRequirement>();
+				orderClause = $"{nameof(CountryRequirement.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFCountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFCountryRequirement>();
-			}
+
+			return this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CountryRequirement>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b6dc99645362eeb0729b7a5cd8c12ab</Hash>
+    <Hash>47608c1dd33170a27692322246ad6a2c</Hash>
 </Codenesium>*/

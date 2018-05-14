@@ -7,7 +7,7 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IHandlerRepository
 	{
-		int Create(HandlerModel model);
+		POCOHandler Create(HandlerModel model);
 
 		void Update(int id,
 		            HandlerModel model);
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c2c827a3b34e06f0212a4be004807262</Hash>
+    <Hash>b478632aa96d59221fc67026b6392b2e</Hash>
 </Codenesium>*/

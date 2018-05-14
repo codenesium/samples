@@ -29,14 +29,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOSpaceXSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.spaceXSpaceFeatureRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOSpaceXSpaceFeature Get(int id)
+		{
+			return this.spaceXSpaceFeatureRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOSpaceXSpaceFeature>> Create(
 			SpaceXSpaceFeatureModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.spaceXSpaceFeatureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOSpaceXSpaceFeature> response = new CreateResponse<POCOSpaceXSpaceFeature>(await this.spaceXSpaceFeatureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.spaceXSpaceFeatureRepository.Create(model);
-				response.SetId(id);
+				POCOSpaceXSpaceFeature record = this.spaceXSpaceFeatureRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FermataFishNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOSpaceXSpaceFeature Get(int id)
-		{
-			return this.spaceXSpaceFeatureRepository.Get(id);
-		}
-
-		public virtual List<POCOSpaceXSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.spaceXSpaceFeatureRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>536871eb25787b2fce567217efe1603a</Hash>
+    <Hash>b5587d96be9d04790ea43ee9696ec248</Hash>
 </Codenesium>*/

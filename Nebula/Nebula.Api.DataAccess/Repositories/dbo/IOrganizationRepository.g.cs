@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IOrganizationRepository
 	{
-		int Create(OrganizationModel model);
+		POCOOrganization Create(OrganizationModel model);
 
 		void Update(int id,
 		            OrganizationModel model);
@@ -17,9 +17,11 @@ namespace NebulaNS.Api.DataAccess
 		POCOOrganization Get(int id);
 
 		List<POCOOrganization> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOOrganization Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>97b1a0a5a895740e98f38d6bc934d7d2</Hash>
+    <Hash>4d2cc7c2683ba618082a8d7d2225e0e7</Hash>
 </Codenesium>*/

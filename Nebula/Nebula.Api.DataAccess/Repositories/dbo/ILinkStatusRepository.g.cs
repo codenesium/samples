@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkStatusRepository
 	{
-		int Create(LinkStatusModel model);
+		POCOLinkStatus Create(LinkStatusModel model);
 
 		void Update(int id,
 		            LinkStatusModel model);
@@ -17,9 +17,11 @@ namespace NebulaNS.Api.DataAccess
 		POCOLinkStatus Get(int id);
 
 		List<POCOLinkStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOLinkStatus Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>894e2bef8ac5aa114381322bf662de22</Hash>
+    <Hash>e689eb822cdc27dd85754627f37f7faf</Hash>
 </Codenesium>*/

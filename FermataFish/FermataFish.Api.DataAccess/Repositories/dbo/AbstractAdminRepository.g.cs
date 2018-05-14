@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOAdmin> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOAdmin Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOAdmin Create(
 			AdminModel model)
 		{
-			EFAdmin record = new EFAdmin();
+			Admin record = new Admin();
 
 			this.Mapper.AdminMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFAdmin>().Add(record);
+			this.Context.Set<Admin>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.AdminMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			AdminModel model)
 		{
-			EFAdmin record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Admin record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFAdmin record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Admin record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFAdmin>().Remove(record);
+				this.Context.Set<Admin>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOAdmin Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOAdmin> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOAdmin> Where(Expression<Func<EFAdmin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOAdmin> Where(Expression<Func<Admin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOAdmin> SearchLinqPOCO(Expression<Func<EFAdmin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOAdmin> SearchLinqPOCO(Expression<Func<Admin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOAdmin> response = new List<POCOAdmin>();
-			List<EFAdmin> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Admin> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.AdminMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFAdmin> SearchLinqEF(Expression<Func<EFAdmin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Admin> SearchLinqEF(Expression<Func<Admin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFAdmin>();
+				orderClause = $"{nameof(Admin.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAdmin>();
-			}
+			return this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Admin>();
 		}
 
-		private List<EFAdmin> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Admin> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFAdmin>();
+				orderClause = $"{nameof(Admin.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFAdmin>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAdmin>();
-			}
+
+			return this.Context.Set<Admin>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Admin>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>52bad374595e5341ce23706849decaef</Hash>
+    <Hash>227332409e862790a3f9a9c66123e3f5</Hash>
 </Codenesium>*/

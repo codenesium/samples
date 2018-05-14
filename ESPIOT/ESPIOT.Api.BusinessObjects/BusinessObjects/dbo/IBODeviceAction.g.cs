@@ -9,7 +9,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 {
 	public interface IBODeviceAction
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCODeviceAction>> Create(
 			DeviceActionModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bdd117986d5cdbb15c5bbd74fa98a0c7</Hash>
+    <Hash>f20395a75b9358c78f970c6612f74ecc</Hash>
 </Codenesium>*/

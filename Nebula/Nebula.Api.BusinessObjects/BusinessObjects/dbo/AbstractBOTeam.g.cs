@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.teamRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOTeam Get(int id)
+		{
+			return this.teamRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOTeam>> Create(
 			TeamModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.teamModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOTeam> response = new CreateResponse<POCOTeam>(await this.teamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.teamRepository.Create(model);
-				response.SetId(id);
+				POCOTeam record = this.teamRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOTeam Get(int id)
+		public POCOTeam Name(string name)
 		{
-			return this.teamRepository.Get(id);
-		}
-
-		public virtual List<POCOTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.teamRepository.All(skip, take, orderClause);
+			return this.teamRepository.Name(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9bf26ad01342af828730c86256a0b17</Hash>
+    <Hash>233feee82a8c078f85dba135b6eff663</Hash>
 </Codenesium>*/

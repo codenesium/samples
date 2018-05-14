@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetShippingNS.Api.DataAccess
 {
 	[Table("Airline", Schema="dbo")]
-	public partial class EFAirline: AbstractEntityFrameworkPOCO
+	public partial class Airline: AbstractEntityFrameworkPOCO
 	{
-		public EFAirline()
+		public Airline()
 		{}
 
 		public void SetProperties(
@@ -29,5 +29,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ab1a22d5004bb66c7be32151c87a3400</Hash>
+    <Hash>f33b16095cae4cd5ade714e97a065c5b</Hash>
 </Codenesium>*/

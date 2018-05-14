@@ -8,7 +8,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void BreedMapModelToEF(
 			int id,
 			BreedModel model,
-			EFBreed efBreed)
+			Breed efBreed)
 		{
 			efBreed.SetProperties(
 				id,
@@ -16,7 +16,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOBreed BreedMapEFToPOCO(
-			EFBreed efBreed)
+			Breed efBreed)
 		{
 			if (efBreed == null)
 			{
@@ -29,7 +29,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void PaymentTypeMapModelToEF(
 			int id,
 			PaymentTypeModel model,
-			EFPaymentType efPaymentType)
+			PaymentType efPaymentType)
 		{
 			efPaymentType.SetProperties(
 				id,
@@ -37,7 +37,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOPaymentType PaymentTypeMapEFToPOCO(
-			EFPaymentType efPaymentType)
+			PaymentType efPaymentType)
 		{
 			if (efPaymentType == null)
 			{
@@ -50,7 +50,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void PenMapModelToEF(
 			int id,
 			PenModel model,
-			EFPen efPen)
+			Pen efPen)
 		{
 			efPen.SetProperties(
 				id,
@@ -58,7 +58,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOPen PenMapEFToPOCO(
-			EFPen efPen)
+			Pen efPen)
 		{
 			if (efPen == null)
 			{
@@ -71,7 +71,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void PetMapModelToEF(
 			int id,
 			PetModel model,
-			EFPet efPet)
+			Pet efPet)
 		{
 			efPet.SetProperties(
 				id,
@@ -84,7 +84,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOPet PetMapEFToPOCO(
-			EFPet efPet)
+			Pet efPet)
 		{
 			if (efPet == null)
 			{
@@ -97,7 +97,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void SaleMapModelToEF(
 			int id,
 			SaleModel model,
-			EFSale efSale)
+			Sale efSale)
 		{
 			efSale.SetProperties(
 				id,
@@ -110,7 +110,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOSale SaleMapEFToPOCO(
-			EFSale efSale)
+			Sale efSale)
 		{
 			if (efSale == null)
 			{
@@ -123,7 +123,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void SpeciesMapModelToEF(
 			int id,
 			SpeciesModel model,
-			EFSpecies efSpecies)
+			Species efSpecies)
 		{
 			efSpecies.SetProperties(
 				id,
@@ -131,7 +131,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOSpecies SpeciesMapEFToPOCO(
-			EFSpecies efSpecies)
+			Species efSpecies)
 		{
 			if (efSpecies == null)
 			{
@@ -144,5 +144,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd0c46afc91e99fa3fddfe756c19d2c3</Hash>
+    <Hash>9af6ac078d08adef3e33529037982e64</Hash>
 </Codenesium>*/

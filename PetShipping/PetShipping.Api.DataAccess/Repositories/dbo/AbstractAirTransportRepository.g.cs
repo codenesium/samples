@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOAirTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOAirTransport Get(int airlineId)
+		{
+			return this.SearchLinqPOCO(x => x.AirlineId == airlineId).FirstOrDefault();
+		}
+
+		public virtual POCOAirTransport Create(
 			AirTransportModel model)
 		{
-			EFAirTransport record = new EFAirTransport();
+			AirTransport record = new AirTransport();
 
 			this.Mapper.AirTransportMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFAirTransport>().Add(record);
+			this.Context.Set<AirTransport>().Add(record);
 			this.Context.SaveChanges();
-			return record.AirlineId;
+			return this.Mapper.AirTransportMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int airlineId,
 			AirTransportModel model)
 		{
-			EFAirTransport record = this.SearchLinqEF(x => x.AirlineId == airlineId).FirstOrDefault();
+			AirTransport record = this.SearchLinqEF(x => x.AirlineId == airlineId).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{airlineId}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int airlineId)
 		{
-			EFAirTransport record = this.SearchLinqEF(x => x.AirlineId == airlineId).FirstOrDefault();
+			AirTransport record = this.SearchLinqEF(x => x.AirlineId == airlineId).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFAirTransport>().Remove(record);
+				this.Context.Set<AirTransport>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOAirTransport Get(int airlineId)
-		{
-			return this.SearchLinqPOCO(x => x.AirlineId == airlineId).FirstOrDefault();
-		}
-
-		public virtual List<POCOAirTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOAirTransport> Where(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOAirTransport> Where(Expression<Func<AirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOAirTransport> SearchLinqPOCO(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOAirTransport> SearchLinqPOCO(Expression<Func<AirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOAirTransport> response = new List<POCOAirTransport>();
-			List<EFAirTransport> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<AirTransport> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.AirTransportMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFAirTransport> SearchLinqEF(Expression<Func<EFAirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<AirTransport> SearchLinqEF(Expression<Func<AirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy("AirlineId ASC").Skip(skip).Take(take).ToList<EFAirTransport>();
+				orderClause = $"{nameof(AirTransport.AirlineId)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAirTransport>();
-			}
+			return this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<AirTransport>();
 		}
 
-		private List<EFAirTransport> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<AirTransport> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy("AirlineId ASC").Skip(skip).Take(take).ToList<EFAirTransport>();
+				orderClause = $"{nameof(AirTransport.AirlineId)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFAirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFAirTransport>();
-			}
+
+			return this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<AirTransport>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d39a1d15a840e4b8a083ba1cbecee39f</Hash>
+    <Hash>330e653bb64052bc1a3f46360c1ec90f</Hash>
 </Codenesium>*/

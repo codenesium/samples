@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.DataAccess
 {
 	[Table("FileType", Schema="dbo")]
-	public partial class EFFileType: AbstractEntityFrameworkPOCO
+	public partial class FileType: AbstractEntityFrameworkPOCO
 	{
-		public EFFileType()
+		public FileType()
 		{}
 
 		public void SetProperties(
@@ -29,5 +29,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e60f36a058682624876ab5773c48c68f</Hash>
+    <Hash>772f523db0f690d578191070ea153aa4</Hash>
 </Codenesium>*/

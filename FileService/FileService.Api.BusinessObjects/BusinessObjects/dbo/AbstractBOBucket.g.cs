@@ -29,14 +29,24 @@ namespace FileServiceNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.bucketRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOBucket Get(int id)
+		{
+			return this.bucketRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOBucket>> Create(
 			BucketModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.bucketModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOBucket> response = new CreateResponse<POCOBucket>(await this.bucketModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.bucketRepository.Create(model);
-				response.SetId(id);
+				POCOBucket record = this.bucketRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,18 @@ namespace FileServiceNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOBucket Get(int id)
+		public POCOBucket Name(string name)
 		{
-			return this.bucketRepository.Get(id);
+			return this.bucketRepository.Name(name);
 		}
 
-		public virtual List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public POCOBucket ExternalId(Guid externalId)
 		{
-			return this.bucketRepository.All(skip, take, orderClause);
+			return this.bucketRepository.ExternalId(externalId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>42d1b302336f857569b20334df93db49</Hash>
+    <Hash>ffc023259f975b47a2c7e399d624f471</Hash>
 </Codenesium>*/

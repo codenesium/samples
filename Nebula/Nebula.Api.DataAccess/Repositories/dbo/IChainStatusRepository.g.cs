@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IChainStatusRepository
 	{
-		int Create(ChainStatusModel model);
+		POCOChainStatus Create(ChainStatusModel model);
 
 		void Update(int id,
 		            ChainStatusModel model);
@@ -17,9 +17,11 @@ namespace NebulaNS.Api.DataAccess
 		POCOChainStatus Get(int id);
 
 		List<POCOChainStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOChainStatus Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8fc482016381dd14d226e84fd4203485</Hash>
+    <Hash>757b5740ba47058606c815a16bfff543</Hash>
 </Codenesium>*/

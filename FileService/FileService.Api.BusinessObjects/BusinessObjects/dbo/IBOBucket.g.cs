@@ -9,7 +9,7 @@ namespace FileServiceNS.Api.BusinessObjects
 {
 	public interface IBOBucket
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOBucket>> Create(
 			BucketModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -20,9 +20,13 @@ namespace FileServiceNS.Api.BusinessObjects
 		POCOBucket Get(int id);
 
 		List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOBucket Name(string name);
+
+		POCOBucket ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7dd5e1db3b1bf506b8e38cc62cd398fe</Hash>
+    <Hash>bc19ed7a777e0790eb3926def843787c</Hash>
 </Codenesium>*/

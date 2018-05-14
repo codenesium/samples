@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetShippingNS.Api.DataAccess
 {
 	[Table("CountryRequirement", Schema="dbo")]
-	public partial class EFCountryRequirement: AbstractEntityFrameworkPOCO
+	public partial class CountryRequirement: AbstractEntityFrameworkPOCO
 	{
-		public EFCountryRequirement()
+		public CountryRequirement()
 		{}
 
 		public void SetProperties(
@@ -32,10 +32,10 @@ namespace PetShippingNS.Api.DataAccess
 		public int Id { get; set; }
 
 		[ForeignKey("CountryId")]
-		public virtual EFCountry Country { get; set; }
+		public virtual Country Country { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a41e5e4432951aef35255ac871fa7ae</Hash>
+    <Hash>08bfdf49dcc0662f08e8731366627a0b</Hash>
 </Codenesium>*/

@@ -26,26 +26,36 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOPaymentType Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOPaymentType Create(
 			PaymentTypeModel model)
 		{
-			EFPaymentType record = new EFPaymentType();
+			PaymentType record = new PaymentType();
 
 			this.Mapper.PaymentTypeMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFPaymentType>().Add(record);
+			this.Context.Set<PaymentType>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.PaymentTypeMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			PaymentTypeModel model)
 		{
-			EFPaymentType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			PaymentType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetStoreNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFPaymentType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			PaymentType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetStoreNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFPaymentType>().Remove(record);
+				this.Context.Set<PaymentType>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOPaymentType Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOPaymentType> Where(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOPaymentType> Where(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOPaymentType> SearchLinqPOCO(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOPaymentType> SearchLinqPOCO(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOPaymentType> response = new List<POCOPaymentType>();
-			List<EFPaymentType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<PaymentType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.PaymentTypeMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFPaymentType> SearchLinqEF(Expression<Func<EFPaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<PaymentType> SearchLinqEF(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPaymentType>();
+				orderClause = $"{nameof(PaymentType.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPaymentType>();
-			}
+			return this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PaymentType>();
 		}
 
-		private List<EFPaymentType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<PaymentType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFPaymentType>();
+				orderClause = $"{nameof(PaymentType.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFPaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFPaymentType>();
-			}
+
+			return this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PaymentType>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce1514bb5f79386863596b0f36ac72af</Hash>
+    <Hash>96aeafbce1a84c0351bb87515379994e</Hash>
 </Codenesium>*/

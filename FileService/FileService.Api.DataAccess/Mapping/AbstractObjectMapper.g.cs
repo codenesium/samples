@@ -8,7 +8,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void BucketMapModelToEF(
 			int id,
 			BucketModel model,
-			EFBucket efBucket)
+			Bucket efBucket)
 		{
 			efBucket.SetProperties(
 				id,
@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual POCOBucket BucketMapEFToPOCO(
-			EFBucket efBucket)
+			Bucket efBucket)
 		{
 			if (efBucket == null)
 			{
@@ -30,7 +30,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void FileMapModelToEF(
 			int id,
 			FileModel model,
-			EFFile efFile)
+			File efFile)
 		{
 			efFile.SetProperties(
 				id,
@@ -48,7 +48,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual POCOFile FileMapEFToPOCO(
-			EFFile efFile)
+			File efFile)
 		{
 			if (efFile == null)
 			{
@@ -61,7 +61,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void FileTypeMapModelToEF(
 			int id,
 			FileTypeModel model,
-			EFFileType efFileType)
+			FileType efFileType)
 		{
 			efFileType.SetProperties(
 				id,
@@ -69,7 +69,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual POCOFileType FileTypeMapEFToPOCO(
-			EFFileType efFileType)
+			FileType efFileType)
 		{
 			if (efFileType == null)
 			{
@@ -82,7 +82,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void VersionInfoMapModelToEF(
 			long version,
 			VersionInfoModel model,
-			EFVersionInfo efVersionInfo)
+			VersionInfo efVersionInfo)
 		{
 			efVersionInfo.SetProperties(
 				version,
@@ -91,7 +91,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual POCOVersionInfo VersionInfoMapEFToPOCO(
-			EFVersionInfo efVersionInfo)
+			VersionInfo efVersionInfo)
 		{
 			if (efVersionInfo == null)
 			{
@@ -104,5 +104,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9e15e64a7daa02f3fbd70c1858fd112f</Hash>
+    <Hash>6f48c892e74368cf3dfb8c3441f8b83f</Hash>
 </Codenesium>*/

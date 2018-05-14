@@ -8,53 +8,53 @@ namespace PetStoreNS.Api.DataAccess
 		void BreedMapModelToEF(
 			int id,
 			BreedModel model,
-			EFBreed efBreed);
+			Breed efBreed);
 
 		POCOBreed BreedMapEFToPOCO(
-			EFBreed efBreed);
+			Breed efBreed);
 
 		void PaymentTypeMapModelToEF(
 			int id,
 			PaymentTypeModel model,
-			EFPaymentType efPaymentType);
+			PaymentType efPaymentType);
 
 		POCOPaymentType PaymentTypeMapEFToPOCO(
-			EFPaymentType efPaymentType);
+			PaymentType efPaymentType);
 
 		void PenMapModelToEF(
 			int id,
 			PenModel model,
-			EFPen efPen);
+			Pen efPen);
 
 		POCOPen PenMapEFToPOCO(
-			EFPen efPen);
+			Pen efPen);
 
 		void PetMapModelToEF(
 			int id,
 			PetModel model,
-			EFPet efPet);
+			Pet efPet);
 
 		POCOPet PetMapEFToPOCO(
-			EFPet efPet);
+			Pet efPet);
 
 		void SaleMapModelToEF(
 			int id,
 			SaleModel model,
-			EFSale efSale);
+			Sale efSale);
 
 		POCOSale SaleMapEFToPOCO(
-			EFSale efSale);
+			Sale efSale);
 
 		void SpeciesMapModelToEF(
 			int id,
 			SpeciesModel model,
-			EFSpecies efSpecies);
+			Species efSpecies);
 
 		POCOSpecies SpeciesMapEFToPOCO(
-			EFSpecies efSpecies);
+			Species efSpecies);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ac7719c1f2fcfa2a4c5750183be8df7b</Hash>
+    <Hash>0441da9434c3ac07b30ddf1a52311011</Hash>
 </Codenesium>*/

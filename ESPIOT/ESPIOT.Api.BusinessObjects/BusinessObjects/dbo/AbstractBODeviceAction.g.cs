@@ -29,14 +29,24 @@ namespace ESPIOTNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCODeviceAction> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.deviceActionRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCODeviceAction Get(int id)
+		{
+			return this.deviceActionRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCODeviceAction>> Create(
 			DeviceActionModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.deviceActionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCODeviceAction> response = new CreateResponse<POCODeviceAction>(await this.deviceActionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.deviceActionRepository.Create(model);
-				response.SetId(id);
+				POCODeviceAction record = this.deviceActionRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace ESPIOTNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCODeviceAction Get(int id)
-		{
-			return this.deviceActionRepository.Get(id);
-		}
-
-		public virtual List<POCODeviceAction> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.deviceActionRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e6d2f67d1ed2299dd7663b7d21d8a31</Hash>
+    <Hash>5d5739c6900651238ee3fd6ace666cee</Hash>
 </Codenesium>*/

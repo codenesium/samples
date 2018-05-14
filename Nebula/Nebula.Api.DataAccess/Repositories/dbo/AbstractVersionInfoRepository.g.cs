@@ -26,26 +26,36 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual long Create(
+		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOVersionInfo Get(long version)
+		{
+			return this.SearchLinqPOCO(x => x.Version == version).FirstOrDefault();
+		}
+
+		public virtual POCOVersionInfo Create(
 			VersionInfoModel model)
 		{
-			EFVersionInfo record = new EFVersionInfo();
+			VersionInfo record = new VersionInfo();
 
 			this.Mapper.VersionInfoMapModelToEF(
 				default (long),
 				model,
 				record);
 
-			this.Context.Set<EFVersionInfo>().Add(record);
+			this.Context.Set<VersionInfo>().Add(record);
 			this.Context.SaveChanges();
-			return record.Version;
+			return this.Mapper.VersionInfoMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			long version,
 			VersionInfoModel model)
 		{
-			EFVersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
+			VersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{version}");
@@ -63,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			long version)
 		{
-			EFVersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
+			VersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,50 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFVersionInfo>().Remove(record);
+				this.Context.Set<VersionInfo>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOVersionInfo Get(long version)
+		public POCOVersionInfo Version(long version)
 		{
 			return this.SearchLinqPOCO(x => x.Version == version).FirstOrDefault();
 		}
 
-		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOVersionInfo> Where(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOVersionInfo> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOVersionInfo> SearchLinqPOCO(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOVersionInfo> SearchLinqPOCO(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOVersionInfo> response = new List<POCOVersionInfo>();
-			List<EFVersionInfo> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<VersionInfo> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.VersionInfoMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFVersionInfo> SearchLinqEF(Expression<Func<EFVersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<VersionInfo> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy("Version ASC").Skip(skip).Take(take).ToList<EFVersionInfo>();
+				orderClause = $"{nameof(VersionInfo.Version)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFVersionInfo>();
-			}
+			return this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<VersionInfo>();
 		}
 
-		private List<EFVersionInfo> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<VersionInfo> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy("Version ASC").Skip(skip).Take(take).ToList<EFVersionInfo>();
+				orderClause = $"{nameof(VersionInfo.Version)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFVersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFVersionInfo>();
-			}
+
+			return this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<VersionInfo>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6178c8c195ff872eb7c803275b7450ff</Hash>
+    <Hash>3917acce11e2c443ed9d9123039044a3</Hash>
 </Codenesium>*/

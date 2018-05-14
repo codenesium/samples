@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCORate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCORate Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCORate Create(
 			RateModel model)
 		{
-			EFRate record = new EFRate();
+			Rate record = new Rate();
 
 			this.Mapper.RateMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFRate>().Add(record);
+			this.Context.Set<Rate>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.RateMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			RateModel model)
 		{
-			EFRate record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Rate record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFRate record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Rate record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFRate>().Remove(record);
+				this.Context.Set<Rate>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCORate Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCORate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCORate> Where(Expression<Func<EFRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCORate> Where(Expression<Func<Rate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCORate> SearchLinqPOCO(Expression<Func<EFRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCORate> SearchLinqPOCO(Expression<Func<Rate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCORate> response = new List<POCORate>();
-			List<EFRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Rate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.RateMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFRate> SearchLinqEF(Expression<Func<EFRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Rate> SearchLinqEF(Expression<Func<Rate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFRate>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFRate>();
+				orderClause = $"{nameof(Rate.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFRate>();
-			}
+			return this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Rate>();
 		}
 
-		private List<EFRate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Rate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFRate>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFRate>();
+				orderClause = $"{nameof(Rate.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFRate>();
-			}
+
+			return this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Rate>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>759e2314a02a8f955f840fd295a54401</Hash>
+    <Hash>05e4dda2a2c9f658a0f3fc7e704b8807</Hash>
 </Codenesium>*/

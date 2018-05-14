@@ -9,7 +9,7 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface IBOSpaceFeature
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOSpaceFeature>> Create(
 			SpaceFeatureModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f98dd6adaab5331adad0f7c8360bf907</Hash>
+    <Hash>d9e1df7ea35d6b289073bd5c86a59df1</Hash>
 </Codenesium>*/

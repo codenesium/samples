@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRepository
 	{
-		int Create(MachineModel model);
+		POCOMachine Create(MachineModel model);
 
 		void Update(int id,
 		            MachineModel model);
@@ -17,9 +17,11 @@ namespace NebulaNS.Api.DataAccess
 		POCOMachine Get(int id);
 
 		List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOMachine MachineGuid(Guid machineGuid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9950467e5f5bdd53be635edf21a94470</Hash>
+    <Hash>84bb770f50b93a6f946220e594d21c3f</Hash>
 </Codenesium>*/

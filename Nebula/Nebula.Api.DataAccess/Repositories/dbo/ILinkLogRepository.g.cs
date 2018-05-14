@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkLogRepository
 	{
-		int Create(LinkLogModel model);
+		POCOLinkLog Create(LinkLogModel model);
 
 		void Update(int id,
 		            LinkLogModel model);
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4edf5165e373f0263b97c818fb84fb05</Hash>
+    <Hash>2e2ccd225750d83dd103ae8562733166</Hash>
 </Codenesium>*/

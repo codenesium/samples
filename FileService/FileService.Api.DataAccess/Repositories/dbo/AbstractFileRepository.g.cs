@@ -26,26 +26,36 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOFile> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOFile Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOFile Create(
 			FileModel model)
 		{
-			EFFile record = new EFFile();
+			File record = new File();
 
 			this.Mapper.FileMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFFile>().Add(record);
+			this.Context.Set<File>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.FileMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			FileModel model)
 		{
-			EFFile record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			File record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFFile record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			File record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFFile>().Remove(record);
+				this.Context.Set<File>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOFile Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOFile> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOFile> Where(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOFile> Where(Expression<Func<File, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOFile> SearchLinqPOCO(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOFile> SearchLinqPOCO(Expression<Func<File, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOFile> response = new List<POCOFile>();
-			List<EFFile> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<File> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.FileMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFFile> SearchLinqEF(Expression<Func<EFFile, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<File> SearchLinqEF(Expression<Func<File, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
+				orderClause = $"{nameof(File.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
-			}
+			return this.Context.Set<File>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<File>();
 		}
 
-		private List<EFFile> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<File> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFile>();
+				orderClause = $"{nameof(File.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFFile>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFile>();
-			}
+
+			return this.Context.Set<File>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<File>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d36ae02406c3c06cf913369304bc06b</Hash>
+    <Hash>31028af2d7318de9c30763914a77a979</Hash>
 </Codenesium>*/

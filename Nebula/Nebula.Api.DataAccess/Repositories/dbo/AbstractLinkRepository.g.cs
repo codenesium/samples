@@ -26,26 +26,36 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOLink> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOLink Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOLink Create(
 			LinkModel model)
 		{
-			EFLink record = new EFLink();
+			Link record = new Link();
 
 			this.Mapper.LinkMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFLink>().Add(record);
+			this.Context.Set<Link>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.LinkMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			LinkModel model)
 		{
-			EFLink record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Link record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFLink record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Link record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,54 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFLink>().Remove(record);
+				this.Context.Set<Link>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOLink Get(int id)
+		public List<POCOLink> ChainId(int chainId)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.ChainId == chainId);
+		}
+		public POCOLink ExternalId(Guid externalId)
+		{
+			return this.SearchLinqPOCO(x => x.ExternalId == externalId).FirstOrDefault();
 		}
 
-		public virtual List<POCOLink> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOLink> Where(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOLink> Where(Expression<Func<Link, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOLink> SearchLinqPOCO(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOLink> SearchLinqPOCO(Expression<Func<Link, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOLink> response = new List<POCOLink>();
-			List<EFLink> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Link> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.LinkMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFLink> SearchLinqEF(Expression<Func<EFLink, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Link> SearchLinqEF(Expression<Func<Link, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFLink>();
+				orderClause = $"{nameof(Link.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLink>();
-			}
+			return this.Context.Set<Link>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Link>();
 		}
 
-		private List<EFLink> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Link> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFLink>();
+				orderClause = $"{nameof(Link.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFLink>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFLink>();
-			}
+
+			return this.Context.Set<Link>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Link>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e2924e630a4c78879bc04979c210f94e</Hash>
+    <Hash>adf2f88fc3d9728853d42c8f5940c5b0</Hash>
 </Codenesium>*/

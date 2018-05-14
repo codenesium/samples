@@ -29,14 +29,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.spaceFeatureRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOSpaceFeature Get(int id)
+		{
+			return this.spaceFeatureRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOSpaceFeature>> Create(
 			SpaceFeatureModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.spaceFeatureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOSpaceFeature> response = new CreateResponse<POCOSpaceFeature>(await this.spaceFeatureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.spaceFeatureRepository.Create(model);
-				response.SetId(id);
+				POCOSpaceFeature record = this.spaceFeatureRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FermataFishNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOSpaceFeature Get(int id)
-		{
-			return this.spaceFeatureRepository.Get(id);
-		}
-
-		public virtual List<POCOSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.spaceFeatureRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f303ff0eb5faef01bbd82e0803a2229d</Hash>
+    <Hash>bd0edbf0419a042fc7b3c77958e91975</Hash>
 </Codenesium>*/

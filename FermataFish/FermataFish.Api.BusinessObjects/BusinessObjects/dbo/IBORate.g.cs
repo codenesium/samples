@@ -9,7 +9,7 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface IBORate
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCORate>> Create(
 			RateModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1773f5687c8fbcb534e7ff7f02aadcf1</Hash>
+    <Hash>c73af1343db9f60c569f1755d4129cf1</Hash>
 </Codenesium>*/

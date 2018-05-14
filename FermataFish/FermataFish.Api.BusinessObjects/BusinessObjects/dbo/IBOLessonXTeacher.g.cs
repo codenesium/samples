@@ -9,7 +9,7 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface IBOLessonXTeacher
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOLessonXTeacher>> Create(
 			LessonXTeacherModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7a36707e3d6331f957de61c0c9f44fb5</Hash>
+    <Hash>cec89b1a6636ed7c4ad71e38f4be49e2</Hash>
 </Codenesium>*/

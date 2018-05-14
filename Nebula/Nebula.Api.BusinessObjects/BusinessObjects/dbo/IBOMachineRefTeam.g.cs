@@ -9,7 +9,7 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOMachineRefTeam
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOMachineRefTeam>> Create(
 			MachineRefTeamModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>adf9b9fd2582559848b1e63e98efde04</Hash>
+    <Hash>18ec00d9107927700af248903f0517ce</Hash>
 </Codenesium>*/

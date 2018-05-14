@@ -7,7 +7,7 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IDestinationRepository
 	{
-		int Create(DestinationModel model);
+		POCODestination Create(DestinationModel model);
 
 		void Update(int id,
 		            DestinationModel model);
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>265d0532dec925ca7a338f262bb4b3b7</Hash>
+    <Hash>971247cfc8ce8e7c7186bb55f863b861</Hash>
 </Codenesium>*/

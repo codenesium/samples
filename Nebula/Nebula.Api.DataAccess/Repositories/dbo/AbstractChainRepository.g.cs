@@ -26,26 +26,36 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOChain Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOChain Create(
 			ChainModel model)
 		{
-			EFChain record = new EFChain();
+			Chain record = new Chain();
 
 			this.Mapper.ChainMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFChain>().Add(record);
+			this.Context.Set<Chain>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.ChainMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			ChainModel model)
 		{
-			EFChain record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Chain record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFChain record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Chain record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,50 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFChain>().Remove(record);
+				this.Context.Set<Chain>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOChain Get(int id)
+		public POCOChain ExternalId(Guid externalId)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.ExternalId == externalId).FirstOrDefault();
 		}
 
-		public virtual List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOChain> Where(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOChain> Where(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOChain> SearchLinqPOCO(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOChain> SearchLinqPOCO(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOChain> response = new List<POCOChain>();
-			List<EFChain> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Chain> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.ChainMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFChain> SearchLinqEF(Expression<Func<EFChain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Chain> SearchLinqEF(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
+				orderClause = $"{nameof(Chain.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
-			}
+			return this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Chain>();
 		}
 
-		private List<EFChain> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Chain> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFChain>();
+				orderClause = $"{nameof(Chain.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFChain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFChain>();
-			}
+
+			return this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Chain>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67dcbd1bcd85db5e3fac3e932160cc6a</Hash>
+    <Hash>3c177c018ddc392f2a1b42fe74b8ce14</Hash>
 </Codenesium>*/

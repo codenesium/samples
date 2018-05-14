@@ -29,14 +29,24 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.speciesRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOSpecies Get(int id)
+		{
+			return this.speciesRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOSpecies>> Create(
 			SpeciesModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.speciesModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOSpecies> response = new CreateResponse<POCOSpecies>(await this.speciesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.speciesRepository.Create(model);
-				response.SetId(id);
+				POCOSpecies record = this.speciesRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetStoreNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOSpecies Get(int id)
-		{
-			return this.speciesRepository.Get(id);
-		}
-
-		public virtual List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.speciesRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6eec0e9ed05a753cadd0554d27de7317</Hash>
+    <Hash>3f3ac2ac0fb17523ac3dc9d1e1bed1e3</Hash>
 </Codenesium>*/

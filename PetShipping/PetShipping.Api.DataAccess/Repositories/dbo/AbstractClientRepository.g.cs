@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOClient> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOClient Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOClient Create(
 			ClientModel model)
 		{
-			EFClient record = new EFClient();
+			Client record = new Client();
 
 			this.Mapper.ClientMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFClient>().Add(record);
+			this.Context.Set<Client>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.ClientMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			ClientModel model)
 		{
-			EFClient record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Client record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFClient record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Client record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFClient>().Remove(record);
+				this.Context.Set<Client>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOClient Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOClient> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOClient> Where(Expression<Func<EFClient, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOClient> Where(Expression<Func<Client, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOClient> SearchLinqPOCO(Expression<Func<EFClient, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOClient> SearchLinqPOCO(Expression<Func<Client, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOClient> response = new List<POCOClient>();
-			List<EFClient> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Client> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.ClientMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFClient> SearchLinqEF(Expression<Func<EFClient, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Client> SearchLinqEF(Expression<Func<Client, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFClient>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClient>();
+				orderClause = $"{nameof(Client.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFClient>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClient>();
-			}
+			return this.Context.Set<Client>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Client>();
 		}
 
-		private List<EFClient> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Client> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFClient>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFClient>();
+				orderClause = $"{nameof(Client.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFClient>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFClient>();
-			}
+
+			return this.Context.Set<Client>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Client>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c683a04cd196fc7beee355d3a70c40c5</Hash>
+    <Hash>4cf09594f6b54500c18054af12d9e26b</Hash>
 </Codenesium>*/

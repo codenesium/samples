@@ -26,26 +26,36 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOFileType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOFileType Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOFileType Create(
 			FileTypeModel model)
 		{
-			EFFileType record = new EFFileType();
+			FileType record = new FileType();
 
 			this.Mapper.FileTypeMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFFileType>().Add(record);
+			this.Context.Set<FileType>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.FileTypeMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			FileTypeModel model)
 		{
-			EFFileType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			FileType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FileServiceNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFFileType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			FileType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFFileType>().Remove(record);
+				this.Context.Set<FileType>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOFileType Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOFileType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOFileType> Where(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOFileType> Where(Expression<Func<FileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOFileType> SearchLinqPOCO(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOFileType> SearchLinqPOCO(Expression<Func<FileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOFileType> response = new List<POCOFileType>();
-			List<EFFileType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<FileType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.FileTypeMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFFileType> SearchLinqEF(Expression<Func<EFFileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<FileType> SearchLinqEF(Expression<Func<FileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFileType>();
+				orderClause = $"{nameof(FileType.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFileType>();
-			}
+			return this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<FileType>();
 		}
 
-		private List<EFFileType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<FileType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFFileType>();
+				orderClause = $"{nameof(FileType.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFFileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFFileType>();
-			}
+
+			return this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<FileType>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fd2000e944f0c224268942505c3cece3</Hash>
+    <Hash>3087cc703d38120973cc5d9952bb8ecd</Hash>
 </Codenesium>*/

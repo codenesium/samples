@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.chainRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOChain Get(int id)
+		{
+			return this.chainRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOChain>> Create(
 			ChainModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.chainModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOChain> response = new CreateResponse<POCOChain>(await this.chainModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.chainRepository.Create(model);
-				response.SetId(id);
+				POCOChain record = this.chainRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOChain Get(int id)
+		public POCOChain ExternalId(Guid externalId)
 		{
-			return this.chainRepository.Get(id);
-		}
-
-		public virtual List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.chainRepository.All(skip, take, orderClause);
+			return this.chainRepository.ExternalId(externalId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>69e0e33fff5691c6214d834170314c07</Hash>
+    <Hash>2bb8212e2d260e2bf0d8124e622b7ed5</Hash>
 </Codenesium>*/

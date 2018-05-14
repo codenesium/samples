@@ -7,7 +7,7 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public interface IPaymentTypeRepository
 	{
-		int Create(PaymentTypeModel model);
+		POCOPaymentType Create(PaymentTypeModel model);
 
 		void Update(int id,
 		            PaymentTypeModel model);
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a95207e3354eaf50665d96e1ce101184</Hash>
+    <Hash>786185612aa245ad0ca2054354646113</Hash>
 </Codenesium>*/

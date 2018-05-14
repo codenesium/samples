@@ -26,26 +26,36 @@ namespace ESPIOTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCODevice Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCODevice Create(
 			DeviceModel model)
 		{
-			EFDevice record = new EFDevice();
+			Device record = new Device();
 
 			this.Mapper.DeviceMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFDevice>().Add(record);
+			this.Context.Set<Device>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.DeviceMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			DeviceModel model)
 		{
-			EFDevice record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Device record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace ESPIOTNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFDevice record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Device record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,50 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFDevice>().Remove(record);
+				this.Context.Set<Device>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCODevice Get(int id)
+		public POCODevice PublicId(Guid publicId)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			return this.SearchLinqPOCO(x => x.PublicId == publicId).FirstOrDefault();
 		}
 
-		public virtual List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCODevice> Where(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCODevice> Where(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCODevice> SearchLinqPOCO(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCODevice> SearchLinqPOCO(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCODevice> response = new List<POCODevice>();
-			List<EFDevice> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Device> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.DeviceMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFDevice> SearchLinqEF(Expression<Func<EFDevice, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Device> SearchLinqEF(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDevice>();
+				orderClause = $"{nameof(Device.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
-			}
+			return this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Device>();
 		}
 
-		private List<EFDevice> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Device> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFDevice>();
+				orderClause = $"{nameof(Device.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFDevice>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFDevice>();
-			}
+
+			return this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Device>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ca973f7fa9eec2e636f09ff5bbbc818</Hash>
+    <Hash>f99863b8db4bbb6f5130e75a4a2f5cea</Hash>
 </Codenesium>*/

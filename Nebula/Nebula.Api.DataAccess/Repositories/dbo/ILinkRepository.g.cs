@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkRepository
 	{
-		int Create(LinkModel model);
+		POCOLink Create(LinkModel model);
 
 		void Update(int id,
 		            LinkModel model);
@@ -17,9 +17,12 @@ namespace NebulaNS.Api.DataAccess
 		POCOLink Get(int id);
 
 		List<POCOLink> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		List<POCOLink> ChainId(int chainId);
+		POCOLink ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>41557ee1ecd7fb55046afba494579d53</Hash>
+    <Hash>27f11ff55bb48a3cc765e32384b10777</Hash>
 </Codenesium>*/

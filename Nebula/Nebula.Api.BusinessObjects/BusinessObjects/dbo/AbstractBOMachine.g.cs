@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.machineRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOMachine Get(int id)
+		{
+			return this.machineRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOMachine>> Create(
 			MachineModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.machineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOMachine> response = new CreateResponse<POCOMachine>(await this.machineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.machineRepository.Create(model);
-				response.SetId(id);
+				POCOMachine record = this.machineRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOMachine Get(int id)
+		public POCOMachine MachineGuid(Guid machineGuid)
 		{
-			return this.machineRepository.Get(id);
-		}
-
-		public virtual List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.machineRepository.All(skip, take, orderClause);
+			return this.machineRepository.MachineGuid(machineGuid);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1776d35d5831c8fc2ecda1a6409a31aa</Hash>
+    <Hash>4d50614e8e0222e6df8281c4e5c8402c</Hash>
 </Codenesium>*/

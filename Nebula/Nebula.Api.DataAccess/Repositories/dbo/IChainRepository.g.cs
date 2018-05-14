@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IChainRepository
 	{
-		int Create(ChainModel model);
+		POCOChain Create(ChainModel model);
 
 		void Update(int id,
 		            ChainModel model);
@@ -17,9 +17,11 @@ namespace NebulaNS.Api.DataAccess
 		POCOChain Get(int id);
 
 		List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOChain ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa469b0590ab0623a4759818bee2ffd4</Hash>
+    <Hash>636638d23d5db5959798f528dee70a19</Hash>
 </Codenesium>*/

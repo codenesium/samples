@@ -9,7 +9,7 @@ namespace PetShippingNS.Api.BusinessObjects
 {
 	public interface IBOHandlerPipelineStep
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOHandlerPipelineStep>> Create(
 			HandlerPipelineStepModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>eceb963dc48e466115514680523c0e8d</Hash>
+    <Hash>525d49f9571ba0b2b8ece3432460c00d</Hash>
 </Codenesium>*/

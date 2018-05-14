@@ -29,14 +29,24 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOClientCommunication> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.clientCommunicationRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOClientCommunication Get(int id)
+		{
+			return this.clientCommunicationRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOClientCommunication>> Create(
 			ClientCommunicationModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.clientCommunicationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOClientCommunication> response = new CreateResponse<POCOClientCommunication>(await this.clientCommunicationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.clientCommunicationRepository.Create(model);
-				response.SetId(id);
+				POCOClientCommunication record = this.clientCommunicationRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetShippingNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOClientCommunication Get(int id)
-		{
-			return this.clientCommunicationRepository.Get(id);
-		}
-
-		public virtual List<POCOClientCommunication> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.clientCommunicationRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7754f3ff17447a4351554d601b5b7e18</Hash>
+    <Hash>7abce5565e3d7a969eca3b96cfe352e6</Hash>
 </Codenesium>*/

@@ -29,14 +29,24 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOAirline> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.airlineRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOAirline Get(int id)
+		{
+			return this.airlineRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOAirline>> Create(
 			AirlineModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.airlineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOAirline> response = new CreateResponse<POCOAirline>(await this.airlineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.airlineRepository.Create(model);
-				response.SetId(id);
+				POCOAirline record = this.airlineRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetShippingNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOAirline Get(int id)
-		{
-			return this.airlineRepository.Get(id);
-		}
-
-		public virtual List<POCOAirline> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.airlineRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46f0298da1d8192126c7200076892f77</Hash>
+    <Hash>52a82976b383a2238ccbe65cb76653e6</Hash>
 </Codenesium>*/

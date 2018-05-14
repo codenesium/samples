@@ -9,7 +9,7 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOLinkLog
 	{
-		Task<CreateResponse<int>> Create(
+		Task<CreateResponse<POCOLinkLog>> Create(
 			LinkLogModel model);
 
 		Task<ActionResponse> Update(int id,
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>90931e5cdcf1ad4d6c2310bd14a1f2e6</Hash>
+    <Hash>7253b3d1d154e070a71af6fa36346327</Hash>
 </Codenesium>*/

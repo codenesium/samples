@@ -29,14 +29,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCORate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.rateRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCORate Get(int id)
+		{
+			return this.rateRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCORate>> Create(
 			RateModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.rateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCORate> response = new CreateResponse<POCORate>(await this.rateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.rateRepository.Create(model);
-				response.SetId(id);
+				POCORate record = this.rateRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FermataFishNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCORate Get(int id)
-		{
-			return this.rateRepository.Get(id);
-		}
-
-		public virtual List<POCORate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.rateRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ffbb308c6ab5f988e49d90ce9ad645a</Hash>
+    <Hash>18df3463e57121f22bded9a4bb980257</Hash>
 </Codenesium>*/

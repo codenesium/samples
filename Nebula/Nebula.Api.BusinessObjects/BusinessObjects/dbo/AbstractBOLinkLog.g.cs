@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOLinkLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.linkLogRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOLinkLog Get(int id)
+		{
+			return this.linkLogRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOLinkLog>> Create(
 			LinkLogModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.linkLogModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOLinkLog> response = new CreateResponse<POCOLinkLog>(await this.linkLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.linkLogRepository.Create(model);
-				response.SetId(id);
+				POCOLinkLog record = this.linkLogRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace NebulaNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOLinkLog Get(int id)
-		{
-			return this.linkLogRepository.Get(id);
-		}
-
-		public virtual List<POCOLinkLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.linkLogRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fceebbe4515789fc863c9535ffecdf5b</Hash>
+    <Hash>984ba529fe49eaa9b71587a39705396c</Hash>
 </Codenesium>*/

@@ -29,14 +29,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOSpace> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.spaceRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOSpace Get(int id)
+		{
+			return this.spaceRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOSpace>> Create(
 			SpaceModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.spaceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOSpace> response = new CreateResponse<POCOSpace>(await this.spaceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.spaceRepository.Create(model);
-				response.SetId(id);
+				POCOSpace record = this.spaceRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FermataFishNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOSpace Get(int id)
-		{
-			return this.spaceRepository.Get(id);
-		}
-
-		public virtual List<POCOSpace> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.spaceRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6b3c0ff8ce1d6270dfbc8501bede9c8c</Hash>
+    <Hash>ea6fda634a031d83bad437f72fef90b6</Hash>
 </Codenesium>*/

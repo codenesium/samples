@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.claspRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOClasp Get(int id)
+		{
+			return this.claspRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOClasp>> Create(
 			ClaspModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.claspModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOClasp> response = new CreateResponse<POCOClasp>(await this.claspModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.claspRepository.Create(model);
-				response.SetId(id);
+				POCOClasp record = this.claspRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace NebulaNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOClasp Get(int id)
-		{
-			return this.claspRepository.Get(id);
-		}
-
-		public virtual List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.claspRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0afa214bd60a3de6a79d268d49bfd29d</Hash>
+    <Hash>e93c8a1eca75b863af37069f6eb9e80b</Hash>
 </Codenesium>*/

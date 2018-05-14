@@ -8,21 +8,21 @@ namespace ESPIOTNS.Api.DataAccess
 		void DeviceMapModelToEF(
 			int id,
 			DeviceModel model,
-			EFDevice efDevice);
+			Device efDevice);
 
 		POCODevice DeviceMapEFToPOCO(
-			EFDevice efDevice);
+			Device efDevice);
 
 		void DeviceActionMapModelToEF(
 			int id,
 			DeviceActionModel model,
-			EFDeviceAction efDeviceAction);
+			DeviceAction efDeviceAction);
 
 		POCODeviceAction DeviceActionMapEFToPOCO(
-			EFDeviceAction efDeviceAction);
+			DeviceAction efDeviceAction);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4bd99235cd532aed049374a8a8cbb4c</Hash>
+    <Hash>8ee90a9f705450be37e03e175d91c65b</Hash>
 </Codenesium>*/

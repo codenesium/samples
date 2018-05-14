@@ -8,7 +8,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void ChainMapModelToEF(
 			int id,
 			ChainModel model,
-			EFChain efChain)
+			Chain efChain)
 		{
 			efChain.SetProperties(
 				id,
@@ -19,7 +19,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOChain ChainMapEFToPOCO(
-			EFChain efChain)
+			Chain efChain)
 		{
 			if (efChain == null)
 			{
@@ -32,7 +32,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void ChainStatusMapModelToEF(
 			int id,
 			ChainStatusModel model,
-			EFChainStatus efChainStatus)
+			ChainStatus efChainStatus)
 		{
 			efChainStatus.SetProperties(
 				id,
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOChainStatus ChainStatusMapEFToPOCO(
-			EFChainStatus efChainStatus)
+			ChainStatus efChainStatus)
 		{
 			if (efChainStatus == null)
 			{
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void ClaspMapModelToEF(
 			int id,
 			ClaspModel model,
-			EFClasp efClasp)
+			Clasp efClasp)
 		{
 			efClasp.SetProperties(
 				id,
@@ -62,7 +62,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOClasp ClaspMapEFToPOCO(
-			EFClasp efClasp)
+			Clasp efClasp)
 		{
 			if (efClasp == null)
 			{
@@ -75,7 +75,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void LinkMapModelToEF(
 			int id,
 			LinkModel model,
-			EFLink efLink)
+			Link efLink)
 		{
 			efLink.SetProperties(
 				id,
@@ -94,7 +94,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOLink LinkMapEFToPOCO(
-			EFLink efLink)
+			Link efLink)
 		{
 			if (efLink == null)
 			{
@@ -107,7 +107,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void LinkLogMapModelToEF(
 			int id,
 			LinkLogModel model,
-			EFLinkLog efLinkLog)
+			LinkLog efLinkLog)
 		{
 			efLinkLog.SetProperties(
 				id,
@@ -117,7 +117,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOLinkLog LinkLogMapEFToPOCO(
-			EFLinkLog efLinkLog)
+			LinkLog efLinkLog)
 		{
 			if (efLinkLog == null)
 			{
@@ -130,7 +130,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void LinkStatusMapModelToEF(
 			int id,
 			LinkStatusModel model,
-			EFLinkStatus efLinkStatus)
+			LinkStatus efLinkStatus)
 		{
 			efLinkStatus.SetProperties(
 				id,
@@ -138,7 +138,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOLinkStatus LinkStatusMapEFToPOCO(
-			EFLinkStatus efLinkStatus)
+			LinkStatus efLinkStatus)
 		{
 			if (efLinkStatus == null)
 			{
@@ -151,7 +151,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void MachineMapModelToEF(
 			int id,
 			MachineModel model,
-			EFMachine efMachine)
+			Machine efMachine)
 		{
 			efMachine.SetProperties(
 				id,
@@ -163,7 +163,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOMachine MachineMapEFToPOCO(
-			EFMachine efMachine)
+			Machine efMachine)
 		{
 			if (efMachine == null)
 			{
@@ -176,7 +176,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void MachineRefTeamMapModelToEF(
 			int id,
 			MachineRefTeamModel model,
-			EFMachineRefTeam efMachineRefTeam)
+			MachineRefTeam efMachineRefTeam)
 		{
 			efMachineRefTeam.SetProperties(
 				id,
@@ -185,7 +185,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOMachineRefTeam MachineRefTeamMapEFToPOCO(
-			EFMachineRefTeam efMachineRefTeam)
+			MachineRefTeam efMachineRefTeam)
 		{
 			if (efMachineRefTeam == null)
 			{
@@ -198,7 +198,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void OrganizationMapModelToEF(
 			int id,
 			OrganizationModel model,
-			EFOrganization efOrganization)
+			Organization efOrganization)
 		{
 			efOrganization.SetProperties(
 				id,
@@ -206,7 +206,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOOrganization OrganizationMapEFToPOCO(
-			EFOrganization efOrganization)
+			Organization efOrganization)
 		{
 			if (efOrganization == null)
 			{
@@ -219,7 +219,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void TeamMapModelToEF(
 			int id,
 			TeamModel model,
-			EFTeam efTeam)
+			Team efTeam)
 		{
 			efTeam.SetProperties(
 				id,
@@ -228,7 +228,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOTeam TeamMapEFToPOCO(
-			EFTeam efTeam)
+			Team efTeam)
 		{
 			if (efTeam == null)
 			{
@@ -241,7 +241,7 @@ namespace NebulaNS.Api.DataAccess
 		public virtual void VersionInfoMapModelToEF(
 			long version,
 			VersionInfoModel model,
-			EFVersionInfo efVersionInfo)
+			VersionInfo efVersionInfo)
 		{
 			efVersionInfo.SetProperties(
 				version,
@@ -250,7 +250,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOVersionInfo VersionInfoMapEFToPOCO(
-			EFVersionInfo efVersionInfo)
+			VersionInfo efVersionInfo)
 		{
 			if (efVersionInfo == null)
 			{
@@ -263,5 +263,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6bc61e9ac22402813e25e2de20b5f771</Hash>
+    <Hash>3269df1a8ab7495bc3464c13e5b13adf</Hash>
 </Codenesium>*/

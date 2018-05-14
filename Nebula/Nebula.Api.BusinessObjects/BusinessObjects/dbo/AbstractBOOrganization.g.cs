@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOOrganization> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.organizationRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOOrganization Get(int id)
+		{
+			return this.organizationRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOOrganization>> Create(
 			OrganizationModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.organizationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOOrganization> response = new CreateResponse<POCOOrganization>(await this.organizationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.organizationRepository.Create(model);
-				response.SetId(id);
+				POCOOrganization record = this.organizationRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOOrganization Get(int id)
+		public POCOOrganization Name(string name)
 		{
-			return this.organizationRepository.Get(id);
-		}
-
-		public virtual List<POCOOrganization> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.organizationRepository.All(skip, take, orderClause);
+			return this.organizationRepository.Name(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc0c696d879c88cca2470f7fd52299ca</Hash>
+    <Hash>ae180181541951c5f2bbe6c10dceba3e</Hash>
 </Codenesium>*/

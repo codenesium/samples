@@ -6,9 +6,9 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.DataAccess
 {
 	[Table("Bucket", Schema="dbo")]
-	public partial class EFBucket: AbstractEntityFrameworkPOCO
+	public partial class Bucket:AbstractEntityFrameworkPOCO
 	{
-		public EFBucket()
+		public Bucket()
 		{}
 
 		public void SetProperties(
@@ -34,5 +34,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>83f06c04ddc49b73baf251c03fd9fa4b</Hash>
+    <Hash>794b74baf664e8c3baaac849e911a22a</Hash>
 </Codenesium>*/

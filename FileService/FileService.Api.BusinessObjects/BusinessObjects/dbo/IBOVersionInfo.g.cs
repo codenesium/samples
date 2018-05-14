@@ -9,7 +9,7 @@ namespace FileServiceNS.Api.BusinessObjects
 {
 	public interface IBOVersionInfo
 	{
-		Task<CreateResponse<long>> Create(
+		Task<CreateResponse<POCOVersionInfo>> Create(
 			VersionInfoModel model);
 
 		Task<ActionResponse> Update(long version,
@@ -20,9 +20,11 @@ namespace FileServiceNS.Api.BusinessObjects
 		POCOVersionInfo Get(long version);
 
 		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+
+		POCOVersionInfo Version(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b7c9a18f5993c26222097e4eeb217e71</Hash>
+    <Hash>efc1e717401841860042c856994b6082</Hash>
 </Codenesium>*/

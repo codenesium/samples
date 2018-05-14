@@ -29,14 +29,24 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOPipelineStepDestination> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.pipelineStepDestinationRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOPipelineStepDestination Get(int id)
+		{
+			return this.pipelineStepDestinationRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOPipelineStepDestination>> Create(
 			PipelineStepDestinationModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.pipelineStepDestinationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOPipelineStepDestination> response = new CreateResponse<POCOPipelineStepDestination>(await this.pipelineStepDestinationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.pipelineStepDestinationRepository.Create(model);
-				response.SetId(id);
+				POCOPipelineStepDestination record = this.pipelineStepDestinationRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace PetShippingNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOPipelineStepDestination Get(int id)
-		{
-			return this.pipelineStepDestinationRepository.Get(id);
-		}
-
-		public virtual List<POCOPipelineStepDestination> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.pipelineStepDestinationRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc2176f87ead35d0feeb19b7e0c984c5</Hash>
+    <Hash>1ec005cac20d6f169458a5c0ad77aaa1</Hash>
 </Codenesium>*/

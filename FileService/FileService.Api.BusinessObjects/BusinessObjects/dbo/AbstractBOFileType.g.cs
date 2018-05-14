@@ -29,14 +29,24 @@ namespace FileServiceNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOFileType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.fileTypeRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOFileType Get(int id)
+		{
+			return this.fileTypeRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOFileType>> Create(
 			FileTypeModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOFileType> response = new CreateResponse<POCOFileType>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.fileTypeRepository.Create(model);
-				response.SetId(id);
+				POCOFileType record = this.fileTypeRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FileServiceNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOFileType Get(int id)
-		{
-			return this.fileTypeRepository.Get(id);
-		}
-
-		public virtual List<POCOFileType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.fileTypeRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3fa356276e156c3bea596fce20db3a8</Hash>
+    <Hash>23cffc42d6092e361bc1f359088b97d2</Hash>
 </Codenesium>*/

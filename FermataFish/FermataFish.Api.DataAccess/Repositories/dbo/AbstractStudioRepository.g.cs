@@ -26,26 +26,36 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOStudio> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOStudio Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOStudio Create(
 			StudioModel model)
 		{
-			EFStudio record = new EFStudio();
+			Studio record = new Studio();
 
 			this.Mapper.StudioMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFStudio>().Add(record);
+			this.Context.Set<Studio>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.StudioMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			StudioModel model)
 		{
-			EFStudio record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Studio record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFStudio record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Studio record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFStudio>().Remove(record);
+				this.Context.Set<Studio>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOStudio Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOStudio> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOStudio> Where(Expression<Func<EFStudio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOStudio> Where(Expression<Func<Studio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOStudio> SearchLinqPOCO(Expression<Func<EFStudio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOStudio> SearchLinqPOCO(Expression<Func<Studio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOStudio> response = new List<POCOStudio>();
-			List<EFStudio> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Studio> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.StudioMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFStudio> SearchLinqEF(Expression<Func<EFStudio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Studio> SearchLinqEF(Expression<Func<Studio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFStudio>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFStudio>();
+				orderClause = $"{nameof(Studio.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFStudio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFStudio>();
-			}
+			return this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Studio>();
 		}
 
-		private List<EFStudio> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Studio> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFStudio>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFStudio>();
+				orderClause = $"{nameof(Studio.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFStudio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFStudio>();
-			}
+
+			return this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Studio>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>497d5de365e8e9ea556a059f69654da2</Hash>
+    <Hash>9cd2b5d4abdfeb6e37758fcdb244af8d</Hash>
 </Codenesium>*/

@@ -8,141 +8,141 @@ namespace FermataFishNS.Api.DataAccess
 		void AdminMapModelToEF(
 			int id,
 			AdminModel model,
-			EFAdmin efAdmin);
+			Admin efAdmin);
 
 		POCOAdmin AdminMapEFToPOCO(
-			EFAdmin efAdmin);
+			Admin efAdmin);
 
 		void FamilyMapModelToEF(
 			int id,
 			FamilyModel model,
-			EFFamily efFamily);
+			Family efFamily);
 
 		POCOFamily FamilyMapEFToPOCO(
-			EFFamily efFamily);
+			Family efFamily);
 
 		void LessonMapModelToEF(
 			int id,
 			LessonModel model,
-			EFLesson efLesson);
+			Lesson efLesson);
 
 		POCOLesson LessonMapEFToPOCO(
-			EFLesson efLesson);
+			Lesson efLesson);
 
 		void LessonStatusMapModelToEF(
 			int id,
 			LessonStatusModel model,
-			EFLessonStatus efLessonStatus);
+			LessonStatus efLessonStatus);
 
 		POCOLessonStatus LessonStatusMapEFToPOCO(
-			EFLessonStatus efLessonStatus);
+			LessonStatus efLessonStatus);
 
 		void LessonXStudentMapModelToEF(
 			int id,
 			LessonXStudentModel model,
-			EFLessonXStudent efLessonXStudent);
+			LessonXStudent efLessonXStudent);
 
 		POCOLessonXStudent LessonXStudentMapEFToPOCO(
-			EFLessonXStudent efLessonXStudent);
+			LessonXStudent efLessonXStudent);
 
 		void LessonXTeacherMapModelToEF(
 			int id,
 			LessonXTeacherModel model,
-			EFLessonXTeacher efLessonXTeacher);
+			LessonXTeacher efLessonXTeacher);
 
 		POCOLessonXTeacher LessonXTeacherMapEFToPOCO(
-			EFLessonXTeacher efLessonXTeacher);
+			LessonXTeacher efLessonXTeacher);
 
 		void RateMapModelToEF(
 			int id,
 			RateModel model,
-			EFRate efRate);
+			Rate efRate);
 
 		POCORate RateMapEFToPOCO(
-			EFRate efRate);
+			Rate efRate);
 
 		void SpaceMapModelToEF(
 			int id,
 			SpaceModel model,
-			EFSpace efSpace);
+			Space efSpace);
 
 		POCOSpace SpaceMapEFToPOCO(
-			EFSpace efSpace);
+			Space efSpace);
 
 		void SpaceFeatureMapModelToEF(
 			int id,
 			SpaceFeatureModel model,
-			EFSpaceFeature efSpaceFeature);
+			SpaceFeature efSpaceFeature);
 
 		POCOSpaceFeature SpaceFeatureMapEFToPOCO(
-			EFSpaceFeature efSpaceFeature);
+			SpaceFeature efSpaceFeature);
 
 		void SpaceXSpaceFeatureMapModelToEF(
 			int id,
 			SpaceXSpaceFeatureModel model,
-			EFSpaceXSpaceFeature efSpaceXSpaceFeature);
+			SpaceXSpaceFeature efSpaceXSpaceFeature);
 
 		POCOSpaceXSpaceFeature SpaceXSpaceFeatureMapEFToPOCO(
-			EFSpaceXSpaceFeature efSpaceXSpaceFeature);
+			SpaceXSpaceFeature efSpaceXSpaceFeature);
 
 		void StateMapModelToEF(
 			int id,
 			StateModel model,
-			EFState efState);
+			State efState);
 
 		POCOState StateMapEFToPOCO(
-			EFState efState);
+			State efState);
 
 		void StudentMapModelToEF(
 			int id,
 			StudentModel model,
-			EFStudent efStudent);
+			Student efStudent);
 
 		POCOStudent StudentMapEFToPOCO(
-			EFStudent efStudent);
+			Student efStudent);
 
 		void StudentXFamilyMapModelToEF(
 			int id,
 			StudentXFamilyModel model,
-			EFStudentXFamily efStudentXFamily);
+			StudentXFamily efStudentXFamily);
 
 		POCOStudentXFamily StudentXFamilyMapEFToPOCO(
-			EFStudentXFamily efStudentXFamily);
+			StudentXFamily efStudentXFamily);
 
 		void StudioMapModelToEF(
 			int id,
 			StudioModel model,
-			EFStudio efStudio);
+			Studio efStudio);
 
 		POCOStudio StudioMapEFToPOCO(
-			EFStudio efStudio);
+			Studio efStudio);
 
 		void TeacherMapModelToEF(
 			int id,
 			TeacherModel model,
-			EFTeacher efTeacher);
+			Teacher efTeacher);
 
 		POCOTeacher TeacherMapEFToPOCO(
-			EFTeacher efTeacher);
+			Teacher efTeacher);
 
 		void TeacherSkillMapModelToEF(
 			int id,
 			TeacherSkillModel model,
-			EFTeacherSkill efTeacherSkill);
+			TeacherSkill efTeacherSkill);
 
 		POCOTeacherSkill TeacherSkillMapEFToPOCO(
-			EFTeacherSkill efTeacherSkill);
+			TeacherSkill efTeacherSkill);
 
 		void TeacherXTeacherSkillMapModelToEF(
 			int id,
 			TeacherXTeacherSkillModel model,
-			EFTeacherXTeacherSkill efTeacherXTeacherSkill);
+			TeacherXTeacherSkill efTeacherXTeacherSkill);
 
 		POCOTeacherXTeacherSkill TeacherXTeacherSkillMapEFToPOCO(
-			EFTeacherXTeacherSkill efTeacherXTeacherSkill);
+			TeacherXTeacherSkill efTeacherXTeacherSkill);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ddb1728c57be6cc57a6e2e3bb0defb75</Hash>
+    <Hash>cb1665dc1067f69d2d9cd1db393171eb</Hash>
 </Codenesium>*/

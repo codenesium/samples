@@ -29,14 +29,24 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<long>> Create(
+		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.versionInfoRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOVersionInfo Get(long version)
+		{
+			return this.versionInfoRepository.Get(version);
+		}
+
+		public virtual async Task<CreateResponse<POCOVersionInfo>> Create(
 			VersionInfoModel model)
 		{
-			CreateResponse<long> response = new CreateResponse<long>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOVersionInfo> response = new CreateResponse<POCOVersionInfo>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				long id = this.versionInfoRepository.Create(model);
-				response.SetId(id);
+				POCOVersionInfo record = this.versionInfoRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -68,18 +78,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public virtual POCOVersionInfo Get(long version)
+		public POCOVersionInfo Version(long version)
 		{
-			return this.versionInfoRepository.Get(version);
-		}
-
-		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.versionInfoRepository.All(skip, take, orderClause);
+			return this.versionInfoRepository.Version(version);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>190ce22505e2fa5dde9b118bdb3094b9</Hash>
+    <Hash>f3881428a848eda14fffb903d2d552d1</Hash>
 </Codenesium>*/

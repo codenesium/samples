@@ -26,26 +26,36 @@ namespace PetShippingNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual int Create(
+		public virtual List<POCOBreed> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+		}
+
+		public virtual POCOBreed Get(int id)
+		{
+			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+		}
+
+		public virtual POCOBreed Create(
 			BreedModel model)
 		{
-			EFBreed record = new EFBreed();
+			Breed record = new Breed();
 
 			this.Mapper.BreedMapModelToEF(
 				default (int),
 				model,
 				record);
 
-			this.Context.Set<EFBreed>().Add(record);
+			this.Context.Set<Breed>().Add(record);
 			this.Context.SaveChanges();
-			return record.Id;
+			return this.Mapper.BreedMapEFToPOCO(record);
 		}
 
 		public virtual void Update(
 			int id,
 			BreedModel model)
 		{
-			EFBreed record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Breed record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -63,7 +73,7 @@ namespace PetShippingNS.Api.DataAccess
 		public virtual void Delete(
 			int id)
 		{
-			EFBreed record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Breed record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 
 			if (record == null)
 			{
@@ -71,60 +81,45 @@ namespace PetShippingNS.Api.DataAccess
 			}
 			else
 			{
-				this.Context.Set<EFBreed>().Remove(record);
+				this.Context.Set<Breed>().Remove(record);
 				this.Context.SaveChanges();
 			}
 		}
 
-		public virtual POCOBreed Get(int id)
-		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
-		}
-
-		public virtual List<POCOBreed> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
-		}
-
-		private List<POCOBreed> Where(Expression<Func<EFBreed, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected List<POCOBreed> Where(Expression<Func<Breed, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
 		}
 
-		private List<POCOBreed> SearchLinqPOCO(Expression<Func<EFBreed, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<POCOBreed> SearchLinqPOCO(Expression<Func<Breed, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOBreed> response = new List<POCOBreed>();
-			List<EFBreed> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Breed> records = this.SearchLinqEF(predicate, skip, take, orderClause);
 			records.ForEach(x => response.Add(this.Mapper.BreedMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EFBreed> SearchLinqEF(Expression<Func<EFBreed, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Breed> SearchLinqEF(Expression<Func<Breed, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFBreed>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBreed>();
+				orderClause = $"{nameof(Breed.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFBreed>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBreed>();
-			}
+			return this.Context.Set<Breed>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Breed>();
 		}
 
-		private List<EFBreed> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private List<Breed> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			if (string.IsNullOrEmpty(orderClause))
+			if (string.IsNullOrWhiteSpace(orderClause))
 			{
-				return this.Context.Set<EFBreed>().Where(predicate).AsQueryable().OrderBy("Id ASC").Skip(skip).Take(take).ToList<EFBreed>();
+				orderClause = $"{nameof(Breed.Id)} ASC";
 			}
-			else
-			{
-				return this.Context.Set<EFBreed>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EFBreed>();
-			}
+
+			return this.Context.Set<Breed>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Breed>();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>92dc6a3f5eb04fb2eb39692201f4060e</Hash>
+    <Hash>ad119a0475dbef906d4780ab295eb3eb</Hash>
 </Codenesium>*/

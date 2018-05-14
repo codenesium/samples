@@ -29,14 +29,24 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual async Task<CreateResponse<int>> Create(
+		public virtual List<POCOLesson> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			return this.lessonRepository.All(skip, take, orderClause);
+		}
+
+		public virtual POCOLesson Get(int id)
+		{
+			return this.lessonRepository.Get(id);
+		}
+
+		public virtual async Task<CreateResponse<POCOLesson>> Create(
 			LessonModel model)
 		{
-			CreateResponse<int> response = new CreateResponse<int>(await this.lessonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<POCOLesson> response = new CreateResponse<POCOLesson>(await this.lessonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				int id = this.lessonRepository.Create(model);
-				response.SetId(id);
+				POCOLesson record = this.lessonRepository.Create(model);
+				response.SetRecord(record);
 			}
 
 			return response;
@@ -67,19 +77,9 @@ namespace FermataFishNS.Api.BusinessObjects
 			}
 			return response;
 		}
-
-		public virtual POCOLesson Get(int id)
-		{
-			return this.lessonRepository.Get(id);
-		}
-
-		public virtual List<POCOLesson> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.lessonRepository.All(skip, take, orderClause);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>88bdd1c5dbe536449d7d03c22f8414b7</Hash>
+    <Hash>482ad58e4fd07fdb3ac559a66fe1de3c</Hash>
 </Codenesium>*/
