@@ -7,7 +7,7 @@ namespace PetShippingNS.Api.DataAccess
 	{
 		public virtual void AirlineMapModelToEF(
 			int id,
-			AirlineModel model,
+			ApiAirlineModel model,
 			Airline efAirline)
 		{
 			efAirline.SetProperties(
@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void AirTransportMapModelToEF(
 			int airlineId,
-			AirTransportModel model,
+			ApiAirTransportModel model,
 			AirTransport efAirTransport)
 		{
 			efAirTransport.SetProperties(
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void BreedMapModelToEF(
 			int id,
-			BreedModel model,
+			ApiBreedModel model,
 			Breed efBreed)
 		{
 			efBreed.SetProperties(
@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void ClientMapModelToEF(
 			int id,
-			ClientModel model,
+			ApiClientModel model,
 			Client efClient)
 		{
 			efClient.SetProperties(
@@ -101,7 +101,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void ClientCommunicationMapModelToEF(
 			int id,
-			ClientCommunicationModel model,
+			ApiClientCommunicationModel model,
 			ClientCommunication efClientCommunication)
 		{
 			efClientCommunication.SetProperties(
@@ -125,7 +125,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void CountryMapModelToEF(
 			int id,
-			CountryModel model,
+			ApiCountryModel model,
 			Country efCountry)
 		{
 			efCountry.SetProperties(
@@ -146,7 +146,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void CountryRequirementMapModelToEF(
 			int id,
-			CountryRequirementModel model,
+			ApiCountryRequirementModel model,
 			CountryRequirement efCountryRequirement)
 		{
 			efCountryRequirement.SetProperties(
@@ -168,7 +168,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void DestinationMapModelToEF(
 			int id,
-			DestinationModel model,
+			ApiDestinationModel model,
 			Destination efDestination)
 		{
 			efDestination.SetProperties(
@@ -191,7 +191,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void EmployeeMapModelToEF(
 			int id,
-			EmployeeModel model,
+			ApiEmployeeModel model,
 			Employee efEmployee)
 		{
 			efEmployee.SetProperties(
@@ -215,7 +215,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void HandlerMapModelToEF(
 			int id,
-			HandlerModel model,
+			ApiHandlerModel model,
 			Handler efHandler)
 		{
 			efHandler.SetProperties(
@@ -240,7 +240,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void HandlerPipelineStepMapModelToEF(
 			int id,
-			HandlerPipelineStepModel model,
+			ApiHandlerPipelineStepModel model,
 			HandlerPipelineStep efHandlerPipelineStep)
 		{
 			efHandlerPipelineStep.SetProperties(
@@ -262,7 +262,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void OtherTransportMapModelToEF(
 			int id,
-			OtherTransportModel model,
+			ApiOtherTransportModel model,
 			OtherTransport efOtherTransport)
 		{
 			efOtherTransport.SetProperties(
@@ -284,7 +284,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PetMapModelToEF(
 			int id,
-			PetModel model,
+			ApiPetModel model,
 			Pet efPet)
 		{
 			efPet.SetProperties(
@@ -308,7 +308,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PipelineMapModelToEF(
 			int id,
-			PipelineModel model,
+			ApiPipelineModel model,
 			Pipeline efPipeline)
 		{
 			efPipeline.SetProperties(
@@ -330,7 +330,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PipelineStatusMapModelToEF(
 			int id,
-			PipelineStatusModel model,
+			ApiPipelineStatusModel model,
 			PipelineStatus efPipelineStatus)
 		{
 			efPipelineStatus.SetProperties(
@@ -351,7 +351,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PipelineStepMapModelToEF(
 			int id,
-			PipelineStepModel model,
+			ApiPipelineStepModel model,
 			PipelineStep efPipelineStep)
 		{
 			efPipelineStep.SetProperties(
@@ -374,7 +374,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PipelineStepDestinationMapModelToEF(
 			int id,
-			PipelineStepDestinationModel model,
+			ApiPipelineStepDestinationModel model,
 			PipelineStepDestination efPipelineStepDestination)
 		{
 			efPipelineStepDestination.SetProperties(
@@ -396,7 +396,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PipelineStepNoteMapModelToEF(
 			int id,
-			PipelineStepNoteModel model,
+			ApiPipelineStepNoteModel model,
 			PipelineStepNote efPipelineStepNote)
 		{
 			efPipelineStepNote.SetProperties(
@@ -419,7 +419,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PipelineStepStatusMapModelToEF(
 			int id,
-			PipelineStepStatusModel model,
+			ApiPipelineStepStatusModel model,
 			PipelineStepStatus efPipelineStepStatus)
 		{
 			efPipelineStepStatus.SetProperties(
@@ -440,7 +440,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void PipelineStepStepRequirementMapModelToEF(
 			int id,
-			PipelineStepStepRequirementModel model,
+			ApiPipelineStepStepRequirementModel model,
 			PipelineStepStepRequirement efPipelineStepStepRequirement)
 		{
 			efPipelineStepStepRequirement.SetProperties(
@@ -463,7 +463,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void SaleMapModelToEF(
 			int id,
-			SaleModel model,
+			ApiSaleModel model,
 			Sale efSale)
 		{
 			efSale.SetProperties(
@@ -489,7 +489,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void SpeciesMapModelToEF(
 			int id,
-			SpeciesModel model,
+			ApiSpeciesModel model,
 			Species efSpecies)
 		{
 			efSpecies.SetProperties(
@@ -511,5 +511,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c8cafa555312ea6c6349ac9b0711626</Hash>
+    <Hash>439a31b138caf2c0ba2b2a84cbccd2c6</Hash>
 </Codenesium>*/

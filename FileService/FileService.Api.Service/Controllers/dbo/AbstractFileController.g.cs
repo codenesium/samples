@@ -80,7 +80,7 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOFile), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] FileModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiFileModel model)
 		{
 			CreateResponse<POCOFile> result = await this.fileManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOFile>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<FileModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFileModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(POCOFile), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] FileModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0e78681130e667c875a2e0a32a1d26ad</Hash>
+    <Hash>de8c24173b605438f9ba3ca74dd32356</Hash>
 </Codenesium>*/

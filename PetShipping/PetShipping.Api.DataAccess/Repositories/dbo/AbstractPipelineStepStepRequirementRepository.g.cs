@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStepStepRequirement Create(
-			PipelineStepStepRequirementModel model)
+			ApiPipelineStepStepRequirementModel model)
 		{
 			PipelineStepStepRequirement record = new PipelineStepStepRequirement();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			PipelineStepStepRequirementModel model)
+			ApiPipelineStepStepRequirementModel model)
 		{
 			PipelineStepStepRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca042c44191982d6a987286700cee487</Hash>
+    <Hash>df0ba4090a78a72fb2917fe7f0cd7873</Hash>
 </Codenesium>*/

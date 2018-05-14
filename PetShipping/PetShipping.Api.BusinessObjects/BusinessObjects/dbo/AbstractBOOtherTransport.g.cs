@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOOtherTransport
 	{
 		private IOtherTransportRepository otherTransportRepository;
-		private IOtherTransportModelValidator otherTransportModelValidator;
+		private IApiOtherTransportModelValidator otherTransportModelValidator;
 		private ILogger logger;
 
 		public AbstractBOOtherTransport(
 			ILogger logger,
 			IOtherTransportRepository otherTransportRepository,
-			IOtherTransportModelValidator otherTransportModelValidator)
+			IApiOtherTransportModelValidator otherTransportModelValidator)
 
 		{
 			this.otherTransportRepository = otherTransportRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOOtherTransport>> Create(
-			OtherTransportModel model)
+			ApiOtherTransportModel model)
 		{
 			CreateResponse<POCOOtherTransport> response = new CreateResponse<POCOOtherTransport>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			OtherTransportModel model)
+			ApiOtherTransportModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.otherTransportModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>3864699035a8519e555c40169be85e3e</Hash>
+    <Hash>c8ebb4d834f50db52103ed50657ec4fb</Hash>
 </Codenesium>*/

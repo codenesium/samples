@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOLinkStatus Create(
-			LinkStatusModel model)
+			ApiLinkStatusModel model)
 		{
 			LinkStatus record = new LinkStatus();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			LinkStatusModel model)
+			ApiLinkStatusModel model)
 		{
 			LinkStatus record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d19c3f0c00ed8c8dd7b4c88f0ea52e6c</Hash>
+    <Hash>6081334e19edcbc89138d935a33214a7</Hash>
 </Codenesium>*/

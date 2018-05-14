@@ -7,10 +7,10 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ITeacherSkillRepository
 	{
-		POCOTeacherSkill Create(TeacherSkillModel model);
+		POCOTeacherSkill Create(ApiTeacherSkillModel model);
 
 		void Update(int id,
-		            TeacherSkillModel model);
+		            ApiTeacherSkillModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c2f8b6ba2fec286e019836cc84605456</Hash>
+    <Hash>127296cfff120beab8eadf2d32108c0e</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOPen
 	{
 		private IPenRepository penRepository;
-		private IPenModelValidator penModelValidator;
+		private IApiPenModelValidator penModelValidator;
 		private ILogger logger;
 
 		public AbstractBOPen(
 			ILogger logger,
 			IPenRepository penRepository,
-			IPenModelValidator penModelValidator)
+			IApiPenModelValidator penModelValidator)
 
 		{
 			this.penRepository = penRepository;
@@ -40,7 +40,7 @@ namespace PetStoreNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOPen>> Create(
-			PenModel model)
+			ApiPenModel model)
 		{
 			CreateResponse<POCOPen> response = new CreateResponse<POCOPen>(await this.penModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			PenModel model)
+			ApiPenModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>6d140fe8c09c871ea8d63eab2e121500</Hash>
+    <Hash>b83dcff8edd0b4b577148265177e97bf</Hash>
 </Codenesium>*/

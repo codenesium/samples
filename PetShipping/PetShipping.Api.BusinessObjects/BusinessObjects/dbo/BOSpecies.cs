@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOSpecies(
 			ILogger<SpeciesRepository> logger,
 			ISpeciesRepository speciesRepository,
-			ISpeciesModelValidator speciesModelValidator)
+			IApiSpeciesModelValidator speciesModelValidator)
 			: base(logger, speciesRepository, speciesModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ed6afd51a051efbb4f2ccdfaa8ec9cdb</Hash>
+    <Hash>71e7d2f0afefd6c358e2eac4bca43eae</Hash>
 </Codenesium>*/

@@ -10,10 +10,10 @@ namespace PetStoreNS.Api.BusinessObjects
 	public interface IBOSale
 	{
 		Task<CreateResponse<POCOSale>> Create(
-			SaleModel model);
+			ApiSaleModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            SaleModel model);
+		                            ApiSaleModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fdb6d84508bbbd4b0e265058779eb4fb</Hash>
+    <Hash>255d6061f1d9894ed9d790ae5040df94</Hash>
 </Codenesium>*/

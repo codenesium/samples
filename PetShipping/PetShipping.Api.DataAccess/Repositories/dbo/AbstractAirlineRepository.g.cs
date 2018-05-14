@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOAirline Create(
-			AirlineModel model)
+			ApiAirlineModel model)
 		{
 			Airline record = new Airline();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			AirlineModel model)
+			ApiAirlineModel model)
 		{
 			Airline record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a63969ebe28c40442bfdeee922d0c558</Hash>
+    <Hash>18aa1d94de5bb3c67883f2f9a4adbf49</Hash>
 </Codenesium>*/

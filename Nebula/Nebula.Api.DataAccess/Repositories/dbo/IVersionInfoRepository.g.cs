@@ -7,10 +7,10 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IVersionInfoRepository
 	{
-		POCOVersionInfo Create(VersionInfoModel model);
+		POCOVersionInfo Create(ApiVersionInfoModel model);
 
 		void Update(long version,
-		            VersionInfoModel model);
+		            ApiVersionInfoModel model);
 
 		void Delete(long version);
 
@@ -23,5 +23,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd5f9c3e2896e48d5209df57ba308fa9</Hash>
+    <Hash>e6262e95a2e238ec6172830f70985d6b</Hash>
 </Codenesium>*/

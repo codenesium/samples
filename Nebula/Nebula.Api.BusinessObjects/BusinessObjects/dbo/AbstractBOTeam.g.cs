@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOTeam
 	{
 		private ITeamRepository teamRepository;
-		private ITeamModelValidator teamModelValidator;
+		private IApiTeamModelValidator teamModelValidator;
 		private ILogger logger;
 
 		public AbstractBOTeam(
 			ILogger logger,
 			ITeamRepository teamRepository,
-			ITeamModelValidator teamModelValidator)
+			IApiTeamModelValidator teamModelValidator)
 
 		{
 			this.teamRepository = teamRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOTeam>> Create(
-			TeamModel model)
+			ApiTeamModel model)
 		{
 			CreateResponse<POCOTeam> response = new CreateResponse<POCOTeam>(await this.teamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			TeamModel model)
+			ApiTeamModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateUpdateAsync(id, model));
 
@@ -86,5 +86,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>233feee82a8c078f85dba135b6eff663</Hash>
+    <Hash>375a9f7e85f5f520219eeb4a4625a0cc</Hash>
 </Codenesium>*/

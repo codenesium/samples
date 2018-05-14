@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOTeacherXTeacherSkill
 	{
 		private ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
-		private ITeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator;
+		private IApiTeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator;
 		private ILogger logger;
 
 		public AbstractBOTeacherXTeacherSkill(
 			ILogger logger,
 			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
-			ITeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator)
+			IApiTeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator)
 
 		{
 			this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOTeacherXTeacherSkill>> Create(
-			TeacherXTeacherSkillModel model)
+			ApiTeacherXTeacherSkillModel model)
 		{
 			CreateResponse<POCOTeacherXTeacherSkill> response = new CreateResponse<POCOTeacherXTeacherSkill>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			TeacherXTeacherSkillModel model)
+			ApiTeacherXTeacherSkillModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.teacherXTeacherSkillModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d7fafff214f3474add8ffe63fb9fe35e</Hash>
+    <Hash>b2fdbd78562c4c4c897370415094fbe4</Hash>
 </Codenesium>*/

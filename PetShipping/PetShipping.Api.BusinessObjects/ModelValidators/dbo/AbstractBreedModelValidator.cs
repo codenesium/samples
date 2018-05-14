@@ -8,14 +8,14 @@ using PetShippingNS.Api.DataAccess;
 namespace PetShippingNS.Api.BusinessObjects
 
 {
-	public abstract class AbstractBreedModelValidator: AbstractValidator<BreedModel>
+	public abstract class AbstractApiBreedModelValidator: AbstractValidator<ApiBreedModel>
 	{
-		public new ValidationResult Validate(BreedModel model)
+		public new ValidationResult Validate(ApiBreedModel model)
 		{
 			return base.Validate(model);
 		}
 
-		public async Task<ValidationResult> ValidateAsync(BreedModel model)
+		public async Task<ValidationResult> ValidateAsync(ApiBreedModel model)
 		{
 			return await base.ValidateAsync(model);
 		}
@@ -41,5 +41,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>185fd098117fef42d177363ee9f7b89b</Hash>
+    <Hash>7e0e8aa8f13eb0ad3cb8a4ac210b8bff</Hash>
 </Codenesium>*/

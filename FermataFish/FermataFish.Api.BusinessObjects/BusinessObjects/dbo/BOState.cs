@@ -15,12 +15,12 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOState(
 			ILogger<StateRepository> logger,
 			IStateRepository stateRepository,
-			IStateModelValidator stateModelValidator)
+			IApiStateModelValidator stateModelValidator)
 			: base(logger, stateRepository, stateModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e92e21eb6bd8b4e1bc401a248f0f0330</Hash>
+    <Hash>d48506eed65bfc22d58c6068d34aba18</Hash>
 </Codenesium>*/

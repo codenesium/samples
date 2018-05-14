@@ -15,13 +15,13 @@ namespace FileServiceNS.Api.BusinessObjects
 	public abstract class AbstractBOFile
 	{
 		private IFileRepository fileRepository;
-		private IFileModelValidator fileModelValidator;
+		private IApiFileModelValidator fileModelValidator;
 		private ILogger logger;
 
 		public AbstractBOFile(
 			ILogger logger,
 			IFileRepository fileRepository,
-			IFileModelValidator fileModelValidator)
+			IApiFileModelValidator fileModelValidator)
 
 		{
 			this.fileRepository = fileRepository;
@@ -40,7 +40,7 @@ namespace FileServiceNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOFile>> Create(
-			FileModel model)
+			ApiFileModel model)
 		{
 			CreateResponse<POCOFile> response = new CreateResponse<POCOFile>(await this.fileModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			FileModel model)
+			ApiFileModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>86177efb99b3b1453ecdae0c4c2bc4b4</Hash>
+    <Hash>7ea4def2d406e18c48a3962ac7c38af1</Hash>
 </Codenesium>*/

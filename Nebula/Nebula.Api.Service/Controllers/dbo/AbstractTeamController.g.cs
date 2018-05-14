@@ -80,7 +80,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOTeam), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] TeamModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiTeamModel model)
 		{
 			CreateResponse<POCOTeam> result = await this.teamManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOTeam>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<TeamModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeamModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(POCOTeam), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] TeamModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeamModel model)
 		{
 			try
 			{
@@ -195,5 +195,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b4ce5437673f7c300215b010836e2db6</Hash>
+    <Hash>9f928734062b506a42755baa82aca278</Hash>
 </Codenesium>*/

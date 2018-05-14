@@ -6,19 +6,19 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public class BucketModelValidator: AbstractBucketModelValidator, IBucketModelValidator
+	public class ApiBucketModelValidator: AbstractApiBucketModelValidator, IApiBucketModelValidator
 	{
-		public BucketModelValidator()
+		public ApiBucketModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(BucketModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiBucketModel model)
 		{
 			this.ExternalIdRules();
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, BucketModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiBucketModel model)
 		{
 			this.ExternalIdRules();
 			this.NameRules();
@@ -33,5 +33,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bf35cae0de78f99c8358e30722817a01</Hash>
+    <Hash>3d6b7fbcd472e57f05c4ceba95eeda63</Hash>
 </Codenesium>*/

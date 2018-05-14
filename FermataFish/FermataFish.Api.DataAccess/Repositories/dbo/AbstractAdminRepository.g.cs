@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOAdmin Create(
-			AdminModel model)
+			ApiAdminModel model)
 		{
 			Admin record = new Admin();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			AdminModel model)
+			ApiAdminModel model)
 		{
 			Admin record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>227332409e862790a3f9a9c66123e3f5</Hash>
+    <Hash>845c8dfb7be85f3f1bf1b094bd9f8e15</Hash>
 </Codenesium>*/

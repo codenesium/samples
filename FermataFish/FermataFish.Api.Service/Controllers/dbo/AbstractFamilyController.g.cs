@@ -80,7 +80,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOFamily), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] FamilyModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiFamilyModel model)
 		{
 			CreateResponse<POCOFamily> result = await this.familyManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOFamily>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<FamilyModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFamilyModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(POCOFamily), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] FamilyModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFamilyModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6a9c7d73e5ef1d9ba64618cda63d1cca</Hash>
+    <Hash>98416c541777653a02d0d60223d4b070</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOLink
 	{
 		private ILinkRepository linkRepository;
-		private ILinkModelValidator linkModelValidator;
+		private IApiLinkModelValidator linkModelValidator;
 		private ILogger logger;
 
 		public AbstractBOLink(
 			ILogger logger,
 			ILinkRepository linkRepository,
-			ILinkModelValidator linkModelValidator)
+			IApiLinkModelValidator linkModelValidator)
 
 		{
 			this.linkRepository = linkRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOLink>> Create(
-			LinkModel model)
+			ApiLinkModel model)
 		{
 			CreateResponse<POCOLink> response = new CreateResponse<POCOLink>(await this.linkModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			LinkModel model)
+			ApiLinkModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.linkModelValidator.ValidateUpdateAsync(id, model));
 
@@ -90,5 +90,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d8cb81baf752a510e900ed142db760e3</Hash>
+    <Hash>5e93048375595d4d5272bf91ec6f2a07</Hash>
 </Codenesium>*/

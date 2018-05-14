@@ -7,10 +7,10 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IOtherTransportRepository
 	{
-		POCOOtherTransport Create(OtherTransportModel model);
+		POCOOtherTransport Create(ApiOtherTransportModel model);
 
 		void Update(int id,
-		            OtherTransportModel model);
+		            ApiOtherTransportModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>43fe129411483df9248af3f694c7e252</Hash>
+    <Hash>766691fe34e2c68a6a6a2b77ca348479</Hash>
 </Codenesium>*/

@@ -10,10 +10,10 @@ namespace NebulaNS.Api.BusinessObjects
 	public interface IBOVersionInfo
 	{
 		Task<CreateResponse<POCOVersionInfo>> Create(
-			VersionInfoModel model);
+			ApiVersionInfoModel model);
 
 		Task<ActionResponse> Update(long version,
-		                            VersionInfoModel model);
+		                            ApiVersionInfoModel model);
 
 		Task<ActionResponse> Delete(long version);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>441b48edcc4ee46e9de94b0eac2c7aca</Hash>
+    <Hash>30677c51fecc8e2df99de29d6cc6c85b</Hash>
 </Codenesium>*/

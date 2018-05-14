@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOClientCommunication(
 			ILogger<ClientCommunicationRepository> logger,
 			IClientCommunicationRepository clientCommunicationRepository,
-			IClientCommunicationModelValidator clientCommunicationModelValidator)
+			IApiClientCommunicationModelValidator clientCommunicationModelValidator)
 			: base(logger, clientCommunicationRepository, clientCommunicationModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14e429bf6bf5aa91729076083bd29ef9</Hash>
+    <Hash>00daecc1afb60285937f1a7a5e426af4</Hash>
 </Codenesium>*/

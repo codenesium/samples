@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOAirTransport
 	{
 		private IAirTransportRepository airTransportRepository;
-		private IAirTransportModelValidator airTransportModelValidator;
+		private IApiAirTransportModelValidator airTransportModelValidator;
 		private ILogger logger;
 
 		public AbstractBOAirTransport(
 			ILogger logger,
 			IAirTransportRepository airTransportRepository,
-			IAirTransportModelValidator airTransportModelValidator)
+			IApiAirTransportModelValidator airTransportModelValidator)
 
 		{
 			this.airTransportRepository = airTransportRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOAirTransport>> Create(
-			AirTransportModel model)
+			ApiAirTransportModel model)
 		{
 			CreateResponse<POCOAirTransport> response = new CreateResponse<POCOAirTransport>(await this.airTransportModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int airlineId,
-			AirTransportModel model)
+			ApiAirTransportModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateUpdateAsync(airlineId, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bff65b646ec8c327c865c1fa3817bc2a</Hash>
+    <Hash>29cbe637fe230260c388326ab28993e1</Hash>
 </Codenesium>*/

@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOHandler Create(
-			HandlerModel model)
+			ApiHandlerModel model)
 		{
 			Handler record = new Handler();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			HandlerModel model)
+			ApiHandlerModel model)
 		{
 			Handler record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b081f47b50f23f6c818352a1ec5085f3</Hash>
+    <Hash>51cbc4b95b062cecb5b0c683bd10efd5</Hash>
 </Codenesium>*/

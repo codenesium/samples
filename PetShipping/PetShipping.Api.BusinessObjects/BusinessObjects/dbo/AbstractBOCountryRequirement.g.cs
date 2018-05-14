@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOCountryRequirement
 	{
 		private ICountryRequirementRepository countryRequirementRepository;
-		private ICountryRequirementModelValidator countryRequirementModelValidator;
+		private IApiCountryRequirementModelValidator countryRequirementModelValidator;
 		private ILogger logger;
 
 		public AbstractBOCountryRequirement(
 			ILogger logger,
 			ICountryRequirementRepository countryRequirementRepository,
-			ICountryRequirementModelValidator countryRequirementModelValidator)
+			IApiCountryRequirementModelValidator countryRequirementModelValidator)
 
 		{
 			this.countryRequirementRepository = countryRequirementRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOCountryRequirement>> Create(
-			CountryRequirementModel model)
+			ApiCountryRequirementModel model)
 		{
 			CreateResponse<POCOCountryRequirement> response = new CreateResponse<POCOCountryRequirement>(await this.countryRequirementModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			CountryRequirementModel model)
+			ApiCountryRequirementModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.countryRequirementModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>486a2bb95d8afc83d52fd1cfd8176167</Hash>
+    <Hash>0b5dad8813d59a5fe3d049bea3eee175</Hash>
 </Codenesium>*/

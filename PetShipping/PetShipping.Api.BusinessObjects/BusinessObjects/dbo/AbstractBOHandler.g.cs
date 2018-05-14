@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOHandler
 	{
 		private IHandlerRepository handlerRepository;
-		private IHandlerModelValidator handlerModelValidator;
+		private IApiHandlerModelValidator handlerModelValidator;
 		private ILogger logger;
 
 		public AbstractBOHandler(
 			ILogger logger,
 			IHandlerRepository handlerRepository,
-			IHandlerModelValidator handlerModelValidator)
+			IApiHandlerModelValidator handlerModelValidator)
 
 		{
 			this.handlerRepository = handlerRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOHandler>> Create(
-			HandlerModel model)
+			ApiHandlerModel model)
 		{
 			CreateResponse<POCOHandler> response = new CreateResponse<POCOHandler>(await this.handlerModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			HandlerModel model)
+			ApiHandlerModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.handlerModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4163434851d563da0117f29fe2a21bfe</Hash>
+    <Hash>7a03777b608565d55e6fb4a49345794c</Hash>
 </Codenesium>*/

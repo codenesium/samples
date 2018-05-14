@@ -10,10 +10,10 @@ namespace NebulaNS.Api.BusinessObjects
 	public interface IBOClasp
 	{
 		Task<CreateResponse<POCOClasp>> Create(
-			ClaspModel model);
+			ApiClaspModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ClaspModel model);
+		                            ApiClaspModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0c168dcab1635afde433388ead1e2590</Hash>
+    <Hash>6a6b84f0780a12f9839e8563fea487a4</Hash>
 </Codenesium>*/

@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOCountryRequirement Create(
-			CountryRequirementModel model)
+			ApiCountryRequirementModel model)
 		{
 			CountryRequirement record = new CountryRequirement();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			CountryRequirementModel model)
+			ApiCountryRequirementModel model)
 		{
 			CountryRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>47608c1dd33170a27692322246ad6a2c</Hash>
+    <Hash>771949bcc7c7c0dc757d10d9c8f22227</Hash>
 </Codenesium>*/

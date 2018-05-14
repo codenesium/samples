@@ -15,13 +15,13 @@ namespace ESPIOTNS.Api.BusinessObjects
 	public abstract class AbstractBODevice
 	{
 		private IDeviceRepository deviceRepository;
-		private IDeviceModelValidator deviceModelValidator;
+		private IApiDeviceModelValidator deviceModelValidator;
 		private ILogger logger;
 
 		public AbstractBODevice(
 			ILogger logger,
 			IDeviceRepository deviceRepository,
-			IDeviceModelValidator deviceModelValidator)
+			IApiDeviceModelValidator deviceModelValidator)
 
 		{
 			this.deviceRepository = deviceRepository;
@@ -40,7 +40,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCODevice>> Create(
-			DeviceModel model)
+			ApiDeviceModel model)
 		{
 			CreateResponse<POCODevice> response = new CreateResponse<POCODevice>(await this.deviceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			DeviceModel model)
+			ApiDeviceModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.deviceModelValidator.ValidateUpdateAsync(id, model));
 
@@ -86,5 +86,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e8f0ffa7dff808e1b2ca2ca4041eaedd</Hash>
+    <Hash>ebe3d6ed464945d488c1122ed160e855</Hash>
 </Codenesium>*/

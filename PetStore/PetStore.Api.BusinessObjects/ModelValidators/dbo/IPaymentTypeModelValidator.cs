@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using PetStoreNS.Api.Contracts;
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public interface IPaymentTypeModelValidator
+	public interface IApiPaymentTypeModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(PaymentTypeModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, PaymentTypeModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiPaymentTypeModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPaymentTypeModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b408384508de2e811ef61a59f931692</Hash>
+    <Hash>963b48e6870507f145b24f3781a58291</Hash>
 </Codenesium>*/

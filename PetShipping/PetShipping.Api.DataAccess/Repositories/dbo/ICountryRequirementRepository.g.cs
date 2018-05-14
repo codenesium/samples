@@ -7,10 +7,10 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface ICountryRequirementRepository
 	{
-		POCOCountryRequirement Create(CountryRequirementModel model);
+		POCOCountryRequirement Create(ApiCountryRequirementModel model);
 
 		void Update(int id,
-		            CountryRequirementModel model);
+		            ApiCountryRequirementModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ce31f958978ee6c3ac4248496eb8d37e</Hash>
+    <Hash>30a7603eab5c8c38db334440da6e368e</Hash>
 </Codenesium>*/

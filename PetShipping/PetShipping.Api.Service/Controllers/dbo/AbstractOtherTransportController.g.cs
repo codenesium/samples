@@ -80,7 +80,7 @@ namespace PetShippingNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOOtherTransport), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] OtherTransportModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiOtherTransportModel model)
 		{
 			CreateResponse<POCOOtherTransport> result = await this.otherTransportManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOOtherTransport>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<OtherTransportModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiOtherTransportModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(POCOOtherTransport), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] OtherTransportModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOtherTransportModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8c3c1c688350700fb0dd092fbbc7926c</Hash>
+    <Hash>6470c758a448251827cd919d9bc4799c</Hash>
 </Codenesium>*/

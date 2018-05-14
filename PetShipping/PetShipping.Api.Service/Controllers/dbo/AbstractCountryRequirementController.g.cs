@@ -80,7 +80,7 @@ namespace PetShippingNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOCountryRequirement), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] CountryRequirementModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiCountryRequirementModel model)
 		{
 			CreateResponse<POCOCountryRequirement> result = await this.countryRequirementManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOCountryRequirement>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<CountryRequirementModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCountryRequirementModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(POCOCountryRequirement), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] CountryRequirementModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCountryRequirementModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6acd5ddf4207989b3b4fee361166d148</Hash>
+    <Hash>3fb9504393afecdb8adebb02c4d4fbb4</Hash>
 </Codenesium>*/

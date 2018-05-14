@@ -80,7 +80,7 @@ namespace PetStoreNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOPaymentType), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] PaymentTypeModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPaymentTypeModel model)
 		{
 			CreateResponse<POCOPaymentType> result = await this.paymentTypeManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace PetStoreNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOPaymentType>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<PaymentTypeModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPaymentTypeModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace PetStoreNS.Api.Service
 		[ProducesResponseType(typeof(POCOPaymentType), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] PaymentTypeModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPaymentTypeModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0405622af11020a634bbba7bf717710a</Hash>
+    <Hash>c45e8bf2428b346eb8a9a36727038197</Hash>
 </Codenesium>*/

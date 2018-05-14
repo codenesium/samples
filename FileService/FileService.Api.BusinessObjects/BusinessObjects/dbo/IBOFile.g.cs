@@ -10,10 +10,10 @@ namespace FileServiceNS.Api.BusinessObjects
 	public interface IBOFile
 	{
 		Task<CreateResponse<POCOFile>> Create(
-			FileModel model);
+			ApiFileModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            FileModel model);
+		                            ApiFileModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>947eea3fa2b21d98e36fdfd0f245091f</Hash>
+    <Hash>5712c3c1afc7a3a354be506bb038eda4</Hash>
 </Codenesium>*/

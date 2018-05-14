@@ -80,7 +80,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOLink), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] LinkModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiLinkModel model)
 		{
 			CreateResponse<POCOLink> result = await this.linkManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOLink>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<LinkModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(POCOLink), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] LinkModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkModel model)
 		{
 			try
 			{
@@ -213,5 +213,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>089585889237392b89106f6321a9a655</Hash>
+    <Hash>5a7c2971e1864089efbfa04f157acff9</Hash>
 </Codenesium>*/

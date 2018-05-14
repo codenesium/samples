@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOBreed Create(
-			BreedModel model)
+			ApiBreedModel model)
 		{
 			Breed record = new Breed();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			BreedModel model)
+			ApiBreedModel model)
 		{
 			Breed record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad119a0475dbef906d4780ab295eb3eb</Hash>
+    <Hash>9d8d2a294737788971aa449850e386ed</Hash>
 </Codenesium>*/

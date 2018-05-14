@@ -7,7 +7,7 @@ namespace ESPIOTNS.Api.DataAccess
 	{
 		void DeviceMapModelToEF(
 			int id,
-			DeviceModel model,
+			ApiDeviceModel model,
 			Device efDevice);
 
 		POCODevice DeviceMapEFToPOCO(
@@ -15,7 +15,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		void DeviceActionMapModelToEF(
 			int id,
-			DeviceActionModel model,
+			ApiDeviceActionModel model,
 			DeviceAction efDeviceAction);
 
 		POCODeviceAction DeviceActionMapEFToPOCO(
@@ -24,5 +24,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8ee90a9f705450be37e03e175d91c65b</Hash>
+    <Hash>553b46aec4ad04727d2dbb17c7b90287</Hash>
 </Codenesium>*/

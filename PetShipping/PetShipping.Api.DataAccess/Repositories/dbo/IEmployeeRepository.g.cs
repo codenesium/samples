@@ -7,10 +7,10 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IEmployeeRepository
 	{
-		POCOEmployee Create(EmployeeModel model);
+		POCOEmployee Create(ApiEmployeeModel model);
 
 		void Update(int id,
-		            EmployeeModel model);
+		            ApiEmployeeModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e705f73beaabcfbaea21a60acba1adf6</Hash>
+    <Hash>e61af9b6dbd0079bf8dfaed4637a8d0c</Hash>
 </Codenesium>*/

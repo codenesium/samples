@@ -48,7 +48,7 @@ namespace NebulaNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
-		public virtual async Task<POCOChain> ChainCreateAsync(ChainModel item)
+		public virtual async Task<POCOChain> ChainCreateAsync(ApiChainModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains", item);
 
@@ -56,7 +56,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOChain>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOChain> ChainUpdateAsync(int id, ChainModel item)
+		public virtual async Task<POCOChain> ChainUpdateAsync(int id, ApiChainModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Chains/{id}", item);
 
@@ -87,7 +87,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOChain>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOChain>> ChainBulkInsertAsync(List<ChainModel> items)
+		public virtual async Task<List<POCOChain>> ChainBulkInsertAsync(List<ApiChainModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains/BulkInsert", items);
 
@@ -95,7 +95,15 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOChain>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOChainStatus> ChainStatusCreateAsync(ChainStatusModel item)
+		public virtual async Task<POCOChain> GetChainExternalId(Guid externalId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/externalId/{externalId}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOChain>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOChainStatus> ChainStatusCreateAsync(ApiChainStatusModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus", item);
 
@@ -103,7 +111,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOChainStatus>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOChainStatus> ChainStatusUpdateAsync(int id, ChainStatusModel item)
+		public virtual async Task<POCOChainStatus> ChainStatusUpdateAsync(int id, ApiChainStatusModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ChainStatus/{id}", item);
 
@@ -134,7 +142,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOChainStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOChainStatus>> ChainStatusBulkInsertAsync(List<ChainStatusModel> items)
+		public virtual async Task<List<POCOChainStatus>> ChainStatusBulkInsertAsync(List<ApiChainStatusModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus/BulkInsert", items);
 
@@ -142,7 +150,15 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOChainStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOClasp> ClaspCreateAsync(ClaspModel item)
+		public virtual async Task<POCOChainStatus> GetChainStatusName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus/name/{name}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOChainStatus>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOClasp> ClaspCreateAsync(ApiClaspModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clasps", item);
 
@@ -150,7 +166,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOClasp>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOClasp> ClaspUpdateAsync(int id, ClaspModel item)
+		public virtual async Task<POCOClasp> ClaspUpdateAsync(int id, ApiClaspModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Clasps/{id}", item);
 
@@ -181,7 +197,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOClasp>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOClasp>> ClaspBulkInsertAsync(List<ClaspModel> items)
+		public virtual async Task<List<POCOClasp>> ClaspBulkInsertAsync(List<ApiClaspModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clasps/BulkInsert", items);
 
@@ -189,7 +205,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOClasp>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOLink> LinkCreateAsync(LinkModel item)
+		public virtual async Task<POCOLink> LinkCreateAsync(ApiLinkModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links", item);
 
@@ -197,7 +213,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOLink>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOLink> LinkUpdateAsync(int id, LinkModel item)
+		public virtual async Task<POCOLink> LinkUpdateAsync(int id, ApiLinkModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Links/{id}", item);
 
@@ -228,7 +244,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLink>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOLink>> LinkBulkInsertAsync(List<LinkModel> items)
+		public virtual async Task<List<POCOLink>> LinkBulkInsertAsync(List<ApiLinkModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links/BulkInsert", items);
 
@@ -236,7 +252,23 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLink>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOLinkLog> LinkLogCreateAsync(LinkLogModel item)
+		public virtual async Task<List<POCOLink>> GetLinkChainId(int chainId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/chainId/{chainId}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<POCOLink>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOLink> GetLinkExternalId(Guid externalId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/externalId/{externalId}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOLink>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOLinkLog> LinkLogCreateAsync(ApiLinkLogModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkLogs", item);
 
@@ -244,7 +276,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOLinkLog>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOLinkLog> LinkLogUpdateAsync(int id, LinkLogModel item)
+		public virtual async Task<POCOLinkLog> LinkLogUpdateAsync(int id, ApiLinkLogModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkLogs/{id}", item);
 
@@ -275,7 +307,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLinkLog>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOLinkLog>> LinkLogBulkInsertAsync(List<LinkLogModel> items)
+		public virtual async Task<List<POCOLinkLog>> LinkLogBulkInsertAsync(List<ApiLinkLogModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkLogs/BulkInsert", items);
 
@@ -283,7 +315,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLinkLog>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOLinkStatus> LinkStatusCreateAsync(LinkStatusModel item)
+		public virtual async Task<POCOLinkStatus> LinkStatusCreateAsync(ApiLinkStatusModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatus", item);
 
@@ -291,7 +323,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOLinkStatus>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOLinkStatus> LinkStatusUpdateAsync(int id, LinkStatusModel item)
+		public virtual async Task<POCOLinkStatus> LinkStatusUpdateAsync(int id, ApiLinkStatusModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkStatus/{id}", item);
 
@@ -322,7 +354,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLinkStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOLinkStatus>> LinkStatusBulkInsertAsync(List<LinkStatusModel> items)
+		public virtual async Task<List<POCOLinkStatus>> LinkStatusBulkInsertAsync(List<ApiLinkStatusModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatus/BulkInsert", items);
 
@@ -330,7 +362,15 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLinkStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOMachine> MachineCreateAsync(MachineModel item)
+		public virtual async Task<POCOLinkStatus> GetLinkStatusName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus/name/{name}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOLinkStatus>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOMachine> MachineCreateAsync(ApiMachineModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines", item);
 
@@ -338,7 +378,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOMachine>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOMachine> MachineUpdateAsync(int id, MachineModel item)
+		public virtual async Task<POCOMachine> MachineUpdateAsync(int id, ApiMachineModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Machines/{id}", item);
 
@@ -369,7 +409,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOMachine>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOMachine>> MachineBulkInsertAsync(List<MachineModel> items)
+		public virtual async Task<List<POCOMachine>> MachineBulkInsertAsync(List<ApiMachineModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines/BulkInsert", items);
 
@@ -377,7 +417,15 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOMachine>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOMachineRefTeam> MachineRefTeamCreateAsync(MachineRefTeamModel item)
+		public virtual async Task<POCOMachine> GetMachineMachineGuid(Guid machineGuid)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/machineGuid/{machineGuid}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOMachine>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOMachineRefTeam> MachineRefTeamCreateAsync(ApiMachineRefTeamModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/MachineRefTeams", item);
 
@@ -385,7 +433,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOMachineRefTeam>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOMachineRefTeam> MachineRefTeamUpdateAsync(int id, MachineRefTeamModel item)
+		public virtual async Task<POCOMachineRefTeam> MachineRefTeamUpdateAsync(int id, ApiMachineRefTeamModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/MachineRefTeams/{id}", item);
 
@@ -416,7 +464,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOMachineRefTeam>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOMachineRefTeam>> MachineRefTeamBulkInsertAsync(List<MachineRefTeamModel> items)
+		public virtual async Task<List<POCOMachineRefTeam>> MachineRefTeamBulkInsertAsync(List<ApiMachineRefTeamModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/MachineRefTeams/BulkInsert", items);
 
@@ -424,7 +472,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOMachineRefTeam>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOOrganization> OrganizationCreateAsync(OrganizationModel item)
+		public virtual async Task<POCOOrganization> OrganizationCreateAsync(ApiOrganizationModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Organizations", item);
 
@@ -432,7 +480,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOOrganization>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOOrganization> OrganizationUpdateAsync(int id, OrganizationModel item)
+		public virtual async Task<POCOOrganization> OrganizationUpdateAsync(int id, ApiOrganizationModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Organizations/{id}", item);
 
@@ -463,7 +511,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOOrganization>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOOrganization>> OrganizationBulkInsertAsync(List<OrganizationModel> items)
+		public virtual async Task<List<POCOOrganization>> OrganizationBulkInsertAsync(List<ApiOrganizationModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Organizations/BulkInsert", items);
 
@@ -471,7 +519,15 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOOrganization>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOTeam> TeamCreateAsync(TeamModel item)
+		public virtual async Task<POCOOrganization> GetOrganizationName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/name/{name}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOOrganization>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOTeam> TeamCreateAsync(ApiTeamModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams", item);
 
@@ -479,7 +535,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOTeam>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOTeam> TeamUpdateAsync(int id, TeamModel item)
+		public virtual async Task<POCOTeam> TeamUpdateAsync(int id, ApiTeamModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Teams/{id}", item);
 
@@ -510,7 +566,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOTeam>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOTeam>> TeamBulkInsertAsync(List<TeamModel> items)
+		public virtual async Task<List<POCOTeam>> TeamBulkInsertAsync(List<ApiTeamModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams/BulkInsert", items);
 
@@ -518,7 +574,15 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOTeam>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOVersionInfo> VersionInfoCreateAsync(VersionInfoModel item)
+		public virtual async Task<POCOTeam> GetTeamName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/name/{name}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOTeam>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOVersionInfo> VersionInfoCreateAsync(ApiVersionInfoModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes", item);
 
@@ -526,7 +590,7 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOVersionInfo> VersionInfoUpdateAsync(long id, VersionInfoModel item)
+		public virtual async Task<POCOVersionInfo> VersionInfoUpdateAsync(long id, ApiVersionInfoModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VersionInfoes/{id}", item);
 
@@ -557,16 +621,24 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOVersionInfo>> VersionInfoBulkInsertAsync(List<VersionInfoModel> items)
+		public virtual async Task<List<POCOVersionInfo>> VersionInfoBulkInsertAsync(List<ApiVersionInfoModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
 		}
+
+		public virtual async Task<POCOVersionInfo> GetVersionInfoVersion(long version)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/version/{version}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4b350108c0ffae83ee711f34c1f7b6c</Hash>
+    <Hash>d3f6e8b213bff7d19ca68a20dcf7e0d8</Hash>
 </Codenesium>*/

@@ -80,7 +80,7 @@ namespace FileServiceNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
 		[ProducesResponseType(typeof(CreateResponse<long>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] VersionInfoModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoModel model)
 		{
 			CreateResponse<POCOVersionInfo> result = await this.versionInfoManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<VersionInfoModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVersionInfoModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace FileServiceNS.Api.Service
 		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(long id, [FromBody] VersionInfoModel model)
+		public virtual async Task<IActionResult> Update(long id, [FromBody] ApiVersionInfoModel model)
 		{
 			try
 			{
@@ -195,5 +195,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9c4a1c7e8f504736ae5ce4bb597c6415</Hash>
+    <Hash>0cce0b5a6f3a12c6603f8f92d5047710</Hash>
 </Codenesium>*/

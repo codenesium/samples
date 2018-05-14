@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOChainStatus
 	{
 		private IChainStatusRepository chainStatusRepository;
-		private IChainStatusModelValidator chainStatusModelValidator;
+		private IApiChainStatusModelValidator chainStatusModelValidator;
 		private ILogger logger;
 
 		public AbstractBOChainStatus(
 			ILogger logger,
 			IChainStatusRepository chainStatusRepository,
-			IChainStatusModelValidator chainStatusModelValidator)
+			IApiChainStatusModelValidator chainStatusModelValidator)
 
 		{
 			this.chainStatusRepository = chainStatusRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOChainStatus>> Create(
-			ChainStatusModel model)
+			ApiChainStatusModel model)
 		{
 			CreateResponse<POCOChainStatus> response = new CreateResponse<POCOChainStatus>(await this.chainStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ChainStatusModel model)
+			ApiChainStatusModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.chainStatusModelValidator.ValidateUpdateAsync(id, model));
 
@@ -86,5 +86,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>520907220af809d032510beb42defa3d</Hash>
+    <Hash>6e20d096809a2ed99f7fc90cfb5cc30b</Hash>
 </Codenesium>*/

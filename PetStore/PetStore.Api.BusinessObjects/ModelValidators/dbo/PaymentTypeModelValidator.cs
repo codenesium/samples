@@ -6,18 +6,18 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public class PaymentTypeModelValidator: AbstractPaymentTypeModelValidator, IPaymentTypeModelValidator
+	public class ApiPaymentTypeModelValidator: AbstractApiPaymentTypeModelValidator, IApiPaymentTypeModelValidator
 	{
-		public PaymentTypeModelValidator()
+		public ApiPaymentTypeModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(PaymentTypeModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiPaymentTypeModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, PaymentTypeModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPaymentTypeModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
@@ -31,5 +31,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8aace15574c5c3ea65a7132ec06a5e87</Hash>
+    <Hash>1d41906c50cbab174a9eec75c077451c</Hash>
 </Codenesium>*/

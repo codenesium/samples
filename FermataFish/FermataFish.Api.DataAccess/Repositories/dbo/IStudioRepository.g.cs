@@ -7,10 +7,10 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStudioRepository
 	{
-		POCOStudio Create(StudioModel model);
+		POCOStudio Create(ApiStudioModel model);
 
 		void Update(int id,
-		            StudioModel model);
+		            ApiStudioModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7ff0029b8ccbf362a5e948152684a62d</Hash>
+    <Hash>8378c4c86c2e2186af66dc7668a68189</Hash>
 </Codenesium>*/

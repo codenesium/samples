@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOEmployee Create(
-			EmployeeModel model)
+			ApiEmployeeModel model)
 		{
 			Employee record = new Employee();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			EmployeeModel model)
+			ApiEmployeeModel model)
 		{
 			Employee record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c07974047ba4e9c081466ac6ddd22e15</Hash>
+    <Hash>d0e80f9a24909b18c90e0babb6927903</Hash>
 </Codenesium>*/

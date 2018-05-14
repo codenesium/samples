@@ -15,12 +15,12 @@ namespace FileServiceNS.Api.BusinessObjects
 		public BOFileType(
 			ILogger<FileTypeRepository> logger,
 			IFileTypeRepository fileTypeRepository,
-			IFileTypeModelValidator fileTypeModelValidator)
+			IApiFileTypeModelValidator fileTypeModelValidator)
 			: base(logger, fileTypeRepository, fileTypeModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f1fb90f707c76c8ade6a9df051c54b9</Hash>
+    <Hash>0bdb39b7750131c8c721c900d35fe47a</Hash>
 </Codenesium>*/

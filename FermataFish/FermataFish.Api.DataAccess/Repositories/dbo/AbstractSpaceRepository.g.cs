@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOSpace Create(
-			SpaceModel model)
+			ApiSpaceModel model)
 		{
 			Space record = new Space();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			SpaceModel model)
+			ApiSpaceModel model)
 		{
 			Space record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a08f4a7130a79003b8553f948e858a1</Hash>
+    <Hash>23ee011709c4ffb903be088d9ac7b37a</Hash>
 </Codenesium>*/

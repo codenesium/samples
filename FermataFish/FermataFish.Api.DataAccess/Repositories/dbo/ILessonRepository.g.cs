@@ -7,10 +7,10 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ILessonRepository
 	{
-		POCOLesson Create(LessonModel model);
+		POCOLesson Create(ApiLessonModel model);
 
 		void Update(int id,
-		            LessonModel model);
+		            ApiLessonModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c3eaa6774214fb9e8e1c8b6770573023</Hash>
+    <Hash>d98e615362eba9e4c25e7c3b76cd1c98</Hash>
 </Codenesium>*/

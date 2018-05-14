@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOClasp
 	{
 		private IClaspRepository claspRepository;
-		private IClaspModelValidator claspModelValidator;
+		private IApiClaspModelValidator claspModelValidator;
 		private ILogger logger;
 
 		public AbstractBOClasp(
 			ILogger logger,
 			IClaspRepository claspRepository,
-			IClaspModelValidator claspModelValidator)
+			IApiClaspModelValidator claspModelValidator)
 
 		{
 			this.claspRepository = claspRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOClasp>> Create(
-			ClaspModel model)
+			ApiClaspModel model)
 		{
 			CreateResponse<POCOClasp> response = new CreateResponse<POCOClasp>(await this.claspModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ClaspModel model)
+			ApiClaspModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.claspModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e93c8a1eca75b863af37069f6eb9e80b</Hash>
+    <Hash>aad48e05d44ae3760b7c32a5f5251537</Hash>
 </Codenesium>*/

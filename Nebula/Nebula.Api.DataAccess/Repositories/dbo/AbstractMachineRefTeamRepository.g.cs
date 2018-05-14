@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOMachineRefTeam Create(
-			MachineRefTeamModel model)
+			ApiMachineRefTeamModel model)
 		{
 			MachineRefTeam record = new MachineRefTeam();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			MachineRefTeamModel model)
+			ApiMachineRefTeamModel model)
 		{
 			MachineRefTeam record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>300c1ceea68215298a73859dcd031521</Hash>
+    <Hash>2ff8081d9c61abc49e92f0abb298021f</Hash>
 </Codenesium>*/

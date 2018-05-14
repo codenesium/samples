@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOClasp Create(
-			ClaspModel model)
+			ApiClaspModel model)
 		{
 			Clasp record = new Clasp();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			ClaspModel model)
+			ApiClaspModel model)
 		{
 			Clasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>203b2ab9434bdea89dc1aaf1999dfbad</Hash>
+    <Hash>7bb9886c30d7df976a99e902f0ed5bc0</Hash>
 </Codenesium>*/

@@ -10,10 +10,10 @@ namespace FermataFishNS.Api.BusinessObjects
 	public interface IBOFamily
 	{
 		Task<CreateResponse<POCOFamily>> Create(
-			FamilyModel model);
+			ApiFamilyModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            FamilyModel model);
+		                            ApiFamilyModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>81a22a4a5da79b8aa912013ebd24ccb5</Hash>
+    <Hash>be353f40faeadd8731b2cd0c91d93ed1</Hash>
 </Codenesium>*/

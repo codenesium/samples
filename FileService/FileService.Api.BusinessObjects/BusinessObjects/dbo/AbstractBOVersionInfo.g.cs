@@ -15,13 +15,13 @@ namespace FileServiceNS.Api.BusinessObjects
 	public abstract class AbstractBOVersionInfo
 	{
 		private IVersionInfoRepository versionInfoRepository;
-		private IVersionInfoModelValidator versionInfoModelValidator;
+		private IApiVersionInfoModelValidator versionInfoModelValidator;
 		private ILogger logger;
 
 		public AbstractBOVersionInfo(
 			ILogger logger,
 			IVersionInfoRepository versionInfoRepository,
-			IVersionInfoModelValidator versionInfoModelValidator)
+			IApiVersionInfoModelValidator versionInfoModelValidator)
 
 		{
 			this.versionInfoRepository = versionInfoRepository;
@@ -40,7 +40,7 @@ namespace FileServiceNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOVersionInfo>> Create(
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			CreateResponse<POCOVersionInfo> response = new CreateResponse<POCOVersionInfo>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			long version,
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
 
@@ -86,5 +86,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e4cb7902608b9f7020efbece4781d135</Hash>
+    <Hash>3ad5aa54580b73dfa0db67a4e20b6afa</Hash>
 </Codenesium>*/

@@ -8,14 +8,14 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.BusinessObjects
 
 {
-	public abstract class AbstractMachineRefTeamModelValidator: AbstractValidator<MachineRefTeamModel>
+	public abstract class AbstractApiMachineRefTeamModelValidator: AbstractValidator<ApiMachineRefTeamModel>
 	{
-		public new ValidationResult Validate(MachineRefTeamModel model)
+		public new ValidationResult Validate(ApiMachineRefTeamModel model)
 		{
 			return base.Validate(model);
 		}
 
-		public async Task<ValidationResult> ValidateAsync(MachineRefTeamModel model)
+		public async Task<ValidationResult> ValidateAsync(ApiMachineRefTeamModel model)
 		{
 			return await base.ValidateAsync(model);
 		}
@@ -47,5 +47,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cc35dd74a7e48ca67d8e6b9baf7cc4d4</Hash>
+    <Hash>249ad4453d4faf22feb1b98a9d738725</Hash>
 </Codenesium>*/

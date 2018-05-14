@@ -10,10 +10,10 @@ namespace NebulaNS.Api.BusinessObjects
 	public interface IBOMachine
 	{
 		Task<CreateResponse<POCOMachine>> Create(
-			MachineModel model);
+			ApiMachineModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            MachineModel model);
+		                            ApiMachineModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>82042d0f9daebbc151a395ea34f58159</Hash>
+    <Hash>5ddcd5c59b0c1f935c2fe0ea65c221a9</Hash>
 </Codenesium>*/

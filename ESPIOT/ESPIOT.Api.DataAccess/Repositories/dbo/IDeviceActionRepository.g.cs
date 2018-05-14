@@ -7,10 +7,10 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public interface IDeviceActionRepository
 	{
-		POCODeviceAction Create(DeviceActionModel model);
+		POCODeviceAction Create(ApiDeviceActionModel model);
 
 		void Update(int id,
-		            DeviceActionModel model);
+		            ApiDeviceActionModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>226c7f74e066b84b701c9d80de80ab57</Hash>
+    <Hash>7ebb5f72ad6aa1954187af4c807a6576</Hash>
 </Codenesium>*/

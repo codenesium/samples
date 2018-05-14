@@ -80,7 +80,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOOrganization), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] OrganizationModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiOrganizationModel model)
 		{
 			CreateResponse<POCOOrganization> result = await this.organizationManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOOrganization>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<OrganizationModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiOrganizationModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(POCOOrganization), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] OrganizationModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOrganizationModel model)
 		{
 			try
 			{
@@ -195,5 +195,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>295faa6f8070d1614d729dee1ee34ecb</Hash>
+    <Hash>7a8b7493d02281eda178ff12e93329b3</Hash>
 </Codenesium>*/

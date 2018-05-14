@@ -7,10 +7,10 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IAdminRepository
 	{
-		POCOAdmin Create(AdminModel model);
+		POCOAdmin Create(ApiAdminModel model);
 
 		void Update(int id,
-		            AdminModel model);
+		            ApiAdminModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3d205dbea3a02809dcda7c64dbb94680</Hash>
+    <Hash>1ce4552b15b10d6ef40d7eb9fbd9f66f</Hash>
 </Codenesium>*/

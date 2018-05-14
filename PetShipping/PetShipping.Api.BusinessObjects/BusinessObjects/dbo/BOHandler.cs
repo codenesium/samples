@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOHandler(
 			ILogger<HandlerRepository> logger,
 			IHandlerRepository handlerRepository,
-			IHandlerModelValidator handlerModelValidator)
+			IApiHandlerModelValidator handlerModelValidator)
 			: base(logger, handlerRepository, handlerModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b74905670355cf4927833ddd863aca0</Hash>
+    <Hash>84d4fe6dad50994d5c82f474253e3466</Hash>
 </Codenesium>*/

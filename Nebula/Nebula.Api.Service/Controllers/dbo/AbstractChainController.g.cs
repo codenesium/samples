@@ -80,7 +80,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOChain), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ChainModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiChainModel model)
 		{
 			CreateResponse<POCOChain> result = await this.chainManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOChain>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ChainModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(POCOChain), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ChainModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainModel model)
 		{
 			try
 			{
@@ -195,5 +195,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0837e7bacec6c65caf4874901938db18</Hash>
+    <Hash>33d913bc7fbf89eab6b9ca0fcbe00e6a</Hash>
 </Codenesium>*/

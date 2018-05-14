@@ -15,12 +15,12 @@ namespace FileServiceNS.Api.BusinessObjects
 		public BOBucket(
 			ILogger<BucketRepository> logger,
 			IBucketRepository bucketRepository,
-			IBucketModelValidator bucketModelValidator)
+			IApiBucketModelValidator bucketModelValidator)
 			: base(logger, bucketRepository, bucketModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f780c0076af844facab3370e7fbfee4b</Hash>
+    <Hash>a9cec370d4fcb05103c930d84fcebda7</Hash>
 </Codenesium>*/

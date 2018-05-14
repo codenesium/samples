@@ -10,10 +10,10 @@ namespace NebulaNS.Api.BusinessObjects
 	public interface IBOOrganization
 	{
 		Task<CreateResponse<POCOOrganization>> Create(
-			OrganizationModel model);
+			ApiOrganizationModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            OrganizationModel model);
+		                            ApiOrganizationModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ae028c28554340ae509026038a57129f</Hash>
+    <Hash>8e0a31ecde1a1e1ff8140b676e3fa63e</Hash>
 </Codenesium>*/

@@ -80,7 +80,7 @@ namespace ESPIOTNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCODeviceAction), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] DeviceActionModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiDeviceActionModel model)
 		{
 			CreateResponse<POCODeviceAction> result = await this.deviceActionManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(List<POCODeviceAction>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<DeviceActionModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDeviceActionModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace ESPIOTNS.Api.Service
 		[ProducesResponseType(typeof(POCODeviceAction), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] DeviceActionModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceActionModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>907b6f5c229ce273f73adfce3cad7e46</Hash>
+    <Hash>e9d1541d3b8a63db1389cc57d8e92478</Hash>
 </Codenesium>*/

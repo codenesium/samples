@@ -37,7 +37,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOPaymentType Create(
-			PaymentTypeModel model)
+			ApiPaymentTypeModel model)
 		{
 			PaymentType record = new PaymentType();
 
@@ -53,7 +53,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			PaymentTypeModel model)
+			ApiPaymentTypeModel model)
 		{
 			PaymentType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>96aeafbce1a84c0351bb87515379994e</Hash>
+    <Hash>e473033923c05bc3fa9080a4d821dabc</Hash>
 </Codenesium>*/

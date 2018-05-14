@@ -7,10 +7,10 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public interface IDeviceRepository
 	{
-		POCODevice Create(DeviceModel model);
+		POCODevice Create(ApiDeviceModel model);
 
 		void Update(int id,
-		            DeviceModel model);
+		            ApiDeviceModel model);
 
 		void Delete(int id);
 
@@ -23,5 +23,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd735532c9aacb996fc383ee1ebf6b90</Hash>
+    <Hash>70ebcf83c45541530fa07fa3a746542b</Hash>
 </Codenesium>*/

@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using FermataFishNS.Api.Contracts;
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public interface IStateModelValidator
+	public interface IApiStateModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(StateModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, StateModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiStateModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiStateModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6ccff7a7e574fb66772a6c07066c422a</Hash>
+    <Hash>8f98412c064d3c0ef6883181bdc41c71</Hash>
 </Codenesium>*/

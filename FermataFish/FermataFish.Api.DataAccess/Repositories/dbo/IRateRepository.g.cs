@@ -7,10 +7,10 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IRateRepository
 	{
-		POCORate Create(RateModel model);
+		POCORate Create(ApiRateModel model);
 
 		void Update(int id,
-		            RateModel model);
+		            ApiRateModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>12ae5497bf8e56e6e1fa2d14182d7556</Hash>
+    <Hash>f004c8138a43680411e28ddeeef4af8f</Hash>
 </Codenesium>*/

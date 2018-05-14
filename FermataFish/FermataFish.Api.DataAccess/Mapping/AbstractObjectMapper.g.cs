@@ -7,7 +7,7 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		public virtual void AdminMapModelToEF(
 			int id,
-			AdminModel model,
+			ApiAdminModel model,
 			Admin efAdmin)
 		{
 			efAdmin.SetProperties(
@@ -33,7 +33,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void FamilyMapModelToEF(
 			int id,
-			FamilyModel model,
+			ApiFamilyModel model,
 			Family efFamily)
 		{
 			efFamily.SetProperties(
@@ -59,7 +59,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void LessonMapModelToEF(
 			int id,
-			LessonModel model,
+			ApiLessonModel model,
 			Lesson efLesson)
 		{
 			efLesson.SetProperties(
@@ -88,7 +88,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void LessonStatusMapModelToEF(
 			int id,
-			LessonStatusModel model,
+			ApiLessonStatusModel model,
 			LessonStatus efLessonStatus)
 		{
 			efLessonStatus.SetProperties(
@@ -110,7 +110,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void LessonXStudentMapModelToEF(
 			int id,
-			LessonXStudentModel model,
+			ApiLessonXStudentModel model,
 			LessonXStudent efLessonXStudent)
 		{
 			efLessonXStudent.SetProperties(
@@ -132,7 +132,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void LessonXTeacherMapModelToEF(
 			int id,
-			LessonXTeacherModel model,
+			ApiLessonXTeacherModel model,
 			LessonXTeacher efLessonXTeacher)
 		{
 			efLessonXTeacher.SetProperties(
@@ -154,7 +154,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void RateMapModelToEF(
 			int id,
-			RateModel model,
+			ApiRateModel model,
 			Rate efRate)
 		{
 			efRate.SetProperties(
@@ -177,7 +177,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void SpaceMapModelToEF(
 			int id,
-			SpaceModel model,
+			ApiSpaceModel model,
 			Space efSpace)
 		{
 			efSpace.SetProperties(
@@ -200,7 +200,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void SpaceFeatureMapModelToEF(
 			int id,
-			SpaceFeatureModel model,
+			ApiSpaceFeatureModel model,
 			SpaceFeature efSpaceFeature)
 		{
 			efSpaceFeature.SetProperties(
@@ -222,7 +222,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void SpaceXSpaceFeatureMapModelToEF(
 			int id,
-			SpaceXSpaceFeatureModel model,
+			ApiSpaceXSpaceFeatureModel model,
 			SpaceXSpaceFeature efSpaceXSpaceFeature)
 		{
 			efSpaceXSpaceFeature.SetProperties(
@@ -244,7 +244,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void StateMapModelToEF(
 			int id,
-			StateModel model,
+			ApiStateModel model,
 			State efState)
 		{
 			efState.SetProperties(
@@ -265,7 +265,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void StudentMapModelToEF(
 			int id,
-			StudentModel model,
+			ApiStudentModel model,
 			Student efStudent)
 		{
 			efStudent.SetProperties(
@@ -295,7 +295,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void StudentXFamilyMapModelToEF(
 			int id,
-			StudentXFamilyModel model,
+			ApiStudentXFamilyModel model,
 			StudentXFamily efStudentXFamily)
 		{
 			efStudentXFamily.SetProperties(
@@ -317,7 +317,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void StudioMapModelToEF(
 			int id,
-			StudioModel model,
+			ApiStudioModel model,
 			Studio efStudio)
 		{
 			efStudio.SetProperties(
@@ -344,7 +344,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void TeacherMapModelToEF(
 			int id,
-			TeacherModel model,
+			ApiTeacherModel model,
 			Teacher efTeacher)
 		{
 			efTeacher.SetProperties(
@@ -370,7 +370,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void TeacherSkillMapModelToEF(
 			int id,
-			TeacherSkillModel model,
+			ApiTeacherSkillModel model,
 			TeacherSkill efTeacherSkill)
 		{
 			efTeacherSkill.SetProperties(
@@ -392,7 +392,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void TeacherXTeacherSkillMapModelToEF(
 			int id,
-			TeacherXTeacherSkillModel model,
+			ApiTeacherXTeacherSkillModel model,
 			TeacherXTeacherSkill efTeacherXTeacherSkill)
 		{
 			efTeacherXTeacherSkill.SetProperties(
@@ -415,5 +415,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bae9b9e0d195697b16a695c884bbb1b6</Hash>
+    <Hash>e6848fdd7a6d0036481f00b8d1411e63</Hash>
 </Codenesium>*/

@@ -80,7 +80,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOStudio), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] StudioModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiStudioModel model)
 		{
 			CreateResponse<POCOStudio> result = await this.studioManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOStudio>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<StudioModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudioModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(POCOStudio), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] StudioModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudioModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>44c99b05181ff2f37ea5ff72b06e2bb8</Hash>
+    <Hash>90af35d2112ffac1cb1aedeba20b7f93</Hash>
 </Codenesium>*/

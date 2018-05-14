@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOSpaceXSpaceFeature
 	{
 		private ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
-		private ISpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator;
+		private IApiSpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator;
 		private ILogger logger;
 
 		public AbstractBOSpaceXSpaceFeature(
 			ILogger logger,
 			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
-			ISpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator)
+			IApiSpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator)
 
 		{
 			this.spaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOSpaceXSpaceFeature>> Create(
-			SpaceXSpaceFeatureModel model)
+			ApiSpaceXSpaceFeatureModel model)
 		{
 			CreateResponse<POCOSpaceXSpaceFeature> response = new CreateResponse<POCOSpaceXSpaceFeature>(await this.spaceXSpaceFeatureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			SpaceXSpaceFeatureModel model)
+			ApiSpaceXSpaceFeatureModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.spaceXSpaceFeatureModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b5587d96be9d04790ea43ee9696ec248</Hash>
+    <Hash>d90362a05c5f0f989e39a0cb12535142</Hash>
 </Codenesium>*/

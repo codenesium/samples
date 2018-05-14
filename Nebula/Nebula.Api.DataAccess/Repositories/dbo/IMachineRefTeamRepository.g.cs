@@ -7,10 +7,10 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRefTeamRepository
 	{
-		POCOMachineRefTeam Create(MachineRefTeamModel model);
+		POCOMachineRefTeam Create(ApiMachineRefTeamModel model);
 
 		void Update(int id,
-		            MachineRefTeamModel model);
+		            ApiMachineRefTeamModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9ec7043a84c0df0f5142e3297c0f2069</Hash>
+    <Hash>590f139c089bdefedfee14eebe8e4881</Hash>
 </Codenesium>*/

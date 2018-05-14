@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOPipelineStepStepRequirement
 	{
 		private IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository;
-		private IPipelineStepStepRequirementModelValidator pipelineStepStepRequirementModelValidator;
+		private IApiPipelineStepStepRequirementModelValidator pipelineStepStepRequirementModelValidator;
 		private ILogger logger;
 
 		public AbstractBOPipelineStepStepRequirement(
 			ILogger logger,
 			IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
-			IPipelineStepStepRequirementModelValidator pipelineStepStepRequirementModelValidator)
+			IApiPipelineStepStepRequirementModelValidator pipelineStepStepRequirementModelValidator)
 
 		{
 			this.pipelineStepStepRequirementRepository = pipelineStepStepRequirementRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOPipelineStepStepRequirement>> Create(
-			PipelineStepStepRequirementModel model)
+			ApiPipelineStepStepRequirementModel model)
 		{
 			CreateResponse<POCOPipelineStepStepRequirement> response = new CreateResponse<POCOPipelineStepStepRequirement>(await this.pipelineStepStepRequirementModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			PipelineStepStepRequirementModel model)
+			ApiPipelineStepStepRequirementModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.pipelineStepStepRequirementModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4a24b64f810d015d94939f453ad5103e</Hash>
+    <Hash>17afc01c15f743c658b581d19395306c</Hash>
 </Codenesium>*/

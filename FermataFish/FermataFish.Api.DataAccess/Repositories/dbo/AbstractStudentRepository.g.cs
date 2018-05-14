@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOStudent Create(
-			StudentModel model)
+			ApiStudentModel model)
 		{
 			Student record = new Student();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			StudentModel model)
+			ApiStudentModel model)
 		{
 			Student record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>49927af7ada7bb729545b9a95cf59b5e</Hash>
+    <Hash>369dfb84f436172304f281ef98c9818c</Hash>
 </Codenesium>*/

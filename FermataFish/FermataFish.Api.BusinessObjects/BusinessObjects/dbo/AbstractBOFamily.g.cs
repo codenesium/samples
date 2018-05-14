@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOFamily
 	{
 		private IFamilyRepository familyRepository;
-		private IFamilyModelValidator familyModelValidator;
+		private IApiFamilyModelValidator familyModelValidator;
 		private ILogger logger;
 
 		public AbstractBOFamily(
 			ILogger logger,
 			IFamilyRepository familyRepository,
-			IFamilyModelValidator familyModelValidator)
+			IApiFamilyModelValidator familyModelValidator)
 
 		{
 			this.familyRepository = familyRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOFamily>> Create(
-			FamilyModel model)
+			ApiFamilyModel model)
 		{
 			CreateResponse<POCOFamily> response = new CreateResponse<POCOFamily>(await this.familyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			FamilyModel model)
+			ApiFamilyModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.familyModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4fa37491b1d489a3b8891146551c97fd</Hash>
+    <Hash>670a31e2d3e818a19a57aa731e07222a</Hash>
 </Codenesium>*/

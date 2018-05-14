@@ -7,10 +7,10 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IOrganizationRepository
 	{
-		POCOOrganization Create(OrganizationModel model);
+		POCOOrganization Create(ApiOrganizationModel model);
 
 		void Update(int id,
-		            OrganizationModel model);
+		            ApiOrganizationModel model);
 
 		void Delete(int id);
 
@@ -23,5 +23,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d2cc7c2683ba618082a8d7d2225e0e7</Hash>
+    <Hash>0f32e01dc485562371e60911f6c61d57</Hash>
 </Codenesium>*/

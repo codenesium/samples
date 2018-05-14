@@ -8,14 +8,14 @@ using FermataFishNS.Api.DataAccess;
 namespace FermataFishNS.Api.BusinessObjects
 
 {
-	public abstract class AbstractFamilyModelValidator: AbstractValidator<FamilyModel>
+	public abstract class AbstractApiFamilyModelValidator: AbstractValidator<ApiFamilyModel>
 	{
-		public new ValidationResult Validate(FamilyModel model)
+		public new ValidationResult Validate(ApiFamilyModel model)
 		{
 			return base.Validate(model);
 		}
 
-		public async Task<ValidationResult> ValidateAsync(FamilyModel model)
+		public async Task<ValidationResult> ValidateAsync(ApiFamilyModel model)
 		{
 			return await base.ValidateAsync(model);
 		}
@@ -65,5 +65,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0400af653bc7408cbf93886d8396b4e7</Hash>
+    <Hash>1d38fcc82cef9f107877a26f1a6cb95b</Hash>
 </Codenesium>*/

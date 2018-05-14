@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCODestination Create(
-			DestinationModel model)
+			ApiDestinationModel model)
 		{
 			Destination record = new Destination();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			DestinationModel model)
+			ApiDestinationModel model)
 		{
 			Destination record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>49b4587a9b8b53c43bf75ee423d859de</Hash>
+    <Hash>ab338219bbe09990900743032f292b12</Hash>
 </Codenesium>*/

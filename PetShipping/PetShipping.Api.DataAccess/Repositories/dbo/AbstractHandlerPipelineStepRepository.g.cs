@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOHandlerPipelineStep Create(
-			HandlerPipelineStepModel model)
+			ApiHandlerPipelineStepModel model)
 		{
 			HandlerPipelineStep record = new HandlerPipelineStep();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			HandlerPipelineStepModel model)
+			ApiHandlerPipelineStepModel model)
 		{
 			HandlerPipelineStep record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dcbe38cd97230cb83c8820c36d898248</Hash>
+    <Hash>ae5a9503ba0862df65fcaa20e0055901</Hash>
 </Codenesium>*/

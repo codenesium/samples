@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBODestination
 	{
 		private IDestinationRepository destinationRepository;
-		private IDestinationModelValidator destinationModelValidator;
+		private IApiDestinationModelValidator destinationModelValidator;
 		private ILogger logger;
 
 		public AbstractBODestination(
 			ILogger logger,
 			IDestinationRepository destinationRepository,
-			IDestinationModelValidator destinationModelValidator)
+			IApiDestinationModelValidator destinationModelValidator)
 
 		{
 			this.destinationRepository = destinationRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCODestination>> Create(
-			DestinationModel model)
+			ApiDestinationModel model)
 		{
 			CreateResponse<POCODestination> response = new CreateResponse<POCODestination>(await this.destinationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			DestinationModel model)
+			ApiDestinationModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.destinationModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f34e6435425e2f6f6a09eec1a9fdde0b</Hash>
+    <Hash>5c539b4f86529541a774d4825db3c96e</Hash>
 </Codenesium>*/

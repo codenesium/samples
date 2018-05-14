@@ -15,12 +15,12 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOLink(
 			ILogger<LinkRepository> logger,
 			ILinkRepository linkRepository,
-			ILinkModelValidator linkModelValidator)
+			IApiLinkModelValidator linkModelValidator)
 			: base(logger, linkRepository, linkModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf8eb4c99a89b17098611550bc9d4734</Hash>
+    <Hash>811267f5facaf6b4ed4485cc34b8e927</Hash>
 </Codenesium>*/

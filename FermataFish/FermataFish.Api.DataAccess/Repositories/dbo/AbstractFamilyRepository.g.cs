@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOFamily Create(
-			FamilyModel model)
+			ApiFamilyModel model)
 		{
 			Family record = new Family();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			FamilyModel model)
+			ApiFamilyModel model)
 		{
 			Family record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9ed04d13ab95ddce88d589b1b3c20085</Hash>
+    <Hash>1932c9a0f2d97d91cb7f778523d54174</Hash>
 </Codenesium>*/

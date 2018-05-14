@@ -10,10 +10,10 @@ namespace PetShippingNS.Api.BusinessObjects
 	public interface IBOAirline
 	{
 		Task<CreateResponse<POCOAirline>> Create(
-			AirlineModel model);
+			ApiAirlineModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            AirlineModel model);
+		                            ApiAirlineModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0bca56cf407384f885c6795b5493eb52</Hash>
+    <Hash>dcbe925e81cbf479a2a248c4fe7d279b</Hash>
 </Codenesium>*/

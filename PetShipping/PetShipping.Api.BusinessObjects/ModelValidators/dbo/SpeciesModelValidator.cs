@@ -6,18 +6,18 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public class SpeciesModelValidator: AbstractSpeciesModelValidator, ISpeciesModelValidator
+	public class ApiSpeciesModelValidator: AbstractApiSpeciesModelValidator, IApiSpeciesModelValidator
 	{
-		public SpeciesModelValidator()
+		public ApiSpeciesModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(SpeciesModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiSpeciesModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, SpeciesModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpeciesModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
@@ -31,5 +31,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5cf4055f3abe76bd3b93741448ca94c0</Hash>
+    <Hash>85331376ce2ece5f68e26b01c1283c4c</Hash>
 </Codenesium>*/

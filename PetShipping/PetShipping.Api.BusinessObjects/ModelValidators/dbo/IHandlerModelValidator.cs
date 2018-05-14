@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using PetShippingNS.Api.Contracts;
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public interface IHandlerModelValidator
+	public interface IApiHandlerModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(HandlerModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, HandlerModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiHandlerModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiHandlerModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>64e0d872c7425d19eb15e58ae325c59d</Hash>
+    <Hash>89c66135b6692c76fae1423bcbac0b3a</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOAdmin
 	{
 		private IAdminRepository adminRepository;
-		private IAdminModelValidator adminModelValidator;
+		private IApiAdminModelValidator adminModelValidator;
 		private ILogger logger;
 
 		public AbstractBOAdmin(
 			ILogger logger,
 			IAdminRepository adminRepository,
-			IAdminModelValidator adminModelValidator)
+			IApiAdminModelValidator adminModelValidator)
 
 		{
 			this.adminRepository = adminRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOAdmin>> Create(
-			AdminModel model)
+			ApiAdminModel model)
 		{
 			CreateResponse<POCOAdmin> response = new CreateResponse<POCOAdmin>(await this.adminModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			AdminModel model)
+			ApiAdminModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>118b80683bbca4fe61148148e0a586d1</Hash>
+    <Hash>8668d0db61418655c462f8cc5487c313</Hash>
 </Codenesium>*/

@@ -80,7 +80,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOStudent), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] StudentModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiStudentModel model)
 		{
 			CreateResponse<POCOStudent> result = await this.studentManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<StudentModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudentModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(POCOStudent), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] StudentModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudentModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>72f20697007c279967c03393ec551202</Hash>
+    <Hash>e38be2e983a164a0c75f87707d206d3f</Hash>
 </Codenesium>*/

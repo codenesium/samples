@@ -80,7 +80,7 @@ namespace PetShippingNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOPipelineStepDestination), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] PipelineStepDestinationModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepDestinationModel model)
 		{
 			CreateResponse<POCOPipelineStepDestination> result = await this.pipelineStepDestinationManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOPipelineStepDestination>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<PipelineStepDestinationModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPipelineStepDestinationModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(POCOPipelineStepDestination), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] PipelineStepDestinationModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepDestinationModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>837c9d86e4db2aa967afea5e8c2df389</Hash>
+    <Hash>881d2431dc126a7a45b28cdc05fad152</Hash>
 </Codenesium>*/

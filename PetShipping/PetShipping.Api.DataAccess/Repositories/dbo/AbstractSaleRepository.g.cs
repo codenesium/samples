@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOSale Create(
-			SaleModel model)
+			ApiSaleModel model)
 		{
 			Sale record = new Sale();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			SaleModel model)
+			ApiSaleModel model)
 		{
 			Sale record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e28016021641df70318418b5facd675c</Hash>
+    <Hash>786bcfcfed5d18ce3b47133c1c9018cd</Hash>
 </Codenesium>*/

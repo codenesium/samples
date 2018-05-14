@@ -10,10 +10,10 @@ namespace PetShippingNS.Api.BusinessObjects
 	public interface IBOPipelineStepNote
 	{
 		Task<CreateResponse<POCOPipelineStepNote>> Create(
-			PipelineStepNoteModel model);
+			ApiPipelineStepNoteModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            PipelineStepNoteModel model);
+		                            ApiPipelineStepNoteModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b8e88c5c039fb7cb05c7f662bdbfab16</Hash>
+    <Hash>22f1c37ef78ed3487e639384fbd966e1</Hash>
 </Codenesium>*/

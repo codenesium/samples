@@ -7,10 +7,10 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRepository
 	{
-		POCOMachine Create(MachineModel model);
+		POCOMachine Create(ApiMachineModel model);
 
 		void Update(int id,
-		            MachineModel model);
+		            ApiMachineModel model);
 
 		void Delete(int id);
 
@@ -23,5 +23,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>84bb770f50b93a6f946220e594d21c3f</Hash>
+    <Hash>9f089c7734a6ba0de01fd61a67c6f32a</Hash>
 </Codenesium>*/

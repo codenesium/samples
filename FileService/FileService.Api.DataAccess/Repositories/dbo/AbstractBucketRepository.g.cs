@@ -37,7 +37,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual POCOBucket Create(
-			BucketModel model)
+			ApiBucketModel model)
 		{
 			Bucket record = new Bucket();
 
@@ -53,7 +53,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			BucketModel model)
+			ApiBucketModel model)
 		{
 			Bucket record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -131,5 +131,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aeef61a4bffee20ed4b17cdcfeb00df9</Hash>
+    <Hash>179125bd0f31e92882ec498bfcb05bdf</Hash>
 </Codenesium>*/

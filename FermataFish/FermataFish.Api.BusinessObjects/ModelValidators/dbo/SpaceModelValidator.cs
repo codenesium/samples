@@ -6,12 +6,12 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public class SpaceModelValidator: AbstractSpaceModelValidator, ISpaceModelValidator
+	public class ApiSpaceModelValidator: AbstractApiSpaceModelValidator, IApiSpaceModelValidator
 	{
-		public SpaceModelValidator()
+		public ApiSpaceModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(SpaceModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiSpaceModel model)
 		{
 			this.DescriptionRules();
 			this.NameRules();
@@ -19,7 +19,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, SpaceModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceModel model)
 		{
 			this.DescriptionRules();
 			this.NameRules();
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>29b1737117f9cedfb92f6872c3b0e4fe</Hash>
+    <Hash>6b62b89f28c7bc16edc70ac5b1d9f4c0</Hash>
 </Codenesium>*/

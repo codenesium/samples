@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOLessonXTeacher
 	{
 		private ILessonXTeacherRepository lessonXTeacherRepository;
-		private ILessonXTeacherModelValidator lessonXTeacherModelValidator;
+		private IApiLessonXTeacherModelValidator lessonXTeacherModelValidator;
 		private ILogger logger;
 
 		public AbstractBOLessonXTeacher(
 			ILogger logger,
 			ILessonXTeacherRepository lessonXTeacherRepository,
-			ILessonXTeacherModelValidator lessonXTeacherModelValidator)
+			IApiLessonXTeacherModelValidator lessonXTeacherModelValidator)
 
 		{
 			this.lessonXTeacherRepository = lessonXTeacherRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOLessonXTeacher>> Create(
-			LessonXTeacherModel model)
+			ApiLessonXTeacherModel model)
 		{
 			CreateResponse<POCOLessonXTeacher> response = new CreateResponse<POCOLessonXTeacher>(await this.lessonXTeacherModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			LessonXTeacherModel model)
+			ApiLessonXTeacherModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f99f88425a3666a5224295058ac0885d</Hash>
+    <Hash>ddc4fc8b73066f4442a637fa11e362f3</Hash>
 </Codenesium>*/

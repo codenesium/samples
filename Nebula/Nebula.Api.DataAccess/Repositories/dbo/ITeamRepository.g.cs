@@ -7,10 +7,10 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ITeamRepository
 	{
-		POCOTeam Create(TeamModel model);
+		POCOTeam Create(ApiTeamModel model);
 
 		void Update(int id,
-		            TeamModel model);
+		            ApiTeamModel model);
 
 		void Delete(int id);
 
@@ -23,5 +23,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2b0cda60579f64edc7e63bc2fc86d117</Hash>
+    <Hash>cf855a74a476f178c860b5f5c3cd07e4</Hash>
 </Codenesium>*/

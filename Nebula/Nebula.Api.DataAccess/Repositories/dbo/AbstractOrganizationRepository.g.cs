@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOOrganization Create(
-			OrganizationModel model)
+			ApiOrganizationModel model)
 		{
 			Organization record = new Organization();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			OrganizationModel model)
+			ApiOrganizationModel model)
 		{
 			Organization record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b319445fedc822729bb816b8280bf408</Hash>
+    <Hash>27ce485f967b78ec1355e6ddd6969934</Hash>
 </Codenesium>*/

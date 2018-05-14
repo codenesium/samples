@@ -10,10 +10,10 @@ namespace FermataFishNS.Api.BusinessObjects
 	public interface IBOAdmin
 	{
 		Task<CreateResponse<POCOAdmin>> Create(
-			AdminModel model);
+			ApiAdminModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            AdminModel model);
+		                            ApiAdminModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7e4b0866cfa00f45103cc65170fd630e</Hash>
+    <Hash>363408029082ca4f087ccbd49fbbb252</Hash>
 </Codenesium>*/

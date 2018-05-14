@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOLessonStatus
 	{
 		private ILessonStatusRepository lessonStatusRepository;
-		private ILessonStatusModelValidator lessonStatusModelValidator;
+		private IApiLessonStatusModelValidator lessonStatusModelValidator;
 		private ILogger logger;
 
 		public AbstractBOLessonStatus(
 			ILogger logger,
 			ILessonStatusRepository lessonStatusRepository,
-			ILessonStatusModelValidator lessonStatusModelValidator)
+			IApiLessonStatusModelValidator lessonStatusModelValidator)
 
 		{
 			this.lessonStatusRepository = lessonStatusRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOLessonStatus>> Create(
-			LessonStatusModel model)
+			ApiLessonStatusModel model)
 		{
 			CreateResponse<POCOLessonStatus> response = new CreateResponse<POCOLessonStatus>(await this.lessonStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			LessonStatusModel model)
+			ApiLessonStatusModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.lessonStatusModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>019eb66b626a89c83765320e33bfc2f7</Hash>
+    <Hash>855178071cd7423c122915952654c321</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public class PipelineStepStepRequirementModelValidator: AbstractPipelineStepStepRequirementModelValidator, IPipelineStepStepRequirementModelValidator
+	public class ApiPipelineStepStepRequirementModelValidator: AbstractApiPipelineStepStepRequirementModelValidator, IApiPipelineStepStepRequirementModelValidator
 	{
-		public PipelineStepStepRequirementModelValidator()
+		public ApiPipelineStepStepRequirementModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(PipelineStepStepRequirementModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiPipelineStepStepRequirementModel model)
 		{
 			this.DetailsRules();
 			this.PipelineStepIdRules();
@@ -19,7 +19,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, PipelineStepStepRequirementModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPipelineStepStepRequirementModel model)
 		{
 			this.DetailsRules();
 			this.PipelineStepIdRules();
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>9aafb832938816b06c65c26770d2f924</Hash>
+    <Hash>6930a43cdd57961489d25bf9ef88fba5</Hash>
 </Codenesium>*/

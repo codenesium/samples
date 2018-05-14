@@ -7,10 +7,10 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IChainRepository
 	{
-		POCOChain Create(ChainModel model);
+		POCOChain Create(ApiChainModel model);
 
 		void Update(int id,
-		            ChainModel model);
+		            ApiChainModel model);
 
 		void Delete(int id);
 
@@ -23,5 +23,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>636638d23d5db5959798f528dee70a19</Hash>
+    <Hash>f6721d16c591f5dbeb2c5747a1fe8c33</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOBreed
 	{
 		private IBreedRepository breedRepository;
-		private IBreedModelValidator breedModelValidator;
+		private IApiBreedModelValidator breedModelValidator;
 		private ILogger logger;
 
 		public AbstractBOBreed(
 			ILogger logger,
 			IBreedRepository breedRepository,
-			IBreedModelValidator breedModelValidator)
+			IApiBreedModelValidator breedModelValidator)
 
 		{
 			this.breedRepository = breedRepository;
@@ -40,7 +40,7 @@ namespace PetStoreNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOBreed>> Create(
-			BreedModel model)
+			ApiBreedModel model)
 		{
 			CreateResponse<POCOBreed> response = new CreateResponse<POCOBreed>(await this.breedModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			BreedModel model)
+			ApiBreedModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.breedModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e1ba09ef39cf339279dc6d0d70b21fad</Hash>
+    <Hash>87dee4ee47dc3b1fda56a0b34cd6c459</Hash>
 </Codenesium>*/

@@ -80,7 +80,7 @@ namespace PetShippingNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOPipelineStepStepRequirement), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] PipelineStepStepRequirementModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepStepRequirementModel model)
 		{
 			CreateResponse<POCOPipelineStepStepRequirement> result = await this.pipelineStepStepRequirementManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOPipelineStepStepRequirement>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<PipelineStepStepRequirementModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPipelineStepStepRequirementModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(POCOPipelineStepStepRequirement), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] PipelineStepStepRequirementModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepStepRequirementModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6b236d1bf50baa454e1e0b358aaf25a2</Hash>
+    <Hash>5ddf5e3972d58abe97f4d86e4237d026</Hash>
 </Codenesium>*/

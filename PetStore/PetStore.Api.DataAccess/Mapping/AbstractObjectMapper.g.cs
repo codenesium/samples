@@ -7,7 +7,7 @@ namespace PetStoreNS.Api.DataAccess
 	{
 		public virtual void BreedMapModelToEF(
 			int id,
-			BreedModel model,
+			ApiBreedModel model,
 			Breed efBreed)
 		{
 			efBreed.SetProperties(
@@ -28,7 +28,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void PaymentTypeMapModelToEF(
 			int id,
-			PaymentTypeModel model,
+			ApiPaymentTypeModel model,
 			PaymentType efPaymentType)
 		{
 			efPaymentType.SetProperties(
@@ -49,7 +49,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void PenMapModelToEF(
 			int id,
-			PenModel model,
+			ApiPenModel model,
 			Pen efPen)
 		{
 			efPen.SetProperties(
@@ -70,7 +70,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void PetMapModelToEF(
 			int id,
-			PetModel model,
+			ApiPetModel model,
 			Pet efPet)
 		{
 			efPet.SetProperties(
@@ -96,7 +96,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void SaleMapModelToEF(
 			int id,
-			SaleModel model,
+			ApiSaleModel model,
 			Sale efSale)
 		{
 			efSale.SetProperties(
@@ -122,7 +122,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void SpeciesMapModelToEF(
 			int id,
-			SpeciesModel model,
+			ApiSpeciesModel model,
 			Species efSpecies)
 		{
 			efSpecies.SetProperties(
@@ -144,5 +144,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9af6ac078d08adef3e33529037982e64</Hash>
+    <Hash>e91c01d25d4db662facc3134a82bb246</Hash>
 </Codenesium>*/

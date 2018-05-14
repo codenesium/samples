@@ -15,12 +15,12 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOChain(
 			ILogger<ChainRepository> logger,
 			IChainRepository chainRepository,
-			IChainModelValidator chainModelValidator)
+			IApiChainModelValidator chainModelValidator)
 			: base(logger, chainRepository, chainModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b2fe76976f945f50d4b905e447dd2ec8</Hash>
+    <Hash>aad33187cbb62b93b8316722b6eda190</Hash>
 </Codenesium>*/

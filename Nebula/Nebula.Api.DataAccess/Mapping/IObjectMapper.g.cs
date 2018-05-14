@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 	{
 		void ChainMapModelToEF(
 			int id,
-			ChainModel model,
+			ApiChainModel model,
 			Chain efChain);
 
 		POCOChain ChainMapEFToPOCO(
@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void ChainStatusMapModelToEF(
 			int id,
-			ChainStatusModel model,
+			ApiChainStatusModel model,
 			ChainStatus efChainStatus);
 
 		POCOChainStatus ChainStatusMapEFToPOCO(
@@ -23,7 +23,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void ClaspMapModelToEF(
 			int id,
-			ClaspModel model,
+			ApiClaspModel model,
 			Clasp efClasp);
 
 		POCOClasp ClaspMapEFToPOCO(
@@ -31,7 +31,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void LinkMapModelToEF(
 			int id,
-			LinkModel model,
+			ApiLinkModel model,
 			Link efLink);
 
 		POCOLink LinkMapEFToPOCO(
@@ -39,7 +39,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void LinkLogMapModelToEF(
 			int id,
-			LinkLogModel model,
+			ApiLinkLogModel model,
 			LinkLog efLinkLog);
 
 		POCOLinkLog LinkLogMapEFToPOCO(
@@ -47,7 +47,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void LinkStatusMapModelToEF(
 			int id,
-			LinkStatusModel model,
+			ApiLinkStatusModel model,
 			LinkStatus efLinkStatus);
 
 		POCOLinkStatus LinkStatusMapEFToPOCO(
@@ -55,7 +55,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void MachineMapModelToEF(
 			int id,
-			MachineModel model,
+			ApiMachineModel model,
 			Machine efMachine);
 
 		POCOMachine MachineMapEFToPOCO(
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void MachineRefTeamMapModelToEF(
 			int id,
-			MachineRefTeamModel model,
+			ApiMachineRefTeamModel model,
 			MachineRefTeam efMachineRefTeam);
 
 		POCOMachineRefTeam MachineRefTeamMapEFToPOCO(
@@ -71,7 +71,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void OrganizationMapModelToEF(
 			int id,
-			OrganizationModel model,
+			ApiOrganizationModel model,
 			Organization efOrganization);
 
 		POCOOrganization OrganizationMapEFToPOCO(
@@ -79,7 +79,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void TeamMapModelToEF(
 			int id,
-			TeamModel model,
+			ApiTeamModel model,
 			Team efTeam);
 
 		POCOTeam TeamMapEFToPOCO(
@@ -87,7 +87,7 @@ namespace NebulaNS.Api.DataAccess
 
 		void VersionInfoMapModelToEF(
 			long version,
-			VersionInfoModel model,
+			ApiVersionInfoModel model,
 			VersionInfo efVersionInfo);
 
 		POCOVersionInfo VersionInfoMapEFToPOCO(
@@ -96,5 +96,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ccb7b728b090d3638f36bf6487944176</Hash>
+    <Hash>5a2bdc5e6e20b96c0b897a302ede1ada</Hash>
 </Codenesium>*/

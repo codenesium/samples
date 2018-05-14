@@ -7,7 +7,7 @@ namespace NebulaNS.Api.DataAccess
 	{
 		public virtual void ChainMapModelToEF(
 			int id,
-			ChainModel model,
+			ApiChainModel model,
 			Chain efChain)
 		{
 			efChain.SetProperties(
@@ -31,7 +31,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void ChainStatusMapModelToEF(
 			int id,
-			ChainStatusModel model,
+			ApiChainStatusModel model,
 			ChainStatus efChainStatus)
 		{
 			efChainStatus.SetProperties(
@@ -52,7 +52,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void ClaspMapModelToEF(
 			int id,
-			ClaspModel model,
+			ApiClaspModel model,
 			Clasp efClasp)
 		{
 			efClasp.SetProperties(
@@ -74,7 +74,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void LinkMapModelToEF(
 			int id,
-			LinkModel model,
+			ApiLinkModel model,
 			Link efLink)
 		{
 			efLink.SetProperties(
@@ -106,7 +106,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void LinkLogMapModelToEF(
 			int id,
-			LinkLogModel model,
+			ApiLinkLogModel model,
 			LinkLog efLinkLog)
 		{
 			efLinkLog.SetProperties(
@@ -129,7 +129,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void LinkStatusMapModelToEF(
 			int id,
-			LinkStatusModel model,
+			ApiLinkStatusModel model,
 			LinkStatus efLinkStatus)
 		{
 			efLinkStatus.SetProperties(
@@ -150,7 +150,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void MachineMapModelToEF(
 			int id,
-			MachineModel model,
+			ApiMachineModel model,
 			Machine efMachine)
 		{
 			efMachine.SetProperties(
@@ -175,7 +175,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void MachineRefTeamMapModelToEF(
 			int id,
-			MachineRefTeamModel model,
+			ApiMachineRefTeamModel model,
 			MachineRefTeam efMachineRefTeam)
 		{
 			efMachineRefTeam.SetProperties(
@@ -197,7 +197,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void OrganizationMapModelToEF(
 			int id,
-			OrganizationModel model,
+			ApiOrganizationModel model,
 			Organization efOrganization)
 		{
 			efOrganization.SetProperties(
@@ -218,7 +218,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void TeamMapModelToEF(
 			int id,
-			TeamModel model,
+			ApiTeamModel model,
 			Team efTeam)
 		{
 			efTeam.SetProperties(
@@ -240,7 +240,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void VersionInfoMapModelToEF(
 			long version,
-			VersionInfoModel model,
+			ApiVersionInfoModel model,
 			VersionInfo efVersionInfo)
 		{
 			efVersionInfo.SetProperties(
@@ -263,5 +263,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3269df1a8ab7495bc3464c13e5b13adf</Hash>
+    <Hash>b5fbab796acba1f300265054a9c31fb6</Hash>
 </Codenesium>*/

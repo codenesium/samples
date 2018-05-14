@@ -15,13 +15,13 @@ namespace FileServiceNS.Api.BusinessObjects
 	public abstract class AbstractBOFileType
 	{
 		private IFileTypeRepository fileTypeRepository;
-		private IFileTypeModelValidator fileTypeModelValidator;
+		private IApiFileTypeModelValidator fileTypeModelValidator;
 		private ILogger logger;
 
 		public AbstractBOFileType(
 			ILogger logger,
 			IFileTypeRepository fileTypeRepository,
-			IFileTypeModelValidator fileTypeModelValidator)
+			IApiFileTypeModelValidator fileTypeModelValidator)
 
 		{
 			this.fileTypeRepository = fileTypeRepository;
@@ -40,7 +40,7 @@ namespace FileServiceNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOFileType>> Create(
-			FileTypeModel model)
+			ApiFileTypeModel model)
 		{
 			CreateResponse<POCOFileType> response = new CreateResponse<POCOFileType>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			FileTypeModel model)
+			ApiFileTypeModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.fileTypeModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>23cffc42d6092e361bc1f359088b97d2</Hash>
+    <Hash>860fadddcdd4da6f240601b585cf738f</Hash>
 </Codenesium>*/

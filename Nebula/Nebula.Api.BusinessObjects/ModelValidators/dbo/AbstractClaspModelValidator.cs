@@ -8,14 +8,14 @@ using NebulaNS.Api.DataAccess;
 namespace NebulaNS.Api.BusinessObjects
 
 {
-	public abstract class AbstractClaspModelValidator: AbstractValidator<ClaspModel>
+	public abstract class AbstractApiClaspModelValidator: AbstractValidator<ApiClaspModel>
 	{
-		public new ValidationResult Validate(ClaspModel model)
+		public new ValidationResult Validate(ApiClaspModel model)
 		{
 			return base.Validate(model);
 		}
 
-		public async Task<ValidationResult> ValidateAsync(ClaspModel model)
+		public async Task<ValidationResult> ValidateAsync(ApiClaspModel model)
 		{
 			return await base.ValidateAsync(model);
 		}
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>073a6f04dc817c0f346f6068ec58a07a</Hash>
+    <Hash>6a07395ec1f78a11ac54a0726b32168a</Hash>
 </Codenesium>*/

@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOBreed(
 			ILogger<BreedRepository> logger,
 			IBreedRepository breedRepository,
-			IBreedModelValidator breedModelValidator)
+			IApiBreedModelValidator breedModelValidator)
 			: base(logger, breedRepository, breedModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>317a40d55e897b1e9ea1178b9eb4c2e6</Hash>
+    <Hash>19b2fbf0dbc9447fd2789000dc4c40da</Hash>
 </Codenesium>*/

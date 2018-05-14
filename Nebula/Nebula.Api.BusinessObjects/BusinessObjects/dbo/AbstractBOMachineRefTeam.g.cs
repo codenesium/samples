@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOMachineRefTeam
 	{
 		private IMachineRefTeamRepository machineRefTeamRepository;
-		private IMachineRefTeamModelValidator machineRefTeamModelValidator;
+		private IApiMachineRefTeamModelValidator machineRefTeamModelValidator;
 		private ILogger logger;
 
 		public AbstractBOMachineRefTeam(
 			ILogger logger,
 			IMachineRefTeamRepository machineRefTeamRepository,
-			IMachineRefTeamModelValidator machineRefTeamModelValidator)
+			IApiMachineRefTeamModelValidator machineRefTeamModelValidator)
 
 		{
 			this.machineRefTeamRepository = machineRefTeamRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOMachineRefTeam>> Create(
-			MachineRefTeamModel model)
+			ApiMachineRefTeamModel model)
 		{
 			CreateResponse<POCOMachineRefTeam> response = new CreateResponse<POCOMachineRefTeam>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			MachineRefTeamModel model)
+			ApiMachineRefTeamModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ce237c4582d73e11727215771e980289</Hash>
+    <Hash>65b404526ce68569328760305b0d1ca2</Hash>
 </Codenesium>*/

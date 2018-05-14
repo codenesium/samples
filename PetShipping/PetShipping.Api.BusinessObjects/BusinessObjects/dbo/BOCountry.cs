@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOCountry(
 			ILogger<CountryRepository> logger,
 			ICountryRepository countryRepository,
-			ICountryModelValidator countryModelValidator)
+			IApiCountryModelValidator countryModelValidator)
 			: base(logger, countryRepository, countryModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6029801e9ac06ad48372cac51ba1c32</Hash>
+    <Hash>237defaec8c515e3d726664bf5fc3b1e</Hash>
 </Codenesium>*/

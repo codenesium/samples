@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOPipelineStatus Create(
-			PipelineStatusModel model)
+			ApiPipelineStatusModel model)
 		{
 			PipelineStatus record = new PipelineStatus();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			PipelineStatusModel model)
+			ApiPipelineStatusModel model)
 		{
 			PipelineStatus record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ada97c924dd946db3aa3c5ff310a490</Hash>
+    <Hash>7e7f49921692cd38a1b8201e9d7d3394</Hash>
 </Codenesium>*/

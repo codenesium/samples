@@ -80,7 +80,7 @@ namespace PetShippingNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOClientCommunication), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ClientCommunicationModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiClientCommunicationModel model)
 		{
 			CreateResponse<POCOClientCommunication> result = await this.clientCommunicationManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOClientCommunication>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ClientCommunicationModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClientCommunicationModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace PetShippingNS.Api.Service
 		[ProducesResponseType(typeof(POCOClientCommunication), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ClientCommunicationModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClientCommunicationModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2b7f2062994d13609b7179fc0c1500af</Hash>
+    <Hash>75100bff6ce9ee9c494c55fba9271d06</Hash>
 </Codenesium>*/

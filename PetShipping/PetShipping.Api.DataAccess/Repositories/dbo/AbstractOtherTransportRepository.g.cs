@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOOtherTransport Create(
-			OtherTransportModel model)
+			ApiOtherTransportModel model)
 		{
 			OtherTransport record = new OtherTransport();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			OtherTransportModel model)
+			ApiOtherTransportModel model)
 		{
 			OtherTransport record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f97bdd2b826774eb177a0aead3d7fa46</Hash>
+    <Hash>2bdaa07077aefa62255c28b276038484</Hash>
 </Codenesium>*/

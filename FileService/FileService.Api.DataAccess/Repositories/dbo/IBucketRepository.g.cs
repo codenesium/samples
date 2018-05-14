@@ -7,10 +7,10 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IBucketRepository
 	{
-		POCOBucket Create(BucketModel model);
+		POCOBucket Create(ApiBucketModel model);
 
 		void Update(int id,
-		            BucketModel model);
+		            ApiBucketModel model);
 
 		void Delete(int id);
 
@@ -25,5 +25,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7f0436d3089afe7b39231a9aa4ce97e3</Hash>
+    <Hash>291e24acdf14a7572590ba49949b3d9b</Hash>
 </Codenesium>*/

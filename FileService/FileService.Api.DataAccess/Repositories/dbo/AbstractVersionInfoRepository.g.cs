@@ -37,7 +37,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual POCOVersionInfo Create(
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			VersionInfo record = new VersionInfo();
 
@@ -53,7 +53,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void Update(
 			long version,
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			VersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>367c430dbe19a324be383524ceefbdb6</Hash>
+    <Hash>05c785a7641596fc9d54f102f7c4519f</Hash>
 </Codenesium>*/

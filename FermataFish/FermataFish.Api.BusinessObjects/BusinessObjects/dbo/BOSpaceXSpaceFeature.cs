@@ -15,12 +15,12 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOSpaceXSpaceFeature(
 			ILogger<SpaceXSpaceFeatureRepository> logger,
 			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
-			ISpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator)
+			IApiSpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator)
 			: base(logger, spaceXSpaceFeatureRepository, spaceXSpaceFeatureModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>64d353c97d5497915399c07b19b9ef84</Hash>
+    <Hash>a1e0e5cdc8409d6b1c49dba0665f19d7</Hash>
 </Codenesium>*/

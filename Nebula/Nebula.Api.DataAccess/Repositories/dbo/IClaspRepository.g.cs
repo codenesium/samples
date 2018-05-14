@@ -7,10 +7,10 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IClaspRepository
 	{
-		POCOClasp Create(ClaspModel model);
+		POCOClasp Create(ApiClaspModel model);
 
 		void Update(int id,
-		            ClaspModel model);
+		            ApiClaspModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fc6a6797d99249f1aa655441d56fda53</Hash>
+    <Hash>33811913bf6f97d941e70f361eb98f73</Hash>
 </Codenesium>*/

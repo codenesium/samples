@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOVersionInfo
 	{
 		private IVersionInfoRepository versionInfoRepository;
-		private IVersionInfoModelValidator versionInfoModelValidator;
+		private IApiVersionInfoModelValidator versionInfoModelValidator;
 		private ILogger logger;
 
 		public AbstractBOVersionInfo(
 			ILogger logger,
 			IVersionInfoRepository versionInfoRepository,
-			IVersionInfoModelValidator versionInfoModelValidator)
+			IApiVersionInfoModelValidator versionInfoModelValidator)
 
 		{
 			this.versionInfoRepository = versionInfoRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOVersionInfo>> Create(
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			CreateResponse<POCOVersionInfo> response = new CreateResponse<POCOVersionInfo>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			long version,
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
 
@@ -86,5 +86,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f3881428a848eda14fffb903d2d552d1</Hash>
+    <Hash>3d17f8d112d3c4464e647547adbc29e0</Hash>
 </Codenesium>*/

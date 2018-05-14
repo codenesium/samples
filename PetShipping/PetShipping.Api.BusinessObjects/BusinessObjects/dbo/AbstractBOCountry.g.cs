@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOCountry
 	{
 		private ICountryRepository countryRepository;
-		private ICountryModelValidator countryModelValidator;
+		private IApiCountryModelValidator countryModelValidator;
 		private ILogger logger;
 
 		public AbstractBOCountry(
 			ILogger logger,
 			ICountryRepository countryRepository,
-			ICountryModelValidator countryModelValidator)
+			IApiCountryModelValidator countryModelValidator)
 
 		{
 			this.countryRepository = countryRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOCountry>> Create(
-			CountryModel model)
+			ApiCountryModel model)
 		{
 			CreateResponse<POCOCountry> response = new CreateResponse<POCOCountry>(await this.countryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			CountryModel model)
+			ApiCountryModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>427e54d56b98df52ad164c5f59e5e7e2</Hash>
+    <Hash>85e882e2a98f9a10e239c33085c06726</Hash>
 </Codenesium>*/

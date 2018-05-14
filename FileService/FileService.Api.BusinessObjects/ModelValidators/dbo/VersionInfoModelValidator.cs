@@ -6,19 +6,19 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public class VersionInfoModelValidator: AbstractVersionInfoModelValidator, IVersionInfoModelValidator
+	public class ApiVersionInfoModelValidator: AbstractApiVersionInfoModelValidator, IApiVersionInfoModelValidator
 	{
-		public VersionInfoModelValidator()
+		public ApiVersionInfoModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(VersionInfoModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiVersionInfoModel model)
 		{
 			this.AppliedOnRules();
 			this.DescriptionRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(long id, VersionInfoModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(long id, ApiVersionInfoModel model)
 		{
 			this.AppliedOnRules();
 			this.DescriptionRules();
@@ -33,5 +33,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d9f376ed86576dc9550292a47cc7a67b</Hash>
+    <Hash>aabd9da5b25099ab8833c7b37a95feb8</Hash>
 </Codenesium>*/

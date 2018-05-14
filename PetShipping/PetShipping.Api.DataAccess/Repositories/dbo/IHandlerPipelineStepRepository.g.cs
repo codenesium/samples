@@ -7,10 +7,10 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IHandlerPipelineStepRepository
 	{
-		POCOHandlerPipelineStep Create(HandlerPipelineStepModel model);
+		POCOHandlerPipelineStep Create(ApiHandlerPipelineStepModel model);
 
 		void Update(int id,
-		            HandlerPipelineStepModel model);
+		            ApiHandlerPipelineStepModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4c9564493dd07d4ede00c4714806cf69</Hash>
+    <Hash>8830ae359451833579006cb78ef072cb</Hash>
 </Codenesium>*/

@@ -15,12 +15,12 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOMachine(
 			ILogger<MachineRepository> logger,
 			IMachineRepository machineRepository,
-			IMachineModelValidator machineModelValidator)
+			IApiMachineModelValidator machineModelValidator)
 			: base(logger, machineRepository, machineModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6ff9914ec6c1dd656a79ee37c9a9aecc</Hash>
+    <Hash>973845a84a27f8e90d739a06a6e3c998</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOPaymentType
 	{
 		private IPaymentTypeRepository paymentTypeRepository;
-		private IPaymentTypeModelValidator paymentTypeModelValidator;
+		private IApiPaymentTypeModelValidator paymentTypeModelValidator;
 		private ILogger logger;
 
 		public AbstractBOPaymentType(
 			ILogger logger,
 			IPaymentTypeRepository paymentTypeRepository,
-			IPaymentTypeModelValidator paymentTypeModelValidator)
+			IApiPaymentTypeModelValidator paymentTypeModelValidator)
 
 		{
 			this.paymentTypeRepository = paymentTypeRepository;
@@ -40,7 +40,7 @@ namespace PetStoreNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOPaymentType>> Create(
-			PaymentTypeModel model)
+			ApiPaymentTypeModel model)
 		{
 			CreateResponse<POCOPaymentType> response = new CreateResponse<POCOPaymentType>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			PaymentTypeModel model)
+			ApiPaymentTypeModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ee2140d8dacf3529047fbfa38b413504</Hash>
+    <Hash>e06be2053d7394618237adfc2876d53b</Hash>
 </Codenesium>*/

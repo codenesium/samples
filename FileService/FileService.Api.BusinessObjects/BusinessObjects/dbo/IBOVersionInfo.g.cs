@@ -10,10 +10,10 @@ namespace FileServiceNS.Api.BusinessObjects
 	public interface IBOVersionInfo
 	{
 		Task<CreateResponse<POCOVersionInfo>> Create(
-			VersionInfoModel model);
+			ApiVersionInfoModel model);
 
 		Task<ActionResponse> Update(long version,
-		                            VersionInfoModel model);
+		                            ApiVersionInfoModel model);
 
 		Task<ActionResponse> Delete(long version);
 
@@ -26,5 +26,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>efc1e717401841860042c856994b6082</Hash>
+    <Hash>9dc01cc9f7dfe1f720699074628ed490</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBORate
 	{
 		private IRateRepository rateRepository;
-		private IRateModelValidator rateModelValidator;
+		private IApiRateModelValidator rateModelValidator;
 		private ILogger logger;
 
 		public AbstractBORate(
 			ILogger logger,
 			IRateRepository rateRepository,
-			IRateModelValidator rateModelValidator)
+			IApiRateModelValidator rateModelValidator)
 
 		{
 			this.rateRepository = rateRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCORate>> Create(
-			RateModel model)
+			ApiRateModel model)
 		{
 			CreateResponse<POCORate> response = new CreateResponse<POCORate>(await this.rateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			RateModel model)
+			ApiRateModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>18df3463e57121f22bded9a4bb980257</Hash>
+    <Hash>a5b53f006d8ebc4cbbdc4e13d08b26c4</Hash>
 </Codenesium>*/

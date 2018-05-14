@@ -80,7 +80,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCORate), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] RateModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiRateModel model)
 		{
 			CreateResponse<POCORate> result = await this.rateManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(List<POCORate>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<RateModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRateModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(POCORate), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] RateModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRateModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>55d834cc6cb1eb04b8c745adf8f718fa</Hash>
+    <Hash>ffcfc41fa2a77135134b3b4377841e6d</Hash>
 </Codenesium>*/

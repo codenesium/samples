@@ -7,10 +7,10 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IVersionInfoRepository
 	{
-		POCOVersionInfo Create(VersionInfoModel model);
+		POCOVersionInfo Create(ApiVersionInfoModel model);
 
 		void Update(long version,
-		            VersionInfoModel model);
+		            ApiVersionInfoModel model);
 
 		void Delete(long version);
 
@@ -23,5 +23,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>852961033edb02b9287cf86db2612b67</Hash>
+    <Hash>f228a122ce6af5124bc39f7706896c1f</Hash>
 </Codenesium>*/

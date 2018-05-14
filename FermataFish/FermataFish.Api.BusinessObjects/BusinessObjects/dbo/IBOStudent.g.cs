@@ -10,10 +10,10 @@ namespace FermataFishNS.Api.BusinessObjects
 	public interface IBOStudent
 	{
 		Task<CreateResponse<POCOStudent>> Create(
-			StudentModel model);
+			ApiStudentModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            StudentModel model);
+		                            ApiStudentModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>daee4d0f378122b4df50ae7735e0e332</Hash>
+    <Hash>77fb4486f3c4e3468e1a1a3f60d57d83</Hash>
 </Codenesium>*/

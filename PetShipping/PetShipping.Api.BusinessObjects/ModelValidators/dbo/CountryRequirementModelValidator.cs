@@ -6,19 +6,19 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public class CountryRequirementModelValidator: AbstractCountryRequirementModelValidator, ICountryRequirementModelValidator
+	public class ApiCountryRequirementModelValidator: AbstractApiCountryRequirementModelValidator, IApiCountryRequirementModelValidator
 	{
-		public CountryRequirementModelValidator()
+		public ApiCountryRequirementModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(CountryRequirementModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiCountryRequirementModel model)
 		{
 			this.CountryIdRules();
 			this.DetailsRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, CountryRequirementModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiCountryRequirementModel model)
 		{
 			this.CountryIdRules();
 			this.DetailsRules();
@@ -33,5 +33,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4bacb02d475bc075e254d366f9805b21</Hash>
+    <Hash>1e99ad34d9dd85f096009dcc468c6e29</Hash>
 </Codenesium>*/

@@ -8,14 +8,14 @@ using ESPIOTNS.Api.DataAccess;
 namespace ESPIOTNS.Api.BusinessObjects
 
 {
-	public abstract class AbstractDeviceModelValidator: AbstractValidator<DeviceModel>
+	public abstract class AbstractApiDeviceModelValidator: AbstractValidator<ApiDeviceModel>
 	{
-		public new ValidationResult Validate(DeviceModel model)
+		public new ValidationResult Validate(ApiDeviceModel model)
 		{
 			return base.Validate(model);
 		}
 
-		public async Task<ValidationResult> ValidateAsync(DeviceModel model)
+		public async Task<ValidationResult> ValidateAsync(ApiDeviceModel model)
 		{
 			return await base.ValidateAsync(model);
 		}
@@ -34,5 +34,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>491b6303160139b50cad2544748924fb</Hash>
+    <Hash>65b09de6a9255005ba22ddbe17c6570f</Hash>
 </Codenesium>*/

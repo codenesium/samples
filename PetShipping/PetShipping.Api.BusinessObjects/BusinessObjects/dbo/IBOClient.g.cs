@@ -10,10 +10,10 @@ namespace PetShippingNS.Api.BusinessObjects
 	public interface IBOClient
 	{
 		Task<CreateResponse<POCOClient>> Create(
-			ClientModel model);
+			ApiClientModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ClientModel model);
+		                            ApiClientModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>429390eae77b711da517320374249f94</Hash>
+    <Hash>adf2c742372a1dc4aa24c267dcccabaf</Hash>
 </Codenesium>*/

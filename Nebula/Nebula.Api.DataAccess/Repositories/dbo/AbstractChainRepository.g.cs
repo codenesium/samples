@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOChain Create(
-			ChainModel model)
+			ApiChainModel model)
 		{
 			Chain record = new Chain();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			ChainModel model)
+			ApiChainModel model)
 		{
 			Chain record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3c177c018ddc392f2a1b42fe74b8ce14</Hash>
+    <Hash>8fe54f1255834590734d359ea8d6186d</Hash>
 </Codenesium>*/

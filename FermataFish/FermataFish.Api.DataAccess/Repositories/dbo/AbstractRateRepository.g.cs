@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCORate Create(
-			RateModel model)
+			ApiRateModel model)
 		{
 			Rate record = new Rate();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			RateModel model)
+			ApiRateModel model)
 		{
 			Rate record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>05e4dda2a2c9f658a0f3fc7e704b8807</Hash>
+    <Hash>43be460fb58a26b202a6aaaa124932bb</Hash>
 </Codenesium>*/

@@ -80,7 +80,7 @@ namespace PetStoreNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOBreed), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] BreedModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiBreedModel model)
 		{
 			CreateResponse<POCOBreed> result = await this.breedManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace PetStoreNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOBreed>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<BreedModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBreedModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace PetStoreNS.Api.Service
 		[ProducesResponseType(typeof(POCOBreed), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] BreedModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBreedModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>862e6102dbe64915be4fb6ddec903d9f</Hash>
+    <Hash>c70dec3e9cbb43bb9ed6a60dee1afa9f</Hash>
 </Codenesium>*/

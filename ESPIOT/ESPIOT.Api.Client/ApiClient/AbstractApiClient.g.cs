@@ -48,7 +48,7 @@ namespace ESPIOTNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
-		public virtual async Task<POCODevice> DeviceCreateAsync(DeviceModel item)
+		public virtual async Task<POCODevice> DeviceCreateAsync(ApiDeviceModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices", item);
 
@@ -56,7 +56,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<POCODevice>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCODevice> DeviceUpdateAsync(int id, DeviceModel item)
+		public virtual async Task<POCODevice> DeviceUpdateAsync(int id, ApiDeviceModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Devices/{id}", item);
 
@@ -87,7 +87,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCODevice>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCODevice>> DeviceBulkInsertAsync(List<DeviceModel> items)
+		public virtual async Task<List<POCODevice>> DeviceBulkInsertAsync(List<ApiDeviceModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices/BulkInsert", items);
 
@@ -95,7 +95,15 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCODevice>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCODeviceAction> DeviceActionCreateAsync(DeviceActionModel item)
+		public virtual async Task<POCODevice> GetDevicePublicId(Guid publicId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/publicId/{publicId}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCODevice>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCODeviceAction> DeviceActionCreateAsync(ApiDeviceActionModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions", item);
 
@@ -103,7 +111,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<POCODeviceAction>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCODeviceAction> DeviceActionUpdateAsync(int id, DeviceActionModel item)
+		public virtual async Task<POCODeviceAction> DeviceActionUpdateAsync(int id, ApiDeviceActionModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/DeviceActions/{id}", item);
 
@@ -134,7 +142,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCODeviceAction>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCODeviceAction>> DeviceActionBulkInsertAsync(List<DeviceActionModel> items)
+		public virtual async Task<List<POCODeviceAction>> DeviceActionBulkInsertAsync(List<ApiDeviceActionModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items);
 
@@ -145,5 +153,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>75621ab24e76ab9e3759835218b69b30</Hash>
+    <Hash>27b86195957cc4322405622800903194</Hash>
 </Codenesium>*/

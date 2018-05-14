@@ -10,10 +10,10 @@ namespace NebulaNS.Api.BusinessObjects
 	public interface IBOChainStatus
 	{
 		Task<CreateResponse<POCOChainStatus>> Create(
-			ChainStatusModel model);
+			ApiChainStatusModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ChainStatusModel model);
+		                            ApiChainStatusModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>9217845c77628c5b3d55401ff2177f8a</Hash>
+    <Hash>9a7811407ec27a0879101192982f27ed</Hash>
 </Codenesium>*/

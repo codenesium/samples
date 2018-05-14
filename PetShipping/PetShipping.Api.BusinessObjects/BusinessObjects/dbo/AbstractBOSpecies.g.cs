@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOSpecies
 	{
 		private ISpeciesRepository speciesRepository;
-		private ISpeciesModelValidator speciesModelValidator;
+		private IApiSpeciesModelValidator speciesModelValidator;
 		private ILogger logger;
 
 		public AbstractBOSpecies(
 			ILogger logger,
 			ISpeciesRepository speciesRepository,
-			ISpeciesModelValidator speciesModelValidator)
+			IApiSpeciesModelValidator speciesModelValidator)
 
 		{
 			this.speciesRepository = speciesRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOSpecies>> Create(
-			SpeciesModel model)
+			ApiSpeciesModel model)
 		{
 			CreateResponse<POCOSpecies> response = new CreateResponse<POCOSpecies>(await this.speciesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			SpeciesModel model)
+			ApiSpeciesModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.speciesModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5b0464095575da262a140caf8cde5d68</Hash>
+    <Hash>207c24e35016a6b8e9e54e42950e6260</Hash>
 </Codenesium>*/

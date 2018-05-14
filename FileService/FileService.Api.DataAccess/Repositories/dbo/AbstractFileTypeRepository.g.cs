@@ -37,7 +37,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		public virtual POCOFileType Create(
-			FileTypeModel model)
+			ApiFileTypeModel model)
 		{
 			FileType record = new FileType();
 
@@ -53,7 +53,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			FileTypeModel model)
+			ApiFileTypeModel model)
 		{
 			FileType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3087cc703d38120973cc5d9952bb8ecd</Hash>
+    <Hash>f375b92bf294481121f7929dbc471e43</Hash>
 </Codenesium>*/

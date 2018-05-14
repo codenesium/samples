@@ -37,7 +37,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOPen Create(
-			PenModel model)
+			ApiPenModel model)
 		{
 			Pen record = new Pen();
 
@@ -53,7 +53,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			PenModel model)
+			ApiPenModel model)
 		{
 			Pen record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d48d3240e01a3b742a18cd9b362a7b4b</Hash>
+    <Hash>317baa275c2a5e2e50cc45222123af8a</Hash>
 </Codenesium>*/

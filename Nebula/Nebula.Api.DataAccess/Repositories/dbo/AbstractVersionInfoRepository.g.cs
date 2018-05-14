@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOVersionInfo Create(
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			VersionInfo record = new VersionInfo();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			long version,
-			VersionInfoModel model)
+			ApiVersionInfoModel model)
 		{
 			VersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3917acce11e2c443ed9d9123039044a3</Hash>
+    <Hash>de0b11a29cef31c632c5f1a373a9dead</Hash>
 </Codenesium>*/

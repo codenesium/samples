@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOStudio Create(
-			StudioModel model)
+			ApiStudioModel model)
 		{
 			Studio record = new Studio();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			StudioModel model)
+			ApiStudioModel model)
 		{
 			Studio record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9cd2b5d4abdfeb6e37758fcdb244af8d</Hash>
+    <Hash>d53acc82c22ad2c03b0ea42a36c056a5</Hash>
 </Codenesium>*/

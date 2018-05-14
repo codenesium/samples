@@ -7,7 +7,7 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		void BucketMapModelToEF(
 			int id,
-			BucketModel model,
+			ApiBucketModel model,
 			Bucket efBucket);
 
 		POCOBucket BucketMapEFToPOCO(
@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		void FileMapModelToEF(
 			int id,
-			FileModel model,
+			ApiFileModel model,
 			File efFile);
 
 		POCOFile FileMapEFToPOCO(
@@ -23,7 +23,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		void FileTypeMapModelToEF(
 			int id,
-			FileTypeModel model,
+			ApiFileTypeModel model,
 			FileType efFileType);
 
 		POCOFileType FileTypeMapEFToPOCO(
@@ -31,7 +31,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		void VersionInfoMapModelToEF(
 			long version,
-			VersionInfoModel model,
+			ApiVersionInfoModel model,
 			VersionInfo efVersionInfo);
 
 		POCOVersionInfo VersionInfoMapEFToPOCO(
@@ -40,5 +40,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>22e210f17bfd6eead0a3b0c4e6fd526a</Hash>
+    <Hash>7286805134bc66cf78c39fa85401650e</Hash>
 </Codenesium>*/

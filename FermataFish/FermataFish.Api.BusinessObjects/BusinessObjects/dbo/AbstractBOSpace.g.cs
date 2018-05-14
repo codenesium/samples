@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOSpace
 	{
 		private ISpaceRepository spaceRepository;
-		private ISpaceModelValidator spaceModelValidator;
+		private IApiSpaceModelValidator spaceModelValidator;
 		private ILogger logger;
 
 		public AbstractBOSpace(
 			ILogger logger,
 			ISpaceRepository spaceRepository,
-			ISpaceModelValidator spaceModelValidator)
+			IApiSpaceModelValidator spaceModelValidator)
 
 		{
 			this.spaceRepository = spaceRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOSpace>> Create(
-			SpaceModel model)
+			ApiSpaceModel model)
 		{
 			CreateResponse<POCOSpace> response = new CreateResponse<POCOSpace>(await this.spaceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			SpaceModel model)
+			ApiSpaceModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ea6fda634a031d83bad437f72fef90b6</Hash>
+    <Hash>5189b465b05b372783df2bbf9ab7ecdf</Hash>
 </Codenesium>*/

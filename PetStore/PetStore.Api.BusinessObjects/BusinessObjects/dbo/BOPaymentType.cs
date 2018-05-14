@@ -15,12 +15,12 @@ namespace PetStoreNS.Api.BusinessObjects
 		public BOPaymentType(
 			ILogger<PaymentTypeRepository> logger,
 			IPaymentTypeRepository paymentTypeRepository,
-			IPaymentTypeModelValidator paymentTypeModelValidator)
+			IApiPaymentTypeModelValidator paymentTypeModelValidator)
 			: base(logger, paymentTypeRepository, paymentTypeModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2fadefd25ba7ddffbcd7dcbd188fe608</Hash>
+    <Hash>44e49d56bb19db27c534fd37389908ed</Hash>
 </Codenesium>*/

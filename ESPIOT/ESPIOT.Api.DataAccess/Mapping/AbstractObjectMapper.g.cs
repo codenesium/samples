@@ -7,7 +7,7 @@ namespace ESPIOTNS.Api.DataAccess
 	{
 		public virtual void DeviceMapModelToEF(
 			int id,
-			DeviceModel model,
+			ApiDeviceModel model,
 			Device efDevice)
 		{
 			efDevice.SetProperties(
@@ -29,7 +29,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void DeviceActionMapModelToEF(
 			int id,
-			DeviceActionModel model,
+			ApiDeviceActionModel model,
 			DeviceAction efDeviceAction)
 		{
 			efDeviceAction.SetProperties(
@@ -53,5 +53,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65696931e6b7dae3cb9a22c96af9a40c</Hash>
+    <Hash>cc61321b53b089fc7f2022b85154d21f</Hash>
 </Codenesium>*/

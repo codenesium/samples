@@ -15,12 +15,12 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOTeacherXTeacherSkill(
 			ILogger<TeacherXTeacherSkillRepository> logger,
 			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
-			ITeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator)
+			IApiTeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator)
 			: base(logger, teacherXTeacherSkillRepository, teacherXTeacherSkillModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>77e43432f93a43e9a37e1b2e1ddb272a</Hash>
+    <Hash>18576f01094a3792fc8fd3da353480b8</Hash>
 </Codenesium>*/

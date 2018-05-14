@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOTeacher Create(
-			TeacherModel model)
+			ApiTeacherModel model)
 		{
 			Teacher record = new Teacher();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			TeacherModel model)
+			ApiTeacherModel model)
 		{
 			Teacher record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8179f8731ad2aa92e3c920f49b26da9a</Hash>
+    <Hash>89fb502e662cc9457d23d7dc290f2fb8</Hash>
 </Codenesium>*/

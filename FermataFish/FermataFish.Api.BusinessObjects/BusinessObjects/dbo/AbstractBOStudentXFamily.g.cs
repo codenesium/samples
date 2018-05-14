@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOStudentXFamily
 	{
 		private IStudentXFamilyRepository studentXFamilyRepository;
-		private IStudentXFamilyModelValidator studentXFamilyModelValidator;
+		private IApiStudentXFamilyModelValidator studentXFamilyModelValidator;
 		private ILogger logger;
 
 		public AbstractBOStudentXFamily(
 			ILogger logger,
 			IStudentXFamilyRepository studentXFamilyRepository,
-			IStudentXFamilyModelValidator studentXFamilyModelValidator)
+			IApiStudentXFamilyModelValidator studentXFamilyModelValidator)
 
 		{
 			this.studentXFamilyRepository = studentXFamilyRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOStudentXFamily>> Create(
-			StudentXFamilyModel model)
+			ApiStudentXFamilyModel model)
 		{
 			CreateResponse<POCOStudentXFamily> response = new CreateResponse<POCOStudentXFamily>(await this.studentXFamilyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			StudentXFamilyModel model)
+			ApiStudentXFamilyModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.studentXFamilyModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cff177eae8e317f72321a251686542eb</Hash>
+    <Hash>a2d3426b1849d60106462ddb72021ed8</Hash>
 </Codenesium>*/

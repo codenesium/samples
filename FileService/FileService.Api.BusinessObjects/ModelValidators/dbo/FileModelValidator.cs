@@ -6,12 +6,12 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public class FileModelValidator: AbstractFileModelValidator, IFileModelValidator
+	public class ApiFileModelValidator: AbstractApiFileModelValidator, IApiFileModelValidator
 	{
-		public FileModelValidator()
+		public ApiFileModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(FileModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiFileModel model)
 		{
 			this.BucketIdRules();
 			this.DateCreatedRules();
@@ -27,7 +27,7 @@ namespace FileServiceNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, FileModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiFileModel model)
 		{
 			this.BucketIdRules();
 			this.DateCreatedRules();
@@ -51,5 +51,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f397733d05de1256ad38ff51ec34e003</Hash>
+    <Hash>9b4d61f1ed7203caed05c972a36556ca</Hash>
 </Codenesium>*/

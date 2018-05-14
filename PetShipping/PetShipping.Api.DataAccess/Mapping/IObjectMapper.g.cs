@@ -7,7 +7,7 @@ namespace PetShippingNS.Api.DataAccess
 	{
 		void AirlineMapModelToEF(
 			int id,
-			AirlineModel model,
+			ApiAirlineModel model,
 			Airline efAirline);
 
 		POCOAirline AirlineMapEFToPOCO(
@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void AirTransportMapModelToEF(
 			int airlineId,
-			AirTransportModel model,
+			ApiAirTransportModel model,
 			AirTransport efAirTransport);
 
 		POCOAirTransport AirTransportMapEFToPOCO(
@@ -23,7 +23,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void BreedMapModelToEF(
 			int id,
-			BreedModel model,
+			ApiBreedModel model,
 			Breed efBreed);
 
 		POCOBreed BreedMapEFToPOCO(
@@ -31,7 +31,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void ClientMapModelToEF(
 			int id,
-			ClientModel model,
+			ApiClientModel model,
 			Client efClient);
 
 		POCOClient ClientMapEFToPOCO(
@@ -39,7 +39,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void ClientCommunicationMapModelToEF(
 			int id,
-			ClientCommunicationModel model,
+			ApiClientCommunicationModel model,
 			ClientCommunication efClientCommunication);
 
 		POCOClientCommunication ClientCommunicationMapEFToPOCO(
@@ -47,7 +47,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void CountryMapModelToEF(
 			int id,
-			CountryModel model,
+			ApiCountryModel model,
 			Country efCountry);
 
 		POCOCountry CountryMapEFToPOCO(
@@ -55,7 +55,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void CountryRequirementMapModelToEF(
 			int id,
-			CountryRequirementModel model,
+			ApiCountryRequirementModel model,
 			CountryRequirement efCountryRequirement);
 
 		POCOCountryRequirement CountryRequirementMapEFToPOCO(
@@ -63,7 +63,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void DestinationMapModelToEF(
 			int id,
-			DestinationModel model,
+			ApiDestinationModel model,
 			Destination efDestination);
 
 		POCODestination DestinationMapEFToPOCO(
@@ -71,7 +71,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void EmployeeMapModelToEF(
 			int id,
-			EmployeeModel model,
+			ApiEmployeeModel model,
 			Employee efEmployee);
 
 		POCOEmployee EmployeeMapEFToPOCO(
@@ -79,7 +79,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void HandlerMapModelToEF(
 			int id,
-			HandlerModel model,
+			ApiHandlerModel model,
 			Handler efHandler);
 
 		POCOHandler HandlerMapEFToPOCO(
@@ -87,7 +87,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void HandlerPipelineStepMapModelToEF(
 			int id,
-			HandlerPipelineStepModel model,
+			ApiHandlerPipelineStepModel model,
 			HandlerPipelineStep efHandlerPipelineStep);
 
 		POCOHandlerPipelineStep HandlerPipelineStepMapEFToPOCO(
@@ -95,7 +95,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void OtherTransportMapModelToEF(
 			int id,
-			OtherTransportModel model,
+			ApiOtherTransportModel model,
 			OtherTransport efOtherTransport);
 
 		POCOOtherTransport OtherTransportMapEFToPOCO(
@@ -103,7 +103,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PetMapModelToEF(
 			int id,
-			PetModel model,
+			ApiPetModel model,
 			Pet efPet);
 
 		POCOPet PetMapEFToPOCO(
@@ -111,7 +111,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PipelineMapModelToEF(
 			int id,
-			PipelineModel model,
+			ApiPipelineModel model,
 			Pipeline efPipeline);
 
 		POCOPipeline PipelineMapEFToPOCO(
@@ -119,7 +119,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PipelineStatusMapModelToEF(
 			int id,
-			PipelineStatusModel model,
+			ApiPipelineStatusModel model,
 			PipelineStatus efPipelineStatus);
 
 		POCOPipelineStatus PipelineStatusMapEFToPOCO(
@@ -127,7 +127,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PipelineStepMapModelToEF(
 			int id,
-			PipelineStepModel model,
+			ApiPipelineStepModel model,
 			PipelineStep efPipelineStep);
 
 		POCOPipelineStep PipelineStepMapEFToPOCO(
@@ -135,7 +135,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PipelineStepDestinationMapModelToEF(
 			int id,
-			PipelineStepDestinationModel model,
+			ApiPipelineStepDestinationModel model,
 			PipelineStepDestination efPipelineStepDestination);
 
 		POCOPipelineStepDestination PipelineStepDestinationMapEFToPOCO(
@@ -143,7 +143,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PipelineStepNoteMapModelToEF(
 			int id,
-			PipelineStepNoteModel model,
+			ApiPipelineStepNoteModel model,
 			PipelineStepNote efPipelineStepNote);
 
 		POCOPipelineStepNote PipelineStepNoteMapEFToPOCO(
@@ -151,7 +151,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PipelineStepStatusMapModelToEF(
 			int id,
-			PipelineStepStatusModel model,
+			ApiPipelineStepStatusModel model,
 			PipelineStepStatus efPipelineStepStatus);
 
 		POCOPipelineStepStatus PipelineStepStatusMapEFToPOCO(
@@ -159,7 +159,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void PipelineStepStepRequirementMapModelToEF(
 			int id,
-			PipelineStepStepRequirementModel model,
+			ApiPipelineStepStepRequirementModel model,
 			PipelineStepStepRequirement efPipelineStepStepRequirement);
 
 		POCOPipelineStepStepRequirement PipelineStepStepRequirementMapEFToPOCO(
@@ -167,7 +167,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void SaleMapModelToEF(
 			int id,
-			SaleModel model,
+			ApiSaleModel model,
 			Sale efSale);
 
 		POCOSale SaleMapEFToPOCO(
@@ -175,7 +175,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		void SpeciesMapModelToEF(
 			int id,
-			SpeciesModel model,
+			ApiSpeciesModel model,
 			Species efSpecies);
 
 		POCOSpecies SpeciesMapEFToPOCO(
@@ -184,5 +184,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2ca5730485c58f99c4f9a02deccfe956</Hash>
+    <Hash>4ce89326d81e9a26087985b242c9fe4e</Hash>
 </Codenesium>*/

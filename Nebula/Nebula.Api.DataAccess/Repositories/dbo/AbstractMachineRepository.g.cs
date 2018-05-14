@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOMachine Create(
-			MachineModel model)
+			ApiMachineModel model)
 		{
 			Machine record = new Machine();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			MachineModel model)
+			ApiMachineModel model)
 		{
 			Machine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a7cbbbc13ccf27fec79db7fcaffd6c5d</Hash>
+    <Hash>c7bd0523a398e87e64c319bb3e83b164</Hash>
 </Codenesium>*/

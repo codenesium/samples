@@ -6,12 +6,12 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public class ClientModelValidator: AbstractClientModelValidator, IClientModelValidator
+	public class ApiClientModelValidator: AbstractApiClientModelValidator, IApiClientModelValidator
 	{
-		public ClientModelValidator()
+		public ApiClientModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ClientModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiClientModel model)
 		{
 			this.EmailRules();
 			this.FirstNameRules();
@@ -21,7 +21,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ClientModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiClientModel model)
 		{
 			this.EmailRules();
 			this.FirstNameRules();
@@ -39,5 +39,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8bc2a92a65d1e44ce4c39426a7b84800</Hash>
+    <Hash>e443cc5a4a253002dac11523fbd1425a</Hash>
 </Codenesium>*/

@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOTeam Create(
-			TeamModel model)
+			ApiTeamModel model)
 		{
 			Team record = new Team();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			TeamModel model)
+			ApiTeamModel model)
 		{
 			Team record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>04bd9af56a3fd8e2f4a9221362c709bb</Hash>
+    <Hash>2cac1c74031ed5d585cea21606597049</Hash>
 </Codenesium>*/

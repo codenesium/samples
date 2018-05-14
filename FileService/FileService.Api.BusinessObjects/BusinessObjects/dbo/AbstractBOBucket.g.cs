@@ -15,13 +15,13 @@ namespace FileServiceNS.Api.BusinessObjects
 	public abstract class AbstractBOBucket
 	{
 		private IBucketRepository bucketRepository;
-		private IBucketModelValidator bucketModelValidator;
+		private IApiBucketModelValidator bucketModelValidator;
 		private ILogger logger;
 
 		public AbstractBOBucket(
 			ILogger logger,
 			IBucketRepository bucketRepository,
-			IBucketModelValidator bucketModelValidator)
+			IApiBucketModelValidator bucketModelValidator)
 
 		{
 			this.bucketRepository = bucketRepository;
@@ -40,7 +40,7 @@ namespace FileServiceNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOBucket>> Create(
-			BucketModel model)
+			ApiBucketModel model)
 		{
 			CreateResponse<POCOBucket> response = new CreateResponse<POCOBucket>(await this.bucketModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			BucketModel model)
+			ApiBucketModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.bucketModelValidator.ValidateUpdateAsync(id, model));
 
@@ -91,5 +91,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ffc023259f975b47a2c7e399d624f471</Hash>
+    <Hash>a56dec3ca36e96aea4590871e1f8944f</Hash>
 </Codenesium>*/

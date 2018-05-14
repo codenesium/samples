@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOOrganization
 	{
 		private IOrganizationRepository organizationRepository;
-		private IOrganizationModelValidator organizationModelValidator;
+		private IApiOrganizationModelValidator organizationModelValidator;
 		private ILogger logger;
 
 		public AbstractBOOrganization(
 			ILogger logger,
 			IOrganizationRepository organizationRepository,
-			IOrganizationModelValidator organizationModelValidator)
+			IApiOrganizationModelValidator organizationModelValidator)
 
 		{
 			this.organizationRepository = organizationRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOOrganization>> Create(
-			OrganizationModel model)
+			ApiOrganizationModel model)
 		{
 			CreateResponse<POCOOrganization> response = new CreateResponse<POCOOrganization>(await this.organizationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			OrganizationModel model)
+			ApiOrganizationModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateUpdateAsync(id, model));
 
@@ -86,5 +86,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ae180181541951c5f2bbe6c10dceba3e</Hash>
+    <Hash>eb8b0e6457cbf118bfbbfae49b28829b</Hash>
 </Codenesium>*/

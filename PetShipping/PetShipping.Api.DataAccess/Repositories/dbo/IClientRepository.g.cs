@@ -7,10 +7,10 @@ namespace PetShippingNS.Api.DataAccess
 {
 	public interface IClientRepository
 	{
-		POCOClient Create(ClientModel model);
+		POCOClient Create(ApiClientModel model);
 
 		void Update(int id,
-		            ClientModel model);
+		            ApiClientModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9ef61820a98b39c611de31b2c52cb405</Hash>
+    <Hash>5889e81db202def5db27d62847f98f2c</Hash>
 </Codenesium>*/

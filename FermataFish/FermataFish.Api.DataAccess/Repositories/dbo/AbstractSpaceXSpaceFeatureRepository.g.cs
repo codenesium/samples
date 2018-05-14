@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOSpaceXSpaceFeature Create(
-			SpaceXSpaceFeatureModel model)
+			ApiSpaceXSpaceFeatureModel model)
 		{
 			SpaceXSpaceFeature record = new SpaceXSpaceFeature();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			SpaceXSpaceFeatureModel model)
+			ApiSpaceXSpaceFeatureModel model)
 		{
 			SpaceXSpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>00e85600b335e9b0566e7f5133a4e187</Hash>
+    <Hash>8bb499bca50ab1f637203ef5be0ad9c3</Hash>
 </Codenesium>*/

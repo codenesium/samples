@@ -15,12 +15,12 @@ namespace PetStoreNS.Api.BusinessObjects
 		public BOSale(
 			ILogger<SaleRepository> logger,
 			ISaleRepository saleRepository,
-			ISaleModelValidator saleModelValidator)
+			IApiSaleModelValidator saleModelValidator)
 			: base(logger, saleRepository, saleModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4f165e508c1b9de65d3209d1fee2b6d0</Hash>
+    <Hash>0bb36d13af0a3f18b2a16d5fc00a0ddf</Hash>
 </Codenesium>*/

@@ -80,7 +80,7 @@ namespace NebulaNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOClasp), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ClaspModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiClaspModel model)
 		{
 			CreateResponse<POCOClasp> result = await this.claspManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ClaspModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClaspModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace NebulaNS.Api.Service
 		[ProducesResponseType(typeof(POCOClasp), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ClaspModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClaspModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>99d433cc3812ae6648c4f7843926d8ec</Hash>
+    <Hash>eefc60c1489f8235d7dc245576727883</Hash>
 </Codenesium>*/

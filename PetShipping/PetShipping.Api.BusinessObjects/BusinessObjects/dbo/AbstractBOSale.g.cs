@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOSale
 	{
 		private ISaleRepository saleRepository;
-		private ISaleModelValidator saleModelValidator;
+		private IApiSaleModelValidator saleModelValidator;
 		private ILogger logger;
 
 		public AbstractBOSale(
 			ILogger logger,
 			ISaleRepository saleRepository,
-			ISaleModelValidator saleModelValidator)
+			IApiSaleModelValidator saleModelValidator)
 
 		{
 			this.saleRepository = saleRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOSale>> Create(
-			SaleModel model)
+			ApiSaleModel model)
 		{
 			CreateResponse<POCOSale> response = new CreateResponse<POCOSale>(await this.saleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			SaleModel model)
+			ApiSaleModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c4ece80d4078a3ae7bca1655d6e2b069</Hash>
+    <Hash>69a0c3a0bab12cc4bd24193c75e86cc1</Hash>
 </Codenesium>*/

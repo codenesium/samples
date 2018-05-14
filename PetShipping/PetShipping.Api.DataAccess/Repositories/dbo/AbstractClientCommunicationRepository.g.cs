@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		public virtual POCOClientCommunication Create(
-			ClientCommunicationModel model)
+			ApiClientCommunicationModel model)
 		{
 			ClientCommunication record = new ClientCommunication();
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			ClientCommunicationModel model)
+			ApiClientCommunicationModel model)
 		{
 			ClientCommunication record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1dcb27f9124ba076eadee8415e380fac</Hash>
+    <Hash>e0e0a4f3d3c0d3af2dd62ed64c5cdd95</Hash>
 </Codenesium>*/

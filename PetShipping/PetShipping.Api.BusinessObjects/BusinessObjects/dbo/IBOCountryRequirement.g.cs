@@ -10,10 +10,10 @@ namespace PetShippingNS.Api.BusinessObjects
 	public interface IBOCountryRequirement
 	{
 		Task<CreateResponse<POCOCountryRequirement>> Create(
-			CountryRequirementModel model);
+			ApiCountryRequirementModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            CountryRequirementModel model);
+		                            ApiCountryRequirementModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>6934acacb9638276b1eeda2447013dd7</Hash>
+    <Hash>53ff2b2cdf4e086e485a9714b80a6626</Hash>
 </Codenesium>*/

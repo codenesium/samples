@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOEmployee
 	{
 		private IEmployeeRepository employeeRepository;
-		private IEmployeeModelValidator employeeModelValidator;
+		private IApiEmployeeModelValidator employeeModelValidator;
 		private ILogger logger;
 
 		public AbstractBOEmployee(
 			ILogger logger,
 			IEmployeeRepository employeeRepository,
-			IEmployeeModelValidator employeeModelValidator)
+			IApiEmployeeModelValidator employeeModelValidator)
 
 		{
 			this.employeeRepository = employeeRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOEmployee>> Create(
-			EmployeeModel model)
+			ApiEmployeeModel model)
 		{
 			CreateResponse<POCOEmployee> response = new CreateResponse<POCOEmployee>(await this.employeeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			EmployeeModel model)
+			ApiEmployeeModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>9f4bd2bfb4bcf5be93feb2e092eb2692</Hash>
+    <Hash>7105b826971a4c4142fcc1e40adb6ea8</Hash>
 </Codenesium>*/

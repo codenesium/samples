@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOPipeline(
 			ILogger<PipelineRepository> logger,
 			IPipelineRepository pipelineRepository,
-			IPipelineModelValidator pipelineModelValidator)
+			IApiPipelineModelValidator pipelineModelValidator)
 			: base(logger, pipelineRepository, pipelineModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d79f899cde010d9361e784b0c5494fda</Hash>
+    <Hash>7f1f8aa92ca7b6203a55dd5814811e48</Hash>
 </Codenesium>*/

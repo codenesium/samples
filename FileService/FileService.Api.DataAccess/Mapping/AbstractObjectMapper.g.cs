@@ -7,7 +7,7 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		public virtual void BucketMapModelToEF(
 			int id,
-			BucketModel model,
+			ApiBucketModel model,
 			Bucket efBucket)
 		{
 			efBucket.SetProperties(
@@ -29,7 +29,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void FileMapModelToEF(
 			int id,
-			FileModel model,
+			ApiFileModel model,
 			File efFile)
 		{
 			efFile.SetProperties(
@@ -60,7 +60,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void FileTypeMapModelToEF(
 			int id,
-			FileTypeModel model,
+			ApiFileTypeModel model,
 			FileType efFileType)
 		{
 			efFileType.SetProperties(
@@ -81,7 +81,7 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual void VersionInfoMapModelToEF(
 			long version,
-			VersionInfoModel model,
+			ApiVersionInfoModel model,
 			VersionInfo efVersionInfo)
 		{
 			efVersionInfo.SetProperties(
@@ -104,5 +104,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6f48c892e74368cf3dfb8c3441f8b83f</Hash>
+    <Hash>1168b09271e94862cac9cf516b1d109d</Hash>
 </Codenesium>*/

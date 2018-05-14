@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using PetStoreNS.Api.Contracts;
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public interface IPetModelValidator
+	public interface IApiPetModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(PetModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, PetModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiPetModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPetModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2cd72e9261b6192166c730f92924d809</Hash>
+    <Hash>e044aab775242c1716b6c1df9127a3b7</Hash>
 </Codenesium>*/

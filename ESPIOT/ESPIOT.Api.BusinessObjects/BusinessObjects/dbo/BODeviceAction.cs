@@ -15,12 +15,12 @@ namespace ESPIOTNS.Api.BusinessObjects
 		public BODeviceAction(
 			ILogger<DeviceActionRepository> logger,
 			IDeviceActionRepository deviceActionRepository,
-			IDeviceActionModelValidator deviceActionModelValidator)
+			IApiDeviceActionModelValidator deviceActionModelValidator)
 			: base(logger, deviceActionRepository, deviceActionModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c2323b712eec52b727467fd80a43696</Hash>
+    <Hash>56cb07487e411cac53a7955458bf63ac</Hash>
 </Codenesium>*/

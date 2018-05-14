@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOClient
 	{
 		private IClientRepository clientRepository;
-		private IClientModelValidator clientModelValidator;
+		private IApiClientModelValidator clientModelValidator;
 		private ILogger logger;
 
 		public AbstractBOClient(
 			ILogger logger,
 			IClientRepository clientRepository,
-			IClientModelValidator clientModelValidator)
+			IApiClientModelValidator clientModelValidator)
 
 		{
 			this.clientRepository = clientRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOClient>> Create(
-			ClientModel model)
+			ApiClientModel model)
 		{
 			CreateResponse<POCOClient> response = new CreateResponse<POCOClient>(await this.clientModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ClientModel model)
+			ApiClientModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.clientModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a9a2f1ea66ecdc9b732295491eea98c1</Hash>
+    <Hash>3a479f1f40d91924686b4bf0d83546e8</Hash>
 </Codenesium>*/

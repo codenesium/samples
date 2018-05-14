@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOPipelineStep
 	{
 		private IPipelineStepRepository pipelineStepRepository;
-		private IPipelineStepModelValidator pipelineStepModelValidator;
+		private IApiPipelineStepModelValidator pipelineStepModelValidator;
 		private ILogger logger;
 
 		public AbstractBOPipelineStep(
 			ILogger logger,
 			IPipelineStepRepository pipelineStepRepository,
-			IPipelineStepModelValidator pipelineStepModelValidator)
+			IApiPipelineStepModelValidator pipelineStepModelValidator)
 
 		{
 			this.pipelineStepRepository = pipelineStepRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOPipelineStep>> Create(
-			PipelineStepModel model)
+			ApiPipelineStepModel model)
 		{
 			CreateResponse<POCOPipelineStep> response = new CreateResponse<POCOPipelineStep>(await this.pipelineStepModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			PipelineStepModel model)
+			ApiPipelineStepModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.pipelineStepModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f7117fc7c52a39d1a4abfe6ecb985d8e</Hash>
+    <Hash>432f690fda92d3ded723885730f763b2</Hash>
 </Codenesium>*/

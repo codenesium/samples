@@ -7,10 +7,10 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IFileTypeRepository
 	{
-		POCOFileType Create(FileTypeModel model);
+		POCOFileType Create(ApiFileTypeModel model);
 
 		void Update(int id,
-		            FileTypeModel model);
+		            ApiFileTypeModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>933e78451e846d08ce5bdaf9391d04f2</Hash>
+    <Hash>875b89b5bf500827f4077eec0d460e4e</Hash>
 </Codenesium>*/

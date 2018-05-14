@@ -37,7 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual POCOLinkLog Create(
-			LinkLogModel model)
+			ApiLinkLogModel model)
 		{
 			LinkLog record = new LinkLog();
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			LinkLogModel model)
+			ApiLinkLogModel model)
 		{
 			LinkLog record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>09f3063097b7a9d9bf7f1d39fbcf1960</Hash>
+    <Hash>a824628b0d94c33afaa4f1962d58a821</Hash>
 </Codenesium>*/

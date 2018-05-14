@@ -8,14 +8,14 @@ using FileServiceNS.Api.DataAccess;
 namespace FileServiceNS.Api.BusinessObjects
 
 {
-	public abstract class AbstractBucketModelValidator: AbstractValidator<BucketModel>
+	public abstract class AbstractApiBucketModelValidator: AbstractValidator<ApiBucketModel>
 	{
-		public new ValidationResult Validate(BucketModel model)
+		public new ValidationResult Validate(ApiBucketModel model)
 		{
 			return base.Validate(model);
 		}
 
-		public async Task<ValidationResult> ValidateAsync(BucketModel model)
+		public async Task<ValidationResult> ValidateAsync(ApiBucketModel model)
 		{
 			return await base.ValidateAsync(model);
 		}
@@ -34,5 +34,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>aafef1ab3a1c04e4805b6a0b660b98df</Hash>
+    <Hash>f995f8a3149f943c89a9176f72a41f35</Hash>
 </Codenesium>*/

@@ -15,12 +15,12 @@ namespace PetStoreNS.Api.BusinessObjects
 		public BOPen(
 			ILogger<PenRepository> logger,
 			IPenRepository penRepository,
-			IPenModelValidator penModelValidator)
+			IApiPenModelValidator penModelValidator)
 			: base(logger, penRepository, penModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>06306434d0335b0c09758c2609a3af90</Hash>
+    <Hash>734454723ad11f8d94f04af6b1c0f8f4</Hash>
 </Codenesium>*/

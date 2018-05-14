@@ -37,7 +37,7 @@ namespace ESPIOTNS.Api.DataAccess
 		}
 
 		public virtual POCODevice Create(
-			DeviceModel model)
+			ApiDeviceModel model)
 		{
 			Device record = new Device();
 
@@ -53,7 +53,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			DeviceModel model)
+			ApiDeviceModel model)
 		{
 			Device record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -126,5 +126,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f99863b8db4bbb6f5130e75a4a2f5cea</Hash>
+    <Hash>54b884ecf8352d2988a40bb6e0448c2f</Hash>
 </Codenesium>*/

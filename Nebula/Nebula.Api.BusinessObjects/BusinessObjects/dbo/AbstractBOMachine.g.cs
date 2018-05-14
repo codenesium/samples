@@ -15,13 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOMachine
 	{
 		private IMachineRepository machineRepository;
-		private IMachineModelValidator machineModelValidator;
+		private IApiMachineModelValidator machineModelValidator;
 		private ILogger logger;
 
 		public AbstractBOMachine(
 			ILogger logger,
 			IMachineRepository machineRepository,
-			IMachineModelValidator machineModelValidator)
+			IApiMachineModelValidator machineModelValidator)
 
 		{
 			this.machineRepository = machineRepository;
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOMachine>> Create(
-			MachineModel model)
+			ApiMachineModel model)
 		{
 			CreateResponse<POCOMachine> response = new CreateResponse<POCOMachine>(await this.machineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			MachineModel model)
+			ApiMachineModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateUpdateAsync(id, model));
 
@@ -86,5 +86,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4d50614e8e0222e6df8281c4e5c8402c</Hash>
+    <Hash>5298708f8920e4d15b6a331b9d81f670</Hash>
 </Codenesium>*/

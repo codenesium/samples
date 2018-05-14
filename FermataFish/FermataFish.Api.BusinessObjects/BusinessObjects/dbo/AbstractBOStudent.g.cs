@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOStudent
 	{
 		private IStudentRepository studentRepository;
-		private IStudentModelValidator studentModelValidator;
+		private IApiStudentModelValidator studentModelValidator;
 		private ILogger logger;
 
 		public AbstractBOStudent(
 			ILogger logger,
 			IStudentRepository studentRepository,
-			IStudentModelValidator studentModelValidator)
+			IApiStudentModelValidator studentModelValidator)
 
 		{
 			this.studentRepository = studentRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOStudent>> Create(
-			StudentModel model)
+			ApiStudentModel model)
 		{
 			CreateResponse<POCOStudent> response = new CreateResponse<POCOStudent>(await this.studentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			StudentModel model)
+			ApiStudentModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>9846d63700c1a48171e3d31331b1b943</Hash>
+    <Hash>1ba7dbf8ff221405c904ce37677479a5</Hash>
 </Codenesium>*/

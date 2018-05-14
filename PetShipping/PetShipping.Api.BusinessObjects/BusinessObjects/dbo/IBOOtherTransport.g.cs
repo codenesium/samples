@@ -10,10 +10,10 @@ namespace PetShippingNS.Api.BusinessObjects
 	public interface IBOOtherTransport
 	{
 		Task<CreateResponse<POCOOtherTransport>> Create(
-			OtherTransportModel model);
+			ApiOtherTransportModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            OtherTransportModel model);
+		                            ApiOtherTransportModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0aa52bd83abb937d64b5af30a68dbc0c</Hash>
+    <Hash>1e6125b87f1cfde64040f2e30d55e060</Hash>
 </Codenesium>*/

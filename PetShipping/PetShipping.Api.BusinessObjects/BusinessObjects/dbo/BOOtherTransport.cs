@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOOtherTransport(
 			ILogger<OtherTransportRepository> logger,
 			IOtherTransportRepository otherTransportRepository,
-			IOtherTransportModelValidator otherTransportModelValidator)
+			IApiOtherTransportModelValidator otherTransportModelValidator)
 			: base(logger, otherTransportRepository, otherTransportModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20ed5f424dca8f6f8b47db0175395b86</Hash>
+    <Hash>441a243b7b3a33de3da831c24e43a3ba</Hash>
 </Codenesium>*/

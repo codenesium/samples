@@ -15,12 +15,12 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOVersionInfo(
 			ILogger<VersionInfoRepository> logger,
 			IVersionInfoRepository versionInfoRepository,
-			IVersionInfoModelValidator versionInfoModelValidator)
+			IApiVersionInfoModelValidator versionInfoModelValidator)
 			: base(logger, versionInfoRepository, versionInfoModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0cdedbc454e8326b4495840520a7c306</Hash>
+    <Hash>f5c0c5e0fcf0f0b6b55cd97f0fe93069</Hash>
 </Codenesium>*/

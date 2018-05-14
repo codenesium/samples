@@ -37,7 +37,7 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		public virtual POCOPet Create(
-			PetModel model)
+			ApiPetModel model)
 		{
 			Pet record = new Pet();
 
@@ -53,7 +53,7 @@ namespace PetStoreNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			PetModel model)
+			ApiPetModel model)
 		{
 			Pet record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f691d1eb6bc06fd309e5177a1d2a3c1c</Hash>
+    <Hash>e0dc321d78f337cb187e4c4bddad64e4</Hash>
 </Codenesium>*/

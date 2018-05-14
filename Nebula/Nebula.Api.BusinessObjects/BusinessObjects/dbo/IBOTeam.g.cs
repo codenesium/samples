@@ -10,10 +10,10 @@ namespace NebulaNS.Api.BusinessObjects
 	public interface IBOTeam
 	{
 		Task<CreateResponse<POCOTeam>> Create(
-			TeamModel model);
+			ApiTeamModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            TeamModel model);
+		                            ApiTeamModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4c6cdb55e33d44c1ec9927642e63d556</Hash>
+    <Hash>8cca9d313275fc7ffc4d220fd80ed86c</Hash>
 </Codenesium>*/

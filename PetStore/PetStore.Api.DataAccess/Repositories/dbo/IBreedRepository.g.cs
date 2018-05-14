@@ -7,10 +7,10 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public interface IBreedRepository
 	{
-		POCOBreed Create(BreedModel model);
+		POCOBreed Create(ApiBreedModel model);
 
 		void Update(int id,
-		            BreedModel model);
+		            ApiBreedModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>17209e0df5cfd720099d466de8134b42</Hash>
+    <Hash>c51cf92d6222b084d0d44d5e60fa365c</Hash>
 </Codenesium>*/

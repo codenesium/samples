@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOLesson Create(
-			LessonModel model)
+			ApiLessonModel model)
 		{
 			Lesson record = new Lesson();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			LessonModel model)
+			ApiLessonModel model)
 		{
 			Lesson record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a7ce8e2c207db9d0f08be06c5f2fe6e</Hash>
+    <Hash>4c4421ccf87b803aa15edabb2ab40e0f</Hash>
 </Codenesium>*/

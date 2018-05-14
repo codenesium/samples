@@ -15,13 +15,13 @@ namespace PetShippingNS.Api.BusinessObjects
 	public abstract class AbstractBOClientCommunication
 	{
 		private IClientCommunicationRepository clientCommunicationRepository;
-		private IClientCommunicationModelValidator clientCommunicationModelValidator;
+		private IApiClientCommunicationModelValidator clientCommunicationModelValidator;
 		private ILogger logger;
 
 		public AbstractBOClientCommunication(
 			ILogger logger,
 			IClientCommunicationRepository clientCommunicationRepository,
-			IClientCommunicationModelValidator clientCommunicationModelValidator)
+			IApiClientCommunicationModelValidator clientCommunicationModelValidator)
 
 		{
 			this.clientCommunicationRepository = clientCommunicationRepository;
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOClientCommunication>> Create(
-			ClientCommunicationModel model)
+			ApiClientCommunicationModel model)
 		{
 			CreateResponse<POCOClientCommunication> response = new CreateResponse<POCOClientCommunication>(await this.clientCommunicationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ClientCommunicationModel model)
+			ApiClientCommunicationModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.clientCommunicationModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7abce5565e3d7a969eca3b96cfe352e6</Hash>
+    <Hash>fb402cbbbd8f4068eb3e3621e815ea7a</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		void AdminMapModelToEF(
 			int id,
-			AdminModel model,
+			ApiAdminModel model,
 			Admin efAdmin);
 
 		POCOAdmin AdminMapEFToPOCO(
@@ -15,7 +15,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void FamilyMapModelToEF(
 			int id,
-			FamilyModel model,
+			ApiFamilyModel model,
 			Family efFamily);
 
 		POCOFamily FamilyMapEFToPOCO(
@@ -23,7 +23,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void LessonMapModelToEF(
 			int id,
-			LessonModel model,
+			ApiLessonModel model,
 			Lesson efLesson);
 
 		POCOLesson LessonMapEFToPOCO(
@@ -31,7 +31,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void LessonStatusMapModelToEF(
 			int id,
-			LessonStatusModel model,
+			ApiLessonStatusModel model,
 			LessonStatus efLessonStatus);
 
 		POCOLessonStatus LessonStatusMapEFToPOCO(
@@ -39,7 +39,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void LessonXStudentMapModelToEF(
 			int id,
-			LessonXStudentModel model,
+			ApiLessonXStudentModel model,
 			LessonXStudent efLessonXStudent);
 
 		POCOLessonXStudent LessonXStudentMapEFToPOCO(
@@ -47,7 +47,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void LessonXTeacherMapModelToEF(
 			int id,
-			LessonXTeacherModel model,
+			ApiLessonXTeacherModel model,
 			LessonXTeacher efLessonXTeacher);
 
 		POCOLessonXTeacher LessonXTeacherMapEFToPOCO(
@@ -55,7 +55,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void RateMapModelToEF(
 			int id,
-			RateModel model,
+			ApiRateModel model,
 			Rate efRate);
 
 		POCORate RateMapEFToPOCO(
@@ -63,7 +63,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void SpaceMapModelToEF(
 			int id,
-			SpaceModel model,
+			ApiSpaceModel model,
 			Space efSpace);
 
 		POCOSpace SpaceMapEFToPOCO(
@@ -71,7 +71,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void SpaceFeatureMapModelToEF(
 			int id,
-			SpaceFeatureModel model,
+			ApiSpaceFeatureModel model,
 			SpaceFeature efSpaceFeature);
 
 		POCOSpaceFeature SpaceFeatureMapEFToPOCO(
@@ -79,7 +79,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void SpaceXSpaceFeatureMapModelToEF(
 			int id,
-			SpaceXSpaceFeatureModel model,
+			ApiSpaceXSpaceFeatureModel model,
 			SpaceXSpaceFeature efSpaceXSpaceFeature);
 
 		POCOSpaceXSpaceFeature SpaceXSpaceFeatureMapEFToPOCO(
@@ -87,7 +87,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void StateMapModelToEF(
 			int id,
-			StateModel model,
+			ApiStateModel model,
 			State efState);
 
 		POCOState StateMapEFToPOCO(
@@ -95,7 +95,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void StudentMapModelToEF(
 			int id,
-			StudentModel model,
+			ApiStudentModel model,
 			Student efStudent);
 
 		POCOStudent StudentMapEFToPOCO(
@@ -103,7 +103,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void StudentXFamilyMapModelToEF(
 			int id,
-			StudentXFamilyModel model,
+			ApiStudentXFamilyModel model,
 			StudentXFamily efStudentXFamily);
 
 		POCOStudentXFamily StudentXFamilyMapEFToPOCO(
@@ -111,7 +111,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void StudioMapModelToEF(
 			int id,
-			StudioModel model,
+			ApiStudioModel model,
 			Studio efStudio);
 
 		POCOStudio StudioMapEFToPOCO(
@@ -119,7 +119,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void TeacherMapModelToEF(
 			int id,
-			TeacherModel model,
+			ApiTeacherModel model,
 			Teacher efTeacher);
 
 		POCOTeacher TeacherMapEFToPOCO(
@@ -127,7 +127,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void TeacherSkillMapModelToEF(
 			int id,
-			TeacherSkillModel model,
+			ApiTeacherSkillModel model,
 			TeacherSkill efTeacherSkill);
 
 		POCOTeacherSkill TeacherSkillMapEFToPOCO(
@@ -135,7 +135,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		void TeacherXTeacherSkillMapModelToEF(
 			int id,
-			TeacherXTeacherSkillModel model,
+			ApiTeacherXTeacherSkillModel model,
 			TeacherXTeacherSkill efTeacherXTeacherSkill);
 
 		POCOTeacherXTeacherSkill TeacherXTeacherSkillMapEFToPOCO(
@@ -144,5 +144,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb1665dc1067f69d2d9cd1db393171eb</Hash>
+    <Hash>8bbe3c9072f7fe7c4a0631b4ecabd8c8</Hash>
 </Codenesium>*/

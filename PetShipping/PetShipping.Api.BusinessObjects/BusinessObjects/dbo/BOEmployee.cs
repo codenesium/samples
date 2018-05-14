@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.BusinessObjects
 		public BOEmployee(
 			ILogger<EmployeeRepository> logger,
 			IEmployeeRepository employeeRepository,
-			IEmployeeModelValidator employeeModelValidator)
+			IApiEmployeeModelValidator employeeModelValidator)
 			: base(logger, employeeRepository, employeeModelValidator)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67b54bef3867802058c1214adb8ae94a</Hash>
+    <Hash>a251c449ef4a0f432eea37bf775d9d5f</Hash>
 </Codenesium>*/

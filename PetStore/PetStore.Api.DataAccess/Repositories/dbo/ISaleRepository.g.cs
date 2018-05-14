@@ -7,10 +7,10 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public interface ISaleRepository
 	{
-		POCOSale Create(SaleModel model);
+		POCOSale Create(ApiSaleModel model);
 
 		void Update(int id,
-		            SaleModel model);
+		            ApiSaleModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3e5e1d930c799c1a8b87b7179e8f937a</Hash>
+    <Hash>9e17be0bbaf79ce427db38e084cbbbc4</Hash>
 </Codenesium>*/

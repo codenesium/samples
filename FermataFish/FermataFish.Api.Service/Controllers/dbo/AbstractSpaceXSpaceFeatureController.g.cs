@@ -80,7 +80,7 @@ namespace FermataFishNS.Api.Service
 		[UnitOfWork]
 		[ProducesResponseType(typeof(POCOSpaceXSpaceFeature), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] SpaceXSpaceFeatureModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceXSpaceFeatureModel model)
 		{
 			CreateResponse<POCOSpaceXSpaceFeature> result = await this.spaceXSpaceFeatureManager.Create(model);
 
@@ -102,7 +102,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(List<POCOSpaceXSpaceFeature>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<SpaceXSpaceFeatureModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceXSpaceFeatureModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
@@ -133,7 +133,7 @@ namespace FermataFishNS.Api.Service
 		[ProducesResponseType(typeof(POCOSpaceXSpaceFeature), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] SpaceXSpaceFeatureModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceXSpaceFeatureModel model)
 		{
 			try
 			{
@@ -177,5 +177,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c66a9689b74bc09869438e2a65980573</Hash>
+    <Hash>3c0d3d634c571d9a689d85fe987e517f</Hash>
 </Codenesium>*/

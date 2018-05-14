@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual POCOState Create(
-			StateModel model)
+			ApiStateModel model)
 		{
 			State record = new State();
 
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual void Update(
 			int id,
-			StateModel model)
+			ApiStateModel model)
 		{
 			State record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
 			if (record == null)
@@ -121,5 +121,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c6bc17c9c01d77e6fc05802d8c4469e3</Hash>
+    <Hash>7acc928ff8f9fd7d6a99c7b04686c701</Hash>
 </Codenesium>*/

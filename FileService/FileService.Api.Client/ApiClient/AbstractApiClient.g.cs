@@ -48,7 +48,7 @@ namespace FileServiceNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
-		public virtual async Task<POCOBucket> BucketCreateAsync(BucketModel item)
+		public virtual async Task<POCOBucket> BucketCreateAsync(ApiBucketModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item);
 
@@ -56,7 +56,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOBucket>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOBucket> BucketUpdateAsync(int id, BucketModel item)
+		public virtual async Task<POCOBucket> BucketUpdateAsync(int id, ApiBucketModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Buckets/{id}", item);
 
@@ -87,7 +87,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOBucket>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOBucket>> BucketBulkInsertAsync(List<BucketModel> items)
+		public virtual async Task<List<POCOBucket>> BucketBulkInsertAsync(List<ApiBucketModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets/BulkInsert", items);
 
@@ -95,7 +95,23 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOBucket>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOFile> FileCreateAsync(FileModel item)
+		public virtual async Task<POCOBucket> GetBucketName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/name/{name}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOBucket>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOBucket> GetBucketExternalId(Guid externalId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/externalId/{externalId}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOBucket>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<POCOFile> FileCreateAsync(ApiFileModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files", item);
 
@@ -103,7 +119,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOFile>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOFile> FileUpdateAsync(int id, FileModel item)
+		public virtual async Task<POCOFile> FileUpdateAsync(int id, ApiFileModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Files/{id}", item);
 
@@ -134,7 +150,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOFile>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOFile>> FileBulkInsertAsync(List<FileModel> items)
+		public virtual async Task<List<POCOFile>> FileBulkInsertAsync(List<ApiFileModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files/BulkInsert", items);
 
@@ -142,7 +158,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOFile>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOFileType> FileTypeCreateAsync(FileTypeModel item)
+		public virtual async Task<POCOFileType> FileTypeCreateAsync(ApiFileTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes", item);
 
@@ -150,7 +166,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOFileType>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOFileType> FileTypeUpdateAsync(int id, FileTypeModel item)
+		public virtual async Task<POCOFileType> FileTypeUpdateAsync(int id, ApiFileTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/FileTypes/{id}", item);
 
@@ -181,7 +197,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOFileType>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOFileType>> FileTypeBulkInsertAsync(List<FileTypeModel> items)
+		public virtual async Task<List<POCOFileType>> FileTypeBulkInsertAsync(List<ApiFileTypeModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items);
 
@@ -189,7 +205,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOFileType>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOVersionInfo> VersionInfoCreateAsync(VersionInfoModel item)
+		public virtual async Task<POCOVersionInfo> VersionInfoCreateAsync(ApiVersionInfoModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes", item);
 
@@ -197,7 +213,7 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOVersionInfo> VersionInfoUpdateAsync(long id, VersionInfoModel item)
+		public virtual async Task<POCOVersionInfo> VersionInfoUpdateAsync(long id, ApiVersionInfoModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VersionInfoes/{id}", item);
 
@@ -228,16 +244,24 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOVersionInfo>> VersionInfoBulkInsertAsync(List<VersionInfoModel> items)
+		public virtual async Task<List<POCOVersionInfo>> VersionInfoBulkInsertAsync(List<ApiVersionInfoModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items);
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
 		}
+
+		public virtual async Task<POCOVersionInfo> GetVersionInfoVersion(long version)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/version/{version}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3897fd4e8dd9cfeaab8e444fdc68a43</Hash>
+    <Hash>c999b682eca2d28dd08142b745e0e9ec</Hash>
 </Codenesium>*/

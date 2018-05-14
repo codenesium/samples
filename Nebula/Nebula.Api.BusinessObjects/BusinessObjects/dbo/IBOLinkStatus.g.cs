@@ -10,10 +10,10 @@ namespace NebulaNS.Api.BusinessObjects
 	public interface IBOLinkStatus
 	{
 		Task<CreateResponse<POCOLinkStatus>> Create(
-			LinkStatusModel model);
+			ApiLinkStatusModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            LinkStatusModel model);
+		                            ApiLinkStatusModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>2847186a747f4b604da8dbe4de97c3af</Hash>
+    <Hash>90faeed323a49bb2ea6da7c76050163c</Hash>
 </Codenesium>*/

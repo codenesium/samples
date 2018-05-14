@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOStudio
 	{
 		private IStudioRepository studioRepository;
-		private IStudioModelValidator studioModelValidator;
+		private IApiStudioModelValidator studioModelValidator;
 		private ILogger logger;
 
 		public AbstractBOStudio(
 			ILogger logger,
 			IStudioRepository studioRepository,
-			IStudioModelValidator studioModelValidator)
+			IApiStudioModelValidator studioModelValidator)
 
 		{
 			this.studioRepository = studioRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOStudio>> Create(
-			StudioModel model)
+			ApiStudioModel model)
 		{
 			CreateResponse<POCOStudio> response = new CreateResponse<POCOStudio>(await this.studioModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			StudioModel model)
+			ApiStudioModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.studioModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bee9db7bc4ffd6126c522010ade7e99d</Hash>
+    <Hash>74e385e303de34bef151dd3352fba91c</Hash>
 </Codenesium>*/

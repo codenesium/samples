@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using NebulaNS.Api.Contracts;
 namespace NebulaNS.Api.BusinessObjects
 {
-	public interface IChainModelValidator
+	public interface IApiChainModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ChainModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ChainModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiChainModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiChainModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e86ef4ea8757859d28cdd4e15ab5d99c</Hash>
+    <Hash>eea914757872efc63bbff3b7c2a93851</Hash>
 </Codenesium>*/

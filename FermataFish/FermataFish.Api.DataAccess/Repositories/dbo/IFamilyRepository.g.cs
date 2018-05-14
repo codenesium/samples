@@ -7,10 +7,10 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IFamilyRepository
 	{
-		POCOFamily Create(FamilyModel model);
+		POCOFamily Create(ApiFamilyModel model);
 
 		void Update(int id,
-		            FamilyModel model);
+		            ApiFamilyModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a55ae609ff68a688dcd5096d6b4c0e57</Hash>
+    <Hash>fbc86fc17b925fb7e3c457cb534c5e4f</Hash>
 </Codenesium>*/

@@ -48,7 +48,7 @@ namespace PetStoreNS.Api.Client
 			this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
 		}
 
-		public virtual async Task<POCOBreed> BreedCreateAsync(BreedModel item)
+		public virtual async Task<POCOBreed> BreedCreateAsync(ApiBreedModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Breeds", item);
 
@@ -56,7 +56,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOBreed>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOBreed> BreedUpdateAsync(int id, BreedModel item)
+		public virtual async Task<POCOBreed> BreedUpdateAsync(int id, ApiBreedModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Breeds/{id}", item);
 
@@ -87,7 +87,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOBreed>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOBreed>> BreedBulkInsertAsync(List<BreedModel> items)
+		public virtual async Task<List<POCOBreed>> BreedBulkInsertAsync(List<ApiBreedModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Breeds/BulkInsert", items);
 
@@ -95,7 +95,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOBreed>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOPaymentType> PaymentTypeCreateAsync(PaymentTypeModel item)
+		public virtual async Task<POCOPaymentType> PaymentTypeCreateAsync(ApiPaymentTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PaymentTypes", item);
 
@@ -103,7 +103,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOPaymentType>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOPaymentType> PaymentTypeUpdateAsync(int id, PaymentTypeModel item)
+		public virtual async Task<POCOPaymentType> PaymentTypeUpdateAsync(int id, ApiPaymentTypeModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PaymentTypes/{id}", item);
 
@@ -134,7 +134,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPaymentType>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOPaymentType>> PaymentTypeBulkInsertAsync(List<PaymentTypeModel> items)
+		public virtual async Task<List<POCOPaymentType>> PaymentTypeBulkInsertAsync(List<ApiPaymentTypeModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PaymentTypes/BulkInsert", items);
 
@@ -142,7 +142,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPaymentType>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOPen> PenCreateAsync(PenModel item)
+		public virtual async Task<POCOPen> PenCreateAsync(ApiPenModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pens", item);
 
@@ -150,7 +150,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOPen>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOPen> PenUpdateAsync(int id, PenModel item)
+		public virtual async Task<POCOPen> PenUpdateAsync(int id, ApiPenModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Pens/{id}", item);
 
@@ -181,7 +181,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPen>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOPen>> PenBulkInsertAsync(List<PenModel> items)
+		public virtual async Task<List<POCOPen>> PenBulkInsertAsync(List<ApiPenModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pens/BulkInsert", items);
 
@@ -189,7 +189,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPen>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOPet> PetCreateAsync(PetModel item)
+		public virtual async Task<POCOPet> PetCreateAsync(ApiPetModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pets", item);
 
@@ -197,7 +197,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOPet>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOPet> PetUpdateAsync(int id, PetModel item)
+		public virtual async Task<POCOPet> PetUpdateAsync(int id, ApiPetModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Pets/{id}", item);
 
@@ -228,7 +228,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPet>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOPet>> PetBulkInsertAsync(List<PetModel> items)
+		public virtual async Task<List<POCOPet>> PetBulkInsertAsync(List<ApiPetModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pets/BulkInsert", items);
 
@@ -236,7 +236,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOPet>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOSale> SaleCreateAsync(SaleModel item)
+		public virtual async Task<POCOSale> SaleCreateAsync(ApiSaleModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Sales", item);
 
@@ -244,7 +244,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOSale>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOSale> SaleUpdateAsync(int id, SaleModel item)
+		public virtual async Task<POCOSale> SaleUpdateAsync(int id, ApiSaleModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Sales/{id}", item);
 
@@ -275,7 +275,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSale>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOSale>> SaleBulkInsertAsync(List<SaleModel> items)
+		public virtual async Task<List<POCOSale>> SaleBulkInsertAsync(List<ApiSaleModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Sales/BulkInsert", items);
 
@@ -283,7 +283,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSale>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOSpecies> SpeciesCreateAsync(SpeciesModel item)
+		public virtual async Task<POCOSpecies> SpeciesCreateAsync(ApiSpeciesModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Species", item);
 
@@ -291,7 +291,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<POCOSpecies>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOSpecies> SpeciesUpdateAsync(int id, SpeciesModel item)
+		public virtual async Task<POCOSpecies> SpeciesUpdateAsync(int id, ApiSpeciesModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Species/{id}", item);
 
@@ -322,7 +322,7 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOSpecies>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOSpecies>> SpeciesBulkInsertAsync(List<SpeciesModel> items)
+		public virtual async Task<List<POCOSpecies>> SpeciesBulkInsertAsync(List<ApiSpeciesModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Species/BulkInsert", items);
 
@@ -333,5 +333,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>14467128243dfd597dfda302b724494c</Hash>
+    <Hash>4bae316a2f2e2f92e7272bcccccaf0ea</Hash>
 </Codenesium>*/

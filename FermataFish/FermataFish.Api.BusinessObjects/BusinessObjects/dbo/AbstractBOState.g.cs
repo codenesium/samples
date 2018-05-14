@@ -15,13 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOState
 	{
 		private IStateRepository stateRepository;
-		private IStateModelValidator stateModelValidator;
+		private IApiStateModelValidator stateModelValidator;
 		private ILogger logger;
 
 		public AbstractBOState(
 			ILogger logger,
 			IStateRepository stateRepository,
-			IStateModelValidator stateModelValidator)
+			IApiStateModelValidator stateModelValidator)
 
 		{
 			this.stateRepository = stateRepository;
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.BusinessObjects
 		}
 
 		public virtual async Task<CreateResponse<POCOState>> Create(
-			StateModel model)
+			ApiStateModel model)
 		{
 			CreateResponse<POCOState> response = new CreateResponse<POCOState>(await this.stateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
@@ -54,7 +54,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			StateModel model)
+			ApiStateModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.stateModelValidator.ValidateUpdateAsync(id, model));
 
@@ -81,5 +81,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1731d042bf58b5a677ebeb3c30619aba</Hash>
+    <Hash>b39efda39c3ea71462077488231f12c7</Hash>
 </Codenesium>*/

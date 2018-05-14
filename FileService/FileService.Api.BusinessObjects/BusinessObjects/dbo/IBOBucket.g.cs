@@ -10,10 +10,10 @@ namespace FileServiceNS.Api.BusinessObjects
 	public interface IBOBucket
 	{
 		Task<CreateResponse<POCOBucket>> Create(
-			BucketModel model);
+			ApiBucketModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            BucketModel model);
+		                            ApiBucketModel model);
 
 		Task<ActionResponse> Delete(int id);
 
@@ -28,5 +28,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bc19ed7a777e0790eb3926def843787c</Hash>
+    <Hash>e0c5453e022bbc88b757f82e67c0375d</Hash>
 </Codenesium>*/

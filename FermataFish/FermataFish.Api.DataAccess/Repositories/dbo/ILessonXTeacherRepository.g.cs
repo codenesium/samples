@@ -7,10 +7,10 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ILessonXTeacherRepository
 	{
-		POCOLessonXTeacher Create(LessonXTeacherModel model);
+		POCOLessonXTeacher Create(ApiLessonXTeacherModel model);
 
 		void Update(int id,
-		            LessonXTeacherModel model);
+		            ApiLessonXTeacherModel model);
 
 		void Delete(int id);
 
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d4e917437da03bc24f9cfcf3929e3c3d</Hash>
+    <Hash>909edf3fa70998e063bc9ba6d43e28eb</Hash>
 </Codenesium>*/
