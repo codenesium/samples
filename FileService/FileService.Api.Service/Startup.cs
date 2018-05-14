@@ -255,7 +255,7 @@ namespace FileServiceNS.Api.Service
             {
                 Title = "FileService API " + description.ApiVersion,
                 Version = description.ApiVersion.ToString(),
-                Description = "API",
+                Description = "Visit https://generator.swagger.io/ to generate a client for this API",
                 Contact = new Contact() { Name = "test", Email = "test@test.com" },
                 TermsOfService = "",
                 License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
