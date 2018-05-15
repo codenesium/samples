@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.AddressTypeID = addressTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 		}
 
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>392d64e04595e45b36debcd8282eab6f</Hash>
+    <Hash>cfa5121cd626d9a406fcd1269e007e03</Hash>
 </Codenesium>*/

@@ -37,20 +37,20 @@ namespace AdventureWorksNS.Api.Contracts
 			Nullable<int> territoryID,
 			decimal totalDue)
 		{
-			this.AccountNumber = accountNumber.ToString();
+			this.AccountNumber = accountNumber;
 			this.BillToAddressID = billToAddressID.ToInt();
-			this.Comment = comment.ToString();
-			this.CreditCardApprovalCode = creditCardApprovalCode.ToString();
+			this.Comment = comment;
+			this.CreditCardApprovalCode = creditCardApprovalCode;
 			this.DueDate = dueDate.ToDateTime();
 			this.Freight = freight.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OnlineOrderFlag = onlineOrderFlag.ToBoolean();
 			this.OrderDate = orderDate.ToDateTime();
-			this.PurchaseOrderNumber = purchaseOrderNumber.ToString();
+			this.PurchaseOrderNumber = purchaseOrderNumber;
 			this.RevisionNumber = revisionNumber.ToInt();
 			this.Rowguid = rowguid.ToGuid();
 			this.SalesOrderID = salesOrderID.ToInt();
-			this.SalesOrderNumber = salesOrderNumber.ToString();
+			this.SalesOrderNumber = salesOrderNumber;
 			this.ShipDate = shipDate.ToNullableDateTime();
 			this.ShipMethodID = shipMethodID.ToInt();
 			this.ShipToAddressID = shipToAddressID.ToInt();
@@ -339,5 +339,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f75e94790c543e8207dd6ac0609c5007</Hash>
+    <Hash>018ee185bb37657fd127a8be1d6c1ed6</Hash>
 </Codenesium>*/

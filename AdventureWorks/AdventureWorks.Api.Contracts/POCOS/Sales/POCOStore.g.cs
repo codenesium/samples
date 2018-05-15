@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.Demographics = demographics;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 
 			this.SalesPersonID = new ReferenceEntity<Nullable<int>>(salesPersonID,
@@ -95,5 +95,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6a4a79f133d208d467a885b414c89b4d</Hash>
+    <Hash>d7c68c81a167d26ccbe4e345f8dff5b4</Hash>
 </Codenesium>*/

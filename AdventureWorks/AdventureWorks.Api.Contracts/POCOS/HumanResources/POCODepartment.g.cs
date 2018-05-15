@@ -16,9 +16,9 @@ namespace AdventureWorksNS.Api.Contracts
 			string name)
 		{
 			this.DepartmentID = departmentID;
-			this.GroupName = groupName.ToString();
+			this.GroupName = groupName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		public short DepartmentID { get; set; }
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0ddc2f2a215f51c73004c005c5dea884</Hash>
+    <Hash>98db9a78bf4ac78016f9859d11904992</Hash>
 </Codenesium>*/

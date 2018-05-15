@@ -39,10 +39,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			Nullable<int> territoryID,
 			decimal totalDue)
 		{
-			this.AccountNumber = accountNumber.ToString();
+			this.AccountNumber = accountNumber;
 			this.BillToAddressID = billToAddressID.ToInt();
-			this.Comment = comment.ToString();
-			this.CreditCardApprovalCode = creditCardApprovalCode.ToString();
+			this.Comment = comment;
+			this.CreditCardApprovalCode = creditCardApprovalCode;
 			this.CreditCardID = creditCardID.ToNullableInt();
 			this.CurrencyRateID = currencyRateID.ToNullableInt();
 			this.CustomerID = customerID.ToInt();
@@ -51,11 +51,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OnlineOrderFlag = onlineOrderFlag.ToBoolean();
 			this.OrderDate = orderDate.ToDateTime();
-			this.PurchaseOrderNumber = purchaseOrderNumber.ToString();
+			this.PurchaseOrderNumber = purchaseOrderNumber;
 			this.RevisionNumber = revisionNumber.ToInt();
 			this.Rowguid = rowguid.ToGuid();
 			this.SalesOrderID = salesOrderID.ToInt();
-			this.SalesOrderNumber = salesOrderNumber.ToString();
+			this.SalesOrderNumber = salesOrderNumber;
 			this.SalesPersonID = salesPersonID.ToNullableInt();
 			this.ShipDate = shipDate.ToNullableDateTime();
 			this.ShipMethodID = shipMethodID.ToInt();
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>84fed6b0bbb4a51ac0bd59f6b8c858be</Hash>
+    <Hash>7e7ddcd0044f66e3cc4b47a50e4dc389</Hash>
 </Codenesium>*/

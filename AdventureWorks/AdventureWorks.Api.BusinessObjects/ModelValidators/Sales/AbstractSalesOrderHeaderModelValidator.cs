@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public ICustomerRepository CustomerRepository { get; set; }
 		public ISalesPersonRepository SalesPersonRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
+		public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
 		public virtual void AccountNumberRules()
 		{
 			this.RuleFor(x => x.AccountNumber).Length(0, 15);
@@ -104,6 +105,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void SalesOrderNumberRules()
 		{
 			this.RuleFor(x => x.SalesOrderNumber).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetSalesOrderNumber).When(x => x ?.SalesOrderNumber != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.SalesOrderNumber).Length(0, 25);
 		}
 
@@ -174,9 +176,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			return this.SalesTerritoryRepository.Get(id.GetValueOrDefault()) != null;
 		}
+
+		private bool BeUniqueGetSalesOrderNumber(ApiSalesOrderHeaderModel model)
+		{
+			return this.SalesOrderHeaderRepository.GetSalesOrderNumber(model.SalesOrderNumber) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9ce9019ef0c7205a0881399707f2fa9</Hash>
+    <Hash>4b5c99efc1bf72165277db19e9a81786</Hash>
 </Codenesium>*/

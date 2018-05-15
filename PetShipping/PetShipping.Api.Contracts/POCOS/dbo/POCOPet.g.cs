@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Contracts
 			int weight)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Weight = weight.ToInt();
 
 			this.BreedId = new ReferenceEntity<int>(breedId,
@@ -84,5 +84,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>32e9b95947adc400cfb3cd43069870b8</Hash>
+    <Hash>60ee61cebde83d089379587c0fd68a73</Hash>
 </Codenesium>*/

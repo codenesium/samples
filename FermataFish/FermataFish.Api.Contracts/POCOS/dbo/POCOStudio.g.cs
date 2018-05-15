@@ -19,13 +19,13 @@ namespace FermataFishNS.Api.Contracts
 			string website,
 			string zip)
 		{
-			this.Address1 = address1.ToString();
-			this.Address2 = address2.ToString();
-			this.City = city.ToString();
+			this.Address1 = address1;
+			this.Address2 = address2;
+			this.City = city;
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
-			this.Website = website.ToString();
-			this.Zip = zip.ToString();
+			this.Name = name;
+			this.Website = website;
+			this.Zip = zip;
 
 			this.StateId = new ReferenceEntity<int>(stateId,
 			                                        nameof(ApiResponse.States));
@@ -119,5 +119,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>92352d0282e041c8dad8fbb90c79a690</Hash>
+    <Hash>a6f290acd653c50487b910ba825b2267</Hash>
 </Codenesium>*/

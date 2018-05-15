@@ -19,7 +19,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.ModifiedDateRules();
 			this.PostalCodeRules();
 			this.RowguidRules();
-			this.SpatialLocationRules();
 			this.StateProvinceIDRules();
 			return await this.ValidateAsync(model);
 		}
@@ -32,7 +31,6 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.ModifiedDateRules();
 			this.PostalCodeRules();
 			this.RowguidRules();
-			this.SpatialLocationRules();
 			this.StateProvinceIDRules();
 			return await this.ValidateAsync(model);
 		}
@@ -45,5 +43,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>da8ec9267dcbff325f5b9ef60b32689c</Hash>
+    <Hash>5d7a562c91d752d133cc6faff558ae40</Hash>
 </Codenesium>*/

@@ -20,6 +20,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IDeviceRepository DeviceRepository { get; set; }
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
@@ -29,10 +30,16 @@ namespace ESPIOTNS.Api.BusinessObjects
 		public virtual void PublicIdRules()
 		{
 			this.RuleFor(x => x.PublicId).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniquePublicId).When(x => x ?.PublicId != null).WithMessage("Violates unique constraint");
+		}
+
+		private bool BeUniquePublicId(ApiDeviceModel model)
+		{
+			return this.DeviceRepository.PublicId(model.PublicId) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>65b09de6a9255005ba22ddbe17c6570f</Hash>
+    <Hash>6a6042bbd0d86787237d1abe73205945</Hash>
 </Codenesium>*/

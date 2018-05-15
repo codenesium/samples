@@ -27,8 +27,8 @@ namespace FermataFishNS.Api.Contracts
 			this.Id = id.ToInt();
 			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
 			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
-			this.StudentNotes = studentNotes.ToString();
-			this.TeacherNotes = teacherNotes.ToString();
+			this.StudentNotes = studentNotes;
+			this.TeacherNotes = teacherNotes;
 
 			this.LessonStatusId = new ReferenceEntity<int>(lessonStatusId,
 			                                               nameof(ApiResponse.LessonStatus));
@@ -144,5 +144,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d554756907e4fed1c6d1fcf1287ae540</Hash>
+    <Hash>25fa698100d7f427457f867a66795ec3</Hash>
 </Codenesium>*/

@@ -28,15 +28,15 @@ namespace AdventureWorksNS.Api.Contracts
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.Demographics = demographics;
 			this.EmailPromotion = emailPromotion.ToInt();
-			this.FirstName = firstName.ToString();
-			this.LastName = lastName.ToString();
-			this.MiddleName = middleName.ToString();
+			this.FirstName = firstName;
+			this.LastName = lastName;
+			this.MiddleName = middleName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.NameStyle = nameStyle.ToBoolean();
-			this.PersonType = personType.ToString();
+			this.PersonType = personType;
 			this.Rowguid = rowguid.ToGuid();
-			this.Suffix = suffix.ToString();
-			this.Title = title.ToString();
+			this.Suffix = suffix;
+			this.Title = title;
 		}
 
 		public string AdditionalContactInfo { get; set; }
@@ -177,5 +177,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8ecd7e9f9f9d9bb3f04b1d0fd14a7a6f</Hash>
+    <Hash>c05fd1328c0e863813592da2eee59786</Hash>
 </Codenesium>*/

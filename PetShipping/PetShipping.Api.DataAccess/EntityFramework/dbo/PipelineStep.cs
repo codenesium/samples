@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.DataAccess
 			int shipperId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.PipelineStepStatusId = pipelineStepStatusId.ToInt();
 			this.ShipperId = shipperId.ToInt();
 		}
@@ -45,5 +45,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c0fdc11419c0dc5197c3910a0d4e5743</Hash>
+    <Hash>4bd2a3a5a72062dc50258fff05d24c1b</Hash>
 </Codenesium>*/

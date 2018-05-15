@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IProductModelRepository ProductModelRepository { get; set; }
 		public virtual void CatalogDescriptionRules()
 		{                       }
 
@@ -34,6 +35,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
@@ -41,9 +43,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.Rowguid).NotNull();
 		}
+
+		private bool BeUniqueGetName(ApiProductModelModel model)
+		{
+			return this.ProductModelRepository.GetName(model.Name) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3bebc72d1421de53395bea78124e9a4</Hash>
+    <Hash>6a108675a29cc315782cfb17ecb5c3a3</Hash>
 </Codenesium>*/

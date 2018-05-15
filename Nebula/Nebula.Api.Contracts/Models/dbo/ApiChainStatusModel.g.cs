@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Contracts
 		public ApiChainStatusModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8601775427a284df55494ce1f835a0b7</Hash>
+    <Hash>f022ea3d5da7db6fe0562f8c85846970</Hash>
 </Codenesium>*/

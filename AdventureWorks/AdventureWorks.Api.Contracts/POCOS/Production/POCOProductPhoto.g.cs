@@ -18,11 +18,11 @@ namespace AdventureWorksNS.Api.Contracts
 			string thumbnailPhotoFileName)
 		{
 			this.LargePhoto = largePhoto;
-			this.LargePhotoFileName = largePhotoFileName.ToString();
+			this.LargePhotoFileName = largePhotoFileName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductPhotoID = productPhotoID.ToInt();
 			this.ThumbNailPhoto = thumbNailPhoto;
-			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
+			this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
 		}
 
 		public byte[] LargePhoto { get; set; }
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>227e6b7054f484022634b57ee63855b4</Hash>
+    <Hash>d1b0d4426b4e1ae09c51c2ec0e24f8ad</Hash>
 </Codenesium>*/

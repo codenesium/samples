@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Contracts
 		public ApiOrganizationModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>27be3354a098421b0d992c3eef4848f3</Hash>
+    <Hash>0dbbdc17bd18c4602cf111d1a064230e</Hash>
 </Codenesium>*/

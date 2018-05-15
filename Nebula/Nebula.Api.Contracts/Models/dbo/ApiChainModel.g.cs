@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Contracts
 		{
 			this.ChainStatusId = chainStatusId.ToInt();
 			this.ExternalId = externalId.ToGuid();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.TeamId = teamId.ToInt();
 		}
 
@@ -89,5 +89,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5cac0c9caf21a33502b830747687b841</Hash>
+    <Hash>d861ddc175bb415c7bc5684eafd8676b</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.Contracts
 			string description)
 		{
 			this.AppliedOn = appliedOn.ToNullableDateTime();
-			this.Description = description.ToString();
+			this.Description = description;
 		}
 
 		private Nullable<DateTime> appliedOn;
@@ -51,5 +51,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d2b5f6f6e73fc12eb3c00a4870014a6b</Hash>
+    <Hash>c231d68c25ca525c690c9ea6ecd75b84</Hash>
 </Codenesium>*/

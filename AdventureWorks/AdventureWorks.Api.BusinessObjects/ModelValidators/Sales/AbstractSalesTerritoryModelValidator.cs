@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 		public virtual void CostLastYearRules()
 		{
 			this.RuleFor(x => x.CostLastYear).NotNull();
@@ -50,6 +51,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
@@ -67,9 +69,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.SalesYTD).NotNull();
 		}
+
+		private bool BeUniqueGetName(ApiSalesTerritoryModel model)
+		{
+			return this.SalesTerritoryRepository.GetName(model.Name) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6eeceedba35ef214accdb0ed7f0ea525</Hash>
+    <Hash>aa6d4d8ddd5a89a651782a55f9310b93</Hash>
 </Codenesium>*/

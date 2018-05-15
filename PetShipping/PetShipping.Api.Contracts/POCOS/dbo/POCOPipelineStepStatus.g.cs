@@ -14,7 +14,7 @@ namespace PetShippingNS.Api.Contracts
 			string name)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		public int Id { get; set; }
@@ -45,5 +45,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a5f4955ad78ffbb7bb56c8ffb7909070</Hash>
+    <Hash>ae96cce2d9ca336dfdbdbfad4ed0e308</Hash>
 </Codenesium>*/

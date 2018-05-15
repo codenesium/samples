@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Contracts
 		public ApiPipelineStepStatusModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>62f00f055c0be79b083380254b63d9bd</Hash>
+    <Hash>b7ef7216ba5fb4dd4d8b1d98a7434afa</Hash>
 </Codenesium>*/

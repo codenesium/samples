@@ -21,13 +21,13 @@ namespace AdventureWorksNS.Api.Contracts
 			string userName)
 		{
 			this.ErrorLine = errorLine.ToNullableInt();
-			this.ErrorMessage = errorMessage.ToString();
+			this.ErrorMessage = errorMessage;
 			this.ErrorNumber = errorNumber.ToInt();
-			this.ErrorProcedure = errorProcedure.ToString();
+			this.ErrorProcedure = errorProcedure;
 			this.ErrorSeverity = errorSeverity.ToNullableInt();
 			this.ErrorState = errorState.ToNullableInt();
 			this.ErrorTime = errorTime.ToDateTime();
-			this.UserName = userName.ToString();
+			this.UserName = userName;
 		}
 
 		private Nullable<int> errorLine;
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2840283c32733d4f006e7f0cf5b48b59</Hash>
+    <Hash>5d64222a1025ade3e68fdf779019e75a</Hash>
 </Codenesium>*/

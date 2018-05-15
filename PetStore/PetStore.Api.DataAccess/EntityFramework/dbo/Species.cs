@@ -16,7 +16,7 @@ namespace PetStoreNS.Api.DataAccess
 			string name)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -29,5 +29,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>073ba0ca2319ff94db2131f8142936e9</Hash>
+    <Hash>52843823ef1c9cdfcea4c56bbcee736f</Hash>
 </Codenesium>*/

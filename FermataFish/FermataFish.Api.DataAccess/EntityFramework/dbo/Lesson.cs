@@ -30,9 +30,9 @@ namespace FermataFishNS.Api.DataAccess
 			this.LessonStatusId = lessonStatusId.ToInt();
 			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
 			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
-			this.StudentNotes = studentNotes.ToString();
+			this.StudentNotes = studentNotes;
 			this.StudioId = studioId.ToInt();
-			this.TeacherNotes = teacherNotes.ToString();
+			this.TeacherNotes = teacherNotes;
 		}
 
 		[Column("actualEndDate", TypeName="datetime")]
@@ -75,5 +75,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cd0e8681f966ac6ee0a5b18b65b9e810</Hash>
+    <Hash>ce80677adfebaa2fecabc017b20004ea</Hash>
 </Codenesium>*/

@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 			this.Quantity = quantity.ToInt();
-			this.ShoppingCartID = shoppingCartID.ToString();
+			this.ShoppingCartID = shoppingCartID;
 			this.ShoppingCartItemID = shoppingCartItemID.ToInt();
 		}
 
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0a66438daa3611cc9e02cd4a67682917</Hash>
+    <Hash>20323c763669fff766a3541a5aaa3a22</Hash>
 </Codenesium>*/

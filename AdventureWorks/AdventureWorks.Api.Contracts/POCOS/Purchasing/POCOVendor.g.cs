@@ -19,14 +19,14 @@ namespace AdventureWorksNS.Api.Contracts
 			bool preferredVendorStatus,
 			string purchasingWebServiceURL)
 		{
-			this.AccountNumber = accountNumber.ToString();
+			this.AccountNumber = accountNumber;
 			this.ActiveFlag = activeFlag.ToBoolean();
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.CreditRating = creditRating.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
-			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
+			this.PurchasingWebServiceURL = purchasingWebServiceURL;
 		}
 
 		public string AccountNumber { get; set; }
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>31811bae8d28f8a59ff7d9af746785b9</Hash>
+    <Hash>90e5cf9bd3fd468e5626b9a04a0b073d</Hash>
 </Codenesium>*/

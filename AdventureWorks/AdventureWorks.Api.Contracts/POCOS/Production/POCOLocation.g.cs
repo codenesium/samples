@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.CostRate = costRate.ToDecimal();
 			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		public decimal Availability { get; set; }
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c6a38f64bf79a7ec76b5c9e8c0349d13</Hash>
+    <Hash>3e0f48b0b05281f26122b41eae27375e</Hash>
 </Codenesium>*/

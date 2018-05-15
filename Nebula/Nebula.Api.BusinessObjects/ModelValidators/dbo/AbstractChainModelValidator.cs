@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 		public IChainStatusRepository ChainStatusRepository { get; set; }
 		public ITeamRepository TeamRepository { get; set; }
+		public IChainRepository ChainRepository { get; set; }
 		public virtual void ChainStatusIdRules()
 		{
 			this.RuleFor(x => x.ChainStatusId).NotNull();
@@ -31,6 +32,7 @@ namespace NebulaNS.Api.BusinessObjects
 		public virtual void ExternalIdRules()
 		{
 			this.RuleFor(x => x.ExternalId).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint");
 		}
 
 		public virtual void NameRules()
@@ -54,9 +56,14 @@ namespace NebulaNS.Api.BusinessObjects
 		{
 			return this.TeamRepository.Get(id) != null;
 		}
+
+		private bool BeUniqueExternalId(ApiChainModel model)
+		{
+			return this.ChainRepository.ExternalId(model.ExternalId) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9d5be75ef9379937c284e7f9120daa9</Hash>
+    <Hash>06249ee9f9d0da92e138ae237f1f9b0d</Hash>
 </Codenesium>*/

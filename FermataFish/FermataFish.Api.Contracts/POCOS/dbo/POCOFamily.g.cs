@@ -18,11 +18,11 @@ namespace FermataFishNS.Api.Contracts
 			string pcPhone,
 			int studioId)
 		{
-			this.Notes = notes.ToString();
-			this.PcEmail = pcEmail.ToString();
-			this.PcFirstName = pcFirstName.ToString();
-			this.PcLastName = pcLastName.ToString();
-			this.PcPhone = pcPhone.ToString();
+			this.Notes = notes;
+			this.PcEmail = pcEmail;
+			this.PcFirstName = pcFirstName;
+			this.PcLastName = pcLastName;
+			this.PcPhone = pcPhone;
 
 			this.Id = new ReferenceEntity<int>(id,
 			                                   nameof(ApiResponse.Studios));
@@ -108,5 +108,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>da76a7b9a4b1f4af45bf6845fbb35b47</Hash>
+    <Hash>a002b1080e3876b25b39849830c4903a</Hash>
 </Codenesium>*/

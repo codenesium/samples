@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
 			short scrapReasonID)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.ScrapReasonID = scrapReasonID;
 		}
 
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>75c3d77fedf218ae0d2f174863904e47</Hash>
+    <Hash>e1bd942b796c9c17ac1ee899b82a263f</Hash>
 </Codenesium>*/

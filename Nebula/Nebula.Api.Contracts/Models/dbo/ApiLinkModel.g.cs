@@ -28,13 +28,13 @@ namespace NebulaNS.Api.Contracts
 			this.ChainId = chainId.ToInt();
 			this.DateCompleted = dateCompleted.ToNullableDateTime();
 			this.DateStarted = dateStarted.ToNullableDateTime();
-			this.DynamicParameters = dynamicParameters.ToString();
+			this.DynamicParameters = dynamicParameters;
 			this.ExternalId = externalId.ToGuid();
 			this.LinkStatusId = linkStatusId.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Order = order.ToInt();
-			this.Response = response.ToString();
-			this.StaticParameters = staticParameters.ToString();
+			this.Response = response;
+			this.StaticParameters = staticParameters;
 			this.TimeoutInSeconds = timeoutInSeconds.ToInt();
 		}
 
@@ -227,5 +227,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>df826bcd5e8e1a6fa8d1f4bcf36e1099</Hash>
+    <Hash>d3de89527b300dba637a36b0b87942b0</Hash>
 </Codenesium>*/

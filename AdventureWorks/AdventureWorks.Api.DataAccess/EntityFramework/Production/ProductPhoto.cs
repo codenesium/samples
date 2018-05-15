@@ -20,11 +20,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			string thumbnailPhotoFileName)
 		{
 			this.LargePhoto = largePhoto;
-			this.LargePhotoFileName = largePhotoFileName.ToString();
+			this.LargePhotoFileName = largePhotoFileName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductPhotoID = productPhotoID.ToInt();
 			this.ThumbNailPhoto = thumbNailPhoto;
-			this.ThumbnailPhotoFileName = thumbnailPhotoFileName.ToString();
+			this.ThumbnailPhotoFileName = thumbnailPhotoFileName;
 		}
 
 		[Column("LargePhoto", TypeName="varbinary(-1)")]
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4817fc6e5b695244a4a082b75a105205</Hash>
+    <Hash>065a89371f8927a69523bcbd443f564b</Hash>
 </Codenesium>*/

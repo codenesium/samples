@@ -31,7 +31,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OnOrderQty = onOrderQty.ToNullableInt();
 			this.StandardPrice = standardPrice.ToDecimal();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.UnitMeasureCode = unitMeasureCode;
 		}
 
 		private int averageLeadTime;
@@ -194,5 +194,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>aaf1aa64a4d80162525b010e1e888427</Hash>
+    <Hash>5318f713f63b77915649df2c3210f882</Hash>
 </Codenesium>*/

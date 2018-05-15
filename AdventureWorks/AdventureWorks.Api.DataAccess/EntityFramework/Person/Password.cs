@@ -20,8 +20,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PasswordHash = passwordHash.ToString();
-			this.PasswordSalt = passwordSalt.ToString();
+			this.PasswordHash = passwordHash;
+			this.PasswordSalt = passwordSalt;
 			this.Rowguid = rowguid.ToGuid();
 		}
 
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4a7ed1b0f4b72bcf1c5de184f87e9b6b</Hash>
+    <Hash>25bd3bde40c4cf60f30a7c8e389ef867</Hash>
 </Codenesium>*/

@@ -27,16 +27,16 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			this.BucketId = bucketId.ToNullableInt();
 			this.DateCreated = dateCreated.ToDateTime();
-			this.Description = description.ToString();
+			this.Description = description;
 			this.Expiration = expiration.ToDateTime();
-			this.Extension = extension.ToString();
+			this.Extension = extension;
 			this.ExternalId = externalId.ToGuid();
 			this.FileSizeInBytes = fileSizeInBytes.ToDecimal();
 			this.FileTypeId = fileTypeId.ToInt();
 			this.Id = id.ToInt();
-			this.Location = location.ToString();
-			this.PrivateKey = privateKey.ToString();
-			this.PublicKey = publicKey.ToString();
+			this.Location = location;
+			this.PrivateKey = privateKey;
+			this.PublicKey = publicKey;
 		}
 
 		[Column("bucketId", TypeName="int")]
@@ -85,5 +85,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>459bcef5e744f889b888d66c5e65a274</Hash>
+    <Hash>ec35e393287bcc5d04ef0403e4c7de4f</Hash>
 </Codenesium>*/

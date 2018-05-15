@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.CatalogDescription = catalogDescription;
 			this.Instructions = instructions;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.ProductModelID = productModelID.ToInt();
 			this.Rowguid = rowguid.ToGuid();
 		}
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1c40e7124b5ba8ca78c02ce4aa7c2918</Hash>
+    <Hash>c798a4892ba874c5a6e699ed2833b401</Hash>
 </Codenesium>*/

@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.ContactTypeID = contactTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		public int ContactTypeID { get; set; }
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dc2e35f77ab2bd3de2824a106cf139aa</Hash>
+    <Hash>7faab03df28e08776f188b061dc37b73</Hash>
 </Codenesium>*/

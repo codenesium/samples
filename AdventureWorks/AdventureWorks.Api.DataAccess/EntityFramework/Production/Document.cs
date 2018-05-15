@@ -30,17 +30,17 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ChangeNumber = changeNumber.ToInt();
 			this.Document1 = document1;
 			this.DocumentLevel = documentLevel;
-			this.DocumentNode = documentNode;
-			this.DocumentSummary = documentSummary.ToString();
-			this.FileExtension = fileExtension.ToString();
-			this.FileName = fileName.ToString();
+			this.DocumentNode = documentNode.ToGuid();
+			this.DocumentSummary = documentSummary;
+			this.FileExtension = fileExtension;
+			this.FileName = fileName;
 			this.FolderFlag = folderFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Owner = owner.ToInt();
-			this.Revision = revision.ToString();
+			this.Revision = revision;
 			this.Rowguid = rowguid.ToGuid();
 			this.Status = status.ToInt();
-			this.Title = title.ToString();
+			this.Title = title;
 		}
 
 		[Column("ChangeNumber", TypeName="int")]
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dafba5ba255e87733be08346251ddabf</Hash>
+    <Hash>ca2cd44481d7b3314d72c04a1c5202e9</Hash>
 </Codenesium>*/

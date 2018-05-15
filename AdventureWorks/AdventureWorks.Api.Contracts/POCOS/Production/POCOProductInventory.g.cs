@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ProductID = productID.ToInt();
 			this.Quantity = quantity;
 			this.Rowguid = rowguid.ToGuid();
-			this.Shelf = shelf.ToString();
+			this.Shelf = shelf;
 		}
 
 		public int Bin { get; set; }
@@ -105,5 +105,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3f9ce1329d6230a1e2d38548b9a64f14</Hash>
+    <Hash>f7eeab4c28dc84153f53f8a2ecdfe6a7</Hash>
 </Codenesium>*/

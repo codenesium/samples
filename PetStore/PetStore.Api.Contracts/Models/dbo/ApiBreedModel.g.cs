@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Contracts
 		public ApiBreedModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ffcca41f8a5bbfe83b3402e2083a670f</Hash>
+    <Hash>31a8994d3950264068adb04322f86082</Hash>
 </Codenesium>*/

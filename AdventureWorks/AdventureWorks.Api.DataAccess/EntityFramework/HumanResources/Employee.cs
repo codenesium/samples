@@ -32,15 +32,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.BirthDate = birthDate.ToDateTime();
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.CurrentFlag = currentFlag.ToBoolean();
-			this.Gender = gender.ToString();
+			this.Gender = gender;
 			this.HireDate = hireDate.ToDateTime();
-			this.JobTitle = jobTitle.ToString();
-			this.LoginID = loginID.ToString();
-			this.MaritalStatus = maritalStatus.ToString();
+			this.JobTitle = jobTitle;
+			this.LoginID = loginID;
+			this.MaritalStatus = maritalStatus;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.NationalIDNumber = nationalIDNumber.ToString();
+			this.NationalIDNumber = nationalIDNumber;
 			this.OrganizationLevel = organizationLevel;
-			this.OrganizationNode = organizationNode;
+			this.OrganizationNode = organizationNode.ToNullableGuid();
 			this.Rowguid = rowguid.ToGuid();
 			this.SalariedFlag = salariedFlag.ToBoolean();
 			this.SickLeaveHours = sickLeaveHours;
@@ -99,5 +99,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b1c05517a238ee6a45b283fe0fe28790</Hash>
+    <Hash>c5a4739d51387e8a4897e31c0a9247c6</Hash>
 </Codenesium>*/

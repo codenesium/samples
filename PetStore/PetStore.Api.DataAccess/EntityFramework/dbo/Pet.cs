@@ -22,7 +22,7 @@ namespace PetStoreNS.Api.DataAccess
 		{
 			this.AcquiredDate = acquiredDate.ToDateTime();
 			this.BreedId = breedId.ToInt();
-			this.Description = description.ToString();
+			this.Description = description;
 			this.Id = id.ToInt();
 			this.PenId = penId.ToInt();
 			this.Price = price.ToDecimal();
@@ -63,5 +63,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b4d6559f1862113730c607eb56d1537b</Hash>
+    <Hash>838ea6b2d6be2bda49d0a82b20109142</Hash>
 </Codenesium>*/

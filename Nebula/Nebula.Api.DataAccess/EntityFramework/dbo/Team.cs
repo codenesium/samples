@@ -17,7 +17,7 @@ namespace NebulaNS.Api.DataAccess
 			int organizationId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.OrganizationId = organizationId.ToInt();
 		}
 
@@ -37,5 +37,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bf13c75e14f7a3d2fc03a4a1ca5a8306</Hash>
+    <Hash>000680b2234bf447dc0f61de2fad9a9c</Hash>
 </Codenesium>*/

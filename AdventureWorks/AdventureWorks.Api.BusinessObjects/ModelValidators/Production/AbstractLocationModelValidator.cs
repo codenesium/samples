@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public ILocationRepository LocationRepository { get; set; }
 		public virtual void AvailabilityRules()
 		{
 			this.RuleFor(x => x.Availability).NotNull();
@@ -38,11 +39,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
+		}
+
+		private bool BeUniqueGetName(ApiLocationModel model)
+		{
+			return this.LocationRepository.GetName(model.Name) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>27c4caee1949be2799425bbfd9ff8e15</Hash>
+    <Hash>7ac199e52452b299f5ad9deeb48c4474</Hash>
 </Codenesium>*/

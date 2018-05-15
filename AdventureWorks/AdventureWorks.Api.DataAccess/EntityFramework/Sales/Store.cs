@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.Demographics = demographics;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 			this.SalesPersonID = salesPersonID.ToNullableInt();
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8c4180130cb8266981cae21c90523ad6</Hash>
+    <Hash>00859733d3557c53bab8365def127ab6</Hash>
 </Codenesium>*/

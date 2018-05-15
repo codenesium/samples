@@ -21,12 +21,12 @@ namespace PetStoreNS.Api.DataAccess
 			string phone)
 		{
 			this.Amount = amount.ToDecimal();
-			this.FirstName = firstName.ToString();
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
-			this.LastName = lastName.ToString();
+			this.LastName = lastName;
 			this.PaymentTypeId = paymentTypeId.ToInt();
 			this.PetId = petId.ToInt();
-			this.Phone = phone.ToString();
+			this.Phone = phone;
 		}
 
 		[Column("amount", TypeName="money")]
@@ -60,5 +60,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>55361ec44cd6b0d3530ee07af51a096f</Hash>
+    <Hash>ffc76342d1c0fa8b150196f16b222af7</Hash>
 </Codenesium>*/

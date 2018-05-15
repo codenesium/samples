@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Contracts
 			int pipelineStepId,
 			bool requirementMet)
 		{
-			this.Details = details.ToString();
+			this.Details = details;
 			this.Id = id.ToInt();
 			this.RequirementMet = requirementMet.ToBoolean();
 
@@ -71,5 +71,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7fd0ae5547d04fbe7e17be8a0f37e37d</Hash>
+    <Hash>c1309bcb4b63381221dabae34512f68f</Hash>
 </Codenesium>*/

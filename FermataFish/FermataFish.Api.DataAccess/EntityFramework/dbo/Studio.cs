@@ -21,14 +21,14 @@ namespace FermataFishNS.Api.DataAccess
 			string website,
 			string zip)
 		{
-			this.Address1 = address1.ToString();
-			this.Address2 = address2.ToString();
-			this.City = city.ToString();
+			this.Address1 = address1;
+			this.Address2 = address2;
+			this.City = city;
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.StateId = stateId.ToInt();
-			this.Website = website.ToString();
-			this.Zip = zip.ToString();
+			this.Website = website;
+			this.Zip = zip;
 		}
 
 		[Column("address1", TypeName="varchar(128)")]
@@ -62,5 +62,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>80820ef8f23a6115262749f077f1d17a</Hash>
+    <Hash>cc5bbcd98407d5d314b5e0e4aacb9faa</Hash>
 </Codenesium>*/

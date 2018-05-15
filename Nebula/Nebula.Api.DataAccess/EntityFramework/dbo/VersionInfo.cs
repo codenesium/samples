@@ -17,7 +17,7 @@ namespace NebulaNS.Api.DataAccess
 			string description)
 		{
 			this.AppliedOn = appliedOn.ToNullableDateTime();
-			this.Description = description.ToString();
+			this.Description = description;
 			this.Version = version.ToLong();
 		}
 
@@ -34,5 +34,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7b082bf65bb9434bf3e2e3b52a457e59</Hash>
+    <Hash>589ad272ce571d57bb15e68248ce991a</Hash>
 </Codenesium>*/

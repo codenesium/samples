@@ -21,7 +21,7 @@ namespace NebulaNS.Api.DataAccess
 			this.ChainStatusId = chainStatusId.ToInt();
 			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.TeamId = teamId.ToInt();
 		}
 
@@ -50,5 +50,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>042d4049a06ffe35efde1dc19ca1d8e3</Hash>
+    <Hash>fd251899fbb3e8e20c4e4f81bdedde38</Hash>
 </Codenesium>*/

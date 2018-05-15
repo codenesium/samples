@@ -20,14 +20,21 @@ namespace NebulaNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IChainStatusRepository ChainStatusRepository { get; set; }
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+
+		private bool BeUniqueName(ApiChainStatusModel model)
+		{
+			return this.ChainStatusRepository.Name(model.Name) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ebc413d961164b2c48ee4950dd70f819</Hash>
+    <Hash>f79b72d2125f683b581b7180381030ef</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Contracts
 		public ApiCountryModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cf50405fa79f36e9c284b421d0d2132f</Hash>
+    <Hash>f7b77c8737a6b67fc48bc4baa3995040</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Contracts
 		public ApiStateModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>374fb1e0e1da1a7d5287905588868792</Hash>
+    <Hash>01fd565db346804ded9f194d27918c6f</Hash>
 </Codenesium>*/

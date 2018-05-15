@@ -20,12 +20,12 @@ namespace AdventureWorksNS.Api.Contracts
 			string xmlEvent)
 		{
 			this.DatabaseLogID = databaseLogID.ToInt();
-			this.DatabaseUser = databaseUser.ToString();
-			this.@Event = @event.ToString();
-			this.@Object = @object.ToString();
+			this.DatabaseUser = databaseUser;
+			this.@Event = @event;
+			this.@Object = @object;
 			this.PostTime = postTime.ToDateTime();
-			this.Schema = schema.ToString();
-			this.TSQL = tSQL.ToString();
+			this.Schema = schema;
+			this.TSQL = tSQL;
 			this.XmlEvent = xmlEvent;
 		}
 
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>900bc53fa9feb8ff8e19d8a7f0df11f1</Hash>
+    <Hash>cba8ba8587f8aa26603ed57e2ceb39f1</Hash>
 </Codenesium>*/

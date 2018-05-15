@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PhoneNumber = phoneNumber.ToString();
+			this.PhoneNumber = phoneNumber;
 			this.PhoneNumberTypeID = phoneNumberTypeID.ToInt();
 		}
 
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54aeece0b942d0f300091760da579fa7</Hash>
+    <Hash>b8faf7a9d170006f6618154e30774dec</Hash>
 </Codenesium>*/

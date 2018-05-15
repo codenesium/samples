@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			Guid rowguid)
 		{
-			this.EmailAddress1 = emailAddress1.ToString();
+			this.EmailAddress1 = emailAddress1;
 			this.EmailAddressID = emailAddressID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Rowguid = rowguid.ToGuid();
@@ -88,5 +88,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>acc1832d3233bf32c046cd4153ce7391</Hash>
+    <Hash>d3d468299e8eaa12c41854631c1ba4ba</Hash>
 </Codenesium>*/

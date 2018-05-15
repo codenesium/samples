@@ -24,8 +24,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime startDate,
 			string type)
 		{
-			this.Category = category.ToString();
-			this.Description = description.ToString();
+			this.Category = category;
+			this.Description = description;
 			this.DiscountPct = discountPct.ToDecimal();
 			this.EndDate = endDate.ToDateTime();
 			this.MaxQty = maxQty.ToNullableInt();
@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Rowguid = rowguid.ToGuid();
 			this.SpecialOfferID = specialOfferID.ToInt();
 			this.StartDate = startDate.ToDateTime();
-			this.Type = type.ToString();
+			this.Type = type;
 		}
 
 		[Column("Category", TypeName="nvarchar(50)")]
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>18f407738f51fc7e8a69acfd676d5d1b</Hash>
+    <Hash>cc3c4b644de7d96e963cbf9699469b25</Hash>
 </Codenesium>*/

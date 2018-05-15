@@ -17,12 +17,12 @@ namespace PetShippingNS.Api.Contracts
 			string notes,
 			string phone)
 		{
-			this.Email = email.ToString();
-			this.FirstName = firstName.ToString();
+			this.Email = email;
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
-			this.LastName = lastName.ToString();
-			this.Notes = notes.ToString();
-			this.Phone = phone.ToString();
+			this.LastName = lastName;
+			this.Notes = notes;
+			this.Phone = phone;
 		}
 
 		public string Email { get; set; }
@@ -93,5 +93,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>564a29dafa8bc8cdab5655f3c07f6cca</Hash>
+    <Hash>ef85f74428db075272a5a32785474d1b</Hash>
 </Codenesium>*/

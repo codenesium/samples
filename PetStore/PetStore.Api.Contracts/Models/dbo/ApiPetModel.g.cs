@@ -20,7 +20,7 @@ namespace PetStoreNS.Api.Contracts
 		{
 			this.AcquiredDate = acquiredDate.ToDateTime();
 			this.BreedId = breedId.ToInt();
-			this.Description = description.ToString();
+			this.Description = description;
 			this.PenId = penId.ToInt();
 			this.Price = price.ToDecimal();
 			this.SpeciesId = speciesId.ToInt();
@@ -125,5 +125,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>77c18073a22dd58fa40aa0aa64597835</Hash>
+    <Hash>dc8d172e636eb4e296f21dfca0ecc817</Hash>
 </Codenesium>*/

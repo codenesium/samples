@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			decimal shipRate)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 			this.ShipBase = shipBase.ToDecimal();
 			this.ShipMethodID = shipMethodID.ToInt();
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c69bb8b801e7e3530382ff0d835a7422</Hash>
+    <Hash>59e2768a264de5e14eb12b4bf974f735</Hash>
 </Codenesium>*/

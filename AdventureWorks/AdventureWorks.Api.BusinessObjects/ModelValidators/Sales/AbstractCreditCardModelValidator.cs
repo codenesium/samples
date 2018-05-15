@@ -20,9 +20,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public ICreditCardRepository CreditCardRepository { get; set; }
 		public virtual void CardNumberRules()
 		{
 			this.RuleFor(x => x.CardNumber).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetCardNumber).When(x => x ?.CardNumber != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.CardNumber).Length(0, 25);
 		}
 
@@ -46,9 +48,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
 		}
+
+		private bool BeUniqueGetCardNumber(ApiCreditCardModel model)
+		{
+			return this.CreditCardRepository.GetCardNumber(model.CardNumber) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>255beeeb1e04a8519a25e95d3eec6005</Hash>
+    <Hash>8ed2e54187a446b84cda379146e90710</Hash>
 </Codenesium>*/

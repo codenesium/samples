@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public ISalesTaxRateRepository SalesTaxRateRepository { get; set; }
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
@@ -39,6 +40,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void StateProvinceIDRules()
 		{
 			this.RuleFor(x => x.StateProvinceID).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.StateProvinceID != null).WithMessage("Violates unique constraint");
 		}
 
 		public virtual void TaxRateRules()
@@ -49,10 +51,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void TaxTypeRules()
 		{
 			this.RuleFor(x => x.TaxType).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.TaxType != null).WithMessage("Violates unique constraint");
+		}
+
+		private bool BeUniqueGetStateProvinceIDTaxType(ApiSalesTaxRateModel model)
+		{
+			return this.SalesTaxRateRepository.GetStateProvinceIDTaxType(model.StateProvinceID,model.TaxType) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>39260c150dd55e012bb47f2960bbd33d</Hash>
+    <Hash>5227c3e5b4921af8db2c8200f0683eb8</Hash>
 </Codenesium>*/

@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			int taxType)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 			this.SalesTaxRateID = salesTaxRateID.ToInt();
 			this.StateProvinceID = stateProvinceID.ToInt();
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7289826f8aa15c265945db57cee9e599</Hash>
+    <Hash>5fd0d4daca2f1c998186bc89f96d4d1a</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace FermataFishNS.Api.Contracts
 			int studioId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 
 			this.StudioId = new ReferenceEntity<int>(studioId,
 			                                         nameof(ApiResponse.Studios));
@@ -59,5 +59,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>278746516578c84d521b4727f68c2664</Hash>
+    <Hash>c62a0fb054e3693d56f4185111d9cb4d</Hash>
 </Codenesium>*/

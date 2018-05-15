@@ -29,15 +29,15 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.BirthDate = birthDate.ToDateTime();
 			this.CurrentFlag = currentFlag.ToBoolean();
-			this.Gender = gender.ToString();
+			this.Gender = gender;
 			this.HireDate = hireDate.ToDateTime();
-			this.JobTitle = jobTitle.ToString();
-			this.LoginID = loginID.ToString();
-			this.MaritalStatus = maritalStatus.ToString();
+			this.JobTitle = jobTitle;
+			this.LoginID = loginID;
+			this.MaritalStatus = maritalStatus;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.NationalIDNumber = nationalIDNumber.ToString();
+			this.NationalIDNumber = nationalIDNumber;
 			this.OrganizationLevel = organizationLevel;
-			this.OrganizationNode = organizationNode;
+			this.OrganizationNode = organizationNode.ToNullableGuid();
 			this.Rowguid = rowguid.ToGuid();
 			this.SalariedFlag = salariedFlag.ToBoolean();
 			this.SickLeaveHours = sickLeaveHours;
@@ -285,5 +285,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f11aa1dadd7dfb26c7a9b35acc1e1020</Hash>
+    <Hash>85c53caddc7983b06fdf1e44f29f769e</Hash>
 </Codenesium>*/

@@ -16,7 +16,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			Guid documentNode,
 			DateTime modifiedDate)
 		{
-			this.DocumentNode = documentNode;
+			this.DocumentNode = documentNode.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 		}
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f61d1fd6a149754dc0d1b9ed461a877c</Hash>
+    <Hash>d3f6634fe997975361662dff4796051a</Hash>
 </Codenesium>*/

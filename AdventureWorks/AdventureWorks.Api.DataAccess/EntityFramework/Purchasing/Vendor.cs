@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			bool preferredVendorStatus,
 			string purchasingWebServiceURL)
 		{
-			this.AccountNumber = accountNumber.ToString();
+			this.AccountNumber = accountNumber;
 			this.ActiveFlag = activeFlag.ToBoolean();
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.CreditRating = creditRating.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.PreferredVendorStatus = preferredVendorStatus.ToBoolean();
-			this.PurchasingWebServiceURL = purchasingWebServiceURL.ToString();
+			this.PurchasingWebServiceURL = purchasingWebServiceURL;
 		}
 
 		[Column("AccountNumber", TypeName="nvarchar(15)")]
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b8d3325258efee999f882df68dda76f7</Hash>
+    <Hash>ffc67a997a338c65e4a105113746123d</Hash>
 </Codenesium>*/

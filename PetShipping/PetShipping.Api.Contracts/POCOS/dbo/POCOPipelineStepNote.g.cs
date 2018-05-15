@@ -16,7 +16,7 @@ namespace PetShippingNS.Api.Contracts
 			int pipelineStepId)
 		{
 			this.Id = id.ToInt();
-			this.Note = note.ToString();
+			this.Note = note;
 
 			this.EmployeeId = new ReferenceEntity<int>(employeeId,
 			                                           nameof(ApiResponse.Employees));
@@ -72,5 +72,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>57677569cfc7d9020614305fb5d4d9b8</Hash>
+    <Hash>1e3da6a55c198540da293f2450d97817</Hash>
 </Codenesium>*/

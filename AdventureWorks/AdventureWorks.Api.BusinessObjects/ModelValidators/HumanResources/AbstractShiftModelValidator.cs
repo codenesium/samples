@@ -20,9 +20,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IShiftRepository ShiftRepository { get; set; }
 		public virtual void EndTimeRules()
 		{
 			this.RuleFor(x => x.EndTime).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetStartTimeEndTime).When(x => x ?.EndTime != null).WithMessage("Violates unique constraint");
 		}
 
 		public virtual void ModifiedDateRules()
@@ -33,16 +35,28 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void StartTimeRules()
 		{
 			this.RuleFor(x => x.StartTime).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetStartTimeEndTime).When(x => x ?.StartTime != null).WithMessage("Violates unique constraint");
+		}
+
+		private bool BeUniqueGetName(ApiShiftModel model)
+		{
+			return this.ShiftRepository.GetName(model.Name) != null;
+		}
+
+		private bool BeUniqueGetStartTimeEndTime(ApiShiftModel model)
+		{
+			return this.ShiftRepository.GetStartTimeEndTime(model.StartTime,model.EndTime) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbb622ed1c6f2bc54d3ba1bde3aea1ea</Hash>
+    <Hash>1acb1bcf9c5c46744ac80b6129c8a0bc</Hash>
 </Codenesium>*/

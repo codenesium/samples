@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Contracts
 			int stateProvinceID,
 			int territoryID)
 		{
-			this.CountryRegionCode = countryRegionCode.ToString();
+			this.CountryRegionCode = countryRegionCode;
 			this.IsOnlyStateProvinceFlag = isOnlyStateProvinceFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
-			this.StateProvinceCode = stateProvinceCode.ToString();
+			this.StateProvinceCode = stateProvinceCode;
 			this.StateProvinceID = stateProvinceID.ToInt();
 			this.TerritoryID = territoryID.ToInt();
 		}
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dfd459a706722824ee6ea9ff42bc57ef</Hash>
+    <Hash>5d58ffb30e588117c19db26327dbcfc5</Hash>
 </Codenesium>*/

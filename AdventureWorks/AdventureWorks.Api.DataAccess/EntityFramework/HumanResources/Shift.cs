@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			this.EndTime = endTime;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.ShiftID = shiftID.ToInt();
 			this.StartTime = startTime;
 		}
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f2c8eeef26efc417429b4596a0b01558</Hash>
+    <Hash>b9e4155c3ed89c06c3e9c751a3c85901</Hash>
 </Codenesium>*/

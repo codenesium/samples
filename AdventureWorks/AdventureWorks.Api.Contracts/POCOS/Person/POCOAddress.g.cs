@@ -17,17 +17,15 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			string postalCode,
 			Guid rowguid,
-			object spatialLocation,
 			int stateProvinceID)
 		{
 			this.AddressID = addressID.ToInt();
-			this.AddressLine1 = addressLine1.ToString();
-			this.AddressLine2 = addressLine2.ToString();
-			this.City = city.ToString();
+			this.AddressLine1 = addressLine1;
+			this.AddressLine2 = addressLine2;
+			this.City = city;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PostalCode = postalCode.ToString();
+			this.PostalCode = postalCode;
 			this.Rowguid = rowguid.ToGuid();
-			this.SpatialLocation = spatialLocation;
 			this.StateProvinceID = stateProvinceID.ToInt();
 		}
 
@@ -38,7 +36,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public DateTime ModifiedDate { get; set; }
 		public string PostalCode { get; set; }
 		public Guid Rowguid { get; set; }
-		public object SpatialLocation { get; set; }
 		public int StateProvinceID { get; set; }
 
 		[JsonIgnore]
@@ -98,14 +95,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpatialLocationValue { get; set; } = true;
-
-		public bool ShouldSerializeSpatialLocation()
-		{
-			return this.ShouldSerializeSpatialLocationValue;
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeStateProvinceIDValue { get; set; } = true;
 
 		public bool ShouldSerializeStateProvinceID()
@@ -122,12 +111,11 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ShouldSerializeModifiedDateValue = false;
 			this.ShouldSerializePostalCodeValue = false;
 			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeSpatialLocationValue = false;
 			this.ShouldSerializeStateProvinceIDValue = false;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>92915de0a072ec734809ba757aa9992c</Hash>
+    <Hash>935a113c8ec6a3995e55151c8fe9ffc2</Hash>
 </Codenesium>*/

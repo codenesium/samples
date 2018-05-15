@@ -21,11 +21,11 @@ namespace FermataFishNS.Api.DataAccess
 			int studioId)
 		{
 			this.Birthday = birthday.ToNullableDateTime();
-			this.Email = email.ToString();
-			this.FirstName = firstName.ToString();
+			this.Email = email;
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
-			this.LastName = lastName.ToString();
-			this.Phone = phone.ToString();
+			this.LastName = lastName;
+			this.Phone = phone;
 			this.StudioId = studioId.ToInt();
 		}
 
@@ -57,5 +57,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f7636b6f9b2a5d9d6eed56d53a4a9f2</Hash>
+    <Hash>67ef345e4ede5557ba095db9b197234f</Hash>
 </Codenesium>*/

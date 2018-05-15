@@ -19,8 +19,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			short expYear,
 			DateTime modifiedDate)
 		{
-			this.CardNumber = cardNumber.ToString();
-			this.CardType = cardType.ToString();
+			this.CardNumber = cardNumber;
+			this.CardType = cardType;
 			this.CreditCardID = creditCardID.ToInt();
 			this.ExpMonth = expMonth.ToInt();
 			this.ExpYear = expYear;
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0ad33804b41e752f3835ee840b9e7984</Hash>
+    <Hash>058a1a2f1587995de8efb373f2c0cb16</Hash>
 </Codenesium>*/

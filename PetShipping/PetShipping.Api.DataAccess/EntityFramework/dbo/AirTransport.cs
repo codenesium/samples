@@ -21,7 +21,7 @@ namespace PetShippingNS.Api.DataAccess
 			DateTime takeoffDate)
 		{
 			this.AirlineId = airlineId.ToInt();
-			this.FlightNumber = flightNumber.ToString();
+			this.FlightNumber = flightNumber;
 			this.HandlerId = handlerId.ToInt();
 			this.Id = id.ToInt();
 			this.LandDate = landDate.ToDateTime();
@@ -57,5 +57,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51f684bd106ba4f6537a938b32aed0eb</Hash>
+    <Hash>7254776399c115cce284169039738287</Hash>
 </Codenesium>*/

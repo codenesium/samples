@@ -36,30 +36,30 @@ namespace AdventureWorksNS.Api.Contracts
 			Nullable<decimal> weight,
 			string weightUnitMeasureCode)
 		{
-			this.@Class = @class.ToString();
-			this.Color = color.ToString();
+			this.@Class = @class;
+			this.Color = color;
 			this.DaysToManufacture = daysToManufacture.ToInt();
 			this.DiscontinuedDate = discontinuedDate.ToNullableDateTime();
 			this.FinishedGoodsFlag = finishedGoodsFlag.ToBoolean();
 			this.ListPrice = listPrice.ToDecimal();
 			this.MakeFlag = makeFlag.ToBoolean();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
-			this.ProductLine = productLine.ToString();
+			this.Name = name;
+			this.ProductLine = productLine;
 			this.ProductModelID = productModelID.ToNullableInt();
-			this.ProductNumber = productNumber.ToString();
+			this.ProductNumber = productNumber;
 			this.ProductSubcategoryID = productSubcategoryID.ToNullableInt();
 			this.ReorderPoint = reorderPoint;
 			this.Rowguid = rowguid.ToGuid();
 			this.SafetyStockLevel = safetyStockLevel;
 			this.SellEndDate = sellEndDate.ToNullableDateTime();
 			this.SellStartDate = sellStartDate.ToDateTime();
-			this.Size = size.ToString();
-			this.SizeUnitMeasureCode = sizeUnitMeasureCode.ToString();
+			this.Size = size;
+			this.SizeUnitMeasureCode = sizeUnitMeasureCode;
 			this.StandardCost = standardCost.ToDecimal();
-			this.Style = style.ToString();
+			this.Style = style;
 			this.Weight = weight.ToNullableDecimal();
-			this.WeightUnitMeasureCode = weightUnitMeasureCode.ToString();
+			this.WeightUnitMeasureCode = weightUnitMeasureCode;
 		}
 
 		private string @class;
@@ -437,5 +437,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bb7916a0c3017603aaaf2b2d1b023378</Hash>
+    <Hash>60a2fcf81046ecfc24d876d6fb58b355</Hash>
 </Codenesium>*/

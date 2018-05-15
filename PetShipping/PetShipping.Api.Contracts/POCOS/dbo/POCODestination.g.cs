@@ -16,7 +16,7 @@ namespace PetShippingNS.Api.Contracts
 			int order)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Order = order.ToInt();
 
 			this.CountryId = new ReferenceEntity<int>(countryId,
@@ -71,5 +71,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3fc5dcb4d468223467554f7bc8c43265</Hash>
+    <Hash>3c8146f63573247bdbdb140d380f3212</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace ESPIOTNS.Api.DataAccess
 			Guid publicId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.PublicId = publicId.ToGuid();
 		}
 
@@ -34,5 +34,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>53016bc9832c8b78bd51d2015bfd0639</Hash>
+    <Hash>cc068bb7901a71ea21b27b134446311c</Hash>
 </Codenesium>*/

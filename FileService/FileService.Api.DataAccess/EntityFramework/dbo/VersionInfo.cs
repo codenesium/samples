@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.DataAccess
 			string description)
 		{
 			this.AppliedOn = appliedOn.ToNullableDateTime();
-			this.Description = description.ToString();
+			this.Description = description;
 			this.Version = version.ToLong();
 		}
 
@@ -34,5 +34,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58f85690f269f8249897a983bc06e8da</Hash>
+    <Hash>332bf65210f50ef686389554a9ba7c27</Hash>
 </Codenesium>*/

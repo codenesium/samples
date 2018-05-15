@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.Contracts
 			long version)
 		{
 			this.AppliedOn = appliedOn.ToNullableDateTime();
-			this.Description = description.ToString();
+			this.Description = description;
 			this.Version = version.ToLong();
 		}
 
@@ -57,5 +57,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2021d19c72dc73a29c88a5b2379ec1bb</Hash>
+    <Hash>245f237ef03269ef333c48cec387b66c</Hash>
 </Codenesium>*/

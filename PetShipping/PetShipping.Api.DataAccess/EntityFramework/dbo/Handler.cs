@@ -20,11 +20,11 @@ namespace PetShippingNS.Api.DataAccess
 			string phone)
 		{
 			this.CountryId = countryId.ToInt();
-			this.Email = email.ToString();
-			this.FirstName = firstName.ToString();
+			this.Email = email;
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
-			this.LastName = lastName.ToString();
-			this.Phone = phone.ToString();
+			this.LastName = lastName;
+			this.Phone = phone;
 		}
 
 		[Column("countryId", TypeName="int")]
@@ -49,5 +49,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9642414ab249b6388274bb6031373465</Hash>
+    <Hash>2a4e6addaa1b3137e739c9e1e4e7d43f</Hash>
 </Codenesium>*/

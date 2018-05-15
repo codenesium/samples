@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
 			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
 			this.StartDate = startDate.ToDateTime();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.UnitMeasureCode = unitMeasureCode;
 		}
 
 		public int BillOfMaterialsID { get; set; }
@@ -129,5 +129,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>16517107fbba8a424f7e924705846649</Hash>
+    <Hash>749b8be98b40826cd3cf2704c54b9506</Hash>
 </Codenesium>*/

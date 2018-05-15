@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 			this.Quantity = quantity.ToInt();
-			this.ShoppingCartID = shoppingCartID.ToString();
+			this.ShoppingCartID = shoppingCartID;
 		}
 
 		private DateTime dateCreated;
@@ -107,5 +107,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>aaf8c117ed3035dbcd0cf7ad8fc23dc3</Hash>
+    <Hash>53c7357cea4422c527afdcaa59e3a8e3</Hash>
 </Codenesium>*/

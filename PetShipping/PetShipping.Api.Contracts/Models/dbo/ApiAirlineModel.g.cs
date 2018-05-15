@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Contracts
 		public ApiAirlineModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ee69ec2ba0c580a1dacc24ecd864b79e</Hash>
+    <Hash>f8aa74e4f11480c8eda22ed05a333aba</Hash>
 </Codenesium>*/

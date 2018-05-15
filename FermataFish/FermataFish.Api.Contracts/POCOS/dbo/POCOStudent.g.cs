@@ -23,13 +23,13 @@ namespace FermataFishNS.Api.Contracts
 			int studioId)
 		{
 			this.Birthday = birthday.ToDateTime();
-			this.Email = email.ToString();
+			this.Email = email;
 			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
-			this.FirstName = firstName.ToString();
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
 			this.IsAdult = isAdult.ToBoolean();
-			this.LastName = lastName.ToString();
-			this.Phone = phone.ToString();
+			this.LastName = lastName;
+			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled.ToBoolean();
 
 			this.FamilyId = new ReferenceEntity<int>(familyId,
@@ -156,5 +156,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bb48596e1cccdb367a185f6bd8314b5b</Hash>
+    <Hash>d83e55d650f1b025fc958fc997bcfb28</Hash>
 </Codenesium>*/

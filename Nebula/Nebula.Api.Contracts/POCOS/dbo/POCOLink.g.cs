@@ -26,13 +26,13 @@ namespace NebulaNS.Api.Contracts
 		{
 			this.DateCompleted = dateCompleted.ToNullableDateTime();
 			this.DateStarted = dateStarted.ToNullableDateTime();
-			this.DynamicParameters = dynamicParameters.ToString();
+			this.DynamicParameters = dynamicParameters;
 			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Order = order.ToInt();
-			this.Response = response.ToString();
-			this.StaticParameters = staticParameters.ToString();
+			this.Response = response;
+			this.StaticParameters = staticParameters;
 			this.TimeoutInSeconds = timeoutInSeconds.ToInt();
 
 			this.AssignedMachineId = new ReferenceEntity<Nullable<int>>(assignedMachineId,
@@ -181,5 +181,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7291421546d47f2c2b4ff2b9406bcecb</Hash>
+    <Hash>ab680549f09ee256eae5e4b0c9a03679</Hash>
 </Codenesium>*/

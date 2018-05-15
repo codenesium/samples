@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.CostRate = costRate.ToDecimal();
 			this.LocationID = locationID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Column("Availability", TypeName="decimal")]
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5e01c29231b43226a738d30b76fbb0c9</Hash>
+    <Hash>c67d759235e8ce46879c4a32dc86b6a5</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Contracts
 		{
 			this.BreedId = breedId.ToInt();
 			this.ClientId = clientId.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Weight = weight.ToInt();
 		}
 
@@ -89,5 +89,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5990c1c5ed676c987129710445bbbce4</Hash>
+    <Hash>2ea730334c5a7ea5d5824bf66f42a27c</Hash>
 </Codenesium>*/

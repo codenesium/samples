@@ -22,7 +22,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.CatalogDescription = catalogDescription;
 			this.Instructions = instructions;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.ProductModelID = productModelID.ToInt();
 			this.Rowguid = rowguid.ToGuid();
 		}
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>182b109e30ec7318b7b3bd430babc811</Hash>
+    <Hash>107d27af33255b4cd33aeaa52e1d7142</Hash>
 </Codenesium>*/

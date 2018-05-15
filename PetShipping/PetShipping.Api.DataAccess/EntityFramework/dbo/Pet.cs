@@ -21,7 +21,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.BreedId = breedId.ToInt();
 			this.ClientId = clientId.ToInt();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Weight = weight.ToInt();
 		}
 
@@ -50,5 +50,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>98733b7380b63fa8b65fe7206d546bfb</Hash>
+    <Hash>01c0d57401a9485f9b25e0222b17d773</Hash>
 </Codenesium>*/

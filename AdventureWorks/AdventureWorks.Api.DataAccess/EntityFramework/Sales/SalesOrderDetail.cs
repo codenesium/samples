@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			decimal unitPrice,
 			decimal unitPriceDiscount)
 		{
-			this.CarrierTrackingNumber = carrierTrackingNumber.ToString();
+			this.CarrierTrackingNumber = carrierTrackingNumber;
 			this.LineTotal = lineTotal.ToDecimal();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.OrderQty = orderQty;
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3728bccf5ec23acc6eac12c043252924</Hash>
+    <Hash>510b6d19a7e6a25d890a39e2f93304c4</Hash>
 </Codenesium>*/

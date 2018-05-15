@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IProductRepository ProductRepository { get; set; }
 		public virtual void @ClassRules()
 		{
 			this.RuleFor(x => x.@Class).Length(0, 2);
@@ -61,6 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
@@ -75,6 +77,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ProductNumberRules()
 		{
 			this.RuleFor(x => x.ProductNumber).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetProductNumber).When(x => x ?.ProductNumber != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.ProductNumber).Length(0, 25);
 		}
 
@@ -131,9 +134,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3);
 		}
+
+		private bool BeUniqueGetName(ApiProductModel model)
+		{
+			return this.ProductRepository.GetName(model.Name) != null;
+		}
+
+		private bool BeUniqueGetProductNumber(ApiProductModel model)
+		{
+			return this.ProductRepository.GetProductNumber(model.ProductNumber) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>741e28eec9ce9c17d6d29ed728e31231</Hash>
+    <Hash>960725d2130017f95cfe3a4e5dd94830</Hash>
 </Codenesium>*/

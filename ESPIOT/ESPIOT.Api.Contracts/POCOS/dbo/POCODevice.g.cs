@@ -15,7 +15,7 @@ namespace ESPIOTNS.Api.Contracts
 			Guid publicId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.PublicId = publicId.ToGuid();
 		}
 
@@ -57,5 +57,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>83dc28e09920033270cf977d5e3736cf</Hash>
+    <Hash>486ee0f5ef702454c79a0a09e9a8544d</Hash>
 </Codenesium>*/

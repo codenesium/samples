@@ -24,13 +24,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			this.ErrorLine = errorLine.ToNullableInt();
 			this.ErrorLogID = errorLogID.ToInt();
-			this.ErrorMessage = errorMessage.ToString();
+			this.ErrorMessage = errorMessage;
 			this.ErrorNumber = errorNumber.ToInt();
-			this.ErrorProcedure = errorProcedure.ToString();
+			this.ErrorProcedure = errorProcedure;
 			this.ErrorSeverity = errorSeverity.ToNullableInt();
 			this.ErrorState = errorState.ToNullableInt();
 			this.ErrorTime = errorTime.ToDateTime();
-			this.UserName = userName.ToString();
+			this.UserName = userName;
 		}
 
 		[Column("ErrorLine", TypeName="int")]
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f09463978ceafc1b42431d04f8ffde2d</Hash>
+    <Hash>81c79a0b0266d34f10b5a30913eefd06</Hash>
 </Codenesium>*/

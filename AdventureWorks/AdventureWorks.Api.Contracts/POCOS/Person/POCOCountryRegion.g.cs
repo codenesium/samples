@@ -14,9 +14,9 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			string name)
 		{
-			this.CountryRegionCode = countryRegionCode.ToString();
+			this.CountryRegionCode = countryRegionCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		public string CountryRegionCode { get; set; }
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>722e85ca7e9be28245413e56fde693b0</Hash>
+    <Hash>52479312a51066279c738393781c0623</Hash>
 </Codenesium>*/

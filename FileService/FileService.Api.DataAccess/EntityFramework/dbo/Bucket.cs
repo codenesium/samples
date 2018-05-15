@@ -18,7 +18,7 @@ namespace FileServiceNS.Api.DataAccess
 		{
 			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Column("externalId", TypeName="uniqueidentifier")]
@@ -34,5 +34,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>794b74baf664e8c3baaac849e911a22a</Hash>
+    <Hash>708c03018947413166644e35e2445390</Hash>
 </Codenesium>*/

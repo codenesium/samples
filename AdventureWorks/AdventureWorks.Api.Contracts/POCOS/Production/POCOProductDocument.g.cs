@@ -14,7 +14,7 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			int productID)
 		{
-			this.DocumentNode = documentNode;
+			this.DocumentNode = documentNode.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 		}
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>de1a91ab43e32cd1de052d11487a403b</Hash>
+    <Hash>381798c8ca99dc636bf99c4f97ed6560</Hash>
 </Codenesium>*/

@@ -16,9 +16,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime modifiedDate,
 			string name)
 		{
-			this.CountryRegionCode = countryRegionCode.ToString();
+			this.CountryRegionCode = countryRegionCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb58db222d8ff7ffd22b0dab4b91abc9</Hash>
+    <Hash>8d80a21cc29c8da9b5e5344a020875b4</Hash>
 </Codenesium>*/

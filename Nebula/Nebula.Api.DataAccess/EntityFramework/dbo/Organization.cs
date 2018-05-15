@@ -16,7 +16,7 @@ namespace NebulaNS.Api.DataAccess
 			string name)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -29,5 +29,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a2fc655beb79de11e5a6f70c136332e</Hash>
+    <Hash>32831a88a70a03f3f80b60ae07f1c119</Hash>
 </Codenesium>*/

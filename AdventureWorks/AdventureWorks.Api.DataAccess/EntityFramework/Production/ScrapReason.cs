@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			string name)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.ScrapReasonID = scrapReasonID;
 		}
 
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d7b7b49e533df4ff940824c5282c1c8</Hash>
+    <Hash>1315727d1148364d6b2128b04f37d301</Hash>
 </Codenesium>*/

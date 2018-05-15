@@ -19,11 +19,11 @@ namespace PetStoreNS.Api.Contracts
 			string phone)
 		{
 			this.Amount = amount.ToDecimal();
-			this.FirstName = firstName.ToString();
-			this.LastName = lastName.ToString();
+			this.FirstName = firstName;
+			this.LastName = lastName;
 			this.PaymentTypeId = paymentTypeId.ToInt();
 			this.PetId = petId.ToInt();
-			this.Phone = phone.ToString();
+			this.Phone = phone;
 		}
 
 		private decimal amount;
@@ -125,5 +125,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>63576984e79cd9518804e70608fb8a04</Hash>
+    <Hash>9acf8aab44ef939e8cc16bca75d53547</Hash>
 </Codenesium>*/

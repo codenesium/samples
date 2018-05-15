@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
 			string name)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private DateTime modifiedDate;
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f8b6cbf8cdec5e0a025958d3797c7a8e</Hash>
+    <Hash>8c11b64b2004e633d6a625062929d908</Hash>
 </Codenesium>*/

@@ -17,16 +17,14 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			string postalCode,
 			Guid rowguid,
-			object spatialLocation,
 			int stateProvinceID)
 		{
-			this.AddressLine1 = addressLine1.ToString();
-			this.AddressLine2 = addressLine2.ToString();
-			this.City = city.ToString();
+			this.AddressLine1 = addressLine1;
+			this.AddressLine2 = addressLine2;
+			this.City = city;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PostalCode = postalCode.ToString();
+			this.PostalCode = postalCode;
 			this.Rowguid = rowguid.ToGuid();
-			this.SpatialLocation = spatialLocation;
 			this.StateProvinceID = stateProvinceID.ToInt();
 		}
 
@@ -125,21 +123,6 @@ namespace AdventureWorksNS.Api.Contracts
 			}
 		}
 
-		private object spatialLocation;
-
-		public object SpatialLocation
-		{
-			get
-			{
-				return this.spatialLocation.IsEmptyOrZeroOrNull() ? null : this.spatialLocation;
-			}
-
-			set
-			{
-				this.spatialLocation = value;
-			}
-		}
-
 		private int stateProvinceID;
 
 		[Required]
@@ -159,5 +142,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b86ef401875b8861d2fda58f30e50bf8</Hash>
+    <Hash>1402816a1ae29299a59eea6a6e751109</Hash>
 </Codenesium>*/

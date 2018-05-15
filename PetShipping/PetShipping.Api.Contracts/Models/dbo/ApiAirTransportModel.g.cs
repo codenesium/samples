@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Contracts
 			int pipelineStepId,
 			DateTime takeoffDate)
 		{
-			this.FlightNumber = flightNumber.ToString();
+			this.FlightNumber = flightNumber;
 			this.HandlerId = handlerId.ToInt();
 			this.Id = id.ToInt();
 			this.LandDate = landDate.ToDateTime();
@@ -125,5 +125,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1dca8d94050d33fff30f563866181cdd</Hash>
+    <Hash>1a592678c6f64017d470c2ab48955be9</Hash>
 </Codenesium>*/

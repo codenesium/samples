@@ -18,7 +18,7 @@ namespace NebulaNS.Api.Contracts
 		{
 			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 
 			this.ChainStatusId = new ReferenceEntity<int>(chainStatusId,
 			                                              nameof(ApiResponse.ChainStatus));
@@ -84,5 +84,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8114fca92e720dc2e83833201a7c3f1a</Hash>
+    <Hash>f5226e76e7bfc1054cd62069b8cfbb3b</Hash>
 </Codenesium>*/

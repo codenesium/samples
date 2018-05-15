@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			Guid rowguid)
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
-			this.EmailAddress1 = emailAddress1.ToString();
+			this.EmailAddress1 = emailAddress1;
 			this.EmailAddressID = emailAddressID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Rowguid = rowguid.ToGuid();
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e81c6f0abdca10af5aa976f43d80826d</Hash>
+    <Hash>0dc7a55793217721f57b6babc9aa2f18</Hash>
 </Codenesium>*/

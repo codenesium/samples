@@ -16,8 +16,8 @@ namespace ESPIOTNS.Api.Contracts
 			string @value)
 		{
 			this.DeviceId = deviceId.ToInt();
-			this.Name = name.ToString();
-			this.@Value = @value.ToString();
+			this.Name = name;
+			this.@Value = @value;
 		}
 
 		private int deviceId;
@@ -71,5 +71,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0fc26b3cd538794f9f1719b04c52c9bc</Hash>
+    <Hash>00da4148d90084eabf75b7e4e68eb0fe</Hash>
 </Codenesium>*/

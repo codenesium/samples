@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
 			this.TransactionDate = transactionDate.ToDateTime();
 			this.TransactionID = transactionID.ToInt();
-			this.TransactionType = transactionType.ToString();
+			this.TransactionType = transactionType;
 		}
 
 		[Column("ActualCost", TypeName="money")]
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3fe37a2e56afaea3b31c31539b16523d</Hash>
+    <Hash>8e3015fd71ab62eac950bc067d3b0cf3</Hash>
 </Codenesium>*/

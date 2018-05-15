@@ -16,7 +16,7 @@ namespace FileServiceNS.Api.DataAccess
 			string name)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -29,5 +29,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>772f523db0f690d578191070ea153aa4</Hash>
+    <Hash>c6294970f1f86ad35dd0cbeb639fb41b</Hash>
 </Codenesium>*/

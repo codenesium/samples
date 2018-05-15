@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IBillOfMaterialsRepository BillOfMaterialsRepository { get; set; }
 		public virtual void BOMLevelRules()
 		{
 			this.RuleFor(x => x.BOMLevel).NotNull();
@@ -28,6 +29,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ComponentIDRules()
 		{
 			this.RuleFor(x => x.ComponentID).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ComponentID != null).WithMessage("Violates unique constraint");
 		}
 
 		public virtual void EndDateRules()
@@ -44,11 +46,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		}
 
 		public virtual void ProductAssemblyIDRules()
-		{                       }
+		{
+			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ProductAssemblyID != null).WithMessage("Violates unique constraint");
+		}
 
 		public virtual void StartDateRules()
 		{
 			this.RuleFor(x => x.StartDate).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.StartDate != null).WithMessage("Violates unique constraint");
 		}
 
 		public virtual void UnitMeasureCodeRules()
@@ -56,9 +61,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.RuleFor(x => x.UnitMeasureCode).NotNull();
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
 		}
+
+		private bool BeUniqueGetProductAssemblyIDComponentIDStartDate(ApiBillOfMaterialsModel model)
+		{
+			return this.BillOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(model.ProductAssemblyID,model.ComponentID,model.StartDate) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7c5f23bce494802c0de77cdfd1d36f5</Hash>
+    <Hash>1a555992312d90f9c5264a16841cd775</Hash>
 </Codenesium>*/

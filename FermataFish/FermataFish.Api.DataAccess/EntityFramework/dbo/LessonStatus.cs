@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.DataAccess
 			int studioId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.StudioId = studioId.ToInt();
 		}
 
@@ -40,5 +40,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8912af9cbbbd6ba734d1824a3949cc25</Hash>
+    <Hash>e5f39617bdd6bcd975b56aa913afcbf3</Hash>
 </Codenesium>*/

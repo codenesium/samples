@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			this.AddressTypeID = addressTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 		}
 
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>066e95f885ebfc528259a25f3904e059</Hash>
+    <Hash>102119d36bca1e1794f0f30e95808e78</Hash>
 </Codenesium>*/

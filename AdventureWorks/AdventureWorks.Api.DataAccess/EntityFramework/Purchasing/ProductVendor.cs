@@ -34,7 +34,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.OnOrderQty = onOrderQty.ToNullableInt();
 			this.ProductID = productID.ToInt();
 			this.StandardPrice = standardPrice.ToDecimal();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.UnitMeasureCode = unitMeasureCode;
 		}
 
 		[Column("AverageLeadTime", TypeName="int")]
@@ -74,5 +74,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e543aea11ba817487754f761b570367b</Hash>
+    <Hash>32d3d9056fc3406ae760a8b322d6f56f</Hash>
 </Codenesium>*/

@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IEmployeeRepository EmployeeRepository { get; set; }
 		public virtual void BirthDateRules()
 		{
 			this.RuleFor(x => x.BirthDate).NotNull();
@@ -50,6 +51,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void LoginIDRules()
 		{
 			this.RuleFor(x => x.LoginID).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetLoginID).When(x => x ?.LoginID != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.LoginID).Length(0, 256);
 		}
 
@@ -67,6 +69,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NationalIDNumberRules()
 		{
 			this.RuleFor(x => x.NationalIDNumber).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetNationalIDNumber).When(x => x ?.NationalIDNumber != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.NationalIDNumber).Length(0, 15);
 		}
 
@@ -95,9 +98,19 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.VacationHours).NotNull();
 		}
+
+		private bool BeUniqueGetLoginID(ApiEmployeeModel model)
+		{
+			return this.EmployeeRepository.GetLoginID(model.LoginID) != null;
+		}
+
+		private bool BeUniqueGetNationalIDNumber(ApiEmployeeModel model)
+		{
+			return this.EmployeeRepository.GetNationalIDNumber(model.NationalIDNumber) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>678173234aec33d3103b7f878edae519</Hash>
+    <Hash>391cf10eb4273bea0f486b96901c24cf</Hash>
 </Codenesium>*/

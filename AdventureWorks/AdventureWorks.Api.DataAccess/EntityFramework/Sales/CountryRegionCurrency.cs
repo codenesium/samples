@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			string currencyCode,
 			DateTime modifiedDate)
 		{
-			this.CountryRegionCode = countryRegionCode.ToString();
-			this.CurrencyCode = currencyCode.ToString();
+			this.CountryRegionCode = countryRegionCode;
+			this.CurrencyCode = currencyCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 		}
 
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d118866c006837f112aa3527e4065d8d</Hash>
+    <Hash>e0fd87d7a5aaac0c5b5828117650cde1</Hash>
 </Codenesium>*/

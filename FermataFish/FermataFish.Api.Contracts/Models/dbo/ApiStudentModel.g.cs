@@ -23,13 +23,13 @@ namespace FermataFishNS.Api.Contracts
 			int studioId)
 		{
 			this.Birthday = birthday.ToDateTime();
-			this.Email = email.ToString();
+			this.Email = email;
 			this.EmailRemindersEnabled = emailRemindersEnabled.ToBoolean();
 			this.FamilyId = familyId.ToInt();
-			this.FirstName = firstName.ToString();
+			this.FirstName = firstName;
 			this.IsAdult = isAdult.ToBoolean();
-			this.LastName = lastName.ToString();
-			this.Phone = phone.ToString();
+			this.LastName = lastName;
+			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled.ToBoolean();
 			this.StudioId = studioId.ToInt();
 		}
@@ -197,5 +197,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3953cb4e436e1d83da50b4193bcbe8b</Hash>
+    <Hash>39cac6d43b41a4512e7a1fcec2817a26</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Contracts
 		public ApiPaymentTypeModel(
 			string name)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string name;
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>61a76a3cc0e335145c9aa809e9b67198</Hash>
+    <Hash>2efefe7cd41bfb7d57c5dcffca1b8ce5</Hash>
 </Codenesium>*/

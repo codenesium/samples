@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.DataAccess
 			int speciesId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.SpeciesId = speciesId.ToInt();
 		}
 
@@ -37,5 +37,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>206793c6ba3856578bb57b5f0cb23d08</Hash>
+    <Hash>fb2d29c97005dbb5c95f102d2c9bfe04</Hash>
 </Codenesium>*/

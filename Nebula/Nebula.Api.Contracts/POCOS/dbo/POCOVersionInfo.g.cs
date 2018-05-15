@@ -15,7 +15,7 @@ namespace NebulaNS.Api.Contracts
 			long version)
 		{
 			this.AppliedOn = appliedOn.ToNullableDateTime();
-			this.Description = description.ToString();
+			this.Description = description;
 			this.Version = version.ToLong();
 		}
 
@@ -57,5 +57,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f0f6a27c3ffb39b0707834807f627e9f</Hash>
+    <Hash>de87545d39adab7782bfa1c2bdeeeb31</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Contracts
 			int pipelineStepStatusId,
 			int shipperId)
 		{
-			this.Name = name.ToString();
+			this.Name = name;
 			this.PipelineStepStatusId = pipelineStepStatusId.ToInt();
 			this.ShipperId = shipperId.ToInt();
 		}
@@ -71,5 +71,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>047a5ad2e4e531267d98b57910c422b7</Hash>
+    <Hash>618cd7ec0cd0a87ce36ad97f83ee7d0c</Hash>
 </Codenesium>*/

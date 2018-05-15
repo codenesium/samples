@@ -19,12 +19,12 @@ namespace PetShippingNS.Api.DataAccess
 			string notes,
 			string phone)
 		{
-			this.Email = email.ToString();
-			this.FirstName = firstName.ToString();
+			this.Email = email;
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
-			this.LastName = lastName.ToString();
-			this.Notes = notes.ToString();
-			this.Phone = phone.ToString();
+			this.LastName = lastName;
+			this.Notes = notes;
+			this.Phone = phone;
 		}
 
 		[Column("email", TypeName="varchar(128)")]
@@ -49,5 +49,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>250fbd7196bb46cc056d239f62aed546</Hash>
+    <Hash>ed94930258554c5804b8bc646da65c61</Hash>
 </Codenesium>*/

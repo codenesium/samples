@@ -16,9 +16,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime modifiedDate,
 			string name)
 		{
-			this.CurrencyCode = currencyCode.ToString();
+			this.CurrencyCode = currencyCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>306f9fbe4553ba0a669ac7a3a1ecb9de</Hash>
+    <Hash>8b5f3afc674a1f0398193e04f18f043a</Hash>
 </Codenesium>*/

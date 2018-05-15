@@ -30,14 +30,14 @@ namespace NebulaNS.Api.DataAccess
 			this.ChainId = chainId.ToInt();
 			this.DateCompleted = dateCompleted.ToNullableDateTime();
 			this.DateStarted = dateStarted.ToNullableDateTime();
-			this.DynamicParameters = dynamicParameters.ToString();
+			this.DynamicParameters = dynamicParameters;
 			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
 			this.LinkStatusId = linkStatusId.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Order = order.ToInt();
-			this.Response = response.ToString();
-			this.StaticParameters = staticParameters.ToString();
+			this.Response = response;
+			this.StaticParameters = staticParameters;
 			this.TimeoutInSeconds = timeoutInSeconds.ToInt();
 		}
 
@@ -93,5 +93,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5beeee15cd5235163782e372c7019f95</Hash>
+    <Hash>306218b54d454b251d30e93a0f5a58f8</Hash>
 </Codenesium>*/

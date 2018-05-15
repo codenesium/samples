@@ -17,8 +17,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			string name)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.Name = name;
+			this.UnitMeasureCode = unitMeasureCode;
 		}
 
 		[Column("ModifiedDate", TypeName="datetime")]
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>37964b402ec6b73bac4916ba788080e4</Hash>
+    <Hash>157965c9f79be5f3c8176615ba25cca0</Hash>
 </Codenesium>*/

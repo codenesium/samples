@@ -19,10 +19,10 @@ namespace PetStoreNS.Api.Contracts
 			string phone)
 		{
 			this.Amount = amount.ToDecimal();
-			this.FirstName = firstName.ToString();
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
-			this.LastName = lastName.ToString();
-			this.Phone = phone.ToString();
+			this.LastName = lastName;
+			this.Phone = phone;
 
 			this.PaymentTypeId = new ReferenceEntity<int>(paymentTypeId,
 			                                              nameof(ApiResponse.PaymentTypes));
@@ -108,5 +108,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>493e4031ffbeba794436fdf9df3c0b25</Hash>
+    <Hash>78a34fbecb176bf2bb55344323268cee</Hash>
 </Codenesium>*/

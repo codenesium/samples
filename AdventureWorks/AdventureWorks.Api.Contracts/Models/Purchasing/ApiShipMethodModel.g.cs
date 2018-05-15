@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Contracts
 			decimal shipRate)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 			this.ShipBase = shipBase.ToDecimal();
 			this.ShipRate = shipRate.ToDecimal();
@@ -107,5 +107,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8f41f7fc3d70965d24254b1a5253d66e</Hash>
+    <Hash>248e4c1513017534eea470cd1ad7e40f</Hash>
 </Codenesium>*/

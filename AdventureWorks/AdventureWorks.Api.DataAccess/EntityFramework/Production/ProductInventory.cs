@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ProductID = productID.ToInt();
 			this.Quantity = quantity;
 			this.Rowguid = rowguid.ToGuid();
-			this.Shelf = shelf.ToString();
+			this.Shelf = shelf;
 		}
 
 		[Column("Bin", TypeName="tinyint")]
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7af701b342bb46a75928ebe114bc8703</Hash>
+    <Hash>cc1bf6b22a7937de5637550258ca5127</Hash>
 </Codenesium>*/

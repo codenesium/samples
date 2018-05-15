@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime modifiedDate,
 			DateTime versionDate)
 		{
-			this.Database_Version = database_Version.ToString();
+			this.Database_Version = database_Version;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.SystemInformationID = systemInformationID.ToInt();
 			this.VersionDate = versionDate.ToDateTime();
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ed329147fad3d34d34810f6717527e49</Hash>
+    <Hash>d3fe5376a9cdb0983be11ef0482414d2</Hash>
 </Codenesium>*/

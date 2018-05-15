@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
 			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
 			this.StartDate = startDate.ToDateTime();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.UnitMeasureCode = unitMeasureCode;
 		}
 
 		private short bOMLevel;
@@ -159,5 +159,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4ad4509fea85dfca35b43a0ea37469d3</Hash>
+    <Hash>3da2b4266f189b53da2f1d1d877d5cf5</Hash>
 </Codenesium>*/

@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
 			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
 			this.StartDate = startDate.ToDateTime();
-			this.UnitMeasureCode = unitMeasureCode.ToString();
+			this.UnitMeasureCode = unitMeasureCode;
 		}
 
 		[Key]
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>756adf8fc6ed5d1c553554f950f4888d</Hash>
+    <Hash>12e3008a488ab13092b827f54145e091</Hash>
 </Codenesium>*/

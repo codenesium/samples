@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			int productDescriptionID)
 		{
-			this.CultureID = cultureID.ToString();
+			this.CultureID = cultureID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductDescriptionID = productDescriptionID.ToInt();
 		}
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>58de4ec8bc7fbac9f902efb9944167ad</Hash>
+    <Hash>5ab41be3e27645badb798bfdcfcf425c</Hash>
 </Codenesium>*/

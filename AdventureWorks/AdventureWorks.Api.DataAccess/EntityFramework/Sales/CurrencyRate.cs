@@ -24,9 +24,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.CurrencyRateDate = currencyRateDate.ToDateTime();
 			this.CurrencyRateID = currencyRateID.ToInt();
 			this.EndOfDayRate = endOfDayRate.ToDecimal();
-			this.FromCurrencyCode = fromCurrencyCode.ToString();
+			this.FromCurrencyCode = fromCurrencyCode;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ToCurrencyCode = toCurrencyCode.ToString();
+			this.ToCurrencyCode = toCurrencyCode;
 		}
 
 		[Column("AverageRate", TypeName="money")]
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>709a0f8184472b62fdcc4a8a5d60f76b</Hash>
+    <Hash>81967c05baa36f7fcf6c533c20e88d94</Hash>
 </Codenesium>*/

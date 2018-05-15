@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.Contracts
 			int speciesId)
 		{
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 
 			this.SpeciesId = new ReferenceEntity<int>(speciesId,
 			                                          nameof(ApiResponse.Species));
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e2cf2cbcea8496af6fa6637a1f3a7140</Hash>
+    <Hash>881d2122891f1ee0c541a574a4638b8f</Hash>
 </Codenesium>*/

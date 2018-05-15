@@ -250,7 +250,6 @@ namespace AdventureWorksNS.Api.DataAccess
 				model.ModifiedDate,
 				model.PostalCode,
 				model.Rowguid,
-				model.SpatialLocation,
 				model.StateProvinceID);
 		}
 
@@ -262,7 +261,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				return null;
 			}
 
-			return new POCOAddress(efAddress.AddressID, efAddress.AddressLine1, efAddress.AddressLine2, efAddress.City, efAddress.ModifiedDate, efAddress.PostalCode, efAddress.Rowguid, efAddress.SpatialLocation, efAddress.StateProvinceID);
+			return new POCOAddress(efAddress.AddressID, efAddress.AddressLine1, efAddress.AddressLine2, efAddress.City, efAddress.ModifiedDate, efAddress.PostalCode, efAddress.Rowguid, efAddress.StateProvinceID);
 		}
 
 		public virtual void AddressTypeMapModelToEF(
@@ -1843,5 +1842,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>18181d79af448b9e446f3b034bbfb7fa</Hash>
+    <Hash>6e7c459f9344a1579b3e1053ce9c9bd0</Hash>
 </Codenesium>*/

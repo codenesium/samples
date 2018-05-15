@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Contracts
 			Guid rowguid)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.ProductCategoryID = productCategoryID.ToInt();
 			this.Rowguid = rowguid.ToGuid();
 		}
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6a56221929871449df420c3fd536e432</Hash>
+    <Hash>e40e521db785703cf33167a414eaa9cf</Hash>
 </Codenesium>*/

@@ -18,8 +18,8 @@ namespace AdventureWorksNS.Api.Contracts
 		{
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PasswordHash = passwordHash.ToString();
-			this.PasswordSalt = passwordSalt.ToString();
+			this.PasswordHash = passwordHash;
+			this.PasswordSalt = passwordSalt;
 			this.Rowguid = rowguid.ToGuid();
 		}
 
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>49a9bdadb7074e00739baf5370e9b1f4</Hash>
+    <Hash>810e3601acded0cc6d3705e807799327</Hash>
 </Codenesium>*/

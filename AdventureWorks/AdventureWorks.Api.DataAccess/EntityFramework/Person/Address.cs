@@ -19,17 +19,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime modifiedDate,
 			string postalCode,
 			Guid rowguid,
-			object spatialLocation,
 			int stateProvinceID)
 		{
 			this.AddressID = addressID.ToInt();
-			this.AddressLine1 = addressLine1.ToString();
-			this.AddressLine2 = addressLine2.ToString();
-			this.City = city.ToString();
+			this.AddressLine1 = addressLine1;
+			this.AddressLine2 = addressLine2;
+			this.City = city;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PostalCode = postalCode.ToString();
+			this.PostalCode = postalCode;
 			this.Rowguid = rowguid.ToGuid();
-			this.SpatialLocation = spatialLocation;
 			this.StateProvinceID = stateProvinceID.ToInt();
 		}
 
@@ -55,14 +53,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
-		[Column("SpatialLocation", TypeName="geography(-1)")]
-		public object SpatialLocation { get; set; }
-
 		[Column("StateProvinceID", TypeName="int")]
 		public int StateProvinceID { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f5fd91e1d77316eda8c0aa2d9f4818b</Hash>
+    <Hash>f5ba65e7c2719425c898f583925fca2f</Hash>
 </Codenesium>*/

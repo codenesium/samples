@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			Guid rowguid)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.ProductCategoryID = productCategoryID.ToInt();
 			this.Rowguid = rowguid.ToGuid();
 		}
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6875bbdde11f2254c80847746eeadaa2</Hash>
+    <Hash>f1fde478eebc10df8e984c8a003b331f</Hash>
 </Codenesium>*/

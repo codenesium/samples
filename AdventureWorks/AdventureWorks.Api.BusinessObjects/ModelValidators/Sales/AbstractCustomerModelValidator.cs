@@ -22,9 +22,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public IStoreRepository StoreRepository { get; set; }
 		public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
+		public ICustomerRepository CustomerRepository { get; set; }
 		public virtual void AccountNumberRules()
 		{
 			this.RuleFor(x => x.AccountNumber).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.AccountNumber).Length(0, 10);
 		}
 
@@ -60,9 +62,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			return this.SalesTerritoryRepository.Get(id.GetValueOrDefault()) != null;
 		}
+
+		private bool BeUniqueGetAccountNumber(ApiCustomerModel model)
+		{
+			return this.CustomerRepository.GetAccountNumber(model.AccountNumber) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>540640fee52a534d58c7ff3f56c911b3</Hash>
+    <Hash>45c8b05f15327412d51c157a034e024c</Hash>
 </Codenesium>*/

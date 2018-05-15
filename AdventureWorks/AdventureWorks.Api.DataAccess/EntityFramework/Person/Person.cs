@@ -30,15 +30,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.BusinessEntityID = businessEntityID.ToInt();
 			this.Demographics = demographics;
 			this.EmailPromotion = emailPromotion.ToInt();
-			this.FirstName = firstName.ToString();
-			this.LastName = lastName.ToString();
-			this.MiddleName = middleName.ToString();
+			this.FirstName = firstName;
+			this.LastName = lastName;
+			this.MiddleName = middleName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.NameStyle = nameStyle.ToBoolean();
-			this.PersonType = personType.ToString();
+			this.PersonType = personType;
 			this.Rowguid = rowguid.ToGuid();
-			this.Suffix = suffix.ToString();
-			this.Title = title.ToString();
+			this.Suffix = suffix;
+			this.Title = title;
 		}
 
 		[Column("AdditionalContactInfo", TypeName="xml(-1)")]
@@ -84,5 +84,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>000537fd9855feae8092d0b92eb02240</Hash>
+    <Hash>7322a74afd19958925ca4f62e952504a</Hash>
 </Codenesium>*/

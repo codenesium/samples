@@ -19,12 +19,12 @@ namespace NebulaNS.Api.DataAccess
 			Guid machineGuid,
 			string name)
 		{
-			this.Description = description.ToString();
+			this.Description = description;
 			this.Id = id.ToInt();
-			this.JwtKey = jwtKey.ToString();
-			this.LastIpAddress = lastIpAddress.ToString();
+			this.JwtKey = jwtKey;
+			this.LastIpAddress = lastIpAddress;
 			this.MachineGuid = machineGuid.ToGuid();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Column("description", TypeName="text(2147483647)")]
@@ -49,5 +49,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd3f10a02c2d830c54a7fb705bd9ab83</Hash>
+    <Hash>f1894240462c6b8e79443e38197d0480</Hash>
 </Codenesium>*/

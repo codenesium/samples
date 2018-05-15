@@ -18,10 +18,10 @@ namespace PetShippingNS.Api.Contracts
 			string phone)
 		{
 			this.CountryId = countryId.ToInt();
-			this.Email = email.ToString();
-			this.FirstName = firstName.ToString();
-			this.LastName = lastName.ToString();
-			this.Phone = phone.ToString();
+			this.Email = email;
+			this.FirstName = firstName;
+			this.LastName = lastName;
+			this.Phone = phone;
 		}
 
 		private int countryId;
@@ -107,5 +107,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>38d19f8f6ddeaade3622d0f090c3c057</Hash>
+    <Hash>1cb1429ff7f7f6734cae14aebae20ef7</Hash>
 </Codenesium>*/

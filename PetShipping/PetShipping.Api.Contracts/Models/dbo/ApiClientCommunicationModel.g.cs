@@ -19,7 +19,7 @@ namespace PetShippingNS.Api.Contracts
 			this.ClientId = clientId.ToInt();
 			this.DateCreated = dateCreated.ToDateTime();
 			this.EmployeeId = employeeId.ToInt();
-			this.Notes = notes.ToString();
+			this.Notes = notes;
 		}
 
 		private int clientId;
@@ -89,5 +89,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>da84fd075fffbc451e4013db44931566</Hash>
+    <Hash>2b68c09b2cb5ed7a64a2ff647c5e69a9</Hash>
 </Codenesium>*/

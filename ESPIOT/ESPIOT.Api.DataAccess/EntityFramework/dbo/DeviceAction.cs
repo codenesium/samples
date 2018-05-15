@@ -19,8 +19,8 @@ namespace ESPIOTNS.Api.DataAccess
 		{
 			this.DeviceId = deviceId.ToInt();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
-			this.@Value = @value.ToString();
+			this.Name = name;
+			this.@Value = @value;
 		}
 
 		[Column("deviceId", TypeName="int")]
@@ -42,5 +42,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d9b9370354bd39aab80de9e8437ae316</Hash>
+    <Hash>d9066ca7365116637c5f4ff3222e2356</Hash>
 </Codenesium>*/

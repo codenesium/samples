@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IShipMethodRepository ShipMethodRepository { get; set; }
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
@@ -28,6 +29,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
@@ -45,9 +47,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.ShipRate).NotNull();
 		}
+
+		private bool BeUniqueGetName(ApiShipMethodModel model)
+		{
+			return this.ShipMethodRepository.GetName(model.Name) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2e50614186ff25309f2699942b257a5</Hash>
+    <Hash>5ea6c6ded39033ad291e4c712f980e38</Hash>
 </Codenesium>*/

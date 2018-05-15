@@ -15,7 +15,7 @@ namespace NebulaNS.Api.Contracts
 			string description)
 		{
 			this.AppliedOn = appliedOn.ToNullableDateTime();
-			this.Description = description.ToString();
+			this.Description = description;
 		}
 
 		private Nullable<DateTime> appliedOn;
@@ -51,5 +51,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>56397bd049b28276a42f6f60af81191d</Hash>
+    <Hash>69ba92e902f4c8180e4569a6ed3efeb4</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace NebulaNS.Api.DataAccess
 			this.DateEntered = dateEntered.ToDateTime();
 			this.Id = id.ToInt();
 			this.LinkId = linkId.ToInt();
-			this.Log = log.ToString();
+			this.Log = log;
 		}
 
 		[Column("dateEntered", TypeName="datetime")]
@@ -42,5 +42,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c871ac8015c9c7dc61466f6abf0ff238</Hash>
+    <Hash>eaa95642419399a48bebfc0d47f68126</Hash>
 </Codenesium>*/

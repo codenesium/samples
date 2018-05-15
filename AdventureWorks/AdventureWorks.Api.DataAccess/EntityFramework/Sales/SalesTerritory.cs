@@ -25,10 +25,10 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			this.CostLastYear = costLastYear.ToDecimal();
 			this.CostYTD = costYTD.ToDecimal();
-			this.CountryRegionCode = countryRegionCode.ToString();
-			this.@Group = @group.ToString();
+			this.CountryRegionCode = countryRegionCode;
+			this.@Group = @group;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 			this.SalesLastYear = salesLastYear.ToDecimal();
 			this.SalesYTD = salesYTD.ToDecimal();
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f03f8a6e2114a7b1f0df72f63fb25b9</Hash>
+    <Hash>fd3fe4fa65930438f4371a255e018dfc</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.Contracts
 			Nullable<int> storeID,
 			Nullable<int> territoryID)
 		{
-			this.AccountNumber = accountNumber.ToString();
+			this.AccountNumber = accountNumber;
 			this.CustomerID = customerID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.PersonID = personID.ToNullableInt();
@@ -108,5 +108,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9f7c555207550efa0217a2bcb4ffbf0e</Hash>
+    <Hash>429f8897ae7213b19f332f63535cfcee</Hash>
 </Codenesium>*/

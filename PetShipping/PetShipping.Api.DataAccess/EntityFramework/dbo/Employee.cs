@@ -18,11 +18,11 @@ namespace PetShippingNS.Api.DataAccess
 			bool isShipper,
 			string lastName)
 		{
-			this.FirstName = firstName.ToString();
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
 			this.IsSalesPerson = isSalesPerson.ToBoolean();
 			this.IsShipper = isShipper.ToBoolean();
-			this.LastName = lastName.ToString();
+			this.LastName = lastName;
 		}
 
 		[Column("firstName", TypeName="varchar(128)")]
@@ -44,5 +44,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b0d706044092ce7f4379af421557a02c</Hash>
+    <Hash>487df6517a209786443eea8161857cd5</Hash>
 </Codenesium>*/

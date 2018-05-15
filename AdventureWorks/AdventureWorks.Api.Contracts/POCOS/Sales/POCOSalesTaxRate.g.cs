@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Contracts
 			int taxType)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 			this.Rowguid = rowguid.ToGuid();
 			this.SalesTaxRateID = salesTaxRateID.ToInt();
 			this.StateProvinceID = stateProvinceID.ToInt();
@@ -105,5 +105,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9fb2c53dbd05a3e20f9ffd59ba648730</Hash>
+    <Hash>b00caf68770e3bc2e00b10e308d91703</Hash>
 </Codenesium>*/

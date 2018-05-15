@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IContactTypeRepository ContactTypeRepository { get; set; }
 		public virtual void ModifiedDateRules()
 		{
 			this.RuleFor(x => x.ModifiedDate).NotNull();
@@ -28,11 +29,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
+		}
+
+		private bool BeUniqueGetName(ApiContactTypeModel model)
+		{
+			return this.ContactTypeRepository.GetName(model.Name) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b9320bb13a643cb80787f4c01820cb05</Hash>
+    <Hash>28a7ecf5e8edfd9bf0d6ae85d1a01bad</Hash>
 </Codenesium>*/

@@ -15,9 +15,9 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime modifiedDate,
 			string name)
 		{
-			this.GroupName = groupName.ToString();
+			this.GroupName = groupName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		private string groupName;
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>52874ada30dc5b6686edac2dcc7cfb38</Hash>
+    <Hash>47fc8ee2c2683aea32b30e098add2465</Hash>
 </Codenesium>*/

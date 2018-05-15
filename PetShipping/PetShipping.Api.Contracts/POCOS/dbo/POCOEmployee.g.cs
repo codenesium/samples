@@ -16,11 +16,11 @@ namespace PetShippingNS.Api.Contracts
 			bool isShipper,
 			string lastName)
 		{
-			this.FirstName = firstName.ToString();
+			this.FirstName = firstName;
 			this.Id = id.ToInt();
 			this.IsSalesPerson = isSalesPerson.ToBoolean();
 			this.IsShipper = isShipper.ToBoolean();
-			this.LastName = lastName.ToString();
+			this.LastName = lastName;
 		}
 
 		public string FirstName { get; set; }
@@ -81,5 +81,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8f631dedb1fb311e4ecf32d6e199c27c</Hash>
+    <Hash>edc670575edd877176adab92176e5fa0</Hash>
 </Codenesium>*/

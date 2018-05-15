@@ -16,7 +16,7 @@ namespace FileServiceNS.Api.Contracts
 		{
 			this.ExternalId = externalId.ToGuid();
 			this.Id = id.ToInt();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		public Guid ExternalId { get; set; }
@@ -57,5 +57,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ea1a2c1b97282b131674abbd66fffc8a</Hash>
+    <Hash>fb5cdd9c0788aeec991420c9a5019de0</Hash>
 </Codenesium>*/

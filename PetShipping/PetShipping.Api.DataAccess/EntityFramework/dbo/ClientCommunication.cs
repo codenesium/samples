@@ -22,7 +22,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.DateCreated = dateCreated.ToDateTime();
 			this.EmployeeId = employeeId.ToInt();
 			this.Id = id.ToInt();
-			this.Notes = notes.ToString();
+			this.Notes = notes;
 		}
 
 		[Column("clientId", TypeName="int")]
@@ -50,5 +50,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0d83ff923dcb37d7a88abf955bb542d6</Hash>
+    <Hash>18cc61a6a35529d05d28ff81dba73562</Hash>
 </Codenesium>*/

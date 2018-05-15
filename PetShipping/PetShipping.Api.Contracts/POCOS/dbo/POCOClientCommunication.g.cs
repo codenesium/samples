@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Contracts
 		{
 			this.DateCreated = dateCreated.ToDateTime();
 			this.Id = id.ToInt();
-			this.Notes = notes.ToString();
+			this.Notes = notes;
 
 			this.ClientId = new ReferenceEntity<int>(clientId,
 			                                         nameof(ApiResponse.Clients));
@@ -84,5 +84,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2d1f700db9f0f6dd17496ecd9e65f883</Hash>
+    <Hash>dcf579dfaf99c592ea1af80c30875961</Hash>
 </Codenesium>*/

@@ -20,6 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await base.ValidateAsync(model);
 		}
 
+		public IDepartmentRepository DepartmentRepository { get; set; }
 		public virtual void GroupNameRules()
 		{
 			this.RuleFor(x => x.GroupName).NotNull();
@@ -34,11 +35,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
 			this.RuleFor(x => x.Name).Length(0, 50);
+		}
+
+		private bool BeUniqueGetName(ApiDepartmentModel model)
+		{
+			return this.DepartmentRepository.GetName(model.Name) != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b97a88a38315548f9022ebb36045689b</Hash>
+    <Hash>ddf561a26900f51440c11d22407d4114</Hash>
 </Codenesium>*/

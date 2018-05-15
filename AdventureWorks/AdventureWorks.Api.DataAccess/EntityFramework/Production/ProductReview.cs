@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime reviewDate,
 			string reviewerName)
 		{
-			this.Comments = comments.ToString();
-			this.EmailAddress = emailAddress.ToString();
+			this.Comments = comments;
+			this.EmailAddress = emailAddress;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 			this.ProductReviewID = productReviewID.ToInt();
 			this.Rating = rating.ToInt();
 			this.ReviewDate = reviewDate.ToDateTime();
-			this.ReviewerName = reviewerName.ToString();
+			this.ReviewerName = reviewerName;
 		}
 
 		[Column("Comments", TypeName="nvarchar(3850)")]
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>805fae744744b88037ffee5f8f2e3aa7</Hash>
+    <Hash>ac445e6801b68a73801d7702815d18e1</Hash>
 </Codenesium>*/

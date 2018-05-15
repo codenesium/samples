@@ -18,8 +18,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			string reasonType)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
-			this.ReasonType = reasonType.ToString();
+			this.Name = name;
+			this.ReasonType = reasonType;
 			this.SalesReasonID = salesReasonID.ToInt();
 		}
 
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ecb539ea4429121dc7eeb712a97f8ce1</Hash>
+    <Hash>75184cce303acb7312dc800e3802e264</Hash>
 </Codenesium>*/

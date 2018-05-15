@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Contracts
 		{
 			this.DateEntered = dateEntered.ToDateTime();
 			this.Id = id.ToInt();
-			this.Log = log.ToString();
+			this.Log = log;
 
 			this.LinkId = new ReferenceEntity<int>(linkId,
 			                                       nameof(ApiResponse.Links));
@@ -71,5 +71,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2ed44fa7fcb1cbae1c47cd92aef707a0</Hash>
+    <Hash>2ea8604d03d40dc62c418c18e81fc0b4</Hash>
 </Codenesium>*/

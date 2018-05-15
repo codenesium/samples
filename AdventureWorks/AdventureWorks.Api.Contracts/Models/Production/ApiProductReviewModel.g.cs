@@ -19,13 +19,13 @@ namespace AdventureWorksNS.Api.Contracts
 			DateTime reviewDate,
 			string reviewerName)
 		{
-			this.Comments = comments.ToString();
-			this.EmailAddress = emailAddress.ToString();
+			this.Comments = comments;
+			this.EmailAddress = emailAddress;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 			this.Rating = rating.ToInt();
 			this.ReviewDate = reviewDate.ToDateTime();
-			this.ReviewerName = reviewerName.ToString();
+			this.ReviewerName = reviewerName;
 		}
 
 		private string comments;
@@ -142,5 +142,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c637b643207bb16a45d5959bc8de3b01</Hash>
+    <Hash>4422eeb8b085ba69d21c8d4b9d3b2817</Hash>
 </Codenesium>*/

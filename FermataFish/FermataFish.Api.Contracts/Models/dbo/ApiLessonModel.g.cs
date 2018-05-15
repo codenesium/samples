@@ -27,9 +27,9 @@ namespace FermataFishNS.Api.Contracts
 			this.LessonStatusId = lessonStatusId.ToInt();
 			this.ScheduledEndDate = scheduledEndDate.ToNullableDateTime();
 			this.ScheduledStartDate = scheduledStartDate.ToNullableDateTime();
-			this.StudentNotes = studentNotes.ToString();
+			this.StudentNotes = studentNotes;
 			this.StudioId = studioId.ToInt();
-			this.TeacherNotes = teacherNotes.ToString();
+			this.TeacherNotes = teacherNotes;
 		}
 
 		private Nullable<DateTime> actualEndDate;
@@ -172,5 +172,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2ba23b2e6560354a5cd5f2d0ea1b687d</Hash>
+    <Hash>65bc6d25ae3a3466449c2676923affd5</Hash>
 </Codenesium>*/

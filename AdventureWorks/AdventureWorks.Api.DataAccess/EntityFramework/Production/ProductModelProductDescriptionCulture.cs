@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime modifiedDate,
 			int productDescriptionID)
 		{
-			this.CultureID = cultureID.ToString();
+			this.CultureID = cultureID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductDescriptionID = productDescriptionID.ToInt();
 			this.ProductModelID = productModelID.ToInt();
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0c78b34812acb6d89b330e25401864c9</Hash>
+    <Hash>6b888dcc71b307c8f3ebea7b4a78730f</Hash>
 </Codenesium>*/

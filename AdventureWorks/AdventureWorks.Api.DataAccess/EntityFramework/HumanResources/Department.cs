@@ -18,9 +18,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			string name)
 		{
 			this.DepartmentID = departmentID;
-			this.GroupName = groupName.ToString();
+			this.GroupName = groupName;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8fcfe4dbc86322ce8a8e2a95538a5e2e</Hash>
+    <Hash>468d62ab0238a2b26eee59653a6d2940</Hash>
 </Codenesium>*/

@@ -22,12 +22,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			string xmlEvent)
 		{
 			this.DatabaseLogID = databaseLogID.ToInt();
-			this.DatabaseUser = databaseUser.ToString();
-			this.@Event = @event.ToString();
-			this.@Object = @object.ToString();
+			this.DatabaseUser = databaseUser;
+			this.@Event = @event;
+			this.@Object = @object;
 			this.PostTime = postTime.ToDateTime();
-			this.Schema = schema.ToString();
-			this.TSQL = tSQL.ToString();
+			this.Schema = schema;
+			this.TSQL = tSQL;
 			this.XmlEvent = xmlEvent;
 		}
 
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>98c6224249734f240d4a93bc1df153cd</Hash>
+    <Hash>43e62e54fa68b2df6625c7d764b0573d</Hash>
 </Codenesium>*/

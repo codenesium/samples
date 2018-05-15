@@ -16,9 +16,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			DateTime modifiedDate,
 			string name)
 		{
-			this.CultureID = cultureID.ToString();
+			this.CultureID = cultureID;
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>239f2a273dd0d313d66587e8839b5a4f</Hash>
+    <Hash>2eee8dd0ea7f9ce89f041256259aeaf1</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace PetShippingNS.Api.Contracts
 		{
 			this.Amount = amount.ToDecimal();
 			this.ClientId = clientId.ToInt();
-			this.Note = note.ToString();
+			this.Note = note;
 			this.PetId = petId.ToInt();
 			this.SaleDate = saleDate.ToDateTime();
 			this.SalesPersonId = salesPersonId.ToInt();
@@ -125,5 +125,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ab2a8b80adf7881d4ad011395fb4a570</Hash>
+    <Hash>289d62d697e6018cfd51bf3b44dd07fa</Hash>
 </Codenesium>*/

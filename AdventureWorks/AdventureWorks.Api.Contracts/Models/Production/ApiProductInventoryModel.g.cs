@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Quantity = quantity;
 			this.Rowguid = rowguid.ToGuid();
-			this.Shelf = shelf.ToString();
+			this.Shelf = shelf;
 		}
 
 		private int bin;
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d5c6eea4ca91980707ddeb083094913c</Hash>
+    <Hash>4514594d2f25785009725d9e621973a0</Hash>
 </Codenesium>*/

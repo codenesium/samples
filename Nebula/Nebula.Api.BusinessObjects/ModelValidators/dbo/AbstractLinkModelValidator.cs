@@ -23,6 +23,7 @@ namespace NebulaNS.Api.BusinessObjects
 		public IMachineRepository MachineRepository { get; set; }
 		public IChainRepository ChainRepository { get; set; }
 		public ILinkStatusRepository LinkStatusRepository { get; set; }
+		public ILinkRepository LinkRepository { get; set; }
 		public virtual void AssignedMachineIdRules()
 		{
 			this.RuleFor(x => x.AssignedMachineId).Must(this.BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
@@ -48,6 +49,7 @@ namespace NebulaNS.Api.BusinessObjects
 		public virtual void ExternalIdRules()
 		{
 			this.RuleFor(x => x.ExternalId).NotNull();
+			this.RuleFor(x => x).Must(this.BeUniqueExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint");
 		}
 
 		public virtual void LinkStatusIdRules()
@@ -96,9 +98,14 @@ namespace NebulaNS.Api.BusinessObjects
 		{
 			return this.LinkStatusRepository.Get(id) != null;
 		}
+
+		private bool BeUniqueExternalId(ApiLinkModel model)
+		{
+			return this.LinkRepository.ExternalId(model.ExternalId) != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>24368c9018ed20ca7aa7c4fab1020388</Hash>
+    <Hash>e742982a8ce5b2b403dfedc29a5b067b</Hash>
 </Codenesium>*/

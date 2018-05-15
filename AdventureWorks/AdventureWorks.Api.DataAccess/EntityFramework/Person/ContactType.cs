@@ -18,7 +18,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		{
 			this.ContactTypeID = contactTypeID.ToInt();
 			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name.ToString();
+			this.Name = name;
 		}
 
 		[Key]
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c21d31cd3f273e468dca1a1d6a85e8cc</Hash>
+    <Hash>7570588e42695152a45d60dd3a1ab7b5</Hash>
 </Codenesium>*/
