@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					phoneNumberTypeID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -137,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8c78b6a73837e9648823ab365abcc381</Hash>
+    <Hash>33cb8f6b28cb0ddd09f27c111e8ec18a</Hash>
 </Codenesium>*/

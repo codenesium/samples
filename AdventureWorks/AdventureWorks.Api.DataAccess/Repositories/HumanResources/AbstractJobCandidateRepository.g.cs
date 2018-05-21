@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					jobCandidateID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7b23bec2d21e8f5b57669f646f655017</Hash>
+    <Hash>6d6c95177e37a7159a747c63825a90a3</Hash>
 </Codenesium>*/

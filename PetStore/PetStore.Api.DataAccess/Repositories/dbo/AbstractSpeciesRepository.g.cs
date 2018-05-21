@@ -72,7 +72,8 @@ namespace PetStoreNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -137,5 +138,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f44a85a781d5a8fa25565364edb56c32</Hash>
+    <Hash>3c87059a02757c9e5354c6f69a0fd42f</Hash>
 </Codenesium>*/

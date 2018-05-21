@@ -72,7 +72,8 @@ namespace PetShippingNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -137,5 +138,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dfbfdcca0c37c8abfe91dfcc041e0056</Hash>
+    <Hash>478a4c06a4e53303df1369e92d5d4a33</Hash>
 </Codenesium>*/

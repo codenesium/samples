@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					currencyRateID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cf66a4dd2010704dc13b516891dc5159</Hash>
+    <Hash>8671a03846c047b82a2abe4cfdc96aa4</Hash>
 </Codenesium>*/

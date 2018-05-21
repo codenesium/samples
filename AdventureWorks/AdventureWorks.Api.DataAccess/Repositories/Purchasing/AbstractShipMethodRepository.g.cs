@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					shipMethodID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>516201033ec27856d667b7219482ab46</Hash>
+    <Hash>1c16f4fd2f142a81dfd388d574ba732f</Hash>
 </Codenesium>*/

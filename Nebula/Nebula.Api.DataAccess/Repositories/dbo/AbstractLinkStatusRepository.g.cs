@@ -72,7 +72,8 @@ namespace NebulaNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>13d02c0a53470ff208cd0d780a91b88a</Hash>
+    <Hash>ff316284b67a89160669bae799221a64</Hash>
 </Codenesium>*/

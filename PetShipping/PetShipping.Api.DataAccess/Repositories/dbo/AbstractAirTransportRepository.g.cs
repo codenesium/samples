@@ -72,7 +72,8 @@ namespace PetShippingNS.Api.DataAccess
 					airlineId,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -137,5 +138,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>34a99301bb98cec8f67b69ced36b5636</Hash>
+    <Hash>d3bd6b7c4126f150aeede1659997cece</Hash>
 </Codenesium>*/

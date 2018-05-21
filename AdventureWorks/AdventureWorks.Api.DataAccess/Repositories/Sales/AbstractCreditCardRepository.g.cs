@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					creditCardID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3997b0832d65573148bbcb9056b9cc7</Hash>
+    <Hash>614979a5a6cb08f75cdc4e364f1964b0</Hash>
 </Codenesium>*/

@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					salesTaxRateID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1116293dbc0bca8c9258fd44ca031c25</Hash>
+    <Hash>e5b2f02397465fcfafa29df2999e7079</Hash>
 </Codenesium>*/

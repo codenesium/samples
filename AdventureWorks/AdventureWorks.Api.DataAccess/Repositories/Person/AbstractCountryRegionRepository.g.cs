@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					countryRegionCode,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f1adedccd8f20bef12996042b08e7f53</Hash>
+    <Hash>55def2e401a7daa92eb40916fb2ac518</Hash>
 </Codenesium>*/

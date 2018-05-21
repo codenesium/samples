@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					territoryID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e44c67b0344a717015d36e486e745fce</Hash>
+    <Hash>9b456e05c94ccc3b8204d551de1085be</Hash>
 </Codenesium>*/

@@ -72,7 +72,8 @@ namespace ESPIOTNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -137,5 +138,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>616770da76dfb3e3eb62d454212ba61f</Hash>
+    <Hash>c7e9747d589844b0c9f50994a317817d</Hash>
 </Codenesium>*/

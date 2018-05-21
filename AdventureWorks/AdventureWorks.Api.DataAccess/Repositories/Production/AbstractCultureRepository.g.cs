@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					cultureID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>56b234e67b52bb4cb9636e06456c5eb2</Hash>
+    <Hash>8b446f255fa2b684bc89f6a62c403a5e</Hash>
 </Codenesium>*/

@@ -72,7 +72,8 @@ namespace FileServiceNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -150,5 +151,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>98f010c160670875e61463bc3c5a9874</Hash>
+    <Hash>d6a037dc4d5721915f27cc02c36e2743</Hash>
 </Codenesium>*/

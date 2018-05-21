@@ -72,7 +72,8 @@ namespace FermataFishNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -137,5 +138,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>13c5a096d23a106b7d003a795b7df8aa</Hash>
+    <Hash>bd769d89ca28686a5253e18f509d780a</Hash>
 </Codenesium>*/

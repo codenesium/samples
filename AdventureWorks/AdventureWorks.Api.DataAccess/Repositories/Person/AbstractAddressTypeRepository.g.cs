@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					addressTypeID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ee36a9b7e1c6883bb85b44edc11aa0d2</Hash>
+    <Hash>22a1935b90410ed564849aee59c4011b</Hash>
 </Codenesium>*/

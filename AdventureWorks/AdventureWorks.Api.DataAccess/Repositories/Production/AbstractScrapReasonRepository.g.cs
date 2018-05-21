@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					scrapReasonID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e6e4df5e2f94a0d312b385d95462d743</Hash>
+    <Hash>f4cd8e217df151bd7d45003d74067bc9</Hash>
 </Codenesium>*/

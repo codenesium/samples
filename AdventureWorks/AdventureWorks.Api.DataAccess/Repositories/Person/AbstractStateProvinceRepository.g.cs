@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					stateProvinceID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -150,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65b3187d313a77caebcbf39c95e341e3</Hash>
+    <Hash>bdb6fa3413cbf482c8b6aa4c0cb0af2a</Hash>
 </Codenesium>*/

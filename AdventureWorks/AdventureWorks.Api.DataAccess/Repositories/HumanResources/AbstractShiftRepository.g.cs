@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					shiftID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -150,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>83e53479bf2873b8adcbf7c3c0a3e1b4</Hash>
+    <Hash>164d25db3eb764b49d0e6d690bb0c402</Hash>
 </Codenesium>*/

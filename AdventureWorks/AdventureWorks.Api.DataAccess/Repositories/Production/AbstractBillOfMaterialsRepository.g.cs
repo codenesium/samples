@@ -72,7 +72,8 @@ namespace AdventureWorksNS.Api.DataAccess
 					billOfMaterialsID,
 					model,
 					record);
-				this.Context.SaveChangesAsync();
+
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
@@ -150,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d7b926e27a546c974af70d2908b1fd1</Hash>
+    <Hash>bed845694fca7767c8cc45caa42fd023</Hash>
 </Codenesium>*/
