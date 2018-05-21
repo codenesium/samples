@@ -24,17 +24,17 @@ namespace NebulaNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkStatusModel.Name));
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkStatusModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
-		private bool BeUniqueName(ApiLinkStatusModel model)
+		private bool BeUniqueGetName(ApiLinkStatusModel model)
 		{
-			return this.LinkStatusRepository.Name(model.Name) == null;
+			return this.LinkStatusRepository.GetName(model.Name) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0cbf272925920c50be395c2c4637871</Hash>
+    <Hash>68b8da4bbee979d9cd0dc55d73cc278e</Hash>
 </Codenesium>*/

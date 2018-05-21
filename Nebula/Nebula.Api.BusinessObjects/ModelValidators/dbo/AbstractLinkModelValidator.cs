@@ -49,7 +49,7 @@ namespace NebulaNS.Api.BusinessObjects
 		public virtual void ExternalIdRules()
 		{
 			this.RuleFor(x => x.ExternalId).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkModel.ExternalId));
+			this.RuleFor(x => x).Must(this.BeUniqueGetExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkModel.ExternalId));
 		}
 
 		public virtual void LinkStatusIdRules()
@@ -99,13 +99,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return this.LinkStatusRepository.Get(id) != null;
 		}
 
-		private bool BeUniqueExternalId(ApiLinkModel model)
+		private bool BeUniqueGetExternalId(ApiLinkModel model)
 		{
-			return this.LinkRepository.ExternalId(model.ExternalId) == null;
+			return this.LinkRepository.GetExternalId(model.ExternalId) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d63c43f3f3804e7ac3dc88dda66143c</Hash>
+    <Hash>022cff10d89cf596d739713a0be756dc</Hash>
 </Codenesium>*/

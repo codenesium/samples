@@ -80,17 +80,17 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOLink>> ChainId(int chainId)
+		public async Task<POCOLink> GetExternalId(Guid externalId)
 		{
-			return await this.linkRepository.ChainId(chainId);
+			return await this.linkRepository.GetExternalId(externalId);
 		}
-		public async Task<POCOLink> ExternalId(Guid externalId)
+		public async Task<List<POCOLink>> GetChainId(int chainId)
 		{
-			return await this.linkRepository.ExternalId(externalId);
+			return await this.linkRepository.GetChainId(chainId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>13419572c9dd9406457290b023887e9c</Hash>
+    <Hash>f52d5efae89fbe7872dddcece692d2ed</Hash>
 </Codenesium>*/

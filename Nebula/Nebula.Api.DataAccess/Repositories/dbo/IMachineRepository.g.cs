@@ -19,10 +19,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOMachine> MachineGuid(Guid machineGuid);
+		Task<POCOMachine> GetMachineGuid(Guid machineGuid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>36bd010f0aa95c7da62d28c83e40ad86</Hash>
+    <Hash>8e15e055ef67e7456af05b94c935fc0a</Hash>
 </Codenesium>*/

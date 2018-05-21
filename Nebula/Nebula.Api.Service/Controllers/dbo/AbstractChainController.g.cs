@@ -169,13 +169,13 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("externalId/{externalId}")]
+		[Route("getExternalId/{externalId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOChain), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> ExternalId(Guid externalId)
+		public async virtual Task<IActionResult> GetExternalId(Guid externalId)
 		{
-			POCOChain response = await this.chainManager.ExternalId(externalId);
+			POCOChain response = await this.chainManager.GetExternalId(externalId);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c6adfed14ef76a19cf9ae7ff7791548f</Hash>
+    <Hash>90b7c192d43677e49922bc149b0e1086</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<POCOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOChain> ExternalId(Guid externalId);
+		Task<POCOChain> GetExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>439aabe8db2c776b6b0aa965c79045dc</Hash>
+    <Hash>6a4d5559e4e7042aa1855d0cb248ef82</Hash>
 </Codenesium>*/

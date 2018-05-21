@@ -169,13 +169,13 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("machineGuid/{machineGuid}")]
+		[Route("getMachineGuid/{machineGuid}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOMachine), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> MachineGuid(Guid machineGuid)
+		public async virtual Task<IActionResult> GetMachineGuid(Guid machineGuid)
 		{
-			POCOMachine response = await this.machineManager.MachineGuid(machineGuid);
+			POCOMachine response = await this.machineManager.GetMachineGuid(machineGuid);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f9f838ea29c92535c65752178fa2fce2</Hash>
+    <Hash>d3e34b68f9c3b3b04650adac6bb2e6d4</Hash>
 </Codenesium>*/

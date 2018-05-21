@@ -42,7 +42,7 @@ namespace NebulaNS.Api.BusinessObjects
 		public virtual void MachineGuidRules()
 		{
 			this.RuleFor(x => x.MachineGuid).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueMachineGuid).When(x => x ?.MachineGuid != null).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineModel.MachineGuid));
+			this.RuleFor(x => x).Must(this.BeUniqueGetMachineGuid).When(x => x ?.MachineGuid != null).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineModel.MachineGuid));
 		}
 
 		public virtual void NameRules()
@@ -51,13 +51,13 @@ namespace NebulaNS.Api.BusinessObjects
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
-		private bool BeUniqueMachineGuid(ApiMachineModel model)
+		private bool BeUniqueGetMachineGuid(ApiMachineModel model)
 		{
-			return this.MachineRepository.MachineGuid(model.MachineGuid) == null;
+			return this.MachineRepository.GetMachineGuid(model.MachineGuid) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>48583a15b0d81cf8b99af88a380d350f</Hash>
+    <Hash>311166ef08718ae2cbd00a82c3bf8def</Hash>
 </Codenesium>*/

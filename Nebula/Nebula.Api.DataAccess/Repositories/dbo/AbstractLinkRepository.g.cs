@@ -93,17 +93,17 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOLink>> ChainId(int chainId)
-		{
-			var records = await this.SearchLinqPOCO(x => x.ChainId == chainId);
-
-			return records;
-		}
-		public async Task<POCOLink> ExternalId(Guid externalId)
+		public async Task<POCOLink> GetExternalId(Guid externalId)
 		{
 			var records = await this.SearchLinqPOCO(x => x.ExternalId == externalId);
 
 			return records.FirstOrDefault();
+		}
+		public async Task<List<POCOLink>> GetChainId(int chainId)
+		{
+			var records = await this.SearchLinqPOCO(x => x.ChainId == chainId);
+
+			return records;
 		}
 
 		protected async Task<List<POCOLink>> Where(Expression<Func<Link, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +151,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d808bff1148bc6107597b98536182883</Hash>
+    <Hash>06701082ef2d89808052a326a2af4007</Hash>
 </Codenesium>*/

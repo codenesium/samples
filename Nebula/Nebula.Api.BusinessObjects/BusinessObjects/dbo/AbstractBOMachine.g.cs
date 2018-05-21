@@ -80,13 +80,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOMachine> MachineGuid(Guid machineGuid)
+		public async Task<POCOMachine> GetMachineGuid(Guid machineGuid)
 		{
-			return await this.machineRepository.MachineGuid(machineGuid);
+			return await this.machineRepository.GetMachineGuid(machineGuid);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c79b28f6ae8b68ea6ebb227c0a44bc94</Hash>
+    <Hash>e456055d00d4ab3927d4c9f39c366f0f</Hash>
 </Codenesium>*/

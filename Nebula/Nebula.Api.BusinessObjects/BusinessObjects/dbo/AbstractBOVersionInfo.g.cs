@@ -80,13 +80,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOVersionInfo> Version(long version)
+		public async Task<POCOVersionInfo> GetVersion(long version)
 		{
-			return await this.versionInfoRepository.Version(version);
+			return await this.versionInfoRepository.GetVersion(version);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14c0e211c2f20b351d9cc154f14457e1</Hash>
+    <Hash>a29386e14a9ea9b53d3dc149cbed8b6f</Hash>
 </Codenesium>*/

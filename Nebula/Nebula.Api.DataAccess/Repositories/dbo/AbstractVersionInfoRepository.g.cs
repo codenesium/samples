@@ -93,7 +93,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOVersionInfo> Version(long version)
+		public async Task<POCOVersionInfo> GetVersion(long version)
 		{
 			var records = await this.SearchLinqPOCO(x => x.Version == version);
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1485ebd004a6208f044d9cae51c86e08</Hash>
+    <Hash>ce62feaa59ad2830094b705eb5d18c15</Hash>
 </Codenesium>*/

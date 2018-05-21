@@ -25,7 +25,7 @@ namespace NebulaNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamModel.Name));
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
@@ -40,13 +40,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return this.OrganizationRepository.Get(id) != null;
 		}
 
-		private bool BeUniqueName(ApiTeamModel model)
+		private bool BeUniqueGetName(ApiTeamModel model)
 		{
-			return this.TeamRepository.Name(model.Name) == null;
+			return this.TeamRepository.GetName(model.Name) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>382c9c2d5f8ef58732a74d828a1bda2f</Hash>
+    <Hash>1526a081e292efcda3bb88f4153172f1</Hash>
 </Codenesium>*/

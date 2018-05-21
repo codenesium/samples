@@ -19,10 +19,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOVersionInfo> Version(long version);
+		Task<POCOVersionInfo> GetVersion(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8c788b60e017e3f7507516fb38f4836</Hash>
+    <Hash>71555c390176a910ff2bf8092b22653c</Hash>
 </Codenesium>*/

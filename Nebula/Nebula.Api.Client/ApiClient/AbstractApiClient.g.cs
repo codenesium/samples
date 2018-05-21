@@ -95,9 +95,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOChain>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOChain> GetChainExternalId(Guid externalId)
+		public virtual async Task<POCOChain> GetChainGetExternalId(Guid externalId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/externalId/{externalId}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/getExternalId/{externalId}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOChain>(httpResponse.Content.ContentToString());
@@ -150,9 +150,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOChainStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOChainStatus> GetChainStatusName(string name)
+		public virtual async Task<POCOChainStatus> GetChainStatusGetName(string name)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus/name/{name}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus/getName/{name}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOChainStatus>(httpResponse.Content.ContentToString());
@@ -252,20 +252,20 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLink>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<POCOLink>> GetLinkChainId(int chainId)
+		public virtual async Task<POCOLink> GetLinkGetExternalId(Guid externalId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/chainId/{chainId}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<POCOLink>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<POCOLink> GetLinkExternalId(Guid externalId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/externalId/{externalId}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/getExternalId/{externalId}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOLink>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<POCOLink>> GetLinkGetChainId(int chainId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/getChainId/{chainId}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<POCOLink>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<POCOLinkLog> LinkLogCreateAsync(ApiLinkLogModel item)
@@ -362,9 +362,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOLinkStatus>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOLinkStatus> GetLinkStatusName(string name)
+		public virtual async Task<POCOLinkStatus> GetLinkStatusGetName(string name)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus/name/{name}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus/getName/{name}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOLinkStatus>(httpResponse.Content.ContentToString());
@@ -417,9 +417,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOMachine>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOMachine> GetMachineMachineGuid(Guid machineGuid)
+		public virtual async Task<POCOMachine> GetMachineGetMachineGuid(Guid machineGuid)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/machineGuid/{machineGuid}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/getMachineGuid/{machineGuid}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOMachine>(httpResponse.Content.ContentToString());
@@ -519,9 +519,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOOrganization>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOOrganization> GetOrganizationName(string name)
+		public virtual async Task<POCOOrganization> GetOrganizationGetName(string name)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/name/{name}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/getName/{name}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOOrganization>(httpResponse.Content.ContentToString());
@@ -574,9 +574,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOTeam>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOTeam> GetTeamName(string name)
+		public virtual async Task<POCOTeam> GetTeamGetName(string name)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/name/{name}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/getName/{name}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOTeam>(httpResponse.Content.ContentToString());
@@ -629,9 +629,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<POCOVersionInfo>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<POCOVersionInfo> GetVersionInfoVersion(long version)
+		public virtual async Task<POCOVersionInfo> GetVersionInfoGetVersion(long version)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/version/{version}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/getVersion/{version}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<POCOVersionInfo>(httpResponse.Content.ContentToString());
@@ -640,5 +640,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d3f6e8b213bff7d19ca68a20dcf7e0d8</Hash>
+    <Hash>0631648fb88eab0d187d6cefa094bf85</Hash>
 </Codenesium>*/

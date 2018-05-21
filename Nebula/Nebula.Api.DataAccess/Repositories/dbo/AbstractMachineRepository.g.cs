@@ -93,7 +93,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOMachine> MachineGuid(Guid machineGuid)
+		public async Task<POCOMachine> GetMachineGuid(Guid machineGuid)
 		{
 			var records = await this.SearchLinqPOCO(x => x.MachineGuid == machineGuid);
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e181f1a3ca3a1cd6e9452e4618d869ca</Hash>
+    <Hash>dfbd00c944e9d8cf40bb2f6ba2d09ffc</Hash>
 </Codenesium>*/

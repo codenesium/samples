@@ -21,10 +21,10 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOVersionInfo> Version(long version);
+		Task<POCOVersionInfo> GetVersion(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>80ecdf6f967fa2c7e9dd50b6a748b65c</Hash>
+    <Hash>7a7253df6289fef94117ee4bfd0a2b3a</Hash>
 </Codenesium>*/

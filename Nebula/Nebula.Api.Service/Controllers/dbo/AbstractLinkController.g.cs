@@ -169,24 +169,13 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("chainId/{chainId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLink>), 200)]
-		public async virtual Task<IActionResult> ChainId(int chainId)
-		{
-			List<POCOLink> response = await this.linkManager.ChainId(chainId);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("externalId/{externalId}")]
+		[Route("getExternalId/{externalId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLink), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> ExternalId(Guid externalId)
+		public async virtual Task<IActionResult> GetExternalId(Guid externalId)
 		{
-			POCOLink response = await this.linkManager.ExternalId(externalId);
+			POCOLink response = await this.linkManager.GetExternalId(externalId);
 
 			if (response == null)
 			{
@@ -197,9 +186,20 @@ namespace NebulaNS.Api.Service
 				return this.Ok(response);
 			}
 		}
+
+		[HttpGet]
+		[Route("getChainId/{chainId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<POCOLink>), 200)]
+		public async virtual Task<IActionResult> GetChainId(int chainId)
+		{
+			List<POCOLink> response = await this.linkManager.GetChainId(chainId);
+
+			return this.Ok(response);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c401d3c678f35b0facd7e1766d8fd26</Hash>
+    <Hash>cd52e7c5025be0e2b8c3ad1754408677</Hash>
 </Codenesium>*/

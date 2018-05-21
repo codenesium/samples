@@ -169,13 +169,13 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("version/{version}")]
+		[Route("getVersion/{version}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Version(long version)
+		public async virtual Task<IActionResult> GetVersion(long version)
 		{
-			POCOVersionInfo response = await this.versionInfoManager.Version(version);
+			POCOVersionInfo response = await this.versionInfoManager.GetVersion(version);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b6b78995da71b56bd708a742e9424595</Hash>
+    <Hash>e9e5c4cde2529148fc071a2830ad9594</Hash>
 </Codenesium>*/

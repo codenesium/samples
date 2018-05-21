@@ -169,13 +169,13 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("name/{name}")]
+		[Route("getName/{name}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLinkStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Name(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOLinkStatus response = await this.linkStatusManager.Name(name);
+			POCOLinkStatus response = await this.linkStatusManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>dd7d2c7c56cdea6884ec167a4312c7c2</Hash>
+    <Hash>18ed5b566f93e2e316dfd0240ec38fec</Hash>
 </Codenesium>*/

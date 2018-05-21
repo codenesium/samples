@@ -21,11 +21,11 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<List<POCOLink>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOLink>> ChainId(int chainId);
-		Task<POCOLink> ExternalId(Guid externalId);
+		Task<POCOLink> GetExternalId(Guid externalId);
+		Task<List<POCOLink>> GetChainId(int chainId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>890a44a47c8ab993e58afd96a3a5fdf9</Hash>
+    <Hash>d6cc605257c053dc6b813ccf24106f60</Hash>
 </Codenesium>*/

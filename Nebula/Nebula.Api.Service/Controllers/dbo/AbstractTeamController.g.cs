@@ -169,13 +169,13 @@ namespace NebulaNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("name/{name}")]
+		[Route("getName/{name}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOTeam), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Name(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOTeam response = await this.teamManager.Name(name);
+			POCOTeam response = await this.teamManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ee5bf5cbd43e3a95dc5af2df5838ecde</Hash>
+    <Hash>62e122ae9d5fc9ebd5b9d82037ba5651</Hash>
 </Codenesium>*/

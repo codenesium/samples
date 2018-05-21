@@ -93,7 +93,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOChainStatus> Name(string name)
+		public async Task<POCOChainStatus> GetName(string name)
 		{
 			var records = await this.SearchLinqPOCO(x => x.Name == name);
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6134709d6b4130ba2d58142b8225e491</Hash>
+    <Hash>26324f0ca33ad91eb3fdff8b30a41985</Hash>
 </Codenesium>*/

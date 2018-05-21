@@ -21,10 +21,10 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<List<POCOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOOrganization> Name(string name);
+		Task<POCOOrganization> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e0bb927c5cc2c871a178e4eef967f16e</Hash>
+    <Hash>0ebb2f9b595c0d72cba50f378e5e062d</Hash>
 </Codenesium>*/

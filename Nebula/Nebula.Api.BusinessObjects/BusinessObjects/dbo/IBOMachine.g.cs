@@ -21,10 +21,10 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOMachine> MachineGuid(Guid machineGuid);
+		Task<POCOMachine> GetMachineGuid(Guid machineGuid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9282c5773a3a0909c3213845c946c894</Hash>
+    <Hash>44a6aafa884b357b8eeb9bbdcb85daff</Hash>
 </Codenesium>*/

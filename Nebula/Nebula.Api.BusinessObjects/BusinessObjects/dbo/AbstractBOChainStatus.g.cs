@@ -80,13 +80,13 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOChainStatus> Name(string name)
+		public async Task<POCOChainStatus> GetName(string name)
 		{
-			return await this.chainStatusRepository.Name(name);
+			return await this.chainStatusRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e28406f1a9b4d64ca52522bb9e4a5c6b</Hash>
+    <Hash>b3926dc4d6e27cfb410baec92020e0eb</Hash>
 </Codenesium>*/

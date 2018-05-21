@@ -93,7 +93,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOChain> ExternalId(Guid externalId)
+		public async Task<POCOChain> GetExternalId(Guid externalId)
 		{
 			var records = await this.SearchLinqPOCO(x => x.ExternalId == externalId);
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>030eeee3226e66a14cb7a1d8b47adac6</Hash>
+    <Hash>84883ace91b2ad301eb2326bdefb7943</Hash>
 </Codenesium>*/

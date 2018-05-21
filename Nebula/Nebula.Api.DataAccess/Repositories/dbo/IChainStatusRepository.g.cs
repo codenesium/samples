@@ -19,10 +19,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<POCOChainStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOChainStatus> Name(string name);
+		Task<POCOChainStatus> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>293d30be12b0cdefcfa7f27165abf95a</Hash>
+    <Hash>74dedc46677c71bbd04470ea0e29603b</Hash>
 </Codenesium>*/
