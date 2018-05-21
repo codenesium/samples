@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductCategoryRepository
+	public abstract class AbstractProductCategoryRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProductCategory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductCategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProductCategory Get(int productCategoryID)
+		public async virtual Task<POCOProductCategory> Get(int productCategoryID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
+			ProductCategory record = await this.GetById(productCategoryID);
+
+			return this.Mapper.ProductCategoryMapEFToPOCO(record);
 		}
 
-		public virtual POCOProductCategory Create(
+		public async virtual Task<POCOProductCategory> Create(
 			ApiProductCategoryModel model)
 		{
 			ProductCategory record = new ProductCategory();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ProductCategory>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductCategoryMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productCategoryID,
 			ApiProductCategoryModel model)
 		{
-			ProductCategory record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
+			ProductCategory record = await this.GetById(productCategoryID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productCategoryID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productCategoryID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productCategoryID)
 		{
-			ProductCategory record = this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID).FirstOrDefault();
+			ProductCategory record = await this.GetById(productCategoryID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ProductCategory>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOProductCategory GetName(string name)
+		public async Task<POCOProductCategory> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOProductCategory> Where(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOProductCategory>> Where(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOProductCategory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOProductCategory> SearchLinqPOCO(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProductCategory>> SearchLinqPOCO(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProductCategory> response = new List<POCOProductCategory>();
-			List<ProductCategory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ProductCategory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductCategoryMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ProductCategory> SearchLinqEF(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductCategory>> SearchLinqEF(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductCategory.ProductCategoryID)} ASC";
 			}
-			return this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductCategory>();
+			return await this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCategory>();
 		}
 
-		private List<ProductCategory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductCategory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductCategory.ProductCategoryID)} ASC";
 			}
 
-			return this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductCategory>();
+			return await this.Context.Set<ProductCategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCategory>();
+		}
+
+		private async Task<ProductCategory> GetById(int productCategoryID)
+		{
+			List<ProductCategory> records = await this.SearchLinqEF(x => x.ProductCategoryID == productCategoryID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>130be8f796eee37822f0567c99bdc160</Hash>
+    <Hash>9fd8395425ac669342e227761b40b2cd</Hash>
 </Codenesium>*/

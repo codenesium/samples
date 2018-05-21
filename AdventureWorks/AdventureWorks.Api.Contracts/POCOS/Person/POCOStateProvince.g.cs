@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOStateProvince
+	public partial class POCOStateProvince: AbstractPOCO
 	{
-		public POCOStateProvince()
+		public POCOStateProvince() : base()
 		{}
 
 		public POCOStateProvince(
@@ -117,5 +117,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5d58ffb30e588117c19db26327dbcfc5</Hash>
+    <Hash>7c544cb529cce1566ed7ea4556631ca7</Hash>
 </Codenesium>*/

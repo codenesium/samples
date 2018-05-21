@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductModelIllustration>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductModelIllustration> response = this.productModelIllustrationManager.All(query.Offset, query.Limit);
+			List<POCOProductModelIllustration> response = await this.productModelIllustrationManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProductModelIllustration), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductModelIllustration response = this.productModelIllustrationManager.Get(id);
+			POCOProductModelIllustration response = await this.productModelIllustrationManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductModelIllustration response = this.productModelIllustrationManager.Get(id);
+					POCOProductModelIllustration response = await this.productModelIllustrationManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1b2b03e4f5f3eee1234baf39e92322a1</Hash>
+    <Hash>ce4f7cec8fe9b328b2e6b9118377f855</Hash>
 </Codenesium>*/

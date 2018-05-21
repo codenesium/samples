@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPerson>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPerson> response = this.personManager.All(query.Offset, query.Limit);
+			List<POCOPerson> response = await this.personManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOPerson), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPerson response = this.personManager.Get(id);
+			POCOPerson response = await this.personManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPerson response = this.personManager.Get(id);
+					POCOPerson response = await this.personManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,58 +172,37 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getLastNameFirstNameMiddleName/{lastName}/{firstName}/{middleName}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPerson>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName)
+		public async virtual Task<IActionResult> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName)
 		{
-			List<POCOPerson> response = this.personManager.GetLastNameFirstNameMiddleName(lastName,firstName,middleName);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOPerson> response = await this.personManager.GetLastNameFirstNameMiddleName(lastName,firstName,middleName);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getAdditionalContactInfo/{additionalContactInfo}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPerson>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetAdditionalContactInfo(string additionalContactInfo)
+		public async virtual Task<IActionResult> GetAdditionalContactInfo(string additionalContactInfo)
 		{
-			List<POCOPerson> response = this.personManager.GetAdditionalContactInfo(additionalContactInfo);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOPerson> response = await this.personManager.GetAdditionalContactInfo(additionalContactInfo);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getDemographics/{demographics}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPerson>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetDemographics(string demographics)
+		public async virtual Task<IActionResult> GetDemographics(string demographics)
 		{
-			List<POCOPerson> response = this.personManager.GetDemographics(demographics);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOPerson> response = await this.personManager.GetDemographics(demographics);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97b763f9961c5ec4b99d06cff5c2a9e6</Hash>
+    <Hash>3e1de0e5fe39ffd724468242a772fc09</Hash>
 </Codenesium>*/

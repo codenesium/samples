@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPhoneNumberTypeModel
+	public partial class ApiPhoneNumberTypeModel: AbstractModel
 	{
-		public ApiPhoneNumberTypeModel()
+		public ApiPhoneNumberTypeModel() : base()
 		{}
 
 		public ApiPhoneNumberTypeModel(
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>212d43e230876fda063d33d9950e182c</Hash>
+    <Hash>f1e313d899b40fc12029150d0ab6b214</Hash>
 </Codenesium>*/

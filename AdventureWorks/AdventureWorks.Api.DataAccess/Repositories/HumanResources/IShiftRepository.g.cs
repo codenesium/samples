@@ -1,29 +1,29 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShiftRepository
 	{
-		POCOShift Create(ApiShiftModel model);
+		Task<POCOShift> Create(ApiShiftModel model);
 
-		void Update(int shiftID,
+		Task Update(int shiftID,
 		            ApiShiftModel model);
 
-		void Delete(int shiftID);
+		Task Delete(int shiftID);
 
-		POCOShift Get(int shiftID);
+		Task<POCOShift> Get(int shiftID);
 
-		List<POCOShift> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOShift GetName(string name);
-
-		POCOShift GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
+		Task<POCOShift> GetName(string name);
+		Task<POCOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>eaf30518cc63fee46e6f32113eba6218</Hash>
+    <Hash>f88f939a1002a0ab590e58114b9194e1</Hash>
 </Codenesium>*/

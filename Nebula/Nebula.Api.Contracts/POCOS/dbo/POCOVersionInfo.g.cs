@@ -4,9 +4,9 @@ using System;
 
 namespace NebulaNS.Api.Contracts
 {
-	public partial class POCOVersionInfo
+	public partial class POCOVersionInfo: AbstractPOCO
 	{
-		public POCOVersionInfo()
+		public POCOVersionInfo() : base()
 		{}
 
 		public POCOVersionInfo(
@@ -57,5 +57,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>de87545d39adab7782bfa1c2bdeeeb31</Hash>
+    <Hash>6e89126dfa9379f824d486c055662a4d</Hash>
 </Codenesium>*/

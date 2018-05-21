@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOAWBuildVersion
+	public partial class POCOAWBuildVersion: AbstractPOCO
 	{
-		public POCOAWBuildVersion()
+		public POCOAWBuildVersion() : base()
 		{}
 
 		public POCOAWBuildVersion(
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cd877bc19ba9d0b04188ca8199925208</Hash>
+    <Hash>82a58c8287424a03dba67849923a87d2</Hash>
 </Codenesium>*/

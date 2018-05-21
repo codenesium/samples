@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOShoppingCartItem
+	public abstract class AbstractBOShoppingCartItem: AbstractBOManager
 	{
 		private IShoppingCartItemRepository shoppingCartItemRepository;
 		private IApiShoppingCartItemModelValidator shoppingCartItemModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IShoppingCartItemRepository shoppingCartItemRepository,
 			IApiShoppingCartItemModelValidator shoppingCartItemModelValidator)
+			: base()
 
 		{
 			this.shoppingCartItemRepository = shoppingCartItemRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOShoppingCartItem> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.shoppingCartItemRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOShoppingCartItem Get(int shoppingCartItemID)
+		public virtual Task<POCOShoppingCartItem> Get(int shoppingCartItemID)
 		{
 			return this.shoppingCartItemRepository.Get(shoppingCartItemID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOShoppingCartItem> response = new CreateResponse<POCOShoppingCartItem>(await this.shoppingCartItemModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOShoppingCartItem record = this.shoppingCartItemRepository.Create(model);
+				POCOShoppingCartItem record = await this.shoppingCartItemRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.shoppingCartItemRepository.Update(shoppingCartItemID, model);
+				await this.shoppingCartItemRepository.Update(shoppingCartItemID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.shoppingCartItemRepository.Delete(shoppingCartItemID);
+				await this.shoppingCartItemRepository.Delete(shoppingCartItemID);
 			}
 			return response;
 		}
 
-		public List<POCOShoppingCartItem> GetShoppingCartIDProductID(string shoppingCartID,int productID)
+		public async Task<List<POCOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID)
 		{
-			return this.shoppingCartItemRepository.GetShoppingCartIDProductID(shoppingCartID,productID);
+			return await this.shoppingCartItemRepository.GetShoppingCartIDProductID(shoppingCartID,productID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>807abc74340cb75ed1f38d42b4f3a38c</Hash>
+    <Hash>b82ae59e69eff757e8e7ff853494435d</Hash>
 </Codenesium>*/

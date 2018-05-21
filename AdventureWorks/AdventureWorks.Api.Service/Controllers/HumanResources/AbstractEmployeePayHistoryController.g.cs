@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmployeePayHistory>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmployeePayHistory> response = this.employeePayHistoryManager.All(query.Offset, query.Limit);
+			List<POCOEmployeePayHistory> response = await this.employeePayHistoryManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOEmployeePayHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmployeePayHistory response = this.employeePayHistoryManager.Get(id);
+			POCOEmployeePayHistory response = await this.employeePayHistoryManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmployeePayHistory response = this.employeePayHistoryManager.Get(id);
+					POCOEmployeePayHistory response = await this.employeePayHistoryManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>163aa622272f8a3483c2f1b73e2c7915</Hash>
+    <Hash>e9437da18df7ae823a88359ccc302b70</Hash>
 </Codenesium>*/

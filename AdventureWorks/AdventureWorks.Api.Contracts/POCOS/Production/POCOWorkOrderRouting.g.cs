@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOWorkOrderRouting
+	public partial class POCOWorkOrderRouting: AbstractPOCO
 	{
-		public POCOWorkOrderRouting()
+		public POCOWorkOrderRouting() : base()
 		{}
 
 		public POCOWorkOrderRouting(
@@ -165,5 +165,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d770b121ed457ac893a75af9b5eb3514</Hash>
+    <Hash>e6cb165c2633a8d162a69f6181589e49</Hash>
 </Codenesium>*/

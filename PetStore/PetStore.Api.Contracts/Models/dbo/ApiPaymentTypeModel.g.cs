@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace PetStoreNS.Api.Contracts
 {
-	public partial class ApiPaymentTypeModel
+	public partial class ApiPaymentTypeModel: AbstractModel
 	{
-		public ApiPaymentTypeModel()
+		public ApiPaymentTypeModel() : base()
 		{}
 
 		public ApiPaymentTypeModel(
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2efefe7cd41bfb7d57c5dcffca1b8ce5</Hash>
+    <Hash>dc1f16cd7ee0358fda331adb9f01b7c7</Hash>
 </Codenesium>*/

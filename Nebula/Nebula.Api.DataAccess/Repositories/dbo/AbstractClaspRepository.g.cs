@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public abstract class AbstractClaspRepository
+	public abstract class AbstractClaspRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace NebulaNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOClasp Get(int id)
+		public async virtual Task<POCOClasp> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			Clasp record = await this.GetById(id);
+
+			return this.Mapper.ClaspMapEFToPOCO(record);
 		}
 
-		public virtual POCOClasp Create(
+		public async virtual Task<POCOClasp> Create(
 			ApiClaspModel model)
 		{
 			Clasp record = new Clasp();
@@ -47,15 +51,17 @@ namespace NebulaNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Clasp>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ClaspMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiClaspModel model)
 		{
-			Clasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Clasp record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace NebulaNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			Clasp record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Clasp record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Clasp>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOClasp> Where(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOClasp>> Where(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOClasp> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOClasp> SearchLinqPOCO(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOClasp>> SearchLinqPOCO(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOClasp> response = new List<POCOClasp>();
-			List<Clasp> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Clasp> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ClaspMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Clasp> SearchLinqEF(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Clasp>> SearchLinqEF(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Clasp.Id)} ASC";
 			}
-			return this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Clasp>();
+			return await this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Clasp>();
 		}
 
-		private List<Clasp> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Clasp>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Clasp.Id)} ASC";
 			}
 
-			return this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Clasp>();
+			return await this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Clasp>();
+		}
+
+		private async Task<Clasp> GetById(int id)
+		{
+			List<Clasp> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7bb9886c30d7df976a99e902f0ed5bc0</Hash>
+    <Hash>00c491a030741b280dae8d193fbfe66a</Hash>
 </Codenesium>*/

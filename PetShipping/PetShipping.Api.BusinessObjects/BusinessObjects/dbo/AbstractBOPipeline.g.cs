@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPipeline
+	public abstract class AbstractBOPipeline: AbstractBOManager
 	{
 		private IPipelineRepository pipelineRepository;
 		private IApiPipelineModelValidator pipelineModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IPipelineRepository pipelineRepository,
 			IApiPipelineModelValidator pipelineModelValidator)
+			: base()
 
 		{
 			this.pipelineRepository = pipelineRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPipeline> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPipeline>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.pipelineRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPipeline Get(int id)
+		public virtual Task<POCOPipeline> Get(int id)
 		{
 			return this.pipelineRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOPipeline> response = new CreateResponse<POCOPipeline>(await this.pipelineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPipeline record = this.pipelineRepository.Create(model);
+				POCOPipeline record = await this.pipelineRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineRepository.Update(id, model);
+				await this.pipelineRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineRepository.Delete(id);
+				await this.pipelineRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>036e73c797aeb2aff7e1784a6ba4a66c</Hash>
+    <Hash>3cad8b9c5f336b043cf02afc6f2877ce</Hash>
 </Codenesium>*/

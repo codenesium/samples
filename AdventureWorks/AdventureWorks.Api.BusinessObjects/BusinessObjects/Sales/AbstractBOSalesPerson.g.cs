@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesPerson
+	public abstract class AbstractBOSalesPerson: AbstractBOManager
 	{
 		private ISalesPersonRepository salesPersonRepository;
 		private IApiSalesPersonModelValidator salesPersonModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesPersonRepository salesPersonRepository,
 			IApiSalesPersonModelValidator salesPersonModelValidator)
+			: base()
 
 		{
 			this.salesPersonRepository = salesPersonRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesPerson> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesPersonRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesPerson Get(int businessEntityID)
+		public virtual Task<POCOSalesPerson> Get(int businessEntityID)
 		{
 			return this.salesPersonRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesPerson> response = new CreateResponse<POCOSalesPerson>(await this.salesPersonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesPerson record = this.salesPersonRepository.Create(model);
+				POCOSalesPerson record = await this.salesPersonRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesPersonRepository.Update(businessEntityID, model);
+				await this.salesPersonRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesPersonRepository.Delete(businessEntityID);
+				await this.salesPersonRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ae239263254df8ac958bf2f63ac5700a</Hash>
+    <Hash>f2dcfec01ddc52fc22b7f2a7e222c40d</Hash>
 </Codenesium>*/

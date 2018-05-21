@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace PetStoreNS.Api.Contracts
 {
-	public partial class ApiPenModel
+	public partial class ApiPenModel: AbstractModel
 	{
-		public ApiPenModel()
+		public ApiPenModel() : base()
 		{}
 
 		public ApiPenModel(
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ca8397927e48aa636af2a862002b8220</Hash>
+    <Hash>3a243bece3902136d1073e2f37f968be</Hash>
 </Codenesium>*/

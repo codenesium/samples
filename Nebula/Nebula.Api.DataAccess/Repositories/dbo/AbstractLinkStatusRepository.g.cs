@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public abstract class AbstractLinkStatusRepository
+	public abstract class AbstractLinkStatusRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace NebulaNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOLinkStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLinkStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOLinkStatus Get(int id)
+		public async virtual Task<POCOLinkStatus> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			LinkStatus record = await this.GetById(id);
+
+			return this.Mapper.LinkStatusMapEFToPOCO(record);
 		}
 
-		public virtual POCOLinkStatus Create(
+		public async virtual Task<POCOLinkStatus> Create(
 			ApiLinkStatusModel model)
 		{
 			LinkStatus record = new LinkStatus();
@@ -47,15 +51,17 @@ namespace NebulaNS.Api.DataAccess
 				record);
 
 			this.Context.Set<LinkStatus>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.LinkStatusMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiLinkStatusModel model)
 		{
-			LinkStatus record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			LinkStatus record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace NebulaNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			LinkStatus record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			LinkStatus record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<LinkStatus>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOLinkStatus Name(string name)
+		public async Task<POCOLinkStatus> Name(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOLinkStatus> Where(Expression<Func<LinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOLinkStatus>> Where(Expression<Func<LinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOLinkStatus> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOLinkStatus> SearchLinqPOCO(Expression<Func<LinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOLinkStatus>> SearchLinqPOCO(Expression<Func<LinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOLinkStatus> response = new List<POCOLinkStatus>();
-			List<LinkStatus> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<LinkStatus> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.LinkStatusMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<LinkStatus> SearchLinqEF(Expression<Func<LinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<LinkStatus>> SearchLinqEF(Expression<Func<LinkStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(LinkStatus.Id)} ASC";
 			}
-			return this.Context.Set<LinkStatus>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<LinkStatus>();
+			return await this.Context.Set<LinkStatus>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<LinkStatus>();
 		}
 
-		private List<LinkStatus> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<LinkStatus>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(LinkStatus.Id)} ASC";
 			}
 
-			return this.Context.Set<LinkStatus>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<LinkStatus>();
+			return await this.Context.Set<LinkStatus>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<LinkStatus>();
+		}
+
+		private async Task<LinkStatus> GetById(int id)
+		{
+			List<LinkStatus> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6081334e19edcbc89138d935a33214a7</Hash>
+    <Hash>13d02c0a53470ff208cd0d780a91b88a</Hash>
 </Codenesium>*/

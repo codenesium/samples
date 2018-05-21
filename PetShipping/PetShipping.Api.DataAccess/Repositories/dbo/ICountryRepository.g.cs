@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.DataAccess
 {
 	public interface ICountryRepository
 	{
-		POCOCountry Create(ApiCountryModel model);
+		Task<POCOCountry> Create(ApiCountryModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiCountryModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOCountry Get(int id);
+		Task<POCOCountry> Get(int id);
 
-		List<POCOCountry> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOCountry>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa64108ce673535caeea59eb707ed3ce</Hash>
+    <Hash>320730561eb90ef35e39489de0fdd8a5</Hash>
 </Codenesium>*/

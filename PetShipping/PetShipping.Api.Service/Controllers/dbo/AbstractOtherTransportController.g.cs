@@ -39,22 +39,14 @@ namespace PetShippingNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOOtherTransport>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOOtherTransport> response = this.otherTransportManager.All(query.Offset, query.Limit);
+			List<POCOOtherTransport> response = await this.otherTransportManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace PetShippingNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOOtherTransport), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOOtherTransport response = this.otherTransportManager.Get(id);
+			POCOOtherTransport response = await this.otherTransportManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOOtherTransport response = this.otherTransportManager.Get(id);
+					POCOOtherTransport response = await this.otherTransportManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6470c758a448251827cd919d9bc4799c</Hash>
+    <Hash>af72ec8384ef18399a7d9989a90700c4</Hash>
 </Codenesium>*/

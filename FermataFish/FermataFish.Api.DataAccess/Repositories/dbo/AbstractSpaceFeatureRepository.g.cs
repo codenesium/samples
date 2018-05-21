@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public abstract class AbstractSpaceFeatureRepository
+	public abstract class AbstractSpaceFeatureRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace FermataFishNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOSpaceFeature Get(int id)
+		public async virtual Task<POCOSpaceFeature> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			SpaceFeature record = await this.GetById(id);
+
+			return this.Mapper.SpaceFeatureMapEFToPOCO(record);
 		}
 
-		public virtual POCOSpaceFeature Create(
+		public async virtual Task<POCOSpaceFeature> Create(
 			ApiSpaceFeatureModel model)
 		{
 			SpaceFeature record = new SpaceFeature();
@@ -47,15 +51,17 @@ namespace FermataFishNS.Api.DataAccess
 				record);
 
 			this.Context.Set<SpaceFeature>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.SpaceFeatureMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiSpaceFeatureModel model)
 		{
-			SpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			SpaceFeature record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace FermataFishNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			SpaceFeature record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			SpaceFeature record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace FermataFishNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<SpaceFeature>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOSpaceFeature> Where(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOSpaceFeature>> Where(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOSpaceFeature> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOSpaceFeature> SearchLinqPOCO(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOSpaceFeature>> SearchLinqPOCO(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOSpaceFeature> response = new List<POCOSpaceFeature>();
-			List<SpaceFeature> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<SpaceFeature> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.SpaceFeatureMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<SpaceFeature> SearchLinqEF(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SpaceFeature>> SearchLinqEF(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SpaceFeature.Id)} ASC";
 			}
-			return this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SpaceFeature>();
+			return await this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpaceFeature>();
 		}
 
-		private List<SpaceFeature> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SpaceFeature>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SpaceFeature.Id)} ASC";
 			}
 
-			return this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SpaceFeature>();
+			return await this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpaceFeature>();
+		}
+
+		private async Task<SpaceFeature> GetById(int id)
+		{
+			List<SpaceFeature> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>915b658aec8afa6365c56661a31d8b51</Hash>
+    <Hash>e0bea625c0392882e320a133c2e24211</Hash>
 </Codenesium>*/

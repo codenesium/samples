@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public abstract class AbstractSaleRepository
+	public abstract class AbstractSaleRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace PetShippingNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOSale> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSale>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOSale Get(int id)
+		public async virtual Task<POCOSale> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			Sale record = await this.GetById(id);
+
+			return this.Mapper.SaleMapEFToPOCO(record);
 		}
 
-		public virtual POCOSale Create(
+		public async virtual Task<POCOSale> Create(
 			ApiSaleModel model)
 		{
 			Sale record = new Sale();
@@ -47,15 +51,17 @@ namespace PetShippingNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Sale>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.SaleMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiSaleModel model)
 		{
-			Sale record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Sale record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace PetShippingNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			Sale record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Sale record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Sale>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOSale> Where(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOSale>> Where(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOSale> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOSale> SearchLinqPOCO(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOSale>> SearchLinqPOCO(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOSale> response = new List<POCOSale>();
-			List<Sale> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Sale> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.SaleMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Sale> SearchLinqEF(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Sale>> SearchLinqEF(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Sale.Id)} ASC";
 			}
-			return this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Sale>();
+			return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Sale>();
 		}
 
-		private List<Sale> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Sale>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Sale.Id)} ASC";
 			}
 
-			return this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Sale>();
+			return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Sale>();
+		}
+
+		private async Task<Sale> GetById(int id)
+		{
+			List<Sale> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>786bcfcfed5d18ce3b47133c1c9018cd</Hash>
+    <Hash>a55b4a3b468a64aa0e95a55a032e9f57</Hash>
 </Codenesium>*/

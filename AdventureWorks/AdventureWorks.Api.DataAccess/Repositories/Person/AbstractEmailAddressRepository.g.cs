@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractEmailAddressRepository
+	public abstract class AbstractEmailAddressRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOEmailAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOEmailAddress Get(int businessEntityID)
+		public async virtual Task<POCOEmailAddress> Get(int businessEntityID)
 		{
-			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EmailAddress record = await this.GetById(businessEntityID);
+
+			return this.Mapper.EmailAddressMapEFToPOCO(record);
 		}
 
-		public virtual POCOEmailAddress Create(
+		public async virtual Task<POCOEmailAddress> Create(
 			ApiEmailAddressModel model)
 		{
 			EmailAddress record = new EmailAddress();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<EmailAddress>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.EmailAddressMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int businessEntityID,
 			ApiEmailAddressModel model)
 		{
-			EmailAddress record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EmailAddress record = await this.GetById(businessEntityID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					businessEntityID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int businessEntityID)
 		{
-			EmailAddress record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			EmailAddress record = await this.GetById(businessEntityID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<EmailAddress>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOEmailAddress> GetEmailAddress(string emailAddress1)
+		public async Task<List<POCOEmailAddress>> GetEmailAddress(string emailAddress1)
 		{
-			return this.SearchLinqPOCO(x => x.EmailAddress1 == emailAddress1);
+			var records = await this.SearchLinqPOCO(x => x.EmailAddress1 == emailAddress1);
+
+			return records;
 		}
 
-		protected List<POCOEmailAddress> Where(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOEmailAddress>> Where(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOEmailAddress> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOEmailAddress> SearchLinqPOCO(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOEmailAddress>> SearchLinqPOCO(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOEmailAddress> response = new List<POCOEmailAddress>();
-			List<EmailAddress> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<EmailAddress> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.EmailAddressMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<EmailAddress> SearchLinqEF(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<EmailAddress>> SearchLinqEF(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(EmailAddress.BusinessEntityID)} ASC";
 			}
-			return this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EmailAddress>();
+			return await this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmailAddress>();
 		}
 
-		private List<EmailAddress> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<EmailAddress>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(EmailAddress.BusinessEntityID)} ASC";
 			}
 
-			return this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<EmailAddress>();
+			return await this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmailAddress>();
+		}
+
+		private async Task<EmailAddress> GetById(int businessEntityID)
+		{
+			List<EmailAddress> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>874719bb0fed6d4ac958fea8b9626225</Hash>
+    <Hash>becce0ec80901e443838641e2d06562c</Hash>
 </Codenesium>*/

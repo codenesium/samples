@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int shipMethodID);
 
-		POCOShipMethod Get(int shipMethodID);
+		Task<POCOShipMethod> Get(int shipMethodID);
 
-		List<POCOShipMethod> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOShipMethod GetName(string name);
+		Task<POCOShipMethod> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>82d60fae2d115f6fc101f8539c7cab22</Hash>
+    <Hash>4017b6513cdb503ec3ae253909995caa</Hash>
 </Codenesium>*/

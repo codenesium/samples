@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOCountryRegion>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCountryRegion> response = this.countryRegionManager.All(query.Offset, query.Limit);
+			List<POCOCountryRegion> response = await this.countryRegionManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCountryRegion), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(string id)
+		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOCountryRegion response = this.countryRegionManager.Get(id);
+			POCOCountryRegion response = await this.countryRegionManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCountryRegion response = this.countryRegionManager.Get(id);
+					POCOCountryRegion response = await this.countryRegionManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCountryRegion), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOCountryRegion response = this.countryRegionManager.GetName(name);
+			POCOCountryRegion response = await this.countryRegionManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3e3ad22c4ce78980db0e7f160ee00509</Hash>
+    <Hash>f77782b22177ac2a1f0fea89550c0ba0</Hash>
 </Codenesium>*/

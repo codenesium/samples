@@ -17,16 +17,15 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOBucket Get(int id);
+		Task<POCOBucket> Get(int id);
 
-		List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOBucket Name(string name);
-
-		POCOBucket ExternalId(Guid externalId);
+		Task<POCOBucket> Name(string name);
+		Task<POCOBucket> ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e0c5453e022bbc88b757f82e67c0375d</Hash>
+    <Hash>9e72617ef196cc00fb19189fdb76d6dc</Hash>
 </Codenesium>*/

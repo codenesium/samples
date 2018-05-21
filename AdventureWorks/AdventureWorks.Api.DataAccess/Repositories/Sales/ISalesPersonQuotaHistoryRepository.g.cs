@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesPersonQuotaHistoryRepository
 	{
-		POCOSalesPersonQuotaHistory Create(ApiSalesPersonQuotaHistoryModel model);
+		Task<POCOSalesPersonQuotaHistory> Create(ApiSalesPersonQuotaHistoryModel model);
 
-		void Update(int businessEntityID,
+		Task Update(int businessEntityID,
 		            ApiSalesPersonQuotaHistoryModel model);
 
-		void Delete(int businessEntityID);
+		Task Delete(int businessEntityID);
 
-		POCOSalesPersonQuotaHistory Get(int businessEntityID);
+		Task<POCOSalesPersonQuotaHistory> Get(int businessEntityID);
 
-		List<POCOSalesPersonQuotaHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3ce9f1bb6770c1abf15ef4cc7b1cd37</Hash>
+    <Hash>eceea17fe5fae415fc8108260ecfc181</Hash>
 </Codenesium>*/

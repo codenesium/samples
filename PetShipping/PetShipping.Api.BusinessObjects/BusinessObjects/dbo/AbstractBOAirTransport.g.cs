@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOAirTransport
+	public abstract class AbstractBOAirTransport: AbstractBOManager
 	{
 		private IAirTransportRepository airTransportRepository;
 		private IApiAirTransportModelValidator airTransportModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IAirTransportRepository airTransportRepository,
 			IApiAirTransportModelValidator airTransportModelValidator)
+			: base()
 
 		{
 			this.airTransportRepository = airTransportRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOAirTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAirTransport>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.airTransportRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOAirTransport Get(int airlineId)
+		public virtual Task<POCOAirTransport> Get(int airlineId)
 		{
 			return this.airTransportRepository.Get(airlineId);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOAirTransport> response = new CreateResponse<POCOAirTransport>(await this.airTransportModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAirTransport record = this.airTransportRepository.Create(model);
+				POCOAirTransport record = await this.airTransportRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.airTransportRepository.Update(airlineId, model);
+				await this.airTransportRepository.Update(airlineId, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.airTransportRepository.Delete(airlineId);
+				await this.airTransportRepository.Delete(airlineId);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>29cbe637fe230260c388326ab28993e1</Hash>
+    <Hash>fcffa30990fe699a03da30b93713d842</Hash>
 </Codenesium>*/

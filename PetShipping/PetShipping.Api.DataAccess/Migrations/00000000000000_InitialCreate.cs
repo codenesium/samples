@@ -22,175 +22,175 @@ EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[Airline](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[AirTransport](
-[airlineId] [int]   IDENTITY(1,1) NOT NULL,
-[flightNumber] [varchar]  (12)  NOT NULL,
-[handlerId] [int]    NOT NULL,
-[id] [int]    NOT NULL,
-[landDate] [datetime]    NOT NULL,
-[pipelineStepId] [int]    NOT NULL,
-[takeoffDate] [datetime]    NOT NULL,
+[airlineId] [int]   IDENTITY(1,1)  NOT NULL,
+[flightNumber] [varchar]  (12)   NOT NULL,
+[handlerId] [int]     NOT NULL,
+[id] [int]     NOT NULL,
+[landDate] [datetime]     NOT NULL,
+[pipelineStepId] [int]     NOT NULL,
+[takeoffDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Breed](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[speciesId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[speciesId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Client](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[email] [varchar]  (128)  NOT NULL,
-[firstName] [varchar]  (128)  NOT NULL,
-[lastName] [varchar]  (128)  NOT NULL,
-[notes] [text]    NULL,
-[phone] [varchar]  (10)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[email] [varchar]  (128)   NOT NULL,
+[firstName] [varchar]  (128)   NOT NULL,
+[lastName] [varchar]  (128)   NOT NULL,
+[notes] [text]     NULL,
+[phone] [varchar]  (10)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[ClientCommunication](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[clientId] [int]    NOT NULL,
-[dateCreated] [datetime]    NOT NULL,
-[employeeId] [int]    NOT NULL,
-[notes] [text]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[clientId] [int]     NOT NULL,
+[dateCreated] [datetime]     NOT NULL,
+[employeeId] [int]     NOT NULL,
+[notes] [text]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Country](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[CountryRequirement](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[countryId] [int]    NOT NULL,
-[details] [text]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[countryId] [int]     NOT NULL,
+[details] [text]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Destination](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[countryId] [int]    NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[order] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[countryId] [int]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[order] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Employee](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[firstName] [varchar]  (128)  NOT NULL,
-[isSalesPerson] [bit]    NOT NULL,
-[isShipper] [bit]    NOT NULL,
-[lastName] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[firstName] [varchar]  (128)   NOT NULL,
+[isSalesPerson] [bit]     NOT NULL,
+[isShipper] [bit]     NOT NULL,
+[lastName] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Handler](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[countryId] [int]    NOT NULL,
-[email] [varchar]  (128)  NOT NULL,
-[firstName] [varchar]  (128)  NOT NULL,
-[lastName] [varchar]  (128)  NOT NULL,
-[phone] [varchar]  (10)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[countryId] [int]     NOT NULL,
+[email] [varchar]  (128)   NOT NULL,
+[firstName] [varchar]  (128)   NOT NULL,
+[lastName] [varchar]  (128)   NOT NULL,
+[phone] [varchar]  (10)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[HandlerPipelineStep](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[handlerId] [int]    NOT NULL,
-[pipelineStepId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[handlerId] [int]     NOT NULL,
+[pipelineStepId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[OtherTransport](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[handlerId] [int]    NOT NULL,
-[pipelineStepId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[handlerId] [int]     NOT NULL,
+[pipelineStepId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Pet](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[breedId] [int]    NOT NULL,
-[clientId] [int]    NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[weight] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[breedId] [int]     NOT NULL,
+[clientId] [int]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[weight] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Pipeline](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[pipelineStatusId] [int]    NOT NULL,
-[saleId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[pipelineStatusId] [int]     NOT NULL,
+[saleId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[PipelineStatus](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[PipelineStep](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[pipelineStepStatusId] [int]    NOT NULL,
-[shipperId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[pipelineStepStatusId] [int]     NOT NULL,
+[shipperId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[PipelineStepDestination](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[destinationId] [int]    NOT NULL,
-[pipelineStepId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[destinationId] [int]     NOT NULL,
+[pipelineStepId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[PipelineStepNote](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[employeeId] [int]    NOT NULL,
-[note] [text]    NOT NULL,
-[pipelineStepId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[employeeId] [int]     NOT NULL,
+[note] [text]     NOT NULL,
+[pipelineStepId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[PipelineStepStatus](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[PipelineStepStepRequirement](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[details] [text]    NOT NULL,
-[pipelineStepId] [int]    NOT NULL,
-[requirementMet] [bit]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[details] [text]     NOT NULL,
+[pipelineStepId] [int]     NOT NULL,
+[requirementMet] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Sale](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[amount] [money]    NOT NULL,
-[clientId] [int]    NOT NULL,
-[note] [text]    NOT NULL,
-[petId] [int]    NOT NULL,
-[saleDate] [datetime]    NOT NULL,
-[salesPersonId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[amount] [money]     NOT NULL,
+[clientId] [int]     NOT NULL,
+[note] [text]     NOT NULL,
+[petId] [int]     NOT NULL,
+[saleDate] [datetime]     NOT NULL,
+[salesPersonId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Species](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -326,6 +326,7 @@ ADD CONSTRAINT[PK_Species] PRIMARY KEY CLUSTERED
 id ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+
 
 ALTER TABLE[dbo].[Pet]  WITH CHECK ADD  CONSTRAINT[FK_Pet_breedId_Breed_id] FOREIGN KEY([breedId])
 REFERENCES[dbo].[Breed]([id])

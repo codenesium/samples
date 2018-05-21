@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiTeamModel
+	public partial class ApiTeamModel: AbstractModel
 	{
-		public ApiTeamModel()
+		public ApiTeamModel() : base()
 		{}
 
 		public ApiTeamModel(
@@ -53,5 +53,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2edfc3b797e2fd9234fde7548c09828d</Hash>
+    <Hash>fdcb487cc9b61ba1fc234a0d0e829bf7</Hash>
 </Codenesium>*/

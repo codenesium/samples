@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractContactTypeRepository
+	public abstract class AbstractContactTypeRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOContactType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOContactType Get(int contactTypeID)
+		public async virtual Task<POCOContactType> Get(int contactTypeID)
 		{
-			return this.SearchLinqPOCO(x => x.ContactTypeID == contactTypeID).FirstOrDefault();
+			ContactType record = await this.GetById(contactTypeID);
+
+			return this.Mapper.ContactTypeMapEFToPOCO(record);
 		}
 
-		public virtual POCOContactType Create(
+		public async virtual Task<POCOContactType> Create(
 			ApiContactTypeModel model)
 		{
 			ContactType record = new ContactType();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ContactType>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ContactTypeMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int contactTypeID,
 			ApiContactTypeModel model)
 		{
-			ContactType record = this.SearchLinqEF(x => x.ContactTypeID == contactTypeID).FirstOrDefault();
+			ContactType record = await this.GetById(contactTypeID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{contactTypeID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					contactTypeID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int contactTypeID)
 		{
-			ContactType record = this.SearchLinqEF(x => x.ContactTypeID == contactTypeID).FirstOrDefault();
+			ContactType record = await this.GetById(contactTypeID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ContactType>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOContactType GetName(string name)
+		public async Task<POCOContactType> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOContactType> Where(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOContactType>> Where(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOContactType> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOContactType> SearchLinqPOCO(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOContactType>> SearchLinqPOCO(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOContactType> response = new List<POCOContactType>();
-			List<ContactType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ContactType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ContactTypeMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ContactType> SearchLinqEF(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ContactType>> SearchLinqEF(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ContactType.ContactTypeID)} ASC";
 			}
-			return this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ContactType>();
+			return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ContactType>();
 		}
 
-		private List<ContactType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ContactType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ContactType.ContactTypeID)} ASC";
 			}
 
-			return this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ContactType>();
+			return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ContactType>();
+		}
+
+		private async Task<ContactType> GetById(int contactTypeID)
+		{
+			List<ContactType> records = await this.SearchLinqEF(x => x.ContactTypeID == contactTypeID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>96a4c4982d0d409906db6330e0983195</Hash>
+    <Hash>689f574a5db089a45ad5cf520e81ecb9</Hash>
 </Codenesium>*/

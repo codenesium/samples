@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public abstract class AbstractStateRepository
+	public abstract class AbstractStateRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace FermataFishNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOState> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOState>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOState Get(int id)
+		public async virtual Task<POCOState> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			State record = await this.GetById(id);
+
+			return this.Mapper.StateMapEFToPOCO(record);
 		}
 
-		public virtual POCOState Create(
+		public async virtual Task<POCOState> Create(
 			ApiStateModel model)
 		{
 			State record = new State();
@@ -47,15 +51,17 @@ namespace FermataFishNS.Api.DataAccess
 				record);
 
 			this.Context.Set<State>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.StateMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiStateModel model)
 		{
-			State record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			State record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace FermataFishNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			State record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			State record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace FermataFishNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<State>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOState> Where(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOState>> Where(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOState> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOState> SearchLinqPOCO(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOState>> SearchLinqPOCO(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOState> response = new List<POCOState>();
-			List<State> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<State> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.StateMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<State> SearchLinqEF(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<State>> SearchLinqEF(Expression<Func<State, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(State.Id)} ASC";
 			}
-			return this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<State>();
+			return await this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<State>();
 		}
 
-		private List<State> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<State>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(State.Id)} ASC";
 			}
 
-			return this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<State>();
+			return await this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<State>();
+		}
+
+		private async Task<State> GetById(int id)
+		{
+			List<State> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7acc928ff8f9fd7d6a99c7b04686c701</Hash>
+    <Hash>5f6b9bd7c56cee81b0cb6b94a521a88c</Hash>
 </Codenesium>*/

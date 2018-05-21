@@ -4,9 +4,9 @@ using System;
 
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class POCOSpace
+	public partial class POCOSpace: AbstractPOCO
 	{
-		public POCOSpace()
+		public POCOSpace() : base()
 		{}
 
 		public POCOSpace(
@@ -71,5 +71,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9ae61785f1b25d0ceff3d729d396b9ac</Hash>
+    <Hash>b7292d7b7aaf850037a05a97f1ca23f4</Hash>
 </Codenesium>*/

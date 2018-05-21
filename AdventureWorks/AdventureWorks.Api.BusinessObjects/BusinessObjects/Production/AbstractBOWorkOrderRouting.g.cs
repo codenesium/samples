@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOWorkOrderRouting
+	public abstract class AbstractBOWorkOrderRouting: AbstractBOManager
 	{
 		private IWorkOrderRoutingRepository workOrderRoutingRepository;
 		private IApiWorkOrderRoutingModelValidator workOrderRoutingModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IWorkOrderRoutingRepository workOrderRoutingRepository,
 			IApiWorkOrderRoutingModelValidator workOrderRoutingModelValidator)
+			: base()
 
 		{
 			this.workOrderRoutingRepository = workOrderRoutingRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOWorkOrderRouting> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.workOrderRoutingRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOWorkOrderRouting Get(int workOrderID)
+		public virtual Task<POCOWorkOrderRouting> Get(int workOrderID)
 		{
 			return this.workOrderRoutingRepository.Get(workOrderID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOWorkOrderRouting> response = new CreateResponse<POCOWorkOrderRouting>(await this.workOrderRoutingModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOWorkOrderRouting record = this.workOrderRoutingRepository.Create(model);
+				POCOWorkOrderRouting record = await this.workOrderRoutingRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.workOrderRoutingRepository.Update(workOrderID, model);
+				await this.workOrderRoutingRepository.Update(workOrderID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.workOrderRoutingRepository.Delete(workOrderID);
+				await this.workOrderRoutingRepository.Delete(workOrderID);
 			}
 			return response;
 		}
 
-		public List<POCOWorkOrderRouting> GetProductID(int productID)
+		public async Task<List<POCOWorkOrderRouting>> GetProductID(int productID)
 		{
-			return this.workOrderRoutingRepository.GetProductID(productID);
+			return await this.workOrderRoutingRepository.GetProductID(productID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>da20f68ed8358e332316b4cb83ca7cf5</Hash>
+    <Hash>cd7ed482447a6de4ffe9435657d62166</Hash>
 </Codenesium>*/

@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractTransactionHistoryArchiveRepository
+	public abstract class AbstractTransactionHistoryArchiveRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOTransactionHistoryArchive> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOTransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOTransactionHistoryArchive Get(int transactionID)
+		public async virtual Task<POCOTransactionHistoryArchive> Get(int transactionID)
 		{
-			return this.SearchLinqPOCO(x => x.TransactionID == transactionID).FirstOrDefault();
+			TransactionHistoryArchive record = await this.GetById(transactionID);
+
+			return this.Mapper.TransactionHistoryArchiveMapEFToPOCO(record);
 		}
 
-		public virtual POCOTransactionHistoryArchive Create(
+		public async virtual Task<POCOTransactionHistoryArchive> Create(
 			ApiTransactionHistoryArchiveModel model)
 		{
 			TransactionHistoryArchive record = new TransactionHistoryArchive();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<TransactionHistoryArchive>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.TransactionHistoryArchiveMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int transactionID,
 			ApiTransactionHistoryArchiveModel model)
 		{
-			TransactionHistoryArchive record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
+			TransactionHistoryArchive record = await this.GetById(transactionID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{transactionID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					transactionID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int transactionID)
 		{
-			TransactionHistoryArchive record = this.SearchLinqEF(x => x.TransactionID == transactionID).FirstOrDefault();
+			TransactionHistoryArchive record = await this.GetById(transactionID);
 
 			if (record == null)
 			{
@@ -82,53 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<TransactionHistoryArchive>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOTransactionHistoryArchive> GetProductID(int productID)
+		public async Task<List<POCOTransactionHistoryArchive>> GetProductID(int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductID == productID);
+			var records = await this.SearchLinqPOCO(x => x.ProductID == productID);
+
+			return records;
 		}
-		public List<POCOTransactionHistoryArchive> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
+		public async Task<List<POCOTransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
 		{
-			return this.SearchLinqPOCO(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID);
+			var records = await this.SearchLinqPOCO(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID);
+
+			return records;
 		}
 
-		protected List<POCOTransactionHistoryArchive> Where(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOTransactionHistoryArchive>> Where(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOTransactionHistoryArchive> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOTransactionHistoryArchive> SearchLinqPOCO(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOTransactionHistoryArchive>> SearchLinqPOCO(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOTransactionHistoryArchive> response = new List<POCOTransactionHistoryArchive>();
-			List<TransactionHistoryArchive> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<TransactionHistoryArchive> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.TransactionHistoryArchiveMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<TransactionHistoryArchive> SearchLinqEF(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<TransactionHistoryArchive>> SearchLinqEF(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(TransactionHistoryArchive.TransactionID)} ASC";
 			}
-			return this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<TransactionHistoryArchive>();
+			return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<TransactionHistoryArchive>();
 		}
 
-		private List<TransactionHistoryArchive> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<TransactionHistoryArchive>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(TransactionHistoryArchive.TransactionID)} ASC";
 			}
 
-			return this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<TransactionHistoryArchive>();
+			return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<TransactionHistoryArchive>();
+		}
+
+		private async Task<TransactionHistoryArchive> GetById(int transactionID)
+		{
+			List<TransactionHistoryArchive> records = await this.SearchLinqEF(x => x.TransactionID == transactionID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d63ed9b7c333f377daa3cfd3ab90c8a</Hash>
+    <Hash>8a11ef89d64467e79fbf40b32fa692ae</Hash>
 </Codenesium>*/

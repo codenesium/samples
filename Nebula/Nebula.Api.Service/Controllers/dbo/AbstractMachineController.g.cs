@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOMachine>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOMachine> response = this.machineManager.All(query.Offset, query.Limit);
+			List<POCOMachine> response = await this.machineManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOMachine), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOMachine response = this.machineManager.Get(id);
+			POCOMachine response = await this.machineManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOMachine response = this.machineManager.Get(id);
+					POCOMachine response = await this.machineManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOMachine), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult MachineGuid(Guid machineGuid)
+		public async virtual Task<IActionResult> MachineGuid(Guid machineGuid)
 		{
-			POCOMachine response = this.machineManager.MachineGuid(machineGuid);
+			POCOMachine response = await this.machineManager.MachineGuid(machineGuid);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>81eb9494f245019a82dbe752e85335c3</Hash>
+    <Hash>f9f838ea29c92535c65752178fa2fce2</Hash>
 </Codenesium>*/

@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCODepartment>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODepartment> response = this.departmentManager.All(query.Offset, query.Limit);
+			List<POCODepartment> response = await this.departmentManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODepartment), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(short id)
+		public async virtual Task<IActionResult> Get(short id)
 		{
-			POCODepartment response = this.departmentManager.Get(id);
+			POCODepartment response = await this.departmentManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODepartment response = this.departmentManager.Get(id);
+					POCODepartment response = await this.departmentManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODepartment), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCODepartment response = this.departmentManager.GetName(name);
+			POCODepartment response = await this.departmentManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b0146867d8b735a19b315815705404c2</Hash>
+    <Hash>3b9808a6fc2f046801257164a54679ad</Hash>
 </Codenesium>*/

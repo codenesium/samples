@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOBusinessEntityAddress
+	public partial class POCOBusinessEntityAddress: AbstractPOCO
 	{
-		public POCOBusinessEntityAddress()
+		public POCOBusinessEntityAddress() : base()
 		{}
 
 		public POCOBusinessEntityAddress(
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>96706603ea5ef66cd88c54dbaff8c8ef</Hash>
+    <Hash>764c3ff5a89ae2a321728cb002d18c21</Hash>
 </Codenesium>*/

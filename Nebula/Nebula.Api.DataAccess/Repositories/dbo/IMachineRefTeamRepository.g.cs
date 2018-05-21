@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRefTeamRepository
 	{
-		POCOMachineRefTeam Create(ApiMachineRefTeamModel model);
+		Task<POCOMachineRefTeam> Create(ApiMachineRefTeamModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiMachineRefTeamModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOMachineRefTeam Get(int id);
+		Task<POCOMachineRefTeam> Get(int id);
 
-		List<POCOMachineRefTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>590f139c089bdefedfee14eebe8e4881</Hash>
+    <Hash>24b7a527b3e4c0975d4e375741f59c27</Hash>
 </Codenesium>*/

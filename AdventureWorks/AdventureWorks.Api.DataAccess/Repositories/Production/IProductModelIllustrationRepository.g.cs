@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductModelIllustrationRepository
 	{
-		POCOProductModelIllustration Create(ApiProductModelIllustrationModel model);
+		Task<POCOProductModelIllustration> Create(ApiProductModelIllustrationModel model);
 
-		void Update(int productModelID,
+		Task Update(int productModelID,
 		            ApiProductModelIllustrationModel model);
 
-		void Delete(int productModelID);
+		Task Delete(int productModelID);
 
-		POCOProductModelIllustration Get(int productModelID);
+		Task<POCOProductModelIllustration> Get(int productModelID);
 
-		List<POCOProductModelIllustration> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOProductModelIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e061e08d0744898bc158d63ceb705364</Hash>
+    <Hash>3d7025dc513321c8b252a0cb65b3148e</Hash>
 </Codenesium>*/

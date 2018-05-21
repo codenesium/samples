@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCountryRegionCurrency> response = this.countryRegionCurrencyManager.All(query.Offset, query.Limit);
+			List<POCOCountryRegionCurrency> response = await this.countryRegionCurrencyManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCountryRegionCurrency), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(string id)
+		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.Get(id);
+			POCOCountryRegionCurrency response = await this.countryRegionCurrencyManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCountryRegionCurrency response = this.countryRegionCurrencyManager.Get(id);
+					POCOCountryRegionCurrency response = await this.countryRegionCurrencyManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,22 +172,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getCurrencyCode/{currencyCode}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetCurrencyCode(string currencyCode)
+		public async virtual Task<IActionResult> GetCurrencyCode(string currencyCode)
 		{
-			List<POCOCountryRegionCurrency> response = this.countryRegionCurrencyManager.GetCurrencyCode(currencyCode);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOCountryRegionCurrency> response = await this.countryRegionCurrencyManager.GetCurrencyCode(currencyCode);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9fa8643bc2f3ecd61b848d112022964</Hash>
+    <Hash>011994c345ab244b9ca1cae4e3e29372</Hash>
 </Codenesium>*/

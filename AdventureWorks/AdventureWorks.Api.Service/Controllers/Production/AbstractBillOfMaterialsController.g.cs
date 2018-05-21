@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBillOfMaterials> response = this.billOfMaterialsManager.All(query.Offset, query.Limit);
+			List<POCOBillOfMaterials> response = await this.billOfMaterialsManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOBillOfMaterials), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBillOfMaterials response = this.billOfMaterialsManager.Get(id);
+			POCOBillOfMaterials response = await this.billOfMaterialsManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBillOfMaterials response = this.billOfMaterialsManager.Get(id);
+					POCOBillOfMaterials response = await this.billOfMaterialsManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOBillOfMaterials), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
+		public async virtual Task<IActionResult> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
 		{
-			POCOBillOfMaterials response = this.billOfMaterialsManager.GetProductAssemblyIDComponentIDStartDate(productAssemblyID,componentID,startDate);
+			POCOBillOfMaterials response = await this.billOfMaterialsManager.GetProductAssemblyIDComponentIDStartDate(productAssemblyID,componentID,startDate);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -196,22 +191,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getUnitMeasureCode/{unitMeasureCode}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetUnitMeasureCode(string unitMeasureCode)
+		public async virtual Task<IActionResult> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			List<POCOBillOfMaterials> response = this.billOfMaterialsManager.GetUnitMeasureCode(unitMeasureCode);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOBillOfMaterials> response = await this.billOfMaterialsManager.GetUnitMeasureCode(unitMeasureCode);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bdfd25969a605a2184d56e40e07a9bfe</Hash>
+    <Hash>5f273c0a5dbf886f2114b2c85d30193b</Hash>
 </Codenesium>*/

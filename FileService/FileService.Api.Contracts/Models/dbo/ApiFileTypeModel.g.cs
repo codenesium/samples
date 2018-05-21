@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace FileServiceNS.Api.Contracts
 {
-	public partial class ApiFileTypeModel
+	public partial class ApiFileTypeModel: AbstractModel
 	{
-		public ApiFileTypeModel()
+		public ApiFileTypeModel() : base()
 		{}
 
 		public ApiFileTypeModel(
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b96549b944605cb62178ea7d3bb9919e</Hash>
+    <Hash>5106e84c4d191e0a23e5f26bc568dec6</Hash>
 </Codenesium>*/

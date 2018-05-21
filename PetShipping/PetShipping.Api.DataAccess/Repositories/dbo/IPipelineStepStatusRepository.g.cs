@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.DataAccess
 {
 	public interface IPipelineStepStatusRepository
 	{
-		POCOPipelineStepStatus Create(ApiPipelineStepStatusModel model);
+		Task<POCOPipelineStepStatus> Create(ApiPipelineStepStatusModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiPipelineStepStatusModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOPipelineStepStatus Get(int id);
+		Task<POCOPipelineStepStatus> Get(int id);
 
-		List<POCOPipelineStepStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOPipelineStepStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>d142bd45bee0c7712ca85b011229e11c</Hash>
+    <Hash>7c68ed01b39e5a2671b0ac71ed06b561</Hash>
 </Codenesium>*/

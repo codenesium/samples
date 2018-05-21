@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOMachineRefTeam>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOMachineRefTeam> response = this.machineRefTeamManager.All(query.Offset, query.Limit);
+			List<POCOMachineRefTeam> response = await this.machineRefTeamManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOMachineRefTeam), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOMachineRefTeam response = this.machineRefTeamManager.Get(id);
+			POCOMachineRefTeam response = await this.machineRefTeamManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOMachineRefTeam response = this.machineRefTeamManager.Get(id);
+					POCOMachineRefTeam response = await this.machineRefTeamManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e68f085349f6c60d68db5f9600685853</Hash>
+    <Hash>222c916863a1e31501b5e165598d3b8a</Hash>
 </Codenesium>*/

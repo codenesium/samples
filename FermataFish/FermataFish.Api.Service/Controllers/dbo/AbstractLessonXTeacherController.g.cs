@@ -39,22 +39,14 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOLessonXTeacher>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLessonXTeacher> response = this.lessonXTeacherManager.All(query.Offset, query.Limit);
+			List<POCOLessonXTeacher> response = await this.lessonXTeacherManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace FermataFishNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLessonXTeacher), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLessonXTeacher response = this.lessonXTeacherManager.Get(id);
+			POCOLessonXTeacher response = await this.lessonXTeacherManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLessonXTeacher response = this.lessonXTeacherManager.Get(id);
+					POCOLessonXTeacher response = await this.lessonXTeacherManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6494d397d144d12e2c6f288aaae911ee</Hash>
+    <Hash>ea5a30243dda316a4d29c5156659f38a</Hash>
 </Codenesium>*/

@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
@@ -45,11 +45,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeUniqueGetName(ApiProductSubcategoryModel model)
 		{
-			return this.ProductSubcategoryRepository.GetName(model.Name) != null;
+			return this.ProductSubcategoryRepository.GetName(model.Name) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d5dd29973af145b73d7db01be8831c40</Hash>
+    <Hash>f30200fb21bc26fddb6f50a4069f6d39</Hash>
 </Codenesium>*/

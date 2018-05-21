@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSalesTaxRateModel
+	public partial class ApiSalesTaxRateModel: AbstractModel
 	{
-		public ApiSalesTaxRateModel()
+		public ApiSalesTaxRateModel() : base()
 		{}
 
 		public ApiSalesTaxRateModel(
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9324fb83620ccb819ca1031aafc79535</Hash>
+    <Hash>782ca009d911d7d7d024a8691b09cbc3</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOLink
+	public abstract class AbstractBOLink: AbstractBOManager
 	{
 		private ILinkRepository linkRepository;
 		private IApiLinkModelValidator linkModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			ILinkRepository linkRepository,
 			IApiLinkModelValidator linkModelValidator)
+			: base()
 
 		{
 			this.linkRepository = linkRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOLink> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLink>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.linkRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOLink Get(int id)
+		public virtual Task<POCOLink> Get(int id)
 		{
 			return this.linkRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOLink> response = new CreateResponse<POCOLink>(await this.linkModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLink record = this.linkRepository.Create(model);
+				POCOLink record = await this.linkRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.linkRepository.Update(id, model);
+				await this.linkRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,22 +75,22 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.linkRepository.Delete(id);
+				await this.linkRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public List<POCOLink> ChainId(int chainId)
+		public async Task<List<POCOLink>> ChainId(int chainId)
 		{
-			return this.linkRepository.ChainId(chainId);
+			return await this.linkRepository.ChainId(chainId);
 		}
-		public POCOLink ExternalId(Guid externalId)
+		public async Task<POCOLink> ExternalId(Guid externalId)
 		{
-			return this.linkRepository.ExternalId(externalId);
+			return await this.linkRepository.ExternalId(externalId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e93048375595d4d5272bf91ec6f2a07</Hash>
+    <Hash>13419572c9dd9406457290b023887e9c</Hash>
 </Codenesium>*/

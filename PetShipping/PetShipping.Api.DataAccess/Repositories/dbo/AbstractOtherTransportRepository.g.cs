@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public abstract class AbstractOtherTransportRepository
+	public abstract class AbstractOtherTransportRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace PetShippingNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOOtherTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOOtherTransport>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOOtherTransport Get(int id)
+		public async virtual Task<POCOOtherTransport> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			OtherTransport record = await this.GetById(id);
+
+			return this.Mapper.OtherTransportMapEFToPOCO(record);
 		}
 
-		public virtual POCOOtherTransport Create(
+		public async virtual Task<POCOOtherTransport> Create(
 			ApiOtherTransportModel model)
 		{
 			OtherTransport record = new OtherTransport();
@@ -47,15 +51,17 @@ namespace PetShippingNS.Api.DataAccess
 				record);
 
 			this.Context.Set<OtherTransport>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.OtherTransportMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiOtherTransportModel model)
 		{
-			OtherTransport record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			OtherTransport record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace PetShippingNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			OtherTransport record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			OtherTransport record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<OtherTransport>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOOtherTransport> Where(Expression<Func<OtherTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOOtherTransport>> Where(Expression<Func<OtherTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOOtherTransport> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOOtherTransport> SearchLinqPOCO(Expression<Func<OtherTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOOtherTransport>> SearchLinqPOCO(Expression<Func<OtherTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOOtherTransport> response = new List<POCOOtherTransport>();
-			List<OtherTransport> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<OtherTransport> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.OtherTransportMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<OtherTransport> SearchLinqEF(Expression<Func<OtherTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<OtherTransport>> SearchLinqEF(Expression<Func<OtherTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(OtherTransport.Id)} ASC";
 			}
-			return this.Context.Set<OtherTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<OtherTransport>();
+			return await this.Context.Set<OtherTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<OtherTransport>();
 		}
 
-		private List<OtherTransport> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<OtherTransport>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(OtherTransport.Id)} ASC";
 			}
 
-			return this.Context.Set<OtherTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<OtherTransport>();
+			return await this.Context.Set<OtherTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<OtherTransport>();
+		}
+
+		private async Task<OtherTransport> GetById(int id)
+		{
+			List<OtherTransport> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2bdaa07077aefa62255c28b276038484</Hash>
+    <Hash>4911df82dc657b35a102a14ecb6f8c3e</Hash>
 </Codenesium>*/

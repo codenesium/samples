@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductPhoto
+	public abstract class AbstractBOProductPhoto: AbstractBOManager
 	{
 		private IProductPhotoRepository productPhotoRepository;
 		private IApiProductPhotoModelValidator productPhotoModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductPhotoRepository productPhotoRepository,
 			IApiProductPhotoModelValidator productPhotoModelValidator)
+			: base()
 
 		{
 			this.productPhotoRepository = productPhotoRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductPhoto> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productPhotoRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductPhoto Get(int productPhotoID)
+		public virtual Task<POCOProductPhoto> Get(int productPhotoID)
 		{
 			return this.productPhotoRepository.Get(productPhotoID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductPhoto> response = new CreateResponse<POCOProductPhoto>(await this.productPhotoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductPhoto record = this.productPhotoRepository.Create(model);
+				POCOProductPhoto record = await this.productPhotoRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productPhotoRepository.Update(productPhotoID, model);
+				await this.productPhotoRepository.Update(productPhotoID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productPhotoRepository.Delete(productPhotoID);
+				await this.productPhotoRepository.Delete(productPhotoID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>58b3dd85c8037fa2e60215b552baec7d</Hash>
+    <Hash>468b4b32f928212225c2ff6a8ccedfce</Hash>
 </Codenesium>*/

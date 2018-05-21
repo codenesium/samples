@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractIllustrationRepository
+	public abstract class AbstractIllustrationRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOIllustration> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOIllustration Get(int illustrationID)
+		public async virtual Task<POCOIllustration> Get(int illustrationID)
 		{
-			return this.SearchLinqPOCO(x => x.IllustrationID == illustrationID).FirstOrDefault();
+			Illustration record = await this.GetById(illustrationID);
+
+			return this.Mapper.IllustrationMapEFToPOCO(record);
 		}
 
-		public virtual POCOIllustration Create(
+		public async virtual Task<POCOIllustration> Create(
 			ApiIllustrationModel model)
 		{
 			Illustration record = new Illustration();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Illustration>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.IllustrationMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int illustrationID,
 			ApiIllustrationModel model)
 		{
-			Illustration record = this.SearchLinqEF(x => x.IllustrationID == illustrationID).FirstOrDefault();
+			Illustration record = await this.GetById(illustrationID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{illustrationID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					illustrationID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int illustrationID)
 		{
-			Illustration record = this.SearchLinqEF(x => x.IllustrationID == illustrationID).FirstOrDefault();
+			Illustration record = await this.GetById(illustrationID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Illustration>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOIllustration> Where(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOIllustration>> Where(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOIllustration> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOIllustration> SearchLinqPOCO(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOIllustration>> SearchLinqPOCO(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOIllustration> response = new List<POCOIllustration>();
-			List<Illustration> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Illustration> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.IllustrationMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Illustration> SearchLinqEF(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Illustration>> SearchLinqEF(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Illustration.IllustrationID)} ASC";
 			}
-			return this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Illustration>();
+			return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Illustration>();
 		}
 
-		private List<Illustration> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Illustration>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Illustration.IllustrationID)} ASC";
 			}
 
-			return this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Illustration>();
+			return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Illustration>();
+		}
+
+		private async Task<Illustration> GetById(int illustrationID)
+		{
+			List<Illustration> records = await this.SearchLinqEF(x => x.IllustrationID == illustrationID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>40c47b5aa606b459835740cdd7f65150</Hash>
+    <Hash>223e3ce248fd6662d6237b1c664a7cdf</Hash>
 </Codenesium>*/

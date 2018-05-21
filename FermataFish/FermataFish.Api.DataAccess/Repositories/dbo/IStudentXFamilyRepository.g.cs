@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStudentXFamilyRepository
 	{
-		POCOStudentXFamily Create(ApiStudentXFamilyModel model);
+		Task<POCOStudentXFamily> Create(ApiStudentXFamilyModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiStudentXFamilyModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOStudentXFamily Get(int id);
+		Task<POCOStudentXFamily> Get(int id);
 
-		List<POCOStudentXFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOStudentXFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>41d140469ad3398bde8de0e8fee4f627</Hash>
+    <Hash>86da442336511c54b7433a08f0445d1a</Hash>
 </Codenesium>*/

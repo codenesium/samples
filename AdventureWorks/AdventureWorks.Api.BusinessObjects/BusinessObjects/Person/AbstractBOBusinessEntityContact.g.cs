@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOBusinessEntityContact
+	public abstract class AbstractBOBusinessEntityContact: AbstractBOManager
 	{
 		private IBusinessEntityContactRepository businessEntityContactRepository;
 		private IApiBusinessEntityContactModelValidator businessEntityContactModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IBusinessEntityContactRepository businessEntityContactRepository,
 			IApiBusinessEntityContactModelValidator businessEntityContactModelValidator)
+			: base()
 
 		{
 			this.businessEntityContactRepository = businessEntityContactRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOBusinessEntityContact> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOBusinessEntityContact>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.businessEntityContactRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOBusinessEntityContact Get(int businessEntityID)
+		public virtual Task<POCOBusinessEntityContact> Get(int businessEntityID)
 		{
 			return this.businessEntityContactRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOBusinessEntityContact> response = new CreateResponse<POCOBusinessEntityContact>(await this.businessEntityContactModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBusinessEntityContact record = this.businessEntityContactRepository.Create(model);
+				POCOBusinessEntityContact record = await this.businessEntityContactRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.businessEntityContactRepository.Update(businessEntityID, model);
+				await this.businessEntityContactRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,22 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.businessEntityContactRepository.Delete(businessEntityID);
+				await this.businessEntityContactRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public List<POCOBusinessEntityContact> GetContactTypeID(int contactTypeID)
+		public async Task<List<POCOBusinessEntityContact>> GetContactTypeID(int contactTypeID)
 		{
-			return this.businessEntityContactRepository.GetContactTypeID(contactTypeID);
+			return await this.businessEntityContactRepository.GetContactTypeID(contactTypeID);
 		}
-		public List<POCOBusinessEntityContact> GetPersonID(int personID)
+		public async Task<List<POCOBusinessEntityContact>> GetPersonID(int personID)
 		{
-			return this.businessEntityContactRepository.GetPersonID(personID);
+			return await this.businessEntityContactRepository.GetPersonID(personID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ffadd98af3a9ccadee991b56c27eaf88</Hash>
+    <Hash>8d52ba9b01aa2fa5dbebb7adeeac5b69</Hash>
 </Codenesium>*/

@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOWorkOrderRouting> response = this.workOrderRoutingManager.All(query.Offset, query.Limit);
+			List<POCOWorkOrderRouting> response = await this.workOrderRoutingManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOWorkOrderRouting), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOWorkOrderRouting response = this.workOrderRoutingManager.Get(id);
+			POCOWorkOrderRouting response = await this.workOrderRoutingManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOWorkOrderRouting response = this.workOrderRoutingManager.Get(id);
+					POCOWorkOrderRouting response = await this.workOrderRoutingManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,22 +172,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetProductID(int productID)
+		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOWorkOrderRouting> response = this.workOrderRoutingManager.GetProductID(productID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOWorkOrderRouting> response = await this.workOrderRoutingManager.GetProductID(productID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ccc3ce183df5d2bf059a3d9c2f56af4d</Hash>
+    <Hash>3fcfc7466f47d4468249ab29feb3d994</Hash>
 </Codenesium>*/

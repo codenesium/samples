@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOMachineRefTeam
+	public abstract class AbstractBOMachineRefTeam: AbstractBOManager
 	{
 		private IMachineRefTeamRepository machineRefTeamRepository;
 		private IApiMachineRefTeamModelValidator machineRefTeamModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			IMachineRefTeamRepository machineRefTeamRepository,
 			IApiMachineRefTeamModelValidator machineRefTeamModelValidator)
+			: base()
 
 		{
 			this.machineRefTeamRepository = machineRefTeamRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOMachineRefTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.machineRefTeamRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOMachineRefTeam Get(int id)
+		public virtual Task<POCOMachineRefTeam> Get(int id)
 		{
 			return this.machineRefTeamRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOMachineRefTeam> response = new CreateResponse<POCOMachineRefTeam>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOMachineRefTeam record = this.machineRefTeamRepository.Create(model);
+				POCOMachineRefTeam record = await this.machineRefTeamRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.machineRefTeamRepository.Update(id, model);
+				await this.machineRefTeamRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.machineRefTeamRepository.Delete(id);
+				await this.machineRefTeamRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>65b404526ce68569328760305b0d1ca2</Hash>
+    <Hash>53b8d2e4505d8abfbd13fd1f3e69533e</Hash>
 </Codenesium>*/

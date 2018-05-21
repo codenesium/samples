@@ -105,7 +105,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void SalesOrderNumberRules()
 		{
 			this.RuleFor(x => x.SalesOrderNumber).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetSalesOrderNumber).When(x => x ?.SalesOrderNumber != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetSalesOrderNumber).When(x => x ?.SalesOrderNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesOrderHeaderModel.SalesOrderNumber));
 			this.RuleFor(x => x.SalesOrderNumber).Length(0, 25);
 		}
 
@@ -179,11 +179,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeUniqueGetSalesOrderNumber(ApiSalesOrderHeaderModel model)
 		{
-			return this.SalesOrderHeaderRepository.GetSalesOrderNumber(model.SalesOrderNumber) != null;
+			return this.SalesOrderHeaderRepository.GetSalesOrderNumber(model.SalesOrderNumber) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4b5c99efc1bf72165277db19e9a81786</Hash>
+    <Hash>007c01d92f1dcfd23e93fc3f7787365b</Hash>
 </Codenesium>*/

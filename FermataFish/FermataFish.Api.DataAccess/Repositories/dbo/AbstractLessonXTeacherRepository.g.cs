@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public abstract class AbstractLessonXTeacherRepository
+	public abstract class AbstractLessonXTeacherRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace FermataFishNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOLessonXTeacher> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLessonXTeacher>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOLessonXTeacher Get(int id)
+		public async virtual Task<POCOLessonXTeacher> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			LessonXTeacher record = await this.GetById(id);
+
+			return this.Mapper.LessonXTeacherMapEFToPOCO(record);
 		}
 
-		public virtual POCOLessonXTeacher Create(
+		public async virtual Task<POCOLessonXTeacher> Create(
 			ApiLessonXTeacherModel model)
 		{
 			LessonXTeacher record = new LessonXTeacher();
@@ -47,15 +51,17 @@ namespace FermataFishNS.Api.DataAccess
 				record);
 
 			this.Context.Set<LessonXTeacher>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.LessonXTeacherMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiLessonXTeacherModel model)
 		{
-			LessonXTeacher record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			LessonXTeacher record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace FermataFishNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			LessonXTeacher record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			LessonXTeacher record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace FermataFishNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<LessonXTeacher>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOLessonXTeacher> Where(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOLessonXTeacher>> Where(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOLessonXTeacher> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOLessonXTeacher> SearchLinqPOCO(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOLessonXTeacher>> SearchLinqPOCO(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOLessonXTeacher> response = new List<POCOLessonXTeacher>();
-			List<LessonXTeacher> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<LessonXTeacher> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.LessonXTeacherMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<LessonXTeacher> SearchLinqEF(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<LessonXTeacher>> SearchLinqEF(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(LessonXTeacher.Id)} ASC";
 			}
-			return this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<LessonXTeacher>();
+			return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<LessonXTeacher>();
 		}
 
-		private List<LessonXTeacher> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<LessonXTeacher>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(LessonXTeacher.Id)} ASC";
 			}
 
-			return this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<LessonXTeacher>();
+			return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<LessonXTeacher>();
+		}
+
+		private async Task<LessonXTeacher> GetById(int id)
+		{
+			List<LessonXTeacher> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2355947c4901b2931721d97df741f362</Hash>
+    <Hash>66c4530a033c84c6fb660debfb27d604</Hash>
 </Codenesium>*/

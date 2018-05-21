@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface IOrganizationRepository
 	{
-		POCOOrganization Create(ApiOrganizationModel model);
+		Task<POCOOrganization> Create(ApiOrganizationModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiOrganizationModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOOrganization Get(int id);
+		Task<POCOOrganization> Get(int id);
 
-		List<POCOOrganization> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOOrganization Name(string name);
+		Task<POCOOrganization> Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f32e01dc485562371e60911f6c61d57</Hash>
+    <Hash>ff8f14568d607fe1832ea5b45362b24b</Hash>
 </Codenesium>*/

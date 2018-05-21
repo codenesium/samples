@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductModelProductDescriptionCulture
+	public abstract class AbstractBOProductModelProductDescriptionCulture: AbstractBOManager
 	{
 		private IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
 		private IApiProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
 			IApiProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator)
+			: base()
 
 		{
 			this.productModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductModelProductDescriptionCulture> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productModelProductDescriptionCultureRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductModelProductDescriptionCulture Get(int productModelID)
+		public virtual Task<POCOProductModelProductDescriptionCulture> Get(int productModelID)
 		{
 			return this.productModelProductDescriptionCultureRepository.Get(productModelID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductModelProductDescriptionCulture> response = new CreateResponse<POCOProductModelProductDescriptionCulture>(await this.productModelProductDescriptionCultureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductModelProductDescriptionCulture record = this.productModelProductDescriptionCultureRepository.Create(model);
+				POCOProductModelProductDescriptionCulture record = await this.productModelProductDescriptionCultureRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productModelProductDescriptionCultureRepository.Update(productModelID, model);
+				await this.productModelProductDescriptionCultureRepository.Update(productModelID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productModelProductDescriptionCultureRepository.Delete(productModelID);
+				await this.productModelProductDescriptionCultureRepository.Delete(productModelID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e21620e549a7df80bebcb78162d34a51</Hash>
+    <Hash>d068e09d16040fa47f294cbac6b349d3</Hash>
 </Codenesium>*/

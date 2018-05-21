@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCustomerRepository
+	public abstract class AbstractCustomerRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOCustomer> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCustomer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOCustomer Get(int customerID)
+		public async virtual Task<POCOCustomer> Get(int customerID)
 		{
-			return this.SearchLinqPOCO(x => x.CustomerID == customerID).FirstOrDefault();
+			Customer record = await this.GetById(customerID);
+
+			return this.Mapper.CustomerMapEFToPOCO(record);
 		}
 
-		public virtual POCOCustomer Create(
+		public async virtual Task<POCOCustomer> Create(
 			ApiCustomerModel model)
 		{
 			Customer record = new Customer();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Customer>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.CustomerMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int customerID,
 			ApiCustomerModel model)
 		{
-			Customer record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
+			Customer record = await this.GetById(customerID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{customerID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					customerID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int customerID)
 		{
-			Customer record = this.SearchLinqEF(x => x.CustomerID == customerID).FirstOrDefault();
+			Customer record = await this.GetById(customerID);
 
 			if (record == null)
 			{
@@ -82,54 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Customer>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOCustomer GetAccountNumber(string accountNumber)
+		public async Task<POCOCustomer> GetAccountNumber(string accountNumber)
 		{
-			return this.SearchLinqPOCO(x => x.AccountNumber == accountNumber).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.AccountNumber == accountNumber);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<List<POCOCustomer>> GetTerritoryID(Nullable<int> territoryID)
+		{
+			var records = await this.SearchLinqPOCO(x => x.TerritoryID == territoryID);
+
+			return records;
 		}
 
-		public List<POCOCustomer> GetTerritoryID(Nullable<int> territoryID)
+		protected async Task<List<POCOCustomer>> Where(Expression<Func<Customer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.TerritoryID == territoryID);
+			List<POCOCustomer> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCOCustomer> Where(Expression<Func<Customer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOCustomer> SearchLinqPOCO(Expression<Func<Customer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOCustomer>> SearchLinqPOCO(Expression<Func<Customer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOCustomer> response = new List<POCOCustomer>();
-			List<Customer> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Customer> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.CustomerMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Customer> SearchLinqEF(Expression<Func<Customer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Customer>> SearchLinqEF(Expression<Func<Customer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Customer.CustomerID)} ASC";
 			}
-			return this.Context.Set<Customer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Customer>();
+			return await this.Context.Set<Customer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Customer>();
 		}
 
-		private List<Customer> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Customer>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Customer.CustomerID)} ASC";
 			}
 
-			return this.Context.Set<Customer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Customer>();
+			return await this.Context.Set<Customer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Customer>();
+		}
+
+		private async Task<Customer> GetById(int customerID)
+		{
+			List<Customer> records = await this.SearchLinqEF(x => x.CustomerID == customerID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>29e6f55f616e8adb55cfa8c0dc60c8b4</Hash>
+    <Hash>2d4bafddaf8d68a7a240c850fc61b73c</Hash>
 </Codenesium>*/

@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
 	public interface ISpaceXSpaceFeatureRepository
 	{
-		POCOSpaceXSpaceFeature Create(ApiSpaceXSpaceFeatureModel model);
+		Task<POCOSpaceXSpaceFeature> Create(ApiSpaceXSpaceFeatureModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiSpaceXSpaceFeatureModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOSpaceXSpaceFeature Get(int id);
+		Task<POCOSpaceXSpaceFeature> Get(int id);
 
-		List<POCOSpaceXSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSpaceXSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>6701606bf77c990581d2bd83cb05b0cb</Hash>
+    <Hash>004584f9dca16c55f4211a43595d817f</Hash>
 </Codenesium>*/

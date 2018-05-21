@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSpaceXSpaceFeature
+	public abstract class AbstractBOSpaceXSpaceFeature: AbstractBOManager
 	{
 		private ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
 		private IApiSpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
 			IApiSpaceXSpaceFeatureModelValidator spaceXSpaceFeatureModelValidator)
+			: base()
 
 		{
 			this.spaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSpaceXSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpaceXSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.spaceXSpaceFeatureRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSpaceXSpaceFeature Get(int id)
+		public virtual Task<POCOSpaceXSpaceFeature> Get(int id)
 		{
 			return this.spaceXSpaceFeatureRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOSpaceXSpaceFeature> response = new CreateResponse<POCOSpaceXSpaceFeature>(await this.spaceXSpaceFeatureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpaceXSpaceFeature record = this.spaceXSpaceFeatureRepository.Create(model);
+				POCOSpaceXSpaceFeature record = await this.spaceXSpaceFeatureRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.spaceXSpaceFeatureRepository.Update(id, model);
+				await this.spaceXSpaceFeatureRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.spaceXSpaceFeatureRepository.Delete(id);
+				await this.spaceXSpaceFeatureRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d90362a05c5f0f989e39a0cb12535142</Hash>
+    <Hash>1039c82cc0f628ffd9a739126c104fe5</Hash>
 </Codenesium>*/

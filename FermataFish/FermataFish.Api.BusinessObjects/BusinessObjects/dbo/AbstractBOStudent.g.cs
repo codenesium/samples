@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOStudent
+	public abstract class AbstractBOStudent: AbstractBOManager
 	{
 		private IStudentRepository studentRepository;
 		private IApiStudentModelValidator studentModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			IStudentRepository studentRepository,
 			IApiStudentModelValidator studentModelValidator)
+			: base()
 
 		{
 			this.studentRepository = studentRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOStudent> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOStudent>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.studentRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOStudent Get(int id)
+		public virtual Task<POCOStudent> Get(int id)
 		{
 			return this.studentRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOStudent> response = new CreateResponse<POCOStudent>(await this.studentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOStudent record = this.studentRepository.Create(model);
+				POCOStudent record = await this.studentRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.studentRepository.Update(id, model);
+				await this.studentRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.studentRepository.Delete(id);
+				await this.studentRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1ba7dbf8ff221405c904ce37677479a5</Hash>
+    <Hash>e4a4fe3206e735927a3db4a9f2096f15</Hash>
 </Codenesium>*/

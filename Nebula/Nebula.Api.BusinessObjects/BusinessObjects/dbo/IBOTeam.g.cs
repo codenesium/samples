@@ -17,14 +17,14 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOTeam Get(int id);
+		Task<POCOTeam> Get(int id);
 
-		List<POCOTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOTeam Name(string name);
+		Task<POCOTeam> Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8cca9d313275fc7ffc4d220fd80ed86c</Hash>
+    <Hash>e81fc09a8b2ca3d2666ed6f914237d88</Hash>
 </Codenesium>*/

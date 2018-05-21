@@ -52,772 +52,772 @@ EXEC('CREATE SCHEMA [Sales] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[AWBuildVersion](
-[SystemInformationID] [tinyint]   IDENTITY(1,1) NOT NULL,
-[Database Version] [nvarchar]  (25)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[VersionDate] [datetime]    NOT NULL,
+[SystemInformationID] [tinyint]   IDENTITY(1,1)  NOT NULL,
+[Database Version] [nvarchar]  (25)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[VersionDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[DatabaseLog](
-[DatabaseLogID] [int]   IDENTITY(1,1) NOT NULL,
-[DatabaseUser] [nvarchar]  (128)  NOT NULL,
-[Event] [nvarchar]  (128)  NOT NULL,
-[Object] [nvarchar]  (128)  NULL,
-[PostTime] [datetime]    NOT NULL,
-[Schema] [nvarchar]  (128)  NULL,
-[TSQL] [nvarchar]    NOT NULL,
-[XmlEvent] [xml]    NOT NULL,
+[DatabaseLogID] [int]   IDENTITY(1,1)  NOT NULL,
+[DatabaseUser] [nvarchar]  (128)   NOT NULL,
+[Event] [nvarchar]  (128)   NOT NULL,
+[Object] [nvarchar]  (128)   NULL,
+[PostTime] [datetime]     NOT NULL,
+[Schema] [nvarchar]  (128)   NULL,
+[TSQL] [nvarchar]     NOT NULL,
+[XmlEvent] [xml]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[ErrorLog](
-[ErrorLogID] [int]   IDENTITY(1,1) NOT NULL,
-[ErrorLine] [int]    NULL,
-[ErrorMessage] [nvarchar]  (4000)  NOT NULL,
-[ErrorNumber] [int]    NOT NULL,
-[ErrorProcedure] [nvarchar]  (126)  NULL,
-[ErrorSeverity] [int]    NULL,
-[ErrorState] [int]    NULL,
-[ErrorTime] [datetime]    NOT NULL,
-[UserName] [nvarchar]  (128)  NOT NULL,
+[ErrorLogID] [int]   IDENTITY(1,1)  NOT NULL,
+[ErrorLine] [int]     NULL,
+[ErrorMessage] [nvarchar]  (4000)   NOT NULL,
+[ErrorNumber] [int]     NOT NULL,
+[ErrorProcedure] [nvarchar]  (126)   NULL,
+[ErrorSeverity] [int]     NULL,
+[ErrorState] [int]     NULL,
+[ErrorTime] [datetime]     NOT NULL,
+[UserName] [nvarchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [HumanResources].[Department](
-[DepartmentID] [smallint]   IDENTITY(1,1) NOT NULL,
-[GroupName] [nvarchar]  (50)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[DepartmentID] [smallint]   IDENTITY(1,1)  NOT NULL,
+[GroupName] [nvarchar]  (50)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [HumanResources].[Employee](
-[BusinessEntityID] [int]    NOT NULL,
-[BirthDate] [date]    NOT NULL,
-[CurrentFlag] [bit]    NOT NULL,
-[Gender] [nchar]  (1)  NOT NULL,
-[HireDate] [date]    NOT NULL,
-[JobTitle] [nvarchar]  (50)  NOT NULL,
-[LoginID] [nvarchar]  (256)  NOT NULL,
-[MaritalStatus] [nchar]  (1)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[NationalIDNumber] [nvarchar]  (15)  NOT NULL,
-[OrganizationLevel] [smallint]    NULL,
-[OrganizationNode] [hierarchyid]    NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SalariedFlag] [bit]    NOT NULL,
-[SickLeaveHours] [smallint]    NOT NULL,
-[VacationHours] [smallint]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[BirthDate] [date]     NOT NULL,
+[CurrentFlag] [bit]     NOT NULL,
+[Gender] [nchar]  (1)   NOT NULL,
+[HireDate] [date]     NOT NULL,
+[JobTitle] [nvarchar]  (50)   NOT NULL,
+[LoginID] [nvarchar]  (256)   NOT NULL,
+[MaritalStatus] [nchar]  (1)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[NationalIDNumber] [nvarchar]  (15)   NOT NULL,
+[OrganizationLevel] [smallint]     NULL,
+[OrganizationNode] [hierarchyid]     NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SalariedFlag] [bit]     NOT NULL,
+[SickLeaveHours] [smallint]     NOT NULL,
+[VacationHours] [smallint]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [HumanResources].[EmployeeDepartmentHistory](
-[BusinessEntityID] [int]    NOT NULL,
-[DepartmentID] [smallint]    NOT NULL,
-[EndDate] [date]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ShiftID] [tinyint]    NOT NULL,
-[StartDate] [date]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[DepartmentID] [smallint]     NOT NULL,
+[EndDate] [date]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ShiftID] [tinyint]     NOT NULL,
+[StartDate] [date]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [HumanResources].[EmployeePayHistory](
-[BusinessEntityID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[PayFrequency] [tinyint]    NOT NULL,
-[Rate] [money]    NOT NULL,
-[RateChangeDate] [datetime]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PayFrequency] [tinyint]     NOT NULL,
+[Rate] [money]     NOT NULL,
+[RateChangeDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [HumanResources].[JobCandidate](
-[JobCandidateID] [int]   IDENTITY(1,1) NOT NULL,
-[BusinessEntityID] [int]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Resume] [xml]    NULL,
+[JobCandidateID] [int]   IDENTITY(1,1)  NOT NULL,
+[BusinessEntityID] [int]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Resume] [xml]     NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [HumanResources].[Shift](
-[ShiftID] [tinyint]   IDENTITY(1,1) NOT NULL,
-[EndTime] [time]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[StartTime] [time]    NOT NULL,
+[ShiftID] [tinyint]   IDENTITY(1,1)  NOT NULL,
+[EndTime] [time]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[StartTime] [time]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[Address](
-[AddressID] [int]   IDENTITY(1,1) NOT NULL,
-[AddressLine1] [nvarchar]  (60)  NOT NULL,
-[AddressLine2] [nvarchar]  (60)  NULL,
-[City] [nvarchar]  (30)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[PostalCode] [nvarchar]  (15)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SpatialLocation] [geography]    NULL,
-[StateProvinceID] [int]    NOT NULL,
+[AddressID] [int]   IDENTITY(1,1)  NOT NULL,
+[AddressLine1] [nvarchar]  (60)   NOT NULL,
+[AddressLine2] [nvarchar]  (60)   NULL,
+[City] [nvarchar]  (30)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PostalCode] [nvarchar]  (15)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SpatialLocation] [geography]     NULL,
+[StateProvinceID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[AddressType](
-[AddressTypeID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[AddressTypeID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[BusinessEntity](
-[BusinessEntityID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[BusinessEntityID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[BusinessEntityAddress](
-[BusinessEntityID] [int]    NOT NULL,
-[AddressID] [int]    NOT NULL,
-[AddressTypeID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[AddressID] [int]     NOT NULL,
+[AddressTypeID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[BusinessEntityContact](
-[BusinessEntityID] [int]    NOT NULL,
-[ContactTypeID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[PersonID] [int]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[ContactTypeID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PersonID] [int]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[ContactType](
-[ContactTypeID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[ContactTypeID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[CountryRegion](
-[CountryRegionCode] [nvarchar]  (3)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[CountryRegionCode] [nvarchar]  (3)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[EmailAddress](
-[BusinessEntityID] [int]    NOT NULL,
-[EmailAddress] [nvarchar]  (50)  NULL,
-[EmailAddressID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[EmailAddress] [nvarchar]  (50)   NULL,
+[EmailAddressID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[Password](
-[BusinessEntityID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[PasswordHash] [varchar]  (128)  NOT NULL,
-[PasswordSalt] [varchar]  (10)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PasswordHash] [varchar]  (128)   NOT NULL,
+[PasswordSalt] [varchar]  (10)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[Person](
-[BusinessEntityID] [int]    NOT NULL,
-[AdditionalContactInfo] [xml]    NULL,
-[Demographics] [xml]    NULL,
-[EmailPromotion] [int]    NOT NULL,
-[FirstName] [nvarchar]  (50)  NOT NULL,
-[LastName] [nvarchar]  (50)  NOT NULL,
-[MiddleName] [nvarchar]  (50)  NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[NameStyle] [bit]    NOT NULL,
-[PersonType] [nchar]  (2)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[Suffix] [nvarchar]  (10)  NULL,
-[Title] [nvarchar]  (8)  NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[AdditionalContactInfo] [xml]     NULL,
+[Demographics] [xml]     NULL,
+[EmailPromotion] [int]     NOT NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[NameStyle] [bit]     NOT NULL,
+[PersonType] [nchar]  (2)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[Title] [nvarchar]  (8)   NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[PersonPhone](
-[BusinessEntityID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[PhoneNumber] [nvarchar]  (25)  NOT NULL,
-[PhoneNumberTypeID] [int]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PhoneNumber] [nvarchar]  (25)   NOT NULL,
+[PhoneNumberTypeID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[PhoneNumberType](
-[PhoneNumberTypeID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[PhoneNumberTypeID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[StateProvince](
-[StateProvinceID] [int]   IDENTITY(1,1) NOT NULL,
-[CountryRegionCode] [nvarchar]  (3)  NOT NULL,
-[IsOnlyStateProvinceFlag] [bit]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[StateProvinceCode] [nchar]  (3)  NOT NULL,
-[TerritoryID] [int]    NOT NULL,
+[StateProvinceID] [int]   IDENTITY(1,1)  NOT NULL,
+[CountryRegionCode] [nvarchar]  (3)   NOT NULL,
+[IsOnlyStateProvinceFlag] [bit]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[StateProvinceCode] [nchar]  (3)   NOT NULL,
+[TerritoryID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[BillOfMaterials](
-[BillOfMaterialsID] [int]   IDENTITY(1,1) NOT NULL,
-[BOMLevel] [smallint]    NOT NULL,
-[ComponentID] [int]    NOT NULL,
-[EndDate] [datetime]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[PerAssemblyQty] [decimal]    NOT NULL,
-[ProductAssemblyID] [int]    NULL,
-[StartDate] [datetime]    NOT NULL,
-[UnitMeasureCode] [nchar]  (3)  NOT NULL,
+[BillOfMaterialsID] [int]   IDENTITY(1,1)  NOT NULL,
+[BOMLevel] [smallint]     NOT NULL,
+[ComponentID] [int]     NOT NULL,
+[EndDate] [datetime]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PerAssemblyQty] [decimal]     NOT NULL,
+[ProductAssemblyID] [int]     NULL,
+[StartDate] [datetime]     NOT NULL,
+[UnitMeasureCode] [nchar]  (3)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[Culture](
-[CultureID] [nchar]  (6)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[CultureID] [nchar]  (6)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[Document](
-[DocumentNode] [hierarchyid]    NOT NULL,
-[ChangeNumber] [int]    NOT NULL,
-[Document] [varbinary]    NULL,
-[DocumentLevel] [smallint]    NULL,
-[DocumentSummary] [nvarchar]    NULL,
-[FileExtension] [nvarchar]  (8)  NOT NULL,
-[FileName] [nvarchar]  (400)  NOT NULL,
-[FolderFlag] [bit]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Owner] [int]    NOT NULL,
-[Revision] [nchar]  (5)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[Status] [tinyint]    NOT NULL,
-[Title] [nvarchar]  (50)  NOT NULL,
+[DocumentNode] [hierarchyid]     NOT NULL,
+[ChangeNumber] [int]     NOT NULL,
+[Document] [varbinary]     NULL,
+[DocumentLevel] [smallint]     NULL,
+[DocumentSummary] [nvarchar]     NULL,
+[FileExtension] [nvarchar]  (8)   NOT NULL,
+[FileName] [nvarchar]  (400)   NOT NULL,
+[FolderFlag] [bit]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Owner] [int]     NOT NULL,
+[Revision] [nchar]  (5)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[Status] [tinyint]     NOT NULL,
+[Title] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[Illustration](
-[IllustrationID] [int]   IDENTITY(1,1) NOT NULL,
-[Diagram] [xml]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
+[IllustrationID] [int]   IDENTITY(1,1)  NOT NULL,
+[Diagram] [xml]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[Location](
-[LocationID] [smallint]   IDENTITY(1,1) NOT NULL,
-[Availability] [decimal]    NOT NULL,
-[CostRate] [smallmoney]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[LocationID] [smallint]   IDENTITY(1,1)  NOT NULL,
+[Availability] [decimal]     NOT NULL,
+[CostRate] [smallmoney]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[Product](
-[ProductID] [int]   IDENTITY(1,1) NOT NULL,
-[Class] [nchar]  (2)  NULL,
-[Color] [nvarchar]  (15)  NULL,
-[DaysToManufacture] [int]    NOT NULL,
-[DiscontinuedDate] [datetime]    NULL,
-[FinishedGoodsFlag] [bit]    NOT NULL,
-[ListPrice] [money]    NOT NULL,
-[MakeFlag] [bit]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[ProductLine] [nchar]  (2)  NULL,
-[ProductModelID] [int]    NULL,
-[ProductNumber] [nvarchar]  (25)  NOT NULL,
-[ProductSubcategoryID] [int]    NULL,
-[ReorderPoint] [smallint]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SafetyStockLevel] [smallint]    NOT NULL,
-[SellEndDate] [datetime]    NULL,
-[SellStartDate] [datetime]    NOT NULL,
-[Size] [nvarchar]  (5)  NULL,
-[SizeUnitMeasureCode] [nchar]  (3)  NULL,
-[StandardCost] [money]    NOT NULL,
-[Style] [nchar]  (2)  NULL,
-[Weight] [decimal]    NULL,
-[WeightUnitMeasureCode] [nchar]  (3)  NULL,
+[ProductID] [int]   IDENTITY(1,1)  NOT NULL,
+[Class] [nchar]  (2)   NULL,
+[Color] [nvarchar]  (15)   NULL,
+[DaysToManufacture] [int]     NOT NULL,
+[DiscontinuedDate] [datetime]     NULL,
+[FinishedGoodsFlag] [bit]     NOT NULL,
+[ListPrice] [money]     NOT NULL,
+[MakeFlag] [bit]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[ProductLine] [nchar]  (2)   NULL,
+[ProductModelID] [int]     NULL,
+[ProductNumber] [nvarchar]  (25)   NOT NULL,
+[ProductSubcategoryID] [int]     NULL,
+[ReorderPoint] [smallint]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SafetyStockLevel] [smallint]     NOT NULL,
+[SellEndDate] [datetime]     NULL,
+[SellStartDate] [datetime]     NOT NULL,
+[Size] [nvarchar]  (5)   NULL,
+[SizeUnitMeasureCode] [nchar]  (3)   NULL,
+[StandardCost] [money]     NOT NULL,
+[Style] [nchar]  (2)   NULL,
+[Weight] [decimal]     NULL,
+[WeightUnitMeasureCode] [nchar]  (3)   NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductCategory](
-[ProductCategoryID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[ProductCategoryID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductCostHistory](
-[ProductID] [int]    NOT NULL,
-[EndDate] [datetime]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[StandardCost] [money]    NOT NULL,
-[StartDate] [datetime]    NOT NULL,
+[ProductID] [int]     NOT NULL,
+[EndDate] [datetime]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[StandardCost] [money]     NOT NULL,
+[StartDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductDescription](
-[ProductDescriptionID] [int]   IDENTITY(1,1) NOT NULL,
-[Description] [nvarchar]  (400)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[ProductDescriptionID] [int]   IDENTITY(1,1)  NOT NULL,
+[Description] [nvarchar]  (400)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductDocument](
-[ProductID] [int]    NOT NULL,
-[DocumentNode] [hierarchyid]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
+[ProductID] [int]     NOT NULL,
+[DocumentNode] [hierarchyid]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductInventory](
-[ProductID] [int]    NOT NULL,
-[Bin] [tinyint]    NOT NULL,
-[LocationID] [smallint]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Quantity] [smallint]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[Shelf] [nvarchar]  (10)  NOT NULL,
+[ProductID] [int]     NOT NULL,
+[Bin] [tinyint]     NOT NULL,
+[LocationID] [smallint]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Quantity] [smallint]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[Shelf] [nvarchar]  (10)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductListPriceHistory](
-[ProductID] [int]    NOT NULL,
-[EndDate] [datetime]    NULL,
-[ListPrice] [money]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[StartDate] [datetime]    NOT NULL,
+[ProductID] [int]     NOT NULL,
+[EndDate] [datetime]     NULL,
+[ListPrice] [money]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[StartDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductModel](
-[ProductModelID] [int]   IDENTITY(1,1) NOT NULL,
-[CatalogDescription] [xml]    NULL,
-[Instructions] [xml]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[ProductModelID] [int]   IDENTITY(1,1)  NOT NULL,
+[CatalogDescription] [xml]     NULL,
+[Instructions] [xml]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductModelIllustration](
-[ProductModelID] [int]    NOT NULL,
-[IllustrationID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
+[ProductModelID] [int]     NOT NULL,
+[IllustrationID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductModelProductDescriptionCulture](
-[ProductModelID] [int]    NOT NULL,
-[CultureID] [nchar]  (6)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ProductDescriptionID] [int]    NOT NULL,
+[ProductModelID] [int]     NOT NULL,
+[CultureID] [nchar]  (6)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ProductDescriptionID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductPhoto](
-[ProductPhotoID] [int]   IDENTITY(1,1) NOT NULL,
-[LargePhoto] [varbinary]    NULL,
-[LargePhotoFileName] [nvarchar]  (50)  NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ThumbNailPhoto] [varbinary]    NULL,
-[ThumbnailPhotoFileName] [nvarchar]  (50)  NULL,
+[ProductPhotoID] [int]   IDENTITY(1,1)  NOT NULL,
+[LargePhoto] [varbinary]     NULL,
+[LargePhotoFileName] [nvarchar]  (50)   NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ThumbNailPhoto] [varbinary]     NULL,
+[ThumbnailPhotoFileName] [nvarchar]  (50)   NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductProductPhoto](
-[ProductID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Primary] [bit]    NOT NULL,
-[ProductPhotoID] [int]    NOT NULL,
+[ProductID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Primary] [bit]     NOT NULL,
+[ProductPhotoID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductReview](
-[ProductReviewID] [int]   IDENTITY(1,1) NOT NULL,
-[Comments] [nvarchar]  (3850)  NULL,
-[EmailAddress] [nvarchar]  (50)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[Rating] [int]    NOT NULL,
-[ReviewDate] [datetime]    NOT NULL,
-[ReviewerName] [nvarchar]  (50)  NOT NULL,
+[ProductReviewID] [int]   IDENTITY(1,1)  NOT NULL,
+[Comments] [nvarchar]  (3850)   NULL,
+[EmailAddress] [nvarchar]  (50)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[Rating] [int]     NOT NULL,
+[ReviewDate] [datetime]     NOT NULL,
+[ReviewerName] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ProductSubcategory](
-[ProductSubcategoryID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[ProductCategoryID] [int]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[ProductSubcategoryID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[ProductCategoryID] [int]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ScrapReason](
-[ScrapReasonID] [smallint]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[ScrapReasonID] [smallint]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[TransactionHistory](
-[TransactionID] [int]   IDENTITY(1,1) NOT NULL,
-[ActualCost] [money]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[Quantity] [int]    NOT NULL,
-[ReferenceOrderID] [int]    NOT NULL,
-[ReferenceOrderLineID] [int]    NOT NULL,
-[TransactionDate] [datetime]    NOT NULL,
-[TransactionType] [nchar]  (1)  NOT NULL,
+[TransactionID] [int]   IDENTITY(1,1)  NOT NULL,
+[ActualCost] [money]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[Quantity] [int]     NOT NULL,
+[ReferenceOrderID] [int]     NOT NULL,
+[ReferenceOrderLineID] [int]     NOT NULL,
+[TransactionDate] [datetime]     NOT NULL,
+[TransactionType] [nchar]  (1)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[TransactionHistoryArchive](
-[TransactionID] [int]    NOT NULL,
-[ActualCost] [money]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[Quantity] [int]    NOT NULL,
-[ReferenceOrderID] [int]    NOT NULL,
-[ReferenceOrderLineID] [int]    NOT NULL,
-[TransactionDate] [datetime]    NOT NULL,
-[TransactionType] [nchar]  (1)  NOT NULL,
+[TransactionID] [int]     NOT NULL,
+[ActualCost] [money]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[Quantity] [int]     NOT NULL,
+[ReferenceOrderID] [int]     NOT NULL,
+[ReferenceOrderLineID] [int]     NOT NULL,
+[TransactionDate] [datetime]     NOT NULL,
+[TransactionType] [nchar]  (1)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[UnitMeasure](
-[UnitMeasureCode] [nchar]  (3)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[UnitMeasureCode] [nchar]  (3)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[WorkOrder](
-[WorkOrderID] [int]   IDENTITY(1,1) NOT NULL,
-[DueDate] [datetime]    NOT NULL,
-[EndDate] [datetime]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[OrderQty] [int]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[ScrappedQty] [smallint]    NOT NULL,
-[ScrapReasonID] [smallint]    NULL,
-[StartDate] [datetime]    NOT NULL,
-[StockedQty] [int]    NOT NULL,
+[WorkOrderID] [int]   IDENTITY(1,1)  NOT NULL,
+[DueDate] [datetime]     NOT NULL,
+[EndDate] [datetime]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[OrderQty] [int]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[ScrappedQty] [smallint]     NOT NULL,
+[ScrapReasonID] [smallint]     NULL,
+[StartDate] [datetime]     NOT NULL,
+[StockedQty] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[WorkOrderRouting](
-[WorkOrderID] [int]    NOT NULL,
-[ActualCost] [money]    NULL,
-[ActualEndDate] [datetime]    NULL,
-[ActualResourceHrs] [decimal]    NULL,
-[ActualStartDate] [datetime]    NULL,
-[LocationID] [smallint]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[OperationSequence] [smallint]    NOT NULL,
-[PlannedCost] [money]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[ScheduledEndDate] [datetime]    NOT NULL,
-[ScheduledStartDate] [datetime]    NOT NULL,
+[WorkOrderID] [int]     NOT NULL,
+[ActualCost] [money]     NULL,
+[ActualEndDate] [datetime]     NULL,
+[ActualResourceHrs] [decimal]     NULL,
+[ActualStartDate] [datetime]     NULL,
+[LocationID] [smallint]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[OperationSequence] [smallint]     NOT NULL,
+[PlannedCost] [money]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[ScheduledEndDate] [datetime]     NOT NULL,
+[ScheduledStartDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Purchasing].[ProductVendor](
-[ProductID] [int]    NOT NULL,
-[AverageLeadTime] [int]    NOT NULL,
-[BusinessEntityID] [int]    NOT NULL,
-[LastReceiptCost] [money]    NULL,
-[LastReceiptDate] [datetime]    NULL,
-[MaxOrderQty] [int]    NOT NULL,
-[MinOrderQty] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[OnOrderQty] [int]    NULL,
-[StandardPrice] [money]    NOT NULL,
-[UnitMeasureCode] [nchar]  (3)  NOT NULL,
+[ProductID] [int]     NOT NULL,
+[AverageLeadTime] [int]     NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[LastReceiptCost] [money]     NULL,
+[LastReceiptDate] [datetime]     NULL,
+[MaxOrderQty] [int]     NOT NULL,
+[MinOrderQty] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[OnOrderQty] [int]     NULL,
+[StandardPrice] [money]     NOT NULL,
+[UnitMeasureCode] [nchar]  (3)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Purchasing].[PurchaseOrderDetail](
-[PurchaseOrderID] [int]    NOT NULL,
-[DueDate] [datetime]    NOT NULL,
-[LineTotal] [money]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[OrderQty] [smallint]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[PurchaseOrderDetailID] [int]    NOT NULL,
-[ReceivedQty] [decimal]    NOT NULL,
-[RejectedQty] [decimal]    NOT NULL,
-[StockedQty] [decimal]    NOT NULL,
-[UnitPrice] [money]    NOT NULL,
+[PurchaseOrderID] [int]     NOT NULL,
+[DueDate] [datetime]     NOT NULL,
+[LineTotal] [money]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[OrderQty] [smallint]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[PurchaseOrderDetailID] [int]     NOT NULL,
+[ReceivedQty] [decimal]     NOT NULL,
+[RejectedQty] [decimal]     NOT NULL,
+[StockedQty] [decimal]     NOT NULL,
+[UnitPrice] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Purchasing].[PurchaseOrderHeader](
-[PurchaseOrderID] [int]   IDENTITY(1,1) NOT NULL,
-[EmployeeID] [int]    NOT NULL,
-[Freight] [money]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[OrderDate] [datetime]    NOT NULL,
-[RevisionNumber] [tinyint]    NOT NULL,
-[ShipDate] [datetime]    NULL,
-[ShipMethodID] [int]    NOT NULL,
-[Status] [tinyint]    NOT NULL,
-[SubTotal] [money]    NOT NULL,
-[TaxAmt] [money]    NOT NULL,
-[TotalDue] [money]    NOT NULL,
-[VendorID] [int]    NOT NULL,
+[PurchaseOrderID] [int]   IDENTITY(1,1)  NOT NULL,
+[EmployeeID] [int]     NOT NULL,
+[Freight] [money]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[OrderDate] [datetime]     NOT NULL,
+[RevisionNumber] [tinyint]     NOT NULL,
+[ShipDate] [datetime]     NULL,
+[ShipMethodID] [int]     NOT NULL,
+[Status] [tinyint]     NOT NULL,
+[SubTotal] [money]     NOT NULL,
+[TaxAmt] [money]     NOT NULL,
+[TotalDue] [money]     NOT NULL,
+[VendorID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Purchasing].[ShipMethod](
-[ShipMethodID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[ShipBase] [money]    NOT NULL,
-[ShipRate] [money]    NOT NULL,
+[ShipMethodID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[ShipBase] [money]     NOT NULL,
+[ShipRate] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Purchasing].[Vendor](
-[BusinessEntityID] [int]    NOT NULL,
-[AccountNumber] [nvarchar]  (15)  NOT NULL,
-[ActiveFlag] [bit]    NOT NULL,
-[CreditRating] [tinyint]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[PreferredVendorStatus] [bit]    NOT NULL,
-[PurchasingWebServiceURL] [nvarchar]  (1024)  NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[AccountNumber] [nvarchar]  (15)   NOT NULL,
+[ActiveFlag] [bit]     NOT NULL,
+[CreditRating] [tinyint]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[PreferredVendorStatus] [bit]     NOT NULL,
+[PurchasingWebServiceURL] [nvarchar]  (1024)   NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[CountryRegionCurrency](
-[CountryRegionCode] [nvarchar]  (3)  NOT NULL,
-[CurrencyCode] [nchar]  (3)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
+[CountryRegionCode] [nvarchar]  (3)   NOT NULL,
+[CurrencyCode] [nchar]  (3)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[CreditCard](
-[CreditCardID] [int]   IDENTITY(1,1) NOT NULL,
-[CardNumber] [nvarchar]  (25)  NOT NULL,
-[CardType] [nvarchar]  (50)  NOT NULL,
-[ExpMonth] [tinyint]    NOT NULL,
-[ExpYear] [smallint]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
+[CreditCardID] [int]   IDENTITY(1,1)  NOT NULL,
+[CardNumber] [nvarchar]  (25)   NOT NULL,
+[CardType] [nvarchar]  (50)   NOT NULL,
+[ExpMonth] [tinyint]     NOT NULL,
+[ExpYear] [smallint]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[Currency](
-[CurrencyCode] [nchar]  (3)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
+[CurrencyCode] [nchar]  (3)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[CurrencyRate](
-[CurrencyRateID] [int]   IDENTITY(1,1) NOT NULL,
-[AverageRate] [money]    NOT NULL,
-[CurrencyRateDate] [datetime]    NOT NULL,
-[EndOfDayRate] [money]    NOT NULL,
-[FromCurrencyCode] [nchar]  (3)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ToCurrencyCode] [nchar]  (3)  NOT NULL,
+[CurrencyRateID] [int]   IDENTITY(1,1)  NOT NULL,
+[AverageRate] [money]     NOT NULL,
+[CurrencyRateDate] [datetime]     NOT NULL,
+[EndOfDayRate] [money]     NOT NULL,
+[FromCurrencyCode] [nchar]  (3)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ToCurrencyCode] [nchar]  (3)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[Customer](
-[CustomerID] [int]   IDENTITY(1,1) NOT NULL,
-[AccountNumber] [varchar]  (10)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[PersonID] [int]    NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[StoreID] [int]    NULL,
-[TerritoryID] [int]    NULL,
+[CustomerID] [int]   IDENTITY(1,1)  NOT NULL,
+[AccountNumber] [varchar]  (10)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PersonID] [int]     NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[StoreID] [int]     NULL,
+[TerritoryID] [int]     NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[PersonCreditCard](
-[BusinessEntityID] [int]    NOT NULL,
-[CreditCardID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[CreditCardID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesOrderDetail](
-[SalesOrderID] [int]    NOT NULL,
-[CarrierTrackingNumber] [nvarchar]  (25)  NULL,
-[LineTotal] [decimal]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[OrderQty] [smallint]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SalesOrderDetailID] [int]    NOT NULL,
-[SpecialOfferID] [int]    NOT NULL,
-[UnitPrice] [money]    NOT NULL,
-[UnitPriceDiscount] [money]    NOT NULL,
+[SalesOrderID] [int]     NOT NULL,
+[CarrierTrackingNumber] [nvarchar]  (25)   NULL,
+[LineTotal] [decimal]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[OrderQty] [smallint]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SalesOrderDetailID] [int]     NOT NULL,
+[SpecialOfferID] [int]     NOT NULL,
+[UnitPrice] [money]     NOT NULL,
+[UnitPriceDiscount] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesOrderHeader](
-[SalesOrderID] [int]   IDENTITY(1,1) NOT NULL,
-[AccountNumber] [nvarchar]  (15)  NULL,
-[BillToAddressID] [int]    NOT NULL,
-[Comment] [nvarchar]  (128)  NULL,
-[CreditCardApprovalCode] [varchar]  (15)  NULL,
-[CreditCardID] [int]    NULL,
-[CurrencyRateID] [int]    NULL,
-[CustomerID] [int]    NOT NULL,
-[DueDate] [datetime]    NOT NULL,
-[Freight] [money]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[OnlineOrderFlag] [bit]    NOT NULL,
-[OrderDate] [datetime]    NOT NULL,
-[PurchaseOrderNumber] [nvarchar]  (25)  NULL,
-[RevisionNumber] [tinyint]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SalesOrderNumber] [nvarchar]  (25)  NOT NULL,
-[SalesPersonID] [int]    NULL,
-[ShipDate] [datetime]    NULL,
-[ShipMethodID] [int]    NOT NULL,
-[ShipToAddressID] [int]    NOT NULL,
-[Status] [tinyint]    NOT NULL,
-[SubTotal] [money]    NOT NULL,
-[TaxAmt] [money]    NOT NULL,
-[TerritoryID] [int]    NULL,
-[TotalDue] [money]    NOT NULL,
+[SalesOrderID] [int]   IDENTITY(1,1)  NOT NULL,
+[AccountNumber] [nvarchar]  (15)   NULL,
+[BillToAddressID] [int]     NOT NULL,
+[Comment] [nvarchar]  (128)   NULL,
+[CreditCardApprovalCode] [varchar]  (15)   NULL,
+[CreditCardID] [int]     NULL,
+[CurrencyRateID] [int]     NULL,
+[CustomerID] [int]     NOT NULL,
+[DueDate] [datetime]     NOT NULL,
+[Freight] [money]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[OnlineOrderFlag] [bit]     NOT NULL,
+[OrderDate] [datetime]     NOT NULL,
+[PurchaseOrderNumber] [nvarchar]  (25)   NULL,
+[RevisionNumber] [tinyint]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SalesOrderNumber] [nvarchar]  (25)   NOT NULL,
+[SalesPersonID] [int]     NULL,
+[ShipDate] [datetime]     NULL,
+[ShipMethodID] [int]     NOT NULL,
+[ShipToAddressID] [int]     NOT NULL,
+[Status] [tinyint]     NOT NULL,
+[SubTotal] [money]     NOT NULL,
+[TaxAmt] [money]     NOT NULL,
+[TerritoryID] [int]     NULL,
+[TotalDue] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesOrderHeaderSalesReason](
-[SalesOrderID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[SalesReasonID] [int]    NOT NULL,
+[SalesOrderID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[SalesReasonID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesPerson](
-[BusinessEntityID] [int]    NOT NULL,
-[Bonus] [money]    NOT NULL,
-[CommissionPct] [smallmoney]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SalesLastYear] [money]    NOT NULL,
-[SalesQuota] [money]    NULL,
-[SalesYTD] [money]    NOT NULL,
-[TerritoryID] [int]    NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[Bonus] [money]     NOT NULL,
+[CommissionPct] [smallmoney]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SalesLastYear] [money]     NOT NULL,
+[SalesQuota] [money]     NULL,
+[SalesYTD] [money]     NOT NULL,
+[TerritoryID] [int]     NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesPersonQuotaHistory](
-[BusinessEntityID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[QuotaDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SalesQuota] [money]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[QuotaDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SalesQuota] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesReason](
-[SalesReasonID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[ReasonType] [nvarchar]  (50)  NOT NULL,
+[SalesReasonID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[ReasonType] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesTaxRate](
-[SalesTaxRateID] [int]   IDENTITY(1,1) NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[StateProvinceID] [int]    NOT NULL,
-[TaxRate] [smallmoney]    NOT NULL,
-[TaxType] [tinyint]    NOT NULL,
+[SalesTaxRateID] [int]   IDENTITY(1,1)  NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[StateProvinceID] [int]     NOT NULL,
+[TaxRate] [smallmoney]     NOT NULL,
+[TaxType] [tinyint]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesTerritory](
-[TerritoryID] [int]   IDENTITY(1,1) NOT NULL,
-[CostLastYear] [money]    NOT NULL,
-[CostYTD] [money]    NOT NULL,
-[CountryRegionCode] [nvarchar]  (3)  NOT NULL,
-[Group] [nvarchar]  (50)  NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SalesLastYear] [money]    NOT NULL,
-[SalesYTD] [money]    NOT NULL,
+[TerritoryID] [int]   IDENTITY(1,1)  NOT NULL,
+[CostLastYear] [money]     NOT NULL,
+[CostYTD] [money]     NOT NULL,
+[CountryRegionCode] [nvarchar]  (3)   NOT NULL,
+[Group] [nvarchar]  (50)   NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SalesLastYear] [money]     NOT NULL,
+[SalesYTD] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SalesTerritoryHistory](
-[BusinessEntityID] [int]    NOT NULL,
-[EndDate] [datetime]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[StartDate] [datetime]    NOT NULL,
-[TerritoryID] [int]    NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[EndDate] [datetime]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[StartDate] [datetime]     NOT NULL,
+[TerritoryID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[ShoppingCartItem](
-[ShoppingCartItemID] [int]   IDENTITY(1,1) NOT NULL,
-[DateCreated] [datetime]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[Quantity] [int]    NOT NULL,
-[ShoppingCartID] [nvarchar]  (50)  NOT NULL,
+[ShoppingCartItemID] [int]   IDENTITY(1,1)  NOT NULL,
+[DateCreated] [datetime]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[Quantity] [int]     NOT NULL,
+[ShoppingCartID] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SpecialOffer](
-[SpecialOfferID] [int]   IDENTITY(1,1) NOT NULL,
-[Category] [nvarchar]  (50)  NOT NULL,
-[Description] [nvarchar]  (255)  NOT NULL,
-[DiscountPct] [smallmoney]    NOT NULL,
-[EndDate] [datetime]    NOT NULL,
-[MaxQty] [int]    NULL,
-[MinQty] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[StartDate] [datetime]    NOT NULL,
-[Type] [nvarchar]  (50)  NOT NULL,
+[SpecialOfferID] [int]   IDENTITY(1,1)  NOT NULL,
+[Category] [nvarchar]  (50)   NOT NULL,
+[Description] [nvarchar]  (255)   NOT NULL,
+[DiscountPct] [smallmoney]     NOT NULL,
+[EndDate] [datetime]     NOT NULL,
+[MaxQty] [int]     NULL,
+[MinQty] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[StartDate] [datetime]     NOT NULL,
+[Type] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[SpecialOfferProduct](
-[SpecialOfferID] [int]    NOT NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[ProductID] [int]    NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
+[SpecialOfferID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[ProductID] [int]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Sales].[Store](
-[BusinessEntityID] [int]    NOT NULL,
-[Demographics] [xml]    NULL,
-[ModifiedDate] [datetime]    NOT NULL,
-[Name] [nvarchar]  (50)  NOT NULL,
-[rowguid] [uniqueidentifier]    NOT NULL,
-[SalesPersonID] [int]    NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[Demographics] [xml]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SalesPersonID] [int]     NULL,
 ) ON[PRIMARY]
 GO
 
@@ -1769,6 +1769,7 @@ CREATE  NONCLUSTERED INDEX[IX_Store_SalesPersonID] ON[Sales].[Store]
 [SalesPersonID] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+
 
 
 ALTER TABLE[HumanResources].[Employee]  WITH CHECK ADD  CONSTRAINT[FK_Employee_Person_BusinessEntityID] FOREIGN KEY([BusinessEntityID])

@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiTransactionHistoryModel
+	public partial class ApiTransactionHistoryModel: AbstractModel
 	{
-		public ApiTransactionHistoryModel()
+		public ApiTransactionHistoryModel() : base()
 		{}
 
 		public ApiTransactionHistoryModel(
@@ -161,5 +161,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bdcc5e568b129bbf2fa165425af02ff3</Hash>
+    <Hash>7d566418cc6b865fce38412f0e887eb8</Hash>
 </Codenesium>*/

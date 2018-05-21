@@ -39,22 +39,14 @@ namespace PetShippingNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOClient>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOClient> response = this.clientManager.All(query.Offset, query.Limit);
+			List<POCOClient> response = await this.clientManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace PetShippingNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOClient), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOClient response = this.clientManager.Get(id);
+			POCOClient response = await this.clientManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOClient response = this.clientManager.Get(id);
+					POCOClient response = await this.clientManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>56497c619621a8e5bc0ce6426e739d2e</Hash>
+    <Hash>ed826d415a0650502cccd603dd04f2ba</Hash>
 </Codenesium>*/

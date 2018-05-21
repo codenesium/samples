@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductReview
+	public abstract class AbstractBOProductReview: AbstractBOManager
 	{
 		private IProductReviewRepository productReviewRepository;
 		private IApiProductReviewModelValidator productReviewModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductReviewRepository productReviewRepository,
 			IApiProductReviewModelValidator productReviewModelValidator)
+			: base()
 
 		{
 			this.productReviewRepository = productReviewRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductReview> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductReview>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productReviewRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductReview Get(int productReviewID)
+		public virtual Task<POCOProductReview> Get(int productReviewID)
 		{
 			return this.productReviewRepository.Get(productReviewID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductReview> response = new CreateResponse<POCOProductReview>(await this.productReviewModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductReview record = this.productReviewRepository.Create(model);
+				POCOProductReview record = await this.productReviewRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productReviewRepository.Update(productReviewID, model);
+				await this.productReviewRepository.Update(productReviewID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productReviewRepository.Delete(productReviewID);
+				await this.productReviewRepository.Delete(productReviewID);
 			}
 			return response;
 		}
 
-		public List<POCOProductReview> GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
+		public async Task<List<POCOProductReview>> GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
 		{
-			return this.productReviewRepository.GetCommentsProductIDReviewerName(comments,productID,reviewerName);
+			return await this.productReviewRepository.GetCommentsProductIDReviewerName(comments,productID,reviewerName);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>273cde89249894aeb08eab332c9a232a</Hash>
+    <Hash>1e32a6be97149aa82359d62794e64b37</Hash>
 </Codenesium>*/

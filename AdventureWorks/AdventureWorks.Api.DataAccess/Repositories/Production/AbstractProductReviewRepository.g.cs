@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductReviewRepository
+	public abstract class AbstractProductReviewRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProductReview> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductReview>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProductReview Get(int productReviewID)
+		public async virtual Task<POCOProductReview> Get(int productReviewID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductReviewID == productReviewID).FirstOrDefault();
+			ProductReview record = await this.GetById(productReviewID);
+
+			return this.Mapper.ProductReviewMapEFToPOCO(record);
 		}
 
-		public virtual POCOProductReview Create(
+		public async virtual Task<POCOProductReview> Create(
 			ApiProductReviewModel model)
 		{
 			ProductReview record = new ProductReview();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ProductReview>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductReviewMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productReviewID,
 			ApiProductReviewModel model)
 		{
-			ProductReview record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
+			ProductReview record = await this.GetById(productReviewID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productReviewID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productReviewID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productReviewID)
 		{
-			ProductReview record = this.SearchLinqEF(x => x.ProductReviewID == productReviewID).FirstOrDefault();
+			ProductReview record = await this.GetById(productReviewID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ProductReview>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOProductReview> GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
+		public async Task<List<POCOProductReview>> GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
 		{
-			return this.SearchLinqPOCO(x => x.Comments == comments && x.ProductID == productID && x.ReviewerName == reviewerName);
+			var records = await this.SearchLinqPOCO(x => x.Comments == comments && x.ProductID == productID && x.ReviewerName == reviewerName);
+
+			return records;
 		}
 
-		protected List<POCOProductReview> Where(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOProductReview>> Where(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOProductReview> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOProductReview> SearchLinqPOCO(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProductReview>> SearchLinqPOCO(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProductReview> response = new List<POCOProductReview>();
-			List<ProductReview> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ProductReview> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductReviewMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ProductReview> SearchLinqEF(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductReview>> SearchLinqEF(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductReview.ProductReviewID)} ASC";
 			}
-			return this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductReview>();
+			return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductReview>();
 		}
 
-		private List<ProductReview> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductReview>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductReview.ProductReviewID)} ASC";
 			}
 
-			return this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductReview>();
+			return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductReview>();
+		}
+
+		private async Task<ProductReview> GetById(int productReviewID)
+		{
+			List<ProductReview> records = await this.SearchLinqEF(x => x.ProductReviewID == productReviewID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>be01f560c8fabeb441ff7ef3fcda2380</Hash>
+    <Hash>4340557a385cfc35f8ebbc48c840d6bd</Hash>
 </Codenesium>*/

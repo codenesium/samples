@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCurrency
+	public abstract class AbstractBOCurrency: AbstractBOManager
 	{
 		private ICurrencyRepository currencyRepository;
 		private IApiCurrencyModelValidator currencyModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ICurrencyRepository currencyRepository,
 			IApiCurrencyModelValidator currencyModelValidator)
+			: base()
 
 		{
 			this.currencyRepository = currencyRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCurrency> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.currencyRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCurrency Get(string currencyCode)
+		public virtual Task<POCOCurrency> Get(string currencyCode)
 		{
 			return this.currencyRepository.Get(currencyCode);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOCurrency> response = new CreateResponse<POCOCurrency>(await this.currencyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCurrency record = this.currencyRepository.Create(model);
+				POCOCurrency record = await this.currencyRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.currencyRepository.Update(currencyCode, model);
+				await this.currencyRepository.Update(currencyCode, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.currencyRepository.Delete(currencyCode);
+				await this.currencyRepository.Delete(currencyCode);
 			}
 			return response;
 		}
 
-		public POCOCurrency GetName(string name)
+		public async Task<POCOCurrency> GetName(string name)
 		{
-			return this.currencyRepository.GetName(name);
+			return await this.currencyRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7e9a3ecdf15668bf88df3170ab0ca59</Hash>
+    <Hash>8850a23793a682f01afd44df73fba8b7</Hash>
 </Codenesium>*/

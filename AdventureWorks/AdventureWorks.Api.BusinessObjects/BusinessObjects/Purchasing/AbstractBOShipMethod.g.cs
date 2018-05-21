@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOShipMethod
+	public abstract class AbstractBOShipMethod: AbstractBOManager
 	{
 		private IShipMethodRepository shipMethodRepository;
 		private IApiShipMethodModelValidator shipMethodModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IShipMethodRepository shipMethodRepository,
 			IApiShipMethodModelValidator shipMethodModelValidator)
+			: base()
 
 		{
 			this.shipMethodRepository = shipMethodRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOShipMethod> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.shipMethodRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOShipMethod Get(int shipMethodID)
+		public virtual Task<POCOShipMethod> Get(int shipMethodID)
 		{
 			return this.shipMethodRepository.Get(shipMethodID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOShipMethod> response = new CreateResponse<POCOShipMethod>(await this.shipMethodModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOShipMethod record = this.shipMethodRepository.Create(model);
+				POCOShipMethod record = await this.shipMethodRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.shipMethodRepository.Update(shipMethodID, model);
+				await this.shipMethodRepository.Update(shipMethodID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.shipMethodRepository.Delete(shipMethodID);
+				await this.shipMethodRepository.Delete(shipMethodID);
 			}
 			return response;
 		}
 
-		public POCOShipMethod GetName(string name)
+		public async Task<POCOShipMethod> GetName(string name)
 		{
-			return this.shipMethodRepository.GetName(name);
+			return await this.shipMethodRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df509b8e359f0dc618b0262f2fc98cc7</Hash>
+    <Hash>587275d06344801a55e27a12c9003c37</Hash>
 </Codenesium>*/

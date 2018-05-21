@@ -1,28 +1,29 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IBusinessEntityContactRepository
 	{
-		POCOBusinessEntityContact Create(ApiBusinessEntityContactModel model);
+		Task<POCOBusinessEntityContact> Create(ApiBusinessEntityContactModel model);
 
-		void Update(int businessEntityID,
+		Task Update(int businessEntityID,
 		            ApiBusinessEntityContactModel model);
 
-		void Delete(int businessEntityID);
+		Task Delete(int businessEntityID);
 
-		POCOBusinessEntityContact Get(int businessEntityID);
+		Task<POCOBusinessEntityContact> Get(int businessEntityID);
 
-		List<POCOBusinessEntityContact> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOBusinessEntityContact>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOBusinessEntityContact> GetContactTypeID(int contactTypeID);
-		List<POCOBusinessEntityContact> GetPersonID(int personID);
+		Task<List<POCOBusinessEntityContact>> GetContactTypeID(int contactTypeID);
+		Task<List<POCOBusinessEntityContact>> GetPersonID(int personID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e25e5e9f6a8b41da02f3e1063619ee54</Hash>
+    <Hash>7183d173da89ce7a1894cf52a0cee195</Hash>
 </Codenesium>*/

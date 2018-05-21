@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractAddressRepository
+	public abstract class AbstractAddressRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOAddress Get(int addressID)
+		public async virtual Task<POCOAddress> Get(int addressID)
 		{
-			return this.SearchLinqPOCO(x => x.AddressID == addressID).FirstOrDefault();
+			Address record = await this.GetById(addressID);
+
+			return this.Mapper.AddressMapEFToPOCO(record);
 		}
 
-		public virtual POCOAddress Create(
+		public async virtual Task<POCOAddress> Create(
 			ApiAddressModel model)
 		{
 			Address record = new Address();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Address>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.AddressMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int addressID,
 			ApiAddressModel model)
 		{
-			Address record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
+			Address record = await this.GetById(addressID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{addressID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					addressID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int addressID)
 		{
-			Address record = this.SearchLinqEF(x => x.AddressID == addressID).FirstOrDefault();
+			Address record = await this.GetById(addressID);
 
 			if (record == null)
 			{
@@ -82,54 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Address>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOAddress GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
+		public async Task<POCOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
 		{
-			return this.SearchLinqPOCO(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<List<POCOAddress>> GetStateProvinceID(int stateProvinceID)
+		{
+			var records = await this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID);
+
+			return records;
 		}
 
-		public List<POCOAddress> GetStateProvinceID(int stateProvinceID)
+		protected async Task<List<POCOAddress>> Where(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID);
+			List<POCOAddress> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCOAddress> Where(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOAddress> SearchLinqPOCO(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOAddress>> SearchLinqPOCO(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOAddress> response = new List<POCOAddress>();
-			List<Address> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Address> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.AddressMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Address> SearchLinqEF(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Address>> SearchLinqEF(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Address.AddressID)} ASC";
 			}
-			return this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Address>();
+			return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Address>();
 		}
 
-		private List<Address> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Address>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Address.AddressID)} ASC";
 			}
 
-			return this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Address>();
+			return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Address>();
+		}
+
+		private async Task<Address> GetById(int addressID)
+		{
+			List<Address> records = await this.SearchLinqEF(x => x.AddressID == addressID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3da6720eb1d8d503f0c575cd25afe4ff</Hash>
+    <Hash>36223d667a65fbdb1448fe280626b39c</Hash>
 </Codenesium>*/

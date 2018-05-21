@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOCustomer>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCustomer> response = this.customerManager.All(query.Offset, query.Limit);
+			List<POCOCustomer> response = await this.customerManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCustomer), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOCustomer response = this.customerManager.Get(id);
+			POCOCustomer response = await this.customerManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCustomer response = this.customerManager.Get(id);
+					POCOCustomer response = await this.customerManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCustomer), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetAccountNumber(string accountNumber)
+		public async virtual Task<IActionResult> GetAccountNumber(string accountNumber)
 		{
-			POCOCustomer response = this.customerManager.GetAccountNumber(accountNumber);
+			POCOCustomer response = await this.customerManager.GetAccountNumber(accountNumber);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -196,22 +191,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getTerritoryID/{territoryID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOCustomer>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetTerritoryID(Nullable<int> territoryID)
+		public async virtual Task<IActionResult> GetTerritoryID(Nullable<int> territoryID)
 		{
-			List<POCOCustomer> response = this.customerManager.GetTerritoryID(territoryID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOCustomer> response = await this.customerManager.GetTerritoryID(territoryID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ab828448233b4ce44600886cfe79c37</Hash>
+    <Hash>49ecd2426c1034bb0d0863a4cb2a8468</Hash>
 </Codenesium>*/

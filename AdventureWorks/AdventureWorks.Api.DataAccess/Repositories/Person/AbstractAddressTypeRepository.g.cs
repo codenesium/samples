@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractAddressTypeRepository
+	public abstract class AbstractAddressTypeRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOAddressType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOAddressType Get(int addressTypeID)
+		public async virtual Task<POCOAddressType> Get(int addressTypeID)
 		{
-			return this.SearchLinqPOCO(x => x.AddressTypeID == addressTypeID).FirstOrDefault();
+			AddressType record = await this.GetById(addressTypeID);
+
+			return this.Mapper.AddressTypeMapEFToPOCO(record);
 		}
 
-		public virtual POCOAddressType Create(
+		public async virtual Task<POCOAddressType> Create(
 			ApiAddressTypeModel model)
 		{
 			AddressType record = new AddressType();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<AddressType>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.AddressTypeMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int addressTypeID,
 			ApiAddressTypeModel model)
 		{
-			AddressType record = this.SearchLinqEF(x => x.AddressTypeID == addressTypeID).FirstOrDefault();
+			AddressType record = await this.GetById(addressTypeID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{addressTypeID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					addressTypeID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int addressTypeID)
 		{
-			AddressType record = this.SearchLinqEF(x => x.AddressTypeID == addressTypeID).FirstOrDefault();
+			AddressType record = await this.GetById(addressTypeID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<AddressType>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOAddressType GetName(string name)
+		public async Task<POCOAddressType> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOAddressType> Where(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOAddressType>> Where(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOAddressType> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOAddressType> SearchLinqPOCO(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOAddressType>> SearchLinqPOCO(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOAddressType> response = new List<POCOAddressType>();
-			List<AddressType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<AddressType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.AddressTypeMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<AddressType> SearchLinqEF(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<AddressType>> SearchLinqEF(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(AddressType.AddressTypeID)} ASC";
 			}
-			return this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<AddressType>();
+			return await this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AddressType>();
 		}
 
-		private List<AddressType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<AddressType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(AddressType.AddressTypeID)} ASC";
 			}
 
-			return this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<AddressType>();
+			return await this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AddressType>();
+		}
+
+		private async Task<AddressType> GetById(int addressTypeID)
+		{
+			List<AddressType> records = await this.SearchLinqEF(x => x.AddressTypeID == addressTypeID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9038070d327d69b9555907280b2622e0</Hash>
+    <Hash>ee36a9b7e1c6883bb85b44edc11aa0d2</Hash>
 </Codenesium>*/

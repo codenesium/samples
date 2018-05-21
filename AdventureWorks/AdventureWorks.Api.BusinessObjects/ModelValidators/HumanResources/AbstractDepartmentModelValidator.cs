@@ -35,17 +35,17 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDepartmentModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		private bool BeUniqueGetName(ApiDepartmentModel model)
 		{
-			return this.DepartmentRepository.GetName(model.Name) != null;
+			return this.DepartmentRepository.GetName(model.Name) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ddf561a26900f51440c11d22407d4114</Hash>
+    <Hash>ba49f4b87c9d31452a2539726780e05f</Hash>
 </Codenesium>*/

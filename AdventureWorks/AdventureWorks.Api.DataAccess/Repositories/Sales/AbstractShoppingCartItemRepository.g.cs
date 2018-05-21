@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractShoppingCartItemRepository
+	public abstract class AbstractShoppingCartItemRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOShoppingCartItem> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOShoppingCartItem Get(int shoppingCartItemID)
+		public async virtual Task<POCOShoppingCartItem> Get(int shoppingCartItemID)
 		{
-			return this.SearchLinqPOCO(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
+			ShoppingCartItem record = await this.GetById(shoppingCartItemID);
+
+			return this.Mapper.ShoppingCartItemMapEFToPOCO(record);
 		}
 
-		public virtual POCOShoppingCartItem Create(
+		public async virtual Task<POCOShoppingCartItem> Create(
 			ApiShoppingCartItemModel model)
 		{
 			ShoppingCartItem record = new ShoppingCartItem();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ShoppingCartItem>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ShoppingCartItemMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int shoppingCartItemID,
 			ApiShoppingCartItemModel model)
 		{
-			ShoppingCartItem record = this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
+			ShoppingCartItem record = await this.GetById(shoppingCartItemID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{shoppingCartItemID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					shoppingCartItemID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int shoppingCartItemID)
 		{
-			ShoppingCartItem record = this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID).FirstOrDefault();
+			ShoppingCartItem record = await this.GetById(shoppingCartItemID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ShoppingCartItem>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOShoppingCartItem> GetShoppingCartIDProductID(string shoppingCartID,int productID)
+		public async Task<List<POCOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID);
+			var records = await this.SearchLinqPOCO(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID);
+
+			return records;
 		}
 
-		protected List<POCOShoppingCartItem> Where(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOShoppingCartItem>> Where(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOShoppingCartItem> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOShoppingCartItem> SearchLinqPOCO(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOShoppingCartItem>> SearchLinqPOCO(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOShoppingCartItem> response = new List<POCOShoppingCartItem>();
-			List<ShoppingCartItem> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ShoppingCartItem> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ShoppingCartItemMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ShoppingCartItem> SearchLinqEF(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ShoppingCartItem>> SearchLinqEF(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ShoppingCartItem.ShoppingCartItemID)} ASC";
 			}
-			return this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ShoppingCartItem>();
+			return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ShoppingCartItem>();
 		}
 
-		private List<ShoppingCartItem> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ShoppingCartItem>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ShoppingCartItem.ShoppingCartItemID)} ASC";
 			}
 
-			return this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ShoppingCartItem>();
+			return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ShoppingCartItem>();
+		}
+
+		private async Task<ShoppingCartItem> GetById(int shoppingCartItemID)
+		{
+			List<ShoppingCartItem> records = await this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>974ee0e811b124c2e58c9c68a3e1ca2b</Hash>
+    <Hash>8706ff1ffc16b778a3ade7cb3aee0705</Hash>
 </Codenesium>*/

@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductReview>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductReview> response = this.productReviewManager.All(query.Offset, query.Limit);
+			List<POCOProductReview> response = await this.productReviewManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProductReview), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductReview response = this.productReviewManager.Get(id);
+			POCOProductReview response = await this.productReviewManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductReview response = this.productReviewManager.Get(id);
+					POCOProductReview response = await this.productReviewManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,22 +172,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getCommentsProductIDReviewerName/{comments}/{productID}/{reviewerName}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductReview>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
+		public async virtual Task<IActionResult> GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
 		{
-			List<POCOProductReview> response = this.productReviewManager.GetCommentsProductIDReviewerName(comments,productID,reviewerName);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOProductReview> response = await this.productReviewManager.GetCommentsProductIDReviewerName(comments,productID,reviewerName);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a79cf25e516400362011fa09310e54aa</Hash>
+    <Hash>0fe97d0f1beeb6c39481c5181b03b843</Hash>
 </Codenesium>*/

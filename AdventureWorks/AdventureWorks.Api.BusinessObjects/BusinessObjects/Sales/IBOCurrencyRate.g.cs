@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int currencyRateID);
 
-		POCOCurrencyRate Get(int currencyRateID);
+		Task<POCOCurrencyRate> Get(int currencyRateID);
 
-		List<POCOCurrencyRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOCurrencyRate GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode);
+		Task<POCOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab67bbb891d01d67c4e00df5d5b6636f</Hash>
+    <Hash>31ace1cc26da2c862bdfe054a7b953d8</Hash>
 </Codenesium>*/

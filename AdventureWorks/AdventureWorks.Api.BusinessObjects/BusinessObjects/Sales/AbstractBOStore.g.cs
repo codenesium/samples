@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOStore
+	public abstract class AbstractBOStore: AbstractBOManager
 	{
 		private IStoreRepository storeRepository;
 		private IApiStoreModelValidator storeModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IStoreRepository storeRepository,
 			IApiStoreModelValidator storeModelValidator)
+			: base()
 
 		{
 			this.storeRepository = storeRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOStore> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOStore>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.storeRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOStore Get(int businessEntityID)
+		public virtual Task<POCOStore> Get(int businessEntityID)
 		{
 			return this.storeRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOStore> response = new CreateResponse<POCOStore>(await this.storeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOStore record = this.storeRepository.Create(model);
+				POCOStore record = await this.storeRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.storeRepository.Update(businessEntityID, model);
+				await this.storeRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,22 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.storeRepository.Delete(businessEntityID);
+				await this.storeRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public List<POCOStore> GetSalesPersonID(Nullable<int> salesPersonID)
+		public async Task<List<POCOStore>> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			return this.storeRepository.GetSalesPersonID(salesPersonID);
+			return await this.storeRepository.GetSalesPersonID(salesPersonID);
 		}
-		public List<POCOStore> GetDemographics(string demographics)
+		public async Task<List<POCOStore>> GetDemographics(string demographics)
 		{
-			return this.storeRepository.GetDemographics(demographics);
+			return await this.storeRepository.GetDemographics(demographics);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9382575365c8b24e2a3385273886448</Hash>
+    <Hash>287b081b17b0be2627ef4bb06fc20b25</Hash>
 </Codenesium>*/

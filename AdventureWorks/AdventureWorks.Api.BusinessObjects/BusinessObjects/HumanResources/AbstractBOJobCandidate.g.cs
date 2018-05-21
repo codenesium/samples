@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOJobCandidate
+	public abstract class AbstractBOJobCandidate: AbstractBOManager
 	{
 		private IJobCandidateRepository jobCandidateRepository;
 		private IApiJobCandidateModelValidator jobCandidateModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IJobCandidateRepository jobCandidateRepository,
 			IApiJobCandidateModelValidator jobCandidateModelValidator)
+			: base()
 
 		{
 			this.jobCandidateRepository = jobCandidateRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOJobCandidate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.jobCandidateRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOJobCandidate Get(int jobCandidateID)
+		public virtual Task<POCOJobCandidate> Get(int jobCandidateID)
 		{
 			return this.jobCandidateRepository.Get(jobCandidateID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOJobCandidate> response = new CreateResponse<POCOJobCandidate>(await this.jobCandidateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOJobCandidate record = this.jobCandidateRepository.Create(model);
+				POCOJobCandidate record = await this.jobCandidateRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.jobCandidateRepository.Update(jobCandidateID, model);
+				await this.jobCandidateRepository.Update(jobCandidateID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.jobCandidateRepository.Delete(jobCandidateID);
+				await this.jobCandidateRepository.Delete(jobCandidateID);
 			}
 			return response;
 		}
 
-		public List<POCOJobCandidate> GetBusinessEntityID(Nullable<int> businessEntityID)
+		public async Task<List<POCOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID)
 		{
-			return this.jobCandidateRepository.GetBusinessEntityID(businessEntityID);
+			return await this.jobCandidateRepository.GetBusinessEntityID(businessEntityID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>598ce62efd987b8e5ffc8e1e08a04000</Hash>
+    <Hash>4a998f2958dbe4c55a3f814f74bb7d39</Hash>
 </Codenesium>*/

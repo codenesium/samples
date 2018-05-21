@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPassword
+	public abstract class AbstractBOPassword: AbstractBOManager
 	{
 		private IPasswordRepository passwordRepository;
 		private IApiPasswordModelValidator passwordModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IPasswordRepository passwordRepository,
 			IApiPasswordModelValidator passwordModelValidator)
+			: base()
 
 		{
 			this.passwordRepository = passwordRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPassword> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.passwordRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPassword Get(int businessEntityID)
+		public virtual Task<POCOPassword> Get(int businessEntityID)
 		{
 			return this.passwordRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOPassword> response = new CreateResponse<POCOPassword>(await this.passwordModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPassword record = this.passwordRepository.Create(model);
+				POCOPassword record = await this.passwordRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.passwordRepository.Update(businessEntityID, model);
+				await this.passwordRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.passwordRepository.Delete(businessEntityID);
+				await this.passwordRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>dd31ee44c523f29526d9df34ba4e01dd</Hash>
+    <Hash>d9b5aa3f100dab9d4ab8aac76fa2011a</Hash>
 </Codenesium>*/

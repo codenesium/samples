@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOLinkLog
+	public abstract class AbstractBOLinkLog: AbstractBOManager
 	{
 		private ILinkLogRepository linkLogRepository;
 		private IApiLinkLogModelValidator linkLogModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			ILinkLogRepository linkLogRepository,
 			IApiLinkLogModelValidator linkLogModelValidator)
+			: base()
 
 		{
 			this.linkLogRepository = linkLogRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOLinkLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.linkLogRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOLinkLog Get(int id)
+		public virtual Task<POCOLinkLog> Get(int id)
 		{
 			return this.linkLogRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOLinkLog> response = new CreateResponse<POCOLinkLog>(await this.linkLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLinkLog record = this.linkLogRepository.Create(model);
+				POCOLinkLog record = await this.linkLogRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.linkLogRepository.Update(id, model);
+				await this.linkLogRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.linkLogRepository.Delete(id);
+				await this.linkLogRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fbfc3997d03dc4af4edb7a81b90444c2</Hash>
+    <Hash>96b3226d8382dd4093c3739aa2e08b54</Hash>
 </Codenesium>*/

@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOCreditCard>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCreditCard> response = this.creditCardManager.All(query.Offset, query.Limit);
+			List<POCOCreditCard> response = await this.creditCardManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCreditCard), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOCreditCard response = this.creditCardManager.Get(id);
+			POCOCreditCard response = await this.creditCardManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCreditCard response = this.creditCardManager.Get(id);
+					POCOCreditCard response = await this.creditCardManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCreditCard), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetCardNumber(string cardNumber)
+		public async virtual Task<IActionResult> GetCardNumber(string cardNumber)
 		{
-			POCOCreditCard response = this.creditCardManager.GetCardNumber(cardNumber);
+			POCOCreditCard response = await this.creditCardManager.GetCardNumber(cardNumber);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>18f4192e74ea5b905f93748d9b850a92</Hash>
+    <Hash>6826abd29ea457aea44f38b555747f30</Hash>
 </Codenesium>*/

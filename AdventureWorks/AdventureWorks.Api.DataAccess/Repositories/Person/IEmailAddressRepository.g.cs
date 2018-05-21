@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmailAddressRepository
 	{
-		POCOEmailAddress Create(ApiEmailAddressModel model);
+		Task<POCOEmailAddress> Create(ApiEmailAddressModel model);
 
-		void Update(int businessEntityID,
+		Task Update(int businessEntityID,
 		            ApiEmailAddressModel model);
 
-		void Delete(int businessEntityID);
+		Task Delete(int businessEntityID);
 
-		POCOEmailAddress Get(int businessEntityID);
+		Task<POCOEmailAddress> Get(int businessEntityID);
 
-		List<POCOEmailAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOEmailAddress> GetEmailAddress(string emailAddress1);
+		Task<List<POCOEmailAddress>> GetEmailAddress(string emailAddress1);
 	}
 }
 
 /*<Codenesium>
-    <Hash>72feb22fce749d1f2ed1167b5a14225e</Hash>
+    <Hash>2d8faa557522f92d8011c48b0ea30da3</Hash>
 </Codenesium>*/

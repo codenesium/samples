@@ -39,22 +39,14 @@ namespace PetShippingNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOCountryRequirement>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCountryRequirement> response = this.countryRequirementManager.All(query.Offset, query.Limit);
+			List<POCOCountryRequirement> response = await this.countryRequirementManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace PetShippingNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOCountryRequirement), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOCountryRequirement response = this.countryRequirementManager.Get(id);
+			POCOCountryRequirement response = await this.countryRequirementManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCountryRequirement response = this.countryRequirementManager.Get(id);
+					POCOCountryRequirement response = await this.countryRequirementManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3fb9504393afecdb8adebb02c4d4fbb4</Hash>
+    <Hash>74567a4818a3fa26d26262c5506afcab</Hash>
 </Codenesium>*/

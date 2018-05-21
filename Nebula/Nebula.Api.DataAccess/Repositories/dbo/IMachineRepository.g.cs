@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRepository
 	{
-		POCOMachine Create(ApiMachineModel model);
+		Task<POCOMachine> Create(ApiMachineModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiMachineModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOMachine Get(int id);
+		Task<POCOMachine> Get(int id);
 
-		List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOMachine MachineGuid(Guid machineGuid);
+		Task<POCOMachine> MachineGuid(Guid machineGuid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f089c7734a6ba0de01fd61a67c6f32a</Hash>
+    <Hash>36bd010f0aa95c7da62d28c83e40ad86</Hash>
 </Codenesium>*/

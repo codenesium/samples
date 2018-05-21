@@ -39,22 +39,14 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOFileType>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOFileType> response = this.fileTypeManager.All(query.Offset, query.Limit);
+			List<POCOFileType> response = await this.fileTypeManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace FileServiceNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOFileType), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOFileType response = this.fileTypeManager.Get(id);
+			POCOFileType response = await this.fileTypeManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace FileServiceNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOFileType response = this.fileTypeManager.Get(id);
+					POCOFileType response = await this.fileTypeManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>208392a3485ca0499103c3bfc5f8b3b4</Hash>
+    <Hash>34bb768d955aa0d1f8082ff878c8fd68</Hash>
 </Codenesium>*/

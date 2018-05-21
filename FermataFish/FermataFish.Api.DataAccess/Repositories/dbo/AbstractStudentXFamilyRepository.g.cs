@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public abstract class AbstractStudentXFamilyRepository
+	public abstract class AbstractStudentXFamilyRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace FermataFishNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOStudentXFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOStudentXFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOStudentXFamily Get(int id)
+		public async virtual Task<POCOStudentXFamily> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			StudentXFamily record = await this.GetById(id);
+
+			return this.Mapper.StudentXFamilyMapEFToPOCO(record);
 		}
 
-		public virtual POCOStudentXFamily Create(
+		public async virtual Task<POCOStudentXFamily> Create(
 			ApiStudentXFamilyModel model)
 		{
 			StudentXFamily record = new StudentXFamily();
@@ -47,15 +51,17 @@ namespace FermataFishNS.Api.DataAccess
 				record);
 
 			this.Context.Set<StudentXFamily>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.StudentXFamilyMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiStudentXFamilyModel model)
 		{
-			StudentXFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			StudentXFamily record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace FermataFishNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			StudentXFamily record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			StudentXFamily record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace FermataFishNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<StudentXFamily>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOStudentXFamily> Where(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOStudentXFamily>> Where(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOStudentXFamily> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOStudentXFamily> SearchLinqPOCO(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOStudentXFamily>> SearchLinqPOCO(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOStudentXFamily> response = new List<POCOStudentXFamily>();
-			List<StudentXFamily> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<StudentXFamily> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.StudentXFamilyMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<StudentXFamily> SearchLinqEF(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<StudentXFamily>> SearchLinqEF(Expression<Func<StudentXFamily, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(StudentXFamily.Id)} ASC";
 			}
-			return this.Context.Set<StudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<StudentXFamily>();
+			return await this.Context.Set<StudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StudentXFamily>();
 		}
 
-		private List<StudentXFamily> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<StudentXFamily>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(StudentXFamily.Id)} ASC";
 			}
 
-			return this.Context.Set<StudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<StudentXFamily>();
+			return await this.Context.Set<StudentXFamily>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StudentXFamily>();
+		}
+
+		private async Task<StudentXFamily> GetById(int id)
+		{
+			List<StudentXFamily> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5547006e69f5491d13489800f585f45c</Hash>
+    <Hash>d20094f2f6de121090d1e797091af0fa</Hash>
 </Codenesium>*/

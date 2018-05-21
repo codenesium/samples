@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace FileServiceNS.Api.Contracts
 {
-	public partial class ApiBucketModel
+	public partial class ApiBucketModel: AbstractModel
 	{
-		public ApiBucketModel()
+		public ApiBucketModel() : base()
 		{}
 
 		public ApiBucketModel(
@@ -53,5 +53,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>69f5bdc996a658b1958225b5326bb7f1</Hash>
+    <Hash>2cdb19e121d33b3f73f5d4ec21faa67b</Hash>
 </Codenesium>*/

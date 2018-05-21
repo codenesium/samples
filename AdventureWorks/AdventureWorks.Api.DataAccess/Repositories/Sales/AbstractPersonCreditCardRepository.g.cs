@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractPersonCreditCardRepository
+	public abstract class AbstractPersonCreditCardRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOPersonCreditCard> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPersonCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOPersonCreditCard Get(int businessEntityID)
+		public async virtual Task<POCOPersonCreditCard> Get(int businessEntityID)
 		{
-			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			PersonCreditCard record = await this.GetById(businessEntityID);
+
+			return this.Mapper.PersonCreditCardMapEFToPOCO(record);
 		}
 
-		public virtual POCOPersonCreditCard Create(
+		public async virtual Task<POCOPersonCreditCard> Create(
 			ApiPersonCreditCardModel model)
 		{
 			PersonCreditCard record = new PersonCreditCard();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<PersonCreditCard>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.PersonCreditCardMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int businessEntityID,
 			ApiPersonCreditCardModel model)
 		{
-			PersonCreditCard record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			PersonCreditCard record = await this.GetById(businessEntityID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					businessEntityID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int businessEntityID)
 		{
-			PersonCreditCard record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			PersonCreditCard record = await this.GetById(businessEntityID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<PersonCreditCard>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOPersonCreditCard> Where(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOPersonCreditCard>> Where(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOPersonCreditCard> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOPersonCreditCard> SearchLinqPOCO(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOPersonCreditCard>> SearchLinqPOCO(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOPersonCreditCard> response = new List<POCOPersonCreditCard>();
-			List<PersonCreditCard> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<PersonCreditCard> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.PersonCreditCardMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<PersonCreditCard> SearchLinqEF(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PersonCreditCard>> SearchLinqEF(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PersonCreditCard.BusinessEntityID)} ASC";
 			}
-			return this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PersonCreditCard>();
+			return await this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PersonCreditCard>();
 		}
 
-		private List<PersonCreditCard> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PersonCreditCard>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PersonCreditCard.BusinessEntityID)} ASC";
 			}
 
-			return this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PersonCreditCard>();
+			return await this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PersonCreditCard>();
+		}
+
+		private async Task<PersonCreditCard> GetById(int businessEntityID)
+		{
+			List<PersonCreditCard> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6b7561d1589764e37d5dd764027ace1b</Hash>
+    <Hash>5d52da2067b5a4f2caf6edc757fcbea1</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOFile
+	public abstract class AbstractBOFile: AbstractBOManager
 	{
 		private IFileRepository fileRepository;
 		private IApiFileModelValidator fileModelValidator;
@@ -22,6 +22,7 @@ namespace FileServiceNS.Api.BusinessObjects
 			ILogger logger,
 			IFileRepository fileRepository,
 			IApiFileModelValidator fileModelValidator)
+			: base()
 
 		{
 			this.fileRepository = fileRepository;
@@ -29,12 +30,12 @@ namespace FileServiceNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOFile> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOFile>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.fileRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOFile Get(int id)
+		public virtual Task<POCOFile> Get(int id)
 		{
 			return this.fileRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FileServiceNS.Api.BusinessObjects
 			CreateResponse<POCOFile> response = new CreateResponse<POCOFile>(await this.fileModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOFile record = this.fileRepository.Create(model);
+				POCOFile record = await this.fileRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.fileRepository.Update(id, model);
+				await this.fileRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.fileRepository.Delete(id);
+				await this.fileRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7ea4def2d406e18c48a3962ac7c38af1</Hash>
+    <Hash>8850c4858aa04aae995c44eb238b940b</Hash>
 </Codenesium>*/

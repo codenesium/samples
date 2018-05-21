@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
 
 namespace ESPIOTNS.Api.DataAccess
 {
 	public interface IDeviceActionRepository
 	{
-		POCODeviceAction Create(ApiDeviceActionModel model);
+		Task<POCODeviceAction> Create(ApiDeviceActionModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiDeviceActionModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCODeviceAction Get(int id);
+		Task<POCODeviceAction> Get(int id);
 
-		List<POCODeviceAction> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ebb5f72ad6aa1954187af4c807a6576</Hash>
+    <Hash>5a093b58c8a982223ec86432446fbfc9</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductDescription
+	public abstract class AbstractBOProductDescription: AbstractBOManager
 	{
 		private IProductDescriptionRepository productDescriptionRepository;
 		private IApiProductDescriptionModelValidator productDescriptionModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductDescriptionRepository productDescriptionRepository,
 			IApiProductDescriptionModelValidator productDescriptionModelValidator)
+			: base()
 
 		{
 			this.productDescriptionRepository = productDescriptionRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductDescription> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductDescription>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productDescriptionRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductDescription Get(int productDescriptionID)
+		public virtual Task<POCOProductDescription> Get(int productDescriptionID)
 		{
 			return this.productDescriptionRepository.Get(productDescriptionID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductDescription> response = new CreateResponse<POCOProductDescription>(await this.productDescriptionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductDescription record = this.productDescriptionRepository.Create(model);
+				POCOProductDescription record = await this.productDescriptionRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productDescriptionRepository.Update(productDescriptionID, model);
+				await this.productDescriptionRepository.Update(productDescriptionID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productDescriptionRepository.Delete(productDescriptionID);
+				await this.productDescriptionRepository.Delete(productDescriptionID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>03e92eaff0fb1446f7b325cff08e1281</Hash>
+    <Hash>e9eddba5a20fd5373faa36aabb631a68</Hash>
 </Codenesium>*/

@@ -7,10 +7,10 @@ namespace NebulaNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
-		[JsonProperty(PropertyName = "V")]
+		[JsonProperty(PropertyName = "Value")]
 		public T Value { get; set; }
 
-		[JsonProperty(PropertyName = "O")]
+		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -299,5 +299,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f632deaa1bc99ca3818b1056539e0d80</Hash>
+    <Hash>6519a603ed1cbf9ac8e1f943fa18ba15</Hash>
 </Codenesium>*/

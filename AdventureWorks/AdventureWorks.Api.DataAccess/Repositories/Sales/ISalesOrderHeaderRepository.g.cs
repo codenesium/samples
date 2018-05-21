@@ -1,30 +1,30 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesOrderHeaderRepository
 	{
-		POCOSalesOrderHeader Create(ApiSalesOrderHeaderModel model);
+		Task<POCOSalesOrderHeader> Create(ApiSalesOrderHeaderModel model);
 
-		void Update(int salesOrderID,
+		Task Update(int salesOrderID,
 		            ApiSalesOrderHeaderModel model);
 
-		void Delete(int salesOrderID);
+		Task Delete(int salesOrderID);
 
-		POCOSalesOrderHeader Get(int salesOrderID);
+		Task<POCOSalesOrderHeader> Get(int salesOrderID);
 
-		List<POCOSalesOrderHeader> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOSalesOrderHeader GetSalesOrderNumber(string salesOrderNumber);
-
-		List<POCOSalesOrderHeader> GetCustomerID(int customerID);
-		List<POCOSalesOrderHeader> GetSalesPersonID(Nullable<int> salesPersonID);
+		Task<POCOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber);
+		Task<List<POCOSalesOrderHeader>> GetCustomerID(int customerID);
+		Task<List<POCOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>84958eb64b84aca002961a1e4bc61f75</Hash>
+    <Hash>3f694370cbb4b667773df2ebe33d5311</Hash>
 </Codenesium>*/

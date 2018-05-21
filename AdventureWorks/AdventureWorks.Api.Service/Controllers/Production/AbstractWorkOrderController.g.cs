@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOWorkOrder>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOWorkOrder> response = this.workOrderManager.All(query.Offset, query.Limit);
+			List<POCOWorkOrder> response = await this.workOrderManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOWorkOrder), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOWorkOrder response = this.workOrderManager.Get(id);
+			POCOWorkOrder response = await this.workOrderManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOWorkOrder response = this.workOrderManager.Get(id);
+					POCOWorkOrder response = await this.workOrderManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,40 +172,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOWorkOrder>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetProductID(int productID)
+		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOWorkOrder> response = this.workOrderManager.GetProductID(productID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOWorkOrder> response = await this.workOrderManager.GetProductID(productID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getScrapReasonID/{scrapReasonID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOWorkOrder>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetScrapReasonID(Nullable<short> scrapReasonID)
+		public async virtual Task<IActionResult> GetScrapReasonID(Nullable<short> scrapReasonID)
 		{
-			List<POCOWorkOrder> response = this.workOrderManager.GetScrapReasonID(scrapReasonID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOWorkOrder> response = await this.workOrderManager.GetScrapReasonID(scrapReasonID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e78f21ad44517ff0eab94e19fc92307</Hash>
+    <Hash>2f34da2625e6cb08f273edbd7604b089</Hash>
 </Codenesium>*/

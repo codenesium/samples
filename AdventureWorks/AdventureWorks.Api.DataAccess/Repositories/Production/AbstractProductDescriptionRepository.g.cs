@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductDescriptionRepository
+	public abstract class AbstractProductDescriptionRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProductDescription> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductDescription>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProductDescription Get(int productDescriptionID)
+		public async virtual Task<POCOProductDescription> Get(int productDescriptionID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductDescriptionID == productDescriptionID).FirstOrDefault();
+			ProductDescription record = await this.GetById(productDescriptionID);
+
+			return this.Mapper.ProductDescriptionMapEFToPOCO(record);
 		}
 
-		public virtual POCOProductDescription Create(
+		public async virtual Task<POCOProductDescription> Create(
 			ApiProductDescriptionModel model)
 		{
 			ProductDescription record = new ProductDescription();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ProductDescription>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductDescriptionMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productDescriptionID,
 			ApiProductDescriptionModel model)
 		{
-			ProductDescription record = this.SearchLinqEF(x => x.ProductDescriptionID == productDescriptionID).FirstOrDefault();
+			ProductDescription record = await this.GetById(productDescriptionID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productDescriptionID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productDescriptionID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productDescriptionID)
 		{
-			ProductDescription record = this.SearchLinqEF(x => x.ProductDescriptionID == productDescriptionID).FirstOrDefault();
+			ProductDescription record = await this.GetById(productDescriptionID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ProductDescription>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOProductDescription> Where(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOProductDescription>> Where(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOProductDescription> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOProductDescription> SearchLinqPOCO(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProductDescription>> SearchLinqPOCO(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProductDescription> response = new List<POCOProductDescription>();
-			List<ProductDescription> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ProductDescription> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductDescriptionMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ProductDescription> SearchLinqEF(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductDescription>> SearchLinqEF(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductDescription.ProductDescriptionID)} ASC";
 			}
-			return this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductDescription>();
+			return await this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductDescription>();
 		}
 
-		private List<ProductDescription> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductDescription>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductDescription.ProductDescriptionID)} ASC";
 			}
 
-			return this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductDescription>();
+			return await this.Context.Set<ProductDescription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductDescription>();
+		}
+
+		private async Task<ProductDescription> GetById(int productDescriptionID)
+		{
+			List<ProductDescription> records = await this.SearchLinqEF(x => x.ProductDescriptionID == productDescriptionID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4be82ef6613ea24ecd4fea3f22868cd</Hash>
+    <Hash>74484cd2f89714dabad62021eddd4da4</Hash>
 </Codenesium>*/

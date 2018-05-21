@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPasswordRepository
 	{
-		POCOPassword Create(ApiPasswordModel model);
+		Task<POCOPassword> Create(ApiPasswordModel model);
 
-		void Update(int businessEntityID,
+		Task Update(int businessEntityID,
 		            ApiPasswordModel model);
 
-		void Delete(int businessEntityID);
+		Task Delete(int businessEntityID);
 
-		POCOPassword Get(int businessEntityID);
+		Task<POCOPassword> Get(int businessEntityID);
 
-		List<POCOPassword> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>23e2c1cffa36cc0eaf1348ae03167228</Hash>
+    <Hash>acc22496d2e650bcd76a0b6c62de1a6a</Hash>
 </Codenesium>*/

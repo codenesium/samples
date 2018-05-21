@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOMachine
+	public abstract class AbstractBOMachine: AbstractBOManager
 	{
 		private IMachineRepository machineRepository;
 		private IApiMachineModelValidator machineModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			IMachineRepository machineRepository,
 			IApiMachineModelValidator machineModelValidator)
+			: base()
 
 		{
 			this.machineRepository = machineRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.machineRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOMachine Get(int id)
+		public virtual Task<POCOMachine> Get(int id)
 		{
 			return this.machineRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOMachine> response = new CreateResponse<POCOMachine>(await this.machineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOMachine record = this.machineRepository.Create(model);
+				POCOMachine record = await this.machineRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.machineRepository.Update(id, model);
+				await this.machineRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.machineRepository.Delete(id);
+				await this.machineRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCOMachine MachineGuid(Guid machineGuid)
+		public async Task<POCOMachine> MachineGuid(Guid machineGuid)
 		{
-			return this.machineRepository.MachineGuid(machineGuid);
+			return await this.machineRepository.MachineGuid(machineGuid);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5298708f8920e4d15b6a331b9d81f670</Hash>
+    <Hash>c79b28f6ae8b68ea6ebb227c0a44bc94</Hash>
 </Codenesium>*/

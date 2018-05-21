@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesOrderHeaderSalesReason
+	public abstract class AbstractBOSalesOrderHeaderSalesReason: AbstractBOManager
 	{
 		private ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
 		private IApiSalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
 			IApiSalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator)
+			: base()
 
 		{
 			this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesOrderHeaderSalesReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesOrderHeaderSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesOrderHeaderSalesReasonRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesOrderHeaderSalesReason Get(int salesOrderID)
+		public virtual Task<POCOSalesOrderHeaderSalesReason> Get(int salesOrderID)
 		{
 			return this.salesOrderHeaderSalesReasonRepository.Get(salesOrderID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesOrderHeaderSalesReason> response = new CreateResponse<POCOSalesOrderHeaderSalesReason>(await this.salesOrderHeaderSalesReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesOrderHeaderSalesReason record = this.salesOrderHeaderSalesReasonRepository.Create(model);
+				POCOSalesOrderHeaderSalesReason record = await this.salesOrderHeaderSalesReasonRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesOrderHeaderSalesReasonRepository.Update(salesOrderID, model);
+				await this.salesOrderHeaderSalesReasonRepository.Update(salesOrderID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesOrderHeaderSalesReasonRepository.Delete(salesOrderID);
+				await this.salesOrderHeaderSalesReasonRepository.Delete(salesOrderID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f081f614f42d05b13dd78cf79d48a032</Hash>
+    <Hash>86fdd28dcb064dd30befe1a274a01d13</Hash>
 </Codenesium>*/

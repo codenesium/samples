@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractScrapReasonRepository
+	public abstract class AbstractScrapReasonRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOScrapReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOScrapReason Get(short scrapReasonID)
+		public async virtual Task<POCOScrapReason> Get(short scrapReasonID)
 		{
-			return this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
+			ScrapReason record = await this.GetById(scrapReasonID);
+
+			return this.Mapper.ScrapReasonMapEFToPOCO(record);
 		}
 
-		public virtual POCOScrapReason Create(
+		public async virtual Task<POCOScrapReason> Create(
 			ApiScrapReasonModel model)
 		{
 			ScrapReason record = new ScrapReason();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ScrapReason>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ScrapReasonMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			short scrapReasonID,
 			ApiScrapReasonModel model)
 		{
-			ScrapReason record = this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
+			ScrapReason record = await this.GetById(scrapReasonID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{scrapReasonID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					scrapReasonID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			short scrapReasonID)
 		{
-			ScrapReason record = this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID).FirstOrDefault();
+			ScrapReason record = await this.GetById(scrapReasonID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ScrapReason>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOScrapReason GetName(string name)
+		public async Task<POCOScrapReason> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOScrapReason> Where(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOScrapReason>> Where(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOScrapReason> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOScrapReason> SearchLinqPOCO(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOScrapReason>> SearchLinqPOCO(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOScrapReason> response = new List<POCOScrapReason>();
-			List<ScrapReason> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ScrapReason> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ScrapReasonMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ScrapReason> SearchLinqEF(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ScrapReason>> SearchLinqEF(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ScrapReason.ScrapReasonID)} ASC";
 			}
-			return this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ScrapReason>();
+			return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ScrapReason>();
 		}
 
-		private List<ScrapReason> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ScrapReason>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ScrapReason.ScrapReasonID)} ASC";
 			}
 
-			return this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ScrapReason>();
+			return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ScrapReason>();
+		}
+
+		private async Task<ScrapReason> GetById(short scrapReasonID)
+		{
+			List<ScrapReason> records = await this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0dff2bce4f8b821c780e06c6e9512548</Hash>
+    <Hash>e6e4df5e2f94a0d312b385d95462d743</Hash>
 </Codenesium>*/

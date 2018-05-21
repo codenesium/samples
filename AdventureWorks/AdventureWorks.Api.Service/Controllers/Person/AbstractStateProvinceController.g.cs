@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOStateProvince>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOStateProvince> response = this.stateProvinceManager.All(query.Offset, query.Limit);
+			List<POCOStateProvince> response = await this.stateProvinceManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOStateProvince), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOStateProvince response = this.stateProvinceManager.Get(id);
+			POCOStateProvince response = await this.stateProvinceManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStateProvince response = this.stateProvinceManager.Get(id);
+					POCOStateProvince response = await this.stateProvinceManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOStateProvince), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOStateProvince response = this.stateProvinceManager.GetName(name);
+			POCOStateProvince response = await this.stateProvinceManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -197,9 +192,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOStateProvince), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
+		public async virtual Task<IActionResult> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
 		{
-			POCOStateProvince response = this.stateProvinceManager.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
+			POCOStateProvince response = await this.stateProvinceManager.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -213,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>32c67014b869d7d5f33902ed3772ce6d</Hash>
+    <Hash>9d848581119f60eb419df995b98feec7</Hash>
 </Codenesium>*/

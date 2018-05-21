@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProduct>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProduct> response = this.productManager.All(query.Offset, query.Limit);
+			List<POCOProduct> response = await this.productManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProduct), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProduct response = this.productManager.Get(id);
+			POCOProduct response = await this.productManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProduct response = this.productManager.Get(id);
+					POCOProduct response = await this.productManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProduct), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOProduct response = this.productManager.GetName(name);
+			POCOProduct response = await this.productManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -197,9 +192,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProduct), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetProductNumber(string productNumber)
+		public async virtual Task<IActionResult> GetProductNumber(string productNumber)
 		{
-			POCOProduct response = this.productManager.GetProductNumber(productNumber);
+			POCOProduct response = await this.productManager.GetProductNumber(productNumber);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -213,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ce1fee741c1e1edb1881e1805bba6ee3</Hash>
+    <Hash>60d4a9ce13e9a99ed835cd41aff6c466</Hash>
 </Codenesium>*/

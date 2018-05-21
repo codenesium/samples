@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOLinkLog>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLinkLog> response = this.linkLogManager.All(query.Offset, query.Limit);
+			List<POCOLinkLog> response = await this.linkLogManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLinkLog), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLinkLog response = this.linkLogManager.Get(id);
+			POCOLinkLog response = await this.linkLogManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLinkLog response = this.linkLogManager.Get(id);
+					POCOLinkLog response = await this.linkLogManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>7d1677afcb055a7d4dd2b1779a6a401e</Hash>
+    <Hash>cd34362c81673034be10bed144c39f6c</Hash>
 </Codenesium>*/

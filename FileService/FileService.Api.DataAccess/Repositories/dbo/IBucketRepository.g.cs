@@ -1,29 +1,29 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
 
 namespace FileServiceNS.Api.DataAccess
 {
 	public interface IBucketRepository
 	{
-		POCOBucket Create(ApiBucketModel model);
+		Task<POCOBucket> Create(ApiBucketModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiBucketModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOBucket Get(int id);
+		Task<POCOBucket> Get(int id);
 
-		List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOBucket Name(string name);
-
-		POCOBucket ExternalId(Guid externalId);
+		Task<POCOBucket> Name(string name);
+		Task<POCOBucket> ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>291e24acdf14a7572590ba49949b3d9b</Hash>
+    <Hash>ab189c730f8739131b7a73f37f7768ba</Hash>
 </Codenesium>*/

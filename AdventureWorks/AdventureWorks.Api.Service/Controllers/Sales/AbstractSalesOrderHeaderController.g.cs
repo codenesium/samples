@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesOrderHeader> response = this.salesOrderHeaderManager.All(query.Offset, query.Limit);
+			List<POCOSalesOrderHeader> response = await this.salesOrderHeaderManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOSalesOrderHeader), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesOrderHeader response = this.salesOrderHeaderManager.Get(id);
+			POCOSalesOrderHeader response = await this.salesOrderHeaderManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesOrderHeader response = this.salesOrderHeaderManager.Get(id);
+					POCOSalesOrderHeader response = await this.salesOrderHeaderManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOSalesOrderHeader), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetSalesOrderNumber(string salesOrderNumber)
+		public async virtual Task<IActionResult> GetSalesOrderNumber(string salesOrderNumber)
 		{
-			POCOSalesOrderHeader response = this.salesOrderHeaderManager.GetSalesOrderNumber(salesOrderNumber);
+			POCOSalesOrderHeader response = await this.salesOrderHeaderManager.GetSalesOrderNumber(salesOrderNumber);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -196,40 +191,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getCustomerID/{customerID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetCustomerID(int customerID)
+		public async virtual Task<IActionResult> GetCustomerID(int customerID)
 		{
-			List<POCOSalesOrderHeader> response = this.salesOrderHeaderManager.GetCustomerID(customerID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOSalesOrderHeader> response = await this.salesOrderHeaderManager.GetCustomerID(customerID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getSalesPersonID/{salesPersonID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetSalesPersonID(Nullable<int> salesPersonID)
+		public async virtual Task<IActionResult> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			List<POCOSalesOrderHeader> response = this.salesOrderHeaderManager.GetSalesPersonID(salesPersonID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOSalesOrderHeader> response = await this.salesOrderHeaderManager.GetSalesPersonID(salesPersonID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4632fd5a5bdf3763ce2e1fdc32d98810</Hash>
+    <Hash>fcc442134602f19b7f3dc80ee1eb068f</Hash>
 </Codenesium>*/

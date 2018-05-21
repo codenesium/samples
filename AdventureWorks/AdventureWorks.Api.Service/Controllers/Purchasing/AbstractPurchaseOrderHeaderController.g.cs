@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPurchaseOrderHeader>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPurchaseOrderHeader> response = this.purchaseOrderHeaderManager.All(query.Offset, query.Limit);
+			List<POCOPurchaseOrderHeader> response = await this.purchaseOrderHeaderManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOPurchaseOrderHeader), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPurchaseOrderHeader response = this.purchaseOrderHeaderManager.Get(id);
+			POCOPurchaseOrderHeader response = await this.purchaseOrderHeaderManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPurchaseOrderHeader response = this.purchaseOrderHeaderManager.Get(id);
+					POCOPurchaseOrderHeader response = await this.purchaseOrderHeaderManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,40 +172,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getEmployeeID/{employeeID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPurchaseOrderHeader>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetEmployeeID(int employeeID)
+		public async virtual Task<IActionResult> GetEmployeeID(int employeeID)
 		{
-			List<POCOPurchaseOrderHeader> response = this.purchaseOrderHeaderManager.GetEmployeeID(employeeID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOPurchaseOrderHeader> response = await this.purchaseOrderHeaderManager.GetEmployeeID(employeeID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getVendorID/{vendorID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPurchaseOrderHeader>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetVendorID(int vendorID)
+		public async virtual Task<IActionResult> GetVendorID(int vendorID)
 		{
-			List<POCOPurchaseOrderHeader> response = this.purchaseOrderHeaderManager.GetVendorID(vendorID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOPurchaseOrderHeader> response = await this.purchaseOrderHeaderManager.GetVendorID(vendorID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>02cfea9a0ec483f746338ef211ef32d9</Hash>
+    <Hash>1b8c0c476031760a1b0c5c0241876825</Hash>
 </Codenesium>*/

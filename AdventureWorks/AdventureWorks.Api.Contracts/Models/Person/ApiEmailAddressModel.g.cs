@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiEmailAddressModel
+	public partial class ApiEmailAddressModel: AbstractModel
 	{
-		public ApiEmailAddressModel()
+		public ApiEmailAddressModel() : base()
 		{}
 
 		public ApiEmailAddressModel(
@@ -88,5 +88,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3d468299e8eaa12c41854631c1ba4ba</Hash>
+    <Hash>ef2bae21c190a29ddc1a82e5d8f3db17</Hash>
 </Codenesium>*/

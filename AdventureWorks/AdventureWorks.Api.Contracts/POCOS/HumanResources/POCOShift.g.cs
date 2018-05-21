@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOShift
+	public partial class POCOShift: AbstractPOCO
 	{
-		public POCOShift()
+		public POCOShift() : base()
 		{}
 
 		public POCOShift(
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2a0e122f9767f79f6ea819fcbfb15dbe</Hash>
+    <Hash>bb322a99599167b2c32555f9bbc499cc</Hash>
 </Codenesium>*/

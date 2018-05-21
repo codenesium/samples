@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCODocument>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODocument> response = this.documentManager.All(query.Offset, query.Limit);
+			List<POCODocument> response = await this.documentManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODocument), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(Guid id)
+		public async virtual Task<IActionResult> Get(Guid id)
 		{
-			POCODocument response = this.documentManager.Get(id);
+			POCODocument response = await this.documentManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODocument response = this.documentManager.Get(id);
+					POCODocument response = await this.documentManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODocument), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
+		public async virtual Task<IActionResult> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
 		{
-			POCODocument response = this.documentManager.GetDocumentLevelDocumentNode(documentLevel,documentNode);
+			POCODocument response = await this.documentManager.GetDocumentLevelDocumentNode(documentLevel,documentNode);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -196,22 +191,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getFileNameRevision/{fileName}/{revision}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCODocument>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetFileNameRevision(string fileName,string revision)
+		public async virtual Task<IActionResult> GetFileNameRevision(string fileName,string revision)
 		{
-			List<POCODocument> response = this.documentManager.GetFileNameRevision(fileName,revision);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCODocument> response = await this.documentManager.GetFileNameRevision(fileName,revision);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c0ffc23977ab3a8f83284862bdf8c2b</Hash>
+    <Hash>d55bf19c94134950237aa4ade7afd692</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOEmployeeDepartmentHistory
+	public abstract class AbstractBOEmployeeDepartmentHistory: AbstractBOManager
 	{
 		private IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
 		private IApiEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
 			IApiEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator)
+			: base()
 
 		{
 			this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOEmployeeDepartmentHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOEmployeeDepartmentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.employeeDepartmentHistoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOEmployeeDepartmentHistory Get(int businessEntityID)
+		public virtual Task<POCOEmployeeDepartmentHistory> Get(int businessEntityID)
 		{
 			return this.employeeDepartmentHistoryRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOEmployeeDepartmentHistory> response = new CreateResponse<POCOEmployeeDepartmentHistory>(await this.employeeDepartmentHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmployeeDepartmentHistory record = this.employeeDepartmentHistoryRepository.Create(model);
+				POCOEmployeeDepartmentHistory record = await this.employeeDepartmentHistoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.employeeDepartmentHistoryRepository.Update(businessEntityID, model);
+				await this.employeeDepartmentHistoryRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,22 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.employeeDepartmentHistoryRepository.Delete(businessEntityID);
+				await this.employeeDepartmentHistoryRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public List<POCOEmployeeDepartmentHistory> GetDepartmentID(short departmentID)
+		public async Task<List<POCOEmployeeDepartmentHistory>> GetDepartmentID(short departmentID)
 		{
-			return this.employeeDepartmentHistoryRepository.GetDepartmentID(departmentID);
+			return await this.employeeDepartmentHistoryRepository.GetDepartmentID(departmentID);
 		}
-		public List<POCOEmployeeDepartmentHistory> GetShiftID(int shiftID)
+		public async Task<List<POCOEmployeeDepartmentHistory>> GetShiftID(int shiftID)
 		{
-			return this.employeeDepartmentHistoryRepository.GetShiftID(shiftID);
+			return await this.employeeDepartmentHistoryRepository.GetShiftID(shiftID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>813958aca23798774b59e901ff526e40</Hash>
+    <Hash>a24ffd782396159e336f7e0448569bea</Hash>
 </Codenesium>*/

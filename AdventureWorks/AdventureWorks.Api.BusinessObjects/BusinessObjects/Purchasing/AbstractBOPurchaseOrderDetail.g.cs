@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPurchaseOrderDetail
+	public abstract class AbstractBOPurchaseOrderDetail: AbstractBOManager
 	{
 		private IPurchaseOrderDetailRepository purchaseOrderDetailRepository;
 		private IApiPurchaseOrderDetailModelValidator purchaseOrderDetailModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IPurchaseOrderDetailRepository purchaseOrderDetailRepository,
 			IApiPurchaseOrderDetailModelValidator purchaseOrderDetailModelValidator)
+			: base()
 
 		{
 			this.purchaseOrderDetailRepository = purchaseOrderDetailRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPurchaseOrderDetail> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPurchaseOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.purchaseOrderDetailRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPurchaseOrderDetail Get(int purchaseOrderID)
+		public virtual Task<POCOPurchaseOrderDetail> Get(int purchaseOrderID)
 		{
 			return this.purchaseOrderDetailRepository.Get(purchaseOrderID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOPurchaseOrderDetail> response = new CreateResponse<POCOPurchaseOrderDetail>(await this.purchaseOrderDetailModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPurchaseOrderDetail record = this.purchaseOrderDetailRepository.Create(model);
+				POCOPurchaseOrderDetail record = await this.purchaseOrderDetailRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.purchaseOrderDetailRepository.Update(purchaseOrderID, model);
+				await this.purchaseOrderDetailRepository.Update(purchaseOrderID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.purchaseOrderDetailRepository.Delete(purchaseOrderID);
+				await this.purchaseOrderDetailRepository.Delete(purchaseOrderID);
 			}
 			return response;
 		}
 
-		public List<POCOPurchaseOrderDetail> GetProductID(int productID)
+		public async Task<List<POCOPurchaseOrderDetail>> GetProductID(int productID)
 		{
-			return this.purchaseOrderDetailRepository.GetProductID(productID);
+			return await this.purchaseOrderDetailRepository.GetProductID(productID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>838727663f897494a6e90fd586af0932</Hash>
+    <Hash>8fddcabdfa23451e920729c8543efe4f</Hash>
 </Codenesium>*/

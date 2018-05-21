@@ -39,22 +39,14 @@ namespace PetStoreNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSale>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSale> response = this.saleManager.All(query.Offset, query.Limit);
+			List<POCOSale> response = await this.saleManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace PetStoreNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOSale), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSale response = this.saleManager.Get(id);
+			POCOSale response = await this.saleManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSale response = this.saleManager.Get(id);
+					POCOSale response = await this.saleManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>21e96c385f77f279b430f6381237bafe</Hash>
+    <Hash>861c18b327a0dcf4912c20801ac7b1df</Hash>
 </Codenesium>*/

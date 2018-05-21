@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAddressTypeRepository
 	{
-		POCOAddressType Create(ApiAddressTypeModel model);
+		Task<POCOAddressType> Create(ApiAddressTypeModel model);
 
-		void Update(int addressTypeID,
+		Task Update(int addressTypeID,
 		            ApiAddressTypeModel model);
 
-		void Delete(int addressTypeID);
+		Task Delete(int addressTypeID);
 
-		POCOAddressType Get(int addressTypeID);
+		Task<POCOAddressType> Get(int addressTypeID);
 
-		List<POCOAddressType> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOAddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOAddressType GetName(string name);
+		Task<POCOAddressType> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b95e7773ed85fda259d1f79815f10be2</Hash>
+    <Hash>66fc6c83e8d11c56263bc13c676a900a</Hash>
 </Codenesium>*/

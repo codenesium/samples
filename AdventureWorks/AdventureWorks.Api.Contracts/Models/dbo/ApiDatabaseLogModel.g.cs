@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiDatabaseLogModel
+	public partial class ApiDatabaseLogModel: AbstractModel
 	{
-		public ApiDatabaseLogModel()
+		public ApiDatabaseLogModel() : base()
 		{}
 
 		public ApiDatabaseLogModel(
@@ -141,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>578456387f1457b1debdb5b61d73a04c</Hash>
+    <Hash>4a1b3dafdf4f66d5c66efd04df6f2a5b</Hash>
 </Codenesium>*/

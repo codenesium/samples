@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductCostHistoryModel
+	public partial class ApiProductCostHistoryModel: AbstractModel
 	{
-		public ApiProductCostHistoryModel()
+		public ApiProductCostHistoryModel() : base()
 		{}
 
 		public ApiProductCostHistoryModel(
@@ -88,5 +88,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c6f0318d914bd0de02fded38222ca612</Hash>
+    <Hash>f30d1e7d4b374058ca59946020154260</Hash>
 </Codenesium>*/

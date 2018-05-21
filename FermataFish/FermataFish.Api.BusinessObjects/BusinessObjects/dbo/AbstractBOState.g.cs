@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOState
+	public abstract class AbstractBOState: AbstractBOManager
 	{
 		private IStateRepository stateRepository;
 		private IApiStateModelValidator stateModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			IStateRepository stateRepository,
 			IApiStateModelValidator stateModelValidator)
+			: base()
 
 		{
 			this.stateRepository = stateRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOState> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOState>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.stateRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOState Get(int id)
+		public virtual Task<POCOState> Get(int id)
 		{
 			return this.stateRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOState> response = new CreateResponse<POCOState>(await this.stateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOState record = this.stateRepository.Create(model);
+				POCOState record = await this.stateRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.stateRepository.Update(id, model);
+				await this.stateRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.stateRepository.Delete(id);
+				await this.stateRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b39efda39c3ea71462077488231f12c7</Hash>
+    <Hash>013eb2ccd2a5764c8f0984c2e6994552</Hash>
 </Codenesium>*/

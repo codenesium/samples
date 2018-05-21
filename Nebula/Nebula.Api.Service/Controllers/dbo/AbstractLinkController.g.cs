@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOLink>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLink> response = this.linkManager.All(query.Offset, query.Limit);
+			List<POCOLink> response = await this.linkManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLink), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLink response = this.linkManager.Get(id);
+			POCOLink response = await this.linkManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLink response = this.linkManager.Get(id);
+					POCOLink response = await this.linkManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,18 +172,11 @@ namespace NebulaNS.Api.Service
 		[Route("chainId/{chainId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOLink>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult ChainId(int chainId)
+		public async virtual Task<IActionResult> ChainId(int chainId)
 		{
-			List<POCOLink> response = this.linkManager.ChainId(chainId);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOLink> response = await this.linkManager.ChainId(chainId);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -197,9 +184,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLink), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult ExternalId(Guid externalId)
+		public async virtual Task<IActionResult> ExternalId(Guid externalId)
 		{
-			POCOLink response = this.linkManager.ExternalId(externalId);
+			POCOLink response = await this.linkManager.ExternalId(externalId);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -213,5 +201,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5a7c2971e1864089efbfa04f157acff9</Hash>
+    <Hash>5c401d3c678f35b0facd7e1766d8fd26</Hash>
 </Codenesium>*/

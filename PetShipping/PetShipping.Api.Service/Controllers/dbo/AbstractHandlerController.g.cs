@@ -39,22 +39,14 @@ namespace PetShippingNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOHandler>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOHandler> response = this.handlerManager.All(query.Offset, query.Limit);
+			List<POCOHandler> response = await this.handlerManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace PetShippingNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOHandler), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOHandler response = this.handlerManager.Get(id);
+			POCOHandler response = await this.handlerManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOHandler response = this.handlerManager.Get(id);
+					POCOHandler response = await this.handlerManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>84a65ec51a3af5d287d82c1aa00af74e</Hash>
+    <Hash>2f0b03a674f29139069604f6dcb02383</Hash>
 </Codenesium>*/

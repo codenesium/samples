@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductInventoryRepository
+	public abstract class AbstractProductInventoryRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProductInventory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductInventory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProductInventory Get(int productID)
+		public async virtual Task<POCOProductInventory> Get(int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductID == productID).FirstOrDefault();
+			ProductInventory record = await this.GetById(productID);
+
+			return this.Mapper.ProductInventoryMapEFToPOCO(record);
 		}
 
-		public virtual POCOProductInventory Create(
+		public async virtual Task<POCOProductInventory> Create(
 			ApiProductInventoryModel model)
 		{
 			ProductInventory record = new ProductInventory();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ProductInventory>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductInventoryMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productID,
 			ApiProductInventoryModel model)
 		{
-			ProductInventory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			ProductInventory record = await this.GetById(productID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productID)
 		{
-			ProductInventory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			ProductInventory record = await this.GetById(productID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ProductInventory>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOProductInventory> Where(Expression<Func<ProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOProductInventory>> Where(Expression<Func<ProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOProductInventory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOProductInventory> SearchLinqPOCO(Expression<Func<ProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProductInventory>> SearchLinqPOCO(Expression<Func<ProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProductInventory> response = new List<POCOProductInventory>();
-			List<ProductInventory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ProductInventory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductInventoryMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ProductInventory> SearchLinqEF(Expression<Func<ProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductInventory>> SearchLinqEF(Expression<Func<ProductInventory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductInventory.ProductID)} ASC";
 			}
-			return this.Context.Set<ProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductInventory>();
+			return await this.Context.Set<ProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductInventory>();
 		}
 
-		private List<ProductInventory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductInventory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductInventory.ProductID)} ASC";
 			}
 
-			return this.Context.Set<ProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductInventory>();
+			return await this.Context.Set<ProductInventory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductInventory>();
+		}
+
+		private async Task<ProductInventory> GetById(int productID)
+		{
+			List<ProductInventory> records = await this.SearchLinqEF(x => x.ProductID == productID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>77b076826aa7922aa708ff0740074b80</Hash>
+    <Hash>c4c5e48dc751216f6b4ce3bb3b1114a3</Hash>
 </Codenesium>*/

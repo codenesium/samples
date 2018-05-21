@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IErrorLogRepository
 	{
-		POCOErrorLog Create(ApiErrorLogModel model);
+		Task<POCOErrorLog> Create(ApiErrorLogModel model);
 
-		void Update(int errorLogID,
+		Task Update(int errorLogID,
 		            ApiErrorLogModel model);
 
-		void Delete(int errorLogID);
+		Task Delete(int errorLogID);
 
-		POCOErrorLog Get(int errorLogID);
+		Task<POCOErrorLog> Get(int errorLogID);
 
-		List<POCOErrorLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5f134cd254dd5edd803de3d16eb286ab</Hash>
+    <Hash>475d8363c29973a40be6cd2d2d65191c</Hash>
 </Codenesium>*/

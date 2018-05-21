@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICreditCardRepository
 	{
-		POCOCreditCard Create(ApiCreditCardModel model);
+		Task<POCOCreditCard> Create(ApiCreditCardModel model);
 
-		void Update(int creditCardID,
+		Task Update(int creditCardID,
 		            ApiCreditCardModel model);
 
-		void Delete(int creditCardID);
+		Task Delete(int creditCardID);
 
-		POCOCreditCard Get(int creditCardID);
+		Task<POCOCreditCard> Get(int creditCardID);
 
-		List<POCOCreditCard> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOCreditCard GetCardNumber(string cardNumber);
+		Task<POCOCreditCard> GetCardNumber(string cardNumber);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d81b67376dc2356cc6badf35ec5c009e</Hash>
+    <Hash>34b078f879b4892c6af8c3b00d227408</Hash>
 </Codenesium>*/

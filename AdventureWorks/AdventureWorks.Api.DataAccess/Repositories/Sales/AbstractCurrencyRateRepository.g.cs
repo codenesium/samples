@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCurrencyRateRepository
+	public abstract class AbstractCurrencyRateRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOCurrencyRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOCurrencyRate Get(int currencyRateID)
+		public async virtual Task<POCOCurrencyRate> Get(int currencyRateID)
 		{
-			return this.SearchLinqPOCO(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
+			CurrencyRate record = await this.GetById(currencyRateID);
+
+			return this.Mapper.CurrencyRateMapEFToPOCO(record);
 		}
 
-		public virtual POCOCurrencyRate Create(
+		public async virtual Task<POCOCurrencyRate> Create(
 			ApiCurrencyRateModel model)
 		{
 			CurrencyRate record = new CurrencyRate();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<CurrencyRate>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.CurrencyRateMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int currencyRateID,
 			ApiCurrencyRateModel model)
 		{
-			CurrencyRate record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
+			CurrencyRate record = await this.GetById(currencyRateID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{currencyRateID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					currencyRateID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int currencyRateID)
 		{
-			CurrencyRate record = this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID).FirstOrDefault();
+			CurrencyRate record = await this.GetById(currencyRateID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<CurrencyRate>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOCurrencyRate GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
+		public async Task<POCOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
 		{
-			return this.SearchLinqPOCO(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOCurrencyRate> Where(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOCurrencyRate>> Where(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOCurrencyRate> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOCurrencyRate> SearchLinqPOCO(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOCurrencyRate>> SearchLinqPOCO(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOCurrencyRate> response = new List<POCOCurrencyRate>();
-			List<CurrencyRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<CurrencyRate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.CurrencyRateMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<CurrencyRate> SearchLinqEF(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<CurrencyRate>> SearchLinqEF(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(CurrencyRate.CurrencyRateID)} ASC";
 			}
-			return this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CurrencyRate>();
+			return await this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CurrencyRate>();
 		}
 
-		private List<CurrencyRate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<CurrencyRate>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(CurrencyRate.CurrencyRateID)} ASC";
 			}
 
-			return this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CurrencyRate>();
+			return await this.Context.Set<CurrencyRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CurrencyRate>();
+		}
+
+		private async Task<CurrencyRate> GetById(int currencyRateID)
+		{
+			List<CurrencyRate> records = await this.SearchLinqEF(x => x.CurrencyRateID == currencyRateID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2dea5aaa33484f9eaf6f8e67e3e685d</Hash>
+    <Hash>cf66a4dd2010704dc13b516891dc5159</Hash>
 </Codenesium>*/

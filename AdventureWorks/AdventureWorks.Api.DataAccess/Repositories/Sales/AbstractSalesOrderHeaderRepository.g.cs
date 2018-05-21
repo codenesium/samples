@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractSalesOrderHeaderRepository
+	public abstract class AbstractSalesOrderHeaderRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOSalesOrderHeader> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOSalesOrderHeader Get(int salesOrderID)
+		public async virtual Task<POCOSalesOrderHeader> Get(int salesOrderID)
 		{
-			return this.SearchLinqPOCO(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			SalesOrderHeader record = await this.GetById(salesOrderID);
+
+			return this.Mapper.SalesOrderHeaderMapEFToPOCO(record);
 		}
 
-		public virtual POCOSalesOrderHeader Create(
+		public async virtual Task<POCOSalesOrderHeader> Create(
 			ApiSalesOrderHeaderModel model)
 		{
 			SalesOrderHeader record = new SalesOrderHeader();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<SalesOrderHeader>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.SalesOrderHeaderMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int salesOrderID,
 			ApiSalesOrderHeaderModel model)
 		{
-			SalesOrderHeader record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			SalesOrderHeader record = await this.GetById(salesOrderID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{salesOrderID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					salesOrderID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int salesOrderID)
 		{
-			SalesOrderHeader record = this.SearchLinqEF(x => x.SalesOrderID == salesOrderID).FirstOrDefault();
+			SalesOrderHeader record = await this.GetById(salesOrderID);
 
 			if (record == null)
 			{
@@ -82,58 +88,73 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<SalesOrderHeader>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOSalesOrderHeader GetSalesOrderNumber(string salesOrderNumber)
+		public async Task<POCOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
 		{
-			return this.SearchLinqPOCO(x => x.SalesOrderNumber == salesOrderNumber).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.SalesOrderNumber == salesOrderNumber);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<List<POCOSalesOrderHeader>> GetCustomerID(int customerID)
+		{
+			var records = await this.SearchLinqPOCO(x => x.CustomerID == customerID);
+
+			return records;
+		}
+		public async Task<List<POCOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
+		{
+			var records = await this.SearchLinqPOCO(x => x.SalesPersonID == salesPersonID);
+
+			return records;
 		}
 
-		public List<POCOSalesOrderHeader> GetCustomerID(int customerID)
+		protected async Task<List<POCOSalesOrderHeader>> Where(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.CustomerID == customerID);
-		}
-		public List<POCOSalesOrderHeader> GetSalesPersonID(Nullable<int> salesPersonID)
-		{
-			return this.SearchLinqPOCO(x => x.SalesPersonID == salesPersonID);
+			List<POCOSalesOrderHeader> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCOSalesOrderHeader> Where(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOSalesOrderHeader> SearchLinqPOCO(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOSalesOrderHeader>> SearchLinqPOCO(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOSalesOrderHeader> response = new List<POCOSalesOrderHeader>();
-			List<SalesOrderHeader> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<SalesOrderHeader> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.SalesOrderHeaderMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<SalesOrderHeader> SearchLinqEF(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SalesOrderHeader>> SearchLinqEF(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SalesOrderHeader.SalesOrderID)} ASC";
 			}
-			return this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SalesOrderHeader>();
+			return await this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesOrderHeader>();
 		}
 
-		private List<SalesOrderHeader> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SalesOrderHeader>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SalesOrderHeader.SalesOrderID)} ASC";
 			}
 
-			return this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SalesOrderHeader>();
+			return await this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesOrderHeader>();
+		}
+
+		private async Task<SalesOrderHeader> GetById(int salesOrderID)
+		{
+			List<SalesOrderHeader> records = await this.SearchLinqEF(x => x.SalesOrderID == salesOrderID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>def4caf7a73f4288c552dda2786fbbea</Hash>
+    <Hash>646ccaccc1cc3dbcc5b3af5baa8959e9</Hash>
 </Codenesium>*/

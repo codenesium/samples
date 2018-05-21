@@ -17,16 +17,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int addressID);
 
-		POCOAddress Get(int addressID);
+		Task<POCOAddress> Get(int addressID);
 
-		List<POCOAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOAddress GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
-
-		List<POCOAddress> GetStateProvinceID(int stateProvinceID);
+		Task<POCOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
+		Task<List<POCOAddress>> GetStateProvinceID(int stateProvinceID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>24918fd98b5f818c41c027197ef30dfb</Hash>
+    <Hash>ac9799ab00299992d0dba84c58162c17</Hash>
 </Codenesium>*/

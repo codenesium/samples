@@ -12,7 +12,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPaymentType
+	public abstract class AbstractBOPaymentType: AbstractBOManager
 	{
 		private IPaymentTypeRepository paymentTypeRepository;
 		private IApiPaymentTypeModelValidator paymentTypeModelValidator;
@@ -22,6 +22,7 @@ namespace PetStoreNS.Api.BusinessObjects
 			ILogger logger,
 			IPaymentTypeRepository paymentTypeRepository,
 			IApiPaymentTypeModelValidator paymentTypeModelValidator)
+			: base()
 
 		{
 			this.paymentTypeRepository = paymentTypeRepository;
@@ -29,12 +30,12 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPaymentType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.paymentTypeRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPaymentType Get(int id)
+		public virtual Task<POCOPaymentType> Get(int id)
 		{
 			return this.paymentTypeRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetStoreNS.Api.BusinessObjects
 			CreateResponse<POCOPaymentType> response = new CreateResponse<POCOPaymentType>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPaymentType record = this.paymentTypeRepository.Create(model);
+				POCOPaymentType record = await this.paymentTypeRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.paymentTypeRepository.Update(id, model);
+				await this.paymentTypeRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.paymentTypeRepository.Delete(id);
+				await this.paymentTypeRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e06be2053d7394618237adfc2876d53b</Hash>
+    <Hash>0ae1125417e6280a2b57cce81a6d1ac0</Hash>
 </Codenesium>*/

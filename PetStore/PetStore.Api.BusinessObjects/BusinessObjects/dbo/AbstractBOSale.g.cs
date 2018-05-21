@@ -12,7 +12,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSale
+	public abstract class AbstractBOSale: AbstractBOManager
 	{
 		private ISaleRepository saleRepository;
 		private IApiSaleModelValidator saleModelValidator;
@@ -22,6 +22,7 @@ namespace PetStoreNS.Api.BusinessObjects
 			ILogger logger,
 			ISaleRepository saleRepository,
 			IApiSaleModelValidator saleModelValidator)
+			: base()
 
 		{
 			this.saleRepository = saleRepository;
@@ -29,12 +30,12 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSale> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSale>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.saleRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSale Get(int id)
+		public virtual Task<POCOSale> Get(int id)
 		{
 			return this.saleRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetStoreNS.Api.BusinessObjects
 			CreateResponse<POCOSale> response = new CreateResponse<POCOSale>(await this.saleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSale record = this.saleRepository.Create(model);
+				POCOSale record = await this.saleRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.saleRepository.Update(id, model);
+				await this.saleRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.saleRepository.Delete(id);
+				await this.saleRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a9c51fff57e5d3692daf3df0bbe0260b</Hash>
+    <Hash>4348be4b63c9f08a1cb219aa083a0e44</Hash>
 </Codenesium>*/

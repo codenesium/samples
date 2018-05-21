@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractSpecialOfferRepository
+	public abstract class AbstractSpecialOfferRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOSpecialOffer> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOSpecialOffer Get(int specialOfferID)
+		public async virtual Task<POCOSpecialOffer> Get(int specialOfferID)
 		{
-			return this.SearchLinqPOCO(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
+			SpecialOffer record = await this.GetById(specialOfferID);
+
+			return this.Mapper.SpecialOfferMapEFToPOCO(record);
 		}
 
-		public virtual POCOSpecialOffer Create(
+		public async virtual Task<POCOSpecialOffer> Create(
 			ApiSpecialOfferModel model)
 		{
 			SpecialOffer record = new SpecialOffer();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<SpecialOffer>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.SpecialOfferMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int specialOfferID,
 			ApiSpecialOfferModel model)
 		{
-			SpecialOffer record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
+			SpecialOffer record = await this.GetById(specialOfferID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{specialOfferID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					specialOfferID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int specialOfferID)
 		{
-			SpecialOffer record = this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID).FirstOrDefault();
+			SpecialOffer record = await this.GetById(specialOfferID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<SpecialOffer>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOSpecialOffer> Where(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOSpecialOffer>> Where(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOSpecialOffer> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOSpecialOffer> SearchLinqPOCO(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOSpecialOffer>> SearchLinqPOCO(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOSpecialOffer> response = new List<POCOSpecialOffer>();
-			List<SpecialOffer> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<SpecialOffer> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.SpecialOfferMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<SpecialOffer> SearchLinqEF(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SpecialOffer>> SearchLinqEF(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SpecialOffer.SpecialOfferID)} ASC";
 			}
-			return this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SpecialOffer>();
+			return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpecialOffer>();
 		}
 
-		private List<SpecialOffer> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SpecialOffer>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SpecialOffer.SpecialOfferID)} ASC";
 			}
 
-			return this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SpecialOffer>();
+			return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpecialOffer>();
+		}
+
+		private async Task<SpecialOffer> GetById(int specialOfferID)
+		{
+			List<SpecialOffer> records = await this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>565e06b17c881bb280ea3b3201078a43</Hash>
+    <Hash>25fc317cbd0dfe588d0d66d69999c6f6</Hash>
 </Codenesium>*/

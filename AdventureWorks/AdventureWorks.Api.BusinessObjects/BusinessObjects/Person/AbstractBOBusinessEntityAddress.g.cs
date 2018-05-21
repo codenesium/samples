@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOBusinessEntityAddress
+	public abstract class AbstractBOBusinessEntityAddress: AbstractBOManager
 	{
 		private IBusinessEntityAddressRepository businessEntityAddressRepository;
 		private IApiBusinessEntityAddressModelValidator businessEntityAddressModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IBusinessEntityAddressRepository businessEntityAddressRepository,
 			IApiBusinessEntityAddressModelValidator businessEntityAddressModelValidator)
+			: base()
 
 		{
 			this.businessEntityAddressRepository = businessEntityAddressRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOBusinessEntityAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOBusinessEntityAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.businessEntityAddressRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOBusinessEntityAddress Get(int businessEntityID)
+		public virtual Task<POCOBusinessEntityAddress> Get(int businessEntityID)
 		{
 			return this.businessEntityAddressRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOBusinessEntityAddress> response = new CreateResponse<POCOBusinessEntityAddress>(await this.businessEntityAddressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBusinessEntityAddress record = this.businessEntityAddressRepository.Create(model);
+				POCOBusinessEntityAddress record = await this.businessEntityAddressRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.businessEntityAddressRepository.Update(businessEntityID, model);
+				await this.businessEntityAddressRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,22 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.businessEntityAddressRepository.Delete(businessEntityID);
+				await this.businessEntityAddressRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public List<POCOBusinessEntityAddress> GetAddressID(int addressID)
+		public async Task<List<POCOBusinessEntityAddress>> GetAddressID(int addressID)
 		{
-			return this.businessEntityAddressRepository.GetAddressID(addressID);
+			return await this.businessEntityAddressRepository.GetAddressID(addressID);
 		}
-		public List<POCOBusinessEntityAddress> GetAddressTypeID(int addressTypeID)
+		public async Task<List<POCOBusinessEntityAddress>> GetAddressTypeID(int addressTypeID)
 		{
-			return this.businessEntityAddressRepository.GetAddressTypeID(addressTypeID);
+			return await this.businessEntityAddressRepository.GetAddressTypeID(addressTypeID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6ad8b5799fe7aaf4ead7f92486b97860</Hash>
+    <Hash>a3ecb7b054208b031de5a50e8fabc8c8</Hash>
 </Codenesium>*/

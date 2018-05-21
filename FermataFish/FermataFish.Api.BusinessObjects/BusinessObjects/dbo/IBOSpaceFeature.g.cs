@@ -17,12 +17,12 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOSpaceFeature Get(int id);
+		Task<POCOSpaceFeature> Get(int id);
 
-		List<POCOSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a07c672fc95aa09fd6b57469f4674d6</Hash>
+    <Hash>45973acaa4694baf31d781d84c525575</Hash>
 </Codenesium>*/

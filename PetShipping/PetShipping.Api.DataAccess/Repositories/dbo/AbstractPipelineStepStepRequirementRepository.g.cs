@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public abstract class AbstractPipelineStepStepRequirementRepository
+	public abstract class AbstractPipelineStepStepRequirementRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace PetShippingNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOPipelineStepStepRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPipelineStepStepRequirement>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOPipelineStepStepRequirement Get(int id)
+		public async virtual Task<POCOPipelineStepStepRequirement> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			PipelineStepStepRequirement record = await this.GetById(id);
+
+			return this.Mapper.PipelineStepStepRequirementMapEFToPOCO(record);
 		}
 
-		public virtual POCOPipelineStepStepRequirement Create(
+		public async virtual Task<POCOPipelineStepStepRequirement> Create(
 			ApiPipelineStepStepRequirementModel model)
 		{
 			PipelineStepStepRequirement record = new PipelineStepStepRequirement();
@@ -47,15 +51,17 @@ namespace PetShippingNS.Api.DataAccess
 				record);
 
 			this.Context.Set<PipelineStepStepRequirement>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.PipelineStepStepRequirementMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiPipelineStepStepRequirementModel model)
 		{
-			PipelineStepStepRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			PipelineStepStepRequirement record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace PetShippingNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			PipelineStepStepRequirement record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			PipelineStepStepRequirement record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace PetShippingNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<PipelineStepStepRequirement>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOPipelineStepStepRequirement> Where(Expression<Func<PipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOPipelineStepStepRequirement>> Where(Expression<Func<PipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOPipelineStepStepRequirement> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOPipelineStepStepRequirement> SearchLinqPOCO(Expression<Func<PipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOPipelineStepStepRequirement>> SearchLinqPOCO(Expression<Func<PipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOPipelineStepStepRequirement> response = new List<POCOPipelineStepStepRequirement>();
-			List<PipelineStepStepRequirement> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<PipelineStepStepRequirement> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.PipelineStepStepRequirementMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<PipelineStepStepRequirement> SearchLinqEF(Expression<Func<PipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PipelineStepStepRequirement>> SearchLinqEF(Expression<Func<PipelineStepStepRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PipelineStepStepRequirement.Id)} ASC";
 			}
-			return this.Context.Set<PipelineStepStepRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PipelineStepStepRequirement>();
+			return await this.Context.Set<PipelineStepStepRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PipelineStepStepRequirement>();
 		}
 
-		private List<PipelineStepStepRequirement> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PipelineStepStepRequirement>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PipelineStepStepRequirement.Id)} ASC";
 			}
 
-			return this.Context.Set<PipelineStepStepRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PipelineStepStepRequirement>();
+			return await this.Context.Set<PipelineStepStepRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PipelineStepStepRequirement>();
+		}
+
+		private async Task<PipelineStepStepRequirement> GetById(int id)
+		{
+			List<PipelineStepStepRequirement> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df0ba4090a78a72fb2917fe7f0cd7873</Hash>
+    <Hash>7ef0ac867c0825d5a4fa1c673813589c</Hash>
 </Codenesium>*/

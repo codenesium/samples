@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiMachineModel
+	public partial class ApiMachineModel: AbstractModel
 	{
-		public ApiMachineModel()
+		public ApiMachineModel() : base()
 		{}
 
 		public ApiMachineModel(
@@ -107,5 +107,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2f58b21543e821f8474fd394be35d6c5</Hash>
+    <Hash>ce924473456fee9f48a843324cf0b674</Hash>
 </Codenesium>*/

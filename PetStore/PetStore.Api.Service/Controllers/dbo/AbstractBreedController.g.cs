@@ -39,22 +39,14 @@ namespace PetStoreNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOBreed>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBreed> response = this.breedManager.All(query.Offset, query.Limit);
+			List<POCOBreed> response = await this.breedManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace PetStoreNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOBreed), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBreed response = this.breedManager.Get(id);
+			POCOBreed response = await this.breedManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBreed response = this.breedManager.Get(id);
+					POCOBreed response = await this.breedManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c70dec3e9cbb43bb9ed6a60dee1afa9f</Hash>
+    <Hash>4b7588f002922ab60746d100de6aafe3</Hash>
 </Codenesium>*/

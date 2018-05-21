@@ -39,22 +39,14 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOTeacherXTeacherSkill>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOTeacherXTeacherSkill> response = this.teacherXTeacherSkillManager.All(query.Offset, query.Limit);
+			List<POCOTeacherXTeacherSkill> response = await this.teacherXTeacherSkillManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace FermataFishNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOTeacherXTeacherSkill), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOTeacherXTeacherSkill response = this.teacherXTeacherSkillManager.Get(id);
+			POCOTeacherXTeacherSkill response = await this.teacherXTeacherSkillManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTeacherXTeacherSkill response = this.teacherXTeacherSkillManager.Get(id);
+					POCOTeacherXTeacherSkill response = await this.teacherXTeacherSkillManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5bbb1e2560337d42ff4299d0f8895954</Hash>
+    <Hash>241929d333189d7330758a2912427195</Hash>
 </Codenesium>*/

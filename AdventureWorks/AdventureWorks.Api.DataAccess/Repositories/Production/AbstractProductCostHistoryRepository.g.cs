@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductCostHistoryRepository
+	public abstract class AbstractProductCostHistoryRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProductCostHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProductCostHistory Get(int productID)
+		public async virtual Task<POCOProductCostHistory> Get(int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductID == productID).FirstOrDefault();
+			ProductCostHistory record = await this.GetById(productID);
+
+			return this.Mapper.ProductCostHistoryMapEFToPOCO(record);
 		}
 
-		public virtual POCOProductCostHistory Create(
+		public async virtual Task<POCOProductCostHistory> Create(
 			ApiProductCostHistoryModel model)
 		{
 			ProductCostHistory record = new ProductCostHistory();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ProductCostHistory>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductCostHistoryMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productID,
 			ApiProductCostHistoryModel model)
 		{
-			ProductCostHistory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			ProductCostHistory record = await this.GetById(productID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productID)
 		{
-			ProductCostHistory record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			ProductCostHistory record = await this.GetById(productID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ProductCostHistory>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOProductCostHistory> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOProductCostHistory>> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOProductCostHistory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOProductCostHistory> SearchLinqPOCO(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProductCostHistory>> SearchLinqPOCO(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProductCostHistory> response = new List<POCOProductCostHistory>();
-			List<ProductCostHistory> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ProductCostHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductCostHistoryMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ProductCostHistory> SearchLinqEF(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductCostHistory>> SearchLinqEF(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductCostHistory.ProductID)} ASC";
 			}
-			return this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductCostHistory>();
+			return await this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCostHistory>();
 		}
 
-		private List<ProductCostHistory> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductCostHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductCostHistory.ProductID)} ASC";
 			}
 
-			return this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductCostHistory>();
+			return await this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCostHistory>();
+		}
+
+		private async Task<ProductCostHistory> GetById(int productID)
+		{
+			List<ProductCostHistory> records = await this.SearchLinqEF(x => x.ProductID == productID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb8457850740475762e9fd2178074434</Hash>
+    <Hash>0afd9ae316838e8c55d7187acc10102d</Hash>
 </Codenesium>*/

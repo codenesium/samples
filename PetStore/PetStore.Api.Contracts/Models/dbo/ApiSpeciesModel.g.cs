@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace PetStoreNS.Api.Contracts
 {
-	public partial class ApiSpeciesModel
+	public partial class ApiSpeciesModel: AbstractModel
 	{
-		public ApiSpeciesModel()
+		public ApiSpeciesModel() : base()
 		{}
 
 		public ApiSpeciesModel(
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1b79beabd4a8d3dafbc5f7662c02f9ee</Hash>
+    <Hash>8cce3e726b4269df13a1577ea8fdbc28</Hash>
 </Codenesium>*/

@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public abstract class AbstractVersionInfoRepository
+	public abstract class AbstractVersionInfoRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace NebulaNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOVersionInfo Get(long version)
+		public async virtual Task<POCOVersionInfo> Get(long version)
 		{
-			return this.SearchLinqPOCO(x => x.Version == version).FirstOrDefault();
+			VersionInfo record = await this.GetById(version);
+
+			return this.Mapper.VersionInfoMapEFToPOCO(record);
 		}
 
-		public virtual POCOVersionInfo Create(
+		public async virtual Task<POCOVersionInfo> Create(
 			ApiVersionInfoModel model)
 		{
 			VersionInfo record = new VersionInfo();
@@ -47,15 +51,17 @@ namespace NebulaNS.Api.DataAccess
 				record);
 
 			this.Context.Set<VersionInfo>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.VersionInfoMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			long version,
 			ApiVersionInfoModel model)
 		{
-			VersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
+			VersionInfo record = await this.GetById(version);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{version}");
@@ -66,14 +72,14 @@ namespace NebulaNS.Api.DataAccess
 					version,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			long version)
 		{
-			VersionInfo record = this.SearchLinqEF(x => x.Version == version).FirstOrDefault();
+			VersionInfo record = await this.GetById(version);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<VersionInfo>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOVersionInfo Version(long version)
+		public async Task<POCOVersionInfo> Version(long version)
 		{
-			return this.SearchLinqPOCO(x => x.Version == version).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Version == version);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOVersionInfo> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOVersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOVersionInfo> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOVersionInfo> SearchLinqPOCO(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOVersionInfo>> SearchLinqPOCO(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOVersionInfo> response = new List<POCOVersionInfo>();
-			List<VersionInfo> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<VersionInfo> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.VersionInfoMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<VersionInfo> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<VersionInfo>> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(VersionInfo.Version)} ASC";
 			}
-			return this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<VersionInfo>();
+			return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
 		}
 
-		private List<VersionInfo> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<VersionInfo>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(VersionInfo.Version)} ASC";
 			}
 
-			return this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<VersionInfo>();
+			return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
+		}
+
+		private async Task<VersionInfo> GetById(long version)
+		{
+			List<VersionInfo> records = await this.SearchLinqEF(x => x.Version == version);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>de0b11a29cef31c632c5f1a373a9dead</Hash>
+    <Hash>2a07cd4400d9b259911c5722787050dd</Hash>
 </Codenesium>*/

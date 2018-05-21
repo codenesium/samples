@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBODocument
+	public abstract class AbstractBODocument: AbstractBOManager
 	{
 		private IDocumentRepository documentRepository;
 		private IApiDocumentModelValidator documentModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IDocumentRepository documentRepository,
 			IApiDocumentModelValidator documentModelValidator)
+			: base()
 
 		{
 			this.documentRepository = documentRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCODocument> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.documentRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCODocument Get(Guid documentNode)
+		public virtual Task<POCODocument> Get(Guid documentNode)
 		{
 			return this.documentRepository.Get(documentNode);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCODocument> response = new CreateResponse<POCODocument>(await this.documentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODocument record = this.documentRepository.Create(model);
+				POCODocument record = await this.documentRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.documentRepository.Update(documentNode, model);
+				await this.documentRepository.Update(documentNode, model);
 			}
 
 			return response;
@@ -73,23 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.documentRepository.Delete(documentNode);
+				await this.documentRepository.Delete(documentNode);
 			}
 			return response;
 		}
 
-		public POCODocument GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
+		public async Task<POCODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
 		{
-			return this.documentRepository.GetDocumentLevelDocumentNode(documentLevel,documentNode);
+			return await this.documentRepository.GetDocumentLevelDocumentNode(documentLevel,documentNode);
 		}
-
-		public List<POCODocument> GetFileNameRevision(string fileName,string revision)
+		public async Task<List<POCODocument>> GetFileNameRevision(string fileName,string revision)
 		{
-			return this.documentRepository.GetFileNameRevision(fileName,revision);
+			return await this.documentRepository.GetFileNameRevision(fileName,revision);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>791ed73de8cc80a2d190fb86fe96c7e3</Hash>
+    <Hash>9203cbe7969e39f5bd73bf1d4b1eac4e</Hash>
 </Codenesium>*/

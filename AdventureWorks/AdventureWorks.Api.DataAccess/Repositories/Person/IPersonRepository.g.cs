@@ -1,29 +1,30 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPersonRepository
 	{
-		POCOPerson Create(ApiPersonModel model);
+		Task<POCOPerson> Create(ApiPersonModel model);
 
-		void Update(int businessEntityID,
+		Task Update(int businessEntityID,
 		            ApiPersonModel model);
 
-		void Delete(int businessEntityID);
+		Task Delete(int businessEntityID);
 
-		POCOPerson Get(int businessEntityID);
+		Task<POCOPerson> Get(int businessEntityID);
 
-		List<POCOPerson> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOPerson> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName);
-		List<POCOPerson> GetAdditionalContactInfo(string additionalContactInfo);
-		List<POCOPerson> GetDemographics(string demographics);
+		Task<List<POCOPerson>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName);
+		Task<List<POCOPerson>> GetAdditionalContactInfo(string additionalContactInfo);
+		Task<List<POCOPerson>> GetDemographics(string demographics);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a9fb6ea7dac842ba0cb209a84e3dac0</Hash>
+    <Hash>d074561126d3f50a2e7a21dc0230d196</Hash>
 </Codenesium>*/

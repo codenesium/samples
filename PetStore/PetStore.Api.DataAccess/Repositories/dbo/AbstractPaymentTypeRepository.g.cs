@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using PetStoreNS.Api.Contracts;
 
 namespace PetStoreNS.Api.DataAccess
 {
-	public abstract class AbstractPaymentTypeRepository
+	public abstract class AbstractPaymentTypeRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace PetStoreNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOPaymentType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPaymentType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOPaymentType Get(int id)
+		public async virtual Task<POCOPaymentType> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			PaymentType record = await this.GetById(id);
+
+			return this.Mapper.PaymentTypeMapEFToPOCO(record);
 		}
 
-		public virtual POCOPaymentType Create(
+		public async virtual Task<POCOPaymentType> Create(
 			ApiPaymentTypeModel model)
 		{
 			PaymentType record = new PaymentType();
@@ -47,15 +51,17 @@ namespace PetStoreNS.Api.DataAccess
 				record);
 
 			this.Context.Set<PaymentType>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.PaymentTypeMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiPaymentTypeModel model)
 		{
-			PaymentType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			PaymentType record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace PetStoreNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			PaymentType record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			PaymentType record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace PetStoreNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<PaymentType>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOPaymentType> Where(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOPaymentType>> Where(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOPaymentType> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOPaymentType> SearchLinqPOCO(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOPaymentType>> SearchLinqPOCO(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOPaymentType> response = new List<POCOPaymentType>();
-			List<PaymentType> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<PaymentType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.PaymentTypeMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<PaymentType> SearchLinqEF(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PaymentType>> SearchLinqEF(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PaymentType.Id)} ASC";
 			}
-			return this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PaymentType>();
+			return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PaymentType>();
 		}
 
-		private List<PaymentType> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PaymentType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PaymentType.Id)} ASC";
 			}
 
-			return this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PaymentType>();
+			return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PaymentType>();
+		}
+
+		private async Task<PaymentType> GetById(int id)
+		{
+			List<PaymentType> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e473033923c05bc3fa9080a4d821dabc</Hash>
+    <Hash>753041233e525d59df677e0e7d2845a0</Hash>
 </Codenesium>*/

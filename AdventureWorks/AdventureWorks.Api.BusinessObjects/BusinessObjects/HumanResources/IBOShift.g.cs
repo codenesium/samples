@@ -17,16 +17,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int shiftID);
 
-		POCOShift Get(int shiftID);
+		Task<POCOShift> Get(int shiftID);
 
-		List<POCOShift> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOShift GetName(string name);
-
-		POCOShift GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
+		Task<POCOShift> GetName(string name);
+		Task<POCOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4240568e831396039ff3d784b8ab1fcc</Hash>
+    <Hash>6b43bcf4d8058f78d27803b29af89db4</Hash>
 </Codenesium>*/

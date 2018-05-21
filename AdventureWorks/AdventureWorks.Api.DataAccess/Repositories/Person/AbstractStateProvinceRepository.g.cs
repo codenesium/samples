@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractStateProvinceRepository
+	public abstract class AbstractStateProvinceRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOStateProvince> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOStateProvince Get(int stateProvinceID)
+		public async virtual Task<POCOStateProvince> Get(int stateProvinceID)
 		{
-			return this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
+			StateProvince record = await this.GetById(stateProvinceID);
+
+			return this.Mapper.StateProvinceMapEFToPOCO(record);
 		}
 
-		public virtual POCOStateProvince Create(
+		public async virtual Task<POCOStateProvince> Create(
 			ApiStateProvinceModel model)
 		{
 			StateProvince record = new StateProvince();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<StateProvince>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.StateProvinceMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int stateProvinceID,
 			ApiStateProvinceModel model)
 		{
-			StateProvince record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
+			StateProvince record = await this.GetById(stateProvinceID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{stateProvinceID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					stateProvinceID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int stateProvinceID)
 		{
-			StateProvince record = this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID).FirstOrDefault();
+			StateProvince record = await this.GetById(stateProvinceID);
 
 			if (record == null)
 			{
@@ -82,54 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<StateProvince>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOStateProvince GetName(string name)
+		public async Task<POCOStateProvince> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<POCOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
+		{
+			var records = await this.SearchLinqPOCO(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
+
+			return records.FirstOrDefault();
 		}
 
-		public POCOStateProvince GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
+		protected async Task<List<POCOStateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			List<POCOStateProvince> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCOStateProvince> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOStateProvince> SearchLinqPOCO(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOStateProvince>> SearchLinqPOCO(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOStateProvince> response = new List<POCOStateProvince>();
-			List<StateProvince> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<StateProvince> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.StateProvinceMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<StateProvince> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<StateProvince>> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
 			}
-			return this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<StateProvince>();
+			return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
 		}
 
-		private List<StateProvince> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<StateProvince>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
 			}
 
-			return this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<StateProvince>();
+			return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
+		}
+
+		private async Task<StateProvince> GetById(int stateProvinceID)
+		{
+			List<StateProvince> records = await this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b831991eaf5de165a7cd559b494f6c2</Hash>
+    <Hash>65b3187d313a77caebcbf39c95e341e3</Hash>
 </Codenesium>*/

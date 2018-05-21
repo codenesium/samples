@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void AccountNumberRules()
 		{
 			this.RuleFor(x => x.AccountNumber).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiVendorModel.AccountNumber));
 			this.RuleFor(x => x.AccountNumber).Length(0, 15);
 		}
 
@@ -61,11 +61,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeUniqueGetAccountNumber(ApiVendorModel model)
 		{
-			return this.VendorRepository.GetAccountNumber(model.AccountNumber) != null;
+			return this.VendorRepository.GetAccountNumber(model.AccountNumber) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a4cfa0a00f1238def47f80d0ff5c934</Hash>
+    <Hash>f79dc61359561b51ac76b64bec020f5f</Hash>
 </Codenesium>*/

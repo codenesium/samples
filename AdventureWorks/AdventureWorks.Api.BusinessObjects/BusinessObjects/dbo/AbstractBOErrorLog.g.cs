@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOErrorLog
+	public abstract class AbstractBOErrorLog: AbstractBOManager
 	{
 		private IErrorLogRepository errorLogRepository;
 		private IApiErrorLogModelValidator errorLogModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IErrorLogRepository errorLogRepository,
 			IApiErrorLogModelValidator errorLogModelValidator)
+			: base()
 
 		{
 			this.errorLogRepository = errorLogRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOErrorLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.errorLogRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOErrorLog Get(int errorLogID)
+		public virtual Task<POCOErrorLog> Get(int errorLogID)
 		{
 			return this.errorLogRepository.Get(errorLogID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOErrorLog> response = new CreateResponse<POCOErrorLog>(await this.errorLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOErrorLog record = this.errorLogRepository.Create(model);
+				POCOErrorLog record = await this.errorLogRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.errorLogRepository.Update(errorLogID, model);
+				await this.errorLogRepository.Update(errorLogID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.errorLogRepository.Delete(errorLogID);
+				await this.errorLogRepository.Delete(errorLogID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>12973a65371fd68a5143df836ca48742</Hash>
+    <Hash>8a3c338ff95efc772a228b7906d42153</Hash>
 </Codenesium>*/

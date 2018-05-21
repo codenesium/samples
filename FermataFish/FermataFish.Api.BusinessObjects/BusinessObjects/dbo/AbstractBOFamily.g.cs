@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOFamily
+	public abstract class AbstractBOFamily: AbstractBOManager
 	{
 		private IFamilyRepository familyRepository;
 		private IApiFamilyModelValidator familyModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			IFamilyRepository familyRepository,
 			IApiFamilyModelValidator familyModelValidator)
+			: base()
 
 		{
 			this.familyRepository = familyRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.familyRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOFamily Get(int id)
+		public virtual Task<POCOFamily> Get(int id)
 		{
 			return this.familyRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOFamily> response = new CreateResponse<POCOFamily>(await this.familyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOFamily record = this.familyRepository.Create(model);
+				POCOFamily record = await this.familyRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.familyRepository.Update(id, model);
+				await this.familyRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.familyRepository.Delete(id);
+				await this.familyRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>670a31e2d3e818a19a57aa731e07222a</Hash>
+    <Hash>5d052386b3a87b15a2d4f413ed29a9c4</Hash>
 </Codenesium>*/

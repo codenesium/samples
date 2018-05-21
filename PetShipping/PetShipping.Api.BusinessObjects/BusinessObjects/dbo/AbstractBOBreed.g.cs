@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOBreed
+	public abstract class AbstractBOBreed: AbstractBOManager
 	{
 		private IBreedRepository breedRepository;
 		private IApiBreedModelValidator breedModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IBreedRepository breedRepository,
 			IApiBreedModelValidator breedModelValidator)
+			: base()
 
 		{
 			this.breedRepository = breedRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOBreed> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOBreed>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.breedRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOBreed Get(int id)
+		public virtual Task<POCOBreed> Get(int id)
 		{
 			return this.breedRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOBreed> response = new CreateResponse<POCOBreed>(await this.breedModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBreed record = this.breedRepository.Create(model);
+				POCOBreed record = await this.breedRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.breedRepository.Update(id, model);
+				await this.breedRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.breedRepository.Delete(id);
+				await this.breedRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fda81d768c17d046c0810b814186b72c</Hash>
+    <Hash>6e4e9c836d12174e308105f7063cbbc0</Hash>
 </Codenesium>*/

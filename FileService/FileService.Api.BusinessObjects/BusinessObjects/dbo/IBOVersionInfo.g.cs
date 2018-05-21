@@ -17,14 +17,14 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(long version);
 
-		POCOVersionInfo Get(long version);
+		Task<POCOVersionInfo> Get(long version);
 
-		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOVersionInfo Version(long version);
+		Task<POCOVersionInfo> Version(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9dc01cc9f7dfe1f720699074628ed490</Hash>
+    <Hash>1fd9020cf24f681c114ce89fbc992c47</Hash>
 </Codenesium>*/

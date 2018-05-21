@@ -4,9 +4,9 @@ using System;
 
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class POCOTeacherSkill
+	public partial class POCOTeacherSkill: AbstractPOCO
 	{
-		public POCOTeacherSkill()
+		public POCOTeacherSkill() : base()
 		{}
 
 		public POCOTeacherSkill(
@@ -59,5 +59,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c62a0fb054e3693d56f4185111d9cb4d</Hash>
+    <Hash>211f8afb96ec6d93d492c917d5ac2541</Hash>
 </Codenesium>*/

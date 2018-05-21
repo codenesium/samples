@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesReason
+	public abstract class AbstractBOSalesReason: AbstractBOManager
 	{
 		private ISalesReasonRepository salesReasonRepository;
 		private IApiSalesReasonModelValidator salesReasonModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesReasonRepository salesReasonRepository,
 			IApiSalesReasonModelValidator salesReasonModelValidator)
+			: base()
 
 		{
 			this.salesReasonRepository = salesReasonRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesReasonRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesReason Get(int salesReasonID)
+		public virtual Task<POCOSalesReason> Get(int salesReasonID)
 		{
 			return this.salesReasonRepository.Get(salesReasonID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesReason> response = new CreateResponse<POCOSalesReason>(await this.salesReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesReason record = this.salesReasonRepository.Create(model);
+				POCOSalesReason record = await this.salesReasonRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesReasonRepository.Update(salesReasonID, model);
+				await this.salesReasonRepository.Update(salesReasonID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesReasonRepository.Delete(salesReasonID);
+				await this.salesReasonRepository.Delete(salesReasonID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>be73663fb79e14ab6142564744761bc4</Hash>
+    <Hash>ae4d158b13a9d12516668ea3ee2a0d59</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBODatabaseLog
+	public abstract class AbstractBODatabaseLog: AbstractBOManager
 	{
 		private IDatabaseLogRepository databaseLogRepository;
 		private IApiDatabaseLogModelValidator databaseLogModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IDatabaseLogRepository databaseLogRepository,
 			IApiDatabaseLogModelValidator databaseLogModelValidator)
+			: base()
 
 		{
 			this.databaseLogRepository = databaseLogRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCODatabaseLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODatabaseLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.databaseLogRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCODatabaseLog Get(int databaseLogID)
+		public virtual Task<POCODatabaseLog> Get(int databaseLogID)
 		{
 			return this.databaseLogRepository.Get(databaseLogID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCODatabaseLog> response = new CreateResponse<POCODatabaseLog>(await this.databaseLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODatabaseLog record = this.databaseLogRepository.Create(model);
+				POCODatabaseLog record = await this.databaseLogRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.databaseLogRepository.Update(databaseLogID, model);
+				await this.databaseLogRepository.Update(databaseLogID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.databaseLogRepository.Delete(databaseLogID);
+				await this.databaseLogRepository.Delete(databaseLogID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>37cd1181db0813624bbb5bed28ed6c62</Hash>
+    <Hash>8e7d092534254af298cbffc90c53e38b</Hash>
 </Codenesium>*/

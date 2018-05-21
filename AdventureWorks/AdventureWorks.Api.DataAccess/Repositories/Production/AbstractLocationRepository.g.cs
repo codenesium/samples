@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractLocationRepository
+	public abstract class AbstractLocationRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOLocation> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOLocation Get(short locationID)
+		public async virtual Task<POCOLocation> Get(short locationID)
 		{
-			return this.SearchLinqPOCO(x => x.LocationID == locationID).FirstOrDefault();
+			Location record = await this.GetById(locationID);
+
+			return this.Mapper.LocationMapEFToPOCO(record);
 		}
 
-		public virtual POCOLocation Create(
+		public async virtual Task<POCOLocation> Create(
 			ApiLocationModel model)
 		{
 			Location record = new Location();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Location>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.LocationMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			short locationID,
 			ApiLocationModel model)
 		{
-			Location record = this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
+			Location record = await this.GetById(locationID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{locationID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					locationID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			short locationID)
 		{
-			Location record = this.SearchLinqEF(x => x.LocationID == locationID).FirstOrDefault();
+			Location record = await this.GetById(locationID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Location>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOLocation GetName(string name)
+		public async Task<POCOLocation> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOLocation> Where(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOLocation>> Where(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOLocation> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOLocation> SearchLinqPOCO(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOLocation>> SearchLinqPOCO(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOLocation> response = new List<POCOLocation>();
-			List<Location> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Location> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.LocationMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Location> SearchLinqEF(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Location>> SearchLinqEF(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Location.LocationID)} ASC";
 			}
-			return this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Location>();
+			return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Location>();
 		}
 
-		private List<Location> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Location>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Location.LocationID)} ASC";
 			}
 
-			return this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Location>();
+			return await this.Context.Set<Location>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Location>();
+		}
+
+		private async Task<Location> GetById(short locationID)
+		{
+			List<Location> records = await this.SearchLinqEF(x => x.LocationID == locationID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e897146ca8394dcaba48eb5f048d2e7</Hash>
+    <Hash>5a82b57a9d632a197725d56c7d23be33</Hash>
 </Codenesium>*/

@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOClasp> response = this.claspManager.All(query.Offset, query.Limit);
+			List<POCOClasp> response = await this.claspManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOClasp), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOClasp response = this.claspManager.Get(id);
+			POCOClasp response = await this.claspManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOClasp response = this.claspManager.Get(id);
+					POCOClasp response = await this.claspManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>eefc60c1489f8235d7dc245576727883</Hash>
+    <Hash>09051e0bd8cf5d306cea57e93fdeb51c</Hash>
 </Codenesium>*/

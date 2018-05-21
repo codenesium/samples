@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOProductInventory
+	public partial class POCOProductInventory: AbstractPOCO
 	{
-		public POCOProductInventory()
+		public POCOProductInventory() : base()
 		{}
 
 		public POCOProductInventory(
@@ -105,5 +105,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f7eeab4c28dc84153f53f8a2ecdfe6a7</Hash>
+    <Hash>9b5e73ba1231235bbb19d48726ad1aac</Hash>
 </Codenesium>*/

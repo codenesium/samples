@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractErrorLogRepository
+	public abstract class AbstractErrorLogRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOErrorLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOErrorLog Get(int errorLogID)
+		public async virtual Task<POCOErrorLog> Get(int errorLogID)
 		{
-			return this.SearchLinqPOCO(x => x.ErrorLogID == errorLogID).FirstOrDefault();
+			ErrorLog record = await this.GetById(errorLogID);
+
+			return this.Mapper.ErrorLogMapEFToPOCO(record);
 		}
 
-		public virtual POCOErrorLog Create(
+		public async virtual Task<POCOErrorLog> Create(
 			ApiErrorLogModel model)
 		{
 			ErrorLog record = new ErrorLog();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ErrorLog>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ErrorLogMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int errorLogID,
 			ApiErrorLogModel model)
 		{
-			ErrorLog record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
+			ErrorLog record = await this.GetById(errorLogID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{errorLogID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					errorLogID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int errorLogID)
 		{
-			ErrorLog record = this.SearchLinqEF(x => x.ErrorLogID == errorLogID).FirstOrDefault();
+			ErrorLog record = await this.GetById(errorLogID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ErrorLog>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOErrorLog> Where(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOErrorLog>> Where(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOErrorLog> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOErrorLog> SearchLinqPOCO(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOErrorLog>> SearchLinqPOCO(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOErrorLog> response = new List<POCOErrorLog>();
-			List<ErrorLog> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ErrorLog> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ErrorLogMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ErrorLog> SearchLinqEF(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ErrorLog>> SearchLinqEF(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ErrorLog.ErrorLogID)} ASC";
 			}
-			return this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ErrorLog>();
+			return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ErrorLog>();
 		}
 
-		private List<ErrorLog> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ErrorLog>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ErrorLog.ErrorLogID)} ASC";
 			}
 
-			return this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ErrorLog>();
+			return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ErrorLog>();
+		}
+
+		private async Task<ErrorLog> GetById(int errorLogID)
+		{
+			List<ErrorLog> records = await this.SearchLinqEF(x => x.ErrorLogID == errorLogID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>85686d39fc43314eb1899d9d1b0bb0b3</Hash>
+    <Hash>069ce7786ce13beac319ac4f1a33f957</Hash>
 </Codenesium>*/

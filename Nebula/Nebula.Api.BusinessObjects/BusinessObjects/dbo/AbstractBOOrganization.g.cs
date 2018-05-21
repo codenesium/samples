@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOOrganization
+	public abstract class AbstractBOOrganization: AbstractBOManager
 	{
 		private IOrganizationRepository organizationRepository;
 		private IApiOrganizationModelValidator organizationModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			IOrganizationRepository organizationRepository,
 			IApiOrganizationModelValidator organizationModelValidator)
+			: base()
 
 		{
 			this.organizationRepository = organizationRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOOrganization> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.organizationRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOOrganization Get(int id)
+		public virtual Task<POCOOrganization> Get(int id)
 		{
 			return this.organizationRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOOrganization> response = new CreateResponse<POCOOrganization>(await this.organizationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOOrganization record = this.organizationRepository.Create(model);
+				POCOOrganization record = await this.organizationRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.organizationRepository.Update(id, model);
+				await this.organizationRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.organizationRepository.Delete(id);
+				await this.organizationRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCOOrganization Name(string name)
+		public async Task<POCOOrganization> Name(string name)
 		{
-			return this.organizationRepository.Name(name);
+			return await this.organizationRepository.Name(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb8b0e6457cbf118bfbbfae49b28829b</Hash>
+    <Hash>a0a795055ce7e2be8499c02c105812ee</Hash>
 </Codenesium>*/

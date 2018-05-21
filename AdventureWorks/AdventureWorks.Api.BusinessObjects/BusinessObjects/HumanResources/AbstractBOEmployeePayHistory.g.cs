@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOEmployeePayHistory
+	public abstract class AbstractBOEmployeePayHistory: AbstractBOManager
 	{
 		private IEmployeePayHistoryRepository employeePayHistoryRepository;
 		private IApiEmployeePayHistoryModelValidator employeePayHistoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IEmployeePayHistoryRepository employeePayHistoryRepository,
 			IApiEmployeePayHistoryModelValidator employeePayHistoryModelValidator)
+			: base()
 
 		{
 			this.employeePayHistoryRepository = employeePayHistoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOEmployeePayHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOEmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.employeePayHistoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOEmployeePayHistory Get(int businessEntityID)
+		public virtual Task<POCOEmployeePayHistory> Get(int businessEntityID)
 		{
 			return this.employeePayHistoryRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOEmployeePayHistory> response = new CreateResponse<POCOEmployeePayHistory>(await this.employeePayHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmployeePayHistory record = this.employeePayHistoryRepository.Create(model);
+				POCOEmployeePayHistory record = await this.employeePayHistoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.employeePayHistoryRepository.Update(businessEntityID, model);
+				await this.employeePayHistoryRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.employeePayHistoryRepository.Delete(businessEntityID);
+				await this.employeePayHistoryRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>79514ab6a7e2e4aeb9cc9147bba16ac1</Hash>
+    <Hash>02d582d8ba8a0637e4a70a427f9ae5dc</Hash>
 </Codenesium>*/

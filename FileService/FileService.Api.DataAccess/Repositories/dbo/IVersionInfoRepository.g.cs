@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
 
 namespace FileServiceNS.Api.DataAccess
 {
 	public interface IVersionInfoRepository
 	{
-		POCOVersionInfo Create(ApiVersionInfoModel model);
+		Task<POCOVersionInfo> Create(ApiVersionInfoModel model);
 
-		void Update(long version,
+		Task Update(long version,
 		            ApiVersionInfoModel model);
 
-		void Delete(long version);
+		Task Delete(long version);
 
-		POCOVersionInfo Get(long version);
+		Task<POCOVersionInfo> Get(long version);
 
-		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOVersionInfo Version(long version);
+		Task<POCOVersionInfo> Version(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f228a122ce6af5124bc39f7706896c1f</Hash>
+    <Hash>b6334d6f314528c301738e2007a774d4</Hash>
 </Codenesium>*/

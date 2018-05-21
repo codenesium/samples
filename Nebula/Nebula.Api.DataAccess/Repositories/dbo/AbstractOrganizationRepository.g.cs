@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public abstract class AbstractOrganizationRepository
+	public abstract class AbstractOrganizationRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace NebulaNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOOrganization> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOOrganization Get(int id)
+		public async virtual Task<POCOOrganization> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			Organization record = await this.GetById(id);
+
+			return this.Mapper.OrganizationMapEFToPOCO(record);
 		}
 
-		public virtual POCOOrganization Create(
+		public async virtual Task<POCOOrganization> Create(
 			ApiOrganizationModel model)
 		{
 			Organization record = new Organization();
@@ -47,15 +51,17 @@ namespace NebulaNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Organization>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.OrganizationMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiOrganizationModel model)
 		{
-			Organization record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Organization record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace NebulaNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			Organization record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Organization record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Organization>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOOrganization Name(string name)
+		public async Task<POCOOrganization> Name(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOOrganization> Where(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOOrganization>> Where(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOOrganization> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOOrganization> SearchLinqPOCO(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOOrganization>> SearchLinqPOCO(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOOrganization> response = new List<POCOOrganization>();
-			List<Organization> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Organization> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.OrganizationMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Organization> SearchLinqEF(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Organization>> SearchLinqEF(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Organization.Id)} ASC";
 			}
-			return this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Organization>();
+			return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Organization>();
 		}
 
-		private List<Organization> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Organization>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Organization.Id)} ASC";
 			}
 
-			return this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Organization>();
+			return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Organization>();
+		}
+
+		private async Task<Organization> GetById(int id)
+		{
+			List<Organization> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>27ce485f967b78ec1355e6ddd6969934</Hash>
+    <Hash>e9dd728fd83b505365e84fae8eb15c7f</Hash>
 </Codenesium>*/

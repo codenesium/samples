@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOClasp
+	public abstract class AbstractBOClasp: AbstractBOManager
 	{
 		private IClaspRepository claspRepository;
 		private IApiClaspModelValidator claspModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			IClaspRepository claspRepository,
 			IApiClaspModelValidator claspModelValidator)
+			: base()
 
 		{
 			this.claspRepository = claspRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.claspRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOClasp Get(int id)
+		public virtual Task<POCOClasp> Get(int id)
 		{
 			return this.claspRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOClasp> response = new CreateResponse<POCOClasp>(await this.claspModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOClasp record = this.claspRepository.Create(model);
+				POCOClasp record = await this.claspRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.claspRepository.Update(id, model);
+				await this.claspRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.claspRepository.Delete(id);
+				await this.claspRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>aad48e05d44ae3760b7c32a5f5251537</Hash>
+    <Hash>7799036855829c59cb12a26f9bdd7758</Hash>
 </Codenesium>*/

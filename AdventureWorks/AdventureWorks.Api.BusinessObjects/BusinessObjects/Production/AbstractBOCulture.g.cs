@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCulture
+	public abstract class AbstractBOCulture: AbstractBOManager
 	{
 		private ICultureRepository cultureRepository;
 		private IApiCultureModelValidator cultureModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ICultureRepository cultureRepository,
 			IApiCultureModelValidator cultureModelValidator)
+			: base()
 
 		{
 			this.cultureRepository = cultureRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCulture> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.cultureRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCulture Get(string cultureID)
+		public virtual Task<POCOCulture> Get(string cultureID)
 		{
 			return this.cultureRepository.Get(cultureID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOCulture> response = new CreateResponse<POCOCulture>(await this.cultureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCulture record = this.cultureRepository.Create(model);
+				POCOCulture record = await this.cultureRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.cultureRepository.Update(cultureID, model);
+				await this.cultureRepository.Update(cultureID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.cultureRepository.Delete(cultureID);
+				await this.cultureRepository.Delete(cultureID);
 			}
 			return response;
 		}
 
-		public POCOCulture GetName(string name)
+		public async Task<POCOCulture> GetName(string name)
 		{
-			return this.cultureRepository.GetName(name);
+			return await this.cultureRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1e246050c87ef4d6d0afdc7edb27be60</Hash>
+    <Hash>21e92e4397d9438853377a06e453a891</Hash>
 </Codenesium>*/

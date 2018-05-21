@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractShiftRepository
+	public abstract class AbstractShiftRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOShift> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOShift Get(int shiftID)
+		public async virtual Task<POCOShift> Get(int shiftID)
 		{
-			return this.SearchLinqPOCO(x => x.ShiftID == shiftID).FirstOrDefault();
+			Shift record = await this.GetById(shiftID);
+
+			return this.Mapper.ShiftMapEFToPOCO(record);
 		}
 
-		public virtual POCOShift Create(
+		public async virtual Task<POCOShift> Create(
 			ApiShiftModel model)
 		{
 			Shift record = new Shift();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Shift>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ShiftMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int shiftID,
 			ApiShiftModel model)
 		{
-			Shift record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
+			Shift record = await this.GetById(shiftID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{shiftID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					shiftID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int shiftID)
 		{
-			Shift record = this.SearchLinqEF(x => x.ShiftID == shiftID).FirstOrDefault();
+			Shift record = await this.GetById(shiftID);
 
 			if (record == null)
 			{
@@ -82,54 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Shift>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOShift GetName(string name)
+		public async Task<POCOShift> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<POCOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
+		{
+			var records = await this.SearchLinqPOCO(x => x.StartTime == startTime && x.EndTime == endTime);
+
+			return records.FirstOrDefault();
 		}
 
-		public POCOShift GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
+		protected async Task<List<POCOShift>> Where(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.StartTime == startTime && x.EndTime == endTime).FirstOrDefault();
+			List<POCOShift> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCOShift> Where(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOShift> SearchLinqPOCO(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOShift>> SearchLinqPOCO(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOShift> response = new List<POCOShift>();
-			List<Shift> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Shift> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ShiftMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Shift> SearchLinqEF(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Shift>> SearchLinqEF(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Shift.ShiftID)} ASC";
 			}
-			return this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Shift>();
+			return await this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Shift>();
 		}
 
-		private List<Shift> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Shift>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Shift.ShiftID)} ASC";
 			}
 
-			return this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Shift>();
+			return await this.Context.Set<Shift>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Shift>();
+		}
+
+		private async Task<Shift> GetById(int shiftID)
+		{
+			List<Shift> records = await this.SearchLinqEF(x => x.ShiftID == shiftID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e942f608d3251774c247c6660628ed7a</Hash>
+    <Hash>83e53479bf2873b8adcbf7c3c0a3e1b4</Hash>
 </Codenesium>*/

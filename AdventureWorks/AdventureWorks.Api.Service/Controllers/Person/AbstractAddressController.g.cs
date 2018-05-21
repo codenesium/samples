@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOAddress>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOAddress> response = this.addressManager.All(query.Offset, query.Limit);
+			List<POCOAddress> response = await this.addressManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOAddress), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOAddress response = this.addressManager.Get(id);
+			POCOAddress response = await this.addressManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOAddress response = this.addressManager.Get(id);
+					POCOAddress response = await this.addressManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOAddress), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
+		public async virtual Task<IActionResult> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
 		{
-			POCOAddress response = this.addressManager.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
+			POCOAddress response = await this.addressManager.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -196,22 +191,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getStateProvinceID/{stateProvinceID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOAddress>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetStateProvinceID(int stateProvinceID)
+		public async virtual Task<IActionResult> GetStateProvinceID(int stateProvinceID)
 		{
-			List<POCOAddress> response = this.addressManager.GetStateProvinceID(stateProvinceID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOAddress> response = await this.addressManager.GetStateProvinceID(stateProvinceID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5e8949e221e2aa41742f28dcf0c40f1</Hash>
+    <Hash>a6ae6bca8eb7659fcef744214b3a1683</Hash>
 </Codenesium>*/

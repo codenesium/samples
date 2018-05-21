@@ -39,22 +39,14 @@ namespace ESPIOTNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCODeviceAction>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODeviceAction> response = this.deviceActionManager.All(query.Offset, query.Limit);
+			List<POCODeviceAction> response = await this.deviceActionManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace ESPIOTNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODeviceAction), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCODeviceAction response = this.deviceActionManager.Get(id);
+			POCODeviceAction response = await this.deviceActionManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace ESPIOTNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODeviceAction response = this.deviceActionManager.Get(id);
+					POCODeviceAction response = await this.deviceActionManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e9d1541d3b8a63db1389cc57d8e92478</Hash>
+    <Hash>92ca52b1b6350e87bee4978dc9ae690e</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOIllustration
+	public abstract class AbstractBOIllustration: AbstractBOManager
 	{
 		private IIllustrationRepository illustrationRepository;
 		private IApiIllustrationModelValidator illustrationModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IIllustrationRepository illustrationRepository,
 			IApiIllustrationModelValidator illustrationModelValidator)
+			: base()
 
 		{
 			this.illustrationRepository = illustrationRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOIllustration> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.illustrationRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOIllustration Get(int illustrationID)
+		public virtual Task<POCOIllustration> Get(int illustrationID)
 		{
 			return this.illustrationRepository.Get(illustrationID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOIllustration> response = new CreateResponse<POCOIllustration>(await this.illustrationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOIllustration record = this.illustrationRepository.Create(model);
+				POCOIllustration record = await this.illustrationRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.illustrationRepository.Update(illustrationID, model);
+				await this.illustrationRepository.Update(illustrationID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.illustrationRepository.Delete(illustrationID);
+				await this.illustrationRepository.Delete(illustrationID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8309891895fe9b746dd442a5e04e9c85</Hash>
+    <Hash>8895e66efd02c0fa45a6e164ddb597a9</Hash>
 </Codenesium>*/

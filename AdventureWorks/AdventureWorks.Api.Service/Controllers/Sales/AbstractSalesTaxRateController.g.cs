@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSalesTaxRate>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesTaxRate> response = this.salesTaxRateManager.All(query.Offset, query.Limit);
+			List<POCOSalesTaxRate> response = await this.salesTaxRateManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOSalesTaxRate), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesTaxRate response = this.salesTaxRateManager.Get(id);
+			POCOSalesTaxRate response = await this.salesTaxRateManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesTaxRate response = this.salesTaxRateManager.Get(id);
+					POCOSalesTaxRate response = await this.salesTaxRateManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOSalesTaxRate), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
+		public async virtual Task<IActionResult> GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
 		{
-			POCOSalesTaxRate response = this.salesTaxRateManager.GetStateProvinceIDTaxType(stateProvinceID,taxType);
+			POCOSalesTaxRate response = await this.salesTaxRateManager.GetStateProvinceIDTaxType(stateProvinceID,taxType);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b827ca63d3ad760a816f69564451663f</Hash>
+    <Hash>75a1c5e3c383f5b0bd4712044cf2600e</Hash>
 </Codenesium>*/

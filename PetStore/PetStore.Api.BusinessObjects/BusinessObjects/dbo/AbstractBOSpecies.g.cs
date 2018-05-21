@@ -12,7 +12,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSpecies
+	public abstract class AbstractBOSpecies: AbstractBOManager
 	{
 		private ISpeciesRepository speciesRepository;
 		private IApiSpeciesModelValidator speciesModelValidator;
@@ -22,6 +22,7 @@ namespace PetStoreNS.Api.BusinessObjects
 			ILogger logger,
 			ISpeciesRepository speciesRepository,
 			IApiSpeciesModelValidator speciesModelValidator)
+			: base()
 
 		{
 			this.speciesRepository = speciesRepository;
@@ -29,12 +30,12 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpecies>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.speciesRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSpecies Get(int id)
+		public virtual Task<POCOSpecies> Get(int id)
 		{
 			return this.speciesRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetStoreNS.Api.BusinessObjects
 			CreateResponse<POCOSpecies> response = new CreateResponse<POCOSpecies>(await this.speciesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpecies record = this.speciesRepository.Create(model);
+				POCOSpecies record = await this.speciesRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.speciesRepository.Update(id, model);
+				await this.speciesRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.speciesRepository.Delete(id);
+				await this.speciesRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>552131b4804c34e81babf97d6af5461f</Hash>
+    <Hash>470dd6854d3780ffb7fc9827bd890a77</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOVendor
+	public abstract class AbstractBOVendor: AbstractBOManager
 	{
 		private IVendorRepository vendorRepository;
 		private IApiVendorModelValidator vendorModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IVendorRepository vendorRepository,
 			IApiVendorModelValidator vendorModelValidator)
+			: base()
 
 		{
 			this.vendorRepository = vendorRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOVendor> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.vendorRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOVendor Get(int businessEntityID)
+		public virtual Task<POCOVendor> Get(int businessEntityID)
 		{
 			return this.vendorRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOVendor> response = new CreateResponse<POCOVendor>(await this.vendorModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOVendor record = this.vendorRepository.Create(model);
+				POCOVendor record = await this.vendorRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.vendorRepository.Update(businessEntityID, model);
+				await this.vendorRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.vendorRepository.Delete(businessEntityID);
+				await this.vendorRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public POCOVendor GetAccountNumber(string accountNumber)
+		public async Task<POCOVendor> GetAccountNumber(string accountNumber)
 		{
-			return this.vendorRepository.GetAccountNumber(accountNumber);
+			return await this.vendorRepository.GetAccountNumber(accountNumber);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a972518d095cc55098e8d12d0832c2a3</Hash>
+    <Hash>c3c1cc0e835a40001134757dc7a57fe0</Hash>
 </Codenesium>*/

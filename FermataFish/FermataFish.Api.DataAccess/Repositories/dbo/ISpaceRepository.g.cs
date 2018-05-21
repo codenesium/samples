@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
 	public interface ISpaceRepository
 	{
-		POCOSpace Create(ApiSpaceModel model);
+		Task<POCOSpace> Create(ApiSpaceModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiSpaceModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOSpace Get(int id);
+		Task<POCOSpace> Get(int id);
 
-		List<POCOSpace> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSpace>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>09fab77416f806272cd6a7d3f5219c1d</Hash>
+    <Hash>22b18ff0e814e95326b14c6047fa55ea</Hash>
 </Codenesium>*/

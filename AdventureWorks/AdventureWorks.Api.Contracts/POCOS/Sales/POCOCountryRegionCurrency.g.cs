@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOCountryRegionCurrency
+	public partial class POCOCountryRegionCurrency: AbstractPOCO
 	{
-		public POCOCountryRegionCurrency()
+		public POCOCountryRegionCurrency() : base()
 		{}
 
 		public POCOCountryRegionCurrency(
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4cd60c15196d36336cf27583883dbaf6</Hash>
+    <Hash>c24bc96f6a97c68277cd9af153f59f5d</Hash>
 </Codenesium>*/

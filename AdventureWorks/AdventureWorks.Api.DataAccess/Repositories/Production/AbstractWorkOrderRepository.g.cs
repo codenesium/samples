@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractWorkOrderRepository
+	public abstract class AbstractWorkOrderRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOWorkOrder> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOWorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOWorkOrder Get(int workOrderID)
+		public async virtual Task<POCOWorkOrder> Get(int workOrderID)
 		{
-			return this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			WorkOrder record = await this.GetById(workOrderID);
+
+			return this.Mapper.WorkOrderMapEFToPOCO(record);
 		}
 
-		public virtual POCOWorkOrder Create(
+		public async virtual Task<POCOWorkOrder> Create(
 			ApiWorkOrderModel model)
 		{
 			WorkOrder record = new WorkOrder();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<WorkOrder>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.WorkOrderMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int workOrderID,
 			ApiWorkOrderModel model)
 		{
-			WorkOrder record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			WorkOrder record = await this.GetById(workOrderID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{workOrderID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					workOrderID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int workOrderID)
 		{
-			WorkOrder record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			WorkOrder record = await this.GetById(workOrderID);
 
 			if (record == null)
 			{
@@ -82,53 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<WorkOrder>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOWorkOrder> GetProductID(int productID)
+		public async Task<List<POCOWorkOrder>> GetProductID(int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductID == productID);
+			var records = await this.SearchLinqPOCO(x => x.ProductID == productID);
+
+			return records;
 		}
-		public List<POCOWorkOrder> GetScrapReasonID(Nullable<short> scrapReasonID)
+		public async Task<List<POCOWorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
 		{
-			return this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID);
+			var records = await this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID);
+
+			return records;
 		}
 
-		protected List<POCOWorkOrder> Where(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOWorkOrder>> Where(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOWorkOrder> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOWorkOrder> SearchLinqPOCO(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOWorkOrder>> SearchLinqPOCO(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOWorkOrder> response = new List<POCOWorkOrder>();
-			List<WorkOrder> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<WorkOrder> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.WorkOrderMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<WorkOrder> SearchLinqEF(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<WorkOrder>> SearchLinqEF(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(WorkOrder.WorkOrderID)} ASC";
 			}
-			return this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<WorkOrder>();
+			return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<WorkOrder>();
 		}
 
-		private List<WorkOrder> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<WorkOrder>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(WorkOrder.WorkOrderID)} ASC";
 			}
 
-			return this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<WorkOrder>();
+			return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<WorkOrder>();
+		}
+
+		private async Task<WorkOrder> GetById(int workOrderID)
+		{
+			List<WorkOrder> records = await this.SearchLinqEF(x => x.WorkOrderID == workOrderID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4cf211ae064ade6d9af844b9815feee0</Hash>
+    <Hash>fb6418ab44ce2f2fe0e6b8d071fd7e95</Hash>
 </Codenesium>*/

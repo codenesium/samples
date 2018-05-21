@@ -22,48 +22,48 @@ EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[Breed](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[PaymentType](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Pen](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Pet](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[acquiredDate] [date]    NOT NULL,
-[breedId] [int]    NOT NULL,
-[description] [text]    NOT NULL,
-[penId] [int]    NOT NULL,
-[price] [money]    NOT NULL,
-[speciesId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[acquiredDate] [date]     NOT NULL,
+[breedId] [int]     NOT NULL,
+[description] [text]     NOT NULL,
+[penId] [int]     NOT NULL,
+[price] [money]     NOT NULL,
+[speciesId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Sale](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[amount] [money]    NOT NULL,
-[firstName] [varchar]  (90)  NOT NULL,
-[lastName] [varchar]  (90)  NOT NULL,
-[paymentTypeId] [int]    NOT NULL,
-[petId] [int]    NOT NULL,
-[phone] [varchar]  (10)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[amount] [money]     NOT NULL,
+[firstName] [varchar]  (90)   NOT NULL,
+[lastName] [varchar]  (90)   NOT NULL,
+[paymentTypeId] [int]     NOT NULL,
+[petId] [int]     NOT NULL,
+[phone] [varchar]  (10)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Species](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -103,6 +103,7 @@ ADD CONSTRAINT[PK_Species] PRIMARY KEY CLUSTERED
 id ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+
 
 ALTER TABLE[dbo].[Pet]  WITH CHECK ADD  CONSTRAINT[FK_Pet_breedId_Breed_id] FOREIGN KEY([breedId])
 REFERENCES[dbo].[Breed]([id])

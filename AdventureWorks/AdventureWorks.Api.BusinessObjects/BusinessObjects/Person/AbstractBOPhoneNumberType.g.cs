@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPhoneNumberType
+	public abstract class AbstractBOPhoneNumberType: AbstractBOManager
 	{
 		private IPhoneNumberTypeRepository phoneNumberTypeRepository;
 		private IApiPhoneNumberTypeModelValidator phoneNumberTypeModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
 			IApiPhoneNumberTypeModelValidator phoneNumberTypeModelValidator)
+			: base()
 
 		{
 			this.phoneNumberTypeRepository = phoneNumberTypeRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPhoneNumberType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.phoneNumberTypeRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPhoneNumberType Get(int phoneNumberTypeID)
+		public virtual Task<POCOPhoneNumberType> Get(int phoneNumberTypeID)
 		{
 			return this.phoneNumberTypeRepository.Get(phoneNumberTypeID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOPhoneNumberType> response = new CreateResponse<POCOPhoneNumberType>(await this.phoneNumberTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPhoneNumberType record = this.phoneNumberTypeRepository.Create(model);
+				POCOPhoneNumberType record = await this.phoneNumberTypeRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.phoneNumberTypeRepository.Update(phoneNumberTypeID, model);
+				await this.phoneNumberTypeRepository.Update(phoneNumberTypeID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.phoneNumberTypeRepository.Delete(phoneNumberTypeID);
+				await this.phoneNumberTypeRepository.Delete(phoneNumberTypeID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>417c549ccc23e7235ebddec4843bd38f</Hash>
+    <Hash>24eaeeee4d23a870ecfbfa8b1ee1fa4b</Hash>
 </Codenesium>*/

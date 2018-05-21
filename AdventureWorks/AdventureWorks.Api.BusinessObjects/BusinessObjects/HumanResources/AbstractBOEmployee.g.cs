@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOEmployee
+	public abstract class AbstractBOEmployee: AbstractBOManager
 	{
 		private IEmployeeRepository employeeRepository;
 		private IApiEmployeeModelValidator employeeModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IEmployeeRepository employeeRepository,
 			IApiEmployeeModelValidator employeeModelValidator)
+			: base()
 
 		{
 			this.employeeRepository = employeeRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOEmployee> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.employeeRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOEmployee Get(int businessEntityID)
+		public virtual Task<POCOEmployee> Get(int businessEntityID)
 		{
 			return this.employeeRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOEmployee> response = new CreateResponse<POCOEmployee>(await this.employeeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmployee record = this.employeeRepository.Create(model);
+				POCOEmployee record = await this.employeeRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.employeeRepository.Update(businessEntityID, model);
+				await this.employeeRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,32 +75,30 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.employeeRepository.Delete(businessEntityID);
+				await this.employeeRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public POCOEmployee GetLoginID(string loginID)
+		public async Task<POCOEmployee> GetLoginID(string loginID)
 		{
-			return this.employeeRepository.GetLoginID(loginID);
+			return await this.employeeRepository.GetLoginID(loginID);
 		}
-
-		public POCOEmployee GetNationalIDNumber(string nationalIDNumber)
+		public async Task<POCOEmployee> GetNationalIDNumber(string nationalIDNumber)
 		{
-			return this.employeeRepository.GetNationalIDNumber(nationalIDNumber);
+			return await this.employeeRepository.GetNationalIDNumber(nationalIDNumber);
 		}
-
-		public List<POCOEmployee> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
+		public async Task<List<POCOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
 		{
-			return this.employeeRepository.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
+			return await this.employeeRepository.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
 		}
-		public List<POCOEmployee> GetOrganizationNode(Nullable<Guid> organizationNode)
+		public async Task<List<POCOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode)
 		{
-			return this.employeeRepository.GetOrganizationNode(organizationNode);
+			return await this.employeeRepository.GetOrganizationNode(organizationNode);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e32cd97bfd7f5759fb39a81a285f1e69</Hash>
+    <Hash>d0ce4d7329ecdb7265ab9ecdcf6d2991</Hash>
 </Codenesium>*/

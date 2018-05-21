@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSpecialOffer
+	public abstract class AbstractBOSpecialOffer: AbstractBOManager
 	{
 		private ISpecialOfferRepository specialOfferRepository;
 		private IApiSpecialOfferModelValidator specialOfferModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISpecialOfferRepository specialOfferRepository,
 			IApiSpecialOfferModelValidator specialOfferModelValidator)
+			: base()
 
 		{
 			this.specialOfferRepository = specialOfferRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSpecialOffer> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.specialOfferRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSpecialOffer Get(int specialOfferID)
+		public virtual Task<POCOSpecialOffer> Get(int specialOfferID)
 		{
 			return this.specialOfferRepository.Get(specialOfferID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSpecialOffer> response = new CreateResponse<POCOSpecialOffer>(await this.specialOfferModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpecialOffer record = this.specialOfferRepository.Create(model);
+				POCOSpecialOffer record = await this.specialOfferRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.specialOfferRepository.Update(specialOfferID, model);
+				await this.specialOfferRepository.Update(specialOfferID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.specialOfferRepository.Delete(specialOfferID);
+				await this.specialOfferRepository.Delete(specialOfferID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fa5aa82e7bea695bc6f1f21647d24850</Hash>
+    <Hash>f3218fbd4222c447387a9dcbb8e0c53e</Hash>
 </Codenesium>*/

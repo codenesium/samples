@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSalesOrderDetail>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesOrderDetail> response = this.salesOrderDetailManager.All(query.Offset, query.Limit);
+			List<POCOSalesOrderDetail> response = await this.salesOrderDetailManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOSalesOrderDetail), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesOrderDetail response = this.salesOrderDetailManager.Get(id);
+			POCOSalesOrderDetail response = await this.salesOrderDetailManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesOrderDetail response = this.salesOrderDetailManager.Get(id);
+					POCOSalesOrderDetail response = await this.salesOrderDetailManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,22 +172,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSalesOrderDetail>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetProductID(int productID)
+		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOSalesOrderDetail> response = this.salesOrderDetailManager.GetProductID(productID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOSalesOrderDetail> response = await this.salesOrderDetailManager.GetProductID(productID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d37ae6197ae163a02bd56b4c37895533</Hash>
+    <Hash>bb54fa48afb08743273d0040f0fecdb5</Hash>
 </Codenesium>*/

@@ -22,154 +22,154 @@ EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[Admin](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[birthday] [date]    NULL,
-[email] [varchar]  (128)  NOT NULL,
-[firstName] [varchar]  (128)  NOT NULL,
-[lastName] [varchar]  (128)  NOT NULL,
-[phone] [varchar]  (128)  NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[birthday] [date]     NULL,
+[email] [varchar]  (128)   NOT NULL,
+[firstName] [varchar]  (128)   NOT NULL,
+[lastName] [varchar]  (128)   NOT NULL,
+[phone] [varchar]  (128)   NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Family](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[notes] [text]    NOT NULL,
-[pcEmail] [varchar]  (128)  NOT NULL,
-[pcFirstName] [varchar]  (128)  NOT NULL,
-[pcLastName] [varchar]  (128)  NOT NULL,
-[pcPhone] [varchar]  (128)  NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[notes] [text]     NOT NULL,
+[pcEmail] [varchar]  (128)   NOT NULL,
+[pcFirstName] [varchar]  (128)   NOT NULL,
+[pcLastName] [varchar]  (128)   NOT NULL,
+[pcPhone] [varchar]  (128)   NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Lesson](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[actualEndDate] [datetime]    NULL,
-[actualStartDate] [date]    NULL,
-[billAmount] [money]    NULL,
-[lessonStatusId] [int]    NOT NULL,
-[scheduledEndDate] [datetime]    NULL,
-[scheduledStartDate] [datetime]    NULL,
-[studentNotes] [text]    NULL,
-[studioId] [int]    NOT NULL,
-[teacherNotes] [text]    NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[actualEndDate] [datetime]     NULL,
+[actualStartDate] [date]     NULL,
+[billAmount] [money]     NULL,
+[lessonStatusId] [int]     NOT NULL,
+[scheduledEndDate] [datetime]     NULL,
+[scheduledStartDate] [datetime]     NULL,
+[studentNotes] [text]     NULL,
+[studioId] [int]     NOT NULL,
+[teacherNotes] [text]     NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[LessonStatus](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[LessonXStudent](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[lessonId] [int]    NOT NULL,
-[studentId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[lessonId] [int]     NOT NULL,
+[studentId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[LessonXTeacher](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[lessonId] [int]    NOT NULL,
-[studentId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[lessonId] [int]     NOT NULL,
+[studentId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Rate](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[amountPerMinute] [money]    NOT NULL,
-[teacherId] [int]    NOT NULL,
-[teacherSkillId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[amountPerMinute] [money]     NOT NULL,
+[teacherId] [int]     NOT NULL,
+[teacherSkillId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Space](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[description] [varchar]  (128)  NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[description] [varchar]  (128)   NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[SpaceFeature](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[SpaceXSpaceFeature](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[spaceFeatureId] [int]    NOT NULL,
-[spaceId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[spaceFeatureId] [int]     NOT NULL,
+[spaceId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[State](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (2)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (2)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Student](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[birthday] [date]    NOT NULL,
-[email] [varchar]  (128)  NOT NULL,
-[emailRemindersEnabled] [bit]    NOT NULL,
-[familyId] [int]    NOT NULL,
-[firstName] [varchar]  (128)  NOT NULL,
-[isAdult] [bit]    NOT NULL,
-[lastName] [varchar]  (128)  NOT NULL,
-[phone] [varchar]  (128)  NOT NULL,
-[smsRemindersEnabled] [bit]    NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[birthday] [date]     NOT NULL,
+[email] [varchar]  (128)   NOT NULL,
+[emailRemindersEnabled] [bit]     NOT NULL,
+[familyId] [int]     NOT NULL,
+[firstName] [varchar]  (128)   NOT NULL,
+[isAdult] [bit]     NOT NULL,
+[lastName] [varchar]  (128)   NOT NULL,
+[phone] [varchar]  (128)   NOT NULL,
+[smsRemindersEnabled] [bit]     NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[StudentXFamily](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[familyId] [int]    NOT NULL,
-[studentId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[familyId] [int]     NOT NULL,
+[studentId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Studio](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[address1] [varchar]  (128)  NOT NULL,
-[address2] [varchar]  (128)  NOT NULL,
-[city] [varchar]  (128)  NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[stateId] [int]    NOT NULL,
-[website] [varchar]  (128)  NOT NULL,
-[zip] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[address1] [varchar]  (128)   NOT NULL,
+[address2] [varchar]  (128)   NOT NULL,
+[city] [varchar]  (128)   NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[stateId] [int]     NOT NULL,
+[website] [varchar]  (128)   NOT NULL,
+[zip] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Teacher](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[birthday] [date]    NOT NULL,
-[email] [varchar]  (128)  NOT NULL,
-[firstName] [varchar]  (128)  NOT NULL,
-[lastName] [varchar]  (128)  NOT NULL,
-[phone] [varchar]  (128)  NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[birthday] [date]     NOT NULL,
+[email] [varchar]  (128)   NOT NULL,
+[firstName] [varchar]  (128)   NOT NULL,
+[lastName] [varchar]  (128)   NOT NULL,
+[phone] [varchar]  (128)   NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[TeacherSkill](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[studioId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[studioId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[TeacherXTeacherSkill](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[teacherId] [int]    NOT NULL,
-[teacherSkillId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[teacherId] [int]     NOT NULL,
+[teacherSkillId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -275,6 +275,7 @@ ADD CONSTRAINT[PK_TeacherXTeacherSkill] PRIMARY KEY CLUSTERED
 id ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+
 
 ALTER TABLE[dbo].[Admin]  WITH CHECK ADD  CONSTRAINT[FK_Admin_studioId_Studio_id] FOREIGN KEY([studioId])
 REFERENCES[dbo].[Studio]([id])

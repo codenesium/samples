@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOSalesPersonQuotaHistory
+	public partial class POCOSalesPersonQuotaHistory: AbstractPOCO
 	{
-		public POCOSalesPersonQuotaHistory()
+		public POCOSalesPersonQuotaHistory() : base()
 		{}
 
 		public POCOSalesPersonQuotaHistory(
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>92930285bd40b96d42f2d7839b6f8fc0</Hash>
+    <Hash>f7256b51c6476ccae5b9019de0162c08</Hash>
 </Codenesium>*/

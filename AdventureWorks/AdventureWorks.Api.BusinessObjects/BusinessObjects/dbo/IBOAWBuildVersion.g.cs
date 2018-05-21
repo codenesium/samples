@@ -17,12 +17,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int systemInformationID);
 
-		POCOAWBuildVersion Get(int systemInformationID);
+		Task<POCOAWBuildVersion> Get(int systemInformationID);
 
-		List<POCOAWBuildVersion> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>087c591fca1defc603705bcfe4673cb7</Hash>
+    <Hash>f1304957a47465d26f8b090b974b4b65</Hash>
 </Codenesium>*/

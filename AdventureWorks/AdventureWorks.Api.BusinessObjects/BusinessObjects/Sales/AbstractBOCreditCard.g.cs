@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCreditCard
+	public abstract class AbstractBOCreditCard: AbstractBOManager
 	{
 		private ICreditCardRepository creditCardRepository;
 		private IApiCreditCardModelValidator creditCardModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ICreditCardRepository creditCardRepository,
 			IApiCreditCardModelValidator creditCardModelValidator)
+			: base()
 
 		{
 			this.creditCardRepository = creditCardRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCreditCard> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.creditCardRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCreditCard Get(int creditCardID)
+		public virtual Task<POCOCreditCard> Get(int creditCardID)
 		{
 			return this.creditCardRepository.Get(creditCardID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOCreditCard> response = new CreateResponse<POCOCreditCard>(await this.creditCardModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCreditCard record = this.creditCardRepository.Create(model);
+				POCOCreditCard record = await this.creditCardRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.creditCardRepository.Update(creditCardID, model);
+				await this.creditCardRepository.Update(creditCardID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.creditCardRepository.Delete(creditCardID);
+				await this.creditCardRepository.Delete(creditCardID);
 			}
 			return response;
 		}
 
-		public POCOCreditCard GetCardNumber(string cardNumber)
+		public async Task<POCOCreditCard> GetCardNumber(string cardNumber)
 		{
-			return this.creditCardRepository.GetCardNumber(cardNumber);
+			return await this.creditCardRepository.GetCardNumber(cardNumber);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>762882ecf39a9aad73cb7d74f6024c89</Hash>
+    <Hash>ca38244aa633d9d9e317f8c145361340</Hash>
 </Codenesium>*/

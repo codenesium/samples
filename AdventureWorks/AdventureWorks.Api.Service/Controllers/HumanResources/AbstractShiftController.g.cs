@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOShift>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOShift> response = this.shiftManager.All(query.Offset, query.Limit);
+			List<POCOShift> response = await this.shiftManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOShift), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOShift response = this.shiftManager.Get(id);
+			POCOShift response = await this.shiftManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOShift response = this.shiftManager.Get(id);
+					POCOShift response = await this.shiftManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOShift), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOShift response = this.shiftManager.GetName(name);
+			POCOShift response = await this.shiftManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -197,9 +192,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOShift), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
+		public async virtual Task<IActionResult> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
 		{
-			POCOShift response = this.shiftManager.GetStartTimeEndTime(startTime,endTime);
+			POCOShift response = await this.shiftManager.GetStartTimeEndTime(startTime,endTime);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -213,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6764cbd7b990a9863d272f7aca3ecafd</Hash>
+    <Hash>589260efc27bcfd465b4713357d9776f</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOLessonXStudent
+	public abstract class AbstractBOLessonXStudent: AbstractBOManager
 	{
 		private ILessonXStudentRepository lessonXStudentRepository;
 		private IApiLessonXStudentModelValidator lessonXStudentModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			ILessonXStudentRepository lessonXStudentRepository,
 			IApiLessonXStudentModelValidator lessonXStudentModelValidator)
+			: base()
 
 		{
 			this.lessonXStudentRepository = lessonXStudentRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOLessonXStudent> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLessonXStudent>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.lessonXStudentRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOLessonXStudent Get(int id)
+		public virtual Task<POCOLessonXStudent> Get(int id)
 		{
 			return this.lessonXStudentRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOLessonXStudent> response = new CreateResponse<POCOLessonXStudent>(await this.lessonXStudentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLessonXStudent record = this.lessonXStudentRepository.Create(model);
+				POCOLessonXStudent record = await this.lessonXStudentRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.lessonXStudentRepository.Update(id, model);
+				await this.lessonXStudentRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.lessonXStudentRepository.Delete(id);
+				await this.lessonXStudentRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8fe71827e6e44a1c0bd79fd4b8d4447f</Hash>
+    <Hash>037d1fde8bfb08a585f50333e786cbe2</Hash>
 </Codenesium>*/

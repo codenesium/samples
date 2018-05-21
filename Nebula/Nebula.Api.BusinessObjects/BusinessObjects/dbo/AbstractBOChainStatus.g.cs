@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOChainStatus
+	public abstract class AbstractBOChainStatus: AbstractBOManager
 	{
 		private IChainStatusRepository chainStatusRepository;
 		private IApiChainStatusModelValidator chainStatusModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			IChainStatusRepository chainStatusRepository,
 			IApiChainStatusModelValidator chainStatusModelValidator)
+			: base()
 
 		{
 			this.chainStatusRepository = chainStatusRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOChainStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOChainStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.chainStatusRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOChainStatus Get(int id)
+		public virtual Task<POCOChainStatus> Get(int id)
 		{
 			return this.chainStatusRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOChainStatus> response = new CreateResponse<POCOChainStatus>(await this.chainStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOChainStatus record = this.chainStatusRepository.Create(model);
+				POCOChainStatus record = await this.chainStatusRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.chainStatusRepository.Update(id, model);
+				await this.chainStatusRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.chainStatusRepository.Delete(id);
+				await this.chainStatusRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCOChainStatus Name(string name)
+		public async Task<POCOChainStatus> Name(string name)
 		{
-			return this.chainStatusRepository.Name(name);
+			return await this.chainStatusRepository.Name(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e20d096809a2ed99f7fc90cfb5cc30b</Hash>
+    <Hash>e28406f1a9b4d64ca52522bb9e4a5c6b</Hash>
 </Codenesium>*/

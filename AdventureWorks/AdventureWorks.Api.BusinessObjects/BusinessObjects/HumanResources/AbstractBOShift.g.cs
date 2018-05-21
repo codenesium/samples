@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOShift
+	public abstract class AbstractBOShift: AbstractBOManager
 	{
 		private IShiftRepository shiftRepository;
 		private IApiShiftModelValidator shiftModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IShiftRepository shiftRepository,
 			IApiShiftModelValidator shiftModelValidator)
+			: base()
 
 		{
 			this.shiftRepository = shiftRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOShift> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.shiftRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOShift Get(int shiftID)
+		public virtual Task<POCOShift> Get(int shiftID)
 		{
 			return this.shiftRepository.Get(shiftID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOShift> response = new CreateResponse<POCOShift>(await this.shiftModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOShift record = this.shiftRepository.Create(model);
+				POCOShift record = await this.shiftRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.shiftRepository.Update(shiftID, model);
+				await this.shiftRepository.Update(shiftID, model);
 			}
 
 			return response;
@@ -73,23 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.shiftRepository.Delete(shiftID);
+				await this.shiftRepository.Delete(shiftID);
 			}
 			return response;
 		}
 
-		public POCOShift GetName(string name)
+		public async Task<POCOShift> GetName(string name)
 		{
-			return this.shiftRepository.GetName(name);
+			return await this.shiftRepository.GetName(name);
 		}
-
-		public POCOShift GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
+		public async Task<POCOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
 		{
-			return this.shiftRepository.GetStartTimeEndTime(startTime,endTime);
+			return await this.shiftRepository.GetStartTimeEndTime(startTime,endTime);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a155ce1b85e95e3ca3b71897e14ef83e</Hash>
+    <Hash>f00b308e3d7eb544619d5845509ae7df</Hash>
 </Codenesium>*/

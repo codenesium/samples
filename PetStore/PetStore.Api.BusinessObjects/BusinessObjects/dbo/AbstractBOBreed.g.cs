@@ -12,7 +12,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOBreed
+	public abstract class AbstractBOBreed: AbstractBOManager
 	{
 		private IBreedRepository breedRepository;
 		private IApiBreedModelValidator breedModelValidator;
@@ -22,6 +22,7 @@ namespace PetStoreNS.Api.BusinessObjects
 			ILogger logger,
 			IBreedRepository breedRepository,
 			IApiBreedModelValidator breedModelValidator)
+			: base()
 
 		{
 			this.breedRepository = breedRepository;
@@ -29,12 +30,12 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOBreed> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOBreed>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.breedRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOBreed Get(int id)
+		public virtual Task<POCOBreed> Get(int id)
 		{
 			return this.breedRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetStoreNS.Api.BusinessObjects
 			CreateResponse<POCOBreed> response = new CreateResponse<POCOBreed>(await this.breedModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBreed record = this.breedRepository.Create(model);
+				POCOBreed record = await this.breedRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.breedRepository.Update(id, model);
+				await this.breedRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.breedRepository.Delete(id);
+				await this.breedRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>87dee4ee47dc3b1fda56a0b34cd6c459</Hash>
+    <Hash>feb3d5b92e16d3ef979d0be6512221de</Hash>
 </Codenesium>*/

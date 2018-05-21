@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiLocationModel
+	public partial class ApiLocationModel: AbstractModel
 	{
-		public ApiLocationModel()
+		public ApiLocationModel() : base()
 		{}
 
 		public ApiLocationModel(
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f8b57cb46c18c1e5c7d47f51be85768d</Hash>
+    <Hash>119dd381074d63e0d6e38c31cfd5f0a4</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOTeacherXTeacherSkill
+	public abstract class AbstractBOTeacherXTeacherSkill: AbstractBOManager
 	{
 		private ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
 		private IApiTeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
 			IApiTeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator)
+			: base()
 
 		{
 			this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOTeacherXTeacherSkill> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOTeacherXTeacherSkill>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.teacherXTeacherSkillRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOTeacherXTeacherSkill Get(int id)
+		public virtual Task<POCOTeacherXTeacherSkill> Get(int id)
 		{
 			return this.teacherXTeacherSkillRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOTeacherXTeacherSkill> response = new CreateResponse<POCOTeacherXTeacherSkill>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOTeacherXTeacherSkill record = this.teacherXTeacherSkillRepository.Create(model);
+				POCOTeacherXTeacherSkill record = await this.teacherXTeacherSkillRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.teacherXTeacherSkillRepository.Update(id, model);
+				await this.teacherXTeacherSkillRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.teacherXTeacherSkillRepository.Delete(id);
+				await this.teacherXTeacherSkillRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b2fdbd78562c4c4c897370415094fbe4</Hash>
+    <Hash>c359746dae3a8a01a50a6a54a00b5e70</Hash>
 </Codenesium>*/

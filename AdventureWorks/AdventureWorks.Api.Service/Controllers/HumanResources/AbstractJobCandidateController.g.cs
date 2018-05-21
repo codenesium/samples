@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOJobCandidate>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOJobCandidate> response = this.jobCandidateManager.All(query.Offset, query.Limit);
+			List<POCOJobCandidate> response = await this.jobCandidateManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOJobCandidate), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOJobCandidate response = this.jobCandidateManager.Get(id);
+			POCOJobCandidate response = await this.jobCandidateManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOJobCandidate response = this.jobCandidateManager.Get(id);
+					POCOJobCandidate response = await this.jobCandidateManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,22 +172,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getBusinessEntityID/{businessEntityID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOJobCandidate>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetBusinessEntityID(Nullable<int> businessEntityID)
+		public async virtual Task<IActionResult> GetBusinessEntityID(Nullable<int> businessEntityID)
 		{
-			List<POCOJobCandidate> response = this.jobCandidateManager.GetBusinessEntityID(businessEntityID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOJobCandidate> response = await this.jobCandidateManager.GetBusinessEntityID(businessEntityID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4c7ead613ed6119d78f4f5f05046ed3</Hash>
+    <Hash>5510392d4c19c101c2c33f3e728983ea</Hash>
 </Codenesium>*/

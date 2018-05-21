@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace ESPIOTNS.Api.Contracts
 {
-	public partial class ApiDeviceModel
+	public partial class ApiDeviceModel: AbstractModel
 	{
-		public ApiDeviceModel()
+		public ApiDeviceModel() : base()
 		{}
 
 		public ApiDeviceModel(
@@ -53,5 +53,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6ddee2c35919e1ffc76fcf4de79c3fa6</Hash>
+    <Hash>ef3a90c2e1f73e538ddb148b74262f99</Hash>
 </Codenesium>*/

@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface IChainRepository
 	{
-		POCOChain Create(ApiChainModel model);
+		Task<POCOChain> Create(ApiChainModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiChainModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOChain Get(int id);
+		Task<POCOChain> Get(int id);
 
-		List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOChain ExternalId(Guid externalId);
+		Task<POCOChain> ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f6721d16c591f5dbeb2c5747a1fe8c33</Hash>
+    <Hash>439aabe8db2c776b6b0aa965c79045dc</Hash>
 </Codenesium>*/

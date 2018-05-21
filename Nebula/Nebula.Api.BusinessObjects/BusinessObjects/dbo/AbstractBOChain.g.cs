@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOChain
+	public abstract class AbstractBOChain: AbstractBOManager
 	{
 		private IChainRepository chainRepository;
 		private IApiChainModelValidator chainModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			IChainRepository chainRepository,
 			IApiChainModelValidator chainModelValidator)
+			: base()
 
 		{
 			this.chainRepository = chainRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.chainRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOChain Get(int id)
+		public virtual Task<POCOChain> Get(int id)
 		{
 			return this.chainRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOChain> response = new CreateResponse<POCOChain>(await this.chainModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOChain record = this.chainRepository.Create(model);
+				POCOChain record = await this.chainRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.chainRepository.Update(id, model);
+				await this.chainRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.chainRepository.Delete(id);
+				await this.chainRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCOChain ExternalId(Guid externalId)
+		public async Task<POCOChain> ExternalId(Guid externalId)
 		{
-			return this.chainRepository.ExternalId(externalId);
+			return await this.chainRepository.ExternalId(externalId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0a233e8ab83d7d8b8ea9c66c630bf720</Hash>
+    <Hash>c689f26ed702e89c7029dfd063bf2647</Hash>
 </Codenesium>*/

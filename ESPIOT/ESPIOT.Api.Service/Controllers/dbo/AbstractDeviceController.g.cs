@@ -39,22 +39,14 @@ namespace ESPIOTNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCODevice>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODevice> response = this.deviceManager.All(query.Offset, query.Limit);
+			List<POCODevice> response = await this.deviceManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace ESPIOTNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODevice), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCODevice response = this.deviceManager.Get(id);
+			POCODevice response = await this.deviceManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace ESPIOTNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODevice response = this.deviceManager.Get(id);
+					POCODevice response = await this.deviceManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace ESPIOTNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCODevice), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult PublicId(Guid publicId)
+		public async virtual Task<IActionResult> PublicId(Guid publicId)
 		{
-			POCODevice response = this.deviceManager.PublicId(publicId);
+			POCODevice response = await this.deviceManager.PublicId(publicId);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>99148e8b7c70d9ea1cfe5438a7f96968</Hash>
+    <Hash>18d194ef0197411e0023e9b35b12bcd4</Hash>
 </Codenesium>*/

@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace PetShippingNS.Api.Contracts
 {
-	public partial class ApiPipelineStepDestinationModel
+	public partial class ApiPipelineStepDestinationModel: AbstractModel
 	{
-		public ApiPipelineStepDestinationModel()
+		public ApiPipelineStepDestinationModel() : base()
 		{}
 
 		public ApiPipelineStepDestinationModel(
@@ -53,5 +53,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>abe75e2455eb8c68fc39d2e7728dd088</Hash>
+    <Hash>93029e5bb7533e36d968d08de75e086d</Hash>
 </Codenesium>*/

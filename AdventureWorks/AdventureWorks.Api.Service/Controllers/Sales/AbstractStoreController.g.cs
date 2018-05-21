@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOStore>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOStore> response = this.storeManager.All(query.Offset, query.Limit);
+			List<POCOStore> response = await this.storeManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOStore), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOStore response = this.storeManager.Get(id);
+			POCOStore response = await this.storeManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStore response = this.storeManager.Get(id);
+					POCOStore response = await this.storeManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,40 +172,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getSalesPersonID/{salesPersonID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOStore>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetSalesPersonID(Nullable<int> salesPersonID)
+		public async virtual Task<IActionResult> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			List<POCOStore> response = this.storeManager.GetSalesPersonID(salesPersonID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOStore> response = await this.storeManager.GetSalesPersonID(salesPersonID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getDemographics/{demographics}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOStore>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetDemographics(string demographics)
+		public async virtual Task<IActionResult> GetDemographics(string demographics)
 		{
-			List<POCOStore> response = this.storeManager.GetDemographics(demographics);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOStore> response = await this.storeManager.GetDemographics(demographics);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>162369affdebd4778a664a9c59251d10</Hash>
+    <Hash>cced7342e32f035190cf60edbaa5a7f4</Hash>
 </Codenesium>*/

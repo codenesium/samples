@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractEmployeeRepository
+	public abstract class AbstractEmployeeRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOEmployee> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOEmployee Get(int businessEntityID)
+		public async virtual Task<POCOEmployee> Get(int businessEntityID)
 		{
-			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			Employee record = await this.GetById(businessEntityID);
+
+			return this.Mapper.EmployeeMapEFToPOCO(record);
 		}
 
-		public virtual POCOEmployee Create(
+		public async virtual Task<POCOEmployee> Create(
 			ApiEmployeeModel model)
 		{
 			Employee record = new Employee();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Employee>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.EmployeeMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int businessEntityID,
 			ApiEmployeeModel model)
 		{
-			Employee record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			Employee record = await this.GetById(businessEntityID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					businessEntityID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int businessEntityID)
 		{
-			Employee record = this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID).FirstOrDefault();
+			Employee record = await this.GetById(businessEntityID);
 
 			if (record == null)
 			{
@@ -82,63 +88,79 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Employee>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOEmployee GetLoginID(string loginID)
+		public async Task<POCOEmployee> GetLoginID(string loginID)
 		{
-			return this.SearchLinqPOCO(x => x.LoginID == loginID).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.LoginID == loginID);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<POCOEmployee> GetNationalIDNumber(string nationalIDNumber)
+		{
+			var records = await this.SearchLinqPOCO(x => x.NationalIDNumber == nationalIDNumber);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<List<POCOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
+		{
+			var records = await this.SearchLinqPOCO(x => x.OrganizationLevel == organizationLevel && x.OrganizationNode == organizationNode);
+
+			return records;
+		}
+		public async Task<List<POCOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode)
+		{
+			var records = await this.SearchLinqPOCO(x => x.OrganizationNode == organizationNode);
+
+			return records;
 		}
 
-		public POCOEmployee GetNationalIDNumber(string nationalIDNumber)
+		protected async Task<List<POCOEmployee>> Where(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.NationalIDNumber == nationalIDNumber).FirstOrDefault();
+			List<POCOEmployee> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		public List<POCOEmployee> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
-		{
-			return this.SearchLinqPOCO(x => x.OrganizationLevel == organizationLevel && x.OrganizationNode == organizationNode);
-		}
-		public List<POCOEmployee> GetOrganizationNode(Nullable<Guid> organizationNode)
-		{
-			return this.SearchLinqPOCO(x => x.OrganizationNode == organizationNode);
-		}
-
-		protected List<POCOEmployee> Where(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOEmployee> SearchLinqPOCO(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOEmployee>> SearchLinqPOCO(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOEmployee> response = new List<POCOEmployee>();
-			List<Employee> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Employee> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.EmployeeMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Employee> SearchLinqEF(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Employee>> SearchLinqEF(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Employee.BusinessEntityID)} ASC";
 			}
-			return this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Employee>();
+			return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Employee>();
 		}
 
-		private List<Employee> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Employee>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Employee.BusinessEntityID)} ASC";
 			}
 
-			return this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Employee>();
+			return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Employee>();
+		}
+
+		private async Task<Employee> GetById(int businessEntityID)
+		{
+			List<Employee> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>353f6ee5ed7057169cb2e3dd0ac0d394</Hash>
+    <Hash>8fb2e259e4258ddbfe3880202ca2e874</Hash>
 </Codenesium>*/

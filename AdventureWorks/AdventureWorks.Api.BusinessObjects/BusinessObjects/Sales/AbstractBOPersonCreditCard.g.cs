@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPersonCreditCard
+	public abstract class AbstractBOPersonCreditCard: AbstractBOManager
 	{
 		private IPersonCreditCardRepository personCreditCardRepository;
 		private IApiPersonCreditCardModelValidator personCreditCardModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IPersonCreditCardRepository personCreditCardRepository,
 			IApiPersonCreditCardModelValidator personCreditCardModelValidator)
+			: base()
 
 		{
 			this.personCreditCardRepository = personCreditCardRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPersonCreditCard> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPersonCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.personCreditCardRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPersonCreditCard Get(int businessEntityID)
+		public virtual Task<POCOPersonCreditCard> Get(int businessEntityID)
 		{
 			return this.personCreditCardRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOPersonCreditCard> response = new CreateResponse<POCOPersonCreditCard>(await this.personCreditCardModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPersonCreditCard record = this.personCreditCardRepository.Create(model);
+				POCOPersonCreditCard record = await this.personCreditCardRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.personCreditCardRepository.Update(businessEntityID, model);
+				await this.personCreditCardRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.personCreditCardRepository.Delete(businessEntityID);
+				await this.personCreditCardRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d8490a050334a3ae7fd57cd8d4021f2f</Hash>
+    <Hash>59022b03f7c4176108aad82f484d253b</Hash>
 </Codenesium>*/

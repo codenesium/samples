@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesOrderHeader
+	public abstract class AbstractBOSalesOrderHeader: AbstractBOManager
 	{
 		private ISalesOrderHeaderRepository salesOrderHeaderRepository;
 		private IApiSalesOrderHeaderModelValidator salesOrderHeaderModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesOrderHeaderRepository salesOrderHeaderRepository,
 			IApiSalesOrderHeaderModelValidator salesOrderHeaderModelValidator)
+			: base()
 
 		{
 			this.salesOrderHeaderRepository = salesOrderHeaderRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesOrderHeader> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesOrderHeaderRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesOrderHeader Get(int salesOrderID)
+		public virtual Task<POCOSalesOrderHeader> Get(int salesOrderID)
 		{
 			return this.salesOrderHeaderRepository.Get(salesOrderID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesOrderHeader> response = new CreateResponse<POCOSalesOrderHeader>(await this.salesOrderHeaderModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesOrderHeader record = this.salesOrderHeaderRepository.Create(model);
+				POCOSalesOrderHeader record = await this.salesOrderHeaderRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesOrderHeaderRepository.Update(salesOrderID, model);
+				await this.salesOrderHeaderRepository.Update(salesOrderID, model);
 			}
 
 			return response;
@@ -73,27 +75,26 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesOrderHeaderRepository.Delete(salesOrderID);
+				await this.salesOrderHeaderRepository.Delete(salesOrderID);
 			}
 			return response;
 		}
 
-		public POCOSalesOrderHeader GetSalesOrderNumber(string salesOrderNumber)
+		public async Task<POCOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
 		{
-			return this.salesOrderHeaderRepository.GetSalesOrderNumber(salesOrderNumber);
+			return await this.salesOrderHeaderRepository.GetSalesOrderNumber(salesOrderNumber);
 		}
-
-		public List<POCOSalesOrderHeader> GetCustomerID(int customerID)
+		public async Task<List<POCOSalesOrderHeader>> GetCustomerID(int customerID)
 		{
-			return this.salesOrderHeaderRepository.GetCustomerID(customerID);
+			return await this.salesOrderHeaderRepository.GetCustomerID(customerID);
 		}
-		public List<POCOSalesOrderHeader> GetSalesPersonID(Nullable<int> salesPersonID)
+		public async Task<List<POCOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			return this.salesOrderHeaderRepository.GetSalesPersonID(salesPersonID);
+			return await this.salesOrderHeaderRepository.GetSalesPersonID(salesPersonID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>889e7b7655a9c438f407bb539b9d7656</Hash>
+    <Hash>577433e12bffa28be3f94802fca7bd22</Hash>
 </Codenesium>*/

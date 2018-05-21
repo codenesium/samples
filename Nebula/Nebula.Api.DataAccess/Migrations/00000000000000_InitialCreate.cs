@@ -22,92 +22,92 @@ EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[Chain](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[chainStatusId] [int]    NOT NULL,
-[externalId] [uniqueidentifier]    NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[teamId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[chainStatusId] [int]     NOT NULL,
+[externalId] [uniqueidentifier]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[teamId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[ChainStatus](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Clasp](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[nextChainId] [int]    NOT NULL,
-[previousChainId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[nextChainId] [int]     NOT NULL,
+[previousChainId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Link](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[assignedMachineId] [int]    NULL,
-[chainId] [int]    NOT NULL,
-[dateCompleted] [datetime]    NULL,
-[dateStarted] [datetime]    NULL,
-[dynamicParameters] [text]    NULL,
-[externalId] [uniqueidentifier]    NOT NULL,
-[linkStatusId] [int]    NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[order] [int]    NOT NULL,
-[response] [text]    NULL,
-[staticParameters] [text]    NULL,
-[timeoutInSeconds] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[assignedMachineId] [int]     NULL,
+[chainId] [int]     NOT NULL,
+[dateCompleted] [datetime]     NULL,
+[dateStarted] [datetime]     NULL,
+[dynamicParameters] [text]     NULL,
+[externalId] [uniqueidentifier]     NOT NULL,
+[linkStatusId] [int]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[order] [int]     NOT NULL,
+[response] [text]     NULL,
+[staticParameters] [text]     NULL,
+[timeoutInSeconds] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[LinkLog](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[dateEntered] [datetime]    NOT NULL,
-[linkId] [int]    NOT NULL,
-[log] [text]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[dateEntered] [datetime]     NOT NULL,
+[linkId] [int]     NOT NULL,
+[log] [text]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[LinkStatus](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Machine](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[description] [text]    NOT NULL,
-[jwtKey] [varchar]  (128)  NOT NULL,
-[lastIpAddress] [varchar]  (128)  NOT NULL,
-[machineGuid] [uniqueidentifier]    NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[description] [text]     NOT NULL,
+[jwtKey] [varchar]  (128)   NOT NULL,
+[lastIpAddress] [varchar]  (128)   NOT NULL,
+[machineGuid] [uniqueidentifier]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[MachineRefTeam](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[machineId] [int]    NOT NULL,
-[teamId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[machineId] [int]     NOT NULL,
+[teamId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Organization](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Team](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (128)  NOT NULL,
-[organizationId] [int]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
+[organizationId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[VersionInfo](
-[AppliedOn] [datetime]    NULL,
-[Description] [nvarchar]  (1024)  NULL,
-[Version] [bigint]    NOT NULL,
+[AppliedOn] [datetime]     NULL,
+[Description] [nvarchar]  (1024)   NULL,
+[Version] [bigint]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -216,6 +216,7 @@ CREATE UNIQUE CLUSTERED INDEX[UC_Version] ON[dbo].[VersionInfo]
 [Version] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+
 
 ALTER TABLE[dbo].[Clasp]  WITH CHECK ADD  CONSTRAINT[FK_Clasp_nextChainId_Chain_id] FOREIGN KEY([nextChainId])
 REFERENCES[dbo].[Chain]([id])

@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOAirline
+	public abstract class AbstractBOAirline: AbstractBOManager
 	{
 		private IAirlineRepository airlineRepository;
 		private IApiAirlineModelValidator airlineModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IAirlineRepository airlineRepository,
 			IApiAirlineModelValidator airlineModelValidator)
+			: base()
 
 		{
 			this.airlineRepository = airlineRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOAirline> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAirline>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.airlineRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOAirline Get(int id)
+		public virtual Task<POCOAirline> Get(int id)
 		{
 			return this.airlineRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOAirline> response = new CreateResponse<POCOAirline>(await this.airlineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAirline record = this.airlineRepository.Create(model);
+				POCOAirline record = await this.airlineRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.airlineRepository.Update(id, model);
+				await this.airlineRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.airlineRepository.Delete(id);
+				await this.airlineRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>6859ddee20aacc9f83a1f2f4bd6c9a51</Hash>
+    <Hash>6a9ce45d674402cb2ff4bce3e2d59e77</Hash>
 </Codenesium>*/

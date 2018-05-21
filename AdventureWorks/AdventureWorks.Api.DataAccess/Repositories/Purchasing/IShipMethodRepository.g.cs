@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShipMethodRepository
 	{
-		POCOShipMethod Create(ApiShipMethodModel model);
+		Task<POCOShipMethod> Create(ApiShipMethodModel model);
 
-		void Update(int shipMethodID,
+		Task Update(int shipMethodID,
 		            ApiShipMethodModel model);
 
-		void Delete(int shipMethodID);
+		Task Delete(int shipMethodID);
 
-		POCOShipMethod Get(int shipMethodID);
+		Task<POCOShipMethod> Get(int shipMethodID);
 
-		List<POCOShipMethod> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOShipMethod GetName(string name);
+		Task<POCOShipMethod> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cad769837d16de72aa3de08d4f773f1f</Hash>
+    <Hash>a9188371107b15a8997adeac605b911b</Hash>
 </Codenesium>*/

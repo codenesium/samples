@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void ComponentIDRules()
 		{
 			this.RuleFor(x => x.ComponentID).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ComponentID != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ComponentID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsModel.ComponentID));
 		}
 
 		public virtual void EndDateRules()
@@ -47,13 +47,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		public virtual void ProductAssemblyIDRules()
 		{
-			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ProductAssemblyID != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ProductAssemblyID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsModel.ProductAssemblyID));
 		}
 
 		public virtual void StartDateRules()
 		{
 			this.RuleFor(x => x.StartDate).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.StartDate != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.StartDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsModel.StartDate));
 		}
 
 		public virtual void UnitMeasureCodeRules()
@@ -64,11 +64,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeUniqueGetProductAssemblyIDComponentIDStartDate(ApiBillOfMaterialsModel model)
 		{
-			return this.BillOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(model.ProductAssemblyID,model.ComponentID,model.StartDate) != null;
+			return this.BillOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(model.ProductAssemblyID,model.ComponentID,model.StartDate) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a555992312d90f9c5264a16841cd775</Hash>
+    <Hash>d8ff72cd592fdcca2bad3321e47a1f88</Hash>
 </Codenesium>*/

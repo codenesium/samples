@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractPurchaseOrderDetailRepository
+	public abstract class AbstractPurchaseOrderDetailRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOPurchaseOrderDetail> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPurchaseOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOPurchaseOrderDetail Get(int purchaseOrderID)
+		public async virtual Task<POCOPurchaseOrderDetail> Get(int purchaseOrderID)
 		{
-			return this.SearchLinqPOCO(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
+			PurchaseOrderDetail record = await this.GetById(purchaseOrderID);
+
+			return this.Mapper.PurchaseOrderDetailMapEFToPOCO(record);
 		}
 
-		public virtual POCOPurchaseOrderDetail Create(
+		public async virtual Task<POCOPurchaseOrderDetail> Create(
 			ApiPurchaseOrderDetailModel model)
 		{
 			PurchaseOrderDetail record = new PurchaseOrderDetail();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<PurchaseOrderDetail>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.PurchaseOrderDetailMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int purchaseOrderID,
 			ApiPurchaseOrderDetailModel model)
 		{
-			PurchaseOrderDetail record = this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
+			PurchaseOrderDetail record = await this.GetById(purchaseOrderID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{purchaseOrderID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					purchaseOrderID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int purchaseOrderID)
 		{
-			PurchaseOrderDetail record = this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID).FirstOrDefault();
+			PurchaseOrderDetail record = await this.GetById(purchaseOrderID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<PurchaseOrderDetail>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOPurchaseOrderDetail> GetProductID(int productID)
+		public async Task<List<POCOPurchaseOrderDetail>> GetProductID(int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductID == productID);
+			var records = await this.SearchLinqPOCO(x => x.ProductID == productID);
+
+			return records;
 		}
 
-		protected List<POCOPurchaseOrderDetail> Where(Expression<Func<PurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOPurchaseOrderDetail>> Where(Expression<Func<PurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOPurchaseOrderDetail> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOPurchaseOrderDetail> SearchLinqPOCO(Expression<Func<PurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOPurchaseOrderDetail>> SearchLinqPOCO(Expression<Func<PurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOPurchaseOrderDetail> response = new List<POCOPurchaseOrderDetail>();
-			List<PurchaseOrderDetail> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<PurchaseOrderDetail> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.PurchaseOrderDetailMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<PurchaseOrderDetail> SearchLinqEF(Expression<Func<PurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PurchaseOrderDetail>> SearchLinqEF(Expression<Func<PurchaseOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PurchaseOrderDetail.PurchaseOrderID)} ASC";
 			}
-			return this.Context.Set<PurchaseOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PurchaseOrderDetail>();
+			return await this.Context.Set<PurchaseOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PurchaseOrderDetail>();
 		}
 
-		private List<PurchaseOrderDetail> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<PurchaseOrderDetail>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(PurchaseOrderDetail.PurchaseOrderID)} ASC";
 			}
 
-			return this.Context.Set<PurchaseOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<PurchaseOrderDetail>();
+			return await this.Context.Set<PurchaseOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PurchaseOrderDetail>();
+		}
+
+		private async Task<PurchaseOrderDetail> GetById(int purchaseOrderID)
+		{
+			List<PurchaseOrderDetail> records = await this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bfb557c9064112f4410f7f64b5108957</Hash>
+    <Hash>318c4c4428216f650861aa47ca7210cd</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOStateProvince
+	public abstract class AbstractBOStateProvince: AbstractBOManager
 	{
 		private IStateProvinceRepository stateProvinceRepository;
 		private IApiStateProvinceModelValidator stateProvinceModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IStateProvinceRepository stateProvinceRepository,
 			IApiStateProvinceModelValidator stateProvinceModelValidator)
+			: base()
 
 		{
 			this.stateProvinceRepository = stateProvinceRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOStateProvince> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.stateProvinceRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOStateProvince Get(int stateProvinceID)
+		public virtual Task<POCOStateProvince> Get(int stateProvinceID)
 		{
 			return this.stateProvinceRepository.Get(stateProvinceID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOStateProvince> response = new CreateResponse<POCOStateProvince>(await this.stateProvinceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOStateProvince record = this.stateProvinceRepository.Create(model);
+				POCOStateProvince record = await this.stateProvinceRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.stateProvinceRepository.Update(stateProvinceID, model);
+				await this.stateProvinceRepository.Update(stateProvinceID, model);
 			}
 
 			return response;
@@ -73,23 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.stateProvinceRepository.Delete(stateProvinceID);
+				await this.stateProvinceRepository.Delete(stateProvinceID);
 			}
 			return response;
 		}
 
-		public POCOStateProvince GetName(string name)
+		public async Task<POCOStateProvince> GetName(string name)
 		{
-			return this.stateProvinceRepository.GetName(name);
+			return await this.stateProvinceRepository.GetName(name);
 		}
-
-		public POCOStateProvince GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
+		public async Task<POCOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
 		{
-			return this.stateProvinceRepository.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
+			return await this.stateProvinceRepository.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb697dc948b6b62a80d3acbb55a06d04</Hash>
+    <Hash>13220ef9364d8e8899d99652045113c9</Hash>
 </Codenesium>*/

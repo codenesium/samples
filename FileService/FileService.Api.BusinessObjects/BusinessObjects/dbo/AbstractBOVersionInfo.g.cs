@@ -12,7 +12,7 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOVersionInfo
+	public abstract class AbstractBOVersionInfo: AbstractBOManager
 	{
 		private IVersionInfoRepository versionInfoRepository;
 		private IApiVersionInfoModelValidator versionInfoModelValidator;
@@ -22,6 +22,7 @@ namespace FileServiceNS.Api.BusinessObjects
 			ILogger logger,
 			IVersionInfoRepository versionInfoRepository,
 			IApiVersionInfoModelValidator versionInfoModelValidator)
+			: base()
 
 		{
 			this.versionInfoRepository = versionInfoRepository;
@@ -29,12 +30,12 @@ namespace FileServiceNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.versionInfoRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOVersionInfo Get(long version)
+		public virtual Task<POCOVersionInfo> Get(long version)
 		{
 			return this.versionInfoRepository.Get(version);
 		}
@@ -45,7 +46,8 @@ namespace FileServiceNS.Api.BusinessObjects
 			CreateResponse<POCOVersionInfo> response = new CreateResponse<POCOVersionInfo>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOVersionInfo record = this.versionInfoRepository.Create(model);
+				POCOVersionInfo record = await this.versionInfoRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.versionInfoRepository.Update(version, model);
+				await this.versionInfoRepository.Update(version, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.versionInfoRepository.Delete(version);
+				await this.versionInfoRepository.Delete(version);
 			}
 			return response;
 		}
 
-		public POCOVersionInfo Version(long version)
+		public async Task<POCOVersionInfo> Version(long version)
 		{
-			return this.versionInfoRepository.Version(version);
+			return await this.versionInfoRepository.Version(version);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ad5aa54580b73dfa0db67a4e20b6afa</Hash>
+    <Hash>1f9afd0c4dcb22d95bffd46ee4beb6ba</Hash>
 </Codenesium>*/

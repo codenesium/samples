@@ -32,7 +32,7 @@ namespace NebulaNS.Api.BusinessObjects
 		public virtual void ExternalIdRules()
 		{
 			this.RuleFor(x => x.ExternalId).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiChainModel.ExternalId));
 		}
 
 		public virtual void NameRules()
@@ -59,11 +59,11 @@ namespace NebulaNS.Api.BusinessObjects
 
 		private bool BeUniqueExternalId(ApiChainModel model)
 		{
-			return this.ChainRepository.ExternalId(model.ExternalId) != null;
+			return this.ChainRepository.ExternalId(model.ExternalId) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>06249ee9f9d0da92e138ae237f1f9b0d</Hash>
+    <Hash>c7231e8b2365969dfda2118b0e09edba</Hash>
 </Codenesium>*/

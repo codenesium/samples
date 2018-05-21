@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.DataAccess
 {
 	public interface ISaleRepository
 	{
-		POCOSale Create(ApiSaleModel model);
+		Task<POCOSale> Create(ApiSaleModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiSaleModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOSale Get(int id);
+		Task<POCOSale> Get(int id);
 
-		List<POCOSale> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSale>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>69c32b74f470ed7b3a86057ec05e1397</Hash>
+    <Hash>4fbee63c89f8526f1b12f6eb0aaa6fce</Hash>
 </Codenesium>*/

@@ -30,16 +30,16 @@ namespace ESPIOTNS.Api.BusinessObjects
 		public virtual void PublicIdRules()
 		{
 			this.RuleFor(x => x.PublicId).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniquePublicId).When(x => x ?.PublicId != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniquePublicId).When(x => x ?.PublicId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceModel.PublicId));
 		}
 
 		private bool BeUniquePublicId(ApiDeviceModel model)
 		{
-			return this.DeviceRepository.PublicId(model.PublicId) != null;
+			return this.DeviceRepository.PublicId(model.PublicId) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a6042bbd0d86787237d1abe73205945</Hash>
+    <Hash>a6782667265c1c7f0dd33f3676dfe254</Hash>
 </Codenesium>*/

@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void CurrencyRateDateRules()
 		{
 			this.RuleFor(x => x.CurrencyRateDate).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.CurrencyRateDate != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.CurrencyRateDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateModel.CurrencyRateDate));
 		}
 
 		public virtual void EndOfDayRateRules()
@@ -42,7 +42,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.FromCurrencyCode).NotNull();
 			this.RuleFor(x => x.FromCurrencyCode).Must(this.BeValidCurrency).When(x => x ?.FromCurrencyCode != null).WithMessage("Invalid reference");
-			this.RuleFor(x => x).Must(this.BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.FromCurrencyCode != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.FromCurrencyCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateModel.FromCurrencyCode));
 			this.RuleFor(x => x.FromCurrencyCode).Length(0, 3);
 		}
 
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		{
 			this.RuleFor(x => x.ToCurrencyCode).NotNull();
 			this.RuleFor(x => x.ToCurrencyCode).Must(this.BeValidCurrency).When(x => x ?.ToCurrencyCode != null).WithMessage("Invalid reference");
-			this.RuleFor(x => x).Must(this.BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.ToCurrencyCode != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.ToCurrencyCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateModel.ToCurrencyCode));
 			this.RuleFor(x => x.ToCurrencyCode).Length(0, 3);
 		}
 
@@ -66,11 +66,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode(ApiCurrencyRateModel model)
 		{
-			return this.CurrencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(model.CurrencyRateDate,model.FromCurrencyCode,model.ToCurrencyCode) != null;
+			return this.CurrencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(model.CurrencyRateDate,model.FromCurrencyCode,model.ToCurrencyCode) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef1ae94280088e624a0fde4f810156f0</Hash>
+    <Hash>772efeab25e95285d769e0f5fe7c26a9</Hash>
 </Codenesium>*/

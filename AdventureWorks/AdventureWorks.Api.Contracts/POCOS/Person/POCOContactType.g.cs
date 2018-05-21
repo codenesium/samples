@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOContactType
+	public partial class POCOContactType: AbstractPOCO
 	{
-		public POCOContactType()
+		public POCOContactType() : base()
 		{}
 
 		public POCOContactType(
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7faab03df28e08776f188b061dc37b73</Hash>
+    <Hash>32b9586fc4cbc7eb48352eb034ce2736</Hash>
 </Codenesium>*/

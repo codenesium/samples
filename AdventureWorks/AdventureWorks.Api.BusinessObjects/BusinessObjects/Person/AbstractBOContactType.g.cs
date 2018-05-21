@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOContactType
+	public abstract class AbstractBOContactType: AbstractBOManager
 	{
 		private IContactTypeRepository contactTypeRepository;
 		private IApiContactTypeModelValidator contactTypeModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IContactTypeRepository contactTypeRepository,
 			IApiContactTypeModelValidator contactTypeModelValidator)
+			: base()
 
 		{
 			this.contactTypeRepository = contactTypeRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOContactType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.contactTypeRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOContactType Get(int contactTypeID)
+		public virtual Task<POCOContactType> Get(int contactTypeID)
 		{
 			return this.contactTypeRepository.Get(contactTypeID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOContactType> response = new CreateResponse<POCOContactType>(await this.contactTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOContactType record = this.contactTypeRepository.Create(model);
+				POCOContactType record = await this.contactTypeRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.contactTypeRepository.Update(contactTypeID, model);
+				await this.contactTypeRepository.Update(contactTypeID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.contactTypeRepository.Delete(contactTypeID);
+				await this.contactTypeRepository.Delete(contactTypeID);
 			}
 			return response;
 		}
 
-		public POCOContactType GetName(string name)
+		public async Task<POCOContactType> GetName(string name)
 		{
-			return this.contactTypeRepository.GetName(name);
+			return await this.contactTypeRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dafcc226c2dcce43b8dd874c36cf5d39</Hash>
+    <Hash>cb55d6c95732bc9e73c4528c15b79575</Hash>
 </Codenesium>*/

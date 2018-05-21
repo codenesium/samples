@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPipelineStepNote
+	public abstract class AbstractBOPipelineStepNote: AbstractBOManager
 	{
 		private IPipelineStepNoteRepository pipelineStepNoteRepository;
 		private IApiPipelineStepNoteModelValidator pipelineStepNoteModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IPipelineStepNoteRepository pipelineStepNoteRepository,
 			IApiPipelineStepNoteModelValidator pipelineStepNoteModelValidator)
+			: base()
 
 		{
 			this.pipelineStepNoteRepository = pipelineStepNoteRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPipelineStepNote> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPipelineStepNote>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.pipelineStepNoteRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPipelineStepNote Get(int id)
+		public virtual Task<POCOPipelineStepNote> Get(int id)
 		{
 			return this.pipelineStepNoteRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOPipelineStepNote> response = new CreateResponse<POCOPipelineStepNote>(await this.pipelineStepNoteModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPipelineStepNote record = this.pipelineStepNoteRepository.Create(model);
+				POCOPipelineStepNote record = await this.pipelineStepNoteRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineStepNoteRepository.Update(id, model);
+				await this.pipelineStepNoteRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineStepNoteRepository.Delete(id);
+				await this.pipelineStepNoteRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c97e0b12d2205770957c03d6a3620b6c</Hash>
+    <Hash>481b1cb47fd4193cd1f3cfd7c1f48ec0</Hash>
 </Codenesium>*/

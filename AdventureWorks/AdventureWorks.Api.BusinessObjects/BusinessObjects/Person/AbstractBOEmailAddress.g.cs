@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOEmailAddress
+	public abstract class AbstractBOEmailAddress: AbstractBOManager
 	{
 		private IEmailAddressRepository emailAddressRepository;
 		private IApiEmailAddressModelValidator emailAddressModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IEmailAddressRepository emailAddressRepository,
 			IApiEmailAddressModelValidator emailAddressModelValidator)
+			: base()
 
 		{
 			this.emailAddressRepository = emailAddressRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOEmailAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.emailAddressRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOEmailAddress Get(int businessEntityID)
+		public virtual Task<POCOEmailAddress> Get(int businessEntityID)
 		{
 			return this.emailAddressRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOEmailAddress> response = new CreateResponse<POCOEmailAddress>(await this.emailAddressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmailAddress record = this.emailAddressRepository.Create(model);
+				POCOEmailAddress record = await this.emailAddressRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.emailAddressRepository.Update(businessEntityID, model);
+				await this.emailAddressRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.emailAddressRepository.Delete(businessEntityID);
+				await this.emailAddressRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public List<POCOEmailAddress> GetEmailAddress(string emailAddress1)
+		public async Task<List<POCOEmailAddress>> GetEmailAddress(string emailAddress1)
 		{
-			return this.emailAddressRepository.GetEmailAddress(emailAddress1);
+			return await this.emailAddressRepository.GetEmailAddress(emailAddress1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef13ff9eea19b352810918887d9c5a54</Hash>
+    <Hash>d550a3145b28aa3f4830198f959f2f76</Hash>
 </Codenesium>*/

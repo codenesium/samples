@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-	public abstract class AbstractDeviceActionRepository
+	public abstract class AbstractDeviceActionRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace ESPIOTNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCODeviceAction> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCODeviceAction Get(int id)
+		public async virtual Task<POCODeviceAction> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			DeviceAction record = await this.GetById(id);
+
+			return this.Mapper.DeviceActionMapEFToPOCO(record);
 		}
 
-		public virtual POCODeviceAction Create(
+		public async virtual Task<POCODeviceAction> Create(
 			ApiDeviceActionModel model)
 		{
 			DeviceAction record = new DeviceAction();
@@ -47,15 +51,17 @@ namespace ESPIOTNS.Api.DataAccess
 				record);
 
 			this.Context.Set<DeviceAction>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.DeviceActionMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiDeviceActionModel model)
 		{
-			DeviceAction record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			DeviceAction record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace ESPIOTNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			DeviceAction record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			DeviceAction record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace ESPIOTNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<DeviceAction>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCODeviceAction> Where(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCODeviceAction>> Where(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCODeviceAction> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCODeviceAction> SearchLinqPOCO(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCODeviceAction>> SearchLinqPOCO(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCODeviceAction> response = new List<POCODeviceAction>();
-			List<DeviceAction> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<DeviceAction> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.DeviceActionMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<DeviceAction> SearchLinqEF(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DeviceAction>> SearchLinqEF(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(DeviceAction.Id)} ASC";
 			}
-			return this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<DeviceAction>();
+			return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeviceAction>();
 		}
 
-		private List<DeviceAction> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DeviceAction>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(DeviceAction.Id)} ASC";
 			}
 
-			return this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<DeviceAction>();
+			return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeviceAction>();
+		}
+
+		private async Task<DeviceAction> GetById(int id)
+		{
+			List<DeviceAction> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef6916ca162a1902e599418e70c93101</Hash>
+    <Hash>616770da76dfb3e3eb62d454212ba61f</Hash>
 </Codenesium>*/

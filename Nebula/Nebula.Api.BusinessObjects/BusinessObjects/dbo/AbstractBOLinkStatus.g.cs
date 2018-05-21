@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOLinkStatus
+	public abstract class AbstractBOLinkStatus: AbstractBOManager
 	{
 		private ILinkStatusRepository linkStatusRepository;
 		private IApiLinkStatusModelValidator linkStatusModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			ILinkStatusRepository linkStatusRepository,
 			IApiLinkStatusModelValidator linkStatusModelValidator)
+			: base()
 
 		{
 			this.linkStatusRepository = linkStatusRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOLinkStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLinkStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.linkStatusRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOLinkStatus Get(int id)
+		public virtual Task<POCOLinkStatus> Get(int id)
 		{
 			return this.linkStatusRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOLinkStatus> response = new CreateResponse<POCOLinkStatus>(await this.linkStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLinkStatus record = this.linkStatusRepository.Create(model);
+				POCOLinkStatus record = await this.linkStatusRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.linkStatusRepository.Update(id, model);
+				await this.linkStatusRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.linkStatusRepository.Delete(id);
+				await this.linkStatusRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCOLinkStatus Name(string name)
+		public async Task<POCOLinkStatus> Name(string name)
 		{
-			return this.linkStatusRepository.Name(name);
+			return await this.linkStatusRepository.Name(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>008f2db91644ec87060a46ace24ab5fd</Hash>
+    <Hash>996a7ef5294bbd2a3c3db7b5a083f0c9</Hash>
 </Codenesium>*/

@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(short locationID);
 
-		POCOLocation Get(short locationID);
+		Task<POCOLocation> Get(short locationID);
 
-		List<POCOLocation> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOLocation GetName(string name);
+		Task<POCOLocation> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ea6498b3f57125401c28cc4bdb4e10b7</Hash>
+    <Hash>1c24cfcfe6f3c29e3dc3fc4f90d90b45</Hash>
 </Codenesium>*/

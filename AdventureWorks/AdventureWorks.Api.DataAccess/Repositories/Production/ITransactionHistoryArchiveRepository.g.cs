@@ -1,28 +1,29 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ITransactionHistoryArchiveRepository
 	{
-		POCOTransactionHistoryArchive Create(ApiTransactionHistoryArchiveModel model);
+		Task<POCOTransactionHistoryArchive> Create(ApiTransactionHistoryArchiveModel model);
 
-		void Update(int transactionID,
+		Task Update(int transactionID,
 		            ApiTransactionHistoryArchiveModel model);
 
-		void Delete(int transactionID);
+		Task Delete(int transactionID);
 
-		POCOTransactionHistoryArchive Get(int transactionID);
+		Task<POCOTransactionHistoryArchive> Get(int transactionID);
 
-		List<POCOTransactionHistoryArchive> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOTransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOTransactionHistoryArchive> GetProductID(int productID);
-		List<POCOTransactionHistoryArchive> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID);
+		Task<List<POCOTransactionHistoryArchive>> GetProductID(int productID);
+		Task<List<POCOTransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>72fac744c12c353f7a6272a4b4e929fd</Hash>
+    <Hash>1693810f14c69cf35949a11c9cab2433</Hash>
 </Codenesium>*/

@@ -39,22 +39,14 @@ namespace FileServiceNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOBucket>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBucket> response = this.bucketManager.All(query.Offset, query.Limit);
+			List<POCOBucket> response = await this.bucketManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace FileServiceNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOBucket), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBucket response = this.bucketManager.Get(id);
+			POCOBucket response = await this.bucketManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace FileServiceNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBucket response = this.bucketManager.Get(id);
+					POCOBucket response = await this.bucketManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace FileServiceNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOBucket), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Name(string name)
+		public async virtual Task<IActionResult> Name(string name)
 		{
-			POCOBucket response = this.bucketManager.Name(name);
+			POCOBucket response = await this.bucketManager.Name(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -197,9 +192,10 @@ namespace FileServiceNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOBucket), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult ExternalId(Guid externalId)
+		public async virtual Task<IActionResult> ExternalId(Guid externalId)
 		{
-			POCOBucket response = this.bucketManager.ExternalId(externalId);
+			POCOBucket response = await this.bucketManager.ExternalId(externalId);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -213,5 +209,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>686da1b6dfa381efd848cd4e961c8ae5</Hash>
+    <Hash>f77e57ec35baa4fdb666bd2dd41c3dd9</Hash>
 </Codenesium>*/

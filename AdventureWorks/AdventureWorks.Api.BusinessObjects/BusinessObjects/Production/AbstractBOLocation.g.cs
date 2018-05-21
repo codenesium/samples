@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOLocation
+	public abstract class AbstractBOLocation: AbstractBOManager
 	{
 		private ILocationRepository locationRepository;
 		private IApiLocationModelValidator locationModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ILocationRepository locationRepository,
 			IApiLocationModelValidator locationModelValidator)
+			: base()
 
 		{
 			this.locationRepository = locationRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOLocation> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.locationRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOLocation Get(short locationID)
+		public virtual Task<POCOLocation> Get(short locationID)
 		{
 			return this.locationRepository.Get(locationID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOLocation> response = new CreateResponse<POCOLocation>(await this.locationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLocation record = this.locationRepository.Create(model);
+				POCOLocation record = await this.locationRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.locationRepository.Update(locationID, model);
+				await this.locationRepository.Update(locationID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.locationRepository.Delete(locationID);
+				await this.locationRepository.Delete(locationID);
 			}
 			return response;
 		}
 
-		public POCOLocation GetName(string name)
+		public async Task<POCOLocation> GetName(string name)
 		{
-			return this.locationRepository.GetName(name);
+			return await this.locationRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8664f42b2227f171d4ba3fa6554ebbc6</Hash>
+    <Hash>e499c1741a3cb51afe0b89312a2801d2</Hash>
 </Codenesium>*/

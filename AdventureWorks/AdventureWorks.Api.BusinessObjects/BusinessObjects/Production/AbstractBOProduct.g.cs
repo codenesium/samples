@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProduct
+	public abstract class AbstractBOProduct: AbstractBOManager
 	{
 		private IProductRepository productRepository;
 		private IApiProductModelValidator productModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductRepository productRepository,
 			IApiProductModelValidator productModelValidator)
+			: base()
 
 		{
 			this.productRepository = productRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProduct> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProduct Get(int productID)
+		public virtual Task<POCOProduct> Get(int productID)
 		{
 			return this.productRepository.Get(productID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProduct> response = new CreateResponse<POCOProduct>(await this.productModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProduct record = this.productRepository.Create(model);
+				POCOProduct record = await this.productRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productRepository.Update(productID, model);
+				await this.productRepository.Update(productID, model);
 			}
 
 			return response;
@@ -73,23 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productRepository.Delete(productID);
+				await this.productRepository.Delete(productID);
 			}
 			return response;
 		}
 
-		public POCOProduct GetName(string name)
+		public async Task<POCOProduct> GetName(string name)
 		{
-			return this.productRepository.GetName(name);
+			return await this.productRepository.GetName(name);
 		}
-
-		public POCOProduct GetProductNumber(string productNumber)
+		public async Task<POCOProduct> GetProductNumber(string productNumber)
 		{
-			return this.productRepository.GetProductNumber(productNumber);
+			return await this.productRepository.GetProductNumber(productNumber);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>38db53d2c566c123ef63b0d9c3945864</Hash>
+    <Hash>25f7c5c8090e5330193595306a751cb7</Hash>
 </Codenesium>*/

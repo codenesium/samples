@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiUnitMeasureModel
+	public partial class ApiUnitMeasureModel: AbstractModel
 	{
-		public ApiUnitMeasureModel()
+		public ApiUnitMeasureModel() : base()
 		{}
 
 		public ApiUnitMeasureModel(
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1036c785ade0cd6817ace0424d7daed1</Hash>
+    <Hash>f79ded37ff8a8537dcb98293600a8e4d</Hash>
 </Codenesium>*/

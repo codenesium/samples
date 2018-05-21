@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOHandlerPipelineStep
+	public abstract class AbstractBOHandlerPipelineStep: AbstractBOManager
 	{
 		private IHandlerPipelineStepRepository handlerPipelineStepRepository;
 		private IApiHandlerPipelineStepModelValidator handlerPipelineStepModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IHandlerPipelineStepRepository handlerPipelineStepRepository,
 			IApiHandlerPipelineStepModelValidator handlerPipelineStepModelValidator)
+			: base()
 
 		{
 			this.handlerPipelineStepRepository = handlerPipelineStepRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOHandlerPipelineStep> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOHandlerPipelineStep>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.handlerPipelineStepRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOHandlerPipelineStep Get(int id)
+		public virtual Task<POCOHandlerPipelineStep> Get(int id)
 		{
 			return this.handlerPipelineStepRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOHandlerPipelineStep> response = new CreateResponse<POCOHandlerPipelineStep>(await this.handlerPipelineStepModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOHandlerPipelineStep record = this.handlerPipelineStepRepository.Create(model);
+				POCOHandlerPipelineStep record = await this.handlerPipelineStepRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.handlerPipelineStepRepository.Update(id, model);
+				await this.handlerPipelineStepRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.handlerPipelineStepRepository.Delete(id);
+				await this.handlerPipelineStepRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>eab0fd4f452de75c090d7a15a276ad2b</Hash>
+    <Hash>23c16bcb3ae7da79313ada6d59e9aa34</Hash>
 </Codenesium>*/

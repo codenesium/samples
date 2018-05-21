@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductVendor> response = this.productVendorManager.All(query.Offset, query.Limit);
+			List<POCOProductVendor> response = await this.productVendorManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProductVendor), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductVendor response = this.productVendorManager.Get(id);
+			POCOProductVendor response = await this.productVendorManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductVendor response = this.productVendorManager.Get(id);
+					POCOProductVendor response = await this.productVendorManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,40 +172,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getBusinessEntityID/{businessEntityID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetBusinessEntityID(int businessEntityID)
+		public async virtual Task<IActionResult> GetBusinessEntityID(int businessEntityID)
 		{
-			List<POCOProductVendor> response = this.productVendorManager.GetBusinessEntityID(businessEntityID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOProductVendor> response = await this.productVendorManager.GetBusinessEntityID(businessEntityID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getUnitMeasureCode/{unitMeasureCode}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetUnitMeasureCode(string unitMeasureCode)
+		public async virtual Task<IActionResult> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			List<POCOProductVendor> response = this.productVendorManager.GetUnitMeasureCode(unitMeasureCode);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOProductVendor> response = await this.productVendorManager.GetUnitMeasureCode(unitMeasureCode);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4335bf0684844e9d18b00e3940c4bafe</Hash>
+    <Hash>39309ea77d54107e018aec386d431bf8</Hash>
 </Codenesium>*/

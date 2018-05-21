@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOClientCommunication
+	public abstract class AbstractBOClientCommunication: AbstractBOManager
 	{
 		private IClientCommunicationRepository clientCommunicationRepository;
 		private IApiClientCommunicationModelValidator clientCommunicationModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IClientCommunicationRepository clientCommunicationRepository,
 			IApiClientCommunicationModelValidator clientCommunicationModelValidator)
+			: base()
 
 		{
 			this.clientCommunicationRepository = clientCommunicationRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOClientCommunication> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOClientCommunication>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.clientCommunicationRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOClientCommunication Get(int id)
+		public virtual Task<POCOClientCommunication> Get(int id)
 		{
 			return this.clientCommunicationRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOClientCommunication> response = new CreateResponse<POCOClientCommunication>(await this.clientCommunicationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOClientCommunication record = this.clientCommunicationRepository.Create(model);
+				POCOClientCommunication record = await this.clientCommunicationRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.clientCommunicationRepository.Update(id, model);
+				await this.clientCommunicationRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.clientCommunicationRepository.Delete(id);
+				await this.clientCommunicationRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fb402cbbbd8f4068eb3e3621e815ea7a</Hash>
+    <Hash>f229c8a7d8c1a9970bcc779b7ccbd82a</Hash>
 </Codenesium>*/

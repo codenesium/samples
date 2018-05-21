@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void CardNumberRules()
 		{
 			this.RuleFor(x => x.CardNumber).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetCardNumber).When(x => x ?.CardNumber != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetCardNumber).When(x => x ?.CardNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCreditCardModel.CardNumber));
 			this.RuleFor(x => x.CardNumber).Length(0, 25);
 		}
 
@@ -51,11 +51,11 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeUniqueGetCardNumber(ApiCreditCardModel model)
 		{
-			return this.CreditCardRepository.GetCardNumber(model.CardNumber) != null;
+			return this.CreditCardRepository.GetCardNumber(model.CardNumber) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ed2e54187a446b84cda379146e90710</Hash>
+    <Hash>1fd82c7ecdfe5a099f918f61b7f078cf</Hash>
 </Codenesium>*/

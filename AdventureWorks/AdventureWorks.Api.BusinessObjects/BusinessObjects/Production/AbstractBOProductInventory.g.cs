@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductInventory
+	public abstract class AbstractBOProductInventory: AbstractBOManager
 	{
 		private IProductInventoryRepository productInventoryRepository;
 		private IApiProductInventoryModelValidator productInventoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductInventoryRepository productInventoryRepository,
 			IApiProductInventoryModelValidator productInventoryModelValidator)
+			: base()
 
 		{
 			this.productInventoryRepository = productInventoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductInventory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductInventory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productInventoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductInventory Get(int productID)
+		public virtual Task<POCOProductInventory> Get(int productID)
 		{
 			return this.productInventoryRepository.Get(productID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductInventory> response = new CreateResponse<POCOProductInventory>(await this.productInventoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductInventory record = this.productInventoryRepository.Create(model);
+				POCOProductInventory record = await this.productInventoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productInventoryRepository.Update(productID, model);
+				await this.productInventoryRepository.Update(productID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productInventoryRepository.Delete(productID);
+				await this.productInventoryRepository.Delete(productID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>920f9edc4765681593d487d7fce02bee</Hash>
+    <Hash>a9db04596f68f70754cb6431106fe4d8</Hash>
 </Codenesium>*/

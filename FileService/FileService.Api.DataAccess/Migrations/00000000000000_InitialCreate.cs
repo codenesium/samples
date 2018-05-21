@@ -22,38 +22,38 @@ EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[Bucket](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[externalId] [uniqueidentifier]    NOT NULL,
-[name] [nvarchar]  (255)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[externalId] [uniqueidentifier]     NOT NULL,
+[name] [nvarchar]  (255)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[File](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[bucketId] [int]    NULL,
-[dateCreated] [datetime]    NOT NULL,
-[description] [nvarchar]  (255)  NULL,
-[expiration] [datetime]    NOT NULL,
-[extension] [varchar]  (32)  NOT NULL,
-[externalId] [uniqueidentifier]    NOT NULL,
-[fileSizeInBytes] [decimal]    NOT NULL,
-[fileTypeId] [int]    NOT NULL,
-[location] [varchar]  (255)  NOT NULL,
-[privateKey] [varchar]  (64)  NOT NULL,
-[publicKey] [varchar]  (64)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[bucketId] [int]     NULL,
+[dateCreated] [datetime]     NOT NULL,
+[description] [nvarchar]  (255)   NULL,
+[expiration] [datetime]     NOT NULL,
+[extension] [varchar]  (32)   NOT NULL,
+[externalId] [uniqueidentifier]     NOT NULL,
+[fileSizeInBytes] [decimal]     NOT NULL,
+[fileTypeId] [int]     NOT NULL,
+[location] [varchar]  (255)   NOT NULL,
+[privateKey] [varchar]  (64)   NOT NULL,
+[publicKey] [varchar]  (64)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[FileType](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (255)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (255)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[VersionInfo](
-[AppliedOn] [datetime]    NULL,
-[Description] [nvarchar]  (1024)  NULL,
-[Version] [bigint]    NOT NULL,
+[AppliedOn] [datetime]     NULL,
+[Description] [nvarchar]  (1024)   NULL,
+[Version] [bigint]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -90,6 +90,7 @@ CREATE UNIQUE CLUSTERED INDEX[UC_Version] ON[dbo].[VersionInfo]
 [Version] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+
 
 ALTER TABLE[dbo].[File]  WITH CHECK ADD  CONSTRAINT[FK_File_Bucket] FOREIGN KEY([bucketId])
 REFERENCES[dbo].[Bucket]([id])

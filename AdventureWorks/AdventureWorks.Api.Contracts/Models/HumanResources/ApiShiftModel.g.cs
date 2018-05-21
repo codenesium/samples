@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiShiftModel
+	public partial class ApiShiftModel: AbstractModel
 	{
-		public ApiShiftModel()
+		public ApiShiftModel() : base()
 		{}
 
 		public ApiShiftModel(
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>63f9bd8b3810c108429464f156d7b6c1</Hash>
+    <Hash>2da0afbd8df84e3bd2a54ed92b514f29</Hash>
 </Codenesium>*/

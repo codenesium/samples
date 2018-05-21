@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmployee> response = this.employeeManager.All(query.Offset, query.Limit);
+			List<POCOEmployee> response = await this.employeeManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOEmployee), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmployee response = this.employeeManager.Get(id);
+			POCOEmployee response = await this.employeeManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmployee response = this.employeeManager.Get(id);
+					POCOEmployee response = await this.employeeManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOEmployee), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetLoginID(string loginID)
+		public async virtual Task<IActionResult> GetLoginID(string loginID)
 		{
-			POCOEmployee response = this.employeeManager.GetLoginID(loginID);
+			POCOEmployee response = await this.employeeManager.GetLoginID(loginID);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -197,9 +192,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOEmployee), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetNationalIDNumber(string nationalIDNumber)
+		public async virtual Task<IActionResult> GetNationalIDNumber(string nationalIDNumber)
 		{
-			POCOEmployee response = this.employeeManager.GetNationalIDNumber(nationalIDNumber);
+			POCOEmployee response = await this.employeeManager.GetNationalIDNumber(nationalIDNumber);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -214,40 +210,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getOrganizationLevelOrganizationNode/{organizationLevel}/{organizationNode}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
+		public async virtual Task<IActionResult> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
 		{
-			List<POCOEmployee> response = this.employeeManager.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOEmployee> response = await this.employeeManager.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getOrganizationNode/{organizationNode}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetOrganizationNode(Nullable<Guid> organizationNode)
+		public async virtual Task<IActionResult> GetOrganizationNode(Nullable<Guid> organizationNode)
 		{
-			List<POCOEmployee> response = this.employeeManager.GetOrganizationNode(organizationNode);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOEmployee> response = await this.employeeManager.GetOrganizationNode(organizationNode);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>58d487c3168f95573da864ea9e0b4d20</Hash>
+    <Hash>ddf26b8837743457242e8e457912c8e4</Hash>
 </Codenesium>*/

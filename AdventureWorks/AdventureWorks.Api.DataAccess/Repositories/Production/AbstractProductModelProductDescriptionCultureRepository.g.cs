@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductModelProductDescriptionCultureRepository
+	public abstract class AbstractProductModelProductDescriptionCultureRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProductModelProductDescriptionCulture> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProductModelProductDescriptionCulture Get(int productModelID)
+		public async virtual Task<POCOProductModelProductDescriptionCulture> Get(int productModelID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductModelID == productModelID).FirstOrDefault();
+			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
+
+			return this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(record);
 		}
 
-		public virtual POCOProductModelProductDescriptionCulture Create(
+		public async virtual Task<POCOProductModelProductDescriptionCulture> Create(
 			ApiProductModelProductDescriptionCultureModel model)
 		{
 			ProductModelProductDescriptionCulture record = new ProductModelProductDescriptionCulture();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ProductModelProductDescriptionCulture>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productModelID,
 			ApiProductModelProductDescriptionCultureModel model)
 		{
-			ProductModelProductDescriptionCulture record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
+			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productModelID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productModelID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productModelID)
 		{
-			ProductModelProductDescriptionCulture record = this.SearchLinqEF(x => x.ProductModelID == productModelID).FirstOrDefault();
+			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ProductModelProductDescriptionCulture>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOProductModelProductDescriptionCulture> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOProductModelProductDescriptionCulture> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOProductModelProductDescriptionCulture> SearchLinqPOCO(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProductModelProductDescriptionCulture>> SearchLinqPOCO(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProductModelProductDescriptionCulture> response = new List<POCOProductModelProductDescriptionCulture>();
-			List<ProductModelProductDescriptionCulture> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ProductModelProductDescriptionCulture> SearchLinqEF(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEF(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
 			}
-			return this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductModelProductDescriptionCulture>();
+			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
 		}
 
-		private List<ProductModelProductDescriptionCulture> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
 			}
 
-			return this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductModelProductDescriptionCulture>();
+			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
+		}
+
+		private async Task<ProductModelProductDescriptionCulture> GetById(int productModelID)
+		{
+			List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(x => x.ProductModelID == productModelID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0431c8409e1c664e69ecb5ca00c07ef5</Hash>
+    <Hash>ed048ced4fef924869c8d48d1972d5c7</Hash>
 </Codenesium>*/

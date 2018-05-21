@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductModel>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductModel> response = this.productModelManager.All(query.Offset, query.Limit);
+			List<POCOProductModel> response = await this.productModelManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProductModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductModel response = this.productModelManager.Get(id);
+			POCOProductModel response = await this.productModelManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductModel response = this.productModelManager.Get(id);
+					POCOProductModel response = await this.productModelManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOProductModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOProductModel response = this.productModelManager.GetName(name);
+			POCOProductModel response = await this.productModelManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -196,40 +191,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getCatalogDescription/{catalogDescription}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductModel>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetCatalogDescription(string catalogDescription)
+		public async virtual Task<IActionResult> GetCatalogDescription(string catalogDescription)
 		{
-			List<POCOProductModel> response = this.productModelManager.GetCatalogDescription(catalogDescription);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOProductModel> response = await this.productModelManager.GetCatalogDescription(catalogDescription);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getInstructions/{instructions}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOProductModel>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetInstructions(string instructions)
+		public async virtual Task<IActionResult> GetInstructions(string instructions)
 		{
-			List<POCOProductModel> response = this.productModelManager.GetInstructions(instructions);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOProductModel> response = await this.productModelManager.GetInstructions(instructions);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>512c60a5beedf5b0a399827ff33d66ad</Hash>
+    <Hash>13c5d9e7e9fa68e4e988a089f9fb2dd5</Hash>
 </Codenesium>*/

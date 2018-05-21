@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductModel
+	public abstract class AbstractBOProductModel: AbstractBOManager
 	{
 		private IProductModelRepository productModelRepository;
 		private IApiProductModelModelValidator productModelModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductModelRepository productModelRepository,
 			IApiProductModelModelValidator productModelModelValidator)
+			: base()
 
 		{
 			this.productModelRepository = productModelRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductModel> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productModelRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductModel Get(int productModelID)
+		public virtual Task<POCOProductModel> Get(int productModelID)
 		{
 			return this.productModelRepository.Get(productModelID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductModel> response = new CreateResponse<POCOProductModel>(await this.productModelModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductModel record = this.productModelRepository.Create(model);
+				POCOProductModel record = await this.productModelRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productModelRepository.Update(productModelID, model);
+				await this.productModelRepository.Update(productModelID, model);
 			}
 
 			return response;
@@ -73,27 +75,26 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productModelRepository.Delete(productModelID);
+				await this.productModelRepository.Delete(productModelID);
 			}
 			return response;
 		}
 
-		public POCOProductModel GetName(string name)
+		public async Task<POCOProductModel> GetName(string name)
 		{
-			return this.productModelRepository.GetName(name);
+			return await this.productModelRepository.GetName(name);
 		}
-
-		public List<POCOProductModel> GetCatalogDescription(string catalogDescription)
+		public async Task<List<POCOProductModel>> GetCatalogDescription(string catalogDescription)
 		{
-			return this.productModelRepository.GetCatalogDescription(catalogDescription);
+			return await this.productModelRepository.GetCatalogDescription(catalogDescription);
 		}
-		public List<POCOProductModel> GetInstructions(string instructions)
+		public async Task<List<POCOProductModel>> GetInstructions(string instructions)
 		{
-			return this.productModelRepository.GetInstructions(instructions);
+			return await this.productModelRepository.GetInstructions(instructions);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>beefcaa3517c06250e16358a77a7ca54</Hash>
+    <Hash>12bb48a4324c033e3f8498f379060e1e</Hash>
 </Codenesium>*/

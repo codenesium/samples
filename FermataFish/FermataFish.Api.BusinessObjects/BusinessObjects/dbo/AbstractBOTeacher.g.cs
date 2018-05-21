@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOTeacher
+	public abstract class AbstractBOTeacher: AbstractBOManager
 	{
 		private ITeacherRepository teacherRepository;
 		private IApiTeacherModelValidator teacherModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			ITeacherRepository teacherRepository,
 			IApiTeacherModelValidator teacherModelValidator)
+			: base()
 
 		{
 			this.teacherRepository = teacherRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOTeacher> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOTeacher>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.teacherRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOTeacher Get(int id)
+		public virtual Task<POCOTeacher> Get(int id)
 		{
 			return this.teacherRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOTeacher> response = new CreateResponse<POCOTeacher>(await this.teacherModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOTeacher record = this.teacherRepository.Create(model);
+				POCOTeacher record = await this.teacherRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.teacherRepository.Update(id, model);
+				await this.teacherRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.teacherRepository.Delete(id);
+				await this.teacherRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b70c2ef7e69c20d7ef793b1f42cb35db</Hash>
+    <Hash>1cc25ac4cd3bdd7fe8d354ef25af72ba</Hash>
 </Codenesium>*/

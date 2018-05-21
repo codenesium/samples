@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOVersionInfo> response = this.versionInfoManager.All(query.Offset, query.Limit);
+			List<POCOVersionInfo> response = await this.versionInfoManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(long id)
+		public async virtual Task<IActionResult> Get(long id)
 		{
-			POCOVersionInfo response = this.versionInfoManager.Get(id);
+			POCOVersionInfo response = await this.versionInfoManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOVersionInfo response = this.versionInfoManager.Get(id);
+					POCOVersionInfo response = await this.versionInfoManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Version(long version)
+		public async virtual Task<IActionResult> Version(long version)
 		{
-			POCOVersionInfo response = this.versionInfoManager.Version(version);
+			POCOVersionInfo response = await this.versionInfoManager.Version(version);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f4684442c001d8329a7e52144ea72a17</Hash>
+    <Hash>b6b78995da71b56bd708a742e9424595</Hash>
 </Codenesium>*/

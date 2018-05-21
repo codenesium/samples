@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractDocumentRepository
+	public abstract class AbstractDocumentRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCODocument> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCODocument Get(Guid documentNode)
+		public async virtual Task<POCODocument> Get(Guid documentNode)
 		{
-			return this.SearchLinqPOCO(x => x.DocumentNode == documentNode).FirstOrDefault();
+			Document record = await this.GetById(documentNode);
+
+			return this.Mapper.DocumentMapEFToPOCO(record);
 		}
 
-		public virtual POCODocument Create(
+		public async virtual Task<POCODocument> Create(
 			ApiDocumentModel model)
 		{
 			Document record = new Document();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Document>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.DocumentMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			Guid documentNode,
 			ApiDocumentModel model)
 		{
-			Document record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
+			Document record = await this.GetById(documentNode);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{documentNode}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					documentNode,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			Guid documentNode)
 		{
-			Document record = this.SearchLinqEF(x => x.DocumentNode == documentNode).FirstOrDefault();
+			Document record = await this.GetById(documentNode);
 
 			if (record == null)
 			{
@@ -82,54 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Document>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCODocument GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
+		public async Task<POCODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
 		{
-			return this.SearchLinqPOCO(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<List<POCODocument>> GetFileNameRevision(string fileName,string revision)
+		{
+			var records = await this.SearchLinqPOCO(x => x.FileName == fileName && x.Revision == revision);
+
+			return records;
 		}
 
-		public List<POCODocument> GetFileNameRevision(string fileName,string revision)
+		protected async Task<List<POCODocument>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.FileName == fileName && x.Revision == revision);
+			List<POCODocument> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCODocument> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCODocument> SearchLinqPOCO(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCODocument>> SearchLinqPOCO(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCODocument> response = new List<POCODocument>();
-			List<Document> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Document> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.DocumentMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Document> SearchLinqEF(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Document>> SearchLinqEF(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Document.DocumentNode)} ASC";
 			}
-			return this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Document>();
+			return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
 		}
 
-		private List<Document> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Document>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Document.DocumentNode)} ASC";
 			}
 
-			return this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Document>();
+			return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
+		}
+
+		private async Task<Document> GetById(Guid documentNode)
+		{
+			List<Document> records = await this.SearchLinqEF(x => x.DocumentNode == documentNode);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8fe66e9bfd19fa37a5dfcdcb0e79696a</Hash>
+    <Hash>ffa9a1d568583b8b85cb1737d79ac983</Hash>
 </Codenesium>*/

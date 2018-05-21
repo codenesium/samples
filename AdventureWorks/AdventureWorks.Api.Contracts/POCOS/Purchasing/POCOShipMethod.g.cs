@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOShipMethod
+	public partial class POCOShipMethod: AbstractPOCO
 	{
-		public POCOShipMethod()
+		public POCOShipMethod() : base()
 		{}
 
 		public POCOShipMethod(
@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6e565a71232196bd64d68d50da2b57ab</Hash>
+    <Hash>7b803dc8c434682ad2239077ef2c846a</Hash>
 </Codenesium>*/

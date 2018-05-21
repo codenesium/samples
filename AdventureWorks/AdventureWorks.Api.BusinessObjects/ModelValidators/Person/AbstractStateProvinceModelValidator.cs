@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void CountryRegionCodeRules()
 		{
 			this.RuleFor(x => x.CountryRegionCode).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceCodeCountryRegionCode).When(x => x ?.CountryRegionCode != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceCodeCountryRegionCode).When(x => x ?.CountryRegionCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceModel.CountryRegionCode));
 			this.RuleFor(x => x.CountryRegionCode).Length(0, 3);
 		}
 
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void StateProvinceCodeRules()
 		{
 			this.RuleFor(x => x.StateProvinceCode).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceCodeCountryRegionCode).When(x => x ?.StateProvinceCode != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceCodeCountryRegionCode).When(x => x ?.StateProvinceCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceModel.StateProvinceCode));
 			this.RuleFor(x => x.StateProvinceCode).Length(0, 3);
 		}
 
@@ -64,16 +64,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		private bool BeUniqueGetName(ApiStateProvinceModel model)
 		{
-			return this.StateProvinceRepository.GetName(model.Name) != null;
+			return this.StateProvinceRepository.GetName(model.Name) == null;
 		}
 
 		private bool BeUniqueGetStateProvinceCodeCountryRegionCode(ApiStateProvinceModel model)
 		{
-			return this.StateProvinceRepository.GetStateProvinceCodeCountryRegionCode(model.StateProvinceCode,model.CountryRegionCode) != null;
+			return this.StateProvinceRepository.GetStateProvinceCodeCountryRegionCode(model.StateProvinceCode,model.CountryRegionCode) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0501e665191b6838b80a36a406802234</Hash>
+    <Hash>14638810cac8accf2e6a8b93ad83d6c6</Hash>
 </Codenesium>*/

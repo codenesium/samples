@@ -4,9 +4,9 @@ using System;
 
 namespace PetShippingNS.Api.Contracts
 {
-	public partial class POCOCountry
+	public partial class POCOCountry: AbstractPOCO
 	{
-		public POCOCountry()
+		public POCOCountry() : base()
 		{}
 
 		public POCOCountry(
@@ -45,5 +45,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b4841fadd16214caf60a59c8f772771a</Hash>
+    <Hash>0bfce90d0e996bea15c8e1dcbd89778b</Hash>
 </Codenesium>*/

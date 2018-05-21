@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCurrencyRate
+	public abstract class AbstractBOCurrencyRate: AbstractBOManager
 	{
 		private ICurrencyRateRepository currencyRateRepository;
 		private IApiCurrencyRateModelValidator currencyRateModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ICurrencyRateRepository currencyRateRepository,
 			IApiCurrencyRateModelValidator currencyRateModelValidator)
+			: base()
 
 		{
 			this.currencyRateRepository = currencyRateRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCurrencyRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.currencyRateRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCurrencyRate Get(int currencyRateID)
+		public virtual Task<POCOCurrencyRate> Get(int currencyRateID)
 		{
 			return this.currencyRateRepository.Get(currencyRateID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOCurrencyRate> response = new CreateResponse<POCOCurrencyRate>(await this.currencyRateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCurrencyRate record = this.currencyRateRepository.Create(model);
+				POCOCurrencyRate record = await this.currencyRateRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.currencyRateRepository.Update(currencyRateID, model);
+				await this.currencyRateRepository.Update(currencyRateID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.currencyRateRepository.Delete(currencyRateID);
+				await this.currencyRateRepository.Delete(currencyRateID);
 			}
 			return response;
 		}
 
-		public POCOCurrencyRate GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
+		public async Task<POCOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
 		{
-			return this.currencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate,fromCurrencyCode,toCurrencyCode);
+			return await this.currencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate,fromCurrencyCode,toCurrencyCode);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8cb572adce3196fa4703cd8afce98a0</Hash>
+    <Hash>b9342a7943fb417755152b344f47d43c</Hash>
 </Codenesium>*/

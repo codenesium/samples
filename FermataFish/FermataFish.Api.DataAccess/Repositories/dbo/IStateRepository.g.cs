@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStateRepository
 	{
-		POCOState Create(ApiStateModel model);
+		Task<POCOState> Create(ApiStateModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiStateModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOState Get(int id);
+		Task<POCOState> Get(int id);
 
-		List<POCOState> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOState>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae2bb6bd3c174bcef151134fd79247a3</Hash>
+    <Hash>e9b72f899c9728df2634e20e1f111115</Hash>
 </Codenesium>*/

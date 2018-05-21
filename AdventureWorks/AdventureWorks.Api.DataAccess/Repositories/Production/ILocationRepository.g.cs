@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ILocationRepository
 	{
-		POCOLocation Create(ApiLocationModel model);
+		Task<POCOLocation> Create(ApiLocationModel model);
 
-		void Update(short locationID,
+		Task Update(short locationID,
 		            ApiLocationModel model);
 
-		void Delete(short locationID);
+		Task Delete(short locationID);
 
-		POCOLocation Get(short locationID);
+		Task<POCOLocation> Get(short locationID);
 
-		List<POCOLocation> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOLocation GetName(string name);
+		Task<POCOLocation> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>afb84692dd84b53e2153df6ff8f9da70</Hash>
+    <Hash>aa8a032ff24c25f66414ccc45eb73461</Hash>
 </Codenesium>*/

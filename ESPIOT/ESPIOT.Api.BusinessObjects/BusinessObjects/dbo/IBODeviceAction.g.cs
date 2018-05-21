@@ -17,12 +17,12 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCODeviceAction Get(int id);
+		Task<POCODeviceAction> Get(int id);
 
-		List<POCODeviceAction> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>eebf327cbd229700627349dbb6a21980</Hash>
+    <Hash>37b165ff0e174576f48bf1b2b2caf32f</Hash>
 </Codenesium>*/

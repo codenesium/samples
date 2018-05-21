@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPersonCreditCardModel
+	public partial class ApiPersonCreditCardModel: AbstractModel
 	{
-		public ApiPersonCreditCardModel()
+		public ApiPersonCreditCardModel() : base()
 		{}
 
 		public ApiPersonCreditCardModel(
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dfb395495441919f5b3253ec92e026ed</Hash>
+    <Hash>8cc18db8d3b400bb24f278e4dfd3ebcb</Hash>
 </Codenesium>*/

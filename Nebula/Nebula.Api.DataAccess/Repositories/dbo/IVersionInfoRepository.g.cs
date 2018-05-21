@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface IVersionInfoRepository
 	{
-		POCOVersionInfo Create(ApiVersionInfoModel model);
+		Task<POCOVersionInfo> Create(ApiVersionInfoModel model);
 
-		void Update(long version,
+		Task Update(long version,
 		            ApiVersionInfoModel model);
 
-		void Delete(long version);
+		Task Delete(long version);
 
-		POCOVersionInfo Get(long version);
+		Task<POCOVersionInfo> Get(long version);
 
-		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOVersionInfo Version(long version);
+		Task<POCOVersionInfo> Version(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6262e95a2e238ec6172830f70985d6b</Hash>
+    <Hash>a8c788b60e017e3f7507516fb38f4836</Hash>
 </Codenesium>*/

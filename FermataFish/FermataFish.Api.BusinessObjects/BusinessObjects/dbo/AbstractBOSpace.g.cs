@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSpace
+	public abstract class AbstractBOSpace: AbstractBOManager
 	{
 		private ISpaceRepository spaceRepository;
 		private IApiSpaceModelValidator spaceModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			ISpaceRepository spaceRepository,
 			IApiSpaceModelValidator spaceModelValidator)
+			: base()
 
 		{
 			this.spaceRepository = spaceRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSpace> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpace>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.spaceRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSpace Get(int id)
+		public virtual Task<POCOSpace> Get(int id)
 		{
 			return this.spaceRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOSpace> response = new CreateResponse<POCOSpace>(await this.spaceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpace record = this.spaceRepository.Create(model);
+				POCOSpace record = await this.spaceRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.spaceRepository.Update(id, model);
+				await this.spaceRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.spaceRepository.Delete(id);
+				await this.spaceRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5189b465b05b372783df2bbf9ab7ecdf</Hash>
+    <Hash>47af12b4ac2d0c1adadcc3454000cb2a</Hash>
 </Codenesium>*/

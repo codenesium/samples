@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPersonPhone
+	public abstract class AbstractBOPersonPhone: AbstractBOManager
 	{
 		private IPersonPhoneRepository personPhoneRepository;
 		private IApiPersonPhoneModelValidator personPhoneModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IPersonPhoneRepository personPhoneRepository,
 			IApiPersonPhoneModelValidator personPhoneModelValidator)
+			: base()
 
 		{
 			this.personPhoneRepository = personPhoneRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPersonPhone> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.personPhoneRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPersonPhone Get(int businessEntityID)
+		public virtual Task<POCOPersonPhone> Get(int businessEntityID)
 		{
 			return this.personPhoneRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOPersonPhone> response = new CreateResponse<POCOPersonPhone>(await this.personPhoneModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPersonPhone record = this.personPhoneRepository.Create(model);
+				POCOPersonPhone record = await this.personPhoneRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.personPhoneRepository.Update(businessEntityID, model);
+				await this.personPhoneRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.personPhoneRepository.Delete(businessEntityID);
+				await this.personPhoneRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
 
-		public List<POCOPersonPhone> GetPhoneNumber(string phoneNumber)
+		public async Task<List<POCOPersonPhone>> GetPhoneNumber(string phoneNumber)
 		{
-			return this.personPhoneRepository.GetPhoneNumber(phoneNumber);
+			return await this.personPhoneRepository.GetPhoneNumber(phoneNumber);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>396b7502abe1be9fc5d38abad5a47dea</Hash>
+    <Hash>1ee0bfeafa57ae85d52aa524a9e04f00</Hash>
 </Codenesium>*/

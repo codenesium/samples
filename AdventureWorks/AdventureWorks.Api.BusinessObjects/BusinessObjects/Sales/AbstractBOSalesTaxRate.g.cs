@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesTaxRate
+	public abstract class AbstractBOSalesTaxRate: AbstractBOManager
 	{
 		private ISalesTaxRateRepository salesTaxRateRepository;
 		private IApiSalesTaxRateModelValidator salesTaxRateModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesTaxRateRepository salesTaxRateRepository,
 			IApiSalesTaxRateModelValidator salesTaxRateModelValidator)
+			: base()
 
 		{
 			this.salesTaxRateRepository = salesTaxRateRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesTaxRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesTaxRateRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesTaxRate Get(int salesTaxRateID)
+		public virtual Task<POCOSalesTaxRate> Get(int salesTaxRateID)
 		{
 			return this.salesTaxRateRepository.Get(salesTaxRateID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesTaxRate> response = new CreateResponse<POCOSalesTaxRate>(await this.salesTaxRateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesTaxRate record = this.salesTaxRateRepository.Create(model);
+				POCOSalesTaxRate record = await this.salesTaxRateRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesTaxRateRepository.Update(salesTaxRateID, model);
+				await this.salesTaxRateRepository.Update(salesTaxRateID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesTaxRateRepository.Delete(salesTaxRateID);
+				await this.salesTaxRateRepository.Delete(salesTaxRateID);
 			}
 			return response;
 		}
 
-		public POCOSalesTaxRate GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
+		public async Task<POCOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
 		{
-			return this.salesTaxRateRepository.GetStateProvinceIDTaxType(stateProvinceID,taxType);
+			return await this.salesTaxRateRepository.GetStateProvinceIDTaxType(stateProvinceID,taxType);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a9f6b88488d4c102d685da4c02a00f4</Hash>
+    <Hash>747508878b444a8def0134545d989fb2</Hash>
 </Codenesium>*/

@@ -4,9 +4,9 @@ using System;
 
 namespace PetStoreNS.Api.Contracts
 {
-	public partial class POCOSale
+	public partial class POCOSale: AbstractPOCO
 	{
-		public POCOSale()
+		public POCOSale() : base()
 		{}
 
 		public POCOSale(
@@ -108,5 +108,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>78a34fbecb176bf2bb55344323268cee</Hash>
+    <Hash>43b6249f3c9d17a4b505ceed781121d5</Hash>
 </Codenesium>*/

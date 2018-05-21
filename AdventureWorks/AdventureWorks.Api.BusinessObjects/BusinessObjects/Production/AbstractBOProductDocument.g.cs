@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductDocument
+	public abstract class AbstractBOProductDocument: AbstractBOManager
 	{
 		private IProductDocumentRepository productDocumentRepository;
 		private IApiProductDocumentModelValidator productDocumentModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductDocumentRepository productDocumentRepository,
 			IApiProductDocumentModelValidator productDocumentModelValidator)
+			: base()
 
 		{
 			this.productDocumentRepository = productDocumentRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductDocument> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductDocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productDocumentRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductDocument Get(int productID)
+		public virtual Task<POCOProductDocument> Get(int productID)
 		{
 			return this.productDocumentRepository.Get(productID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductDocument> response = new CreateResponse<POCOProductDocument>(await this.productDocumentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductDocument record = this.productDocumentRepository.Create(model);
+				POCOProductDocument record = await this.productDocumentRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productDocumentRepository.Update(productID, model);
+				await this.productDocumentRepository.Update(productID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productDocumentRepository.Delete(productID);
+				await this.productDocumentRepository.Delete(productID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fbebdce5bf7bd226053e7a59ea500b9e</Hash>
+    <Hash>fe24ed66a7f46410ef8b5c6f9bf39b30</Hash>
 </Codenesium>*/

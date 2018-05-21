@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
 
 namespace FileServiceNS.Api.DataAccess
 {
 	public interface IFileTypeRepository
 	{
-		POCOFileType Create(ApiFileTypeModel model);
+		Task<POCOFileType> Create(ApiFileTypeModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiFileTypeModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOFileType Get(int id);
+		Task<POCOFileType> Get(int id);
 
-		List<POCOFileType> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOFileType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>875b89b5bf500827f4077eec0d460e4e</Hash>
+    <Hash>11e833e6a4df1bea1e8efa9530c68ff6</Hash>
 </Codenesium>*/

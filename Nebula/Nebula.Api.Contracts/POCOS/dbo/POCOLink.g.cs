@@ -4,9 +4,9 @@ using System;
 
 namespace NebulaNS.Api.Contracts
 {
-	public partial class POCOLink
+	public partial class POCOLink: AbstractPOCO
 	{
-		public POCOLink()
+		public POCOLink() : base()
 		{}
 
 		public POCOLink(
@@ -181,5 +181,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ab680549f09ee256eae5e4b0c9a03679</Hash>
+    <Hash>be77a0e0bb33a9c992ef63cd9a367df0</Hash>
 </Codenesium>*/

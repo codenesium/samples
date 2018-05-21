@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmailAddress>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmailAddress> response = this.emailAddressManager.All(query.Offset, query.Limit);
+			List<POCOEmailAddress> response = await this.emailAddressManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOEmailAddress), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmailAddress response = this.emailAddressManager.Get(id);
+			POCOEmailAddress response = await this.emailAddressManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmailAddress response = this.emailAddressManager.Get(id);
+					POCOEmailAddress response = await this.emailAddressManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,22 +172,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getEmailAddress/{emailAddress1}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmailAddress>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetEmailAddress(string emailAddress1)
+		public async virtual Task<IActionResult> GetEmailAddress(string emailAddress1)
 		{
-			List<POCOEmailAddress> response = this.emailAddressManager.GetEmailAddress(emailAddress1);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOEmailAddress> response = await this.emailAddressManager.GetEmailAddress(emailAddress1);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>026f2861cd1df784791be450036273c1</Hash>
+    <Hash>1e711bca613b5e78b3f21de890023a1f</Hash>
 </Codenesium>*/

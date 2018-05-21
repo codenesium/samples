@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOPersonPhone
+	public partial class POCOPersonPhone: AbstractPOCO
 	{
-		public POCOPersonPhone()
+		public POCOPersonPhone() : base()
 		{}
 
 		public POCOPersonPhone(
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2478a3f9309a855d33e1e9483da29a71</Hash>
+    <Hash>96bb8cc91f61db5a80aed5837f9445cd</Hash>
 </Codenesium>*/

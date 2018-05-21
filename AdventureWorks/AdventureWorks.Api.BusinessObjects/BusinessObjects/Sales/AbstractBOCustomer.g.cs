@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCustomer
+	public abstract class AbstractBOCustomer: AbstractBOManager
 	{
 		private ICustomerRepository customerRepository;
 		private IApiCustomerModelValidator customerModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ICustomerRepository customerRepository,
 			IApiCustomerModelValidator customerModelValidator)
+			: base()
 
 		{
 			this.customerRepository = customerRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCustomer> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCustomer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.customerRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCustomer Get(int customerID)
+		public virtual Task<POCOCustomer> Get(int customerID)
 		{
 			return this.customerRepository.Get(customerID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOCustomer> response = new CreateResponse<POCOCustomer>(await this.customerModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCustomer record = this.customerRepository.Create(model);
+				POCOCustomer record = await this.customerRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.customerRepository.Update(customerID, model);
+				await this.customerRepository.Update(customerID, model);
 			}
 
 			return response;
@@ -73,23 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.customerRepository.Delete(customerID);
+				await this.customerRepository.Delete(customerID);
 			}
 			return response;
 		}
 
-		public POCOCustomer GetAccountNumber(string accountNumber)
+		public async Task<POCOCustomer> GetAccountNumber(string accountNumber)
 		{
-			return this.customerRepository.GetAccountNumber(accountNumber);
+			return await this.customerRepository.GetAccountNumber(accountNumber);
 		}
-
-		public List<POCOCustomer> GetTerritoryID(Nullable<int> territoryID)
+		public async Task<List<POCOCustomer>> GetTerritoryID(Nullable<int> territoryID)
 		{
-			return this.customerRepository.GetTerritoryID(territoryID);
+			return await this.customerRepository.GetTerritoryID(territoryID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa2311f147d7fd54211ba01f59104383</Hash>
+    <Hash>a8f049c2703efba4abd71363159050d0</Hash>
 </Codenesium>*/

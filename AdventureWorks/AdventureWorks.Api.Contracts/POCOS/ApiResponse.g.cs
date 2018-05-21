@@ -7,10 +7,10 @@ namespace AdventureWorksNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
-		[JsonProperty(PropertyName = "V")]
+		[JsonProperty(PropertyName = "Value")]
 		public T Value { get; set; }
 
-		[JsonProperty(PropertyName = "O")]
+		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -1739,5 +1739,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cecd9480a360017fa7b0c61ee85c9e12</Hash>
+    <Hash>24f494913dcbdca5d0a59a4729322815</Hash>
 </Codenesium>*/

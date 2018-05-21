@@ -7,10 +7,10 @@ namespace FileServiceNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
-		[JsonProperty(PropertyName = "V")]
+		[JsonProperty(PropertyName = "Value")]
 		public T Value { get; set; }
 
-		[JsonProperty(PropertyName = "O")]
+		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -131,5 +131,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5dcc1e2962a2e7765892da95729c9ddc</Hash>
+    <Hash>5f7b3c4b91f776e4ebff788600663356</Hash>
 </Codenesium>*/

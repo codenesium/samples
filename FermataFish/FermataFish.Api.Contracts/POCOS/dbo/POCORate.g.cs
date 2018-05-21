@@ -4,9 +4,9 @@ using System;
 
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class POCORate
+	public partial class POCORate: AbstractPOCO
 	{
-		public POCORate()
+		public POCORate() : base()
 		{}
 
 		public POCORate(
@@ -72,5 +72,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>074c33340e05dd95e7ef66c13c712ddb</Hash>
+    <Hash>037353143906096cd878a91bf5213cb9</Hash>
 </Codenesium>*/

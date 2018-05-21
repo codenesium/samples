@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiCountryRegionCurrencyModel
+	public partial class ApiCountryRegionCurrencyModel: AbstractModel
 	{
-		public ApiCountryRegionCurrencyModel()
+		public ApiCountryRegionCurrencyModel() : base()
 		{}
 
 		public ApiCountryRegionCurrencyModel(
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8053988cb32d24eab73c310b4133ed82</Hash>
+    <Hash>96e90ca7716e81d7a54c5b04b9130b12</Hash>
 </Codenesium>*/

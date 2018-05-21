@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOPassword
+	public partial class POCOPassword: AbstractPOCO
 	{
-		public POCOPassword()
+		public POCOPassword() : base()
 		{}
 
 		public POCOPassword(
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>810e3601acded0cc6d3705e807799327</Hash>
+    <Hash>c85ec09396a47513152a33a96b77ee57</Hash>
 </Codenesium>*/

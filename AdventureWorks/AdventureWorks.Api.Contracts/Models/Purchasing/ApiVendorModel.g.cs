@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiVendorModel
+	public partial class ApiVendorModel: AbstractModel
 	{
-		public ApiVendorModel()
+		public ApiVendorModel() : base()
 		{}
 
 		public ApiVendorModel(
@@ -142,5 +142,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8dd028fcf9c141dbe185ca709b2bfbb4</Hash>
+    <Hash>f8e05c718f6c28a47ad26d72b681f9e8</Hash>
 </Codenesium>*/

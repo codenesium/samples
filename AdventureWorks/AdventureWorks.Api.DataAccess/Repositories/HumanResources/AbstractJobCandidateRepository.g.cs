@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractJobCandidateRepository
+	public abstract class AbstractJobCandidateRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOJobCandidate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOJobCandidate Get(int jobCandidateID)
+		public async virtual Task<POCOJobCandidate> Get(int jobCandidateID)
 		{
-			return this.SearchLinqPOCO(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
+			JobCandidate record = await this.GetById(jobCandidateID);
+
+			return this.Mapper.JobCandidateMapEFToPOCO(record);
 		}
 
-		public virtual POCOJobCandidate Create(
+		public async virtual Task<POCOJobCandidate> Create(
 			ApiJobCandidateModel model)
 		{
 			JobCandidate record = new JobCandidate();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<JobCandidate>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.JobCandidateMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int jobCandidateID,
 			ApiJobCandidateModel model)
 		{
-			JobCandidate record = this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
+			JobCandidate record = await this.GetById(jobCandidateID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{jobCandidateID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					jobCandidateID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int jobCandidateID)
 		{
-			JobCandidate record = this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID).FirstOrDefault();
+			JobCandidate record = await this.GetById(jobCandidateID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<JobCandidate>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOJobCandidate> GetBusinessEntityID(Nullable<int> businessEntityID)
+		public async Task<List<POCOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID)
 		{
-			return this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID);
+			var records = await this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID);
+
+			return records;
 		}
 
-		protected List<POCOJobCandidate> Where(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOJobCandidate>> Where(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOJobCandidate> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOJobCandidate> SearchLinqPOCO(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOJobCandidate>> SearchLinqPOCO(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOJobCandidate> response = new List<POCOJobCandidate>();
-			List<JobCandidate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<JobCandidate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.JobCandidateMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<JobCandidate> SearchLinqEF(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<JobCandidate>> SearchLinqEF(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(JobCandidate.JobCandidateID)} ASC";
 			}
-			return this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<JobCandidate>();
+			return await this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<JobCandidate>();
 		}
 
-		private List<JobCandidate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<JobCandidate>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(JobCandidate.JobCandidateID)} ASC";
 			}
 
-			return this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<JobCandidate>();
+			return await this.Context.Set<JobCandidate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<JobCandidate>();
+		}
+
+		private async Task<JobCandidate> GetById(int jobCandidateID)
+		{
+			List<JobCandidate> records = await this.SearchLinqEF(x => x.JobCandidateID == jobCandidateID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df1f1c7dfc7b8e3336eb8374b585ed12</Hash>
+    <Hash>7b23bec2d21e8f5b57669f646f655017</Hash>
 </Codenesium>*/

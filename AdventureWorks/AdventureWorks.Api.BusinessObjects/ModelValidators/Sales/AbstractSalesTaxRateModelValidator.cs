@@ -40,7 +40,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void StateProvinceIDRules()
 		{
 			this.RuleFor(x => x.StateProvinceID).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.StateProvinceID != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.StateProvinceID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateModel.StateProvinceID));
 		}
 
 		public virtual void TaxRateRules()
@@ -51,16 +51,16 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void TaxTypeRules()
 		{
 			this.RuleFor(x => x.TaxType).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.TaxType != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.TaxType != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateModel.TaxType));
 		}
 
 		private bool BeUniqueGetStateProvinceIDTaxType(ApiSalesTaxRateModel model)
 		{
-			return this.SalesTaxRateRepository.GetStateProvinceIDTaxType(model.StateProvinceID,model.TaxType) != null;
+			return this.SalesTaxRateRepository.GetStateProvinceIDTaxType(model.StateProvinceID,model.TaxType) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5227c3e5b4921af8db2c8200f0683eb8</Hash>
+    <Hash>fe7294a616b41efe586ab8a5608bdd40</Hash>
 </Codenesium>*/

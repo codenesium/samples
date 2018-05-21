@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductPhotoModel
+	public partial class ApiProductPhotoModel: AbstractModel
 	{
-		public ApiProductPhotoModel()
+		public ApiProductPhotoModel() : base()
 		{}
 
 		public ApiProductPhotoModel(
@@ -103,5 +103,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fc645257482f49758db98e113e7d6747</Hash>
+    <Hash>c446d3664351cea91d88ac4abb46a65c</Hash>
 </Codenesium>*/

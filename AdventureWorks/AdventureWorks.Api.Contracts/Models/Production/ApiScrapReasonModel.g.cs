@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiScrapReasonModel
+	public partial class ApiScrapReasonModel: AbstractModel
 	{
-		public ApiScrapReasonModel()
+		public ApiScrapReasonModel() : base()
 		{}
 
 		public ApiScrapReasonModel(
@@ -53,5 +53,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>58a08ecc38fa69b1e6b031839855e12d</Hash>
+    <Hash>2852adf8eaca8c296f3b240454056c05</Hash>
 </Codenesium>*/

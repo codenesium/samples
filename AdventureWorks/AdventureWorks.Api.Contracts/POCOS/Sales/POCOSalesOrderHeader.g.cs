@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOSalesOrderHeader
+	public partial class POCOSalesOrderHeader: AbstractPOCO
 	{
-		public POCOSalesOrderHeader()
+		public POCOSalesOrderHeader() : base()
 		{}
 
 		public POCOSalesOrderHeader(
@@ -339,5 +339,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>018ee185bb37657fd127a8be1d6c1ed6</Hash>
+    <Hash>5906a4b32c578c43180e6a65809e3507</Hash>
 </Codenesium>*/

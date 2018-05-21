@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiAWBuildVersionModel
+	public partial class ApiAWBuildVersionModel: AbstractModel
 	{
-		public ApiAWBuildVersionModel()
+		public ApiAWBuildVersionModel() : base()
 		{}
 
 		public ApiAWBuildVersionModel(
@@ -71,5 +71,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>be9322a39dc780efe5806304f1e5e7ef</Hash>
+    <Hash>2b57525e3d719846aebd7b8f3ebc93b4</Hash>
 </Codenesium>*/

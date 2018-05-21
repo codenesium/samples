@@ -7,10 +7,10 @@ namespace PetStoreNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
-		[JsonProperty(PropertyName = "V")]
+		[JsonProperty(PropertyName = "Value")]
 		public T Value { get; set; }
 
-		[JsonProperty(PropertyName = "O")]
+		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -179,5 +179,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7a1f5986c70e209b4c3cab0fa0aede32</Hash>
+    <Hash>7866ee8889c579e9187875d875ce93ed</Hash>
 </Codenesium>*/

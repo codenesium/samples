@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOTransactionHistoryArchive
+	public abstract class AbstractBOTransactionHistoryArchive: AbstractBOManager
 	{
 		private ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository;
 		private IApiTransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
 			IApiTransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator)
+			: base()
 
 		{
 			this.transactionHistoryArchiveRepository = transactionHistoryArchiveRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOTransactionHistoryArchive> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOTransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.transactionHistoryArchiveRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOTransactionHistoryArchive Get(int transactionID)
+		public virtual Task<POCOTransactionHistoryArchive> Get(int transactionID)
 		{
 			return this.transactionHistoryArchiveRepository.Get(transactionID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOTransactionHistoryArchive> response = new CreateResponse<POCOTransactionHistoryArchive>(await this.transactionHistoryArchiveModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOTransactionHistoryArchive record = this.transactionHistoryArchiveRepository.Create(model);
+				POCOTransactionHistoryArchive record = await this.transactionHistoryArchiveRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.transactionHistoryArchiveRepository.Update(transactionID, model);
+				await this.transactionHistoryArchiveRepository.Update(transactionID, model);
 			}
 
 			return response;
@@ -73,22 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.transactionHistoryArchiveRepository.Delete(transactionID);
+				await this.transactionHistoryArchiveRepository.Delete(transactionID);
 			}
 			return response;
 		}
 
-		public List<POCOTransactionHistoryArchive> GetProductID(int productID)
+		public async Task<List<POCOTransactionHistoryArchive>> GetProductID(int productID)
 		{
-			return this.transactionHistoryArchiveRepository.GetProductID(productID);
+			return await this.transactionHistoryArchiveRepository.GetProductID(productID);
 		}
-		public List<POCOTransactionHistoryArchive> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
+		public async Task<List<POCOTransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
 		{
-			return this.transactionHistoryArchiveRepository.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
+			return await this.transactionHistoryArchiveRepository.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1584734815d51600599076bf880d29f</Hash>
+    <Hash>4a7edaf0082b1f3a8a6934df809de0e0</Hash>
 </Codenesium>*/

@@ -17,12 +17,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int salesOrderID);
 
-		POCOSalesOrderHeaderSalesReason Get(int salesOrderID);
+		Task<POCOSalesOrderHeaderSalesReason> Get(int salesOrderID);
 
-		List<POCOSalesOrderHeaderSalesReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSalesOrderHeaderSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>35bbc64b58447ffd0dca3442d5669137</Hash>
+    <Hash>3622816f37d16f5e06a9ca33edacc861</Hash>
 </Codenesium>*/

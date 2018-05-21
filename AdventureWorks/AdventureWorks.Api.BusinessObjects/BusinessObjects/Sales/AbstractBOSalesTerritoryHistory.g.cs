@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesTerritoryHistory
+	public abstract class AbstractBOSalesTerritoryHistory: AbstractBOManager
 	{
 		private ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
 		private IApiSalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
 			IApiSalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator)
+			: base()
 
 		{
 			this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesTerritoryHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesTerritoryHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesTerritoryHistoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesTerritoryHistory Get(int businessEntityID)
+		public virtual Task<POCOSalesTerritoryHistory> Get(int businessEntityID)
 		{
 			return this.salesTerritoryHistoryRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesTerritoryHistory> response = new CreateResponse<POCOSalesTerritoryHistory>(await this.salesTerritoryHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesTerritoryHistory record = this.salesTerritoryHistoryRepository.Create(model);
+				POCOSalesTerritoryHistory record = await this.salesTerritoryHistoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesTerritoryHistoryRepository.Update(businessEntityID, model);
+				await this.salesTerritoryHistoryRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesTerritoryHistoryRepository.Delete(businessEntityID);
+				await this.salesTerritoryHistoryRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e9eef8e1351e6346d87b618bed1660cc</Hash>
+    <Hash>959c64bc6a65e13de774ae8b976a8f7f</Hash>
 </Codenesium>*/

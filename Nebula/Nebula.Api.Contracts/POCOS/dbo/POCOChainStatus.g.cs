@@ -4,9 +4,9 @@ using System;
 
 namespace NebulaNS.Api.Contracts
 {
-	public partial class POCOChainStatus
+	public partial class POCOChainStatus: AbstractPOCO
 	{
-		public POCOChainStatus()
+		public POCOChainStatus() : base()
 		{}
 
 		public POCOChainStatus(
@@ -45,5 +45,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8dd9ba4b97467ff88ae8c421da570c7f</Hash>
+    <Hash>9e6524948b6724491baeb222aecf0d4e</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBODepartment
+	public abstract class AbstractBODepartment: AbstractBOManager
 	{
 		private IDepartmentRepository departmentRepository;
 		private IApiDepartmentModelValidator departmentModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IDepartmentRepository departmentRepository,
 			IApiDepartmentModelValidator departmentModelValidator)
+			: base()
 
 		{
 			this.departmentRepository = departmentRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCODepartment> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODepartment>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.departmentRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCODepartment Get(short departmentID)
+		public virtual Task<POCODepartment> Get(short departmentID)
 		{
 			return this.departmentRepository.Get(departmentID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCODepartment> response = new CreateResponse<POCODepartment>(await this.departmentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODepartment record = this.departmentRepository.Create(model);
+				POCODepartment record = await this.departmentRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.departmentRepository.Update(departmentID, model);
+				await this.departmentRepository.Update(departmentID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.departmentRepository.Delete(departmentID);
+				await this.departmentRepository.Delete(departmentID);
 			}
 			return response;
 		}
 
-		public POCODepartment GetName(string name)
+		public async Task<POCODepartment> GetName(string name)
 		{
-			return this.departmentRepository.GetName(name);
+			return await this.departmentRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d09e57f54e45cc375384ddf841485cd</Hash>
+    <Hash>8780d0d67865b4214f77a4c5483bb06f</Hash>
 </Codenesium>*/

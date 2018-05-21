@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOPersonCreditCard
+	public partial class POCOPersonCreditCard: AbstractPOCO
 	{
-		public POCOPersonCreditCard()
+		public POCOPersonCreditCard() : base()
 		{}
 
 		public POCOPersonCreditCard(
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b05d41761bccafbef554e26567434011</Hash>
+    <Hash>e42fe4f080e615043c01c48f81e5cb10</Hash>
 </Codenesium>*/

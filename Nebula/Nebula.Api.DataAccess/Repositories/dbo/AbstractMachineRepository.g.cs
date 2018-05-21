@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public abstract class AbstractMachineRepository
+	public abstract class AbstractMachineRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace NebulaNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOMachine> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOMachine Get(int id)
+		public async virtual Task<POCOMachine> Get(int id)
 		{
-			return this.SearchLinqPOCO(x => x.Id == id).FirstOrDefault();
+			Machine record = await this.GetById(id);
+
+			return this.Mapper.MachineMapEFToPOCO(record);
 		}
 
-		public virtual POCOMachine Create(
+		public async virtual Task<POCOMachine> Create(
 			ApiMachineModel model)
 		{
 			Machine record = new Machine();
@@ -47,15 +51,17 @@ namespace NebulaNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Machine>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.MachineMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int id,
 			ApiMachineModel model)
 		{
-			Machine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Machine record = await this.GetById(id);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{id}");
@@ -66,14 +72,14 @@ namespace NebulaNS.Api.DataAccess
 					id,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int id)
 		{
-			Machine record = this.SearchLinqEF(x => x.Id == id).FirstOrDefault();
+			Machine record = await this.GetById(id);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace NebulaNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Machine>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOMachine MachineGuid(Guid machineGuid)
+		public async Task<POCOMachine> MachineGuid(Guid machineGuid)
 		{
-			return this.SearchLinqPOCO(x => x.MachineGuid == machineGuid).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.MachineGuid == machineGuid);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOMachine> Where(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOMachine>> Where(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOMachine> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOMachine> SearchLinqPOCO(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOMachine>> SearchLinqPOCO(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOMachine> response = new List<POCOMachine>();
-			List<Machine> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Machine> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.MachineMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Machine> SearchLinqEF(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Machine>> SearchLinqEF(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Machine.Id)} ASC";
 			}
-			return this.Context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Machine>();
+			return await this.Context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Machine>();
 		}
 
-		private List<Machine> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Machine>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Machine.Id)} ASC";
 			}
 
-			return this.Context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Machine>();
+			return await this.Context.Set<Machine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Machine>();
+		}
+
+		private async Task<Machine> GetById(int id)
+		{
+			List<Machine> records = await this.SearchLinqEF(x => x.Id == id);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7bd0523a398e87e64c319bb3e83b164</Hash>
+    <Hash>873d810ae98851941bee205fb4fbf53a</Hash>
 </Codenesium>*/

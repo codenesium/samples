@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiOrganizationModel
+	public partial class ApiOrganizationModel: AbstractModel
 	{
-		public ApiOrganizationModel()
+		public ApiOrganizationModel() : base()
 		{}
 
 		public ApiOrganizationModel(
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0dbbdc17bd18c4602cf111d1a064230e</Hash>
+    <Hash>a10acc39085ec2c5cf159dd46c087691</Hash>
 </Codenesium>*/

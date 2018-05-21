@@ -4,9 +4,9 @@ using System;
 
 namespace FileServiceNS.Api.Contracts
 {
-	public partial class POCOFileType
+	public partial class POCOFileType: AbstractPOCO
 	{
-		public POCOFileType()
+		public POCOFileType() : base()
 		{}
 
 		public POCOFileType(
@@ -45,5 +45,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>71ee7d76baed4a95de16109672d005b5</Hash>
+    <Hash>b005f92f2f6c556073a924dcef0d820f</Hash>
 </Codenesium>*/

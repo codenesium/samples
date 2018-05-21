@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOScrapReason
+	public abstract class AbstractBOScrapReason: AbstractBOManager
 	{
 		private IScrapReasonRepository scrapReasonRepository;
 		private IApiScrapReasonModelValidator scrapReasonModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IScrapReasonRepository scrapReasonRepository,
 			IApiScrapReasonModelValidator scrapReasonModelValidator)
+			: base()
 
 		{
 			this.scrapReasonRepository = scrapReasonRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOScrapReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.scrapReasonRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOScrapReason Get(short scrapReasonID)
+		public virtual Task<POCOScrapReason> Get(short scrapReasonID)
 		{
 			return this.scrapReasonRepository.Get(scrapReasonID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOScrapReason> response = new CreateResponse<POCOScrapReason>(await this.scrapReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOScrapReason record = this.scrapReasonRepository.Create(model);
+				POCOScrapReason record = await this.scrapReasonRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.scrapReasonRepository.Update(scrapReasonID, model);
+				await this.scrapReasonRepository.Update(scrapReasonID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.scrapReasonRepository.Delete(scrapReasonID);
+				await this.scrapReasonRepository.Delete(scrapReasonID);
 			}
 			return response;
 		}
 
-		public POCOScrapReason GetName(string name)
+		public async Task<POCOScrapReason> GetName(string name)
 		{
-			return this.scrapReasonRepository.GetName(name);
+			return await this.scrapReasonRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c100050ff5ea95246002329f3bbb0d6a</Hash>
+    <Hash>23fc38099de95edb82e96b6cf7f0c4bc</Hash>
 </Codenesium>*/

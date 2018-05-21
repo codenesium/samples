@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiWorkOrderRoutingModel
+	public partial class ApiWorkOrderRoutingModel: AbstractModel
 	{
-		public ApiWorkOrderRoutingModel()
+		public ApiWorkOrderRoutingModel() : base()
 		{}
 
 		public ApiWorkOrderRoutingModel(
@@ -211,5 +211,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1603f17d071fd42fdcb20d0700c19902</Hash>
+    <Hash>eca9aa6158b6085973be95f8620ab35d</Hash>
 </Codenesium>*/

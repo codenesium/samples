@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiMachineRefTeamModel
+	public partial class ApiMachineRefTeamModel: AbstractModel
 	{
-		public ApiMachineRefTeamModel()
+		public ApiMachineRefTeamModel() : base()
 		{}
 
 		public ApiMachineRefTeamModel(
@@ -53,5 +53,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4a99c4204026a0816b786c7b672e4a96</Hash>
+    <Hash>afafbe56ded7d7f673c0f107f6df29bd</Hash>
 </Codenesium>*/

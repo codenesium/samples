@@ -17,12 +17,12 @@ namespace PetStoreNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOSpecies Get(int id);
+		Task<POCOSpecies> Get(int id);
 
-		List<POCOSpecies> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSpecies>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>c226f634f0aa2412e4c45c1285a089ed</Hash>
+    <Hash>b3e0bdf8660bf639f1b3b9a59d55a0e5</Hash>
 </Codenesium>*/

@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCountryRegionRepository
+	public abstract class AbstractCountryRegionRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOCountryRegion> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOCountryRegion Get(string countryRegionCode)
+		public async virtual Task<POCOCountryRegion> Get(string countryRegionCode)
 		{
-			return this.SearchLinqPOCO(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			CountryRegion record = await this.GetById(countryRegionCode);
+
+			return this.Mapper.CountryRegionMapEFToPOCO(record);
 		}
 
-		public virtual POCOCountryRegion Create(
+		public async virtual Task<POCOCountryRegion> Create(
 			ApiCountryRegionModel model)
 		{
 			CountryRegion record = new CountryRegion();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<CountryRegion>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.CountryRegionMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			string countryRegionCode,
 			ApiCountryRegionModel model)
 		{
-			CountryRegion record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			CountryRegion record = await this.GetById(countryRegionCode);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{countryRegionCode}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					countryRegionCode,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			string countryRegionCode)
 		{
-			CountryRegion record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			CountryRegion record = await this.GetById(countryRegionCode);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<CountryRegion>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOCountryRegion GetName(string name)
+		public async Task<POCOCountryRegion> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOCountryRegion> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOCountryRegion>> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOCountryRegion> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOCountryRegion> SearchLinqPOCO(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOCountryRegion>> SearchLinqPOCO(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOCountryRegion> response = new List<POCOCountryRegion>();
-			List<CountryRegion> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<CountryRegion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.CountryRegionMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<CountryRegion> SearchLinqEF(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<CountryRegion>> SearchLinqEF(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(CountryRegion.CountryRegionCode)} ASC";
 			}
-			return this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CountryRegion>();
+			return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegion>();
 		}
 
-		private List<CountryRegion> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<CountryRegion>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(CountryRegion.CountryRegionCode)} ASC";
 			}
 
-			return this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CountryRegion>();
+			return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegion>();
+		}
+
+		private async Task<CountryRegion> GetById(string countryRegionCode)
+		{
+			List<CountryRegion> records = await this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a322b39360ca4ed1dbdb1b40f81eb317</Hash>
+    <Hash>f1adedccd8f20bef12996042b08e7f53</Hash>
 </Codenesium>*/

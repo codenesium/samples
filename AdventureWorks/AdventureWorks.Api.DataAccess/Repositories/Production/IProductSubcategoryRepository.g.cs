@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductSubcategoryRepository
 	{
-		POCOProductSubcategory Create(ApiProductSubcategoryModel model);
+		Task<POCOProductSubcategory> Create(ApiProductSubcategoryModel model);
 
-		void Update(int productSubcategoryID,
+		Task Update(int productSubcategoryID,
 		            ApiProductSubcategoryModel model);
 
-		void Delete(int productSubcategoryID);
+		Task Delete(int productSubcategoryID);
 
-		POCOProductSubcategory Get(int productSubcategoryID);
+		Task<POCOProductSubcategory> Get(int productSubcategoryID);
 
-		List<POCOProductSubcategory> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOProductSubcategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOProductSubcategory GetName(string name);
+		Task<POCOProductSubcategory> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe9e9d8144f252c7fe914b80085bdcb0</Hash>
+    <Hash>76a4d394c4448248ef7ff69c8222fbf9</Hash>
 </Codenesium>*/

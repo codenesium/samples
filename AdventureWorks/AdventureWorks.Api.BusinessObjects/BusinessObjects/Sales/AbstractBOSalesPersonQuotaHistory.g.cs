@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesPersonQuotaHistory
+	public abstract class AbstractBOSalesPersonQuotaHistory: AbstractBOManager
 	{
 		private ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
 		private IApiSalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
 			IApiSalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator)
+			: base()
 
 		{
 			this.salesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesPersonQuotaHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesPersonQuotaHistoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesPersonQuotaHistory Get(int businessEntityID)
+		public virtual Task<POCOSalesPersonQuotaHistory> Get(int businessEntityID)
 		{
 			return this.salesPersonQuotaHistoryRepository.Get(businessEntityID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesPersonQuotaHistory> response = new CreateResponse<POCOSalesPersonQuotaHistory>(await this.salesPersonQuotaHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesPersonQuotaHistory record = this.salesPersonQuotaHistoryRepository.Create(model);
+				POCOSalesPersonQuotaHistory record = await this.salesPersonQuotaHistoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesPersonQuotaHistoryRepository.Update(businessEntityID, model);
+				await this.salesPersonQuotaHistoryRepository.Update(businessEntityID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesPersonQuotaHistoryRepository.Delete(businessEntityID);
+				await this.salesPersonQuotaHistoryRepository.Delete(businessEntityID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>accbbccbfecada02295725221bc06186</Hash>
+    <Hash>42824e8e410135d3c4deb081ee2d895d</Hash>
 </Codenesium>*/

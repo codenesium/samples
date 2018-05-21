@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOOtherTransport
+	public abstract class AbstractBOOtherTransport: AbstractBOManager
 	{
 		private IOtherTransportRepository otherTransportRepository;
 		private IApiOtherTransportModelValidator otherTransportModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IOtherTransportRepository otherTransportRepository,
 			IApiOtherTransportModelValidator otherTransportModelValidator)
+			: base()
 
 		{
 			this.otherTransportRepository = otherTransportRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOOtherTransport> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOOtherTransport>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.otherTransportRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOOtherTransport Get(int id)
+		public virtual Task<POCOOtherTransport> Get(int id)
 		{
 			return this.otherTransportRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOOtherTransport> response = new CreateResponse<POCOOtherTransport>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOOtherTransport record = this.otherTransportRepository.Create(model);
+				POCOOtherTransport record = await this.otherTransportRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.otherTransportRepository.Update(id, model);
+				await this.otherTransportRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.otherTransportRepository.Delete(id);
+				await this.otherTransportRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c8ebb4d834f50db52103ed50657ec4fb</Hash>
+    <Hash>cd38fdc2db1bfe0a44bd79c2e6c360aa</Hash>
 </Codenesium>*/

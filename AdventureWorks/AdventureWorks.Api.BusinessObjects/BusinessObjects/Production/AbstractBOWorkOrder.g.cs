@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOWorkOrder
+	public abstract class AbstractBOWorkOrder: AbstractBOManager
 	{
 		private IWorkOrderRepository workOrderRepository;
 		private IApiWorkOrderModelValidator workOrderModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IWorkOrderRepository workOrderRepository,
 			IApiWorkOrderModelValidator workOrderModelValidator)
+			: base()
 
 		{
 			this.workOrderRepository = workOrderRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOWorkOrder> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOWorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.workOrderRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOWorkOrder Get(int workOrderID)
+		public virtual Task<POCOWorkOrder> Get(int workOrderID)
 		{
 			return this.workOrderRepository.Get(workOrderID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOWorkOrder> response = new CreateResponse<POCOWorkOrder>(await this.workOrderModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOWorkOrder record = this.workOrderRepository.Create(model);
+				POCOWorkOrder record = await this.workOrderRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.workOrderRepository.Update(workOrderID, model);
+				await this.workOrderRepository.Update(workOrderID, model);
 			}
 
 			return response;
@@ -73,22 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.workOrderRepository.Delete(workOrderID);
+				await this.workOrderRepository.Delete(workOrderID);
 			}
 			return response;
 		}
 
-		public List<POCOWorkOrder> GetProductID(int productID)
+		public async Task<List<POCOWorkOrder>> GetProductID(int productID)
 		{
-			return this.workOrderRepository.GetProductID(productID);
+			return await this.workOrderRepository.GetProductID(productID);
 		}
-		public List<POCOWorkOrder> GetScrapReasonID(Nullable<short> scrapReasonID)
+		public async Task<List<POCOWorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
 		{
-			return this.workOrderRepository.GetScrapReasonID(scrapReasonID);
+			return await this.workOrderRepository.GetScrapReasonID(scrapReasonID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b408333560734b45af8ad8acadf8c4a</Hash>
+    <Hash>6dc4184231eb83018699f68aadc07440</Hash>
 </Codenesium>*/

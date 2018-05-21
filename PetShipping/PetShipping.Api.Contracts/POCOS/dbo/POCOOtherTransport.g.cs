@@ -4,9 +4,9 @@ using System;
 
 namespace PetShippingNS.Api.Contracts
 {
-	public partial class POCOOtherTransport
+	public partial class POCOOtherTransport: AbstractPOCO
 	{
-		public POCOOtherTransport()
+		public POCOOtherTransport() : base()
 		{}
 
 		public POCOOtherTransport(
@@ -60,5 +60,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0ef5f476783bc90b7eaf879849816eb7</Hash>
+    <Hash>652cdc2baa758183c388ba32453b6eda</Hash>
 </Codenesium>*/

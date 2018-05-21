@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISpecialOfferRepository
 	{
-		POCOSpecialOffer Create(ApiSpecialOfferModel model);
+		Task<POCOSpecialOffer> Create(ApiSpecialOfferModel model);
 
-		void Update(int specialOfferID,
+		Task Update(int specialOfferID,
 		            ApiSpecialOfferModel model);
 
-		void Delete(int specialOfferID);
+		Task Delete(int specialOfferID);
 
-		POCOSpecialOffer Get(int specialOfferID);
+		Task<POCOSpecialOffer> Get(int specialOfferID);
 
-		List<POCOSpecialOffer> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>cbbe9e15b1a885bb7ba468aba729e3ce</Hash>
+    <Hash>a7a6370c767999f67714f7c3883b812a</Hash>
 </Codenesium>*/

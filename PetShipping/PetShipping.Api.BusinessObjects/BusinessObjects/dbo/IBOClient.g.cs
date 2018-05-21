@@ -17,12 +17,12 @@ namespace PetShippingNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOClient Get(int id);
+		Task<POCOClient> Get(int id);
 
-		List<POCOClient> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOClient>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>adf2c742372a1dc4aa24c267dcccabaf</Hash>
+    <Hash>6912d3be17f4fa32b3589dd3a3ada86f</Hash>
 </Codenesium>*/

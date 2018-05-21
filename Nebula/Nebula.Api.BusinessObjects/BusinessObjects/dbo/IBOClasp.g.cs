@@ -17,12 +17,12 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOClasp Get(int id);
+		Task<POCOClasp> Get(int id);
 
-		List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a6b84f0780a12f9839e8563fea487a4</Hash>
+    <Hash>583a4576a6afe9b3ada4ded6aca150e3</Hash>
 </Codenesium>*/

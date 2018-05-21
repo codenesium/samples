@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkLogRepository
 	{
-		POCOLinkLog Create(ApiLinkLogModel model);
+		Task<POCOLinkLog> Create(ApiLinkLogModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiLinkLogModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOLinkLog Get(int id);
+		Task<POCOLinkLog> Get(int id);
 
-		List<POCOLinkLog> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae6b3e66be324c5a5d44967d83c6275e</Hash>
+    <Hash>b0b67bc9358f2357d9a44e268790aa49</Hash>
 </Codenesium>*/

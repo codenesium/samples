@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSpaceFeature
+	public abstract class AbstractBOSpaceFeature: AbstractBOManager
 	{
 		private ISpaceFeatureRepository spaceFeatureRepository;
 		private IApiSpaceFeatureModelValidator spaceFeatureModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			ISpaceFeatureRepository spaceFeatureRepository,
 			IApiSpaceFeatureModelValidator spaceFeatureModelValidator)
+			: base()
 
 		{
 			this.spaceFeatureRepository = spaceFeatureRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSpaceFeature> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.spaceFeatureRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSpaceFeature Get(int id)
+		public virtual Task<POCOSpaceFeature> Get(int id)
 		{
 			return this.spaceFeatureRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOSpaceFeature> response = new CreateResponse<POCOSpaceFeature>(await this.spaceFeatureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpaceFeature record = this.spaceFeatureRepository.Create(model);
+				POCOSpaceFeature record = await this.spaceFeatureRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.spaceFeatureRepository.Update(id, model);
+				await this.spaceFeatureRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.spaceFeatureRepository.Delete(id);
+				await this.spaceFeatureRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d40c40e8e3dd045285625db9eebb56ca</Hash>
+    <Hash>35f4c4aeb13a77fffd66b37004f075e2</Hash>
 </Codenesium>*/

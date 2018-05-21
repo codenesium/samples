@@ -4,9 +4,9 @@ using System;
 
 namespace PetShippingNS.Api.Contracts
 {
-	public partial class POCOPipelineStep
+	public partial class POCOPipelineStep: AbstractPOCO
 	{
-		public POCOPipelineStep()
+		public POCOPipelineStep() : base()
 		{}
 
 		public POCOPipelineStep(
@@ -72,5 +72,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ebe2211975815ac74e92dd41a9cf8e25</Hash>
+    <Hash>a0512f710e6019d14e7c58f9c5892f23</Hash>
 </Codenesium>*/

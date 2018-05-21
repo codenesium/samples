@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOWorkOrder
+	public partial class POCOWorkOrder: AbstractPOCO
 	{
-		public POCOWorkOrder()
+		public POCOWorkOrder() : base()
 		{}
 
 		public POCOWorkOrder(
@@ -141,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>067555235b7b692a6a6355feef6fa80b</Hash>
+    <Hash>1f4fd935c8b101f2e9806287542f1b7d</Hash>
 </Codenesium>*/

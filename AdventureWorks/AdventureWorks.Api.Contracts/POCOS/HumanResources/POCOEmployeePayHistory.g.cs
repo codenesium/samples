@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOEmployeePayHistory
+	public partial class POCOEmployeePayHistory: AbstractPOCO
 	{
-		public POCOEmployeePayHistory()
+		public POCOEmployeePayHistory() : base()
 		{}
 
 		public POCOEmployeePayHistory(
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>36f0a7cd0f6aaf820de63208a49a3cfc</Hash>
+    <Hash>5eca8127e21390bb876bcc330f0b0bfe</Hash>
 </Codenesium>*/

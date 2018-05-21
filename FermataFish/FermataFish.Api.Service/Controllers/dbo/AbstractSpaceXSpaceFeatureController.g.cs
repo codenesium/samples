@@ -39,22 +39,14 @@ namespace FermataFishNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOSpaceXSpaceFeature>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSpaceXSpaceFeature> response = this.spaceXSpaceFeatureManager.All(query.Offset, query.Limit);
+			List<POCOSpaceXSpaceFeature> response = await this.spaceXSpaceFeatureManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace FermataFishNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOSpaceXSpaceFeature), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSpaceXSpaceFeature response = this.spaceXSpaceFeatureManager.Get(id);
+			POCOSpaceXSpaceFeature response = await this.spaceXSpaceFeatureManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpaceXSpaceFeature response = this.spaceXSpaceFeatureManager.Get(id);
+					POCOSpaceXSpaceFeature response = await this.spaceXSpaceFeatureManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3c0d3d634c571d9a689d85fe987e517f</Hash>
+    <Hash>9caaafda7110d9f142ac912b7719cf5c</Hash>
 </Codenesium>*/

@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOProductSubcategory
+	public partial class POCOProductSubcategory: AbstractPOCO
 	{
-		public POCOProductSubcategory()
+		public POCOProductSubcategory() : base()
 		{}
 
 		public POCOProductSubcategory(
@@ -81,5 +81,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b98b1cd93d5fa34ea34b3a7691e69a68</Hash>
+    <Hash>ad05920f1de86ad0b94120ff93f75ebb</Hash>
 </Codenesium>*/

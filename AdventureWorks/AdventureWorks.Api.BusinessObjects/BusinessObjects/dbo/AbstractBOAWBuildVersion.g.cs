@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOAWBuildVersion
+	public abstract class AbstractBOAWBuildVersion: AbstractBOManager
 	{
 		private IAWBuildVersionRepository aWBuildVersionRepository;
 		private IApiAWBuildVersionModelValidator aWBuildVersionModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IAWBuildVersionRepository aWBuildVersionRepository,
 			IApiAWBuildVersionModelValidator aWBuildVersionModelValidator)
+			: base()
 
 		{
 			this.aWBuildVersionRepository = aWBuildVersionRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOAWBuildVersion> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.aWBuildVersionRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOAWBuildVersion Get(int systemInformationID)
+		public virtual Task<POCOAWBuildVersion> Get(int systemInformationID)
 		{
 			return this.aWBuildVersionRepository.Get(systemInformationID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOAWBuildVersion> response = new CreateResponse<POCOAWBuildVersion>(await this.aWBuildVersionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAWBuildVersion record = this.aWBuildVersionRepository.Create(model);
+				POCOAWBuildVersion record = await this.aWBuildVersionRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.aWBuildVersionRepository.Update(systemInformationID, model);
+				await this.aWBuildVersionRepository.Update(systemInformationID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.aWBuildVersionRepository.Delete(systemInformationID);
+				await this.aWBuildVersionRepository.Delete(systemInformationID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ac180909cc7e2ae604f4333a54c293df</Hash>
+    <Hash>244841cdbbfe57a9dbe1b2dc8c0a7cb3</Hash>
 </Codenesium>*/

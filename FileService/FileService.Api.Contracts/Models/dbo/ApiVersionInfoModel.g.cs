@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace FileServiceNS.Api.Contracts
 {
-	public partial class ApiVersionInfoModel
+	public partial class ApiVersionInfoModel: AbstractModel
 	{
-		public ApiVersionInfoModel()
+		public ApiVersionInfoModel() : base()
 		{}
 
 		public ApiVersionInfoModel(
@@ -51,5 +51,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c231d68c25ca525c690c9ea6ecd75b84</Hash>
+    <Hash>ab2478d14dc47a44a97261a08658a260</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOTeam
+	public abstract class AbstractBOTeam: AbstractBOManager
 	{
 		private ITeamRepository teamRepository;
 		private IApiTeamModelValidator teamModelValidator;
@@ -22,6 +22,7 @@ namespace NebulaNS.Api.BusinessObjects
 			ILogger logger,
 			ITeamRepository teamRepository,
 			IApiTeamModelValidator teamModelValidator)
+			: base()
 
 		{
 			this.teamRepository = teamRepository;
@@ -29,12 +30,12 @@ namespace NebulaNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.teamRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOTeam Get(int id)
+		public virtual Task<POCOTeam> Get(int id)
 		{
 			return this.teamRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace NebulaNS.Api.BusinessObjects
 			CreateResponse<POCOTeam> response = new CreateResponse<POCOTeam>(await this.teamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOTeam record = this.teamRepository.Create(model);
+				POCOTeam record = await this.teamRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.teamRepository.Update(id, model);
+				await this.teamRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace NebulaNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.teamRepository.Delete(id);
+				await this.teamRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCOTeam Name(string name)
+		public async Task<POCOTeam> Name(string name)
 		{
-			return this.teamRepository.Name(name);
+			return await this.teamRepository.Name(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>375a9f7e85f5f520219eeb4a4625a0cc</Hash>
+    <Hash>87f52bc9496e1fb632f3f9491b31ea09</Hash>
 </Codenesium>*/

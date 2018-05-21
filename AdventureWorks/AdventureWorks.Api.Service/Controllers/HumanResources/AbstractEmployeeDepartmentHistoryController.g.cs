@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmployeeDepartmentHistory> response = this.employeeDepartmentHistoryManager.All(query.Offset, query.Limit);
+			List<POCOEmployeeDepartmentHistory> response = await this.employeeDepartmentHistoryManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOEmployeeDepartmentHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.Get(id);
+			POCOEmployeeDepartmentHistory response = await this.employeeDepartmentHistoryManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmployeeDepartmentHistory response = this.employeeDepartmentHistoryManager.Get(id);
+					POCOEmployeeDepartmentHistory response = await this.employeeDepartmentHistoryManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,40 +172,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getDepartmentID/{departmentID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetDepartmentID(short departmentID)
+		public async virtual Task<IActionResult> GetDepartmentID(short departmentID)
 		{
-			List<POCOEmployeeDepartmentHistory> response = this.employeeDepartmentHistoryManager.GetDepartmentID(departmentID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOEmployeeDepartmentHistory> response = await this.employeeDepartmentHistoryManager.GetDepartmentID(departmentID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getShiftID/{shiftID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetShiftID(int shiftID)
+		public async virtual Task<IActionResult> GetShiftID(int shiftID)
 		{
-			List<POCOEmployeeDepartmentHistory> response = this.employeeDepartmentHistoryManager.GetShiftID(shiftID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOEmployeeDepartmentHistory> response = await this.employeeDepartmentHistoryManager.GetShiftID(shiftID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>42771f798625708c1c3a8357eaf997a5</Hash>
+    <Hash>1e03a7096804abaf79a19aa897d1be7f</Hash>
 </Codenesium>*/

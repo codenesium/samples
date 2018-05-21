@@ -39,22 +39,14 @@ namespace PetShippingNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOPipelineStepStepRequirement>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPipelineStepStepRequirement> response = this.pipelineStepStepRequirementManager.All(query.Offset, query.Limit);
+			List<POCOPipelineStepStepRequirement> response = await this.pipelineStepStepRequirementManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace PetShippingNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOPipelineStepStepRequirement), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPipelineStepStepRequirement response = this.pipelineStepStepRequirementManager.Get(id);
+			POCOPipelineStepStepRequirement response = await this.pipelineStepStepRequirementManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace PetShippingNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPipelineStepStepRequirement response = this.pipelineStepStepRequirementManager.Get(id);
+					POCOPipelineStepStepRequirement response = await this.pipelineStepStepRequirementManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -177,5 +171,5 @@ namespace PetShippingNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5ddf5e3972d58abe97f4d86e4237d026</Hash>
+    <Hash>3fcd9efc95cc6241ee57689f164beea3</Hash>
 </Codenesium>*/

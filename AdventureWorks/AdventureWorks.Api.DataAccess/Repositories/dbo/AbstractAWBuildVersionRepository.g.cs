@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractAWBuildVersionRepository
+	public abstract class AbstractAWBuildVersionRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOAWBuildVersion> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOAWBuildVersion Get(int systemInformationID)
+		public async virtual Task<POCOAWBuildVersion> Get(int systemInformationID)
 		{
-			return this.SearchLinqPOCO(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
+			AWBuildVersion record = await this.GetById(systemInformationID);
+
+			return this.Mapper.AWBuildVersionMapEFToPOCO(record);
 		}
 
-		public virtual POCOAWBuildVersion Create(
+		public async virtual Task<POCOAWBuildVersion> Create(
 			ApiAWBuildVersionModel model)
 		{
 			AWBuildVersion record = new AWBuildVersion();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<AWBuildVersion>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.AWBuildVersionMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int systemInformationID,
 			ApiAWBuildVersionModel model)
 		{
-			AWBuildVersion record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
+			AWBuildVersion record = await this.GetById(systemInformationID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{systemInformationID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					systemInformationID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int systemInformationID)
 		{
-			AWBuildVersion record = this.SearchLinqEF(x => x.SystemInformationID == systemInformationID).FirstOrDefault();
+			AWBuildVersion record = await this.GetById(systemInformationID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<AWBuildVersion>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOAWBuildVersion> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOAWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOAWBuildVersion> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOAWBuildVersion> SearchLinqPOCO(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOAWBuildVersion>> SearchLinqPOCO(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOAWBuildVersion> response = new List<POCOAWBuildVersion>();
-			List<AWBuildVersion> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<AWBuildVersion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.AWBuildVersionMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<AWBuildVersion> SearchLinqEF(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<AWBuildVersion>> SearchLinqEF(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
 			}
-			return this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<AWBuildVersion>();
+			return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AWBuildVersion>();
 		}
 
-		private List<AWBuildVersion> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<AWBuildVersion>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
 			}
 
-			return this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<AWBuildVersion>();
+			return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AWBuildVersion>();
+		}
+
+		private async Task<AWBuildVersion> GetById(int systemInformationID)
+		{
+			List<AWBuildVersion> records = await this.SearchLinqEF(x => x.SystemInformationID == systemInformationID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0dcbc953f8262b10e9c0c9cfd97f53eb</Hash>
+    <Hash>606ae2a924268af201d229f1c4af5713</Hash>
 </Codenesium>*/

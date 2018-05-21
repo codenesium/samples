@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOScrapReason
+	public partial class POCOScrapReason: AbstractPOCO
 	{
-		public POCOScrapReason()
+		public POCOScrapReason() : base()
 		{}
 
 		public POCOScrapReason(
@@ -57,5 +57,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e1bd942b796c9c17ac1ee899b82a263f</Hash>
+    <Hash>32f4ab9515179b2359d25d9c0eb99736</Hash>
 </Codenesium>*/

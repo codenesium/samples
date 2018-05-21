@@ -4,9 +4,9 @@ using System;
 
 namespace ESPIOTNS.Api.Contracts
 {
-	public partial class POCODevice
+	public partial class POCODevice: AbstractPOCO
 	{
-		public POCODevice()
+		public POCODevice() : base()
 		{}
 
 		public POCODevice(
@@ -57,5 +57,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>486ee0f5ef702454c79a0a09e9a8544d</Hash>
+    <Hash>f09af2ecac6aaac9d1e6810e0e42b904</Hash>
 </Codenesium>*/

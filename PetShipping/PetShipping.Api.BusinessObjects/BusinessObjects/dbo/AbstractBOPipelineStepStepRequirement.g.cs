@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPipelineStepStepRequirement
+	public abstract class AbstractBOPipelineStepStepRequirement: AbstractBOManager
 	{
 		private IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository;
 		private IApiPipelineStepStepRequirementModelValidator pipelineStepStepRequirementModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
 			IApiPipelineStepStepRequirementModelValidator pipelineStepStepRequirementModelValidator)
+			: base()
 
 		{
 			this.pipelineStepStepRequirementRepository = pipelineStepStepRequirementRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPipelineStepStepRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPipelineStepStepRequirement>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.pipelineStepStepRequirementRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPipelineStepStepRequirement Get(int id)
+		public virtual Task<POCOPipelineStepStepRequirement> Get(int id)
 		{
 			return this.pipelineStepStepRequirementRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOPipelineStepStepRequirement> response = new CreateResponse<POCOPipelineStepStepRequirement>(await this.pipelineStepStepRequirementModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPipelineStepStepRequirement record = this.pipelineStepStepRequirementRepository.Create(model);
+				POCOPipelineStepStepRequirement record = await this.pipelineStepStepRequirementRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineStepStepRequirementRepository.Update(id, model);
+				await this.pipelineStepStepRequirementRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineStepStepRequirementRepository.Delete(id);
+				await this.pipelineStepStepRequirementRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>17afc01c15f743c658b581d19395306c</Hash>
+    <Hash>1de5cbf35f70fd8160514dbf6a64bcd0</Hash>
 </Codenesium>*/

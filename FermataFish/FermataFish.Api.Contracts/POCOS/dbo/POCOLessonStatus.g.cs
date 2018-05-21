@@ -4,9 +4,9 @@ using System;
 
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class POCOLessonStatus
+	public partial class POCOLessonStatus: AbstractPOCO
 	{
-		public POCOLessonStatus()
+		public POCOLessonStatus() : base()
 		{}
 
 		public POCOLessonStatus(
@@ -60,5 +60,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7cb87649ed778d53e37185ae636e188a</Hash>
+    <Hash>0830e346f2d8cc1b01f72cfb5a9e0ed3</Hash>
 </Codenesium>*/

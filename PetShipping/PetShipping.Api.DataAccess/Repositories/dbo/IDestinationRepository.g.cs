@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.DataAccess
 {
 	public interface IDestinationRepository
 	{
-		POCODestination Create(ApiDestinationModel model);
+		Task<POCODestination> Create(ApiDestinationModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiDestinationModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCODestination Get(int id);
+		Task<POCODestination> Get(int id);
 
-		List<POCODestination> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCODestination>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>c4656d94b11f85616ac6086fac30e291</Hash>
+    <Hash>2a355324ae7f93856376fa36d1556a95</Hash>
 </Codenesium>*/

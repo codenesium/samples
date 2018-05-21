@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductPhotoRepository
+	public abstract class AbstractProductPhotoRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProductPhoto> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProductPhoto Get(int productPhotoID)
+		public async virtual Task<POCOProductPhoto> Get(int productPhotoID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductPhotoID == productPhotoID).FirstOrDefault();
+			ProductPhoto record = await this.GetById(productPhotoID);
+
+			return this.Mapper.ProductPhotoMapEFToPOCO(record);
 		}
 
-		public virtual POCOProductPhoto Create(
+		public async virtual Task<POCOProductPhoto> Create(
 			ApiProductPhotoModel model)
 		{
 			ProductPhoto record = new ProductPhoto();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<ProductPhoto>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductPhotoMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productPhotoID,
 			ApiProductPhotoModel model)
 		{
-			ProductPhoto record = this.SearchLinqEF(x => x.ProductPhotoID == productPhotoID).FirstOrDefault();
+			ProductPhoto record = await this.GetById(productPhotoID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productPhotoID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productPhotoID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productPhotoID)
 		{
-			ProductPhoto record = this.SearchLinqEF(x => x.ProductPhotoID == productPhotoID).FirstOrDefault();
+			ProductPhoto record = await this.GetById(productPhotoID);
 
 			if (record == null)
 			{
@@ -82,44 +88,54 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<ProductPhoto>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		protected List<POCOProductPhoto> Where(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOProductPhoto>> Where(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOProductPhoto> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOProductPhoto> SearchLinqPOCO(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProductPhoto>> SearchLinqPOCO(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProductPhoto> response = new List<POCOProductPhoto>();
-			List<ProductPhoto> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<ProductPhoto> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductPhotoMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<ProductPhoto> SearchLinqEF(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductPhoto>> SearchLinqEF(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
 			}
-			return this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductPhoto>();
+			return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductPhoto>();
 		}
 
-		private List<ProductPhoto> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<ProductPhoto>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
 			}
 
-			return this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<ProductPhoto>();
+			return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductPhoto>();
+		}
+
+		private async Task<ProductPhoto> GetById(int productPhotoID)
+		{
+			List<ProductPhoto> records = await this.SearchLinqEF(x => x.ProductPhotoID == productPhotoID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>92829e8a472363500ed68005ce730815</Hash>
+    <Hash>c54da876a68c29e58792cd48f59b2e42</Hash>
 </Codenesium>*/

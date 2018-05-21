@@ -17,15 +17,15 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOLink Get(int id);
+		Task<POCOLink> Get(int id);
 
-		List<POCOLink> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOLink>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOLink> ChainId(int chainId);
-		POCOLink ExternalId(Guid externalId);
+		Task<List<POCOLink>> ChainId(int chainId);
+		Task<POCOLink> ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ddec293675517c3bb7b30e8f59ade3e</Hash>
+    <Hash>890a44a47c8ab993e58afd96a3a5fdf9</Hash>
 </Codenesium>*/

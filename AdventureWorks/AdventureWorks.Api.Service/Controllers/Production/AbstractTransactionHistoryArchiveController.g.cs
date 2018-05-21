@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOTransactionHistoryArchive> response = this.transactionHistoryArchiveManager.All(query.Offset, query.Limit);
+			List<POCOTransactionHistoryArchive> response = await this.transactionHistoryArchiveManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOTransactionHistoryArchive), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.Get(id);
+			POCOTransactionHistoryArchive response = await this.transactionHistoryArchiveManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTransactionHistoryArchive response = this.transactionHistoryArchiveManager.Get(id);
+					POCOTransactionHistoryArchive response = await this.transactionHistoryArchiveManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,40 +172,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetProductID(int productID)
+		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOTransactionHistoryArchive> response = this.transactionHistoryArchiveManager.GetProductID(productID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOTransactionHistoryArchive> response = await this.transactionHistoryArchiveManager.GetProductID(productID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
+		public async virtual Task<IActionResult> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
 		{
-			List<POCOTransactionHistoryArchive> response = this.transactionHistoryArchiveManager.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOTransactionHistoryArchive> response = await this.transactionHistoryArchiveManager.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67ae7188d3c69a4f79d4970ca72831e2</Hash>
+    <Hash>509044989d75042c890e23264cc9ed8d</Hash>
 </Codenesium>*/

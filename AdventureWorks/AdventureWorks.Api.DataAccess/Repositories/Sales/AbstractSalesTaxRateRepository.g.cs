@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractSalesTaxRateRepository
+	public abstract class AbstractSalesTaxRateRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOSalesTaxRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOSalesTaxRate Get(int salesTaxRateID)
+		public async virtual Task<POCOSalesTaxRate> Get(int salesTaxRateID)
 		{
-			return this.SearchLinqPOCO(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
+			SalesTaxRate record = await this.GetById(salesTaxRateID);
+
+			return this.Mapper.SalesTaxRateMapEFToPOCO(record);
 		}
 
-		public virtual POCOSalesTaxRate Create(
+		public async virtual Task<POCOSalesTaxRate> Create(
 			ApiSalesTaxRateModel model)
 		{
 			SalesTaxRate record = new SalesTaxRate();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<SalesTaxRate>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.SalesTaxRateMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int salesTaxRateID,
 			ApiSalesTaxRateModel model)
 		{
-			SalesTaxRate record = this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
+			SalesTaxRate record = await this.GetById(salesTaxRateID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{salesTaxRateID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					salesTaxRateID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int salesTaxRateID)
 		{
-			SalesTaxRate record = this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID).FirstOrDefault();
+			SalesTaxRate record = await this.GetById(salesTaxRateID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<SalesTaxRate>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOSalesTaxRate GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
+		public async Task<POCOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
 		{
-			return this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOSalesTaxRate> Where(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOSalesTaxRate>> Where(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOSalesTaxRate> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOSalesTaxRate> SearchLinqPOCO(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOSalesTaxRate>> SearchLinqPOCO(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOSalesTaxRate> response = new List<POCOSalesTaxRate>();
-			List<SalesTaxRate> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<SalesTaxRate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.SalesTaxRateMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<SalesTaxRate> SearchLinqEF(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SalesTaxRate>> SearchLinqEF(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SalesTaxRate.SalesTaxRateID)} ASC";
 			}
-			return this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SalesTaxRate>();
+			return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesTaxRate>();
 		}
 
-		private List<SalesTaxRate> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<SalesTaxRate>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(SalesTaxRate.SalesTaxRateID)} ASC";
 			}
 
-			return this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<SalesTaxRate>();
+			return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesTaxRate>();
+		}
+
+		private async Task<SalesTaxRate> GetById(int salesTaxRateID)
+		{
+			List<SalesTaxRate> records = await this.SearchLinqEF(x => x.SalesTaxRateID == salesTaxRateID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>10599c3824a5f3e9147a1a8781b6e9cc</Hash>
+    <Hash>1116293dbc0bca8c9258fd44ca031c25</Hash>
 </Codenesium>*/

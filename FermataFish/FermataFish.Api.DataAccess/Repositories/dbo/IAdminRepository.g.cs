@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
 	public interface IAdminRepository
 	{
-		POCOAdmin Create(ApiAdminModel model);
+		Task<POCOAdmin> Create(ApiAdminModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiAdminModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOAdmin Get(int id);
+		Task<POCOAdmin> Get(int id);
 
-		List<POCOAdmin> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOAdmin>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ce4552b15b10d6ef40d7eb9fbd9f66f</Hash>
+    <Hash>94062059678eb44d8f21091589ee53fb</Hash>
 </Codenesium>*/

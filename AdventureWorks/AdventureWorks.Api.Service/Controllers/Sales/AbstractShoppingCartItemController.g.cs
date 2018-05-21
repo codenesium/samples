@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOShoppingCartItem>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOShoppingCartItem> response = this.shoppingCartItemManager.All(query.Offset, query.Limit);
+			List<POCOShoppingCartItem> response = await this.shoppingCartItemManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOShoppingCartItem), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOShoppingCartItem response = this.shoppingCartItemManager.Get(id);
+			POCOShoppingCartItem response = await this.shoppingCartItemManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOShoppingCartItem response = this.shoppingCartItemManager.Get(id);
+					POCOShoppingCartItem response = await this.shoppingCartItemManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,22 +172,15 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getShoppingCartIDProductID/{shoppingCartID}/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOShoppingCartItem>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetShoppingCartIDProductID(string shoppingCartID,int productID)
+		public async virtual Task<IActionResult> GetShoppingCartIDProductID(string shoppingCartID,int productID)
 		{
-			List<POCOShoppingCartItem> response = this.shoppingCartItemManager.GetShoppingCartIDProductID(shoppingCartID,productID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOShoppingCartItem> response = await this.shoppingCartItemManager.GetShoppingCartIDProductID(shoppingCartID,productID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d3824f5be84b667a0e8bbc993134e45</Hash>
+    <Hash>e515a5514ca5d0ffa84700394c5bc425</Hash>
 </Codenesium>*/

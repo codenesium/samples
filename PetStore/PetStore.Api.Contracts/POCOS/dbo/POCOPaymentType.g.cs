@@ -4,9 +4,9 @@ using System;
 
 namespace PetStoreNS.Api.Contracts
 {
-	public partial class POCOPaymentType
+	public partial class POCOPaymentType: AbstractPOCO
 	{
-		public POCOPaymentType()
+		public POCOPaymentType() : base()
 		{}
 
 		public POCOPaymentType(
@@ -45,5 +45,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>94dfb235f6e9d00bac5cbfe70b2a9444</Hash>
+    <Hash>cd0e5338e183081a66a0f5991e1c2f99</Hash>
 </Codenesium>*/

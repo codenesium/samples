@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractBillOfMaterialsRepository
+	public abstract class AbstractBillOfMaterialsRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOBillOfMaterials> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOBillOfMaterials Get(int billOfMaterialsID)
+		public async virtual Task<POCOBillOfMaterials> Get(int billOfMaterialsID)
 		{
-			return this.SearchLinqPOCO(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			BillOfMaterials record = await this.GetById(billOfMaterialsID);
+
+			return this.Mapper.BillOfMaterialsMapEFToPOCO(record);
 		}
 
-		public virtual POCOBillOfMaterials Create(
+		public async virtual Task<POCOBillOfMaterials> Create(
 			ApiBillOfMaterialsModel model)
 		{
 			BillOfMaterials record = new BillOfMaterials();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<BillOfMaterials>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.BillOfMaterialsMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int billOfMaterialsID,
 			ApiBillOfMaterialsModel model)
 		{
-			BillOfMaterials record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			BillOfMaterials record = await this.GetById(billOfMaterialsID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{billOfMaterialsID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					billOfMaterialsID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int billOfMaterialsID)
 		{
-			BillOfMaterials record = this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID).FirstOrDefault();
+			BillOfMaterials record = await this.GetById(billOfMaterialsID);
 
 			if (record == null)
 			{
@@ -82,54 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<BillOfMaterials>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOBillOfMaterials GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
+		public async Task<POCOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
 		{
-			return this.SearchLinqPOCO(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<List<POCOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode)
+		{
+			var records = await this.SearchLinqPOCO(x => x.UnitMeasureCode == unitMeasureCode);
+
+			return records;
 		}
 
-		public List<POCOBillOfMaterials> GetUnitMeasureCode(string unitMeasureCode)
+		protected async Task<List<POCOBillOfMaterials>> Where(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.UnitMeasureCode == unitMeasureCode);
+			List<POCOBillOfMaterials> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCOBillOfMaterials> Where(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOBillOfMaterials> SearchLinqPOCO(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOBillOfMaterials>> SearchLinqPOCO(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOBillOfMaterials> response = new List<POCOBillOfMaterials>();
-			List<BillOfMaterials> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<BillOfMaterials> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.BillOfMaterialsMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<BillOfMaterials> SearchLinqEF(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<BillOfMaterials>> SearchLinqEF(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(BillOfMaterials.BillOfMaterialsID)} ASC";
 			}
-			return this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<BillOfMaterials>();
+			return await this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<BillOfMaterials>();
 		}
 
-		private List<BillOfMaterials> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<BillOfMaterials>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(BillOfMaterials.BillOfMaterialsID)} ASC";
 			}
 
-			return this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<BillOfMaterials>();
+			return await this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<BillOfMaterials>();
+		}
+
+		private async Task<BillOfMaterials> GetById(int billOfMaterialsID)
+		{
+			List<BillOfMaterials> records = await this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3bec8a286e599e98a4b9bb26fcad0c30</Hash>
+    <Hash>1d7b926e27a546c974af70d2908b1fd1</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSpecialOfferProduct
+	public abstract class AbstractBOSpecialOfferProduct: AbstractBOManager
 	{
 		private ISpecialOfferProductRepository specialOfferProductRepository;
 		private IApiSpecialOfferProductModelValidator specialOfferProductModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISpecialOfferProductRepository specialOfferProductRepository,
 			IApiSpecialOfferProductModelValidator specialOfferProductModelValidator)
+			: base()
 
 		{
 			this.specialOfferProductRepository = specialOfferProductRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSpecialOfferProduct> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSpecialOfferProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.specialOfferProductRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSpecialOfferProduct Get(int specialOfferID)
+		public virtual Task<POCOSpecialOfferProduct> Get(int specialOfferID)
 		{
 			return this.specialOfferProductRepository.Get(specialOfferID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSpecialOfferProduct> response = new CreateResponse<POCOSpecialOfferProduct>(await this.specialOfferProductModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpecialOfferProduct record = this.specialOfferProductRepository.Create(model);
+				POCOSpecialOfferProduct record = await this.specialOfferProductRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.specialOfferProductRepository.Update(specialOfferID, model);
+				await this.specialOfferProductRepository.Update(specialOfferID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.specialOfferProductRepository.Delete(specialOfferID);
+				await this.specialOfferProductRepository.Delete(specialOfferID);
 			}
 			return response;
 		}
 
-		public List<POCOSpecialOfferProduct> GetProductID(int productID)
+		public async Task<List<POCOSpecialOfferProduct>> GetProductID(int productID)
 		{
-			return this.specialOfferProductRepository.GetProductID(productID);
+			return await this.specialOfferProductRepository.GetProductID(productID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc4a1c35f93ecfe74dc9661af971db89</Hash>
+    <Hash>36b9af1252648f44f652459fae284ce3</Hash>
 </Codenesium>*/

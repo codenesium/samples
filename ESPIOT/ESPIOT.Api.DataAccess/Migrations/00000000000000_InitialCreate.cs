@@ -22,17 +22,17 @@ EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[Device](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[name] [varchar]  (90)  NOT NULL,
-[publicId] [uniqueidentifier]    NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (90)   NOT NULL,
+[publicId] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[DeviceAction](
-[id] [int]   IDENTITY(1,1) NOT NULL,
-[deviceId] [int]    NOT NULL,
-[name] [varchar]  (90)  NOT NULL,
-[value] [varchar]  (4000)  NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[deviceId] [int]     NOT NULL,
+[name] [varchar]  (90)   NOT NULL,
+[value] [varchar]  (4000)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -53,6 +53,7 @@ ADD CONSTRAINT[PK_Action] PRIMARY KEY CLUSTERED
 id ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+
 
 ALTER TABLE[dbo].[DeviceAction]  WITH CHECK ADD  CONSTRAINT[FK_DeviceAction_Device] FOREIGN KEY([deviceId])
 REFERENCES[dbo].[Device]([id])

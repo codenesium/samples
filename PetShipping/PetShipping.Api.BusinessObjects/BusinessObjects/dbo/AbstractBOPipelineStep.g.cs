@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPipelineStep
+	public abstract class AbstractBOPipelineStep: AbstractBOManager
 	{
 		private IPipelineStepRepository pipelineStepRepository;
 		private IApiPipelineStepModelValidator pipelineStepModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IPipelineStepRepository pipelineStepRepository,
 			IApiPipelineStepModelValidator pipelineStepModelValidator)
+			: base()
 
 		{
 			this.pipelineStepRepository = pipelineStepRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPipelineStep> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPipelineStep>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.pipelineStepRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPipelineStep Get(int id)
+		public virtual Task<POCOPipelineStep> Get(int id)
 		{
 			return this.pipelineStepRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOPipelineStep> response = new CreateResponse<POCOPipelineStep>(await this.pipelineStepModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPipelineStep record = this.pipelineStepRepository.Create(model);
+				POCOPipelineStep record = await this.pipelineStepRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineStepRepository.Update(id, model);
+				await this.pipelineStepRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.pipelineStepRepository.Delete(id);
+				await this.pipelineStepRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>432f690fda92d3ded723885730f763b2</Hash>
+    <Hash>4abcada7b895c1dcf7912544f5d42798</Hash>
 </Codenesium>*/

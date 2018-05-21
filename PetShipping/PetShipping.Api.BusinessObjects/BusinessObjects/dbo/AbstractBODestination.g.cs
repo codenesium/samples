@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBODestination
+	public abstract class AbstractBODestination: AbstractBOManager
 	{
 		private IDestinationRepository destinationRepository;
 		private IApiDestinationModelValidator destinationModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IDestinationRepository destinationRepository,
 			IApiDestinationModelValidator destinationModelValidator)
+			: base()
 
 		{
 			this.destinationRepository = destinationRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCODestination> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODestination>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.destinationRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCODestination Get(int id)
+		public virtual Task<POCODestination> Get(int id)
 		{
 			return this.destinationRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCODestination> response = new CreateResponse<POCODestination>(await this.destinationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODestination record = this.destinationRepository.Create(model);
+				POCODestination record = await this.destinationRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.destinationRepository.Update(id, model);
+				await this.destinationRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.destinationRepository.Delete(id);
+				await this.destinationRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5c539b4f86529541a774d4825db3c96e</Hash>
+    <Hash>28b39dce9e6c5694aa83f178779f3ae1</Hash>
 </Codenesium>*/

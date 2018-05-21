@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPet
+	public abstract class AbstractBOPet: AbstractBOManager
 	{
 		private IPetRepository petRepository;
 		private IApiPetModelValidator petModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			IPetRepository petRepository,
 			IApiPetModelValidator petModelValidator)
+			: base()
 
 		{
 			this.petRepository = petRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPet> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPet>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.petRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPet Get(int id)
+		public virtual Task<POCOPet> Get(int id)
 		{
 			return this.petRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOPet> response = new CreateResponse<POCOPet>(await this.petModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPet record = this.petRepository.Create(model);
+				POCOPet record = await this.petRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.petRepository.Update(id, model);
+				await this.petRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.petRepository.Delete(id);
+				await this.petRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>104cf065a29c244d2bcf8d03f5366d16</Hash>
+    <Hash>97132f3515a68d4136703e9f33554572</Hash>
 </Codenesium>*/

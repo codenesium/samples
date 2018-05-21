@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOAddressType
+	public abstract class AbstractBOAddressType: AbstractBOManager
 	{
 		private IAddressTypeRepository addressTypeRepository;
 		private IApiAddressTypeModelValidator addressTypeModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IAddressTypeRepository addressTypeRepository,
 			IApiAddressTypeModelValidator addressTypeModelValidator)
+			: base()
 
 		{
 			this.addressTypeRepository = addressTypeRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOAddressType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.addressTypeRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOAddressType Get(int addressTypeID)
+		public virtual Task<POCOAddressType> Get(int addressTypeID)
 		{
 			return this.addressTypeRepository.Get(addressTypeID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOAddressType> response = new CreateResponse<POCOAddressType>(await this.addressTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAddressType record = this.addressTypeRepository.Create(model);
+				POCOAddressType record = await this.addressTypeRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.addressTypeRepository.Update(addressTypeID, model);
+				await this.addressTypeRepository.Update(addressTypeID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.addressTypeRepository.Delete(addressTypeID);
+				await this.addressTypeRepository.Delete(addressTypeID);
 			}
 			return response;
 		}
 
-		public POCOAddressType GetName(string name)
+		public async Task<POCOAddressType> GetName(string name)
 		{
-			return this.addressTypeRepository.GetName(name);
+			return await this.addressTypeRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>abd56e79d0d2e50571adfcba1a08cfd5</Hash>
+    <Hash>3abdded2d015db5aa171bde66be3df44</Hash>
 </Codenesium>*/

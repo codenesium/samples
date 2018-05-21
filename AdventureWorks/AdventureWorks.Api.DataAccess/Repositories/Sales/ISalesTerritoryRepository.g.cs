@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesTerritoryRepository
 	{
-		POCOSalesTerritory Create(ApiSalesTerritoryModel model);
+		Task<POCOSalesTerritory> Create(ApiSalesTerritoryModel model);
 
-		void Update(int territoryID,
+		Task Update(int territoryID,
 		            ApiSalesTerritoryModel model);
 
-		void Delete(int territoryID);
+		Task Delete(int territoryID);
 
-		POCOSalesTerritory Get(int territoryID);
+		Task<POCOSalesTerritory> Get(int territoryID);
 
-		List<POCOSalesTerritory> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSalesTerritory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOSalesTerritory GetName(string name);
+		Task<POCOSalesTerritory> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>10f062d5a6862df7fdb693fc3c173590</Hash>
+    <Hash>7b5c1417df745d54b1355a8e6f27cfa8</Hash>
 </Codenesium>*/

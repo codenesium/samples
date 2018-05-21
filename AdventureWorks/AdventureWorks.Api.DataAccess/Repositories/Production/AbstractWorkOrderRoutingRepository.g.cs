@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractWorkOrderRoutingRepository
+	public abstract class AbstractWorkOrderRoutingRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOWorkOrderRouting> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOWorkOrderRouting Get(int workOrderID)
+		public async virtual Task<POCOWorkOrderRouting> Get(int workOrderID)
 		{
-			return this.SearchLinqPOCO(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			WorkOrderRouting record = await this.GetById(workOrderID);
+
+			return this.Mapper.WorkOrderRoutingMapEFToPOCO(record);
 		}
 
-		public virtual POCOWorkOrderRouting Create(
+		public async virtual Task<POCOWorkOrderRouting> Create(
 			ApiWorkOrderRoutingModel model)
 		{
 			WorkOrderRouting record = new WorkOrderRouting();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<WorkOrderRouting>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.WorkOrderRoutingMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int workOrderID,
 			ApiWorkOrderRoutingModel model)
 		{
-			WorkOrderRouting record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			WorkOrderRouting record = await this.GetById(workOrderID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{workOrderID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					workOrderID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int workOrderID)
 		{
-			WorkOrderRouting record = this.SearchLinqEF(x => x.WorkOrderID == workOrderID).FirstOrDefault();
+			WorkOrderRouting record = await this.GetById(workOrderID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<WorkOrderRouting>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOWorkOrderRouting> GetProductID(int productID)
+		public async Task<List<POCOWorkOrderRouting>> GetProductID(int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductID == productID);
+			var records = await this.SearchLinqPOCO(x => x.ProductID == productID);
+
+			return records;
 		}
 
-		protected List<POCOWorkOrderRouting> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOWorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOWorkOrderRouting> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOWorkOrderRouting> SearchLinqPOCO(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOWorkOrderRouting>> SearchLinqPOCO(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOWorkOrderRouting> response = new List<POCOWorkOrderRouting>();
-			List<WorkOrderRouting> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<WorkOrderRouting> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.WorkOrderRoutingMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<WorkOrderRouting> SearchLinqEF(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<WorkOrderRouting>> SearchLinqEF(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(WorkOrderRouting.WorkOrderID)} ASC";
 			}
-			return this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<WorkOrderRouting>();
+			return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<WorkOrderRouting>();
 		}
 
-		private List<WorkOrderRouting> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<WorkOrderRouting>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(WorkOrderRouting.WorkOrderID)} ASC";
 			}
 
-			return this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<WorkOrderRouting>();
+			return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<WorkOrderRouting>();
+		}
+
+		private async Task<WorkOrderRouting> GetById(int workOrderID)
+		{
+			List<WorkOrderRouting> records = await this.SearchLinqEF(x => x.WorkOrderID == workOrderID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3185615642118eb6d2280ae80fbd6ac</Hash>
+    <Hash>95dd1898ad870bee475d182b66501678</Hash>
 </Codenesium>*/

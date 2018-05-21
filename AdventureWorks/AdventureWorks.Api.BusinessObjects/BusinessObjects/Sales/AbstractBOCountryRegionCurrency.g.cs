@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCountryRegionCurrency
+	public abstract class AbstractBOCountryRegionCurrency: AbstractBOManager
 	{
 		private ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
 		private IApiCountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
 			IApiCountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator)
+			: base()
 
 		{
 			this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCountryRegionCurrency> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.countryRegionCurrencyRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCountryRegionCurrency Get(string countryRegionCode)
+		public virtual Task<POCOCountryRegionCurrency> Get(string countryRegionCode)
 		{
 			return this.countryRegionCurrencyRepository.Get(countryRegionCode);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOCountryRegionCurrency> response = new CreateResponse<POCOCountryRegionCurrency>(await this.countryRegionCurrencyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCountryRegionCurrency record = this.countryRegionCurrencyRepository.Create(model);
+				POCOCountryRegionCurrency record = await this.countryRegionCurrencyRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.countryRegionCurrencyRepository.Update(countryRegionCode, model);
+				await this.countryRegionCurrencyRepository.Update(countryRegionCode, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.countryRegionCurrencyRepository.Delete(countryRegionCode);
+				await this.countryRegionCurrencyRepository.Delete(countryRegionCode);
 			}
 			return response;
 		}
 
-		public List<POCOCountryRegionCurrency> GetCurrencyCode(string currencyCode)
+		public async Task<List<POCOCountryRegionCurrency>> GetCurrencyCode(string currencyCode)
 		{
-			return this.countryRegionCurrencyRepository.GetCurrencyCode(currencyCode);
+			return await this.countryRegionCurrencyRepository.GetCurrencyCode(currencyCode);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5450d932f0314adecbb6225c96f31b10</Hash>
+    <Hash>cad78d6eded25492bfbf7aead857c510</Hash>
 </Codenesium>*/

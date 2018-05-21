@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOAdmin
+	public abstract class AbstractBOAdmin: AbstractBOManager
 	{
 		private IAdminRepository adminRepository;
 		private IApiAdminModelValidator adminModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			IAdminRepository adminRepository,
 			IApiAdminModelValidator adminModelValidator)
+			: base()
 
 		{
 			this.adminRepository = adminRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOAdmin> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAdmin>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.adminRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOAdmin Get(int id)
+		public virtual Task<POCOAdmin> Get(int id)
 		{
 			return this.adminRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOAdmin> response = new CreateResponse<POCOAdmin>(await this.adminModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAdmin record = this.adminRepository.Create(model);
+				POCOAdmin record = await this.adminRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.adminRepository.Update(id, model);
+				await this.adminRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.adminRepository.Delete(id);
+				await this.adminRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8668d0db61418655c462f8cc5487c313</Hash>
+    <Hash>a8b3a90c9d0ed0ce2cd4b6dcbb4b45f3</Hash>
 </Codenesium>*/

@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPasswordModel
+	public partial class ApiPasswordModel: AbstractModel
 	{
-		public ApiPasswordModel()
+		public ApiPasswordModel() : base()
 		{}
 
 		public ApiPasswordModel(
@@ -89,5 +89,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>076d4ce5c92731faee81509a0c28c51e</Hash>
+    <Hash>b72417ad750b8fa9b0625c646357aa83</Hash>
 </Codenesium>*/

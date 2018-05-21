@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductListPriceHistory
+	public abstract class AbstractBOProductListPriceHistory: AbstractBOManager
 	{
 		private IProductListPriceHistoryRepository productListPriceHistoryRepository;
 		private IApiProductListPriceHistoryModelValidator productListPriceHistoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductListPriceHistoryRepository productListPriceHistoryRepository,
 			IApiProductListPriceHistoryModelValidator productListPriceHistoryModelValidator)
+			: base()
 
 		{
 			this.productListPriceHistoryRepository = productListPriceHistoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductListPriceHistory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductListPriceHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productListPriceHistoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductListPriceHistory Get(int productID)
+		public virtual Task<POCOProductListPriceHistory> Get(int productID)
 		{
 			return this.productListPriceHistoryRepository.Get(productID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductListPriceHistory> response = new CreateResponse<POCOProductListPriceHistory>(await this.productListPriceHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductListPriceHistory record = this.productListPriceHistoryRepository.Create(model);
+				POCOProductListPriceHistory record = await this.productListPriceHistoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productListPriceHistoryRepository.Update(productID, model);
+				await this.productListPriceHistoryRepository.Update(productID, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productListPriceHistoryRepository.Delete(productID);
+				await this.productListPriceHistoryRepository.Delete(productID);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b5aa86ea47f04726f642b2c5d4bd0976</Hash>
+    <Hash>9318faa7364495311f6d109c9ee7b891</Hash>
 </Codenesium>*/

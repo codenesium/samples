@@ -17,14 +17,14 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOChain Get(int id);
+		Task<POCOChain> Get(int id);
 
-		List<POCOChain> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOChain ExternalId(Guid externalId);
+		Task<POCOChain> ExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7a1529c111dd8d38f4af0bfe378f9f74</Hash>
+    <Hash>0265568a3dd09844f820feb7b4db53a7</Hash>
 </Codenesium>*/

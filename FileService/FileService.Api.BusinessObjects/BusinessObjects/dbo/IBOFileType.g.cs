@@ -17,12 +17,12 @@ namespace FileServiceNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOFileType Get(int id);
+		Task<POCOFileType> Get(int id);
 
-		List<POCOFileType> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOFileType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbdf21ba88faf91a80a6f0d8ec16bf49</Hash>
+    <Hash>9721c32a273ff75b626871cf6e1eff60</Hash>
 </Codenesium>*/

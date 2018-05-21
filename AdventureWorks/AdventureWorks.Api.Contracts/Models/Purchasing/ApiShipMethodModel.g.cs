@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiShipMethodModel
+	public partial class ApiShipMethodModel: AbstractModel
 	{
-		public ApiShipMethodModel()
+		public ApiShipMethodModel() : base()
 		{}
 
 		public ApiShipMethodModel(
@@ -107,5 +107,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>248e4c1513017534eea470cd1ad7e40f</Hash>
+    <Hash>cef47f8aec104a8cd700b22ed089eaf3</Hash>
 </Codenesium>*/

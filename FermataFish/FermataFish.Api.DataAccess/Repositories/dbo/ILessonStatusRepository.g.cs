@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.DataAccess
 {
 	public interface ILessonStatusRepository
 	{
-		POCOLessonStatus Create(ApiLessonStatusModel model);
+		Task<POCOLessonStatus> Create(ApiLessonStatusModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiLessonStatusModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOLessonStatus Get(int id);
+		Task<POCOLessonStatus> Get(int id);
 
-		List<POCOLessonStatus> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOLessonStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>438ab986957f0ce6cd77e662633ef00f</Hash>
+    <Hash>f00e743ff01ffa2ea6679f9b64862c9f</Hash>
 </Codenesium>*/

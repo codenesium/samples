@@ -12,7 +12,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOPen
+	public abstract class AbstractBOPen: AbstractBOManager
 	{
 		private IPenRepository penRepository;
 		private IApiPenModelValidator penModelValidator;
@@ -22,6 +22,7 @@ namespace PetStoreNS.Api.BusinessObjects
 			ILogger logger,
 			IPenRepository penRepository,
 			IApiPenModelValidator penModelValidator)
+			: base()
 
 		{
 			this.penRepository = penRepository;
@@ -29,12 +30,12 @@ namespace PetStoreNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOPen> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOPen>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.penRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOPen Get(int id)
+		public virtual Task<POCOPen> Get(int id)
 		{
 			return this.penRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetStoreNS.Api.BusinessObjects
 			CreateResponse<POCOPen> response = new CreateResponse<POCOPen>(await this.penModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPen record = this.penRepository.Create(model);
+				POCOPen record = await this.penRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.penRepository.Update(id, model);
+				await this.penRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetStoreNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.penRepository.Delete(id);
+				await this.penRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b83dcff8edd0b4b577148265177e97bf</Hash>
+    <Hash>45068a725fabfe62e2b060c73221f3a6</Hash>
 </Codenesium>*/

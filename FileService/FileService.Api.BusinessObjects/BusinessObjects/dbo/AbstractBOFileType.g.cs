@@ -12,7 +12,7 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOFileType
+	public abstract class AbstractBOFileType: AbstractBOManager
 	{
 		private IFileTypeRepository fileTypeRepository;
 		private IApiFileTypeModelValidator fileTypeModelValidator;
@@ -22,6 +22,7 @@ namespace FileServiceNS.Api.BusinessObjects
 			ILogger logger,
 			IFileTypeRepository fileTypeRepository,
 			IApiFileTypeModelValidator fileTypeModelValidator)
+			: base()
 
 		{
 			this.fileTypeRepository = fileTypeRepository;
@@ -29,12 +30,12 @@ namespace FileServiceNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOFileType> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOFileType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.fileTypeRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOFileType Get(int id)
+		public virtual Task<POCOFileType> Get(int id)
 		{
 			return this.fileTypeRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FileServiceNS.Api.BusinessObjects
 			CreateResponse<POCOFileType> response = new CreateResponse<POCOFileType>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOFileType record = this.fileTypeRepository.Create(model);
+				POCOFileType record = await this.fileTypeRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.fileTypeRepository.Update(id, model);
+				await this.fileTypeRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.fileTypeRepository.Delete(id);
+				await this.fileTypeRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>860fadddcdd4da6f240601b585cf738f</Hash>
+    <Hash>f3e82a72439bd29aec7e26bdfef920ad</Hash>
 </Codenesium>*/

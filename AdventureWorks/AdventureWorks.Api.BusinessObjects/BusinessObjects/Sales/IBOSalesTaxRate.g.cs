@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int salesTaxRateID);
 
-		POCOSalesTaxRate Get(int salesTaxRateID);
+		Task<POCOSalesTaxRate> Get(int salesTaxRateID);
 
-		List<POCOSalesTaxRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOSalesTaxRate GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
+		Task<POCOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6050291b99fd809c741ffe658afe056f</Hash>
+    <Hash>3768de128026bbb1e5fa6a75aead6e29</Hash>
 </Codenesium>*/

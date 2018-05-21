@@ -7,10 +7,10 @@ namespace ESPIOTNS.Api.Contracts
 {
 	public class ReferenceEntity<T>
 	{
-		[JsonProperty(PropertyName = "V")]
+		[JsonProperty(PropertyName = "Value")]
 		public T Value { get; set; }
 
-		[JsonProperty(PropertyName = "O")]
+		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
 
 		public ReferenceEntity(T value, string referenceObjectName)
@@ -83,5 +83,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8c3f4125e1e63b0181c968ad43f35e8e</Hash>
+    <Hash>c678e8fdcb585723b4b87b087b410ea3</Hash>
 </Codenesium>*/

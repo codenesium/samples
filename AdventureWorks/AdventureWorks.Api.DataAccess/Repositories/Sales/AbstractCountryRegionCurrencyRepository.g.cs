@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCountryRegionCurrencyRepository
+	public abstract class AbstractCountryRegionCurrencyRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOCountryRegionCurrency> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOCountryRegionCurrency Get(string countryRegionCode)
+		public async virtual Task<POCOCountryRegionCurrency> Get(string countryRegionCode)
 		{
-			return this.SearchLinqPOCO(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			CountryRegionCurrency record = await this.GetById(countryRegionCode);
+
+			return this.Mapper.CountryRegionCurrencyMapEFToPOCO(record);
 		}
 
-		public virtual POCOCountryRegionCurrency Create(
+		public async virtual Task<POCOCountryRegionCurrency> Create(
 			ApiCountryRegionCurrencyModel model)
 		{
 			CountryRegionCurrency record = new CountryRegionCurrency();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<CountryRegionCurrency>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.CountryRegionCurrencyMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			string countryRegionCode,
 			ApiCountryRegionCurrencyModel model)
 		{
-			CountryRegionCurrency record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			CountryRegionCurrency record = await this.GetById(countryRegionCode);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{countryRegionCode}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					countryRegionCode,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			string countryRegionCode)
 		{
-			CountryRegionCurrency record = this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode).FirstOrDefault();
+			CountryRegionCurrency record = await this.GetById(countryRegionCode);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<CountryRegionCurrency>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public List<POCOCountryRegionCurrency> GetCurrencyCode(string currencyCode)
+		public async Task<List<POCOCountryRegionCurrency>> GetCurrencyCode(string currencyCode)
 		{
-			return this.SearchLinqPOCO(x => x.CurrencyCode == currencyCode);
+			var records = await this.SearchLinqPOCO(x => x.CurrencyCode == currencyCode);
+
+			return records;
 		}
 
-		protected List<POCOCountryRegionCurrency> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOCountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOCountryRegionCurrency> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOCountryRegionCurrency> SearchLinqPOCO(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOCountryRegionCurrency>> SearchLinqPOCO(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOCountryRegionCurrency> response = new List<POCOCountryRegionCurrency>();
-			List<CountryRegionCurrency> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<CountryRegionCurrency> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.CountryRegionCurrencyMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<CountryRegionCurrency> SearchLinqEF(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<CountryRegionCurrency>> SearchLinqEF(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(CountryRegionCurrency.CountryRegionCode)} ASC";
 			}
-			return this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CountryRegionCurrency>();
+			return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegionCurrency>();
 		}
 
-		private List<CountryRegionCurrency> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<CountryRegionCurrency>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(CountryRegionCurrency.CountryRegionCode)} ASC";
 			}
 
-			return this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<CountryRegionCurrency>();
+			return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegionCurrency>();
+		}
+
+		private async Task<CountryRegionCurrency> GetById(string countryRegionCode)
+		{
+			List<CountryRegionCurrency> records = await this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>871fc703f1dc4acae66b265f0ea93484</Hash>
+    <Hash>095261300d54089e5d0b277ec11c0f68</Hash>
 </Codenesium>*/

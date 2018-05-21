@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void EndTimeRules()
 		{
 			this.RuleFor(x => x.EndTime).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetStartTimeEndTime).When(x => x ?.EndTime != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetStartTimeEndTime).When(x => x ?.EndTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftModel.EndTime));
 		}
 
 		public virtual void ModifiedDateRules()
@@ -35,28 +35,28 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public virtual void NameRules()
 		{
 			this.RuleFor(x => x.Name).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 50);
 		}
 
 		public virtual void StartTimeRules()
 		{
 			this.RuleFor(x => x.StartTime).NotNull();
-			this.RuleFor(x => x).Must(this.BeUniqueGetStartTimeEndTime).When(x => x ?.StartTime != null).WithMessage("Violates unique constraint");
+			this.RuleFor(x => x).Must(this.BeUniqueGetStartTimeEndTime).When(x => x ?.StartTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftModel.StartTime));
 		}
 
 		private bool BeUniqueGetName(ApiShiftModel model)
 		{
-			return this.ShiftRepository.GetName(model.Name) != null;
+			return this.ShiftRepository.GetName(model.Name) == null;
 		}
 
 		private bool BeUniqueGetStartTimeEndTime(ApiShiftModel model)
 		{
-			return this.ShiftRepository.GetStartTimeEndTime(model.StartTime,model.EndTime) != null;
+			return this.ShiftRepository.GetStartTimeEndTime(model.StartTime,model.EndTime) == null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1acb1bcf9c5c46744ac80b6129c8a0bc</Hash>
+    <Hash>1e33a4f7917ced021d6e29941febd09f</Hash>
 </Codenesium>*/

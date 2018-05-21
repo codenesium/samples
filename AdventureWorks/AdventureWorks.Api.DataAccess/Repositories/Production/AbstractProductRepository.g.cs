@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductRepository
+	public abstract class AbstractProductRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOProduct> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOProduct Get(int productID)
+		public async virtual Task<POCOProduct> Get(int productID)
 		{
-			return this.SearchLinqPOCO(x => x.ProductID == productID).FirstOrDefault();
+			Product record = await this.GetById(productID);
+
+			return this.Mapper.ProductMapEFToPOCO(record);
 		}
 
-		public virtual POCOProduct Create(
+		public async virtual Task<POCOProduct> Create(
 			ApiProductModel model)
 		{
 			Product record = new Product();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Product>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.ProductMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			int productID,
 			ApiProductModel model)
 		{
-			Product record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			Product record = await this.GetById(productID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{productID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					productID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			int productID)
 		{
-			Product record = this.SearchLinqEF(x => x.ProductID == productID).FirstOrDefault();
+			Product record = await this.GetById(productID);
 
 			if (record == null)
 			{
@@ -82,54 +88,67 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Product>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOProduct GetName(string name)
+		public async Task<POCOProduct> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
+		}
+		public async Task<POCOProduct> GetProductNumber(string productNumber)
+		{
+			var records = await this.SearchLinqPOCO(x => x.ProductNumber == productNumber);
+
+			return records.FirstOrDefault();
 		}
 
-		public POCOProduct GetProductNumber(string productNumber)
+		protected async Task<List<POCOProduct>> Where(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => x.ProductNumber == productNumber).FirstOrDefault();
+			List<POCOProduct> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		protected List<POCOProduct> Where(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
-		}
-
-		private List<POCOProduct> SearchLinqPOCO(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOProduct>> SearchLinqPOCO(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOProduct> response = new List<POCOProduct>();
-			List<Product> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Product> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.ProductMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Product> SearchLinqEF(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Product>> SearchLinqEF(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Product.ProductID)} ASC";
 			}
-			return this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Product>();
+			return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Product>();
 		}
 
-		private List<Product> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Product>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Product.ProductID)} ASC";
 			}
 
-			return this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Product>();
+			return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Product>();
+		}
+
+		private async Task<Product> GetById(int productID)
+		{
+			List<Product> records = await this.SearchLinqEF(x => x.ProductID == productID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3bf7f42119e5d9ea3a1d127596c3e4f9</Hash>
+    <Hash>a25be0161da29303fbff4931e5b76da0</Hash>
 </Codenesium>*/

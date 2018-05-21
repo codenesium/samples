@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiShoppingCartItemModel
+	public partial class ApiShoppingCartItemModel: AbstractModel
 	{
-		public ApiShoppingCartItemModel()
+		public ApiShoppingCartItemModel() : base()
 		{}
 
 		public ApiShoppingCartItemModel(
@@ -107,5 +107,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>53c7357cea4422c527afdcaa59e3a8e3</Hash>
+    <Hash>b84256307d43fb7f0389ae8525ef235c</Hash>
 </Codenesium>*/

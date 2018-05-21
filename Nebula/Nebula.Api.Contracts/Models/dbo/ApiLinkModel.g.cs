@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiLinkModel
+	public partial class ApiLinkModel: AbstractModel
 	{
-		public ApiLinkModel()
+		public ApiLinkModel() : base()
 		{}
 
 		public ApiLinkModel(
@@ -227,5 +227,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3de89527b300dba637a36b0b87942b0</Hash>
+    <Hash>bd76cd312c708e22c763f16fda5b230b</Hash>
 </Codenesium>*/

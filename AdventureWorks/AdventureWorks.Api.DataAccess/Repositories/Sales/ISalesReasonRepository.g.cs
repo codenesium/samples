@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesReasonRepository
 	{
-		POCOSalesReason Create(ApiSalesReasonModel model);
+		Task<POCOSalesReason> Create(ApiSalesReasonModel model);
 
-		void Update(int salesReasonID,
+		Task Update(int salesReasonID,
 		            ApiSalesReasonModel model);
 
-		void Delete(int salesReasonID);
+		Task Delete(int salesReasonID);
 
-		POCOSalesReason Get(int salesReasonID);
+		Task<POCOSalesReason> Get(int salesReasonID);
 
-		List<POCOSalesReason> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>9851ad53a5ec87dc2aeca2ed169fe26a</Hash>
+    <Hash>a6d542bef848fd2242fdd957eebd18c0</Hash>
 </Codenesium>*/

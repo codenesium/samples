@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOUnitMeasure>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOUnitMeasure> response = this.unitMeasureManager.All(query.Offset, query.Limit);
+			List<POCOUnitMeasure> response = await this.unitMeasureManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOUnitMeasure), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(string id)
+		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOUnitMeasure response = this.unitMeasureManager.Get(id);
+			POCOUnitMeasure response = await this.unitMeasureManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOUnitMeasure response = this.unitMeasureManager.Get(id);
+					POCOUnitMeasure response = await this.unitMeasureManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOUnitMeasure), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOUnitMeasure response = this.unitMeasureManager.GetName(name);
+			POCOUnitMeasure response = await this.unitMeasureManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>734834077fce8b84bc4c5f858f9ecdae</Hash>
+    <Hash>351b87d77b88403eef34e303dce70e17</Hash>
 </Codenesium>*/

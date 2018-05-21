@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOSalesTerritory
+	public abstract class AbstractBOSalesTerritory: AbstractBOManager
 	{
 		private ISalesTerritoryRepository salesTerritoryRepository;
 		private IApiSalesTerritoryModelValidator salesTerritoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ISalesTerritoryRepository salesTerritoryRepository,
 			IApiSalesTerritoryModelValidator salesTerritoryModelValidator)
+			: base()
 
 		{
 			this.salesTerritoryRepository = salesTerritoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOSalesTerritory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOSalesTerritory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.salesTerritoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOSalesTerritory Get(int territoryID)
+		public virtual Task<POCOSalesTerritory> Get(int territoryID)
 		{
 			return this.salesTerritoryRepository.Get(territoryID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOSalesTerritory> response = new CreateResponse<POCOSalesTerritory>(await this.salesTerritoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesTerritory record = this.salesTerritoryRepository.Create(model);
+				POCOSalesTerritory record = await this.salesTerritoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesTerritoryRepository.Update(territoryID, model);
+				await this.salesTerritoryRepository.Update(territoryID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.salesTerritoryRepository.Delete(territoryID);
+				await this.salesTerritoryRepository.Delete(territoryID);
 			}
 			return response;
 		}
 
-		public POCOSalesTerritory GetName(string name)
+		public async Task<POCOSalesTerritory> GetName(string name)
 		{
-			return this.salesTerritoryRepository.GetName(name);
+			return await this.salesTerritoryRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff2d50cbee710c040857ef3e3485b4cc</Hash>
+    <Hash>a93d460fc73a8466afc2c63e4a5fd42f</Hash>
 </Codenesium>*/

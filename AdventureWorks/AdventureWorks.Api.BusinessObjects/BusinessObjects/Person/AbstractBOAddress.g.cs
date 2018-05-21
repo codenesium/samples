@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOAddress
+	public abstract class AbstractBOAddress: AbstractBOManager
 	{
 		private IAddressRepository addressRepository;
 		private IApiAddressModelValidator addressModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IAddressRepository addressRepository,
 			IApiAddressModelValidator addressModelValidator)
+			: base()
 
 		{
 			this.addressRepository = addressRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOAddress> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.addressRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOAddress Get(int addressID)
+		public virtual Task<POCOAddress> Get(int addressID)
 		{
 			return this.addressRepository.Get(addressID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOAddress> response = new CreateResponse<POCOAddress>(await this.addressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAddress record = this.addressRepository.Create(model);
+				POCOAddress record = await this.addressRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.addressRepository.Update(addressID, model);
+				await this.addressRepository.Update(addressID, model);
 			}
 
 			return response;
@@ -73,23 +75,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.addressRepository.Delete(addressID);
+				await this.addressRepository.Delete(addressID);
 			}
 			return response;
 		}
 
-		public POCOAddress GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
+		public async Task<POCOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
 		{
-			return this.addressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
+			return await this.addressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
 		}
-
-		public List<POCOAddress> GetStateProvinceID(int stateProvinceID)
+		public async Task<List<POCOAddress>> GetStateProvinceID(int stateProvinceID)
 		{
-			return this.addressRepository.GetStateProvinceID(stateProvinceID);
+			return await this.addressRepository.GetStateProvinceID(stateProvinceID);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c298f86ded437dd9f2e2a1082ab92647</Hash>
+    <Hash>efc30171afb60fcd211d9f5bf436befe</Hash>
 </Codenesium>*/

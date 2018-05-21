@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOUnitMeasure
+	public abstract class AbstractBOUnitMeasure: AbstractBOManager
 	{
 		private IUnitMeasureRepository unitMeasureRepository;
 		private IApiUnitMeasureModelValidator unitMeasureModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IUnitMeasureRepository unitMeasureRepository,
 			IApiUnitMeasureModelValidator unitMeasureModelValidator)
+			: base()
 
 		{
 			this.unitMeasureRepository = unitMeasureRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOUnitMeasure> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOUnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.unitMeasureRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOUnitMeasure Get(string unitMeasureCode)
+		public virtual Task<POCOUnitMeasure> Get(string unitMeasureCode)
 		{
 			return this.unitMeasureRepository.Get(unitMeasureCode);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOUnitMeasure> response = new CreateResponse<POCOUnitMeasure>(await this.unitMeasureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOUnitMeasure record = this.unitMeasureRepository.Create(model);
+				POCOUnitMeasure record = await this.unitMeasureRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.unitMeasureRepository.Update(unitMeasureCode, model);
+				await this.unitMeasureRepository.Update(unitMeasureCode, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.unitMeasureRepository.Delete(unitMeasureCode);
+				await this.unitMeasureRepository.Delete(unitMeasureCode);
 			}
 			return response;
 		}
 
-		public POCOUnitMeasure GetName(string name)
+		public async Task<POCOUnitMeasure> GetName(string name)
 		{
-			return this.unitMeasureRepository.GetName(name);
+			return await this.unitMeasureRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0b5629ffe0dc6616e73556d082021670</Hash>
+    <Hash>1f542eb317ec9283edd443414af98a2a</Hash>
 </Codenesium>*/

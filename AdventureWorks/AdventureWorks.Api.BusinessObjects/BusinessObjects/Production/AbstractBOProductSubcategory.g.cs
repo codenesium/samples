@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOProductSubcategory
+	public abstract class AbstractBOProductSubcategory: AbstractBOManager
 	{
 		private IProductSubcategoryRepository productSubcategoryRepository;
 		private IApiProductSubcategoryModelValidator productSubcategoryModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			IProductSubcategoryRepository productSubcategoryRepository,
 			IApiProductSubcategoryModelValidator productSubcategoryModelValidator)
+			: base()
 
 		{
 			this.productSubcategoryRepository = productSubcategoryRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOProductSubcategory> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOProductSubcategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.productSubcategoryRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOProductSubcategory Get(int productSubcategoryID)
+		public virtual Task<POCOProductSubcategory> Get(int productSubcategoryID)
 		{
 			return this.productSubcategoryRepository.Get(productSubcategoryID);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOProductSubcategory> response = new CreateResponse<POCOProductSubcategory>(await this.productSubcategoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductSubcategory record = this.productSubcategoryRepository.Create(model);
+				POCOProductSubcategory record = await this.productSubcategoryRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productSubcategoryRepository.Update(productSubcategoryID, model);
+				await this.productSubcategoryRepository.Update(productSubcategoryID, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.productSubcategoryRepository.Delete(productSubcategoryID);
+				await this.productSubcategoryRepository.Delete(productSubcategoryID);
 			}
 			return response;
 		}
 
-		public POCOProductSubcategory GetName(string name)
+		public async Task<POCOProductSubcategory> GetName(string name)
 		{
-			return this.productSubcategoryRepository.GetName(name);
+			return await this.productSubcategoryRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbd1b1a485899c422d0cbea35f461ec8</Hash>
+    <Hash>d59518d824c1c92f4b58a2e75d2315ee</Hash>
 </Codenesium>*/

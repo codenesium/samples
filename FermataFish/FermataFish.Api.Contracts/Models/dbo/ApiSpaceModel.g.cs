@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class ApiSpaceModel
+	public partial class ApiSpaceModel: AbstractModel
 	{
-		public ApiSpaceModel()
+		public ApiSpaceModel() : base()
 		{}
 
 		public ApiSpaceModel(
@@ -71,5 +71,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6b171b21c5704530495aba22d0c0357f</Hash>
+    <Hash>25c3bea2b241d287c65883a99ffd15e3</Hash>
 </Codenesium>*/

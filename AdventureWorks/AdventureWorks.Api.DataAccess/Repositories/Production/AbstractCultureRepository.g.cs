@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCultureRepository
+	public abstract class AbstractCultureRepository: AbstractRepository
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
@@ -20,23 +21,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			IObjectMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
+			: base ()
 		{
 			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual List<POCOCulture> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
 		}
 
-		public virtual POCOCulture Get(string cultureID)
+		public async virtual Task<POCOCulture> Get(string cultureID)
 		{
-			return this.SearchLinqPOCO(x => x.CultureID == cultureID).FirstOrDefault();
+			Culture record = await this.GetById(cultureID);
+
+			return this.Mapper.CultureMapEFToPOCO(record);
 		}
 
-		public virtual POCOCulture Create(
+		public async virtual Task<POCOCulture> Create(
 			ApiCultureModel model)
 		{
 			Culture record = new Culture();
@@ -47,15 +51,17 @@ namespace AdventureWorksNS.Api.DataAccess
 				record);
 
 			this.Context.Set<Culture>().Add(record);
-			this.Context.SaveChanges();
+			await this.Context.SaveChangesAsync();
+
 			return this.Mapper.CultureMapEFToPOCO(record);
 		}
 
-		public virtual void Update(
+		public async virtual Task Update(
 			string cultureID,
 			ApiCultureModel model)
 		{
-			Culture record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
+			Culture record = await this.GetById(cultureID);
+
 			if (record == null)
 			{
 				throw new RecordNotFoundException($"Unable to find id:{cultureID}");
@@ -66,14 +72,14 @@ namespace AdventureWorksNS.Api.DataAccess
 					cultureID,
 					model,
 					record);
-				this.Context.SaveChanges();
+				this.Context.SaveChangesAsync();
 			}
 		}
 
-		public virtual void Delete(
+		public async virtual Task Delete(
 			string cultureID)
 		{
-			Culture record = this.SearchLinqEF(x => x.CultureID == cultureID).FirstOrDefault();
+			Culture record = await this.GetById(cultureID);
 
 			if (record == null)
 			{
@@ -82,49 +88,61 @@ namespace AdventureWorksNS.Api.DataAccess
 			else
 			{
 				this.Context.Set<Culture>().Remove(record);
-				this.Context.SaveChanges();
+				await this.Context.SaveChangesAsync();
 			}
 		}
 
-		public POCOCulture GetName(string name)
+		public async Task<POCOCulture> GetName(string name)
 		{
-			return this.SearchLinqPOCO(x => x.Name == name).FirstOrDefault();
+			var records = await this.SearchLinqPOCO(x => x.Name == name);
+
+			return records.FirstOrDefault();
 		}
 
-		protected List<POCOCulture> Where(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<POCOCulture>> Where(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<POCOCulture> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+
+			return records;
 		}
 
-		private List<POCOCulture> SearchLinqPOCO(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<POCOCulture>> SearchLinqPOCO(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			List<POCOCulture> response = new List<POCOCulture>();
-			List<Culture> records = this.SearchLinqEF(predicate, skip, take, orderClause);
+			List<Culture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+
 			records.ForEach(x => response.Add(this.Mapper.CultureMapEFToPOCO(x)));
 			return response;
 		}
 
-		private List<Culture> SearchLinqEF(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Culture>> SearchLinqEF(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Culture.CultureID)} ASC";
 			}
-			return this.Context.Set<Culture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Culture>();
+			return await this.Context.Set<Culture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Culture>();
 		}
 
-		private List<Culture> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<Culture>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			if (string.IsNullOrWhiteSpace(orderClause))
 			{
 				orderClause = $"{nameof(Culture.CultureID)} ASC";
 			}
 
-			return this.Context.Set<Culture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToList<Culture>();
+			return await this.Context.Set<Culture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Culture>();
+		}
+
+		private async Task<Culture> GetById(string cultureID)
+		{
+			List<Culture> records = await this.SearchLinqEF(x => x.CultureID == cultureID);
+
+			return records.FirstOrDefault();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>178c956b0b4ce164096223bed9bbefc5</Hash>
+    <Hash>56b234e67b52bb4cb9636e06456c5eb2</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.BusinessObjects
 {
-	public abstract class AbstractBODeviceAction
+	public abstract class AbstractBODeviceAction: AbstractBOManager
 	{
 		private IDeviceActionRepository deviceActionRepository;
 		private IApiDeviceActionModelValidator deviceActionModelValidator;
@@ -22,6 +22,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 			ILogger logger,
 			IDeviceActionRepository deviceActionRepository,
 			IApiDeviceActionModelValidator deviceActionModelValidator)
+			: base()
 
 		{
 			this.deviceActionRepository = deviceActionRepository;
@@ -29,12 +30,12 @@ namespace ESPIOTNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCODeviceAction> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.deviceActionRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCODeviceAction Get(int id)
+		public virtual Task<POCODeviceAction> Get(int id)
 		{
 			return this.deviceActionRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace ESPIOTNS.Api.BusinessObjects
 			CreateResponse<POCODeviceAction> response = new CreateResponse<POCODeviceAction>(await this.deviceActionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODeviceAction record = this.deviceActionRepository.Create(model);
+				POCODeviceAction record = await this.deviceActionRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.deviceActionRepository.Update(id, model);
+				await this.deviceActionRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.deviceActionRepository.Delete(id);
+				await this.deviceActionRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e728d5c36a4bc179adc00a7003f4d1f7</Hash>
+    <Hash>9cf6e09acff628f196de2b2e6bef0509</Hash>
 </Codenesium>*/

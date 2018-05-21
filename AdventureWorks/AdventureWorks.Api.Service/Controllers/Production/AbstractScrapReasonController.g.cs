@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOScrapReason>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOScrapReason> response = this.scrapReasonManager.All(query.Offset, query.Limit);
+			List<POCOScrapReason> response = await this.scrapReasonManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOScrapReason), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(short id)
+		public async virtual Task<IActionResult> Get(short id)
 		{
-			POCOScrapReason response = this.scrapReasonManager.Get(id);
+			POCOScrapReason response = await this.scrapReasonManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOScrapReason response = this.scrapReasonManager.Get(id);
+					POCOScrapReason response = await this.scrapReasonManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOScrapReason), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetName(string name)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOScrapReason response = this.scrapReasonManager.GetName(name);
+			POCOScrapReason response = await this.scrapReasonManager.GetName(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f98ee5661dfc310dc9bfcebc39484f3f</Hash>
+    <Hash>61ad9830661eff18353f729d27468155</Hash>
 </Codenesium>*/

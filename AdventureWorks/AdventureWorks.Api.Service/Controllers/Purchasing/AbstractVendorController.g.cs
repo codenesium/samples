@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOVendor>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOVendor> response = this.vendorManager.All(query.Offset, query.Limit);
+			List<POCOVendor> response = await this.vendorManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOVendor), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOVendor response = this.vendorManager.Get(id);
+			POCOVendor response = await this.vendorManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOVendor response = this.vendorManager.Get(id);
+					POCOVendor response = await this.vendorManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOVendor), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetAccountNumber(string accountNumber)
+		public async virtual Task<IActionResult> GetAccountNumber(string accountNumber)
 		{
-			POCOVendor response = this.vendorManager.GetAccountNumber(accountNumber);
+			POCOVendor response = await this.vendorManager.GetAccountNumber(accountNumber);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>797bcb9120ada027ccaf9555fe5b2623</Hash>
+    <Hash>3897f2aacc1f3877c4f445d1c2b21ed0</Hash>
 </Codenesium>*/

@@ -17,14 +17,14 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int shoppingCartItemID);
 
-		POCOShoppingCartItem Get(int shoppingCartItemID);
+		Task<POCOShoppingCartItem> Get(int shoppingCartItemID);
 
-		List<POCOShoppingCartItem> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		List<POCOShoppingCartItem> GetShoppingCartIDProductID(string shoppingCartID,int productID);
+		Task<List<POCOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>deb03fb0dc1f8f12940b152935239dbe</Hash>
+    <Hash>e04d2809ade9948216260e1e1616fea1</Hash>
 </Codenesium>*/

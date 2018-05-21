@@ -12,7 +12,7 @@ using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.BusinessObjects
 {
-	public abstract class AbstractBODevice
+	public abstract class AbstractBODevice: AbstractBOManager
 	{
 		private IDeviceRepository deviceRepository;
 		private IApiDeviceModelValidator deviceModelValidator;
@@ -22,6 +22,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 			ILogger logger,
 			IDeviceRepository deviceRepository,
 			IApiDeviceModelValidator deviceModelValidator)
+			: base()
 
 		{
 			this.deviceRepository = deviceRepository;
@@ -29,12 +30,12 @@ namespace ESPIOTNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCODevice> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCODevice>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.deviceRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCODevice Get(int id)
+		public virtual Task<POCODevice> Get(int id)
 		{
 			return this.deviceRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace ESPIOTNS.Api.BusinessObjects
 			CreateResponse<POCODevice> response = new CreateResponse<POCODevice>(await this.deviceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODevice record = this.deviceRepository.Create(model);
+				POCODevice record = await this.deviceRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.deviceRepository.Update(id, model);
+				await this.deviceRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace ESPIOTNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.deviceRepository.Delete(id);
+				await this.deviceRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCODevice PublicId(Guid publicId)
+		public async Task<POCODevice> PublicId(Guid publicId)
 		{
-			return this.deviceRepository.PublicId(publicId);
+			return await this.deviceRepository.PublicId(publicId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ebe3d6ed464945d488c1122ed160e855</Hash>
+    <Hash>2db08f6492482283f1690dda2b5cd48e</Hash>
 </Codenesium>*/

@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOChainStatus>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOChainStatus> response = this.chainStatusManager.All(query.Offset, query.Limit);
+			List<POCOChainStatus> response = await this.chainStatusManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOChainStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOChainStatus response = this.chainStatusManager.Get(id);
+			POCOChainStatus response = await this.chainStatusManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOChainStatus response = this.chainStatusManager.Get(id);
+					POCOChainStatus response = await this.chainStatusManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOChainStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Name(string name)
+		public async virtual Task<IActionResult> Name(string name)
 		{
-			POCOChainStatus response = this.chainStatusManager.Name(name);
+			POCOChainStatus response = await this.chainStatusManager.Name(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c27eba34700b193e298d1086834ccd8b</Hash>
+    <Hash>f24970bd149021f90b69b171fb1c9a3e</Hash>
 </Codenesium>*/

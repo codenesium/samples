@@ -12,7 +12,7 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCountryRegion
+	public abstract class AbstractBOCountryRegion: AbstractBOManager
 	{
 		private ICountryRegionRepository countryRegionRepository;
 		private IApiCountryRegionModelValidator countryRegionModelValidator;
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			ILogger logger,
 			ICountryRegionRepository countryRegionRepository,
 			IApiCountryRegionModelValidator countryRegionModelValidator)
+			: base()
 
 		{
 			this.countryRegionRepository = countryRegionRepository;
@@ -29,12 +30,12 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCountryRegion> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.countryRegionRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCountryRegion Get(string countryRegionCode)
+		public virtual Task<POCOCountryRegion> Get(string countryRegionCode)
 		{
 			return this.countryRegionRepository.Get(countryRegionCode);
 		}
@@ -45,7 +46,8 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			CreateResponse<POCOCountryRegion> response = new CreateResponse<POCOCountryRegion>(await this.countryRegionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCountryRegion record = this.countryRegionRepository.Create(model);
+				POCOCountryRegion record = await this.countryRegionRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.countryRegionRepository.Update(countryRegionCode, model);
+				await this.countryRegionRepository.Update(countryRegionCode, model);
 			}
 
 			return response;
@@ -73,18 +75,18 @@ namespace AdventureWorksNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.countryRegionRepository.Delete(countryRegionCode);
+				await this.countryRegionRepository.Delete(countryRegionCode);
 			}
 			return response;
 		}
 
-		public POCOCountryRegion GetName(string name)
+		public async Task<POCOCountryRegion> GetName(string name)
 		{
-			return this.countryRegionRepository.GetName(name);
+			return await this.countryRegionRepository.GetName(name);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cdb93edbf1e761464cf9928a61d68d32</Hash>
+    <Hash>2c046321d1550279202a2eb860179abe</Hash>
 </Codenesium>*/

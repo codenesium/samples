@@ -39,22 +39,14 @@ namespace NebulaNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOLinkStatus>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLinkStatus> response = this.linkStatusManager.All(query.Offset, query.Limit);
+			List<POCOLinkStatus> response = await this.linkStatusManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLinkStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLinkStatus response = this.linkStatusManager.Get(id);
+			POCOLinkStatus response = await this.linkStatusManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLinkStatus response = this.linkStatusManager.Get(id);
+					POCOLinkStatus response = await this.linkStatusManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -179,9 +173,10 @@ namespace NebulaNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOLinkStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Name(string name)
+		public async virtual Task<IActionResult> Name(string name)
 		{
-			POCOLinkStatus response = this.linkStatusManager.Name(name);
+			POCOLinkStatus response = await this.linkStatusManager.Name(name);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -195,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f2c3d2ab50aebddd5ef5990cecd7ee65</Hash>
+    <Hash>dd7d2c7c56cdea6884ec167a4312c7c2</Hash>
 </Codenesium>*/

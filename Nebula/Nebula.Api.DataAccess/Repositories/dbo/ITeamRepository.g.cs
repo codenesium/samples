@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface ITeamRepository
 	{
-		POCOTeam Create(ApiTeamModel model);
+		Task<POCOTeam> Create(ApiTeamModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiTeamModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOTeam Get(int id);
+		Task<POCOTeam> Get(int id);
 
-		List<POCOTeam> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOTeam Name(string name);
+		Task<POCOTeam> Name(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf855a74a476f178c860b5f5c3cd07e4</Hash>
+    <Hash>8cfd43b94076c4fd46ea9d977f325959</Hash>
 </Codenesium>*/

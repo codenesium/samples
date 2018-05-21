@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOStudio
+	public abstract class AbstractBOStudio: AbstractBOManager
 	{
 		private IStudioRepository studioRepository;
 		private IApiStudioModelValidator studioModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			IStudioRepository studioRepository,
 			IApiStudioModelValidator studioModelValidator)
+			: base()
 
 		{
 			this.studioRepository = studioRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOStudio> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOStudio>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.studioRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOStudio Get(int id)
+		public virtual Task<POCOStudio> Get(int id)
 		{
 			return this.studioRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCOStudio> response = new CreateResponse<POCOStudio>(await this.studioModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOStudio record = this.studioRepository.Create(model);
+				POCOStudio record = await this.studioRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.studioRepository.Update(id, model);
+				await this.studioRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.studioRepository.Delete(id);
+				await this.studioRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>74e385e303de34bef151dd3352fba91c</Hash>
+    <Hash>2b6614c3580fc083b87ebc1c12bac2e5</Hash>
 </Codenesium>*/

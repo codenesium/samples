@@ -12,7 +12,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOCountryRequirement
+	public abstract class AbstractBOCountryRequirement: AbstractBOManager
 	{
 		private ICountryRequirementRepository countryRequirementRepository;
 		private IApiCountryRequirementModelValidator countryRequirementModelValidator;
@@ -22,6 +22,7 @@ namespace PetShippingNS.Api.BusinessObjects
 			ILogger logger,
 			ICountryRequirementRepository countryRequirementRepository,
 			IApiCountryRequirementModelValidator countryRequirementModelValidator)
+			: base()
 
 		{
 			this.countryRequirementRepository = countryRequirementRepository;
@@ -29,12 +30,12 @@ namespace PetShippingNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOCountryRequirement> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOCountryRequirement>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.countryRequirementRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOCountryRequirement Get(int id)
+		public virtual Task<POCOCountryRequirement> Get(int id)
 		{
 			return this.countryRequirementRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace PetShippingNS.Api.BusinessObjects
 			CreateResponse<POCOCountryRequirement> response = new CreateResponse<POCOCountryRequirement>(await this.countryRequirementModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCountryRequirement record = this.countryRequirementRepository.Create(model);
+				POCOCountryRequirement record = await this.countryRequirementRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.countryRequirementRepository.Update(id, model);
+				await this.countryRequirementRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace PetShippingNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.countryRequirementRepository.Delete(id);
+				await this.countryRequirementRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace PetShippingNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0b5dad8813d59a5fe3d049bea3eee175</Hash>
+    <Hash>c8671bdfddc4d53e17e02d260be65a8f</Hash>
 </Codenesium>*/

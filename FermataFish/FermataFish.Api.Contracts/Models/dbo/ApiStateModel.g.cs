@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class ApiStateModel
+	public partial class ApiStateModel: AbstractModel
 	{
-		public ApiStateModel()
+		public ApiStateModel() : base()
 		{}
 
 		public ApiStateModel(
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>01fd565db346804ded9f194d27918c6f</Hash>
+    <Hash>20e7f889d3154e15fd99d54c1bfb051c</Hash>
 </Codenesium>*/

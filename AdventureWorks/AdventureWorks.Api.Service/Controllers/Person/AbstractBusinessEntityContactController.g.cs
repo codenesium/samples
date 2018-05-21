@@ -39,22 +39,14 @@ namespace AdventureWorksNS.Api.Service
 		[Route("")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult All()
+		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBusinessEntityContact> response = this.businessEntityContactManager.All(query.Offset, query.Limit);
+			List<POCOBusinessEntityContact> response = await this.businessEntityContactManager.All(query.Offset, query.Limit);
 
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			return this.Ok(response);
 		}
 
 		[HttpGet]
@@ -62,9 +54,10 @@ namespace AdventureWorksNS.Api.Service
 		[ReadOnly]
 		[ProducesResponseType(typeof(POCOBusinessEntityContact), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult Get(int id)
+		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBusinessEntityContact response = this.businessEntityContactManager.Get(id);
+			POCOBusinessEntityContact response = await this.businessEntityContactManager.Get(id);
+
 			if (response == null)
 			{
 				return this.StatusCode(StatusCodes.Status404NotFound);
@@ -141,7 +134,8 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBusinessEntityContact response = this.businessEntityContactManager.Get(id);
+					POCOBusinessEntityContact response = await this.businessEntityContactManager.Get(id);
+
 					return this.Ok(response);
 				}
 				else
@@ -178,40 +172,26 @@ namespace AdventureWorksNS.Api.Service
 		[Route("getContactTypeID/{contactTypeID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetContactTypeID(int contactTypeID)
+		public async virtual Task<IActionResult> GetContactTypeID(int contactTypeID)
 		{
-			List<POCOBusinessEntityContact> response = this.businessEntityContactManager.GetContactTypeID(contactTypeID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOBusinessEntityContact> response = await this.businessEntityContactManager.GetContactTypeID(contactTypeID);
+
+			return this.Ok(response);
 		}
 
 		[HttpGet]
 		[Route("getPersonID/{personID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public virtual IActionResult GetPersonID(int personID)
+		public async virtual Task<IActionResult> GetPersonID(int personID)
 		{
-			List<POCOBusinessEntityContact> response = this.businessEntityContactManager.GetPersonID(personID);
-			if (response.Count == 0)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
+			List<POCOBusinessEntityContact> response = await this.businessEntityContactManager.GetPersonID(personID);
+
+			return this.Ok(response);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b6a6b2f3d2578bb637d0cc7dea6def9</Hash>
+    <Hash>c1c1613f1816a6175c16cbfd5eef4232</Hash>
 </Codenesium>*/

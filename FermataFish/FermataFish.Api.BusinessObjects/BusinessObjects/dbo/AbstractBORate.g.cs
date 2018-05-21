@@ -12,7 +12,7 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public abstract class AbstractBORate
+	public abstract class AbstractBORate: AbstractBOManager
 	{
 		private IRateRepository rateRepository;
 		private IApiRateModelValidator rateModelValidator;
@@ -22,6 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			ILogger logger,
 			IRateRepository rateRepository,
 			IApiRateModelValidator rateModelValidator)
+			: base()
 
 		{
 			this.rateRepository = rateRepository;
@@ -29,12 +30,12 @@ namespace FermataFishNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCORate> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCORate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.rateRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCORate Get(int id)
+		public virtual Task<POCORate> Get(int id)
 		{
 			return this.rateRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FermataFishNS.Api.BusinessObjects
 			CreateResponse<POCORate> response = new CreateResponse<POCORate>(await this.rateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCORate record = this.rateRepository.Create(model);
+				POCORate record = await this.rateRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.rateRepository.Update(id, model);
+				await this.rateRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,7 +75,7 @@ namespace FermataFishNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.rateRepository.Delete(id);
+				await this.rateRepository.Delete(id);
 			}
 			return response;
 		}
@@ -81,5 +83,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a5b53f006d8ebc4cbbdc4e13d08b26c4</Hash>
+    <Hash>d8be4ba1aeb55e745f3c8ad346c8eac6</Hash>
 </Codenesium>*/

@@ -4,9 +4,9 @@ using System;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class POCOStore
+	public partial class POCOStore: AbstractPOCO
 	{
-		public POCOStore()
+		public POCOStore() : base()
 		{}
 
 		public POCOStore(
@@ -95,5 +95,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d7c68c81a167d26ccbe4e345f8dff5b4</Hash>
+    <Hash>5f644bcb5e44f1612b680f347160dbcb</Hash>
 </Codenesium>*/

@@ -4,9 +4,9 @@ using System;
 
 namespace FileServiceNS.Api.Contracts
 {
-	public partial class POCOVersionInfo
+	public partial class POCOVersionInfo: AbstractPOCO
 	{
-		public POCOVersionInfo()
+		public POCOVersionInfo() : base()
 		{}
 
 		public POCOVersionInfo(
@@ -57,5 +57,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>245f237ef03269ef333c48cec387b66c</Hash>
+    <Hash>3bfa3cb417588ae37cc2e55ea92e38c6</Hash>
 </Codenesium>*/

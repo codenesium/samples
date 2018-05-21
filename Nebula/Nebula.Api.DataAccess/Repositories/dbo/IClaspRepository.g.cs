@@ -1,25 +1,26 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 
 namespace NebulaNS.Api.DataAccess
 {
 	public interface IClaspRepository
 	{
-		POCOClasp Create(ApiClaspModel model);
+		Task<POCOClasp> Create(ApiClaspModel model);
 
-		void Update(int id,
+		Task Update(int id,
 		            ApiClaspModel model);
 
-		void Delete(int id);
+		Task Delete(int id);
 
-		POCOClasp Get(int id);
+		Task<POCOClasp> Get(int id);
 
-		List<POCOClasp> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>33811913bf6f97d941e70f361eb98f73</Hash>
+    <Hash>665eb2292df8691fb1c8a2592cc8566a</Hash>
 </Codenesium>*/

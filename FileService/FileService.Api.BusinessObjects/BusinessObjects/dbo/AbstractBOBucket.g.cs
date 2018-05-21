@@ -12,7 +12,7 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public abstract class AbstractBOBucket
+	public abstract class AbstractBOBucket: AbstractBOManager
 	{
 		private IBucketRepository bucketRepository;
 		private IApiBucketModelValidator bucketModelValidator;
@@ -22,6 +22,7 @@ namespace FileServiceNS.Api.BusinessObjects
 			ILogger logger,
 			IBucketRepository bucketRepository,
 			IApiBucketModelValidator bucketModelValidator)
+			: base()
 
 		{
 			this.bucketRepository = bucketRepository;
@@ -29,12 +30,12 @@ namespace FileServiceNS.Api.BusinessObjects
 			this.logger = logger;
 		}
 
-		public virtual List<POCOBucket> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<POCOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
 			return this.bucketRepository.All(skip, take, orderClause);
 		}
 
-		public virtual POCOBucket Get(int id)
+		public virtual Task<POCOBucket> Get(int id)
 		{
 			return this.bucketRepository.Get(id);
 		}
@@ -45,7 +46,8 @@ namespace FileServiceNS.Api.BusinessObjects
 			CreateResponse<POCOBucket> response = new CreateResponse<POCOBucket>(await this.bucketModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBucket record = this.bucketRepository.Create(model);
+				POCOBucket record = await this.bucketRepository.Create(model);
+
 				response.SetRecord(record);
 			}
 
@@ -60,7 +62,7 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.bucketRepository.Update(id, model);
+				await this.bucketRepository.Update(id, model);
 			}
 
 			return response;
@@ -73,23 +75,22 @@ namespace FileServiceNS.Api.BusinessObjects
 
 			if (response.Success)
 			{
-				this.bucketRepository.Delete(id);
+				await this.bucketRepository.Delete(id);
 			}
 			return response;
 		}
 
-		public POCOBucket Name(string name)
+		public async Task<POCOBucket> Name(string name)
 		{
-			return this.bucketRepository.Name(name);
+			return await this.bucketRepository.Name(name);
 		}
-
-		public POCOBucket ExternalId(Guid externalId)
+		public async Task<POCOBucket> ExternalId(Guid externalId)
 		{
-			return this.bucketRepository.ExternalId(externalId);
+			return await this.bucketRepository.ExternalId(externalId);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a56dec3ca36e96aea4590871e1f8944f</Hash>
+    <Hash>bcad9eeea57b329569f627f9a5b3135d</Hash>
 </Codenesium>*/

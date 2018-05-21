@@ -17,14 +17,14 @@ namespace NebulaNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(long version);
 
-		POCOVersionInfo Get(long version);
+		Task<POCOVersionInfo> Get(long version);
 
-		List<POCOVersionInfo> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOVersionInfo Version(long version);
+		Task<POCOVersionInfo> Version(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>30677c51fecc8e2df99de29d6cc6c85b</Hash>
+    <Hash>80ecdf6f967fa2c7e9dd50b6a748b65c</Hash>
 </Codenesium>*/

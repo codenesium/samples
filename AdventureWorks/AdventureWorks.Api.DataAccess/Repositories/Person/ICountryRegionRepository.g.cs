@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICountryRegionRepository
 	{
-		POCOCountryRegion Create(ApiCountryRegionModel model);
+		Task<POCOCountryRegion> Create(ApiCountryRegionModel model);
 
-		void Update(string countryRegionCode,
+		Task Update(string countryRegionCode,
 		            ApiCountryRegionModel model);
 
-		void Delete(string countryRegionCode);
+		Task Delete(string countryRegionCode);
 
-		POCOCountryRegion Get(string countryRegionCode);
+		Task<POCOCountryRegion> Get(string countryRegionCode);
 
-		List<POCOCountryRegion> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOCountryRegion GetName(string name);
+		Task<POCOCountryRegion> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>99f10cc36b825cab63d2a01f3f1d8b3a</Hash>
+    <Hash>df76e27e9ec79e69109e3f0c645a2d30</Hash>
 </Codenesium>*/

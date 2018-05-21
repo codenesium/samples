@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiVersionInfoModel
+	public partial class ApiVersionInfoModel: AbstractModel
 	{
-		public ApiVersionInfoModel()
+		public ApiVersionInfoModel() : base()
 		{}
 
 		public ApiVersionInfoModel(
@@ -51,5 +51,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>69ba92e902f4c8180e4569a6ed3efeb4</Hash>
+    <Hash>038f7fcd36208077cabc1eed90066ca9</Hash>
 </Codenesium>*/

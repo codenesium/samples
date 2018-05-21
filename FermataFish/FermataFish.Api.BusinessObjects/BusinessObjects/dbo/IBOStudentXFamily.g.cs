@@ -17,12 +17,12 @@ namespace FermataFishNS.Api.BusinessObjects
 
 		Task<ActionResponse> Delete(int id);
 
-		POCOStudentXFamily Get(int id);
+		Task<POCOStudentXFamily> Get(int id);
 
-		List<POCOStudentXFamily> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOStudentXFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>c50ee93e37b573dacc0ce56ea14d158b</Hash>
+    <Hash>497532b844eeb45c6a2f790d9eb9cfee</Hash>
 </Codenesium>*/

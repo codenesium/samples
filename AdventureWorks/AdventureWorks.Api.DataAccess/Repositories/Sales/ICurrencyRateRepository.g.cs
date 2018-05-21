@@ -1,27 +1,28 @@
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICurrencyRateRepository
 	{
-		POCOCurrencyRate Create(ApiCurrencyRateModel model);
+		Task<POCOCurrencyRate> Create(ApiCurrencyRateModel model);
 
-		void Update(int currencyRateID,
+		Task Update(int currencyRateID,
 		            ApiCurrencyRateModel model);
 
-		void Delete(int currencyRateID);
+		Task Delete(int currencyRateID);
 
-		POCOCurrencyRate Get(int currencyRateID);
+		Task<POCOCurrencyRate> Get(int currencyRateID);
 
-		List<POCOCurrencyRate> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<POCOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		POCOCurrencyRate GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode);
+		Task<POCOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a4dd6a202cbe2f2046a6d0bffac3252</Hash>
+    <Hash>f9d34496170c3726ff77950e120dff88</Hash>
 </Codenesium>*/
