@@ -9,20 +9,20 @@ namespace PetStoreNS.Api.BusinessObjects
 {
 	public interface IBOBreed
 	{
-		Task<CreateResponse<POCOBreed>> Create(
-			ApiBreedModel model);
+		Task<CreateResponse<ApiBreedResponseModel>> Create(
+			ApiBreedRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiBreedModel model);
+		                            ApiBreedRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOBreed> Get(int id);
+		Task<ApiBreedResponseModel> Get(int id);
 
-		Task<List<POCOBreed>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiBreedResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>55401e0151e3410e1aae334c18636c51</Hash>
+    <Hash>d807f09194494bad5336a944437fefe3</Hash>
 </Codenesium>*/

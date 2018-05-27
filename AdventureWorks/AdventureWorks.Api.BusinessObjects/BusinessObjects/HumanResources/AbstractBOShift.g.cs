@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOShift: AbstractBOManager
 	{
 		private IShiftRepository shiftRepository;
-		private IApiShiftModelValidator shiftModelValidator;
+		private IApiShiftRequestModelValidator shiftModelValidator;
+		private IBOLShiftMapper shiftMapper;
 		private ILogger logger;
 
 		public AbstractBOShift(
 			ILogger logger,
 			IShiftRepository shiftRepository,
-			IApiShiftModelValidator shiftModelValidator)
+			IApiShiftRequestModelValidator shiftModelValidator,
+			IBOLShiftMapper shiftMapper)
 			: base()
 
 		{
 			this.shiftRepository = shiftRepository;
 			this.shiftModelValidator = shiftModelValidator;
+			this.shiftMapper = shiftMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiShiftResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.shiftRepository.All(skip, take, orderClause);
+			var records = await this.shiftRepository.All(skip, take, orderClause);
+
+			return this.shiftMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOShift> Get(int shiftID)
+		public virtual async Task<ApiShiftResponseModel> Get(int shiftID)
 		{
-			return this.shiftRepository.Get(shiftID);
+			var record = await shiftRepository.Get(shiftID);
+
+			return this.shiftMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOShift>> Create(
-			ApiShiftModel model)
+		public virtual async Task<CreateResponse<ApiShiftResponseModel>> Create(
+			ApiShiftRequestModel model)
 		{
-			CreateResponse<POCOShift> response = new CreateResponse<POCOShift>(await this.shiftModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiShiftResponseModel> response = new CreateResponse<ApiShiftResponseModel>(await this.shiftModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOShift record = await this.shiftRepository.Create(model);
+				var dto = this.shiftMapper.MapModelToDTO(default (int), model);
+				var record = await this.shiftRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.shiftMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int shiftID,
-			ApiShiftModel model)
+			ApiShiftRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateUpdateAsync(shiftID, model));
 
 			if (response.Success)
 			{
-				await this.shiftRepository.Update(shiftID, model);
+				var dto = this.shiftMapper.MapModelToDTO(shiftID, model);
+				await this.shiftRepository.Update(shiftID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOShift> GetName(string name)
+		public async Task<ApiShiftResponseModel> GetName(string name)
 		{
-			return await this.shiftRepository.GetName(name);
+			DTOShift record = await this.shiftRepository.GetName(name);
+
+			return this.shiftMapper.MapDTOToModel(record);
 		}
-		public async Task<POCOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
+		public async Task<ApiShiftResponseModel> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
 		{
-			return await this.shiftRepository.GetStartTimeEndTime(startTime,endTime);
+			DTOShift record = await this.shiftRepository.GetStartTimeEndTime(startTime,endTime);
+
+			return this.shiftMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f00b308e3d7eb544619d5845509ae7df</Hash>
+    <Hash>9037e29b086da1f896d5706458fe0e83</Hash>
 </Codenesium>*/

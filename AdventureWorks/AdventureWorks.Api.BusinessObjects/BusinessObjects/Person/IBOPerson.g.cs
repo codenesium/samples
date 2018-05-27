@@ -9,24 +9,24 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOPerson
 	{
-		Task<CreateResponse<POCOPerson>> Create(
-			ApiPersonModel model);
+		Task<CreateResponse<ApiPersonResponseModel>> Create(
+			ApiPersonRequestModel model);
 
 		Task<ActionResponse> Update(int businessEntityID,
-		                            ApiPersonModel model);
+		                            ApiPersonRequestModel model);
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<POCOPerson> Get(int businessEntityID);
+		Task<ApiPersonResponseModel> Get(int businessEntityID);
 
-		Task<List<POCOPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiPersonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOPerson>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName);
-		Task<List<POCOPerson>> GetAdditionalContactInfo(string additionalContactInfo);
-		Task<List<POCOPerson>> GetDemographics(string demographics);
+		Task<List<ApiPersonResponseModel>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName);
+		Task<List<ApiPersonResponseModel>> GetAdditionalContactInfo(string additionalContactInfo);
+		Task<List<ApiPersonResponseModel>> GetDemographics(string demographics);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6d2ed1bd34136faa767a70600fd47f3</Hash>
+    <Hash>1466fe35fe77d4d5aa12da94997558a9</Hash>
 </Codenesium>*/

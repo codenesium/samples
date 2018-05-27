@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOStateProvince(
 			ILogger<StateProvinceRepository> logger,
 			IStateProvinceRepository stateProvinceRepository,
-			IApiStateProvinceModelValidator stateProvinceModelValidator)
-			: base(logger, stateProvinceRepository, stateProvinceModelValidator)
+			IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
+			IBOLStateProvinceMapper stateProvinceMapper)
+			: base(logger, stateProvinceRepository, stateProvinceModelValidator, stateProvinceMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d4d32bbacd40a8ec2c7bd5dbd163e151</Hash>
+    <Hash>b1e28ef96a563ee46f21f8e79153791b</Hash>
 </Codenesium>*/

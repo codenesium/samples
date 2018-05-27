@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPersonPhoneRepository
 	{
-		Task<POCOPersonPhone> Create(ApiPersonPhoneModel model);
+		Task<DTOPersonPhone> Create(DTOPersonPhone dto);
 
 		Task Update(int businessEntityID,
-		            ApiPersonPhoneModel model);
+		            DTOPersonPhone dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOPersonPhone> Get(int businessEntityID);
+		Task<DTOPersonPhone> Get(int businessEntityID);
 
-		Task<List<POCOPersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOPersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOPersonPhone>> GetPhoneNumber(string phoneNumber);
+		Task<List<DTOPersonPhone>> GetPhoneNumber(string phoneNumber);
 	}
 }
 
 /*<Codenesium>
-    <Hash>748ac44ee55c2d1c3f063916d25e0e9c</Hash>
+    <Hash>77a2af40d8770379e3b00857bb50bc87</Hash>
 </Codenesium>*/

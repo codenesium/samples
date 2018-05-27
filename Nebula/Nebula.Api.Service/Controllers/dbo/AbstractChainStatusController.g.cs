@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOChainStatus>), 200)]
+		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOChainStatus> response = await this.chainStatusManager.All(query.Offset, query.Limit);
+			List<ApiChainStatusResponseModel> response = await this.chainStatusManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOChainStatus), 200)]
+		[ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOChainStatus response = await this.chainStatusManager.Get(id);
+			ApiChainStatusResponseModel response = await this.chainStatusManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOChainStatus), 200)]
+		[ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiChainStatusModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiChainStatusRequestModel model)
 		{
-			CreateResponse<POCOChainStatus> result = await this.chainStatusManager.Create(model);
+			CreateResponse<ApiChainStatusResponseModel> result = await this.chainStatusManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOChainStatus>), 200)]
+		[ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainStatusModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainStatusRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOChainStatus> records = new List<POCOChainStatus>();
+			List<ApiChainStatusResponseModel> records = new List<ApiChainStatusResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOChainStatus> result = await this.chainStatusManager.Create(model);
+				CreateResponse<ApiChainStatusResponseModel> result = await this.chainStatusManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOChainStatus), 200)]
+		[ProducesResponseType(typeof(DTOChainStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainStatusModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainStatusRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOChainStatus response = await this.chainStatusManager.Get(id);
+					ApiChainStatusResponseModel response = await this.chainStatusManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOChainStatus), 200)]
+		[ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOChainStatus response = await this.chainStatusManager.GetName(name);
+			ApiChainStatusResponseModel response = await this.chainStatusManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>23e6901bddbb0f016e6abe79f80a7bec</Hash>
+    <Hash>316f2036a511ef9323bb14923e65f469</Hash>
 </Codenesium>*/

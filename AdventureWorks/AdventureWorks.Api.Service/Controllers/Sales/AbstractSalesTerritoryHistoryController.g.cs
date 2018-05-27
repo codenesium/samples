@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesTerritoryHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTerritoryHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesTerritoryHistory> response = await this.salesTerritoryHistoryManager.All(query.Offset, query.Limit);
+			List<ApiSalesTerritoryHistoryResponseModel> response = await this.salesTerritoryHistoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesTerritoryHistory), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesTerritoryHistory response = await this.salesTerritoryHistoryManager.Get(id);
+			ApiSalesTerritoryHistoryResponseModel response = await this.salesTerritoryHistoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesTerritoryHistory), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryHistoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryHistoryRequestModel model)
 		{
-			CreateResponse<POCOSalesTerritoryHistory> result = await this.salesTerritoryHistoryManager.Create(model);
+			CreateResponse<ApiSalesTerritoryHistoryResponseModel> result = await this.salesTerritoryHistoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSalesTerritoryHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTerritoryHistoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTerritoryHistoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTerritoryHistoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSalesTerritoryHistory> records = new List<POCOSalesTerritoryHistory>();
+			List<ApiSalesTerritoryHistoryResponseModel> records = new List<ApiSalesTerritoryHistoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSalesTerritoryHistory> result = await this.salesTerritoryHistoryManager.Create(model);
+				CreateResponse<ApiSalesTerritoryHistoryResponseModel> result = await this.salesTerritoryHistoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesTerritoryHistory), 200)]
+		[ProducesResponseType(typeof(DTOSalesTerritoryHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryHistoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryHistoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesTerritoryHistory response = await this.salesTerritoryHistoryManager.Get(id);
+					ApiSalesTerritoryHistoryResponseModel response = await this.salesTerritoryHistoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>aececa2c11439eb678c92af76adfab5b</Hash>
+    <Hash>4738b1579503d0db2db460f9d35cba16</Hash>
 </Codenesium>*/

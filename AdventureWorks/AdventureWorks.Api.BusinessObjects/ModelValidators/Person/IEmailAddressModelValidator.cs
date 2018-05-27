@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiEmailAddressModelValidator
+	public interface IApiEmailAddressRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiEmailAddressModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmailAddressModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiEmailAddressRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmailAddressRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c05474fd527dff64b80fd2f26b0594ec</Hash>
+    <Hash>b87d4f69885e9359b4fe86d3bcca9260</Hash>
 </Codenesium>*/

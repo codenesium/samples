@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOIllustration(
 			ILogger<IllustrationRepository> logger,
 			IIllustrationRepository illustrationRepository,
-			IApiIllustrationModelValidator illustrationModelValidator)
-			: base(logger, illustrationRepository, illustrationModelValidator)
+			IApiIllustrationRequestModelValidator illustrationModelValidator,
+			IBOLIllustrationMapper illustrationMapper)
+			: base(logger, illustrationRepository, illustrationModelValidator, illustrationMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6183d2e96b259d0a16e95c2f925bd230</Hash>
+    <Hash>b095b96c047c137eec04ad7195cf601a</Hash>
 </Codenesium>*/

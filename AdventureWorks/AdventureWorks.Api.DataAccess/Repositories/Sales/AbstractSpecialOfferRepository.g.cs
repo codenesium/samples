@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSpecialOfferMapper Mapper { get; }
 
 		public AbstractSpecialOfferRepository(
-			IObjectMapper mapper,
+			IDALSpecialOfferMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSpecialOffer> Get(int specialOfferID)
+		public async virtual Task<DTOSpecialOffer> Get(int specialOfferID)
 		{
 			SpecialOffer record = await this.GetById(specialOfferID);
 
-			return this.Mapper.SpecialOfferMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSpecialOffer> Create(
-			ApiSpecialOfferModel model)
+		public async virtual Task<DTOSpecialOffer> Create(
+			DTOSpecialOffer dto)
 		{
 			SpecialOffer record = new SpecialOffer();
 
-			this.Mapper.SpecialOfferMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<SpecialOffer>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SpecialOfferMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int specialOfferID,
-			ApiSpecialOfferModel model)
+			DTOSpecialOffer dto)
 		{
 			SpecialOffer record = await this.GetById(specialOfferID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SpecialOfferMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					specialOfferID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOSpecialOffer>> Where(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSpecialOffer>> Where(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSpecialOffer> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSpecialOffer> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSpecialOffer>> SearchLinqPOCO(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSpecialOffer>> SearchLinqDTO(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSpecialOffer> response = new List<POCOSpecialOffer>();
+			List<DTOSpecialOffer> response = new List<DTOSpecialOffer>();
 			List<SpecialOffer> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SpecialOfferMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eea3e0ad1f3fd32935cc88490f47ae7d</Hash>
+    <Hash>7db45efde36e8e9fd2bd6ab747bc25b0</Hash>
 </Codenesium>*/

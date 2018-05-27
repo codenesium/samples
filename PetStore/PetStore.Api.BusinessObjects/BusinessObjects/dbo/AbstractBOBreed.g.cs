@@ -15,54 +15,62 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOBreed: AbstractBOManager
 	{
 		private IBreedRepository breedRepository;
-		private IApiBreedModelValidator breedModelValidator;
+		private IApiBreedRequestModelValidator breedModelValidator;
+		private IBOLBreedMapper breedMapper;
 		private ILogger logger;
 
 		public AbstractBOBreed(
 			ILogger logger,
 			IBreedRepository breedRepository,
-			IApiBreedModelValidator breedModelValidator)
+			IApiBreedRequestModelValidator breedModelValidator,
+			IBOLBreedMapper breedMapper)
 			: base()
 
 		{
 			this.breedRepository = breedRepository;
 			this.breedModelValidator = breedModelValidator;
+			this.breedMapper = breedMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOBreed>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiBreedResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.breedRepository.All(skip, take, orderClause);
+			var records = await this.breedRepository.All(skip, take, orderClause);
+
+			return this.breedMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOBreed> Get(int id)
+		public virtual async Task<ApiBreedResponseModel> Get(int id)
 		{
-			return this.breedRepository.Get(id);
+			var record = await breedRepository.Get(id);
+
+			return this.breedMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOBreed>> Create(
-			ApiBreedModel model)
+		public virtual async Task<CreateResponse<ApiBreedResponseModel>> Create(
+			ApiBreedRequestModel model)
 		{
-			CreateResponse<POCOBreed> response = new CreateResponse<POCOBreed>(await this.breedModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBreedResponseModel> response = new CreateResponse<ApiBreedResponseModel>(await this.breedModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBreed record = await this.breedRepository.Create(model);
+				var dto = this.breedMapper.MapModelToDTO(default (int), model);
+				var record = await this.breedRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.breedMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiBreedModel model)
+			ApiBreedRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.breedModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.breedRepository.Update(id, model);
+				var dto = this.breedMapper.MapModelToDTO(id, model);
+				await this.breedRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>feb3d5b92e16d3ef979d0be6512221de</Hash>
+    <Hash>0ca80f6de0a70f6884a01c0e16f278d4</Hash>
 </Codenesium>*/

@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOShipMethod(
 			ILogger<ShipMethodRepository> logger,
 			IShipMethodRepository shipMethodRepository,
-			IApiShipMethodModelValidator shipMethodModelValidator)
-			: base(logger, shipMethodRepository, shipMethodModelValidator)
+			IApiShipMethodRequestModelValidator shipMethodModelValidator,
+			IBOLShipMethodMapper shipMethodMapper)
+			: base(logger, shipMethodRepository, shipMethodModelValidator, shipMethodMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>38638f4fcfb3c84ac43577396e9e9e71</Hash>
+    <Hash>05df9abcacdefa870aba7aa8caba0950</Hash>
 </Codenesium>*/

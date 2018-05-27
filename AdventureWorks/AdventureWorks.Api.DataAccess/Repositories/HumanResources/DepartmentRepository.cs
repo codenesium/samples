@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class DepartmentRepository: AbstractDepartmentRepository, IDepartmentRepository
 	{
 		public DepartmentRepository(
-			IObjectMapper mapper,
+			IDALDepartmentMapper mapper,
 			ILogger<DepartmentRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f25709038f304358737959dc5846848</Hash>
+    <Hash>fcda8fe1f432f27cd3695b9d0ae71993</Hash>
 </Codenesium>*/

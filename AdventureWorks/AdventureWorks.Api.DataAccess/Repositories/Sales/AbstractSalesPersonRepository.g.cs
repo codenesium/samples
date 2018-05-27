@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSalesPersonMapper Mapper { get; }
 
 		public AbstractSalesPersonRepository(
-			IObjectMapper mapper,
+			IDALSalesPersonMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSalesPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSalesPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSalesPerson> Get(int businessEntityID)
+		public async virtual Task<DTOSalesPerson> Get(int businessEntityID)
 		{
 			SalesPerson record = await this.GetById(businessEntityID);
 
-			return this.Mapper.SalesPersonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSalesPerson> Create(
-			ApiSalesPersonModel model)
+		public async virtual Task<DTOSalesPerson> Create(
+			DTOSalesPerson dto)
 		{
 			SalesPerson record = new SalesPerson();
 
-			this.Mapper.SalesPersonMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<SalesPerson>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SalesPersonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiSalesPersonModel model)
+			DTOSalesPerson dto)
 		{
 			SalesPerson record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SalesPersonMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOSalesPerson>> Where(Expression<Func<SalesPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSalesPerson>> Where(Expression<Func<SalesPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesPerson> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSalesPerson> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSalesPerson>> SearchLinqPOCO(Expression<Func<SalesPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSalesPerson>> SearchLinqDTO(Expression<Func<SalesPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesPerson> response = new List<POCOSalesPerson>();
+			List<DTOSalesPerson> response = new List<DTOSalesPerson>();
 			List<SalesPerson> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SalesPersonMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5e13028265fd86a16f5ac2cce42394f9</Hash>
+    <Hash>e7568414038b1bfe1767592f2db7dd29</Hash>
 </Codenesium>*/

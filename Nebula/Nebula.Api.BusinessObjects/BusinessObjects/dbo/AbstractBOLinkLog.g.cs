@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOLinkLog: AbstractBOManager
 	{
 		private ILinkLogRepository linkLogRepository;
-		private IApiLinkLogModelValidator linkLogModelValidator;
+		private IApiLinkLogRequestModelValidator linkLogModelValidator;
+		private IBOLLinkLogMapper linkLogMapper;
 		private ILogger logger;
 
 		public AbstractBOLinkLog(
 			ILogger logger,
 			ILinkLogRepository linkLogRepository,
-			IApiLinkLogModelValidator linkLogModelValidator)
+			IApiLinkLogRequestModelValidator linkLogModelValidator,
+			IBOLLinkLogMapper linkLogMapper)
 			: base()
 
 		{
 			this.linkLogRepository = linkLogRepository;
 			this.linkLogModelValidator = linkLogModelValidator;
+			this.linkLogMapper = linkLogMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiLinkLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.linkLogRepository.All(skip, take, orderClause);
+			var records = await this.linkLogRepository.All(skip, take, orderClause);
+
+			return this.linkLogMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOLinkLog> Get(int id)
+		public virtual async Task<ApiLinkLogResponseModel> Get(int id)
 		{
-			return this.linkLogRepository.Get(id);
+			var record = await linkLogRepository.Get(id);
+
+			return this.linkLogMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOLinkLog>> Create(
-			ApiLinkLogModel model)
+		public virtual async Task<CreateResponse<ApiLinkLogResponseModel>> Create(
+			ApiLinkLogRequestModel model)
 		{
-			CreateResponse<POCOLinkLog> response = new CreateResponse<POCOLinkLog>(await this.linkLogModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLinkLogResponseModel> response = new CreateResponse<ApiLinkLogResponseModel>(await this.linkLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLinkLog record = await this.linkLogRepository.Create(model);
+				var dto = this.linkLogMapper.MapModelToDTO(default (int), model);
+				var record = await this.linkLogRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.linkLogMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiLinkLogModel model)
+			ApiLinkLogRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.linkLogModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.linkLogRepository.Update(id, model);
+				var dto = this.linkLogMapper.MapModelToDTO(id, model);
+				await this.linkLogRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>96b3226d8382dd4093c3739aa2e08b54</Hash>
+    <Hash>29d63936650e3f56688d24db31834c57</Hash>
 </Codenesium>*/

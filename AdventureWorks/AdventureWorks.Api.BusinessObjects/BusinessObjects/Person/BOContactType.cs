@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOContactType(
 			ILogger<ContactTypeRepository> logger,
 			IContactTypeRepository contactTypeRepository,
-			IApiContactTypeModelValidator contactTypeModelValidator)
-			: base(logger, contactTypeRepository, contactTypeModelValidator)
+			IApiContactTypeRequestModelValidator contactTypeModelValidator,
+			IBOLContactTypeMapper contactTypeMapper)
+			: base(logger, contactTypeRepository, contactTypeModelValidator, contactTypeMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e21b184263ab964f14d051cc121c9b3e</Hash>
+    <Hash>7fcec8a5eb88e89380d066f2d75b157b</Hash>
 </Codenesium>*/

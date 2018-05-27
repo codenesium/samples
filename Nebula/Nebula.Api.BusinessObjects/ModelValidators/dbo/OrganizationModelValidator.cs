@@ -6,18 +6,18 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public class ApiOrganizationModelValidator: AbstractApiOrganizationModelValidator, IApiOrganizationModelValidator
+	public class ApiOrganizationRequestModelValidator: AbstractApiOrganizationRequestModelValidator, IApiOrganizationRequestModelValidator
 	{
-		public ApiOrganizationModelValidator()
+		public ApiOrganizationRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiOrganizationModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiOrganizationRequestModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiOrganizationModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiOrganizationRequestModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
@@ -31,5 +31,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1bc813c4be750b6737dbc81f7a17c36f</Hash>
+    <Hash>e8ed675c6f68c17cec2805ba42f17a8d</Hash>
 </Codenesium>*/

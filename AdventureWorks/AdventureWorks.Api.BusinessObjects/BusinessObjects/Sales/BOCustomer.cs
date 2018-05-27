@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOCustomer(
 			ILogger<CustomerRepository> logger,
 			ICustomerRepository customerRepository,
-			IApiCustomerModelValidator customerModelValidator)
-			: base(logger, customerRepository, customerModelValidator)
+			IApiCustomerRequestModelValidator customerModelValidator,
+			IBOLCustomerMapper customerMapper)
+			: base(logger, customerRepository, customerModelValidator, customerMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>40dbec5acc67812241fbe79a08d2f5b4</Hash>
+    <Hash>57c148e8b9cf5d0d6d04d4e4f03fabc2</Hash>
 </Codenesium>*/

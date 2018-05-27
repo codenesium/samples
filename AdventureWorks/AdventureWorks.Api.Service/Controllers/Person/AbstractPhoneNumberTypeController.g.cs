@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPhoneNumberType>), 200)]
+		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPhoneNumberType> response = await this.phoneNumberTypeManager.All(query.Offset, query.Limit);
+			List<ApiPhoneNumberTypeResponseModel> response = await this.phoneNumberTypeManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOPhoneNumberType), 200)]
+		[ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPhoneNumberType response = await this.phoneNumberTypeManager.Get(id);
+			ApiPhoneNumberTypeResponseModel response = await this.phoneNumberTypeManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPhoneNumberType), 200)]
+		[ProducesResponseType(typeof(ApiPhoneNumberTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPhoneNumberTypeModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPhoneNumberTypeRequestModel model)
 		{
-			CreateResponse<POCOPhoneNumberType> result = await this.phoneNumberTypeManager.Create(model);
+			CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.phoneNumberTypeManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOPhoneNumberType>), 200)]
+		[ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPhoneNumberTypeModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPhoneNumberTypeRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOPhoneNumberType> records = new List<POCOPhoneNumberType>();
+			List<ApiPhoneNumberTypeResponseModel> records = new List<ApiPhoneNumberTypeResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOPhoneNumberType> result = await this.phoneNumberTypeManager.Create(model);
+				CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.phoneNumberTypeManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPhoneNumberType), 200)]
+		[ProducesResponseType(typeof(DTOPhoneNumberType), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPhoneNumberTypeRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPhoneNumberType response = await this.phoneNumberTypeManager.Get(id);
+					ApiPhoneNumberTypeResponseModel response = await this.phoneNumberTypeManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ab26292594cb0eba110204d04ed8a9e8</Hash>
+    <Hash>a0e30c8bb2ad0d0cee973122d7f5870a</Hash>
 </Codenesium>*/

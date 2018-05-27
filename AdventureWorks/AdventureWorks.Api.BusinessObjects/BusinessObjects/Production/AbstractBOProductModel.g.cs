@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductModel: AbstractBOManager
 	{
 		private IProductModelRepository productModelRepository;
-		private IApiProductModelModelValidator productModelModelValidator;
+		private IApiProductModelRequestModelValidator productModelModelValidator;
+		private IBOLProductModelMapper productModelMapper;
 		private ILogger logger;
 
 		public AbstractBOProductModel(
 			ILogger logger,
 			IProductModelRepository productModelRepository,
-			IApiProductModelModelValidator productModelModelValidator)
+			IApiProductModelRequestModelValidator productModelModelValidator,
+			IBOLProductModelMapper productModelMapper)
 			: base()
 
 		{
 			this.productModelRepository = productModelRepository;
 			this.productModelModelValidator = productModelModelValidator;
+			this.productModelMapper = productModelMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductModelResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productModelRepository.All(skip, take, orderClause);
+			var records = await this.productModelRepository.All(skip, take, orderClause);
+
+			return this.productModelMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductModel> Get(int productModelID)
+		public virtual async Task<ApiProductModelResponseModel> Get(int productModelID)
 		{
-			return this.productModelRepository.Get(productModelID);
+			var record = await productModelRepository.Get(productModelID);
+
+			return this.productModelMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductModel>> Create(
-			ApiProductModelModel model)
+		public virtual async Task<CreateResponse<ApiProductModelResponseModel>> Create(
+			ApiProductModelRequestModel model)
 		{
-			CreateResponse<POCOProductModel> response = new CreateResponse<POCOProductModel>(await this.productModelModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductModelResponseModel> response = new CreateResponse<ApiProductModelResponseModel>(await this.productModelModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductModel record = await this.productModelRepository.Create(model);
+				var dto = this.productModelMapper.MapModelToDTO(default (int), model);
+				var record = await this.productModelRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productModelMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productModelID,
-			ApiProductModelModel model)
+			ApiProductModelRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateUpdateAsync(productModelID, model));
 
 			if (response.Success)
 			{
-				await this.productModelRepository.Update(productModelID, model);
+				var dto = this.productModelMapper.MapModelToDTO(productModelID, model);
+				await this.productModelRepository.Update(productModelID, dto);
 			}
 
 			return response;
@@ -80,21 +88,27 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOProductModel> GetName(string name)
+		public async Task<ApiProductModelResponseModel> GetName(string name)
 		{
-			return await this.productModelRepository.GetName(name);
+			DTOProductModel record = await this.productModelRepository.GetName(name);
+
+			return this.productModelMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCOProductModel>> GetCatalogDescription(string catalogDescription)
+		public async Task<List<ApiProductModelResponseModel>> GetCatalogDescription(string catalogDescription)
 		{
-			return await this.productModelRepository.GetCatalogDescription(catalogDescription);
+			List<DTOProductModel> records = await this.productModelRepository.GetCatalogDescription(catalogDescription);
+
+			return this.productModelMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOProductModel>> GetInstructions(string instructions)
+		public async Task<List<ApiProductModelResponseModel>> GetInstructions(string instructions)
 		{
-			return await this.productModelRepository.GetInstructions(instructions);
+			List<DTOProductModel> records = await this.productModelRepository.GetInstructions(instructions);
+
+			return this.productModelMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>12bb48a4324c033e3f8498f379060e1e</Hash>
+    <Hash>f5c85ed50c6a2cae87d9b0c7acc6d82c</Hash>
 </Codenesium>*/

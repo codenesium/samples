@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICreditCardRepository
 	{
-		Task<POCOCreditCard> Create(ApiCreditCardModel model);
+		Task<DTOCreditCard> Create(DTOCreditCard dto);
 
 		Task Update(int creditCardID,
-		            ApiCreditCardModel model);
+		            DTOCreditCard dto);
 
 		Task Delete(int creditCardID);
 
-		Task<POCOCreditCard> Get(int creditCardID);
+		Task<DTOCreditCard> Get(int creditCardID);
 
-		Task<List<POCOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCreditCard> GetCardNumber(string cardNumber);
+		Task<DTOCreditCard> GetCardNumber(string cardNumber);
 	}
 }
 
 /*<Codenesium>
-    <Hash>34b078f879b4892c6af8c3b00d227408</Hash>
+    <Hash>cf218519985ec156305ac9eefda3518a</Hash>
 </Codenesium>*/

@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IStateProvinceRepository
 	{
-		Task<POCOStateProvince> Create(ApiStateProvinceModel model);
+		Task<DTOStateProvince> Create(DTOStateProvince dto);
 
 		Task Update(int stateProvinceID,
-		            ApiStateProvinceModel model);
+		            DTOStateProvince dto);
 
 		Task Delete(int stateProvinceID);
 
-		Task<POCOStateProvince> Get(int stateProvinceID);
+		Task<DTOStateProvince> Get(int stateProvinceID);
 
-		Task<List<POCOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOStateProvince> GetName(string name);
-		Task<POCOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode);
+		Task<DTOStateProvince> GetName(string name);
+		Task<DTOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6828bf0e500a5a8065dfe407f968a1c9</Hash>
+    <Hash>74afb125ff683550e434dc43f6b8345b</Hash>
 </Codenesium>*/

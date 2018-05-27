@@ -15,10 +15,10 @@ namespace PetStoreNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALPetMapper Mapper { get; }
 
 		public AbstractPetRepository(
-			IObjectMapper mapper,
+			IDALPetMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOPet>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOPet>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOPet> Get(int id)
+		public async virtual Task<DTOPet> Get(int id)
 		{
 			Pet record = await this.GetById(id);
 
-			return this.Mapper.PetMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOPet> Create(
-			ApiPetModel model)
+		public async virtual Task<DTOPet> Create(
+			DTOPet dto)
 		{
 			Pet record = new Pet();
 
-			this.Mapper.PetMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Pet>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.PetMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiPetModel model)
+			DTOPet dto)
 		{
 			Pet record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace PetStoreNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.PetMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOPet>> Where(Expression<Func<Pet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOPet>> Where(Expression<Func<Pet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPet> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOPet> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOPet>> SearchLinqPOCO(Expression<Func<Pet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOPet>> SearchLinqDTO(Expression<Func<Pet, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPet> response = new List<POCOPet>();
+			List<DTOPet> response = new List<DTOPet>();
 			List<Pet> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.PetMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b286f34294ba103480021882e5acab63</Hash>
+    <Hash>26cec24d17c60aaeb45695041db7470b</Hash>
 </Codenesium>*/

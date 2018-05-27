@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALTeamMapper Mapper { get; }
 
 		public AbstractTeamRepository(
-			IObjectMapper mapper,
+			IDALTeamMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOTeam> Get(int id)
+		public async virtual Task<DTOTeam> Get(int id)
 		{
 			Team record = await this.GetById(id);
 
-			return this.Mapper.TeamMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOTeam> Create(
-			ApiTeamModel model)
+		public async virtual Task<DTOTeam> Create(
+			DTOTeam dto)
 		{
 			Team record = new Team();
 
-			this.Mapper.TeamMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Team>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.TeamMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiTeamModel model)
+			DTOTeam dto)
 		{
 			Team record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.TeamMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOTeam> GetName(string name)
+		public async Task<DTOTeam> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOTeam>> Where(Expression<Func<Team, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOTeam>> Where(Expression<Func<Team, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOTeam> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOTeam> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOTeam>> SearchLinqPOCO(Expression<Func<Team, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOTeam>> SearchLinqDTO(Expression<Func<Team, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOTeam> response = new List<POCOTeam>();
+			List<DTOTeam> response = new List<DTOTeam>();
 			List<Team> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.TeamMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6abab4cfc9e7fadba032504f5bf30cf7</Hash>
+    <Hash>2a4b8fbab3301d9f9b3b0422340b22d9</Hash>
 </Codenesium>*/

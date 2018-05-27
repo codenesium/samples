@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALWorkOrderMapper Mapper { get; }
 
 		public AbstractWorkOrderRepository(
-			IObjectMapper mapper,
+			IDALWorkOrderMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOWorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOWorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOWorkOrder> Get(int workOrderID)
+		public async virtual Task<DTOWorkOrder> Get(int workOrderID)
 		{
 			WorkOrder record = await this.GetById(workOrderID);
 
-			return this.Mapper.WorkOrderMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOWorkOrder> Create(
-			ApiWorkOrderModel model)
+		public async virtual Task<DTOWorkOrder> Create(
+			DTOWorkOrder dto)
 		{
 			WorkOrder record = new WorkOrder();
 
-			this.Mapper.WorkOrderMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<WorkOrder>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.WorkOrderMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int workOrderID,
-			ApiWorkOrderModel model)
+			DTOWorkOrder dto)
 		{
 			WorkOrder record = await this.GetById(workOrderID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.WorkOrderMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					workOrderID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOWorkOrder>> GetProductID(int productID)
+		public async Task<List<DTOWorkOrder>> GetProductID(int productID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ProductID == productID);
+			var records = await this.SearchLinqDTO(x => x.ProductID == productID);
 
 			return records;
 		}
-		public async Task<List<POCOWorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
+		public async Task<List<DTOWorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ScrapReasonID == scrapReasonID);
-
-			return records;
-		}
-
-		protected async Task<List<POCOWorkOrder>> Where(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<POCOWorkOrder> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqDTO(x => x.ScrapReasonID == scrapReasonID);
 
 			return records;
 		}
 
-		private async Task<List<POCOWorkOrder>> SearchLinqPOCO(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOWorkOrder>> Where(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOWorkOrder> response = new List<POCOWorkOrder>();
+			List<DTOWorkOrder> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+
+			return records;
+		}
+
+		private async Task<List<DTOWorkOrder>> SearchLinqDTO(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			List<DTOWorkOrder> response = new List<DTOWorkOrder>();
 			List<WorkOrder> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.WorkOrderMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3f660bbdd847f1b9b2d032e363820492</Hash>
+    <Hash>7363c5545fd05cfc7f09140212f8059e</Hash>
 </Codenesium>*/

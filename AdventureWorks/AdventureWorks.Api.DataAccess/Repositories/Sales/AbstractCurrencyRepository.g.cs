@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALCurrencyMapper Mapper { get; }
 
 		public AbstractCurrencyRepository(
-			IObjectMapper mapper,
+			IDALCurrencyMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOCurrency> Get(string currencyCode)
+		public async virtual Task<DTOCurrency> Get(string currencyCode)
 		{
 			Currency record = await this.GetById(currencyCode);
 
-			return this.Mapper.CurrencyMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOCurrency> Create(
-			ApiCurrencyModel model)
+		public async virtual Task<DTOCurrency> Create(
+			DTOCurrency dto)
 		{
 			Currency record = new Currency();
 
-			this.Mapper.CurrencyMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (string),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Currency>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.CurrencyMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			string currencyCode,
-			ApiCurrencyModel model)
+			DTOCurrency dto)
 		{
 			Currency record = await this.GetById(currencyCode);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.CurrencyMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					currencyCode,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOCurrency> GetName(string name)
+		public async Task<DTOCurrency> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOCurrency>> Where(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOCurrency>> Where(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCurrency> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOCurrency> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOCurrency>> SearchLinqPOCO(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOCurrency>> SearchLinqDTO(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCurrency> response = new List<POCOCurrency>();
+			List<DTOCurrency> response = new List<DTOCurrency>();
 			List<Currency> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.CurrencyMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a77a80654f968260745b6eb7d7f147b9</Hash>
+    <Hash>0b5925f428576f2625ec4dcf26e9b01b</Hash>
 </Codenesium>*/

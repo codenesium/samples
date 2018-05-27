@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOEmailAddress: AbstractBOManager
 	{
 		private IEmailAddressRepository emailAddressRepository;
-		private IApiEmailAddressModelValidator emailAddressModelValidator;
+		private IApiEmailAddressRequestModelValidator emailAddressModelValidator;
+		private IBOLEmailAddressMapper emailAddressMapper;
 		private ILogger logger;
 
 		public AbstractBOEmailAddress(
 			ILogger logger,
 			IEmailAddressRepository emailAddressRepository,
-			IApiEmailAddressModelValidator emailAddressModelValidator)
+			IApiEmailAddressRequestModelValidator emailAddressModelValidator,
+			IBOLEmailAddressMapper emailAddressMapper)
 			: base()
 
 		{
 			this.emailAddressRepository = emailAddressRepository;
 			this.emailAddressModelValidator = emailAddressModelValidator;
+			this.emailAddressMapper = emailAddressMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiEmailAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.emailAddressRepository.All(skip, take, orderClause);
+			var records = await this.emailAddressRepository.All(skip, take, orderClause);
+
+			return this.emailAddressMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOEmailAddress> Get(int businessEntityID)
+		public virtual async Task<ApiEmailAddressResponseModel> Get(int businessEntityID)
 		{
-			return this.emailAddressRepository.Get(businessEntityID);
+			var record = await emailAddressRepository.Get(businessEntityID);
+
+			return this.emailAddressMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOEmailAddress>> Create(
-			ApiEmailAddressModel model)
+		public virtual async Task<CreateResponse<ApiEmailAddressResponseModel>> Create(
+			ApiEmailAddressRequestModel model)
 		{
-			CreateResponse<POCOEmailAddress> response = new CreateResponse<POCOEmailAddress>(await this.emailAddressModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmailAddressResponseModel> response = new CreateResponse<ApiEmailAddressResponseModel>(await this.emailAddressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmailAddress record = await this.emailAddressRepository.Create(model);
+				var dto = this.emailAddressMapper.MapModelToDTO(default (int), model);
+				var record = await this.emailAddressRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.emailAddressMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiEmailAddressModel model)
+			ApiEmailAddressRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.emailAddressModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.emailAddressRepository.Update(businessEntityID, model);
+				var dto = this.emailAddressMapper.MapModelToDTO(businessEntityID, model);
+				await this.emailAddressRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOEmailAddress>> GetEmailAddress(string emailAddress1)
+		public async Task<List<ApiEmailAddressResponseModel>> GetEmailAddress(string emailAddress1)
 		{
-			return await this.emailAddressRepository.GetEmailAddress(emailAddress1);
+			List<DTOEmailAddress> records = await this.emailAddressRepository.GetEmailAddress(emailAddress1);
+
+			return this.emailAddressMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d550a3145b28aa3f4830198f959f2f76</Hash>
+    <Hash>59d159315243971e0ef9e3ee700892f1</Hash>
 </Codenesium>*/

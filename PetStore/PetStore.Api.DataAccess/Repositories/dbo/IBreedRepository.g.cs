@@ -8,19 +8,19 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public interface IBreedRepository
 	{
-		Task<POCOBreed> Create(ApiBreedModel model);
+		Task<DTOBreed> Create(DTOBreed dto);
 
 		Task Update(int id,
-		            ApiBreedModel model);
+		            DTOBreed dto);
 
 		Task Delete(int id);
 
-		Task<POCOBreed> Get(int id);
+		Task<DTOBreed> Get(int id);
 
-		Task<List<POCOBreed>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOBreed>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0285f489adc920c7640bd6dc43c44c8</Hash>
+    <Hash>09e43958c86ef816b3ec87abcd8aa1db</Hash>
 </Codenesium>*/

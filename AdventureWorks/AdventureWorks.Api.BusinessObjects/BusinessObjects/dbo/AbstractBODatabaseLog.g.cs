@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBODatabaseLog: AbstractBOManager
 	{
 		private IDatabaseLogRepository databaseLogRepository;
-		private IApiDatabaseLogModelValidator databaseLogModelValidator;
+		private IApiDatabaseLogRequestModelValidator databaseLogModelValidator;
+		private IBOLDatabaseLogMapper databaseLogMapper;
 		private ILogger logger;
 
 		public AbstractBODatabaseLog(
 			ILogger logger,
 			IDatabaseLogRepository databaseLogRepository,
-			IApiDatabaseLogModelValidator databaseLogModelValidator)
+			IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
+			IBOLDatabaseLogMapper databaseLogMapper)
 			: base()
 
 		{
 			this.databaseLogRepository = databaseLogRepository;
 			this.databaseLogModelValidator = databaseLogModelValidator;
+			this.databaseLogMapper = databaseLogMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCODatabaseLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiDatabaseLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.databaseLogRepository.All(skip, take, orderClause);
+			var records = await this.databaseLogRepository.All(skip, take, orderClause);
+
+			return this.databaseLogMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCODatabaseLog> Get(int databaseLogID)
+		public virtual async Task<ApiDatabaseLogResponseModel> Get(int databaseLogID)
 		{
-			return this.databaseLogRepository.Get(databaseLogID);
+			var record = await databaseLogRepository.Get(databaseLogID);
+
+			return this.databaseLogMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCODatabaseLog>> Create(
-			ApiDatabaseLogModel model)
+		public virtual async Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
+			ApiDatabaseLogRequestModel model)
 		{
-			CreateResponse<POCODatabaseLog> response = new CreateResponse<POCODatabaseLog>(await this.databaseLogModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDatabaseLogResponseModel> response = new CreateResponse<ApiDatabaseLogResponseModel>(await this.databaseLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODatabaseLog record = await this.databaseLogRepository.Create(model);
+				var dto = this.databaseLogMapper.MapModelToDTO(default (int), model);
+				var record = await this.databaseLogRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.databaseLogMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int databaseLogID,
-			ApiDatabaseLogModel model)
+			ApiDatabaseLogRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.databaseLogModelValidator.ValidateUpdateAsync(databaseLogID, model));
 
 			if (response.Success)
 			{
-				await this.databaseLogRepository.Update(databaseLogID, model);
+				var dto = this.databaseLogMapper.MapModelToDTO(databaseLogID, model);
+				await this.databaseLogRepository.Update(databaseLogID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8e7d092534254af298cbffc90c53e38b</Hash>
+    <Hash>e9e57a7e9523c4bbafb6f45478955db6</Hash>
 </Codenesium>*/

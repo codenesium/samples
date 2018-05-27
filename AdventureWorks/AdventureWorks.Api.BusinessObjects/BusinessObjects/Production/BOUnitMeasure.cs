@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOUnitMeasure(
 			ILogger<UnitMeasureRepository> logger,
 			IUnitMeasureRepository unitMeasureRepository,
-			IApiUnitMeasureModelValidator unitMeasureModelValidator)
-			: base(logger, unitMeasureRepository, unitMeasureModelValidator)
+			IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
+			IBOLUnitMeasureMapper unitMeasureMapper)
+			: base(logger, unitMeasureRepository, unitMeasureModelValidator, unitMeasureMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8bd83f17f33c46a67ed05f7e368974a5</Hash>
+    <Hash>0c5b75aeedd77e7b401acbead5480435</Hash>
 </Codenesium>*/

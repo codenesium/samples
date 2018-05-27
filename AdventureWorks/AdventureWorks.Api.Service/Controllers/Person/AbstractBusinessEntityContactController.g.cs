@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBusinessEntityContact> response = await this.businessEntityContactManager.All(query.Offset, query.Limit);
+			List<ApiBusinessEntityContactResponseModel> response = await this.businessEntityContactManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOBusinessEntityContact), 200)]
+		[ProducesResponseType(typeof(ApiBusinessEntityContactResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBusinessEntityContact response = await this.businessEntityContactManager.Get(id);
+			ApiBusinessEntityContactResponseModel response = await this.businessEntityContactManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBusinessEntityContact), 200)]
+		[ProducesResponseType(typeof(ApiBusinessEntityContactResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityContactModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityContactRequestModel model)
 		{
-			CreateResponse<POCOBusinessEntityContact> result = await this.businessEntityContactManager.Create(model);
+			CreateResponse<ApiBusinessEntityContactResponseModel> result = await this.businessEntityContactManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBusinessEntityContactModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBusinessEntityContactRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOBusinessEntityContact> records = new List<POCOBusinessEntityContact>();
+			List<ApiBusinessEntityContactResponseModel> records = new List<ApiBusinessEntityContactResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOBusinessEntityContact> result = await this.businessEntityContactManager.Create(model);
+				CreateResponse<ApiBusinessEntityContactResponseModel> result = await this.businessEntityContactManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBusinessEntityContact), 200)]
+		[ProducesResponseType(typeof(DTOBusinessEntityContact), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityContactModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityContactRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBusinessEntityContact response = await this.businessEntityContactManager.Get(id);
+					ApiBusinessEntityContactResponseModel response = await this.businessEntityContactManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getContactTypeID/{contactTypeID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetContactTypeID(int contactTypeID)
 		{
-			List<POCOBusinessEntityContact> response = await this.businessEntityContactManager.GetContactTypeID(contactTypeID);
+			List<ApiBusinessEntityContactResponseModel> response = await this.businessEntityContactManager.GetContactTypeID(contactTypeID);
 
 			return this.Ok(response);
 		}
@@ -182,10 +182,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getPersonID/{personID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOBusinessEntityContact>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetPersonID(int personID)
 		{
-			List<POCOBusinessEntityContact> response = await this.businessEntityContactManager.GetPersonID(personID);
+			List<ApiBusinessEntityContactResponseModel> response = await this.businessEntityContactManager.GetPersonID(personID);
 
 			return this.Ok(response);
 		}
@@ -193,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c1c1613f1816a6175c16cbfd5eef4232</Hash>
+    <Hash>4e705ee03e109938e929165680b8ccdc</Hash>
 </Codenesium>*/

@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOLocation
 	{
-		Task<CreateResponse<POCOLocation>> Create(
-			ApiLocationModel model);
+		Task<CreateResponse<ApiLocationResponseModel>> Create(
+			ApiLocationRequestModel model);
 
 		Task<ActionResponse> Update(short locationID,
-		                            ApiLocationModel model);
+		                            ApiLocationRequestModel model);
 
 		Task<ActionResponse> Delete(short locationID);
 
-		Task<POCOLocation> Get(short locationID);
+		Task<ApiLocationResponseModel> Get(short locationID);
 
-		Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiLocationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOLocation> GetName(string name);
+		Task<ApiLocationResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c24cfcfe6f3c29e3dc3fc4f90d90b45</Hash>
+    <Hash>0cb3b3a0a96f44e574ab0889fe21879d</Hash>
 </Codenesium>*/

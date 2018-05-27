@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOOrganization>), 200)]
+		[ProducesResponseType(typeof(List<ApiOrganizationResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOOrganization> response = await this.organizationManager.All(query.Offset, query.Limit);
+			List<ApiOrganizationResponseModel> response = await this.organizationManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOOrganization), 200)]
+		[ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOOrganization response = await this.organizationManager.Get(id);
+			ApiOrganizationResponseModel response = await this.organizationManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOOrganization), 200)]
+		[ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiOrganizationModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiOrganizationRequestModel model)
 		{
-			CreateResponse<POCOOrganization> result = await this.organizationManager.Create(model);
+			CreateResponse<ApiOrganizationResponseModel> result = await this.organizationManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOOrganization>), 200)]
+		[ProducesResponseType(typeof(List<ApiOrganizationResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiOrganizationModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiOrganizationRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOOrganization> records = new List<POCOOrganization>();
+			List<ApiOrganizationResponseModel> records = new List<ApiOrganizationResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOOrganization> result = await this.organizationManager.Create(model);
+				CreateResponse<ApiOrganizationResponseModel> result = await this.organizationManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOOrganization), 200)]
+		[ProducesResponseType(typeof(DTOOrganization), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOrganizationModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiOrganizationRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOOrganization response = await this.organizationManager.Get(id);
+					ApiOrganizationResponseModel response = await this.organizationManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOOrganization), 200)]
+		[ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOOrganization response = await this.organizationManager.GetName(name);
+			ApiOrganizationResponseModel response = await this.organizationManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>8a07d7692e5c12029569a9e87851d4b0</Hash>
+    <Hash>20dfa858154952224a22bdd8fcf0967e</Hash>
 </Codenesium>*/

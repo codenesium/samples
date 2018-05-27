@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTransactionHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOTransactionHistory> response = await this.transactionHistoryManager.All(query.Offset, query.Limit);
+			List<ApiTransactionHistoryResponseModel> response = await this.transactionHistoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOTransactionHistory), 200)]
+		[ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOTransactionHistory response = await this.transactionHistoryManager.Get(id);
+			ApiTransactionHistoryResponseModel response = await this.transactionHistoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTransactionHistory), 200)]
+		[ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryRequestModel model)
 		{
-			CreateResponse<POCOTransactionHistory> result = await this.transactionHistoryManager.Create(model);
+			CreateResponse<ApiTransactionHistoryResponseModel> result = await this.transactionHistoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOTransactionHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTransactionHistoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTransactionHistoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOTransactionHistory> records = new List<POCOTransactionHistory>();
+			List<ApiTransactionHistoryResponseModel> records = new List<ApiTransactionHistoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOTransactionHistory> result = await this.transactionHistoryManager.Create(model);
+				CreateResponse<ApiTransactionHistoryResponseModel> result = await this.transactionHistoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTransactionHistory), 200)]
+		[ProducesResponseType(typeof(DTOTransactionHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTransactionHistory response = await this.transactionHistoryManager.Get(id);
+					ApiTransactionHistoryResponseModel response = await this.transactionHistoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTransactionHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOTransactionHistory> response = await this.transactionHistoryManager.GetProductID(productID);
+			List<ApiTransactionHistoryResponseModel> response = await this.transactionHistoryManager.GetProductID(productID);
 
 			return this.Ok(response);
 		}
@@ -182,10 +182,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTransactionHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
 		{
-			List<POCOTransactionHistory> response = await this.transactionHistoryManager.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
+			List<ApiTransactionHistoryResponseModel> response = await this.transactionHistoryManager.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
 
 			return this.Ok(response);
 		}
@@ -193,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1ba398f400b784309bb3e2b18713793f</Hash>
+    <Hash>bff71b67be2119e1c7c931b020c2e8f0</Hash>
 </Codenesium>*/

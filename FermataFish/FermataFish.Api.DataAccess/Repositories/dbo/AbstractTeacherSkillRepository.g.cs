@@ -15,10 +15,10 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALTeacherSkillMapper Mapper { get; }
 
 		public AbstractTeacherSkillRepository(
-			IObjectMapper mapper,
+			IDALTeacherSkillMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOTeacherSkill>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOTeacherSkill>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOTeacherSkill> Get(int id)
+		public async virtual Task<DTOTeacherSkill> Get(int id)
 		{
 			TeacherSkill record = await this.GetById(id);
 
-			return this.Mapper.TeacherSkillMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOTeacherSkill> Create(
-			ApiTeacherSkillModel model)
+		public async virtual Task<DTOTeacherSkill> Create(
+			DTOTeacherSkill dto)
 		{
 			TeacherSkill record = new TeacherSkill();
 
-			this.Mapper.TeacherSkillMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<TeacherSkill>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.TeacherSkillMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiTeacherSkillModel model)
+			DTOTeacherSkill dto)
 		{
 			TeacherSkill record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.TeacherSkillMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOTeacherSkill>> Where(Expression<Func<TeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOTeacherSkill>> Where(Expression<Func<TeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOTeacherSkill> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOTeacherSkill> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOTeacherSkill>> SearchLinqPOCO(Expression<Func<TeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOTeacherSkill>> SearchLinqDTO(Expression<Func<TeacherSkill, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOTeacherSkill> response = new List<POCOTeacherSkill>();
+			List<DTOTeacherSkill> response = new List<DTOTeacherSkill>();
 			List<TeacherSkill> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.TeacherSkillMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3c4457b11b3f2e8957801d4c87ab0408</Hash>
+    <Hash>e963dfbed3a2a1bff021282492ab02a5</Hash>
 </Codenesium>*/

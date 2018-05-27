@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesPersonQuotaHistory: AbstractBOManager
 	{
 		private ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
-		private IApiSalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator;
+		private IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator;
+		private IBOLSalesPersonQuotaHistoryMapper salesPersonQuotaHistoryMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesPersonQuotaHistory(
 			ILogger logger,
 			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
-			IApiSalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator)
+			IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
+			IBOLSalesPersonQuotaHistoryMapper salesPersonQuotaHistoryMapper)
 			: base()
 
 		{
 			this.salesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
 			this.salesPersonQuotaHistoryModelValidator = salesPersonQuotaHistoryModelValidator;
+			this.salesPersonQuotaHistoryMapper = salesPersonQuotaHistoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesPersonQuotaHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesPersonQuotaHistoryRepository.All(skip, take, orderClause);
+			var records = await this.salesPersonQuotaHistoryRepository.All(skip, take, orderClause);
+
+			return this.salesPersonQuotaHistoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesPersonQuotaHistory> Get(int businessEntityID)
+		public virtual async Task<ApiSalesPersonQuotaHistoryResponseModel> Get(int businessEntityID)
 		{
-			return this.salesPersonQuotaHistoryRepository.Get(businessEntityID);
+			var record = await salesPersonQuotaHistoryRepository.Get(businessEntityID);
+
+			return this.salesPersonQuotaHistoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesPersonQuotaHistory>> Create(
-			ApiSalesPersonQuotaHistoryModel model)
+		public virtual async Task<CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>> Create(
+			ApiSalesPersonQuotaHistoryRequestModel model)
 		{
-			CreateResponse<POCOSalesPersonQuotaHistory> response = new CreateResponse<POCOSalesPersonQuotaHistory>(await this.salesPersonQuotaHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> response = new CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>(await this.salesPersonQuotaHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesPersonQuotaHistory record = await this.salesPersonQuotaHistoryRepository.Create(model);
+				var dto = this.salesPersonQuotaHistoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesPersonQuotaHistoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesPersonQuotaHistoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiSalesPersonQuotaHistoryModel model)
+			ApiSalesPersonQuotaHistoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesPersonQuotaHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.salesPersonQuotaHistoryRepository.Update(businessEntityID, model);
+				var dto = this.salesPersonQuotaHistoryMapper.MapModelToDTO(businessEntityID, model);
+				await this.salesPersonQuotaHistoryRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>42824e8e410135d3c4deb081ee2d895d</Hash>
+    <Hash>f3ce11cc9d03bb7b679d4082dfa12c98</Hash>
 </Codenesium>*/

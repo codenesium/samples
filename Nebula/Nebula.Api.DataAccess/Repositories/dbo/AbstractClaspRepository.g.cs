@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALClaspMapper Mapper { get; }
 
 		public AbstractClaspRepository(
-			IObjectMapper mapper,
+			IDALClaspMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOClasp> Get(int id)
+		public async virtual Task<DTOClasp> Get(int id)
 		{
 			Clasp record = await this.GetById(id);
 
-			return this.Mapper.ClaspMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOClasp> Create(
-			ApiClaspModel model)
+		public async virtual Task<DTOClasp> Create(
+			DTOClasp dto)
 		{
 			Clasp record = new Clasp();
 
-			this.Mapper.ClaspMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Clasp>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ClaspMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiClaspModel model)
+			DTOClasp dto)
 		{
 			Clasp record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ClaspMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOClasp>> Where(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOClasp>> Where(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOClasp> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOClasp> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOClasp>> SearchLinqPOCO(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOClasp>> SearchLinqDTO(Expression<Func<Clasp, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOClasp> response = new List<POCOClasp>();
+			List<DTOClasp> response = new List<DTOClasp>();
 			List<Clasp> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ClaspMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f323802e0678b888fecfbb5540641480</Hash>
+    <Hash>686ffebab8ded41cea678a8426c1ec51</Hash>
 </Codenesium>*/

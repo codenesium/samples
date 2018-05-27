@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRegionCurrencyResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCountryRegionCurrency> response = await this.countryRegionCurrencyManager.All(query.Offset, query.Limit);
+			List<ApiCountryRegionCurrencyResponseModel> response = await this.countryRegionCurrencyManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCountryRegionCurrency), 200)]
+		[ProducesResponseType(typeof(ApiCountryRegionCurrencyResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOCountryRegionCurrency response = await this.countryRegionCurrencyManager.Get(id);
+			ApiCountryRegionCurrencyResponseModel response = await this.countryRegionCurrencyManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCountryRegionCurrency), 200)]
+		[ProducesResponseType(typeof(ApiCountryRegionCurrencyResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<string>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCountryRegionCurrencyModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiCountryRegionCurrencyRequestModel model)
 		{
-			CreateResponse<POCOCountryRegionCurrency> result = await this.countryRegionCurrencyManager.Create(model);
+			CreateResponse<ApiCountryRegionCurrencyResponseModel> result = await this.countryRegionCurrencyManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRegionCurrencyResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCountryRegionCurrencyModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCountryRegionCurrencyRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOCountryRegionCurrency> records = new List<POCOCountryRegionCurrency>();
+			List<ApiCountryRegionCurrencyResponseModel> records = new List<ApiCountryRegionCurrencyResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOCountryRegionCurrency> result = await this.countryRegionCurrencyManager.Create(model);
+				CreateResponse<ApiCountryRegionCurrencyResponseModel> result = await this.countryRegionCurrencyManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCountryRegionCurrency), 200)]
+		[ProducesResponseType(typeof(DTOCountryRegionCurrency), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionCurrencyModel model)
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionCurrencyRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCountryRegionCurrency response = await this.countryRegionCurrencyManager.Get(id);
+					ApiCountryRegionCurrencyResponseModel response = await this.countryRegionCurrencyManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getCurrencyCode/{currencyCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCountryRegionCurrency>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRegionCurrencyResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetCurrencyCode(string currencyCode)
 		{
-			List<POCOCountryRegionCurrency> response = await this.countryRegionCurrencyManager.GetCurrencyCode(currencyCode);
+			List<ApiCountryRegionCurrencyResponseModel> response = await this.countryRegionCurrencyManager.GetCurrencyCode(currencyCode);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>011994c345ab244b9ca1cae4e3e29372</Hash>
+    <Hash>179b4c6eaaea33a2ced98f42a7f6a40b</Hash>
 </Codenesium>*/

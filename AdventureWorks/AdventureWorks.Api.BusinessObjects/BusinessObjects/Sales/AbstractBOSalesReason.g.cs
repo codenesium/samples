@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesReason: AbstractBOManager
 	{
 		private ISalesReasonRepository salesReasonRepository;
-		private IApiSalesReasonModelValidator salesReasonModelValidator;
+		private IApiSalesReasonRequestModelValidator salesReasonModelValidator;
+		private IBOLSalesReasonMapper salesReasonMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesReason(
 			ILogger logger,
 			ISalesReasonRepository salesReasonRepository,
-			IApiSalesReasonModelValidator salesReasonModelValidator)
+			IApiSalesReasonRequestModelValidator salesReasonModelValidator,
+			IBOLSalesReasonMapper salesReasonMapper)
 			: base()
 
 		{
 			this.salesReasonRepository = salesReasonRepository;
 			this.salesReasonModelValidator = salesReasonModelValidator;
+			this.salesReasonMapper = salesReasonMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesReasonRepository.All(skip, take, orderClause);
+			var records = await this.salesReasonRepository.All(skip, take, orderClause);
+
+			return this.salesReasonMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesReason> Get(int salesReasonID)
+		public virtual async Task<ApiSalesReasonResponseModel> Get(int salesReasonID)
 		{
-			return this.salesReasonRepository.Get(salesReasonID);
+			var record = await salesReasonRepository.Get(salesReasonID);
+
+			return this.salesReasonMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesReason>> Create(
-			ApiSalesReasonModel model)
+		public virtual async Task<CreateResponse<ApiSalesReasonResponseModel>> Create(
+			ApiSalesReasonRequestModel model)
 		{
-			CreateResponse<POCOSalesReason> response = new CreateResponse<POCOSalesReason>(await this.salesReasonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesReasonResponseModel> response = new CreateResponse<ApiSalesReasonResponseModel>(await this.salesReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesReason record = await this.salesReasonRepository.Create(model);
+				var dto = this.salesReasonMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesReasonRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesReasonMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int salesReasonID,
-			ApiSalesReasonModel model)
+			ApiSalesReasonRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesReasonModelValidator.ValidateUpdateAsync(salesReasonID, model));
 
 			if (response.Success)
 			{
-				await this.salesReasonRepository.Update(salesReasonID, model);
+				var dto = this.salesReasonMapper.MapModelToDTO(salesReasonID, model);
+				await this.salesReasonRepository.Update(salesReasonID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>ae4d158b13a9d12516668ea3ee2a0d59</Hash>
+    <Hash>76258c7f7515897bed8782fa18f48802</Hash>
 </Codenesium>*/

@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOPersonPhone
 	{
-		Task<CreateResponse<POCOPersonPhone>> Create(
-			ApiPersonPhoneModel model);
+		Task<CreateResponse<ApiPersonPhoneResponseModel>> Create(
+			ApiPersonPhoneRequestModel model);
 
 		Task<ActionResponse> Update(int businessEntityID,
-		                            ApiPersonPhoneModel model);
+		                            ApiPersonPhoneRequestModel model);
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<POCOPersonPhone> Get(int businessEntityID);
+		Task<ApiPersonPhoneResponseModel> Get(int businessEntityID);
 
-		Task<List<POCOPersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiPersonPhoneResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOPersonPhone>> GetPhoneNumber(string phoneNumber);
+		Task<List<ApiPersonPhoneResponseModel>> GetPhoneNumber(string phoneNumber);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d4eb48169c7e66ecf1df381531104e6</Hash>
+    <Hash>bca8ef0777ec9864cd5f3aa3f6cc378f</Hash>
 </Codenesium>*/

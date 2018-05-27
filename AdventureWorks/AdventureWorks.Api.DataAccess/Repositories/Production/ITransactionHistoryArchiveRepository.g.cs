@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ITransactionHistoryArchiveRepository
 	{
-		Task<POCOTransactionHistoryArchive> Create(ApiTransactionHistoryArchiveModel model);
+		Task<DTOTransactionHistoryArchive> Create(DTOTransactionHistoryArchive dto);
 
 		Task Update(int transactionID,
-		            ApiTransactionHistoryArchiveModel model);
+		            DTOTransactionHistoryArchive dto);
 
 		Task Delete(int transactionID);
 
-		Task<POCOTransactionHistoryArchive> Get(int transactionID);
+		Task<DTOTransactionHistoryArchive> Get(int transactionID);
 
-		Task<List<POCOTransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOTransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOTransactionHistoryArchive>> GetProductID(int productID);
-		Task<List<POCOTransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID);
+		Task<List<DTOTransactionHistoryArchive>> GetProductID(int productID);
+		Task<List<DTOTransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1693810f14c69cf35949a11c9cab2433</Hash>
+    <Hash>0717fdb3819e410182d6a2c37f437358</Hash>
 </Codenesium>*/

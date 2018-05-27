@@ -38,13 +38,13 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSpecies>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSpecies> response = await this.speciesManager.All(query.Offset, query.Limit);
+			List<ApiSpeciesResponseModel> response = await this.speciesManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSpecies), 200)]
+		[ProducesResponseType(typeof(ApiSpeciesResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSpecies response = await this.speciesManager.Get(id);
+			ApiSpeciesResponseModel response = await this.speciesManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpecies), 200)]
+		[ProducesResponseType(typeof(ApiSpeciesResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpeciesModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpeciesRequestModel model)
 		{
-			CreateResponse<POCOSpecies> result = await this.speciesManager.Create(model);
+			CreateResponse<ApiSpeciesResponseModel> result = await this.speciesManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSpecies>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpeciesResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpeciesModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpeciesRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSpecies> records = new List<POCOSpecies>();
+			List<ApiSpeciesResponseModel> records = new List<ApiSpeciesResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSpecies> result = await this.speciesManager.Create(model);
+				CreateResponse<ApiSpeciesResponseModel> result = await this.speciesManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace PetStoreNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpecies), 200)]
+		[ProducesResponseType(typeof(DTOSpecies), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpeciesModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpeciesRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpecies response = await this.speciesManager.Get(id);
+					ApiSpeciesResponseModel response = await this.speciesManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6264049f08050b71926fdc66f87f9451</Hash>
+    <Hash>4c4b22d2983e4897fb19672e0414a2dd</Hash>
 </Codenesium>*/

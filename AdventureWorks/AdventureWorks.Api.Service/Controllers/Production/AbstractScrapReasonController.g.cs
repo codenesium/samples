@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOScrapReason>), 200)]
+		[ProducesResponseType(typeof(List<ApiScrapReasonResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOScrapReason> response = await this.scrapReasonManager.All(query.Offset, query.Limit);
+			List<ApiScrapReasonResponseModel> response = await this.scrapReasonManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOScrapReason), 200)]
+		[ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(short id)
 		{
-			POCOScrapReason response = await this.scrapReasonManager.Get(id);
+			ApiScrapReasonResponseModel response = await this.scrapReasonManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOScrapReason), 200)]
+		[ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<short>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiScrapReasonModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiScrapReasonRequestModel model)
 		{
-			CreateResponse<POCOScrapReason> result = await this.scrapReasonManager.Create(model);
+			CreateResponse<ApiScrapReasonResponseModel> result = await this.scrapReasonManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOScrapReason>), 200)]
+		[ProducesResponseType(typeof(List<ApiScrapReasonResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiScrapReasonModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiScrapReasonRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOScrapReason> records = new List<POCOScrapReason>();
+			List<ApiScrapReasonResponseModel> records = new List<ApiScrapReasonResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOScrapReason> result = await this.scrapReasonManager.Create(model);
+				CreateResponse<ApiScrapReasonResponseModel> result = await this.scrapReasonManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOScrapReason), 200)]
+		[ProducesResponseType(typeof(DTOScrapReason), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiScrapReasonModel model)
+		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiScrapReasonRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOScrapReason response = await this.scrapReasonManager.Get(id);
+					ApiScrapReasonResponseModel response = await this.scrapReasonManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOScrapReason), 200)]
+		[ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOScrapReason response = await this.scrapReasonManager.GetName(name);
+			ApiScrapReasonResponseModel response = await this.scrapReasonManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>61ad9830661eff18353f729d27468155</Hash>
+    <Hash>55b2319ba74b580cfb5fe669acd54bdb</Hash>
 </Codenesium>*/

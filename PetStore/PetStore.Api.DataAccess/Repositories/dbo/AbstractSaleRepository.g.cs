@@ -15,10 +15,10 @@ namespace PetStoreNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSaleMapper Mapper { get; }
 
 		public AbstractSaleRepository(
-			IObjectMapper mapper,
+			IDALSaleMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSale>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSale>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSale> Get(int id)
+		public async virtual Task<DTOSale> Get(int id)
 		{
 			Sale record = await this.GetById(id);
 
-			return this.Mapper.SaleMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSale> Create(
-			ApiSaleModel model)
+		public async virtual Task<DTOSale> Create(
+			DTOSale dto)
 		{
 			Sale record = new Sale();
 
-			this.Mapper.SaleMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Sale>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SaleMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiSaleModel model)
+			DTOSale dto)
 		{
 			Sale record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace PetStoreNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SaleMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOSale>> Where(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSale>> Where(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSale> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSale> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSale>> SearchLinqPOCO(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSale>> SearchLinqDTO(Expression<Func<Sale, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSale> response = new List<POCOSale>();
+			List<DTOSale> response = new List<DTOSale>();
 			List<Sale> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SaleMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>255e3c072bee409ead6d2cfe93042bbe</Hash>
+    <Hash>c4b11b7fb48c6937a7d420b6f980b42d</Hash>
 </Codenesium>*/

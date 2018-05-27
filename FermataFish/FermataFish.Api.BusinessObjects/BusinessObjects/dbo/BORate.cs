@@ -15,12 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BORate(
 			ILogger<RateRepository> logger,
 			IRateRepository rateRepository,
-			IApiRateModelValidator rateModelValidator)
-			: base(logger, rateRepository, rateModelValidator)
+			IApiRateRequestModelValidator rateModelValidator,
+			IBOLRateMapper rateMapper)
+			: base(logger, rateRepository, rateModelValidator, rateMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>37649e3ccffb40987ac4f65b9c70ff0f</Hash>
+    <Hash>7c7008b49d17d5e4a0203f8088c56ad4</Hash>
 </Codenesium>*/

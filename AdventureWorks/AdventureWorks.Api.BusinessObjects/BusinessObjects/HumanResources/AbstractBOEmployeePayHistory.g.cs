@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOEmployeePayHistory: AbstractBOManager
 	{
 		private IEmployeePayHistoryRepository employeePayHistoryRepository;
-		private IApiEmployeePayHistoryModelValidator employeePayHistoryModelValidator;
+		private IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator;
+		private IBOLEmployeePayHistoryMapper employeePayHistoryMapper;
 		private ILogger logger;
 
 		public AbstractBOEmployeePayHistory(
 			ILogger logger,
 			IEmployeePayHistoryRepository employeePayHistoryRepository,
-			IApiEmployeePayHistoryModelValidator employeePayHistoryModelValidator)
+			IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
+			IBOLEmployeePayHistoryMapper employeePayHistoryMapper)
 			: base()
 
 		{
 			this.employeePayHistoryRepository = employeePayHistoryRepository;
 			this.employeePayHistoryModelValidator = employeePayHistoryModelValidator;
+			this.employeePayHistoryMapper = employeePayHistoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOEmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiEmployeePayHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.employeePayHistoryRepository.All(skip, take, orderClause);
+			var records = await this.employeePayHistoryRepository.All(skip, take, orderClause);
+
+			return this.employeePayHistoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOEmployeePayHistory> Get(int businessEntityID)
+		public virtual async Task<ApiEmployeePayHistoryResponseModel> Get(int businessEntityID)
 		{
-			return this.employeePayHistoryRepository.Get(businessEntityID);
+			var record = await employeePayHistoryRepository.Get(businessEntityID);
+
+			return this.employeePayHistoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOEmployeePayHistory>> Create(
-			ApiEmployeePayHistoryModel model)
+		public virtual async Task<CreateResponse<ApiEmployeePayHistoryResponseModel>> Create(
+			ApiEmployeePayHistoryRequestModel model)
 		{
-			CreateResponse<POCOEmployeePayHistory> response = new CreateResponse<POCOEmployeePayHistory>(await this.employeePayHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmployeePayHistoryResponseModel> response = new CreateResponse<ApiEmployeePayHistoryResponseModel>(await this.employeePayHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmployeePayHistory record = await this.employeePayHistoryRepository.Create(model);
+				var dto = this.employeePayHistoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.employeePayHistoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.employeePayHistoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiEmployeePayHistoryModel model)
+			ApiEmployeePayHistoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.employeePayHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.employeePayHistoryRepository.Update(businessEntityID, model);
+				var dto = this.employeePayHistoryMapper.MapModelToDTO(businessEntityID, model);
+				await this.employeePayHistoryRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>02d582d8ba8a0637e4a70a427f9ae5dc</Hash>
+    <Hash>d258a85587aa52ca31a3ac362850597e</Hash>
 </Codenesium>*/

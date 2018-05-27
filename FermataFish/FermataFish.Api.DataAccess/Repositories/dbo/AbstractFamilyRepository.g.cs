@@ -15,10 +15,10 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALFamilyMapper Mapper { get; }
 
 		public AbstractFamilyRepository(
-			IObjectMapper mapper,
+			IDALFamilyMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOFamily> Get(int id)
+		public async virtual Task<DTOFamily> Get(int id)
 		{
 			Family record = await this.GetById(id);
 
-			return this.Mapper.FamilyMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOFamily> Create(
-			ApiFamilyModel model)
+		public async virtual Task<DTOFamily> Create(
+			DTOFamily dto)
 		{
 			Family record = new Family();
 
-			this.Mapper.FamilyMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Family>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.FamilyMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiFamilyModel model)
+			DTOFamily dto)
 		{
 			Family record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.FamilyMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOFamily>> Where(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOFamily>> Where(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOFamily> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOFamily> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOFamily>> SearchLinqPOCO(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOFamily>> SearchLinqDTO(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOFamily> response = new List<POCOFamily>();
+			List<DTOFamily> response = new List<DTOFamily>();
 			List<Family> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.FamilyMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e14b51362d84d4188b829b4b1da5bfc0</Hash>
+    <Hash>bbd21cccfe644cf0f711fabc9f7683c8</Hash>
 </Codenesium>*/

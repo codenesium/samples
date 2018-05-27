@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOAdmin: AbstractBOManager
 	{
 		private IAdminRepository adminRepository;
-		private IApiAdminModelValidator adminModelValidator;
+		private IApiAdminRequestModelValidator adminModelValidator;
+		private IBOLAdminMapper adminMapper;
 		private ILogger logger;
 
 		public AbstractBOAdmin(
 			ILogger logger,
 			IAdminRepository adminRepository,
-			IApiAdminModelValidator adminModelValidator)
+			IApiAdminRequestModelValidator adminModelValidator,
+			IBOLAdminMapper adminMapper)
 			: base()
 
 		{
 			this.adminRepository = adminRepository;
 			this.adminModelValidator = adminModelValidator;
+			this.adminMapper = adminMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOAdmin>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiAdminResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.adminRepository.All(skip, take, orderClause);
+			var records = await this.adminRepository.All(skip, take, orderClause);
+
+			return this.adminMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOAdmin> Get(int id)
+		public virtual async Task<ApiAdminResponseModel> Get(int id)
 		{
-			return this.adminRepository.Get(id);
+			var record = await adminRepository.Get(id);
+
+			return this.adminMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOAdmin>> Create(
-			ApiAdminModel model)
+		public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
+			ApiAdminRequestModel model)
 		{
-			CreateResponse<POCOAdmin> response = new CreateResponse<POCOAdmin>(await this.adminModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.adminModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAdmin record = await this.adminRepository.Create(model);
+				var dto = this.adminMapper.MapModelToDTO(default (int), model);
+				var record = await this.adminRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.adminMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiAdminModel model)
+			ApiAdminRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.adminRepository.Update(id, model);
+				var dto = this.adminMapper.MapModelToDTO(id, model);
+				await this.adminRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a8b3a90c9d0ed0ce2cd4b6dcbb4b45f3</Hash>
+    <Hash>df9e1acda934f381b4980ebe40755c51</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSalesOrderDetailMapper Mapper { get; }
 
 		public AbstractSalesOrderDetailRepository(
-			IObjectMapper mapper,
+			IDALSalesOrderDetailMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSalesOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSalesOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSalesOrderDetail> Get(int salesOrderID)
+		public async virtual Task<DTOSalesOrderDetail> Get(int salesOrderID)
 		{
 			SalesOrderDetail record = await this.GetById(salesOrderID);
 
-			return this.Mapper.SalesOrderDetailMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSalesOrderDetail> Create(
-			ApiSalesOrderDetailModel model)
+		public async virtual Task<DTOSalesOrderDetail> Create(
+			DTOSalesOrderDetail dto)
 		{
 			SalesOrderDetail record = new SalesOrderDetail();
 
-			this.Mapper.SalesOrderDetailMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<SalesOrderDetail>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SalesOrderDetailMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int salesOrderID,
-			ApiSalesOrderDetailModel model)
+			DTOSalesOrderDetail dto)
 		{
 			SalesOrderDetail record = await this.GetById(salesOrderID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SalesOrderDetailMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					salesOrderID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOSalesOrderDetail>> GetProductID(int productID)
+		public async Task<List<DTOSalesOrderDetail>> GetProductID(int productID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ProductID == productID);
+			var records = await this.SearchLinqDTO(x => x.ProductID == productID);
 
 			return records;
 		}
 
-		protected async Task<List<POCOSalesOrderDetail>> Where(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSalesOrderDetail>> Where(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesOrderDetail> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSalesOrderDetail> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSalesOrderDetail>> SearchLinqPOCO(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSalesOrderDetail>> SearchLinqDTO(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesOrderDetail> response = new List<POCOSalesOrderDetail>();
+			List<DTOSalesOrderDetail> response = new List<DTOSalesOrderDetail>();
 			List<SalesOrderDetail> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SalesOrderDetailMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>64158613ef5c56a3b19323843fc9f022</Hash>
+    <Hash>d130fb1911f8b2a62549dc5e6156cc17</Hash>
 </Codenesium>*/

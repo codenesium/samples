@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductInventoryRepository: AbstractProductInventoryRepository, IProductInventoryRepository
 	{
 		public ProductInventoryRepository(
-			IObjectMapper mapper,
+			IDALProductInventoryMapper mapper,
 			ILogger<ProductInventoryRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a827b635f87108ac94d62be043a47029</Hash>
+    <Hash>863247bfe4996ba8e9e49f3995df785c</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class ClaspRepository: AbstractClaspRepository, IClaspRepository
 	{
 		public ClaspRepository(
-			IObjectMapper mapper,
+			IDALClaspMapper mapper,
 			ILogger<ClaspRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2ba5582290c423381a005121f613ce8d</Hash>
+    <Hash>d28bcd856bf275faccdbe5a1960db0c3</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOEmployeeDepartmentHistory: AbstractBOManager
 	{
 		private IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
-		private IApiEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator;
+		private IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator;
+		private IBOLEmployeeDepartmentHistoryMapper employeeDepartmentHistoryMapper;
 		private ILogger logger;
 
 		public AbstractBOEmployeeDepartmentHistory(
 			ILogger logger,
 			IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
-			IApiEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator)
+			IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator,
+			IBOLEmployeeDepartmentHistoryMapper employeeDepartmentHistoryMapper)
 			: base()
 
 		{
 			this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
 			this.employeeDepartmentHistoryModelValidator = employeeDepartmentHistoryModelValidator;
+			this.employeeDepartmentHistoryMapper = employeeDepartmentHistoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOEmployeeDepartmentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.employeeDepartmentHistoryRepository.All(skip, take, orderClause);
+			var records = await this.employeeDepartmentHistoryRepository.All(skip, take, orderClause);
+
+			return this.employeeDepartmentHistoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOEmployeeDepartmentHistory> Get(int businessEntityID)
+		public virtual async Task<ApiEmployeeDepartmentHistoryResponseModel> Get(int businessEntityID)
 		{
-			return this.employeeDepartmentHistoryRepository.Get(businessEntityID);
+			var record = await employeeDepartmentHistoryRepository.Get(businessEntityID);
+
+			return this.employeeDepartmentHistoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOEmployeeDepartmentHistory>> Create(
-			ApiEmployeeDepartmentHistoryModel model)
+		public virtual async Task<CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Create(
+			ApiEmployeeDepartmentHistoryRequestModel model)
 		{
-			CreateResponse<POCOEmployeeDepartmentHistory> response = new CreateResponse<POCOEmployeeDepartmentHistory>(await this.employeeDepartmentHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> response = new CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>(await this.employeeDepartmentHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmployeeDepartmentHistory record = await this.employeeDepartmentHistoryRepository.Create(model);
+				var dto = this.employeeDepartmentHistoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.employeeDepartmentHistoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.employeeDepartmentHistoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiEmployeeDepartmentHistoryModel model)
+			ApiEmployeeDepartmentHistoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.employeeDepartmentHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.employeeDepartmentHistoryRepository.Update(businessEntityID, model);
+				var dto = this.employeeDepartmentHistoryMapper.MapModelToDTO(businessEntityID, model);
+				await this.employeeDepartmentHistoryRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOEmployeeDepartmentHistory>> GetDepartmentID(short departmentID)
+		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetDepartmentID(short departmentID)
 		{
-			return await this.employeeDepartmentHistoryRepository.GetDepartmentID(departmentID);
+			List<DTOEmployeeDepartmentHistory> records = await this.employeeDepartmentHistoryRepository.GetDepartmentID(departmentID);
+
+			return this.employeeDepartmentHistoryMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOEmployeeDepartmentHistory>> GetShiftID(int shiftID)
+		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetShiftID(int shiftID)
 		{
-			return await this.employeeDepartmentHistoryRepository.GetShiftID(shiftID);
+			List<DTOEmployeeDepartmentHistory> records = await this.employeeDepartmentHistoryRepository.GetShiftID(shiftID);
+
+			return this.employeeDepartmentHistoryMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a24ffd782396159e336f7e0448569bea</Hash>
+    <Hash>39832378152d536771e32a0222cc532d</Hash>
 </Codenesium>*/

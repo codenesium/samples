@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLessonXStudent>), 200)]
+		[ProducesResponseType(typeof(List<ApiLessonXStudentResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLessonXStudent> response = await this.lessonXStudentManager.All(query.Offset, query.Limit);
+			List<ApiLessonXStudentResponseModel> response = await this.lessonXStudentManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOLessonXStudent), 200)]
+		[ProducesResponseType(typeof(ApiLessonXStudentResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLessonXStudent response = await this.lessonXStudentManager.Get(id);
+			ApiLessonXStudentResponseModel response = await this.lessonXStudentManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLessonXStudent), 200)]
+		[ProducesResponseType(typeof(ApiLessonXStudentResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLessonXStudentModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiLessonXStudentRequestModel model)
 		{
-			CreateResponse<POCOLessonXStudent> result = await this.lessonXStudentManager.Create(model);
+			CreateResponse<ApiLessonXStudentResponseModel> result = await this.lessonXStudentManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOLessonXStudent>), 200)]
+		[ProducesResponseType(typeof(List<ApiLessonXStudentResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLessonXStudentModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLessonXStudentRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOLessonXStudent> records = new List<POCOLessonXStudent>();
+			List<ApiLessonXStudentResponseModel> records = new List<ApiLessonXStudentResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOLessonXStudent> result = await this.lessonXStudentManager.Create(model);
+				CreateResponse<ApiLessonXStudentResponseModel> result = await this.lessonXStudentManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLessonXStudent), 200)]
+		[ProducesResponseType(typeof(DTOLessonXStudent), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonXStudentModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonXStudentRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLessonXStudent response = await this.lessonXStudentManager.Get(id);
+					ApiLessonXStudentResponseModel response = await this.lessonXStudentManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e5b10a7b265d7b248c35461f297eb6bf</Hash>
+    <Hash>b7dd6537fd2d29b853bcb148ba530368</Hash>
 </Codenesium>*/

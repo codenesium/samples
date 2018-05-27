@@ -8,19 +8,19 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IClaspRepository
 	{
-		Task<POCOClasp> Create(ApiClaspModel model);
+		Task<DTOClasp> Create(DTOClasp dto);
 
 		Task Update(int id,
-		            ApiClaspModel model);
+		            DTOClasp dto);
 
 		Task Delete(int id);
 
-		Task<POCOClasp> Get(int id);
+		Task<DTOClasp> Get(int id);
 
-		Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>665eb2292df8691fb1c8a2592cc8566a</Hash>
+    <Hash>9f1266c6eb8ae5ed160e43a99f9dd299</Hash>
 </Codenesium>*/

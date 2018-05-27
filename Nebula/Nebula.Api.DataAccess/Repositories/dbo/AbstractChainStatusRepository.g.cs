@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALChainStatusMapper Mapper { get; }
 
 		public AbstractChainStatusRepository(
-			IObjectMapper mapper,
+			IDALChainStatusMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOChainStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOChainStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOChainStatus> Get(int id)
+		public async virtual Task<DTOChainStatus> Get(int id)
 		{
 			ChainStatus record = await this.GetById(id);
 
-			return this.Mapper.ChainStatusMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOChainStatus> Create(
-			ApiChainStatusModel model)
+		public async virtual Task<DTOChainStatus> Create(
+			DTOChainStatus dto)
 		{
 			ChainStatus record = new ChainStatus();
 
-			this.Mapper.ChainStatusMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ChainStatus>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ChainStatusMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiChainStatusModel model)
+			DTOChainStatus dto)
 		{
 			ChainStatus record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ChainStatusMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOChainStatus> GetName(string name)
+		public async Task<DTOChainStatus> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOChainStatus>> Where(Expression<Func<ChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOChainStatus>> Where(Expression<Func<ChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOChainStatus> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOChainStatus> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOChainStatus>> SearchLinqPOCO(Expression<Func<ChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOChainStatus>> SearchLinqDTO(Expression<Func<ChainStatus, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOChainStatus> response = new List<POCOChainStatus>();
+			List<DTOChainStatus> response = new List<DTOChainStatus>();
 			List<ChainStatus> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ChainStatusMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>26324f0ca33ad91eb3fdff8b30a41985</Hash>
+    <Hash>39a9f632ca7d0f53cd44f68f3eb0299e</Hash>
 </Codenesium>*/

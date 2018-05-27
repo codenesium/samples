@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALCountryRegionCurrencyMapper Mapper { get; }
 
 		public AbstractCountryRegionCurrencyRepository(
-			IObjectMapper mapper,
+			IDALCountryRegionCurrencyMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOCountryRegionCurrency> Get(string countryRegionCode)
+		public async virtual Task<DTOCountryRegionCurrency> Get(string countryRegionCode)
 		{
 			CountryRegionCurrency record = await this.GetById(countryRegionCode);
 
-			return this.Mapper.CountryRegionCurrencyMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOCountryRegionCurrency> Create(
-			ApiCountryRegionCurrencyModel model)
+		public async virtual Task<DTOCountryRegionCurrency> Create(
+			DTOCountryRegionCurrency dto)
 		{
 			CountryRegionCurrency record = new CountryRegionCurrency();
 
-			this.Mapper.CountryRegionCurrencyMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (string),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<CountryRegionCurrency>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.CountryRegionCurrencyMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			string countryRegionCode,
-			ApiCountryRegionCurrencyModel model)
+			DTOCountryRegionCurrency dto)
 		{
 			CountryRegionCurrency record = await this.GetById(countryRegionCode);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.CountryRegionCurrencyMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					countryRegionCode,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOCountryRegionCurrency>> GetCurrencyCode(string currencyCode)
+		public async Task<List<DTOCountryRegionCurrency>> GetCurrencyCode(string currencyCode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.CurrencyCode == currencyCode);
+			var records = await this.SearchLinqDTO(x => x.CurrencyCode == currencyCode);
 
 			return records;
 		}
 
-		protected async Task<List<POCOCountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOCountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCountryRegionCurrency> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOCountryRegionCurrency> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOCountryRegionCurrency>> SearchLinqPOCO(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOCountryRegionCurrency>> SearchLinqDTO(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCountryRegionCurrency> response = new List<POCOCountryRegionCurrency>();
+			List<DTOCountryRegionCurrency> response = new List<DTOCountryRegionCurrency>();
 			List<CountryRegionCurrency> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.CountryRegionCurrencyMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6892756af635116749fb467421c6228d</Hash>
+    <Hash>4346f9d8b86fc7363c707f6c849af5e7</Hash>
 </Codenesium>*/

@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IWorkOrderRoutingRepository
 	{
-		Task<POCOWorkOrderRouting> Create(ApiWorkOrderRoutingModel model);
+		Task<DTOWorkOrderRouting> Create(DTOWorkOrderRouting dto);
 
 		Task Update(int workOrderID,
-		            ApiWorkOrderRoutingModel model);
+		            DTOWorkOrderRouting dto);
 
 		Task Delete(int workOrderID);
 
-		Task<POCOWorkOrderRouting> Get(int workOrderID);
+		Task<DTOWorkOrderRouting> Get(int workOrderID);
 
-		Task<List<POCOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOWorkOrderRouting>> GetProductID(int productID);
+		Task<List<DTOWorkOrderRouting>> GetProductID(int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4bac393c3e8e75b5eb39963b023e7f5d</Hash>
+    <Hash>a90f613af67913ff0d970f28af934050</Hash>
 </Codenesium>*/

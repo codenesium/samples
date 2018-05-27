@@ -9,23 +9,23 @@ namespace FileServiceNS.Api.BusinessObjects
 {
 	public interface IBOBucket
 	{
-		Task<CreateResponse<POCOBucket>> Create(
-			ApiBucketModel model);
+		Task<CreateResponse<ApiBucketResponseModel>> Create(
+			ApiBucketRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiBucketModel model);
+		                            ApiBucketRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOBucket> Get(int id);
+		Task<ApiBucketResponseModel> Get(int id);
 
-		Task<List<POCOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiBucketResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOBucket> Name(string name);
-		Task<POCOBucket> ExternalId(Guid externalId);
+		Task<ApiBucketResponseModel> GetExternalId(Guid externalId);
+		Task<ApiBucketResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e72617ef196cc00fb19189fdb76d6dc</Hash>
+    <Hash>b25c3fb8124e4893e6290a6ecc9767f6</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace FileServiceNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOBucket>), 200)]
+		[ProducesResponseType(typeof(List<ApiBucketResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBucket> response = await this.bucketManager.All(query.Offset, query.Limit);
+			List<ApiBucketResponseModel> response = await this.bucketManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FileServiceNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOBucket), 200)]
+		[ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBucket response = await this.bucketManager.Get(id);
+			ApiBucketResponseModel response = await this.bucketManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FileServiceNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBucket), 200)]
+		[ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBucketModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiBucketRequestModel model)
 		{
-			CreateResponse<POCOBucket> result = await this.bucketManager.Create(model);
+			CreateResponse<ApiBucketResponseModel> result = await this.bucketManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FileServiceNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOBucket>), 200)]
+		[ProducesResponseType(typeof(List<ApiBucketResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBucketModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBucketRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOBucket> records = new List<POCOBucket>();
+			List<ApiBucketResponseModel> records = new List<ApiBucketResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOBucket> result = await this.bucketManager.Create(model);
+				CreateResponse<ApiBucketResponseModel> result = await this.bucketManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FileServiceNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBucket), 200)]
+		[ProducesResponseType(typeof(DTOBucket), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBucketModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBucketRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FileServiceNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBucket response = await this.bucketManager.Get(id);
+					ApiBucketResponseModel response = await this.bucketManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -169,13 +169,13 @@ namespace FileServiceNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("name/{name}")]
+		[Route("getExternalId/{externalId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOBucket), 200)]
+		[ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Name(string name)
+		public async virtual Task<IActionResult> GetExternalId(Guid externalId)
 		{
-			POCOBucket response = await this.bucketManager.Name(name);
+			ApiBucketResponseModel response = await this.bucketManager.GetExternalId(externalId);
 
 			if (response == null)
 			{
@@ -188,13 +188,13 @@ namespace FileServiceNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("externalId/{externalId}")]
+		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOBucket), 200)]
+		[ProducesResponseType(typeof(ApiBucketResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> ExternalId(Guid externalId)
+		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOBucket response = await this.bucketManager.ExternalId(externalId);
+			ApiBucketResponseModel response = await this.bucketManager.GetName(name);
 
 			if (response == null)
 			{
@@ -209,5 +209,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f77e57ec35baa4fdb666bd2dd41c3dd9</Hash>
+    <Hash>96dc8bc0be38ff2159135c483d24e46b</Hash>
 </Codenesium>*/

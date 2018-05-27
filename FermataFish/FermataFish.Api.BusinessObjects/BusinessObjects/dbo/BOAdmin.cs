@@ -15,12 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOAdmin(
 			ILogger<AdminRepository> logger,
 			IAdminRepository adminRepository,
-			IApiAdminModelValidator adminModelValidator)
-			: base(logger, adminRepository, adminModelValidator)
+			IApiAdminRequestModelValidator adminModelValidator,
+			IBOLAdminMapper adminMapper)
+			: base(logger, adminRepository, adminModelValidator, adminMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>92f284022a657c20f3bf235714efa045</Hash>
+    <Hash>63e50df2d79c8324785b50e3bcbf230f</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALEmployeeMapper Mapper { get; }
 
 		public AbstractEmployeeRepository(
-			IObjectMapper mapper,
+			IDALEmployeeMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOEmployee> Get(int businessEntityID)
+		public async virtual Task<DTOEmployee> Get(int businessEntityID)
 		{
 			Employee record = await this.GetById(businessEntityID);
 
-			return this.Mapper.EmployeeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOEmployee> Create(
-			ApiEmployeeModel model)
+		public async virtual Task<DTOEmployee> Create(
+			DTOEmployee dto)
 		{
 			Employee record = new Employee();
 
-			this.Mapper.EmployeeMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Employee>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.EmployeeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiEmployeeModel model)
+			DTOEmployee dto)
 		{
 			Employee record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.EmployeeMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,44 +93,44 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOEmployee> GetLoginID(string loginID)
+		public async Task<DTOEmployee> GetLoginID(string loginID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.LoginID == loginID);
+			var records = await this.SearchLinqDTO(x => x.LoginID == loginID);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<POCOEmployee> GetNationalIDNumber(string nationalIDNumber)
+		public async Task<DTOEmployee> GetNationalIDNumber(string nationalIDNumber)
 		{
-			var records = await this.SearchLinqPOCO(x => x.NationalIDNumber == nationalIDNumber);
+			var records = await this.SearchLinqDTO(x => x.NationalIDNumber == nationalIDNumber);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<POCOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
+		public async Task<List<DTOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.OrganizationLevel == organizationLevel && x.OrganizationNode == organizationNode);
+			var records = await this.SearchLinqDTO(x => x.OrganizationLevel == organizationLevel && x.OrganizationNode == organizationNode);
 
 			return records;
 		}
-		public async Task<List<POCOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode)
+		public async Task<List<DTOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.OrganizationNode == organizationNode);
-
-			return records;
-		}
-
-		protected async Task<List<POCOEmployee>> Where(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<POCOEmployee> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqDTO(x => x.OrganizationNode == organizationNode);
 
 			return records;
 		}
 
-		private async Task<List<POCOEmployee>> SearchLinqPOCO(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOEmployee>> Where(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOEmployee> response = new List<POCOEmployee>();
+			List<DTOEmployee> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+
+			return records;
+		}
+
+		private async Task<List<DTOEmployee>> SearchLinqDTO(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			List<DTOEmployee> response = new List<DTOEmployee>();
 			List<Employee> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.EmployeeMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -163,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c7d909f85710311cf1815d1e1e3ae5c6</Hash>
+    <Hash>97c593f9734868ef5509fb43685e82d4</Hash>
 </Codenesium>*/

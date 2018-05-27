@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALDepartmentMapper Mapper { get; }
 
 		public AbstractDepartmentRepository(
-			IObjectMapper mapper,
+			IDALDepartmentMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCODepartment>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTODepartment>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCODepartment> Get(short departmentID)
+		public async virtual Task<DTODepartment> Get(short departmentID)
 		{
 			Department record = await this.GetById(departmentID);
 
-			return this.Mapper.DepartmentMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCODepartment> Create(
-			ApiDepartmentModel model)
+		public async virtual Task<DTODepartment> Create(
+			DTODepartment dto)
 		{
 			Department record = new Department();
 
-			this.Mapper.DepartmentMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (short),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Department>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.DepartmentMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			short departmentID,
-			ApiDepartmentModel model)
+			DTODepartment dto)
 		{
 			Department record = await this.GetById(departmentID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.DepartmentMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					departmentID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCODepartment> GetName(string name)
+		public async Task<DTODepartment> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCODepartment>> Where(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTODepartment>> Where(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODepartment> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTODepartment> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCODepartment>> SearchLinqPOCO(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTODepartment>> SearchLinqDTO(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODepartment> response = new List<POCODepartment>();
+			List<DTODepartment> response = new List<DTODepartment>();
 			List<Department> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.DepartmentMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>02b5caef32b2322fdaae6671d73d2458</Hash>
+    <Hash>88a4165b302b917f6b21096e15729bb5</Hash>
 </Codenesium>*/

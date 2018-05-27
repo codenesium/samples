@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductDescription>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductDescriptionResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductDescription> response = await this.productDescriptionManager.All(query.Offset, query.Limit);
+			List<ApiProductDescriptionResponseModel> response = await this.productDescriptionManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductDescription), 200)]
+		[ProducesResponseType(typeof(ApiProductDescriptionResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductDescription response = await this.productDescriptionManager.Get(id);
+			ApiProductDescriptionResponseModel response = await this.productDescriptionManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductDescription), 200)]
+		[ProducesResponseType(typeof(ApiProductDescriptionResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductDescriptionModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductDescriptionRequestModel model)
 		{
-			CreateResponse<POCOProductDescription> result = await this.productDescriptionManager.Create(model);
+			CreateResponse<ApiProductDescriptionResponseModel> result = await this.productDescriptionManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductDescription>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductDescriptionResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductDescriptionModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductDescriptionRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductDescription> records = new List<POCOProductDescription>();
+			List<ApiProductDescriptionResponseModel> records = new List<ApiProductDescriptionResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductDescription> result = await this.productDescriptionManager.Create(model);
+				CreateResponse<ApiProductDescriptionResponseModel> result = await this.productDescriptionManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductDescription), 200)]
+		[ProducesResponseType(typeof(DTOProductDescription), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDescriptionModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDescriptionRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductDescription response = await this.productDescriptionManager.Get(id);
+					ApiProductDescriptionResponseModel response = await this.productDescriptionManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e2e677e4542f40780327ffc52a694403</Hash>
+    <Hash>b6680b00b78318d40aca8dc92000dd39</Hash>
 </Codenesium>*/

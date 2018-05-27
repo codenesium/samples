@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALBusinessEntityContactMapper Mapper { get; }
 
 		public AbstractBusinessEntityContactRepository(
-			IObjectMapper mapper,
+			IDALBusinessEntityContactMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOBusinessEntityContact>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOBusinessEntityContact>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOBusinessEntityContact> Get(int businessEntityID)
+		public async virtual Task<DTOBusinessEntityContact> Get(int businessEntityID)
 		{
 			BusinessEntityContact record = await this.GetById(businessEntityID);
 
-			return this.Mapper.BusinessEntityContactMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOBusinessEntityContact> Create(
-			ApiBusinessEntityContactModel model)
+		public async virtual Task<DTOBusinessEntityContact> Create(
+			DTOBusinessEntityContact dto)
 		{
 			BusinessEntityContact record = new BusinessEntityContact();
 
-			this.Mapper.BusinessEntityContactMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<BusinessEntityContact>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.BusinessEntityContactMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiBusinessEntityContactModel model)
+			DTOBusinessEntityContact dto)
 		{
 			BusinessEntityContact record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.BusinessEntityContactMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOBusinessEntityContact>> GetContactTypeID(int contactTypeID)
+		public async Task<List<DTOBusinessEntityContact>> GetContactTypeID(int contactTypeID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ContactTypeID == contactTypeID);
+			var records = await this.SearchLinqDTO(x => x.ContactTypeID == contactTypeID);
 
 			return records;
 		}
-		public async Task<List<POCOBusinessEntityContact>> GetPersonID(int personID)
+		public async Task<List<DTOBusinessEntityContact>> GetPersonID(int personID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.PersonID == personID);
-
-			return records;
-		}
-
-		protected async Task<List<POCOBusinessEntityContact>> Where(Expression<Func<BusinessEntityContact, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<POCOBusinessEntityContact> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqDTO(x => x.PersonID == personID);
 
 			return records;
 		}
 
-		private async Task<List<POCOBusinessEntityContact>> SearchLinqPOCO(Expression<Func<BusinessEntityContact, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOBusinessEntityContact>> Where(Expression<Func<BusinessEntityContact, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOBusinessEntityContact> response = new List<POCOBusinessEntityContact>();
+			List<DTOBusinessEntityContact> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+
+			return records;
+		}
+
+		private async Task<List<DTOBusinessEntityContact>> SearchLinqDTO(Expression<Func<BusinessEntityContact, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			List<DTOBusinessEntityContact> response = new List<DTOBusinessEntityContact>();
 			List<BusinessEntityContact> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.BusinessEntityContactMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>78306776ac14f710fa0143400312b79a</Hash>
+    <Hash>659ac99e7750a029cdce0cc57eaca0e6</Hash>
 </Codenesium>*/

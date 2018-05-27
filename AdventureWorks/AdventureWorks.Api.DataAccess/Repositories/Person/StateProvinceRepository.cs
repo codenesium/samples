@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class StateProvinceRepository: AbstractStateProvinceRepository, IStateProvinceRepository
 	{
 		public StateProvinceRepository(
-			IObjectMapper mapper,
+			IDALStateProvinceMapper mapper,
 			ILogger<StateProvinceRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7b7642d57339e301d7b85b1884278776</Hash>
+    <Hash>36a87df1e8d493bdedb04b4bcf46df18</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOCurrencyRate: AbstractBOManager
 	{
 		private ICurrencyRateRepository currencyRateRepository;
-		private IApiCurrencyRateModelValidator currencyRateModelValidator;
+		private IApiCurrencyRateRequestModelValidator currencyRateModelValidator;
+		private IBOLCurrencyRateMapper currencyRateMapper;
 		private ILogger logger;
 
 		public AbstractBOCurrencyRate(
 			ILogger logger,
 			ICurrencyRateRepository currencyRateRepository,
-			IApiCurrencyRateModelValidator currencyRateModelValidator)
+			IApiCurrencyRateRequestModelValidator currencyRateModelValidator,
+			IBOLCurrencyRateMapper currencyRateMapper)
 			: base()
 
 		{
 			this.currencyRateRepository = currencyRateRepository;
 			this.currencyRateModelValidator = currencyRateModelValidator;
+			this.currencyRateMapper = currencyRateMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiCurrencyRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.currencyRateRepository.All(skip, take, orderClause);
+			var records = await this.currencyRateRepository.All(skip, take, orderClause);
+
+			return this.currencyRateMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOCurrencyRate> Get(int currencyRateID)
+		public virtual async Task<ApiCurrencyRateResponseModel> Get(int currencyRateID)
 		{
-			return this.currencyRateRepository.Get(currencyRateID);
+			var record = await currencyRateRepository.Get(currencyRateID);
+
+			return this.currencyRateMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOCurrencyRate>> Create(
-			ApiCurrencyRateModel model)
+		public virtual async Task<CreateResponse<ApiCurrencyRateResponseModel>> Create(
+			ApiCurrencyRateRequestModel model)
 		{
-			CreateResponse<POCOCurrencyRate> response = new CreateResponse<POCOCurrencyRate>(await this.currencyRateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCurrencyRateResponseModel> response = new CreateResponse<ApiCurrencyRateResponseModel>(await this.currencyRateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCurrencyRate record = await this.currencyRateRepository.Create(model);
+				var dto = this.currencyRateMapper.MapModelToDTO(default (int), model);
+				var record = await this.currencyRateRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.currencyRateMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int currencyRateID,
-			ApiCurrencyRateModel model)
+			ApiCurrencyRateRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.currencyRateModelValidator.ValidateUpdateAsync(currencyRateID, model));
 
 			if (response.Success)
 			{
-				await this.currencyRateRepository.Update(currencyRateID, model);
+				var dto = this.currencyRateMapper.MapModelToDTO(currencyRateID, model);
+				await this.currencyRateRepository.Update(currencyRateID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
+		public async Task<ApiCurrencyRateResponseModel> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
 		{
-			return await this.currencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate,fromCurrencyCode,toCurrencyCode);
+			DTOCurrencyRate record = await this.currencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate,fromCurrencyCode,toCurrencyCode);
+
+			return this.currencyRateMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b9342a7943fb417755152b344f47d43c</Hash>
+    <Hash>8d7ec9ae81b857c28e979cc39dd6a3d2</Hash>
 </Codenesium>*/

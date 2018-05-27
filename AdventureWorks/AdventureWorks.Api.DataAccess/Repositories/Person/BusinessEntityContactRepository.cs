@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class BusinessEntityContactRepository: AbstractBusinessEntityContactRepository, IBusinessEntityContactRepository
 	{
 		public BusinessEntityContactRepository(
-			IObjectMapper mapper,
+			IDALBusinessEntityContactMapper mapper,
 			ILogger<BusinessEntityContactRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e9bfda22dfb808c541107b7610ad112c</Hash>
+    <Hash>dca350e2f88e88e8222e6914ad23796d</Hash>
 </Codenesium>*/

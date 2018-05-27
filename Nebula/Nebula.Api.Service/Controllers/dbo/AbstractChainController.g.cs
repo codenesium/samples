@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOChain>), 200)]
+		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOChain> response = await this.chainManager.All(query.Offset, query.Limit);
+			List<ApiChainResponseModel> response = await this.chainManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOChain), 200)]
+		[ProducesResponseType(typeof(ApiChainResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOChain response = await this.chainManager.Get(id);
+			ApiChainResponseModel response = await this.chainManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOChain), 200)]
+		[ProducesResponseType(typeof(ApiChainResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiChainModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiChainRequestModel model)
 		{
-			CreateResponse<POCOChain> result = await this.chainManager.Create(model);
+			CreateResponse<ApiChainResponseModel> result = await this.chainManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOChain>), 200)]
+		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiChainRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOChain> records = new List<POCOChain>();
+			List<ApiChainResponseModel> records = new List<ApiChainResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOChain> result = await this.chainManager.Create(model);
+				CreateResponse<ApiChainResponseModel> result = await this.chainManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOChain), 200)]
+		[ProducesResponseType(typeof(DTOChain), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiChainRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOChain response = await this.chainManager.Get(id);
+					ApiChainResponseModel response = await this.chainManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("getExternalId/{externalId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOChain), 200)]
+		[ProducesResponseType(typeof(ApiChainResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetExternalId(Guid externalId)
 		{
-			POCOChain response = await this.chainManager.GetExternalId(externalId);
+			ApiChainResponseModel response = await this.chainManager.GetExternalId(externalId);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>90b7c192d43677e49922bc149b0e1086</Hash>
+    <Hash>539311b8394c120b1c2ef60fafdc9935</Hash>
 </Codenesium>*/

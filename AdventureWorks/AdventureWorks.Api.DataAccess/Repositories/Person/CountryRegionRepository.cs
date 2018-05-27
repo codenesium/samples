@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CountryRegionRepository: AbstractCountryRegionRepository, ICountryRegionRepository
 	{
 		public CountryRegionRepository(
-			IObjectMapper mapper,
+			IDALCountryRegionMapper mapper,
 			ILogger<CountryRegionRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0ff88aa16d1527d1eabb7e279eef5f0c</Hash>
+    <Hash>75acc39af2d086a4f3e20788247bc6f0</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class IllustrationRepository: AbstractIllustrationRepository, IIllustrationRepository
 	{
 		public IllustrationRepository(
-			IObjectMapper mapper,
+			IDALIllustrationMapper mapper,
 			ILogger<IllustrationRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f646c7932447a32a839cc90f81939a80</Hash>
+    <Hash>cfa76979a76bcba2afd34b80199886cf</Hash>
 </Codenesium>*/

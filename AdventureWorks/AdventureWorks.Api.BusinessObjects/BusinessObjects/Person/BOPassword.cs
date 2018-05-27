@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOPassword(
 			ILogger<PasswordRepository> logger,
 			IPasswordRepository passwordRepository,
-			IApiPasswordModelValidator passwordModelValidator)
-			: base(logger, passwordRepository, passwordModelValidator)
+			IApiPasswordRequestModelValidator passwordModelValidator,
+			IBOLPasswordMapper passwordMapper)
+			: base(logger, passwordRepository, passwordModelValidator, passwordMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>733c69642788b359d52b7df30c1b95c3</Hash>
+    <Hash>4ea5aa44c31c6cbc9f673f0206c8a558</Hash>
 </Codenesium>*/

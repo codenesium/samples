@@ -38,13 +38,13 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSale>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSale> response = await this.saleManager.All(query.Offset, query.Limit);
+			List<ApiSaleResponseModel> response = await this.saleManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSale), 200)]
+		[ProducesResponseType(typeof(ApiSaleResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSale response = await this.saleManager.Get(id);
+			ApiSaleResponseModel response = await this.saleManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSale), 200)]
+		[ProducesResponseType(typeof(ApiSaleResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSaleModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSaleRequestModel model)
 		{
-			CreateResponse<POCOSale> result = await this.saleManager.Create(model);
+			CreateResponse<ApiSaleResponseModel> result = await this.saleManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSale>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSaleModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSaleRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSale> records = new List<POCOSale>();
+			List<ApiSaleResponseModel> records = new List<ApiSaleResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSale> result = await this.saleManager.Create(model);
+				CreateResponse<ApiSaleResponseModel> result = await this.saleManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace PetStoreNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSale), 200)]
+		[ProducesResponseType(typeof(DTOSale), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSaleModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSaleRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSale response = await this.saleManager.Get(id);
+					ApiSaleResponseModel response = await this.saleManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>861c18b327a0dcf4912c20801ac7b1df</Hash>
+    <Hash>af4bc36eb0a0aa4cf4f4c6243fe42f4d</Hash>
 </Codenesium>*/

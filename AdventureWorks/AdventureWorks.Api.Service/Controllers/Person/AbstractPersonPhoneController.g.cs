@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPersonPhone>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPersonPhone> response = await this.personPhoneManager.All(query.Offset, query.Limit);
+			List<ApiPersonPhoneResponseModel> response = await this.personPhoneManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOPersonPhone), 200)]
+		[ProducesResponseType(typeof(ApiPersonPhoneResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPersonPhone response = await this.personPhoneManager.Get(id);
+			ApiPersonPhoneResponseModel response = await this.personPhoneManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPersonPhone), 200)]
+		[ProducesResponseType(typeof(ApiPersonPhoneResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPersonPhoneModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPersonPhoneRequestModel model)
 		{
-			CreateResponse<POCOPersonPhone> result = await this.personPhoneManager.Create(model);
+			CreateResponse<ApiPersonPhoneResponseModel> result = await this.personPhoneManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOPersonPhone>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPersonPhoneModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPersonPhoneRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOPersonPhone> records = new List<POCOPersonPhone>();
+			List<ApiPersonPhoneResponseModel> records = new List<ApiPersonPhoneResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOPersonPhone> result = await this.personPhoneManager.Create(model);
+				CreateResponse<ApiPersonPhoneResponseModel> result = await this.personPhoneManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPersonPhone), 200)]
+		[ProducesResponseType(typeof(DTOPersonPhone), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonPhoneModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonPhoneRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPersonPhone response = await this.personPhoneManager.Get(id);
+					ApiPersonPhoneResponseModel response = await this.personPhoneManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getPhoneNumber/{phoneNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPersonPhone>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetPhoneNumber(string phoneNumber)
 		{
-			List<POCOPersonPhone> response = await this.personPhoneManager.GetPhoneNumber(phoneNumber);
+			List<ApiPersonPhoneResponseModel> response = await this.personPhoneManager.GetPhoneNumber(phoneNumber);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>89acee639efd07ec6b599c1f37981bb1</Hash>
+    <Hash>dcd20dea30dcef00303d49991c33beb5</Hash>
 </Codenesium>*/

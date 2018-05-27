@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class MachineRefTeamRepository: AbstractMachineRefTeamRepository, IMachineRefTeamRepository
 	{
 		public MachineRefTeamRepository(
-			IObjectMapper mapper,
+			IDALMachineRefTeamMapper mapper,
 			ILogger<MachineRefTeamRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca3c521c51f1af351558354ea49d7ca2</Hash>
+    <Hash>27777883aa428b48c94339699435ac5c</Hash>
 </Codenesium>*/

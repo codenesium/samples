@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOSalesTaxRate
 	{
-		Task<CreateResponse<POCOSalesTaxRate>> Create(
-			ApiSalesTaxRateModel model);
+		Task<CreateResponse<ApiSalesTaxRateResponseModel>> Create(
+			ApiSalesTaxRateRequestModel model);
 
 		Task<ActionResponse> Update(int salesTaxRateID,
-		                            ApiSalesTaxRateModel model);
+		                            ApiSalesTaxRateRequestModel model);
 
 		Task<ActionResponse> Delete(int salesTaxRateID);
 
-		Task<POCOSalesTaxRate> Get(int salesTaxRateID);
+		Task<ApiSalesTaxRateResponseModel> Get(int salesTaxRateID);
 
-		Task<List<POCOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiSalesTaxRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
+		Task<ApiSalesTaxRateResponseModel> GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3768de128026bbb1e5fa6a75aead6e29</Hash>
+    <Hash>f20ebf6dfed05f17d68cada3f408de3a</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiEmailAddressModelValidator: AbstractApiEmailAddressModelValidator, IApiEmailAddressModelValidator
+	public class ApiEmailAddressRequestModelValidator: AbstractApiEmailAddressRequestModelValidator, IApiEmailAddressRequestModelValidator
 	{
-		public ApiEmailAddressModelValidator()
+		public ApiEmailAddressRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiEmailAddressModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiEmailAddressRequestModel model)
 		{
 			this.EmailAddress1Rules();
 			this.EmailAddressIDRules();
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmailAddressModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmailAddressRequestModel model)
 		{
 			this.EmailAddress1Rules();
 			this.EmailAddressIDRules();
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7c9d236a60605bbcbeaeaa1d1f5e2788</Hash>
+    <Hash>4a2f3b592d1ef4656a8d1111e21cef79</Hash>
 </Codenesium>*/

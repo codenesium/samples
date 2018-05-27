@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiPurchaseOrderHeaderModelValidator
+	public interface IApiPurchaseOrderHeaderRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiPurchaseOrderHeaderModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPurchaseOrderHeaderModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiPurchaseOrderHeaderRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPurchaseOrderHeaderRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f3d14cb0e221f3fb0729b130cd29ca7</Hash>
+    <Hash>7fe04968965222d373bcdcbccdc3c9a1</Hash>
 </Codenesium>*/

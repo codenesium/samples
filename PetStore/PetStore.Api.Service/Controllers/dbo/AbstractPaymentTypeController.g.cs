@@ -38,13 +38,13 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPaymentType>), 200)]
+		[ProducesResponseType(typeof(List<ApiPaymentTypeResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPaymentType> response = await this.paymentTypeManager.All(query.Offset, query.Limit);
+			List<ApiPaymentTypeResponseModel> response = await this.paymentTypeManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOPaymentType), 200)]
+		[ProducesResponseType(typeof(ApiPaymentTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPaymentType response = await this.paymentTypeManager.Get(id);
+			ApiPaymentTypeResponseModel response = await this.paymentTypeManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPaymentType), 200)]
+		[ProducesResponseType(typeof(ApiPaymentTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPaymentTypeModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPaymentTypeRequestModel model)
 		{
-			CreateResponse<POCOPaymentType> result = await this.paymentTypeManager.Create(model);
+			CreateResponse<ApiPaymentTypeResponseModel> result = await this.paymentTypeManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOPaymentType>), 200)]
+		[ProducesResponseType(typeof(List<ApiPaymentTypeResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPaymentTypeModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPaymentTypeRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOPaymentType> records = new List<POCOPaymentType>();
+			List<ApiPaymentTypeResponseModel> records = new List<ApiPaymentTypeResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOPaymentType> result = await this.paymentTypeManager.Create(model);
+				CreateResponse<ApiPaymentTypeResponseModel> result = await this.paymentTypeManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace PetStoreNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPaymentType), 200)]
+		[ProducesResponseType(typeof(DTOPaymentType), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPaymentTypeModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPaymentTypeRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPaymentType response = await this.paymentTypeManager.Get(id);
+					ApiPaymentTypeResponseModel response = await this.paymentTypeManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1667ecfab2cd9f2ba850fd18c4916e42</Hash>
+    <Hash>53c6a8558932de668385e24a075a3538</Hash>
 </Codenesium>*/

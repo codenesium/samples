@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
+		[ProducesResponseType(typeof(List<ApiClaspResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOClasp> response = await this.claspManager.All(query.Offset, query.Limit);
+			List<ApiClaspResponseModel> response = await this.claspManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOClasp), 200)]
+		[ProducesResponseType(typeof(ApiClaspResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOClasp response = await this.claspManager.Get(id);
+			ApiClaspResponseModel response = await this.claspManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOClasp), 200)]
+		[ProducesResponseType(typeof(ApiClaspResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiClaspModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiClaspRequestModel model)
 		{
-			CreateResponse<POCOClasp> result = await this.claspManager.Create(model);
+			CreateResponse<ApiClaspResponseModel> result = await this.claspManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOClasp>), 200)]
+		[ProducesResponseType(typeof(List<ApiClaspResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClaspModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiClaspRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOClasp> records = new List<POCOClasp>();
+			List<ApiClaspResponseModel> records = new List<ApiClaspResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOClasp> result = await this.claspManager.Create(model);
+				CreateResponse<ApiClaspResponseModel> result = await this.claspManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOClasp), 200)]
+		[ProducesResponseType(typeof(DTOClasp), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClaspModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiClaspRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOClasp response = await this.claspManager.Get(id);
+					ApiClaspResponseModel response = await this.claspManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>09051e0bd8cf5d306cea57e93fdeb51c</Hash>
+    <Hash>ee0f9797474b4cf854ce4d7e87b4de1a</Hash>
 </Codenesium>*/

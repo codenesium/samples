@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("BillOfMaterials", Schema="Production")]
-	public partial class BillOfMaterials: AbstractEntityFrameworkPOCO
+	public partial class BillOfMaterials: AbstractEntityFrameworkDTO
 	{
 		public BillOfMaterials()
 		{}
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>12e3008a488ab13092b827f54145e091</Hash>
+    <Hash>b2823640a368a0f5f610ddae5a600211</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOErrorLog: AbstractBOManager
 	{
 		private IErrorLogRepository errorLogRepository;
-		private IApiErrorLogModelValidator errorLogModelValidator;
+		private IApiErrorLogRequestModelValidator errorLogModelValidator;
+		private IBOLErrorLogMapper errorLogMapper;
 		private ILogger logger;
 
 		public AbstractBOErrorLog(
 			ILogger logger,
 			IErrorLogRepository errorLogRepository,
-			IApiErrorLogModelValidator errorLogModelValidator)
+			IApiErrorLogRequestModelValidator errorLogModelValidator,
+			IBOLErrorLogMapper errorLogMapper)
 			: base()
 
 		{
 			this.errorLogRepository = errorLogRepository;
 			this.errorLogModelValidator = errorLogModelValidator;
+			this.errorLogMapper = errorLogMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiErrorLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.errorLogRepository.All(skip, take, orderClause);
+			var records = await this.errorLogRepository.All(skip, take, orderClause);
+
+			return this.errorLogMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOErrorLog> Get(int errorLogID)
+		public virtual async Task<ApiErrorLogResponseModel> Get(int errorLogID)
 		{
-			return this.errorLogRepository.Get(errorLogID);
+			var record = await errorLogRepository.Get(errorLogID);
+
+			return this.errorLogMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOErrorLog>> Create(
-			ApiErrorLogModel model)
+		public virtual async Task<CreateResponse<ApiErrorLogResponseModel>> Create(
+			ApiErrorLogRequestModel model)
 		{
-			CreateResponse<POCOErrorLog> response = new CreateResponse<POCOErrorLog>(await this.errorLogModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiErrorLogResponseModel> response = new CreateResponse<ApiErrorLogResponseModel>(await this.errorLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOErrorLog record = await this.errorLogRepository.Create(model);
+				var dto = this.errorLogMapper.MapModelToDTO(default (int), model);
+				var record = await this.errorLogRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.errorLogMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int errorLogID,
-			ApiErrorLogModel model)
+			ApiErrorLogRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.errorLogModelValidator.ValidateUpdateAsync(errorLogID, model));
 
 			if (response.Success)
 			{
-				await this.errorLogRepository.Update(errorLogID, model);
+				var dto = this.errorLogMapper.MapModelToDTO(errorLogID, model);
+				await this.errorLogRepository.Update(errorLogID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8a3c338ff95efc772a228b7906d42153</Hash>
+    <Hash>bc8f891955f340cfb55062790d66d63f</Hash>
 </Codenesium>*/

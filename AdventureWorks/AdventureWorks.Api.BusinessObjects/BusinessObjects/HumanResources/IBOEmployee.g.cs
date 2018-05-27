@@ -9,25 +9,25 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOEmployee
 	{
-		Task<CreateResponse<POCOEmployee>> Create(
-			ApiEmployeeModel model);
+		Task<CreateResponse<ApiEmployeeResponseModel>> Create(
+			ApiEmployeeRequestModel model);
 
 		Task<ActionResponse> Update(int businessEntityID,
-		                            ApiEmployeeModel model);
+		                            ApiEmployeeRequestModel model);
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<POCOEmployee> Get(int businessEntityID);
+		Task<ApiEmployeeResponseModel> Get(int businessEntityID);
 
-		Task<List<POCOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiEmployeeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOEmployee> GetLoginID(string loginID);
-		Task<POCOEmployee> GetNationalIDNumber(string nationalIDNumber);
-		Task<List<POCOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode);
-		Task<List<POCOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode);
+		Task<ApiEmployeeResponseModel> GetLoginID(string loginID);
+		Task<ApiEmployeeResponseModel> GetNationalIDNumber(string nationalIDNumber);
+		Task<List<ApiEmployeeResponseModel>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode);
+		Task<List<ApiEmployeeResponseModel>> GetOrganizationNode(Nullable<Guid> organizationNode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f95f4777d6d23cd6bfd2e85cd59079f0</Hash>
+    <Hash>d8a98c9dcd070bfc8a9df14d89eb3ba9</Hash>
 </Codenesium>*/

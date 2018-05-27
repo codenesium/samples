@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOCountryRegion(
 			ILogger<CountryRegionRepository> logger,
 			ICountryRegionRepository countryRegionRepository,
-			IApiCountryRegionModelValidator countryRegionModelValidator)
-			: base(logger, countryRegionRepository, countryRegionModelValidator)
+			IApiCountryRegionRequestModelValidator countryRegionModelValidator,
+			IBOLCountryRegionMapper countryRegionMapper)
+			: base(logger, countryRegionRepository, countryRegionModelValidator, countryRegionMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>21043700f569918dbdbc787348592f14</Hash>
+    <Hash>50f6fa35a5499059cff3c3e6a0ecb905</Hash>
 </Codenesium>*/

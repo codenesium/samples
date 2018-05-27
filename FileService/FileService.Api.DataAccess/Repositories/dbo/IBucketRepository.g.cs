@@ -8,22 +8,22 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IBucketRepository
 	{
-		Task<POCOBucket> Create(ApiBucketModel model);
+		Task<DTOBucket> Create(DTOBucket dto);
 
 		Task Update(int id,
-		            ApiBucketModel model);
+		            DTOBucket dto);
 
 		Task Delete(int id);
 
-		Task<POCOBucket> Get(int id);
+		Task<DTOBucket> Get(int id);
 
-		Task<List<POCOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOBucket> Name(string name);
-		Task<POCOBucket> ExternalId(Guid externalId);
+		Task<DTOBucket> GetExternalId(Guid externalId);
+		Task<DTOBucket> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab189c730f8739131b7a73f37f7768ba</Hash>
+    <Hash>ed54ee9d424e09f604c897af57cfafa1</Hash>
 </Codenesium>*/

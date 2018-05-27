@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductMapper Mapper { get; }
 
 		public AbstractProductRepository(
-			IObjectMapper mapper,
+			IDALProductMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProduct> Get(int productID)
+		public async virtual Task<DTOProduct> Get(int productID)
 		{
 			Product record = await this.GetById(productID);
 
-			return this.Mapper.ProductMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProduct> Create(
-			ApiProductModel model)
+		public async virtual Task<DTOProduct> Create(
+			DTOProduct dto)
 		{
 			Product record = new Product();
 
-			this.Mapper.ProductMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Product>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productID,
-			ApiProductModel model)
+			DTOProduct dto)
 		{
 			Product record = await this.GetById(productID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOProduct> GetName(string name)
+		public async Task<DTOProduct> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<POCOProduct> GetProductNumber(string productNumber)
+		public async Task<DTOProduct> GetProductNumber(string productNumber)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ProductNumber == productNumber);
+			var records = await this.SearchLinqDTO(x => x.ProductNumber == productNumber);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOProduct>> Where(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProduct>> Where(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProduct> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProduct> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProduct>> SearchLinqPOCO(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProduct>> SearchLinqDTO(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProduct> response = new List<POCOProduct>();
+			List<DTOProduct> response = new List<DTOProduct>();
 			List<Product> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bcdf9961fb4c69f3d60405863738551b</Hash>
+    <Hash>1f6a3cd243656c2cae94df2dde61d862</Hash>
 </Codenesium>*/

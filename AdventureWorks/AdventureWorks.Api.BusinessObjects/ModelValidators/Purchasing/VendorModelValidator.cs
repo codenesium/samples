@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiVendorModelValidator: AbstractApiVendorModelValidator, IApiVendorModelValidator
+	public class ApiVendorRequestModelValidator: AbstractApiVendorRequestModelValidator, IApiVendorRequestModelValidator
 	{
-		public ApiVendorModelValidator()
+		public ApiVendorRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiVendorModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiVendorRequestModel model)
 		{
 			this.AccountNumberRules();
 			this.ActiveFlagRules();
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiVendorModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiVendorRequestModel model)
 		{
 			this.AccountNumberRules();
 			this.ActiveFlagRules();
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4683f091f9df35a1a68dedf446ccc98b</Hash>
+    <Hash>a129f6a3c1ac176a1cbf22a3411096d8</Hash>
 </Codenesium>*/

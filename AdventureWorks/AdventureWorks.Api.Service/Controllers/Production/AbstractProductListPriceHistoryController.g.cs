@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductListPriceHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductListPriceHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductListPriceHistory> response = await this.productListPriceHistoryManager.All(query.Offset, query.Limit);
+			List<ApiProductListPriceHistoryResponseModel> response = await this.productListPriceHistoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductListPriceHistory), 200)]
+		[ProducesResponseType(typeof(ApiProductListPriceHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductListPriceHistory response = await this.productListPriceHistoryManager.Get(id);
+			ApiProductListPriceHistoryResponseModel response = await this.productListPriceHistoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductListPriceHistory), 200)]
+		[ProducesResponseType(typeof(ApiProductListPriceHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductListPriceHistoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductListPriceHistoryRequestModel model)
 		{
-			CreateResponse<POCOProductListPriceHistory> result = await this.productListPriceHistoryManager.Create(model);
+			CreateResponse<ApiProductListPriceHistoryResponseModel> result = await this.productListPriceHistoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductListPriceHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductListPriceHistoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductListPriceHistoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductListPriceHistoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductListPriceHistory> records = new List<POCOProductListPriceHistory>();
+			List<ApiProductListPriceHistoryResponseModel> records = new List<ApiProductListPriceHistoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductListPriceHistory> result = await this.productListPriceHistoryManager.Create(model);
+				CreateResponse<ApiProductListPriceHistoryResponseModel> result = await this.productListPriceHistoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductListPriceHistory), 200)]
+		[ProducesResponseType(typeof(DTOProductListPriceHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductListPriceHistoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductListPriceHistoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductListPriceHistory response = await this.productListPriceHistoryManager.Get(id);
+					ApiProductListPriceHistoryResponseModel response = await this.productListPriceHistoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>929425c0a70d2e21b429faec3da7cf3e</Hash>
+    <Hash>a3192c4224dd057c0281859c6ff7227d</Hash>
 </Codenesium>*/

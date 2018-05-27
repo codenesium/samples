@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSpaceXSpaceFeature>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceXSpaceFeatureResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSpaceXSpaceFeature> response = await this.spaceXSpaceFeatureManager.All(query.Offset, query.Limit);
+			List<ApiSpaceXSpaceFeatureResponseModel> response = await this.spaceXSpaceFeatureManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSpaceXSpaceFeature), 200)]
+		[ProducesResponseType(typeof(ApiSpaceXSpaceFeatureResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSpaceXSpaceFeature response = await this.spaceXSpaceFeatureManager.Get(id);
+			ApiSpaceXSpaceFeatureResponseModel response = await this.spaceXSpaceFeatureManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpaceXSpaceFeature), 200)]
+		[ProducesResponseType(typeof(ApiSpaceXSpaceFeatureResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceXSpaceFeatureModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceXSpaceFeatureRequestModel model)
 		{
-			CreateResponse<POCOSpaceXSpaceFeature> result = await this.spaceXSpaceFeatureManager.Create(model);
+			CreateResponse<ApiSpaceXSpaceFeatureResponseModel> result = await this.spaceXSpaceFeatureManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSpaceXSpaceFeature>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceXSpaceFeatureResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceXSpaceFeatureModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceXSpaceFeatureRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSpaceXSpaceFeature> records = new List<POCOSpaceXSpaceFeature>();
+			List<ApiSpaceXSpaceFeatureResponseModel> records = new List<ApiSpaceXSpaceFeatureResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSpaceXSpaceFeature> result = await this.spaceXSpaceFeatureManager.Create(model);
+				CreateResponse<ApiSpaceXSpaceFeatureResponseModel> result = await this.spaceXSpaceFeatureManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpaceXSpaceFeature), 200)]
+		[ProducesResponseType(typeof(DTOSpaceXSpaceFeature), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceXSpaceFeatureModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceXSpaceFeatureRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpaceXSpaceFeature response = await this.spaceXSpaceFeatureManager.Get(id);
+					ApiSpaceXSpaceFeatureResponseModel response = await this.spaceXSpaceFeatureManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9caaafda7110d9f142ac912b7719cf5c</Hash>
+    <Hash>a2203c94c2ed47340306f791ccd6010f</Hash>
 </Codenesium>*/

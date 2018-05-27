@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSpace>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSpace> response = await this.spaceManager.All(query.Offset, query.Limit);
+			List<ApiSpaceResponseModel> response = await this.spaceManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSpace), 200)]
+		[ProducesResponseType(typeof(ApiSpaceResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSpace response = await this.spaceManager.Get(id);
+			ApiSpaceResponseModel response = await this.spaceManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpace), 200)]
+		[ProducesResponseType(typeof(ApiSpaceResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceRequestModel model)
 		{
-			CreateResponse<POCOSpace> result = await this.spaceManager.Create(model);
+			CreateResponse<ApiSpaceResponseModel> result = await this.spaceManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSpace>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSpace> records = new List<POCOSpace>();
+			List<ApiSpaceResponseModel> records = new List<ApiSpaceResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSpace> result = await this.spaceManager.Create(model);
+				CreateResponse<ApiSpaceResponseModel> result = await this.spaceManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpace), 200)]
+		[ProducesResponseType(typeof(DTOSpace), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpace response = await this.spaceManager.Get(id);
+					ApiSpaceResponseModel response = await this.spaceManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>65481d5e1fa58bda716d8cd859ec4a57</Hash>
+    <Hash>38637a8f789f3c39f8802791749626b1</Hash>
 </Codenesium>*/

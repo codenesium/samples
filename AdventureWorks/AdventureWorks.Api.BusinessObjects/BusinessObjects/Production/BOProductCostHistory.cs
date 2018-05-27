@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOProductCostHistory(
 			ILogger<ProductCostHistoryRepository> logger,
 			IProductCostHistoryRepository productCostHistoryRepository,
-			IApiProductCostHistoryModelValidator productCostHistoryModelValidator)
-			: base(logger, productCostHistoryRepository, productCostHistoryModelValidator)
+			IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator,
+			IBOLProductCostHistoryMapper productCostHistoryMapper)
+			: base(logger, productCostHistoryRepository, productCostHistoryModelValidator, productCostHistoryMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>96c8efa4ffbd09bc6a945a729fba4fd4</Hash>
+    <Hash>db10ba9ec19e5ec07de34bf0e2c0340b</Hash>
 </Codenesium>*/

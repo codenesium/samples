@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class LinkStatusRepository: AbstractLinkStatusRepository, ILinkStatusRepository
 	{
 		public LinkStatusRepository(
-			IObjectMapper mapper,
+			IDALLinkStatusMapper mapper,
 			ILogger<LinkStatusRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>247fb656485872ffff2704fdc1b46ca1</Hash>
+    <Hash>94be0e2127e86884072db1307135be4a</Hash>
 </Codenesium>*/

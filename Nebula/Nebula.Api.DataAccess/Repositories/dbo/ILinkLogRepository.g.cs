@@ -8,19 +8,19 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkLogRepository
 	{
-		Task<POCOLinkLog> Create(ApiLinkLogModel model);
+		Task<DTOLinkLog> Create(DTOLinkLog dto);
 
 		Task Update(int id,
-		            ApiLinkLogModel model);
+		            DTOLinkLog dto);
 
 		Task Delete(int id);
 
-		Task<POCOLinkLog> Get(int id);
+		Task<DTOLinkLog> Get(int id);
 
-		Task<List<POCOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b0b67bc9358f2357d9a44e268790aa49</Hash>
+    <Hash>b94fb351257ccf552a8a17b7e318f848</Hash>
 </Codenesium>*/

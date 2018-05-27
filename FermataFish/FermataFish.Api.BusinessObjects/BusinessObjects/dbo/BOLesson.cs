@@ -15,12 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOLesson(
 			ILogger<LessonRepository> logger,
 			ILessonRepository lessonRepository,
-			IApiLessonModelValidator lessonModelValidator)
-			: base(logger, lessonRepository, lessonModelValidator)
+			IApiLessonRequestModelValidator lessonModelValidator,
+			IBOLLessonMapper lessonMapper)
+			: base(logger, lessonRepository, lessonModelValidator, lessonMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7104ce685a7d9b9920b25426ab9f72e8</Hash>
+    <Hash>0b2942bd1f6b1d45200ce0135e3be5fb</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSpaceMapper Mapper { get; }
 
 		public AbstractSpaceRepository(
-			IObjectMapper mapper,
+			IDALSpaceMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSpace>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSpace>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSpace> Get(int id)
+		public async virtual Task<DTOSpace> Get(int id)
 		{
 			Space record = await this.GetById(id);
 
-			return this.Mapper.SpaceMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSpace> Create(
-			ApiSpaceModel model)
+		public async virtual Task<DTOSpace> Create(
+			DTOSpace dto)
 		{
 			Space record = new Space();
 
-			this.Mapper.SpaceMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Space>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SpaceMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiSpaceModel model)
+			DTOSpace dto)
 		{
 			Space record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SpaceMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOSpace>> Where(Expression<Func<Space, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSpace>> Where(Expression<Func<Space, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSpace> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSpace> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSpace>> SearchLinqPOCO(Expression<Func<Space, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSpace>> SearchLinqDTO(Expression<Func<Space, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSpace> response = new List<POCOSpace>();
+			List<DTOSpace> response = new List<DTOSpace>();
 			List<Space> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SpaceMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d66ca89332c87af82cd0e6c4c289e81a</Hash>
+    <Hash>5e235f269dd547980ea35b447b55155e</Hash>
 </Codenesium>*/

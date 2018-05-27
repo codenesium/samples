@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALDatabaseLogMapper Mapper { get; }
 
 		public AbstractDatabaseLogRepository(
-			IObjectMapper mapper,
+			IDALDatabaseLogMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCODatabaseLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTODatabaseLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCODatabaseLog> Get(int databaseLogID)
+		public async virtual Task<DTODatabaseLog> Get(int databaseLogID)
 		{
 			DatabaseLog record = await this.GetById(databaseLogID);
 
-			return this.Mapper.DatabaseLogMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCODatabaseLog> Create(
-			ApiDatabaseLogModel model)
+		public async virtual Task<DTODatabaseLog> Create(
+			DTODatabaseLog dto)
 		{
 			DatabaseLog record = new DatabaseLog();
 
-			this.Mapper.DatabaseLogMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<DatabaseLog>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.DatabaseLogMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int databaseLogID,
-			ApiDatabaseLogModel model)
+			DTODatabaseLog dto)
 		{
 			DatabaseLog record = await this.GetById(databaseLogID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.DatabaseLogMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					databaseLogID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCODatabaseLog>> Where(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTODatabaseLog>> Where(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODatabaseLog> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTODatabaseLog> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCODatabaseLog>> SearchLinqPOCO(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTODatabaseLog>> SearchLinqDTO(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODatabaseLog> response = new List<POCODatabaseLog>();
+			List<DTODatabaseLog> response = new List<DTODatabaseLog>();
 			List<DatabaseLog> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.DatabaseLogMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c4c427cc9c423bd4a0066630167ff0d4</Hash>
+    <Hash>4117c7376bcf7fc87dad830369e9c165</Hash>
 </Codenesium>*/

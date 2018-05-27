@@ -15,54 +15,62 @@ namespace FileServiceNS.Api.BusinessObjects
 	public abstract class AbstractBOFileType: AbstractBOManager
 	{
 		private IFileTypeRepository fileTypeRepository;
-		private IApiFileTypeModelValidator fileTypeModelValidator;
+		private IApiFileTypeRequestModelValidator fileTypeModelValidator;
+		private IBOLFileTypeMapper fileTypeMapper;
 		private ILogger logger;
 
 		public AbstractBOFileType(
 			ILogger logger,
 			IFileTypeRepository fileTypeRepository,
-			IApiFileTypeModelValidator fileTypeModelValidator)
+			IApiFileTypeRequestModelValidator fileTypeModelValidator,
+			IBOLFileTypeMapper fileTypeMapper)
 			: base()
 
 		{
 			this.fileTypeRepository = fileTypeRepository;
 			this.fileTypeModelValidator = fileTypeModelValidator;
+			this.fileTypeMapper = fileTypeMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOFileType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiFileTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.fileTypeRepository.All(skip, take, orderClause);
+			var records = await this.fileTypeRepository.All(skip, take, orderClause);
+
+			return this.fileTypeMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOFileType> Get(int id)
+		public virtual async Task<ApiFileTypeResponseModel> Get(int id)
 		{
-			return this.fileTypeRepository.Get(id);
+			var record = await fileTypeRepository.Get(id);
+
+			return this.fileTypeMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOFileType>> Create(
-			ApiFileTypeModel model)
+		public virtual async Task<CreateResponse<ApiFileTypeResponseModel>> Create(
+			ApiFileTypeRequestModel model)
 		{
-			CreateResponse<POCOFileType> response = new CreateResponse<POCOFileType>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFileTypeResponseModel> response = new CreateResponse<ApiFileTypeResponseModel>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOFileType record = await this.fileTypeRepository.Create(model);
+				var dto = this.fileTypeMapper.MapModelToDTO(default (int), model);
+				var record = await this.fileTypeRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.fileTypeMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiFileTypeModel model)
+			ApiFileTypeRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.fileTypeModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.fileTypeRepository.Update(id, model);
+				var dto = this.fileTypeMapper.MapModelToDTO(id, model);
+				await this.fileTypeRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FileServiceNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f3e82a72439bd29aec7e26bdfef920ad</Hash>
+    <Hash>d9d7639db421c6a80602793ac46f32b6</Hash>
 </Codenesium>*/

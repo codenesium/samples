@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiWorkOrderRoutingModelValidator: AbstractApiWorkOrderRoutingModelValidator, IApiWorkOrderRoutingModelValidator
+	public class ApiWorkOrderRoutingRequestModelValidator: AbstractApiWorkOrderRoutingRequestModelValidator, IApiWorkOrderRoutingRequestModelValidator
 	{
-		public ApiWorkOrderRoutingModelValidator()
+		public ApiWorkOrderRoutingRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiWorkOrderRoutingModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiWorkOrderRoutingRequestModel model)
 		{
 			this.ActualCostRules();
 			this.ActualEndDateRules();
@@ -27,7 +27,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiWorkOrderRoutingModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiWorkOrderRoutingRequestModel model)
 		{
 			this.ActualCostRules();
 			this.ActualEndDateRules();
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7c3b9758f2baa640fab70f34bc7b279e</Hash>
+    <Hash>da01fed155d4598d809f27b13689bd9d</Hash>
 </Codenesium>*/

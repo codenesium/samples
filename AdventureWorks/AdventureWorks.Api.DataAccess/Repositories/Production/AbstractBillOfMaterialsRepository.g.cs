@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALBillOfMaterialsMapper Mapper { get; }
 
 		public AbstractBillOfMaterialsRepository(
-			IObjectMapper mapper,
+			IDALBillOfMaterialsMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOBillOfMaterials> Get(int billOfMaterialsID)
+		public async virtual Task<DTOBillOfMaterials> Get(int billOfMaterialsID)
 		{
 			BillOfMaterials record = await this.GetById(billOfMaterialsID);
 
-			return this.Mapper.BillOfMaterialsMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOBillOfMaterials> Create(
-			ApiBillOfMaterialsModel model)
+		public async virtual Task<DTOBillOfMaterials> Create(
+			DTOBillOfMaterials dto)
 		{
 			BillOfMaterials record = new BillOfMaterials();
 
-			this.Mapper.BillOfMaterialsMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<BillOfMaterials>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.BillOfMaterialsMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int billOfMaterialsID,
-			ApiBillOfMaterialsModel model)
+			DTOBillOfMaterials dto)
 		{
 			BillOfMaterials record = await this.GetById(billOfMaterialsID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.BillOfMaterialsMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					billOfMaterialsID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
+		public async Task<DTOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
+			var records = await this.SearchLinqDTO(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<POCOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode)
+		public async Task<List<DTOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.UnitMeasureCode == unitMeasureCode);
+			var records = await this.SearchLinqDTO(x => x.UnitMeasureCode == unitMeasureCode);
 
 			return records;
 		}
 
-		protected async Task<List<POCOBillOfMaterials>> Where(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOBillOfMaterials>> Where(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOBillOfMaterials> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOBillOfMaterials> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOBillOfMaterials>> SearchLinqPOCO(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOBillOfMaterials>> SearchLinqDTO(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOBillOfMaterials> response = new List<POCOBillOfMaterials>();
+			List<DTOBillOfMaterials> response = new List<DTOBillOfMaterials>();
 			List<BillOfMaterials> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.BillOfMaterialsMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bed845694fca7767c8cc45caa42fd023</Hash>
+    <Hash>310feac2a19bea937a656236e59badb3</Hash>
 </Codenesium>*/

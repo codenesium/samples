@@ -15,54 +15,62 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOPen: AbstractBOManager
 	{
 		private IPenRepository penRepository;
-		private IApiPenModelValidator penModelValidator;
+		private IApiPenRequestModelValidator penModelValidator;
+		private IBOLPenMapper penMapper;
 		private ILogger logger;
 
 		public AbstractBOPen(
 			ILogger logger,
 			IPenRepository penRepository,
-			IApiPenModelValidator penModelValidator)
+			IApiPenRequestModelValidator penModelValidator,
+			IBOLPenMapper penMapper)
 			: base()
 
 		{
 			this.penRepository = penRepository;
 			this.penModelValidator = penModelValidator;
+			this.penMapper = penMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPen>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPenResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.penRepository.All(skip, take, orderClause);
+			var records = await this.penRepository.All(skip, take, orderClause);
+
+			return this.penMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPen> Get(int id)
+		public virtual async Task<ApiPenResponseModel> Get(int id)
 		{
-			return this.penRepository.Get(id);
+			var record = await penRepository.Get(id);
+
+			return this.penMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPen>> Create(
-			ApiPenModel model)
+		public virtual async Task<CreateResponse<ApiPenResponseModel>> Create(
+			ApiPenRequestModel model)
 		{
-			CreateResponse<POCOPen> response = new CreateResponse<POCOPen>(await this.penModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPenResponseModel> response = new CreateResponse<ApiPenResponseModel>(await this.penModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPen record = await this.penRepository.Create(model);
+				var dto = this.penMapper.MapModelToDTO(default (int), model);
+				var record = await this.penRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.penMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiPenModel model)
+			ApiPenRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.penRepository.Update(id, model);
+				var dto = this.penMapper.MapModelToDTO(id, model);
+				await this.penRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>45068a725fabfe62e2b060c73221f3a6</Hash>
+    <Hash>3b02c5c33522be47042b3b35cd2b923d</Hash>
 </Codenesium>*/

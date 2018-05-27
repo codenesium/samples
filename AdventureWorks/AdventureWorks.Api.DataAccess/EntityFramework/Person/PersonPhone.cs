@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("PersonPhone", Schema="Person")]
-	public partial class PersonPhone: AbstractEntityFrameworkPOCO
+	public partial class PersonPhone: AbstractEntityFrameworkDTO
 	{
 		public PersonPhone()
 		{}
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b8faf7a9d170006f6618154e30774dec</Hash>
+    <Hash>18f7ab4fd16c2bc9ac1e1f5baea3bcb2</Hash>
 </Codenesium>*/

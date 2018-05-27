@@ -9,20 +9,20 @@ namespace FileServiceNS.Api.BusinessObjects
 {
 	public interface IBOFile
 	{
-		Task<CreateResponse<POCOFile>> Create(
-			ApiFileModel model);
+		Task<CreateResponse<ApiFileResponseModel>> Create(
+			ApiFileRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiFileModel model);
+		                            ApiFileRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOFile> Get(int id);
+		Task<ApiFileResponseModel> Get(int id);
 
-		Task<List<POCOFile>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiFileResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>16a6cac480ffc645c7b7f5e35cb2e90f</Hash>
+    <Hash>219b9d58e978e9eadfc67ba741520649</Hash>
 </Codenesium>*/

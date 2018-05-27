@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CurrencyRateRepository: AbstractCurrencyRateRepository, ICurrencyRateRepository
 	{
 		public CurrencyRateRepository(
-			IObjectMapper mapper,
+			IDALCurrencyRateMapper mapper,
 			ILogger<CurrencyRateRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>884edb82c3ef9a1bf1c2485c146042c9</Hash>
+    <Hash>c5265380a1c8d7072980b8b688ac92ff</Hash>
 </Codenesium>*/

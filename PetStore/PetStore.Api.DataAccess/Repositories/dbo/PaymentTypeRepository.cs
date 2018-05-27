@@ -12,7 +12,7 @@ namespace PetStoreNS.Api.DataAccess
 	public class PaymentTypeRepository: AbstractPaymentTypeRepository, IPaymentTypeRepository
 	{
 		public PaymentTypeRepository(
-			IObjectMapper mapper,
+			IDALPaymentTypeMapper mapper,
 			ILogger<PaymentTypeRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>db4d00917d82cb6af9db720c755df972</Hash>
+    <Hash>b50ad93518e26a6717537cb00cb2b8ea</Hash>
 </Codenesium>*/

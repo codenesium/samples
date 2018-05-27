@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class WorkOrderRoutingRepository: AbstractWorkOrderRoutingRepository, IWorkOrderRoutingRepository
 	{
 		public WorkOrderRoutingRepository(
-			IObjectMapper mapper,
+			IDALWorkOrderRoutingMapper mapper,
 			ILogger<WorkOrderRoutingRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>49346837541f8809b599b6e89910aa88</Hash>
+    <Hash>7dfe7f4939c77eb7324382348c6e4f44</Hash>
 </Codenesium>*/

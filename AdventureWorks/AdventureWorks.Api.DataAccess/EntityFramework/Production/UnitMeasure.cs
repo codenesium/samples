@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("UnitMeasure", Schema="Production")]
-	public partial class UnitMeasure: AbstractEntityFrameworkPOCO
+	public partial class UnitMeasure: AbstractEntityFrameworkDTO
 	{
 		public UnitMeasure()
 		{}
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>157965c9f79be5f3c8176615ba25cca0</Hash>
+    <Hash>a6b9e5ec41546353314c86df322f55dc</Hash>
 </Codenesium>*/

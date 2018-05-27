@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiScrapReasonModelValidator
+	public interface IApiScrapReasonRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiScrapReasonModel model);
-		Task<ValidationResult> ValidateUpdateAsync(short id, ApiScrapReasonModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiScrapReasonRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(short id, ApiScrapReasonRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(short id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>de266fcfc91ba8674737956a6f6d8160</Hash>
+    <Hash>87127fad4f20df04ff137e0ec5cda360</Hash>
 </Codenesium>*/

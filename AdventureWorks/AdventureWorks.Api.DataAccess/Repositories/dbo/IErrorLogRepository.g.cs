@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IErrorLogRepository
 	{
-		Task<POCOErrorLog> Create(ApiErrorLogModel model);
+		Task<DTOErrorLog> Create(DTOErrorLog dto);
 
 		Task Update(int errorLogID,
-		            ApiErrorLogModel model);
+		            DTOErrorLog dto);
 
 		Task Delete(int errorLogID);
 
-		Task<POCOErrorLog> Get(int errorLogID);
+		Task<DTOErrorLog> Get(int errorLogID);
 
-		Task<List<POCOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>475d8363c29973a40be6cd2d2d65191c</Hash>
+    <Hash>55c63e3425e0db3d0cc815aba88c0b84</Hash>
 </Codenesium>*/

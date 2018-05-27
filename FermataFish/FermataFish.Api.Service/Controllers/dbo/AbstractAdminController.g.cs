@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOAdmin>), 200)]
+		[ProducesResponseType(typeof(List<ApiAdminResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOAdmin> response = await this.adminManager.All(query.Offset, query.Limit);
+			List<ApiAdminResponseModel> response = await this.adminManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOAdmin), 200)]
+		[ProducesResponseType(typeof(ApiAdminResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOAdmin response = await this.adminManager.Get(id);
+			ApiAdminResponseModel response = await this.adminManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAdmin), 200)]
+		[ProducesResponseType(typeof(ApiAdminResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAdminModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiAdminRequestModel model)
 		{
-			CreateResponse<POCOAdmin> result = await this.adminManager.Create(model);
+			CreateResponse<ApiAdminResponseModel> result = await this.adminManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOAdmin>), 200)]
+		[ProducesResponseType(typeof(List<ApiAdminResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAdminModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAdminRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOAdmin> records = new List<POCOAdmin>();
+			List<ApiAdminResponseModel> records = new List<ApiAdminResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOAdmin> result = await this.adminManager.Create(model);
+				CreateResponse<ApiAdminResponseModel> result = await this.adminManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAdmin), 200)]
+		[ProducesResponseType(typeof(DTOAdmin), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAdminModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAdminRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOAdmin response = await this.adminManager.Get(id);
+					ApiAdminResponseModel response = await this.adminManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ccc839dfd651325a9cd8500a29c63813</Hash>
+    <Hash>cc21d4e7b877132c15d3815fa8cbaf3c</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCurrency>), 200)]
+		[ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCurrency> response = await this.currencyManager.All(query.Offset, query.Limit);
+			List<ApiCurrencyResponseModel> response = await this.currencyManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCurrency), 200)]
+		[ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOCurrency response = await this.currencyManager.Get(id);
+			ApiCurrencyResponseModel response = await this.currencyManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCurrency), 200)]
+		[ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<string>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyRequestModel model)
 		{
-			CreateResponse<POCOCurrency> result = await this.currencyManager.Create(model);
+			CreateResponse<ApiCurrencyResponseModel> result = await this.currencyManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOCurrency>), 200)]
+		[ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCurrencyModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCurrencyRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOCurrency> records = new List<POCOCurrency>();
+			List<ApiCurrencyResponseModel> records = new List<ApiCurrencyResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOCurrency> result = await this.currencyManager.Create(model);
+				CreateResponse<ApiCurrencyResponseModel> result = await this.currencyManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCurrency), 200)]
+		[ProducesResponseType(typeof(DTOCurrency), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCurrencyModel model)
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCurrencyRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCurrency response = await this.currencyManager.Get(id);
+					ApiCurrencyResponseModel response = await this.currencyManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCurrency), 200)]
+		[ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOCurrency response = await this.currencyManager.GetName(name);
+			ApiCurrencyResponseModel response = await this.currencyManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1e48178ff15ca7e561f3405002625524</Hash>
+    <Hash>ff5da71716b8b402e01f79b93f2bb63c</Hash>
 </Codenesium>*/

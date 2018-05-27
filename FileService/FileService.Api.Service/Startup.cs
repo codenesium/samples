@@ -166,9 +166,6 @@ namespace FileServiceNS.Api.Service
                 .InstancePerLifetimeScope();
 
 
-	        builder.RegisterType<ObjectMapper>()
-                .As<IObjectMapper>()
-                .InstancePerLifetimeScope(); 
 
 
 			var businessObjectsAssembly = typeof(ValidationError).Assembly;
@@ -177,9 +174,9 @@ namespace FileServiceNS.Api.Service
                 .AsImplementedInterfaces()
 			    .PropertiesAutowired();
 
-            var dataAccessAssembly = typeof(ObjectMapper).Assembly;
+            var dataAccessAssembly = typeof(AbstractRepository).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
-				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
+				.Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Repository") || t.Name.EndsWith("Mapper") ))
 				.AsImplementedInterfaces();
 
 

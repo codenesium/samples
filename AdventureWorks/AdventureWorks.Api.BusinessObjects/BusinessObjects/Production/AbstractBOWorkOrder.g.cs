@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOWorkOrder: AbstractBOManager
 	{
 		private IWorkOrderRepository workOrderRepository;
-		private IApiWorkOrderModelValidator workOrderModelValidator;
+		private IApiWorkOrderRequestModelValidator workOrderModelValidator;
+		private IBOLWorkOrderMapper workOrderMapper;
 		private ILogger logger;
 
 		public AbstractBOWorkOrder(
 			ILogger logger,
 			IWorkOrderRepository workOrderRepository,
-			IApiWorkOrderModelValidator workOrderModelValidator)
+			IApiWorkOrderRequestModelValidator workOrderModelValidator,
+			IBOLWorkOrderMapper workOrderMapper)
 			: base()
 
 		{
 			this.workOrderRepository = workOrderRepository;
 			this.workOrderModelValidator = workOrderModelValidator;
+			this.workOrderMapper = workOrderMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOWorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiWorkOrderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.workOrderRepository.All(skip, take, orderClause);
+			var records = await this.workOrderRepository.All(skip, take, orderClause);
+
+			return this.workOrderMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOWorkOrder> Get(int workOrderID)
+		public virtual async Task<ApiWorkOrderResponseModel> Get(int workOrderID)
 		{
-			return this.workOrderRepository.Get(workOrderID);
+			var record = await workOrderRepository.Get(workOrderID);
+
+			return this.workOrderMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOWorkOrder>> Create(
-			ApiWorkOrderModel model)
+		public virtual async Task<CreateResponse<ApiWorkOrderResponseModel>> Create(
+			ApiWorkOrderRequestModel model)
 		{
-			CreateResponse<POCOWorkOrder> response = new CreateResponse<POCOWorkOrder>(await this.workOrderModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiWorkOrderResponseModel> response = new CreateResponse<ApiWorkOrderResponseModel>(await this.workOrderModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOWorkOrder record = await this.workOrderRepository.Create(model);
+				var dto = this.workOrderMapper.MapModelToDTO(default (int), model);
+				var record = await this.workOrderRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.workOrderMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int workOrderID,
-			ApiWorkOrderModel model)
+			ApiWorkOrderRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.workOrderModelValidator.ValidateUpdateAsync(workOrderID, model));
 
 			if (response.Success)
 			{
-				await this.workOrderRepository.Update(workOrderID, model);
+				var dto = this.workOrderMapper.MapModelToDTO(workOrderID, model);
+				await this.workOrderRepository.Update(workOrderID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOWorkOrder>> GetProductID(int productID)
+		public async Task<List<ApiWorkOrderResponseModel>> GetProductID(int productID)
 		{
-			return await this.workOrderRepository.GetProductID(productID);
+			List<DTOWorkOrder> records = await this.workOrderRepository.GetProductID(productID);
+
+			return this.workOrderMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOWorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
+		public async Task<List<ApiWorkOrderResponseModel>> GetScrapReasonID(Nullable<short> scrapReasonID)
 		{
-			return await this.workOrderRepository.GetScrapReasonID(scrapReasonID);
+			List<DTOWorkOrder> records = await this.workOrderRepository.GetScrapReasonID(scrapReasonID);
+
+			return this.workOrderMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6dc4184231eb83018699f68aadc07440</Hash>
+    <Hash>124eb16b7900ceca6b9912bb4a589b09</Hash>
 </Codenesium>*/

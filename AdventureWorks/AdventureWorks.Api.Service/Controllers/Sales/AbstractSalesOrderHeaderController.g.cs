@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesOrderHeader> response = await this.salesOrderHeaderManager.All(query.Offset, query.Limit);
+			List<ApiSalesOrderHeaderResponseModel> response = await this.salesOrderHeaderManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesOrderHeader), 200)]
+		[ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesOrderHeader response = await this.salesOrderHeaderManager.Get(id);
+			ApiSalesOrderHeaderResponseModel response = await this.salesOrderHeaderManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesOrderHeader), 200)]
+		[ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderHeaderModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderHeaderRequestModel model)
 		{
-			CreateResponse<POCOSalesOrderHeader> result = await this.salesOrderHeaderManager.Create(model);
+			CreateResponse<ApiSalesOrderHeaderResponseModel> result = await this.salesOrderHeaderManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesOrderHeaderModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesOrderHeaderRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSalesOrderHeader> records = new List<POCOSalesOrderHeader>();
+			List<ApiSalesOrderHeaderResponseModel> records = new List<ApiSalesOrderHeaderResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSalesOrderHeader> result = await this.salesOrderHeaderManager.Create(model);
+				CreateResponse<ApiSalesOrderHeaderResponseModel> result = await this.salesOrderHeaderManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesOrderHeader), 200)]
+		[ProducesResponseType(typeof(DTOSalesOrderHeader), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderHeaderModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesOrderHeaderRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesOrderHeader response = await this.salesOrderHeaderManager.Get(id);
+					ApiSalesOrderHeaderResponseModel response = await this.salesOrderHeaderManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getSalesOrderNumber/{salesOrderNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesOrderHeader), 200)]
+		[ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetSalesOrderNumber(string salesOrderNumber)
 		{
-			POCOSalesOrderHeader response = await this.salesOrderHeaderManager.GetSalesOrderNumber(salesOrderNumber);
+			ApiSalesOrderHeaderResponseModel response = await this.salesOrderHeaderManager.GetSalesOrderNumber(salesOrderNumber);
 
 			if (response == null)
 			{
@@ -190,10 +190,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getCustomerID/{customerID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetCustomerID(int customerID)
 		{
-			List<POCOSalesOrderHeader> response = await this.salesOrderHeaderManager.GetCustomerID(customerID);
+			List<ApiSalesOrderHeaderResponseModel> response = await this.salesOrderHeaderManager.GetCustomerID(customerID);
 
 			return this.Ok(response);
 		}
@@ -201,10 +201,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getSalesPersonID/{salesPersonID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesOrderHeader>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			List<POCOSalesOrderHeader> response = await this.salesOrderHeaderManager.GetSalesPersonID(salesPersonID);
+			List<ApiSalesOrderHeaderResponseModel> response = await this.salesOrderHeaderManager.GetSalesPersonID(salesPersonID);
 
 			return this.Ok(response);
 		}
@@ -212,5 +212,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>fcc442134602f19b7f3dc80ee1eb068f</Hash>
+    <Hash>9338e979c9c60ad7b17f5c95832b3388</Hash>
 </Codenesium>*/

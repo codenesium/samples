@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALPasswordMapper Mapper { get; }
 
 		public AbstractPasswordRepository(
-			IObjectMapper mapper,
+			IDALPasswordMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOPassword> Get(int businessEntityID)
+		public async virtual Task<DTOPassword> Get(int businessEntityID)
 		{
 			Password record = await this.GetById(businessEntityID);
 
-			return this.Mapper.PasswordMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOPassword> Create(
-			ApiPasswordModel model)
+		public async virtual Task<DTOPassword> Create(
+			DTOPassword dto)
 		{
 			Password record = new Password();
 
-			this.Mapper.PasswordMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Password>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.PasswordMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiPasswordModel model)
+			DTOPassword dto)
 		{
 			Password record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.PasswordMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOPassword>> Where(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOPassword>> Where(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPassword> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOPassword> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOPassword>> SearchLinqPOCO(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOPassword>> SearchLinqDTO(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPassword> response = new List<POCOPassword>();
+			List<DTOPassword> response = new List<DTOPassword>();
 			List<Password> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.PasswordMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3346eb8e111cef2988ce09bda837b041</Hash>
+    <Hash>d658d90602117f0275460bbf7f5f3f0a</Hash>
 </Codenesium>*/

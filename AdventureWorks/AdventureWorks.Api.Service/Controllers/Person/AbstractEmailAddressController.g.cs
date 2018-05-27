@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmailAddress>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmailAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmailAddress> response = await this.emailAddressManager.All(query.Offset, query.Limit);
+			List<ApiEmailAddressResponseModel> response = await this.emailAddressManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOEmailAddress), 200)]
+		[ProducesResponseType(typeof(ApiEmailAddressResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmailAddress response = await this.emailAddressManager.Get(id);
+			ApiEmailAddressResponseModel response = await this.emailAddressManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmailAddress), 200)]
+		[ProducesResponseType(typeof(ApiEmailAddressResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiEmailAddressModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiEmailAddressRequestModel model)
 		{
-			CreateResponse<POCOEmailAddress> result = await this.emailAddressManager.Create(model);
+			CreateResponse<ApiEmailAddressResponseModel> result = await this.emailAddressManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOEmailAddress>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmailAddressResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmailAddressModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmailAddressRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOEmailAddress> records = new List<POCOEmailAddress>();
+			List<ApiEmailAddressResponseModel> records = new List<ApiEmailAddressResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOEmailAddress> result = await this.emailAddressManager.Create(model);
+				CreateResponse<ApiEmailAddressResponseModel> result = await this.emailAddressManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmailAddress), 200)]
+		[ProducesResponseType(typeof(DTOEmailAddress), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmailAddressModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmailAddressRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmailAddress response = await this.emailAddressManager.Get(id);
+					ApiEmailAddressResponseModel response = await this.emailAddressManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getEmailAddress/{emailAddress1}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmailAddress>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmailAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetEmailAddress(string emailAddress1)
 		{
-			List<POCOEmailAddress> response = await this.emailAddressManager.GetEmailAddress(emailAddress1);
+			List<ApiEmailAddressResponseModel> response = await this.emailAddressManager.GetEmailAddress(emailAddress1);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1e711bca613b5e78b3f21de890023a1f</Hash>
+    <Hash>b7af4a01c1159c9860acbac9392d0796</Hash>
 </Codenesium>*/

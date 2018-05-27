@@ -8,21 +8,21 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IOrganizationRepository
 	{
-		Task<POCOOrganization> Create(ApiOrganizationModel model);
+		Task<DTOOrganization> Create(DTOOrganization dto);
 
 		Task Update(int id,
-		            ApiOrganizationModel model);
+		            DTOOrganization dto);
 
 		Task Delete(int id);
 
-		Task<POCOOrganization> Get(int id);
+		Task<DTOOrganization> Get(int id);
 
-		Task<List<POCOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOOrganization> GetName(string name);
+		Task<DTOOrganization> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>39609f36cff8e8780602922254191543</Hash>
+    <Hash>d63365ad0da2bdf605c620d994c0e05a</Hash>
 </Codenesium>*/

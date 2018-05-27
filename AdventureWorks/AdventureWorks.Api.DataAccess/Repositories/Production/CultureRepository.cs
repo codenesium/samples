@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class CultureRepository: AbstractCultureRepository, ICultureRepository
 	{
 		public CultureRepository(
-			IObjectMapper mapper,
+			IDALCultureMapper mapper,
 			ILogger<CultureRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>920364743d3850b8f7ed6132633482f1</Hash>
+    <Hash>e369cd79e068588aa89869b75694ca19</Hash>
 </Codenesium>*/

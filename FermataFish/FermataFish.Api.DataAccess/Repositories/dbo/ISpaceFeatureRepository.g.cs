@@ -8,19 +8,19 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ISpaceFeatureRepository
 	{
-		Task<POCOSpaceFeature> Create(ApiSpaceFeatureModel model);
+		Task<DTOSpaceFeature> Create(DTOSpaceFeature dto);
 
 		Task Update(int id,
-		            ApiSpaceFeatureModel model);
+		            DTOSpaceFeature dto);
 
 		Task Delete(int id);
 
-		Task<POCOSpaceFeature> Get(int id);
+		Task<DTOSpaceFeature> Get(int id);
 
-		Task<List<POCOSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>cbda9f7674fe05500834cecb1393d74f</Hash>
+    <Hash>603de81bcf0d5eef345b4a6369343166</Hash>
 </Codenesium>*/

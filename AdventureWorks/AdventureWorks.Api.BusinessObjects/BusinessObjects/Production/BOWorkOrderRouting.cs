@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOWorkOrderRouting(
 			ILogger<WorkOrderRoutingRepository> logger,
 			IWorkOrderRoutingRepository workOrderRoutingRepository,
-			IApiWorkOrderRoutingModelValidator workOrderRoutingModelValidator)
-			: base(logger, workOrderRoutingRepository, workOrderRoutingModelValidator)
+			IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
+			IBOLWorkOrderRoutingMapper workOrderRoutingMapper)
+			: base(logger, workOrderRoutingRepository, workOrderRoutingModelValidator, workOrderRoutingMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e486f7d76917066f20cae2f7aa30197</Hash>
+    <Hash>dc6c13bab4b8b2fd3b1f3c9009040b9d</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace FileServiceNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOFileType>), 200)]
+		[ProducesResponseType(typeof(List<ApiFileTypeResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOFileType> response = await this.fileTypeManager.All(query.Offset, query.Limit);
+			List<ApiFileTypeResponseModel> response = await this.fileTypeManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FileServiceNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOFileType), 200)]
+		[ProducesResponseType(typeof(ApiFileTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOFileType response = await this.fileTypeManager.Get(id);
+			ApiFileTypeResponseModel response = await this.fileTypeManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FileServiceNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOFileType), 200)]
+		[ProducesResponseType(typeof(ApiFileTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiFileTypeModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiFileTypeRequestModel model)
 		{
-			CreateResponse<POCOFileType> result = await this.fileTypeManager.Create(model);
+			CreateResponse<ApiFileTypeResponseModel> result = await this.fileTypeManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FileServiceNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOFileType>), 200)]
+		[ProducesResponseType(typeof(List<ApiFileTypeResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFileTypeModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFileTypeRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOFileType> records = new List<POCOFileType>();
+			List<ApiFileTypeResponseModel> records = new List<ApiFileTypeResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOFileType> result = await this.fileTypeManager.Create(model);
+				CreateResponse<ApiFileTypeResponseModel> result = await this.fileTypeManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FileServiceNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOFileType), 200)]
+		[ProducesResponseType(typeof(DTOFileType), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileTypeModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFileTypeRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FileServiceNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOFileType response = await this.fileTypeManager.Get(id);
+					ApiFileTypeResponseModel response = await this.fileTypeManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>34bb768d955aa0d1f8082ff878c8fd68</Hash>
+    <Hash>e6d3ee811758906dd341d4bad21b39e4</Hash>
 </Codenesium>*/

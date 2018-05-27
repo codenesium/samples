@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOStore: AbstractBOManager
 	{
 		private IStoreRepository storeRepository;
-		private IApiStoreModelValidator storeModelValidator;
+		private IApiStoreRequestModelValidator storeModelValidator;
+		private IBOLStoreMapper storeMapper;
 		private ILogger logger;
 
 		public AbstractBOStore(
 			ILogger logger,
 			IStoreRepository storeRepository,
-			IApiStoreModelValidator storeModelValidator)
+			IApiStoreRequestModelValidator storeModelValidator,
+			IBOLStoreMapper storeMapper)
 			: base()
 
 		{
 			this.storeRepository = storeRepository;
 			this.storeModelValidator = storeModelValidator;
+			this.storeMapper = storeMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOStore>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiStoreResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.storeRepository.All(skip, take, orderClause);
+			var records = await this.storeRepository.All(skip, take, orderClause);
+
+			return this.storeMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOStore> Get(int businessEntityID)
+		public virtual async Task<ApiStoreResponseModel> Get(int businessEntityID)
 		{
-			return this.storeRepository.Get(businessEntityID);
+			var record = await storeRepository.Get(businessEntityID);
+
+			return this.storeMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOStore>> Create(
-			ApiStoreModel model)
+		public virtual async Task<CreateResponse<ApiStoreResponseModel>> Create(
+			ApiStoreRequestModel model)
 		{
-			CreateResponse<POCOStore> response = new CreateResponse<POCOStore>(await this.storeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStoreResponseModel> response = new CreateResponse<ApiStoreResponseModel>(await this.storeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOStore record = await this.storeRepository.Create(model);
+				var dto = this.storeMapper.MapModelToDTO(default (int), model);
+				var record = await this.storeRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.storeMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiStoreModel model)
+			ApiStoreRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.storeModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.storeRepository.Update(businessEntityID, model);
+				var dto = this.storeMapper.MapModelToDTO(businessEntityID, model);
+				await this.storeRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOStore>> GetSalesPersonID(Nullable<int> salesPersonID)
+		public async Task<List<ApiStoreResponseModel>> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			return await this.storeRepository.GetSalesPersonID(salesPersonID);
+			List<DTOStore> records = await this.storeRepository.GetSalesPersonID(salesPersonID);
+
+			return this.storeMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOStore>> GetDemographics(string demographics)
+		public async Task<List<ApiStoreResponseModel>> GetDemographics(string demographics)
 		{
-			return await this.storeRepository.GetDemographics(demographics);
+			List<DTOStore> records = await this.storeRepository.GetDemographics(demographics);
+
+			return this.storeMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>287b081b17b0be2627ef4bb06fc20b25</Hash>
+    <Hash>04eda9c5849ab585e8965535da78e9ea</Hash>
 </Codenesium>*/

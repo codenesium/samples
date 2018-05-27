@@ -6,18 +6,18 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public class ApiLinkStatusModelValidator: AbstractApiLinkStatusModelValidator, IApiLinkStatusModelValidator
+	public class ApiLinkStatusRequestModelValidator: AbstractApiLinkStatusRequestModelValidator, IApiLinkStatusRequestModelValidator
 	{
-		public ApiLinkStatusModelValidator()
+		public ApiLinkStatusRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiLinkStatusModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiLinkStatusRequestModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkStatusModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkStatusRequestModel model)
 		{
 			this.NameRules();
 			return await this.ValidateAsync(model);
@@ -31,5 +31,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>947500f8a04266f7e2ec8883152500a2</Hash>
+    <Hash>b7d0b54d4a53f56873fcf4b9fad2a93e</Hash>
 </Codenesium>*/

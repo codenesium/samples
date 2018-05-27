@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiSalesPersonQuotaHistoryModelValidator: AbstractApiSalesPersonQuotaHistoryModelValidator, IApiSalesPersonQuotaHistoryModelValidator
+	public class ApiSalesPersonQuotaHistoryRequestModelValidator: AbstractApiSalesPersonQuotaHistoryRequestModelValidator, IApiSalesPersonQuotaHistoryRequestModelValidator
 	{
-		public ApiSalesPersonQuotaHistoryModelValidator()
+		public ApiSalesPersonQuotaHistoryRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiSalesPersonQuotaHistoryModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiSalesPersonQuotaHistoryRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.QuotaDateRules();
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSalesPersonQuotaHistoryModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSalesPersonQuotaHistoryRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.QuotaDateRules();
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>36e6ae197206b3edca9add0c0692fcad</Hash>
+    <Hash>23636cb89993f0e50c229e3ada09f9b9</Hash>
 </Codenesium>*/

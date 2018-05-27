@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOStateProvince>), 200)]
+		[ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOStateProvince> response = await this.stateProvinceManager.All(query.Offset, query.Limit);
+			List<ApiStateProvinceResponseModel> response = await this.stateProvinceManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOStateProvince), 200)]
+		[ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOStateProvince response = await this.stateProvinceManager.Get(id);
+			ApiStateProvinceResponseModel response = await this.stateProvinceManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStateProvince), 200)]
+		[ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStateProvinceModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiStateProvinceRequestModel model)
 		{
-			CreateResponse<POCOStateProvince> result = await this.stateProvinceManager.Create(model);
+			CreateResponse<ApiStateProvinceResponseModel> result = await this.stateProvinceManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOStateProvince>), 200)]
+		[ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateProvinceModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateProvinceRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOStateProvince> records = new List<POCOStateProvince>();
+			List<ApiStateProvinceResponseModel> records = new List<ApiStateProvinceResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOStateProvince> result = await this.stateProvinceManager.Create(model);
+				CreateResponse<ApiStateProvinceResponseModel> result = await this.stateProvinceManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStateProvince), 200)]
+		[ProducesResponseType(typeof(DTOStateProvince), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateProvinceModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateProvinceRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStateProvince response = await this.stateProvinceManager.Get(id);
+					ApiStateProvinceResponseModel response = await this.stateProvinceManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOStateProvince), 200)]
+		[ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOStateProvince response = await this.stateProvinceManager.GetName(name);
+			ApiStateProvinceResponseModel response = await this.stateProvinceManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,11 +190,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getStateProvinceCodeCountryRegionCode/{stateProvinceCode}/{countryRegionCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOStateProvince), 200)]
+		[ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
 		{
-			POCOStateProvince response = await this.stateProvinceManager.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
+			ApiStateProvinceResponseModel response = await this.stateProvinceManager.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
 
 			if (response == null)
 			{
@@ -209,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>9d848581119f60eb419df995b98feec7</Hash>
+    <Hash>c35baf6709a0c506663f913d56806efb</Hash>
 </Codenesium>*/

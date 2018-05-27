@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductProductPhoto: AbstractBOManager
 	{
 		private IProductProductPhotoRepository productProductPhotoRepository;
-		private IApiProductProductPhotoModelValidator productProductPhotoModelValidator;
+		private IApiProductProductPhotoRequestModelValidator productProductPhotoModelValidator;
+		private IBOLProductProductPhotoMapper productProductPhotoMapper;
 		private ILogger logger;
 
 		public AbstractBOProductProductPhoto(
 			ILogger logger,
 			IProductProductPhotoRepository productProductPhotoRepository,
-			IApiProductProductPhotoModelValidator productProductPhotoModelValidator)
+			IApiProductProductPhotoRequestModelValidator productProductPhotoModelValidator,
+			IBOLProductProductPhotoMapper productProductPhotoMapper)
 			: base()
 
 		{
 			this.productProductPhotoRepository = productProductPhotoRepository;
 			this.productProductPhotoModelValidator = productProductPhotoModelValidator;
+			this.productProductPhotoMapper = productProductPhotoMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductProductPhotoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productProductPhotoRepository.All(skip, take, orderClause);
+			var records = await this.productProductPhotoRepository.All(skip, take, orderClause);
+
+			return this.productProductPhotoMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductProductPhoto> Get(int productID)
+		public virtual async Task<ApiProductProductPhotoResponseModel> Get(int productID)
 		{
-			return this.productProductPhotoRepository.Get(productID);
+			var record = await productProductPhotoRepository.Get(productID);
+
+			return this.productProductPhotoMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductProductPhoto>> Create(
-			ApiProductProductPhotoModel model)
+		public virtual async Task<CreateResponse<ApiProductProductPhotoResponseModel>> Create(
+			ApiProductProductPhotoRequestModel model)
 		{
-			CreateResponse<POCOProductProductPhoto> response = new CreateResponse<POCOProductProductPhoto>(await this.productProductPhotoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductProductPhotoResponseModel> response = new CreateResponse<ApiProductProductPhotoResponseModel>(await this.productProductPhotoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductProductPhoto record = await this.productProductPhotoRepository.Create(model);
+				var dto = this.productProductPhotoMapper.MapModelToDTO(default (int), model);
+				var record = await this.productProductPhotoRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productProductPhotoMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productID,
-			ApiProductProductPhotoModel model)
+			ApiProductProductPhotoRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productProductPhotoModelValidator.ValidateUpdateAsync(productID, model));
 
 			if (response.Success)
 			{
-				await this.productProductPhotoRepository.Update(productID, model);
+				var dto = this.productProductPhotoMapper.MapModelToDTO(productID, model);
+				await this.productProductPhotoRepository.Update(productID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>624634d354274f409c8ab1ac265dafe3</Hash>
+    <Hash>d7eaddf1ab677a17b01da6fd1921a771</Hash>
 </Codenesium>*/

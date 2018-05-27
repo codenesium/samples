@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOTransactionHistoryArchive: AbstractBOManager
 	{
 		private ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository;
-		private IApiTransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator;
+		private IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator;
+		private IBOLTransactionHistoryArchiveMapper transactionHistoryArchiveMapper;
 		private ILogger logger;
 
 		public AbstractBOTransactionHistoryArchive(
 			ILogger logger,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
-			IApiTransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator)
+			IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
+			IBOLTransactionHistoryArchiveMapper transactionHistoryArchiveMapper)
 			: base()
 
 		{
 			this.transactionHistoryArchiveRepository = transactionHistoryArchiveRepository;
 			this.transactionHistoryArchiveModelValidator = transactionHistoryArchiveModelValidator;
+			this.transactionHistoryArchiveMapper = transactionHistoryArchiveMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOTransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.transactionHistoryArchiveRepository.All(skip, take, orderClause);
+			var records = await this.transactionHistoryArchiveRepository.All(skip, take, orderClause);
+
+			return this.transactionHistoryArchiveMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOTransactionHistoryArchive> Get(int transactionID)
+		public virtual async Task<ApiTransactionHistoryArchiveResponseModel> Get(int transactionID)
 		{
-			return this.transactionHistoryArchiveRepository.Get(transactionID);
+			var record = await transactionHistoryArchiveRepository.Get(transactionID);
+
+			return this.transactionHistoryArchiveMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOTransactionHistoryArchive>> Create(
-			ApiTransactionHistoryArchiveModel model)
+		public virtual async Task<CreateResponse<ApiTransactionHistoryArchiveResponseModel>> Create(
+			ApiTransactionHistoryArchiveRequestModel model)
 		{
-			CreateResponse<POCOTransactionHistoryArchive> response = new CreateResponse<POCOTransactionHistoryArchive>(await this.transactionHistoryArchiveModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTransactionHistoryArchiveResponseModel> response = new CreateResponse<ApiTransactionHistoryArchiveResponseModel>(await this.transactionHistoryArchiveModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOTransactionHistoryArchive record = await this.transactionHistoryArchiveRepository.Create(model);
+				var dto = this.transactionHistoryArchiveMapper.MapModelToDTO(default (int), model);
+				var record = await this.transactionHistoryArchiveRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.transactionHistoryArchiveMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int transactionID,
-			ApiTransactionHistoryArchiveModel model)
+			ApiTransactionHistoryArchiveRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.transactionHistoryArchiveModelValidator.ValidateUpdateAsync(transactionID, model));
 
 			if (response.Success)
 			{
-				await this.transactionHistoryArchiveRepository.Update(transactionID, model);
+				var dto = this.transactionHistoryArchiveMapper.MapModelToDTO(transactionID, model);
+				await this.transactionHistoryArchiveRepository.Update(transactionID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOTransactionHistoryArchive>> GetProductID(int productID)
+		public async Task<List<ApiTransactionHistoryArchiveResponseModel>> GetProductID(int productID)
 		{
-			return await this.transactionHistoryArchiveRepository.GetProductID(productID);
+			List<DTOTransactionHistoryArchive> records = await this.transactionHistoryArchiveRepository.GetProductID(productID);
+
+			return this.transactionHistoryArchiveMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOTransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
+		public async Task<List<ApiTransactionHistoryArchiveResponseModel>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
 		{
-			return await this.transactionHistoryArchiveRepository.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
+			List<DTOTransactionHistoryArchive> records = await this.transactionHistoryArchiveRepository.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
+
+			return this.transactionHistoryArchiveMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a7edaf0082b1f3a8a6934df809de0e0</Hash>
+    <Hash>e8de479ba5f3eb788570dad3b637ad84</Hash>
 </Codenesium>*/

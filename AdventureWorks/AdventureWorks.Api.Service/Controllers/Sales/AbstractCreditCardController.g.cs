@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCreditCard>), 200)]
+		[ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCreditCard> response = await this.creditCardManager.All(query.Offset, query.Limit);
+			List<ApiCreditCardResponseModel> response = await this.creditCardManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCreditCard), 200)]
+		[ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOCreditCard response = await this.creditCardManager.Get(id);
+			ApiCreditCardResponseModel response = await this.creditCardManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCreditCard), 200)]
+		[ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCreditCardModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiCreditCardRequestModel model)
 		{
-			CreateResponse<POCOCreditCard> result = await this.creditCardManager.Create(model);
+			CreateResponse<ApiCreditCardResponseModel> result = await this.creditCardManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOCreditCard>), 200)]
+		[ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCreditCardModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCreditCardRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOCreditCard> records = new List<POCOCreditCard>();
+			List<ApiCreditCardResponseModel> records = new List<ApiCreditCardResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOCreditCard> result = await this.creditCardManager.Create(model);
+				CreateResponse<ApiCreditCardResponseModel> result = await this.creditCardManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCreditCard), 200)]
+		[ProducesResponseType(typeof(DTOCreditCard), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCreditCardModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCreditCardRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCreditCard response = await this.creditCardManager.Get(id);
+					ApiCreditCardResponseModel response = await this.creditCardManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getCardNumber/{cardNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCreditCard), 200)]
+		[ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetCardNumber(string cardNumber)
 		{
-			POCOCreditCard response = await this.creditCardManager.GetCardNumber(cardNumber);
+			ApiCreditCardResponseModel response = await this.creditCardManager.GetCardNumber(cardNumber);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6826abd29ea457aea44f38b555747f30</Hash>
+    <Hash>cdc4ead29dee2a1541b5da47b84348e9</Hash>
 </Codenesium>*/

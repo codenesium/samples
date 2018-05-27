@@ -15,54 +15,62 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOSale: AbstractBOManager
 	{
 		private ISaleRepository saleRepository;
-		private IApiSaleModelValidator saleModelValidator;
+		private IApiSaleRequestModelValidator saleModelValidator;
+		private IBOLSaleMapper saleMapper;
 		private ILogger logger;
 
 		public AbstractBOSale(
 			ILogger logger,
 			ISaleRepository saleRepository,
-			IApiSaleModelValidator saleModelValidator)
+			IApiSaleRequestModelValidator saleModelValidator,
+			IBOLSaleMapper saleMapper)
 			: base()
 
 		{
 			this.saleRepository = saleRepository;
 			this.saleModelValidator = saleModelValidator;
+			this.saleMapper = saleMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSale>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSaleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.saleRepository.All(skip, take, orderClause);
+			var records = await this.saleRepository.All(skip, take, orderClause);
+
+			return this.saleMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSale> Get(int id)
+		public virtual async Task<ApiSaleResponseModel> Get(int id)
 		{
-			return this.saleRepository.Get(id);
+			var record = await saleRepository.Get(id);
+
+			return this.saleMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSale>> Create(
-			ApiSaleModel model)
+		public virtual async Task<CreateResponse<ApiSaleResponseModel>> Create(
+			ApiSaleRequestModel model)
 		{
-			CreateResponse<POCOSale> response = new CreateResponse<POCOSale>(await this.saleModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSale record = await this.saleRepository.Create(model);
+				var dto = this.saleMapper.MapModelToDTO(default (int), model);
+				var record = await this.saleRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.saleMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiSaleModel model)
+			ApiSaleRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.saleRepository.Update(id, model);
+				var dto = this.saleMapper.MapModelToDTO(id, model);
+				await this.saleRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4348be4b63c9f08a1cb219aa083a0e44</Hash>
+    <Hash>a1e87c41e4890159994ae2fa55f343b9</Hash>
 </Codenesium>*/

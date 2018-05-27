@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace PetStoreNS.Api.DataAccess
 {
 	[Table("Pet", Schema="dbo")]
-	public partial class Pet:AbstractEntityFrameworkPOCO
+	public partial class Pet:AbstractEntityFrameworkDTO
 	{
 		public Pet()
 		{}
@@ -63,5 +63,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>838ea6b2d6be2bda49d0a82b20109142</Hash>
+    <Hash>5a26a4cbae05c88780e3252532a68576</Hash>
 </Codenesium>*/

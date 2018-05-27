@@ -6,19 +6,19 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiCurrencyModelValidator: AbstractApiCurrencyModelValidator, IApiCurrencyModelValidator
+	public class ApiCurrencyRequestModelValidator: AbstractApiCurrencyRequestModelValidator, IApiCurrencyRequestModelValidator
 	{
-		public ApiCurrencyModelValidator()
+		public ApiCurrencyRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiCurrencyModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiCurrencyRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCurrencyModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCurrencyRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.NameRules();
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>6da4c3d18b8658d85d4c02cda451ae3c</Hash>
+    <Hash>af6905664f821c2018f1d9ba330be1f5</Hash>
 </Codenesium>*/

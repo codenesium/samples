@@ -9,20 +9,20 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBODatabaseLog
 	{
-		Task<CreateResponse<POCODatabaseLog>> Create(
-			ApiDatabaseLogModel model);
+		Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
+			ApiDatabaseLogRequestModel model);
 
 		Task<ActionResponse> Update(int databaseLogID,
-		                            ApiDatabaseLogModel model);
+		                            ApiDatabaseLogRequestModel model);
 
 		Task<ActionResponse> Delete(int databaseLogID);
 
-		Task<POCODatabaseLog> Get(int databaseLogID);
+		Task<ApiDatabaseLogResponseModel> Get(int databaseLogID);
 
-		Task<List<POCODatabaseLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiDatabaseLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>101f097c9c33bcc4be91fe8136f59166</Hash>
+    <Hash>1fcb2a0635ab05ac0fde343df3981d09</Hash>
 </Codenesium>*/

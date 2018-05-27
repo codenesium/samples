@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class UnitMeasureRepository: AbstractUnitMeasureRepository, IUnitMeasureRepository
 	{
 		public UnitMeasureRepository(
-			IObjectMapper mapper,
+			IDALUnitMeasureMapper mapper,
 			ILogger<UnitMeasureRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>adf12f870adee6d2cc12efbd28611d4d</Hash>
+    <Hash>1757869f88fc6bd241374e8cd32a7f08</Hash>
 </Codenesium>*/

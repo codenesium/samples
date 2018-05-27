@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOLessonXTeacher: AbstractBOManager
 	{
 		private ILessonXTeacherRepository lessonXTeacherRepository;
-		private IApiLessonXTeacherModelValidator lessonXTeacherModelValidator;
+		private IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator;
+		private IBOLLessonXTeacherMapper lessonXTeacherMapper;
 		private ILogger logger;
 
 		public AbstractBOLessonXTeacher(
 			ILogger logger,
 			ILessonXTeacherRepository lessonXTeacherRepository,
-			IApiLessonXTeacherModelValidator lessonXTeacherModelValidator)
+			IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator,
+			IBOLLessonXTeacherMapper lessonXTeacherMapper)
 			: base()
 
 		{
 			this.lessonXTeacherRepository = lessonXTeacherRepository;
 			this.lessonXTeacherModelValidator = lessonXTeacherModelValidator;
+			this.lessonXTeacherMapper = lessonXTeacherMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOLessonXTeacher>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiLessonXTeacherResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.lessonXTeacherRepository.All(skip, take, orderClause);
+			var records = await this.lessonXTeacherRepository.All(skip, take, orderClause);
+
+			return this.lessonXTeacherMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOLessonXTeacher> Get(int id)
+		public virtual async Task<ApiLessonXTeacherResponseModel> Get(int id)
 		{
-			return this.lessonXTeacherRepository.Get(id);
+			var record = await lessonXTeacherRepository.Get(id);
+
+			return this.lessonXTeacherMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOLessonXTeacher>> Create(
-			ApiLessonXTeacherModel model)
+		public virtual async Task<CreateResponse<ApiLessonXTeacherResponseModel>> Create(
+			ApiLessonXTeacherRequestModel model)
 		{
-			CreateResponse<POCOLessonXTeacher> response = new CreateResponse<POCOLessonXTeacher>(await this.lessonXTeacherModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLessonXTeacherResponseModel> response = new CreateResponse<ApiLessonXTeacherResponseModel>(await this.lessonXTeacherModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLessonXTeacher record = await this.lessonXTeacherRepository.Create(model);
+				var dto = this.lessonXTeacherMapper.MapModelToDTO(default (int), model);
+				var record = await this.lessonXTeacherRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.lessonXTeacherMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiLessonXTeacherModel model)
+			ApiLessonXTeacherRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.lessonXTeacherRepository.Update(id, model);
+				var dto = this.lessonXTeacherMapper.MapModelToDTO(id, model);
+				await this.lessonXTeacherRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>9d2e1557b362df992848e3a6a9e98468</Hash>
+    <Hash>a3866b3260b42f9124a94d0b446135db</Hash>
 </Codenesium>*/

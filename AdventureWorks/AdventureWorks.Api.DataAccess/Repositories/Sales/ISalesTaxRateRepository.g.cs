@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesTaxRateRepository
 	{
-		Task<POCOSalesTaxRate> Create(ApiSalesTaxRateModel model);
+		Task<DTOSalesTaxRate> Create(DTOSalesTaxRate dto);
 
 		Task Update(int salesTaxRateID,
-		            ApiSalesTaxRateModel model);
+		            DTOSalesTaxRate dto);
 
 		Task Delete(int salesTaxRateID);
 
-		Task<POCOSalesTaxRate> Get(int salesTaxRateID);
+		Task<DTOSalesTaxRate> Get(int salesTaxRateID);
 
-		Task<List<POCOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
+		Task<DTOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
 	}
 }
 
 /*<Codenesium>
-    <Hash>266520deb1e0c5a3fedf397998774c7e</Hash>
+    <Hash>3ec32896a3b9bb12acf14f7a0e2aa8b0</Hash>
 </Codenesium>*/

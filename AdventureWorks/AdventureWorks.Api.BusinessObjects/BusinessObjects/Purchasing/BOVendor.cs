@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOVendor(
 			ILogger<VendorRepository> logger,
 			IVendorRepository vendorRepository,
-			IApiVendorModelValidator vendorModelValidator)
-			: base(logger, vendorRepository, vendorModelValidator)
+			IApiVendorRequestModelValidator vendorModelValidator,
+			IBOLVendorMapper vendorMapper)
+			: base(logger, vendorRepository, vendorModelValidator, vendorMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b76b996ea6e96e9044dfee2904be4b4f</Hash>
+    <Hash>4b09fd553fda1844a8be30be33111b08</Hash>
 </Codenesium>*/

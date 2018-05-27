@@ -12,7 +12,7 @@ namespace FileServiceNS.Api.DataAccess
 	public class BucketRepository: AbstractBucketRepository, IBucketRepository
 	{
 		public BucketRepository(
-			IObjectMapper mapper,
+			IDALBucketMapper mapper,
 			ILogger<BucketRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af2e47527596c9595e57c88ee2b43a3e</Hash>
+    <Hash>423ee6c55b51b4296c627da0e8545dbc</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class MachineRepository: AbstractMachineRepository, IMachineRepository
 	{
 		public MachineRepository(
-			IObjectMapper mapper,
+			IDALMachineMapper mapper,
 			ILogger<MachineRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>117c78ad5944c4c0bc39e4d272143d71</Hash>
+    <Hash>834292270e9f1ce5830bc25e40fb4c83</Hash>
 </Codenesium>*/

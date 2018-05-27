@@ -9,20 +9,20 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOProductProductPhoto
 	{
-		Task<CreateResponse<POCOProductProductPhoto>> Create(
-			ApiProductProductPhotoModel model);
+		Task<CreateResponse<ApiProductProductPhotoResponseModel>> Create(
+			ApiProductProductPhotoRequestModel model);
 
 		Task<ActionResponse> Update(int productID,
-		                            ApiProductProductPhotoModel model);
+		                            ApiProductProductPhotoRequestModel model);
 
 		Task<ActionResponse> Delete(int productID);
 
-		Task<POCOProductProductPhoto> Get(int productID);
+		Task<ApiProductProductPhotoResponseModel> Get(int productID);
 
-		Task<List<POCOProductProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiProductProductPhotoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b66b05e4686dd6da33eaf2336406151</Hash>
+    <Hash>69f63441c7208f1169f1564cff613b99</Hash>
 </Codenesium>*/

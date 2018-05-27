@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALCountryRegionMapper Mapper { get; }
 
 		public AbstractCountryRegionRepository(
-			IObjectMapper mapper,
+			IDALCountryRegionMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOCountryRegion> Get(string countryRegionCode)
+		public async virtual Task<DTOCountryRegion> Get(string countryRegionCode)
 		{
 			CountryRegion record = await this.GetById(countryRegionCode);
 
-			return this.Mapper.CountryRegionMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOCountryRegion> Create(
-			ApiCountryRegionModel model)
+		public async virtual Task<DTOCountryRegion> Create(
+			DTOCountryRegion dto)
 		{
 			CountryRegion record = new CountryRegion();
 
-			this.Mapper.CountryRegionMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (string),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<CountryRegion>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.CountryRegionMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			string countryRegionCode,
-			ApiCountryRegionModel model)
+			DTOCountryRegion dto)
 		{
 			CountryRegion record = await this.GetById(countryRegionCode);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.CountryRegionMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					countryRegionCode,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOCountryRegion> GetName(string name)
+		public async Task<DTOCountryRegion> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOCountryRegion>> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOCountryRegion>> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCountryRegion> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOCountryRegion> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOCountryRegion>> SearchLinqPOCO(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOCountryRegion>> SearchLinqDTO(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCountryRegion> response = new List<POCOCountryRegion>();
+			List<DTOCountryRegion> response = new List<DTOCountryRegion>();
 			List<CountryRegion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.CountryRegionMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>55def2e401a7daa92eb40916fb2ac518</Hash>
+    <Hash>25cbbe77b51200a3f5dae1656ca51055</Hash>
 </Codenesium>*/

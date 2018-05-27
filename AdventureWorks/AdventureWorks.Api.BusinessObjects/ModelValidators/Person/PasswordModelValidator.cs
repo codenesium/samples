@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiPasswordModelValidator: AbstractApiPasswordModelValidator, IApiPasswordModelValidator
+	public class ApiPasswordRequestModelValidator: AbstractApiPasswordRequestModelValidator, IApiPasswordRequestModelValidator
 	{
-		public ApiPasswordModelValidator()
+		public ApiPasswordRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiPasswordModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiPasswordRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.PasswordHashRules();
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPasswordModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPasswordRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.PasswordHashRules();
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d1efc764905907829936a106ebbd34d4</Hash>
+    <Hash>4c0a06a706702dc81ce75d069b5a888c</Hash>
 </Codenesium>*/

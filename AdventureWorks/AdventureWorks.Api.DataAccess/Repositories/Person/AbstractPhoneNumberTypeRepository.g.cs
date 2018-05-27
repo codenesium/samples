@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALPhoneNumberTypeMapper Mapper { get; }
 
 		public AbstractPhoneNumberTypeRepository(
-			IObjectMapper mapper,
+			IDALPhoneNumberTypeMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOPhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOPhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOPhoneNumberType> Get(int phoneNumberTypeID)
+		public async virtual Task<DTOPhoneNumberType> Get(int phoneNumberTypeID)
 		{
 			PhoneNumberType record = await this.GetById(phoneNumberTypeID);
 
-			return this.Mapper.PhoneNumberTypeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOPhoneNumberType> Create(
-			ApiPhoneNumberTypeModel model)
+		public async virtual Task<DTOPhoneNumberType> Create(
+			DTOPhoneNumberType dto)
 		{
 			PhoneNumberType record = new PhoneNumberType();
 
-			this.Mapper.PhoneNumberTypeMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<PhoneNumberType>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.PhoneNumberTypeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int phoneNumberTypeID,
-			ApiPhoneNumberTypeModel model)
+			DTOPhoneNumberType dto)
 		{
 			PhoneNumberType record = await this.GetById(phoneNumberTypeID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.PhoneNumberTypeMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					phoneNumberTypeID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOPhoneNumberType>> Where(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOPhoneNumberType>> Where(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPhoneNumberType> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOPhoneNumberType> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOPhoneNumberType>> SearchLinqPOCO(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOPhoneNumberType>> SearchLinqDTO(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPhoneNumberType> response = new List<POCOPhoneNumberType>();
+			List<DTOPhoneNumberType> response = new List<DTOPhoneNumberType>();
 			List<PhoneNumberType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.PhoneNumberTypeMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>33cb8f6b28cb0ddd09f27c111e8ec18a</Hash>
+    <Hash>f698db5946d844fbc2179037a1bc7f3c</Hash>
 </Codenesium>*/

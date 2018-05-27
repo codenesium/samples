@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOSalesOrderHeaderSalesReason(
 			ILogger<SalesOrderHeaderSalesReasonRepository> logger,
 			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
-			IApiSalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator)
-			: base(logger, salesOrderHeaderSalesReasonRepository, salesOrderHeaderSalesReasonModelValidator)
+			IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
+			IBOLSalesOrderHeaderSalesReasonMapper salesOrderHeaderSalesReasonMapper)
+			: base(logger, salesOrderHeaderSalesReasonRepository, salesOrderHeaderSalesReasonModelValidator, salesOrderHeaderSalesReasonMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8406daf7e3d931b4ac96141beb12809</Hash>
+    <Hash>0267dc609bc7d36862b82c7c914e171e</Hash>
 </Codenesium>*/

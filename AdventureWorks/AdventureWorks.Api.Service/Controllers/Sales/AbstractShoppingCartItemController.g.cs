@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOShoppingCartItem>), 200)]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOShoppingCartItem> response = await this.shoppingCartItemManager.All(query.Offset, query.Limit);
+			List<ApiShoppingCartItemResponseModel> response = await this.shoppingCartItemManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOShoppingCartItem), 200)]
+		[ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOShoppingCartItem response = await this.shoppingCartItemManager.Get(id);
+			ApiShoppingCartItemResponseModel response = await this.shoppingCartItemManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOShoppingCartItem), 200)]
+		[ProducesResponseType(typeof(ApiShoppingCartItemResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiShoppingCartItemModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiShoppingCartItemRequestModel model)
 		{
-			CreateResponse<POCOShoppingCartItem> result = await this.shoppingCartItemManager.Create(model);
+			CreateResponse<ApiShoppingCartItemResponseModel> result = await this.shoppingCartItemManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOShoppingCartItem>), 200)]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShoppingCartItemModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShoppingCartItemRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOShoppingCartItem> records = new List<POCOShoppingCartItem>();
+			List<ApiShoppingCartItemResponseModel> records = new List<ApiShoppingCartItemResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOShoppingCartItem> result = await this.shoppingCartItemManager.Create(model);
+				CreateResponse<ApiShoppingCartItemResponseModel> result = await this.shoppingCartItemManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOShoppingCartItem), 200)]
+		[ProducesResponseType(typeof(DTOShoppingCartItem), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShoppingCartItemRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOShoppingCartItem response = await this.shoppingCartItemManager.Get(id);
+					ApiShoppingCartItemResponseModel response = await this.shoppingCartItemManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getShoppingCartIDProductID/{shoppingCartID}/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOShoppingCartItem>), 200)]
+		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetShoppingCartIDProductID(string shoppingCartID,int productID)
 		{
-			List<POCOShoppingCartItem> response = await this.shoppingCartItemManager.GetShoppingCartIDProductID(shoppingCartID,productID);
+			List<ApiShoppingCartItemResponseModel> response = await this.shoppingCartItemManager.GetShoppingCartIDProductID(shoppingCartID,productID);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e515a5514ca5d0ffa84700394c5bc425</Hash>
+    <Hash>718090587ad7f0c19daa95918cbf74ae</Hash>
 </Codenesium>*/

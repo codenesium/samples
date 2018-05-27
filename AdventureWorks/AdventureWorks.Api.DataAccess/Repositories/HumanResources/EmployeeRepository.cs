@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class EmployeeRepository: AbstractEmployeeRepository, IEmployeeRepository
 	{
 		public EmployeeRepository(
-			IObjectMapper mapper,
+			IDALEmployeeMapper mapper,
 			ILogger<EmployeeRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>11bde51bacd165a3c276fd88eb525514</Hash>
+    <Hash>3c8fa7fa8b8f3724b89b52751beaa6df</Hash>
 </Codenesium>*/

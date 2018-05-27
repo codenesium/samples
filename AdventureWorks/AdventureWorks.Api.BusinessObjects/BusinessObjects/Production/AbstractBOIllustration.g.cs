@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOIllustration: AbstractBOManager
 	{
 		private IIllustrationRepository illustrationRepository;
-		private IApiIllustrationModelValidator illustrationModelValidator;
+		private IApiIllustrationRequestModelValidator illustrationModelValidator;
+		private IBOLIllustrationMapper illustrationMapper;
 		private ILogger logger;
 
 		public AbstractBOIllustration(
 			ILogger logger,
 			IIllustrationRepository illustrationRepository,
-			IApiIllustrationModelValidator illustrationModelValidator)
+			IApiIllustrationRequestModelValidator illustrationModelValidator,
+			IBOLIllustrationMapper illustrationMapper)
 			: base()
 
 		{
 			this.illustrationRepository = illustrationRepository;
 			this.illustrationModelValidator = illustrationModelValidator;
+			this.illustrationMapper = illustrationMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiIllustrationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.illustrationRepository.All(skip, take, orderClause);
+			var records = await this.illustrationRepository.All(skip, take, orderClause);
+
+			return this.illustrationMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOIllustration> Get(int illustrationID)
+		public virtual async Task<ApiIllustrationResponseModel> Get(int illustrationID)
 		{
-			return this.illustrationRepository.Get(illustrationID);
+			var record = await illustrationRepository.Get(illustrationID);
+
+			return this.illustrationMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOIllustration>> Create(
-			ApiIllustrationModel model)
+		public virtual async Task<CreateResponse<ApiIllustrationResponseModel>> Create(
+			ApiIllustrationRequestModel model)
 		{
-			CreateResponse<POCOIllustration> response = new CreateResponse<POCOIllustration>(await this.illustrationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiIllustrationResponseModel> response = new CreateResponse<ApiIllustrationResponseModel>(await this.illustrationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOIllustration record = await this.illustrationRepository.Create(model);
+				var dto = this.illustrationMapper.MapModelToDTO(default (int), model);
+				var record = await this.illustrationRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.illustrationMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int illustrationID,
-			ApiIllustrationModel model)
+			ApiIllustrationRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.illustrationModelValidator.ValidateUpdateAsync(illustrationID, model));
 
 			if (response.Success)
 			{
-				await this.illustrationRepository.Update(illustrationID, model);
+				var dto = this.illustrationMapper.MapModelToDTO(illustrationID, model);
+				await this.illustrationRepository.Update(illustrationID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>8895e66efd02c0fa45a6e164ddb597a9</Hash>
+    <Hash>ed052d9b1fecba5ffbecb57fca6ec8e3</Hash>
 </Codenesium>*/

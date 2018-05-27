@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductModelProductDescriptionCultureRepository: AbstractProductModelProductDescriptionCultureRepository, IProductModelProductDescriptionCultureRepository
 	{
 		public ProductModelProductDescriptionCultureRepository(
-			IObjectMapper mapper,
+			IDALProductModelProductDescriptionCultureMapper mapper,
 			ILogger<ProductModelProductDescriptionCultureRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c09488db9a84ccb1352add49ed6aab0</Hash>
+    <Hash>a5957d3a818c5f936e9af73c990e6ee8</Hash>
 </Codenesium>*/

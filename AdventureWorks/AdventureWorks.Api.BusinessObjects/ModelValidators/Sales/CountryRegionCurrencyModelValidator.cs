@@ -6,19 +6,19 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiCountryRegionCurrencyModelValidator: AbstractApiCountryRegionCurrencyModelValidator, IApiCountryRegionCurrencyModelValidator
+	public class ApiCountryRegionCurrencyRequestModelValidator: AbstractApiCountryRegionCurrencyRequestModelValidator, IApiCountryRegionCurrencyRequestModelValidator
 	{
-		public ApiCountryRegionCurrencyModelValidator()
+		public ApiCountryRegionCurrencyRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiCountryRegionCurrencyModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiCountryRegionCurrencyRequestModel model)
 		{
 			this.CurrencyCodeRules();
 			this.ModifiedDateRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCountryRegionCurrencyModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCountryRegionCurrencyRequestModel model)
 		{
 			this.CurrencyCodeRules();
 			this.ModifiedDateRules();
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bd1ecfe7a8de506f21b696102e8a49dc</Hash>
+    <Hash>e90c58a825de176ebb1e161707b53564</Hash>
 </Codenesium>*/

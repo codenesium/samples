@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductSubcategory: AbstractBOManager
 	{
 		private IProductSubcategoryRepository productSubcategoryRepository;
-		private IApiProductSubcategoryModelValidator productSubcategoryModelValidator;
+		private IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator;
+		private IBOLProductSubcategoryMapper productSubcategoryMapper;
 		private ILogger logger;
 
 		public AbstractBOProductSubcategory(
 			ILogger logger,
 			IProductSubcategoryRepository productSubcategoryRepository,
-			IApiProductSubcategoryModelValidator productSubcategoryModelValidator)
+			IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator,
+			IBOLProductSubcategoryMapper productSubcategoryMapper)
 			: base()
 
 		{
 			this.productSubcategoryRepository = productSubcategoryRepository;
 			this.productSubcategoryModelValidator = productSubcategoryModelValidator;
+			this.productSubcategoryMapper = productSubcategoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductSubcategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductSubcategoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productSubcategoryRepository.All(skip, take, orderClause);
+			var records = await this.productSubcategoryRepository.All(skip, take, orderClause);
+
+			return this.productSubcategoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductSubcategory> Get(int productSubcategoryID)
+		public virtual async Task<ApiProductSubcategoryResponseModel> Get(int productSubcategoryID)
 		{
-			return this.productSubcategoryRepository.Get(productSubcategoryID);
+			var record = await productSubcategoryRepository.Get(productSubcategoryID);
+
+			return this.productSubcategoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductSubcategory>> Create(
-			ApiProductSubcategoryModel model)
+		public virtual async Task<CreateResponse<ApiProductSubcategoryResponseModel>> Create(
+			ApiProductSubcategoryRequestModel model)
 		{
-			CreateResponse<POCOProductSubcategory> response = new CreateResponse<POCOProductSubcategory>(await this.productSubcategoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductSubcategoryResponseModel> response = new CreateResponse<ApiProductSubcategoryResponseModel>(await this.productSubcategoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductSubcategory record = await this.productSubcategoryRepository.Create(model);
+				var dto = this.productSubcategoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.productSubcategoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productSubcategoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productSubcategoryID,
-			ApiProductSubcategoryModel model)
+			ApiProductSubcategoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productSubcategoryModelValidator.ValidateUpdateAsync(productSubcategoryID, model));
 
 			if (response.Success)
 			{
-				await this.productSubcategoryRepository.Update(productSubcategoryID, model);
+				var dto = this.productSubcategoryMapper.MapModelToDTO(productSubcategoryID, model);
+				await this.productSubcategoryRepository.Update(productSubcategoryID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOProductSubcategory> GetName(string name)
+		public async Task<ApiProductSubcategoryResponseModel> GetName(string name)
 		{
-			return await this.productSubcategoryRepository.GetName(name);
+			DTOProductSubcategory record = await this.productSubcategoryRepository.GetName(name);
+
+			return this.productSubcategoryMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d59518d824c1c92f4b58a2e75d2315ee</Hash>
+    <Hash>12403cd06ce1a1bd09388c9f3913217b</Hash>
 </Codenesium>*/

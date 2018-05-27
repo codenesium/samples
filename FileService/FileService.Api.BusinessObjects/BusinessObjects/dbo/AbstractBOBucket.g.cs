@@ -15,54 +15,62 @@ namespace FileServiceNS.Api.BusinessObjects
 	public abstract class AbstractBOBucket: AbstractBOManager
 	{
 		private IBucketRepository bucketRepository;
-		private IApiBucketModelValidator bucketModelValidator;
+		private IApiBucketRequestModelValidator bucketModelValidator;
+		private IBOLBucketMapper bucketMapper;
 		private ILogger logger;
 
 		public AbstractBOBucket(
 			ILogger logger,
 			IBucketRepository bucketRepository,
-			IApiBucketModelValidator bucketModelValidator)
+			IApiBucketRequestModelValidator bucketModelValidator,
+			IBOLBucketMapper bucketMapper)
 			: base()
 
 		{
 			this.bucketRepository = bucketRepository;
 			this.bucketModelValidator = bucketModelValidator;
+			this.bucketMapper = bucketMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiBucketResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.bucketRepository.All(skip, take, orderClause);
+			var records = await this.bucketRepository.All(skip, take, orderClause);
+
+			return this.bucketMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOBucket> Get(int id)
+		public virtual async Task<ApiBucketResponseModel> Get(int id)
 		{
-			return this.bucketRepository.Get(id);
+			var record = await bucketRepository.Get(id);
+
+			return this.bucketMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOBucket>> Create(
-			ApiBucketModel model)
+		public virtual async Task<CreateResponse<ApiBucketResponseModel>> Create(
+			ApiBucketRequestModel model)
 		{
-			CreateResponse<POCOBucket> response = new CreateResponse<POCOBucket>(await this.bucketModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBucketResponseModel> response = new CreateResponse<ApiBucketResponseModel>(await this.bucketModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBucket record = await this.bucketRepository.Create(model);
+				var dto = this.bucketMapper.MapModelToDTO(default (int), model);
+				var record = await this.bucketRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.bucketMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiBucketModel model)
+			ApiBucketRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.bucketModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.bucketRepository.Update(id, model);
+				var dto = this.bucketMapper.MapModelToDTO(id, model);
+				await this.bucketRepository.Update(id, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace FileServiceNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOBucket> Name(string name)
+		public async Task<ApiBucketResponseModel> GetExternalId(Guid externalId)
 		{
-			return await this.bucketRepository.Name(name);
+			DTOBucket record = await this.bucketRepository.GetExternalId(externalId);
+
+			return this.bucketMapper.MapDTOToModel(record);
 		}
-		public async Task<POCOBucket> ExternalId(Guid externalId)
+		public async Task<ApiBucketResponseModel> GetName(string name)
 		{
-			return await this.bucketRepository.ExternalId(externalId);
+			DTOBucket record = await this.bucketRepository.GetName(name);
+
+			return this.bucketMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bcad9eeea57b329569f627f9a5b3135d</Hash>
+    <Hash>8dd1337bac4d4ce234d45865fcc41d7a</Hash>
 </Codenesium>*/

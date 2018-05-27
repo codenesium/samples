@@ -8,23 +8,23 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesOrderHeaderRepository
 	{
-		Task<POCOSalesOrderHeader> Create(ApiSalesOrderHeaderModel model);
+		Task<DTOSalesOrderHeader> Create(DTOSalesOrderHeader dto);
 
 		Task Update(int salesOrderID,
-		            ApiSalesOrderHeaderModel model);
+		            DTOSalesOrderHeader dto);
 
 		Task Delete(int salesOrderID);
 
-		Task<POCOSalesOrderHeader> Get(int salesOrderID);
+		Task<DTOSalesOrderHeader> Get(int salesOrderID);
 
-		Task<List<POCOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber);
-		Task<List<POCOSalesOrderHeader>> GetCustomerID(int customerID);
-		Task<List<POCOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID);
+		Task<DTOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber);
+		Task<List<DTOSalesOrderHeader>> GetCustomerID(int customerID);
+		Task<List<DTOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3f694370cbb4b667773df2ebe33d5311</Hash>
+    <Hash>5472f120a840d65a52465aa05c74f8d6</Hash>
 </Codenesium>*/

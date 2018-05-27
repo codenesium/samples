@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ScrapReason", Schema="Production")]
-	public partial class ScrapReason: AbstractEntityFrameworkPOCO
+	public partial class ScrapReason: AbstractEntityFrameworkDTO
 	{
 		public ScrapReason()
 		{}
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1315727d1148364d6b2128b04f37d301</Hash>
+    <Hash>0866bc2669cf00eb1fe0d28f9acce04a</Hash>
 </Codenesium>*/

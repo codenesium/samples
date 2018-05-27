@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOStateProvince: AbstractBOManager
 	{
 		private IStateProvinceRepository stateProvinceRepository;
-		private IApiStateProvinceModelValidator stateProvinceModelValidator;
+		private IApiStateProvinceRequestModelValidator stateProvinceModelValidator;
+		private IBOLStateProvinceMapper stateProvinceMapper;
 		private ILogger logger;
 
 		public AbstractBOStateProvince(
 			ILogger logger,
 			IStateProvinceRepository stateProvinceRepository,
-			IApiStateProvinceModelValidator stateProvinceModelValidator)
+			IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
+			IBOLStateProvinceMapper stateProvinceMapper)
 			: base()
 
 		{
 			this.stateProvinceRepository = stateProvinceRepository;
 			this.stateProvinceModelValidator = stateProvinceModelValidator;
+			this.stateProvinceMapper = stateProvinceMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiStateProvinceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.stateProvinceRepository.All(skip, take, orderClause);
+			var records = await this.stateProvinceRepository.All(skip, take, orderClause);
+
+			return this.stateProvinceMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOStateProvince> Get(int stateProvinceID)
+		public virtual async Task<ApiStateProvinceResponseModel> Get(int stateProvinceID)
 		{
-			return this.stateProvinceRepository.Get(stateProvinceID);
+			var record = await stateProvinceRepository.Get(stateProvinceID);
+
+			return this.stateProvinceMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOStateProvince>> Create(
-			ApiStateProvinceModel model)
+		public virtual async Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
+			ApiStateProvinceRequestModel model)
 		{
-			CreateResponse<POCOStateProvince> response = new CreateResponse<POCOStateProvince>(await this.stateProvinceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStateProvinceResponseModel> response = new CreateResponse<ApiStateProvinceResponseModel>(await this.stateProvinceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOStateProvince record = await this.stateProvinceRepository.Create(model);
+				var dto = this.stateProvinceMapper.MapModelToDTO(default (int), model);
+				var record = await this.stateProvinceRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.stateProvinceMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int stateProvinceID,
-			ApiStateProvinceModel model)
+			ApiStateProvinceRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.stateProvinceModelValidator.ValidateUpdateAsync(stateProvinceID, model));
 
 			if (response.Success)
 			{
-				await this.stateProvinceRepository.Update(stateProvinceID, model);
+				var dto = this.stateProvinceMapper.MapModelToDTO(stateProvinceID, model);
+				await this.stateProvinceRepository.Update(stateProvinceID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOStateProvince> GetName(string name)
+		public async Task<ApiStateProvinceResponseModel> GetName(string name)
 		{
-			return await this.stateProvinceRepository.GetName(name);
+			DTOStateProvince record = await this.stateProvinceRepository.GetName(name);
+
+			return this.stateProvinceMapper.MapDTOToModel(record);
 		}
-		public async Task<POCOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
+		public async Task<ApiStateProvinceResponseModel> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
 		{
-			return await this.stateProvinceRepository.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
+			DTOStateProvince record = await this.stateProvinceRepository.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
+
+			return this.stateProvinceMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>13220ef9364d8e8899d99652045113c9</Hash>
+    <Hash>a52b65cf92988ba531d3001d6d7eb981</Hash>
 </Codenesium>*/

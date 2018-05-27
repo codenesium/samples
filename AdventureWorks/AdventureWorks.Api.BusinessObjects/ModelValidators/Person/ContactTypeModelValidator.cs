@@ -6,19 +6,19 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiContactTypeModelValidator: AbstractApiContactTypeModelValidator, IApiContactTypeModelValidator
+	public class ApiContactTypeRequestModelValidator: AbstractApiContactTypeRequestModelValidator, IApiContactTypeRequestModelValidator
 	{
-		public ApiContactTypeModelValidator()
+		public ApiContactTypeRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiContactTypeModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiContactTypeRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiContactTypeModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiContactTypeRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.NameRules();
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cf618f55fed001c7ab33324a2f92e07c</Hash>
+    <Hash>1aed1101633f70b9df07c8bb21ac2069</Hash>
 </Codenesium>*/

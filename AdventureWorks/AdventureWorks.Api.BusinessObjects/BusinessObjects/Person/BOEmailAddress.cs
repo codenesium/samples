@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOEmailAddress(
 			ILogger<EmailAddressRepository> logger,
 			IEmailAddressRepository emailAddressRepository,
-			IApiEmailAddressModelValidator emailAddressModelValidator)
-			: base(logger, emailAddressRepository, emailAddressModelValidator)
+			IApiEmailAddressRequestModelValidator emailAddressModelValidator,
+			IBOLEmailAddressMapper emailAddressMapper)
+			: base(logger, emailAddressRepository, emailAddressModelValidator, emailAddressMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2d7ca245525aff82a7caf73c2b4d34e7</Hash>
+    <Hash>70b37df754cbf6d71149e1513e0ae96a</Hash>
 </Codenesium>*/

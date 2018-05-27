@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALCultureMapper Mapper { get; }
 
 		public AbstractCultureRepository(
-			IObjectMapper mapper,
+			IDALCultureMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOCulture> Get(string cultureID)
+		public async virtual Task<DTOCulture> Get(string cultureID)
 		{
 			Culture record = await this.GetById(cultureID);
 
-			return this.Mapper.CultureMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOCulture> Create(
-			ApiCultureModel model)
+		public async virtual Task<DTOCulture> Create(
+			DTOCulture dto)
 		{
 			Culture record = new Culture();
 
-			this.Mapper.CultureMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (string),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Culture>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.CultureMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			string cultureID,
-			ApiCultureModel model)
+			DTOCulture dto)
 		{
 			Culture record = await this.GetById(cultureID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.CultureMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					cultureID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOCulture> GetName(string name)
+		public async Task<DTOCulture> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOCulture>> Where(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOCulture>> Where(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCulture> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOCulture> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOCulture>> SearchLinqPOCO(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOCulture>> SearchLinqDTO(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCulture> response = new List<POCOCulture>();
+			List<DTOCulture> response = new List<DTOCulture>();
 			List<Culture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.CultureMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8b446f255fa2b684bc89f6a62c403a5e</Hash>
+    <Hash>7fd2f5ef77b8cedbe5677b6d8856c39f</Hash>
 </Codenesium>*/

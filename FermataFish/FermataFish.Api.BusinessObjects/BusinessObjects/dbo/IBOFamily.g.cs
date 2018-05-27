@@ -9,20 +9,20 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface IBOFamily
 	{
-		Task<CreateResponse<POCOFamily>> Create(
-			ApiFamilyModel model);
+		Task<CreateResponse<ApiFamilyResponseModel>> Create(
+			ApiFamilyRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiFamilyModel model);
+		                            ApiFamilyRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOFamily> Get(int id);
+		Task<ApiFamilyResponseModel> Get(int id);
 
-		Task<List<POCOFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiFamilyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f185c0e68032886e0e5d6c199e050e82</Hash>
+    <Hash>1d680ed33de86c40dadd9270b97cbad8</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOJobCandidate: AbstractBOManager
 	{
 		private IJobCandidateRepository jobCandidateRepository;
-		private IApiJobCandidateModelValidator jobCandidateModelValidator;
+		private IApiJobCandidateRequestModelValidator jobCandidateModelValidator;
+		private IBOLJobCandidateMapper jobCandidateMapper;
 		private ILogger logger;
 
 		public AbstractBOJobCandidate(
 			ILogger logger,
 			IJobCandidateRepository jobCandidateRepository,
-			IApiJobCandidateModelValidator jobCandidateModelValidator)
+			IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
+			IBOLJobCandidateMapper jobCandidateMapper)
 			: base()
 
 		{
 			this.jobCandidateRepository = jobCandidateRepository;
 			this.jobCandidateModelValidator = jobCandidateModelValidator;
+			this.jobCandidateMapper = jobCandidateMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiJobCandidateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.jobCandidateRepository.All(skip, take, orderClause);
+			var records = await this.jobCandidateRepository.All(skip, take, orderClause);
+
+			return this.jobCandidateMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOJobCandidate> Get(int jobCandidateID)
+		public virtual async Task<ApiJobCandidateResponseModel> Get(int jobCandidateID)
 		{
-			return this.jobCandidateRepository.Get(jobCandidateID);
+			var record = await jobCandidateRepository.Get(jobCandidateID);
+
+			return this.jobCandidateMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOJobCandidate>> Create(
-			ApiJobCandidateModel model)
+		public virtual async Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
+			ApiJobCandidateRequestModel model)
 		{
-			CreateResponse<POCOJobCandidate> response = new CreateResponse<POCOJobCandidate>(await this.jobCandidateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiJobCandidateResponseModel> response = new CreateResponse<ApiJobCandidateResponseModel>(await this.jobCandidateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOJobCandidate record = await this.jobCandidateRepository.Create(model);
+				var dto = this.jobCandidateMapper.MapModelToDTO(default (int), model);
+				var record = await this.jobCandidateRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.jobCandidateMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int jobCandidateID,
-			ApiJobCandidateModel model)
+			ApiJobCandidateRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.jobCandidateModelValidator.ValidateUpdateAsync(jobCandidateID, model));
 
 			if (response.Success)
 			{
-				await this.jobCandidateRepository.Update(jobCandidateID, model);
+				var dto = this.jobCandidateMapper.MapModelToDTO(jobCandidateID, model);
+				await this.jobCandidateRepository.Update(jobCandidateID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID)
+		public async Task<List<ApiJobCandidateResponseModel>> GetBusinessEntityID(Nullable<int> businessEntityID)
 		{
-			return await this.jobCandidateRepository.GetBusinessEntityID(businessEntityID);
+			List<DTOJobCandidate> records = await this.jobCandidateRepository.GetBusinessEntityID(businessEntityID);
+
+			return this.jobCandidateMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a998f2958dbe4c55a3f814f74bb7d39</Hash>
+    <Hash>ad2f3b6caf5b5df116484fa81d441a9a</Hash>
 </Codenesium>*/

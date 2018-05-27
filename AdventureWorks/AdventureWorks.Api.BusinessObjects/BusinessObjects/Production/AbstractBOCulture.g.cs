@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOCulture: AbstractBOManager
 	{
 		private ICultureRepository cultureRepository;
-		private IApiCultureModelValidator cultureModelValidator;
+		private IApiCultureRequestModelValidator cultureModelValidator;
+		private IBOLCultureMapper cultureMapper;
 		private ILogger logger;
 
 		public AbstractBOCulture(
 			ILogger logger,
 			ICultureRepository cultureRepository,
-			IApiCultureModelValidator cultureModelValidator)
+			IApiCultureRequestModelValidator cultureModelValidator,
+			IBOLCultureMapper cultureMapper)
 			: base()
 
 		{
 			this.cultureRepository = cultureRepository;
 			this.cultureModelValidator = cultureModelValidator;
+			this.cultureMapper = cultureMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiCultureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.cultureRepository.All(skip, take, orderClause);
+			var records = await this.cultureRepository.All(skip, take, orderClause);
+
+			return this.cultureMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOCulture> Get(string cultureID)
+		public virtual async Task<ApiCultureResponseModel> Get(string cultureID)
 		{
-			return this.cultureRepository.Get(cultureID);
+			var record = await cultureRepository.Get(cultureID);
+
+			return this.cultureMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOCulture>> Create(
-			ApiCultureModel model)
+		public virtual async Task<CreateResponse<ApiCultureResponseModel>> Create(
+			ApiCultureRequestModel model)
 		{
-			CreateResponse<POCOCulture> response = new CreateResponse<POCOCulture>(await this.cultureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCultureResponseModel> response = new CreateResponse<ApiCultureResponseModel>(await this.cultureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCulture record = await this.cultureRepository.Create(model);
+				var dto = this.cultureMapper.MapModelToDTO(default (string), model);
+				var record = await this.cultureRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.cultureMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			string cultureID,
-			ApiCultureModel model)
+			ApiCultureRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.cultureModelValidator.ValidateUpdateAsync(cultureID, model));
 
 			if (response.Success)
 			{
-				await this.cultureRepository.Update(cultureID, model);
+				var dto = this.cultureMapper.MapModelToDTO(cultureID, model);
+				await this.cultureRepository.Update(cultureID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOCulture> GetName(string name)
+		public async Task<ApiCultureResponseModel> GetName(string name)
 		{
-			return await this.cultureRepository.GetName(name);
+			DTOCulture record = await this.cultureRepository.GetName(name);
+
+			return this.cultureMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>21e92e4397d9438853377a06e453a891</Hash>
+    <Hash>c43506b9107c4620129d1b47acd6338b</Hash>
 </Codenesium>*/

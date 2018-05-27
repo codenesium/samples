@@ -15,12 +15,13 @@ namespace PetStoreNS.Api.BusinessObjects
 		public BOBreed(
 			ILogger<BreedRepository> logger,
 			IBreedRepository breedRepository,
-			IApiBreedModelValidator breedModelValidator)
-			: base(logger, breedRepository, breedModelValidator)
+			IApiBreedRequestModelValidator breedModelValidator,
+			IBOLBreedMapper breedMapper)
+			: base(logger, breedRepository, breedModelValidator, breedMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1539b9f626c84db32c0aeb639213738c</Hash>
+    <Hash>f73ba4e6be5437269e16f63455e6f031</Hash>
 </Codenesium>*/

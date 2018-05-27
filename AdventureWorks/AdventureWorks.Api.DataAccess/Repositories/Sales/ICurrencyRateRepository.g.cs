@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICurrencyRateRepository
 	{
-		Task<POCOCurrencyRate> Create(ApiCurrencyRateModel model);
+		Task<DTOCurrencyRate> Create(DTOCurrencyRate dto);
 
 		Task Update(int currencyRateID,
-		            ApiCurrencyRateModel model);
+		            DTOCurrencyRate dto);
 
 		Task Delete(int currencyRateID);
 
-		Task<POCOCurrencyRate> Get(int currencyRateID);
+		Task<DTOCurrencyRate> Get(int currencyRateID);
 
-		Task<List<POCOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode);
+		Task<DTOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9d34496170c3726ff77950e120dff88</Hash>
+    <Hash>ebcfbc62c3874478df0fdfa99747fe90</Hash>
 </Codenesium>*/

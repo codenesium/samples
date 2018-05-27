@@ -9,22 +9,22 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOOrganization
 	{
-		Task<CreateResponse<POCOOrganization>> Create(
-			ApiOrganizationModel model);
+		Task<CreateResponse<ApiOrganizationResponseModel>> Create(
+			ApiOrganizationRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiOrganizationModel model);
+		                            ApiOrganizationRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOOrganization> Get(int id);
+		Task<ApiOrganizationResponseModel> Get(int id);
 
-		Task<List<POCOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiOrganizationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOOrganization> GetName(string name);
+		Task<ApiOrganizationResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ebb2f9b595c0d72cba50f378e5e062d</Hash>
+    <Hash>2bda2a15c332bcc25d10052801ed228a</Hash>
 </Codenesium>*/

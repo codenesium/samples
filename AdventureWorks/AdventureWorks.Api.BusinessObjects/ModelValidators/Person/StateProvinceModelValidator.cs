@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiStateProvinceModelValidator: AbstractApiStateProvinceModelValidator, IApiStateProvinceModelValidator
+	public class ApiStateProvinceRequestModelValidator: AbstractApiStateProvinceRequestModelValidator, IApiStateProvinceRequestModelValidator
 	{
-		public ApiStateProvinceModelValidator()
+		public ApiStateProvinceRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiStateProvinceModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiStateProvinceRequestModel model)
 		{
 			this.CountryRegionCodeRules();
 			this.IsOnlyStateProvinceFlagRules();
@@ -23,7 +23,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiStateProvinceModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiStateProvinceRequestModel model)
 		{
 			this.CountryRegionCodeRules();
 			this.IsOnlyStateProvinceFlagRules();
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>29ec2db91b3761a4e2c47807a277f121</Hash>
+    <Hash>81781d75426c5e4657420ba4961518fd</Hash>
 </Codenesium>*/

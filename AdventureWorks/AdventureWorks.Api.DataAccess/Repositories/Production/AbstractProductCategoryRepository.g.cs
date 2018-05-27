@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductCategoryMapper Mapper { get; }
 
 		public AbstractProductCategoryRepository(
-			IObjectMapper mapper,
+			IDALProductCategoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProductCategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProductCategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProductCategory> Get(int productCategoryID)
+		public async virtual Task<DTOProductCategory> Get(int productCategoryID)
 		{
 			ProductCategory record = await this.GetById(productCategoryID);
 
-			return this.Mapper.ProductCategoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProductCategory> Create(
-			ApiProductCategoryModel model)
+		public async virtual Task<DTOProductCategory> Create(
+			DTOProductCategory dto)
 		{
 			ProductCategory record = new ProductCategory();
 
-			this.Mapper.ProductCategoryMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ProductCategory>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductCategoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productCategoryID,
-			ApiProductCategoryModel model)
+			DTOProductCategory dto)
 		{
 			ProductCategory record = await this.GetById(productCategoryID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductCategoryMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productCategoryID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOProductCategory> GetName(string name)
+		public async Task<DTOProductCategory> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOProductCategory>> Where(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProductCategory>> Where(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductCategory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProductCategory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProductCategory>> SearchLinqPOCO(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProductCategory>> SearchLinqDTO(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductCategory> response = new List<POCOProductCategory>();
+			List<DTOProductCategory> response = new List<DTOProductCategory>();
 			List<ProductCategory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductCategoryMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8cd48f40691406f9e295355312f30d08</Hash>
+    <Hash>fef684d9244bb5961edbed5368decba1</Hash>
 </Codenesium>*/

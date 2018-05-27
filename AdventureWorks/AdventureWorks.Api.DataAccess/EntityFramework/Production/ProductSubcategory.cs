@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductSubcategory", Schema="Production")]
-	public partial class ProductSubcategory: AbstractEntityFrameworkPOCO
+	public partial class ProductSubcategory: AbstractEntityFrameworkDTO
 	{
 		public ProductSubcategory()
 		{}
@@ -38,11 +38,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ProductSubcategoryID", TypeName="int")]
 		public int ProductSubcategoryID { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8521a8a5f78d6940f0186818738ccd5</Hash>
+    <Hash>44fc05cd712ace46c531cc9f9c80436f</Hash>
 </Codenesium>*/

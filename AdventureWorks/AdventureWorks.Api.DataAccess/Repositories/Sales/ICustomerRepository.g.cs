@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICustomerRepository
 	{
-		Task<POCOCustomer> Create(ApiCustomerModel model);
+		Task<DTOCustomer> Create(DTOCustomer dto);
 
 		Task Update(int customerID,
-		            ApiCustomerModel model);
+		            DTOCustomer dto);
 
 		Task Delete(int customerID);
 
-		Task<POCOCustomer> Get(int customerID);
+		Task<DTOCustomer> Get(int customerID);
 
-		Task<List<POCOCustomer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOCustomer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCustomer> GetAccountNumber(string accountNumber);
-		Task<List<POCOCustomer>> GetTerritoryID(Nullable<int> territoryID);
+		Task<DTOCustomer> GetAccountNumber(string accountNumber);
+		Task<List<DTOCustomer>> GetTerritoryID(Nullable<int> territoryID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e65ccf00fa759ff252f5631cb9686170</Hash>
+    <Hash>45c9081a6df8544123723cecd2572430</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesPersonQuotaHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesPersonQuotaHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesPersonQuotaHistory> response = await this.salesPersonQuotaHistoryManager.All(query.Offset, query.Limit);
+			List<ApiSalesPersonQuotaHistoryResponseModel> response = await this.salesPersonQuotaHistoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesPersonQuotaHistory), 200)]
+		[ProducesResponseType(typeof(ApiSalesPersonQuotaHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesPersonQuotaHistory response = await this.salesPersonQuotaHistoryManager.Get(id);
+			ApiSalesPersonQuotaHistoryResponseModel response = await this.salesPersonQuotaHistoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesPersonQuotaHistory), 200)]
+		[ProducesResponseType(typeof(ApiSalesPersonQuotaHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesPersonQuotaHistoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesPersonQuotaHistoryRequestModel model)
 		{
-			CreateResponse<POCOSalesPersonQuotaHistory> result = await this.salesPersonQuotaHistoryManager.Create(model);
+			CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await this.salesPersonQuotaHistoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSalesPersonQuotaHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesPersonQuotaHistoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesPersonQuotaHistoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesPersonQuotaHistoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSalesPersonQuotaHistory> records = new List<POCOSalesPersonQuotaHistory>();
+			List<ApiSalesPersonQuotaHistoryResponseModel> records = new List<ApiSalesPersonQuotaHistoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSalesPersonQuotaHistory> result = await this.salesPersonQuotaHistoryManager.Create(model);
+				CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await this.salesPersonQuotaHistoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesPersonQuotaHistory), 200)]
+		[ProducesResponseType(typeof(DTOSalesPersonQuotaHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonQuotaHistoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonQuotaHistoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesPersonQuotaHistory response = await this.salesPersonQuotaHistoryManager.Get(id);
+					ApiSalesPersonQuotaHistoryResponseModel response = await this.salesPersonQuotaHistoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5c6b2c71829053c6e966c6f2bbbc9aa2</Hash>
+    <Hash>b35f40500ab617295fc71d0bd772bc00</Hash>
 </Codenesium>*/

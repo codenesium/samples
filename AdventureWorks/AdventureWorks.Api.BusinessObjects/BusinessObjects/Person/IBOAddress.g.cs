@@ -9,23 +9,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOAddress
 	{
-		Task<CreateResponse<POCOAddress>> Create(
-			ApiAddressModel model);
+		Task<CreateResponse<ApiAddressResponseModel>> Create(
+			ApiAddressRequestModel model);
 
 		Task<ActionResponse> Update(int addressID,
-		                            ApiAddressModel model);
+		                            ApiAddressRequestModel model);
 
 		Task<ActionResponse> Delete(int addressID);
 
-		Task<POCOAddress> Get(int addressID);
+		Task<ApiAddressResponseModel> Get(int addressID);
 
-		Task<List<POCOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
-		Task<List<POCOAddress>> GetStateProvinceID(int stateProvinceID);
+		Task<ApiAddressResponseModel> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
+		Task<List<ApiAddressResponseModel>> GetStateProvinceID(int stateProvinceID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ac9799ab00299992d0dba84c58162c17</Hash>
+    <Hash>724304f17d4a03508873f3e16e8c147e</Hash>
 </Codenesium>*/

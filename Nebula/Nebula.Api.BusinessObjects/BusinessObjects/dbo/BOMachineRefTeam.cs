@@ -15,12 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOMachineRefTeam(
 			ILogger<MachineRefTeamRepository> logger,
 			IMachineRefTeamRepository machineRefTeamRepository,
-			IApiMachineRefTeamModelValidator machineRefTeamModelValidator)
-			: base(logger, machineRefTeamRepository, machineRefTeamModelValidator)
+			IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
+			IBOLMachineRefTeamMapper machineRefTeamMapper)
+			: base(logger, machineRefTeamRepository, machineRefTeamModelValidator, machineRefTeamMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>79047dbdc2064775c7f43c636b5d0d5a</Hash>
+    <Hash>bebdcb9733265af1b0763aad6de042b2</Hash>
 </Codenesium>*/

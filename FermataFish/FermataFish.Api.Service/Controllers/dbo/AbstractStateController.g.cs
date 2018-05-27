@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOState>), 200)]
+		[ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOState> response = await this.stateManager.All(query.Offset, query.Limit);
+			List<ApiStateResponseModel> response = await this.stateManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOState), 200)]
+		[ProducesResponseType(typeof(ApiStateResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOState response = await this.stateManager.Get(id);
+			ApiStateResponseModel response = await this.stateManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOState), 200)]
+		[ProducesResponseType(typeof(ApiStateResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStateModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiStateRequestModel model)
 		{
-			CreateResponse<POCOState> result = await this.stateManager.Create(model);
+			CreateResponse<ApiStateResponseModel> result = await this.stateManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOState>), 200)]
+		[ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOState> records = new List<POCOState>();
+			List<ApiStateResponseModel> records = new List<ApiStateResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOState> result = await this.stateManager.Create(model);
+				CreateResponse<ApiStateResponseModel> result = await this.stateManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOState), 200)]
+		[ProducesResponseType(typeof(DTOState), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOState response = await this.stateManager.Get(id);
+					ApiStateResponseModel response = await this.stateManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b970f453f96b350f908249f8c8ff76f2</Hash>
+    <Hash>d015c5839d7315ffbba243ace0fcec7e</Hash>
 </Codenesium>*/

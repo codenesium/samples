@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOAddress(
 			ILogger<AddressRepository> logger,
 			IAddressRepository addressRepository,
-			IApiAddressModelValidator addressModelValidator)
-			: base(logger, addressRepository, addressModelValidator)
+			IApiAddressRequestModelValidator addressModelValidator,
+			IBOLAddressMapper addressMapper)
+			: base(logger, addressRepository, addressModelValidator, addressMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4147fc89d7c857ae76b4b424c65b855</Hash>
+    <Hash>e1487e717b64da021a5a98afb8f2ca99</Hash>
 </Codenesium>*/

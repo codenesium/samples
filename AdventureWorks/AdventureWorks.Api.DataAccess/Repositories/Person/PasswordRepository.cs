@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PasswordRepository: AbstractPasswordRepository, IPasswordRepository
 	{
 		public PasswordRepository(
-			IObjectMapper mapper,
+			IDALPasswordMapper mapper,
 			ILogger<PasswordRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>730e81f74bc414f0645106e8673375f2</Hash>
+    <Hash>a468486a024a2cfdcdd3527aabe7ebd7</Hash>
 </Codenesium>*/

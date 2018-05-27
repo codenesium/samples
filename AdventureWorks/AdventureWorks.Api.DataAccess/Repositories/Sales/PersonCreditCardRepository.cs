@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PersonCreditCardRepository: AbstractPersonCreditCardRepository, IPersonCreditCardRepository
 	{
 		public PersonCreditCardRepository(
-			IObjectMapper mapper,
+			IDALPersonCreditCardMapper mapper,
 			ILogger<PersonCreditCardRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c9056cc00650b245ad19e601dd95310</Hash>
+    <Hash>07e724bb7c03f118fc233761a3dd1f8c</Hash>
 </Codenesium>*/

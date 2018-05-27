@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesOrderHeaderRepository: AbstractSalesOrderHeaderRepository, ISalesOrderHeaderRepository
 	{
 		public SalesOrderHeaderRepository(
-			IObjectMapper mapper,
+			IDALSalesOrderHeaderMapper mapper,
 			ILogger<SalesOrderHeaderRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c0e7616f1c235a5bce298f47e7f6df5b</Hash>
+    <Hash>c1b3ac82f013416fc9a076a5be90174e</Hash>
 </Codenesium>*/

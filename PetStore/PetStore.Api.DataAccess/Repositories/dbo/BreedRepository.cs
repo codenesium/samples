@@ -12,7 +12,7 @@ namespace PetStoreNS.Api.DataAccess
 	public class BreedRepository: AbstractBreedRepository, IBreedRepository
 	{
 		public BreedRepository(
-			IObjectMapper mapper,
+			IDALBreedMapper mapper,
 			ILogger<BreedRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e1b3d7c64b11db8cf4a84299a9b630e0</Hash>
+    <Hash>0b61642c627481ac36d392901d040722</Hash>
 </Codenesium>*/

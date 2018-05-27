@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class EmployeePayHistoryRepository: AbstractEmployeePayHistoryRepository, IEmployeePayHistoryRepository
 	{
 		public EmployeePayHistoryRepository(
-			IObjectMapper mapper,
+			IDALEmployeePayHistoryMapper mapper,
 			ILogger<EmployeePayHistoryRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f76d98265465c8871853dc615ebc5fb9</Hash>
+    <Hash>ec795b1fe7e2acebf8e1454230a0afce</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FermataFishNS.Api.DataAccess
 {
 	[Table("TeacherXTeacherSkill", Schema="dbo")]
-	public partial class TeacherXTeacherSkill: AbstractEntityFrameworkPOCO
+	public partial class TeacherXTeacherSkill: AbstractEntityFrameworkDTO
 	{
 		public TeacherXTeacherSkill()
 		{}
@@ -40,5 +40,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>16f55176a903a66a4cd377d7f0400da3</Hash>
+    <Hash>3efb13ecbd2321acbc19e10c6496cf5d</Hash>
 </Codenesium>*/

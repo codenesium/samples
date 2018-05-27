@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiTransactionHistoryModelValidator: AbstractApiTransactionHistoryModelValidator, IApiTransactionHistoryModelValidator
+	public class ApiTransactionHistoryRequestModelValidator: AbstractApiTransactionHistoryRequestModelValidator, IApiTransactionHistoryRequestModelValidator
 	{
-		public ApiTransactionHistoryModelValidator()
+		public ApiTransactionHistoryRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiTransactionHistoryModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiTransactionHistoryRequestModel model)
 		{
 			this.ActualCostRules();
 			this.ModifiedDateRules();
@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiTransactionHistoryModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiTransactionHistoryRequestModel model)
 		{
 			this.ActualCostRules();
 			this.ModifiedDateRules();
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>38cd1dfd7e497cc14955243578d535d1</Hash>
+    <Hash>a4a02400e354979db987433a95884ac4</Hash>
 </Codenesium>*/

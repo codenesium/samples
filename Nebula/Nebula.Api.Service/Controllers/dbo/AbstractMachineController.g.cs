@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOMachine>), 200)]
+		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOMachine> response = await this.machineManager.All(query.Offset, query.Limit);
+			List<ApiMachineResponseModel> response = await this.machineManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOMachine), 200)]
+		[ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOMachine response = await this.machineManager.Get(id);
+			ApiMachineResponseModel response = await this.machineManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOMachine), 200)]
+		[ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiMachineModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiMachineRequestModel model)
 		{
-			CreateResponse<POCOMachine> result = await this.machineManager.Create(model);
+			CreateResponse<ApiMachineResponseModel> result = await this.machineManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOMachine>), 200)]
+		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiMachineModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiMachineRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOMachine> records = new List<POCOMachine>();
+			List<ApiMachineResponseModel> records = new List<ApiMachineResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOMachine> result = await this.machineManager.Create(model);
+				CreateResponse<ApiMachineResponseModel> result = await this.machineManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOMachine), 200)]
+		[ProducesResponseType(typeof(DTOMachine), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOMachine response = await this.machineManager.Get(id);
+					ApiMachineResponseModel response = await this.machineManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("getMachineGuid/{machineGuid}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOMachine), 200)]
+		[ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetMachineGuid(Guid machineGuid)
 		{
-			POCOMachine response = await this.machineManager.GetMachineGuid(machineGuid);
+			ApiMachineResponseModel response = await this.machineManager.GetMachineGuid(machineGuid);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d3e34b68f9c3b3b04650adac6bb2e6d4</Hash>
+    <Hash>914d7227976969a3fb29aca63667798b</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOContactType: AbstractBOManager
 	{
 		private IContactTypeRepository contactTypeRepository;
-		private IApiContactTypeModelValidator contactTypeModelValidator;
+		private IApiContactTypeRequestModelValidator contactTypeModelValidator;
+		private IBOLContactTypeMapper contactTypeMapper;
 		private ILogger logger;
 
 		public AbstractBOContactType(
 			ILogger logger,
 			IContactTypeRepository contactTypeRepository,
-			IApiContactTypeModelValidator contactTypeModelValidator)
+			IApiContactTypeRequestModelValidator contactTypeModelValidator,
+			IBOLContactTypeMapper contactTypeMapper)
 			: base()
 
 		{
 			this.contactTypeRepository = contactTypeRepository;
 			this.contactTypeModelValidator = contactTypeModelValidator;
+			this.contactTypeMapper = contactTypeMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiContactTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.contactTypeRepository.All(skip, take, orderClause);
+			var records = await this.contactTypeRepository.All(skip, take, orderClause);
+
+			return this.contactTypeMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOContactType> Get(int contactTypeID)
+		public virtual async Task<ApiContactTypeResponseModel> Get(int contactTypeID)
 		{
-			return this.contactTypeRepository.Get(contactTypeID);
+			var record = await contactTypeRepository.Get(contactTypeID);
+
+			return this.contactTypeMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOContactType>> Create(
-			ApiContactTypeModel model)
+		public virtual async Task<CreateResponse<ApiContactTypeResponseModel>> Create(
+			ApiContactTypeRequestModel model)
 		{
-			CreateResponse<POCOContactType> response = new CreateResponse<POCOContactType>(await this.contactTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiContactTypeResponseModel> response = new CreateResponse<ApiContactTypeResponseModel>(await this.contactTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOContactType record = await this.contactTypeRepository.Create(model);
+				var dto = this.contactTypeMapper.MapModelToDTO(default (int), model);
+				var record = await this.contactTypeRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.contactTypeMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int contactTypeID,
-			ApiContactTypeModel model)
+			ApiContactTypeRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.contactTypeModelValidator.ValidateUpdateAsync(contactTypeID, model));
 
 			if (response.Success)
 			{
-				await this.contactTypeRepository.Update(contactTypeID, model);
+				var dto = this.contactTypeMapper.MapModelToDTO(contactTypeID, model);
+				await this.contactTypeRepository.Update(contactTypeID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOContactType> GetName(string name)
+		public async Task<ApiContactTypeResponseModel> GetName(string name)
 		{
-			return await this.contactTypeRepository.GetName(name);
+			DTOContactType record = await this.contactTypeRepository.GetName(name);
+
+			return this.contactTypeMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb55d6c95732bc9e73c4528c15b79575</Hash>
+    <Hash>748bcca85a574c7fc40f466ac08f09f0</Hash>
 </Codenesium>*/

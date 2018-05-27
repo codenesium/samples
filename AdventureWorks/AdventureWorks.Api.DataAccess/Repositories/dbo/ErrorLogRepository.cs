@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ErrorLogRepository: AbstractErrorLogRepository, IErrorLogRepository
 	{
 		public ErrorLogRepository(
-			IObjectMapper mapper,
+			IDALErrorLogMapper mapper,
 			ILogger<ErrorLogRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c3b3a615010e7250431a767ee6272b85</Hash>
+    <Hash>ae954d0eec1e2e5f421abb003263b5f5</Hash>
 </Codenesium>*/

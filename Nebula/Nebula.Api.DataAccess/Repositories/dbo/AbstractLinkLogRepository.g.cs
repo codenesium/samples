@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALLinkLogMapper Mapper { get; }
 
 		public AbstractLinkLogRepository(
-			IObjectMapper mapper,
+			IDALLinkLogMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOLinkLog> Get(int id)
+		public async virtual Task<DTOLinkLog> Get(int id)
 		{
 			LinkLog record = await this.GetById(id);
 
-			return this.Mapper.LinkLogMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOLinkLog> Create(
-			ApiLinkLogModel model)
+		public async virtual Task<DTOLinkLog> Create(
+			DTOLinkLog dto)
 		{
 			LinkLog record = new LinkLog();
 
-			this.Mapper.LinkLogMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<LinkLog>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.LinkLogMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiLinkLogModel model)
+			DTOLinkLog dto)
 		{
 			LinkLog record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.LinkLogMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOLinkLog>> Where(Expression<Func<LinkLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOLinkLog>> Where(Expression<Func<LinkLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOLinkLog> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOLinkLog> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOLinkLog>> SearchLinqPOCO(Expression<Func<LinkLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOLinkLog>> SearchLinqDTO(Expression<Func<LinkLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOLinkLog> response = new List<POCOLinkLog>();
+			List<DTOLinkLog> response = new List<DTOLinkLog>();
 			List<LinkLog> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.LinkLogMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>36a7e82b6a112028ec2b88d8bfa2c803</Hash>
+    <Hash>692b7662d1eaa039d026affeda24570e</Hash>
 </Codenesium>*/

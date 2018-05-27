@@ -15,10 +15,10 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALAdminMapper Mapper { get; }
 
 		public AbstractAdminRepository(
-			IObjectMapper mapper,
+			IDALAdminMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOAdmin>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOAdmin>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOAdmin> Get(int id)
+		public async virtual Task<DTOAdmin> Get(int id)
 		{
 			Admin record = await this.GetById(id);
 
-			return this.Mapper.AdminMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOAdmin> Create(
-			ApiAdminModel model)
+		public async virtual Task<DTOAdmin> Create(
+			DTOAdmin dto)
 		{
 			Admin record = new Admin();
 
-			this.Mapper.AdminMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Admin>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.AdminMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiAdminModel model)
+			DTOAdmin dto)
 		{
 			Admin record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.AdminMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOAdmin>> Where(Expression<Func<Admin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOAdmin>> Where(Expression<Func<Admin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAdmin> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOAdmin> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOAdmin>> SearchLinqPOCO(Expression<Func<Admin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOAdmin>> SearchLinqDTO(Expression<Func<Admin, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAdmin> response = new List<POCOAdmin>();
+			List<DTOAdmin> response = new List<DTOAdmin>();
 			List<Admin> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.AdminMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1088df97eb897552eb0e715b2385c433</Hash>
+    <Hash>707f125e568eb7db559cc30675a79680</Hash>
 </Codenesium>*/

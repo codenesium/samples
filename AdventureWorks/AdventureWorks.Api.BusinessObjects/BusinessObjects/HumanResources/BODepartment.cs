@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BODepartment(
 			ILogger<DepartmentRepository> logger,
 			IDepartmentRepository departmentRepository,
-			IApiDepartmentModelValidator departmentModelValidator)
-			: base(logger, departmentRepository, departmentModelValidator)
+			IApiDepartmentRequestModelValidator departmentModelValidator,
+			IBOLDepartmentMapper departmentMapper)
+			: base(logger, departmentRepository, departmentModelValidator, departmentMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>42abe7bbe4e290e2774e5ea679734b0e</Hash>
+    <Hash>a318ad525eefd0d058c6d60e1396a8a6</Hash>
 </Codenesium>*/

@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPersonCreditCardRepository
 	{
-		Task<POCOPersonCreditCard> Create(ApiPersonCreditCardModel model);
+		Task<DTOPersonCreditCard> Create(DTOPersonCreditCard dto);
 
 		Task Update(int businessEntityID,
-		            ApiPersonCreditCardModel model);
+		            DTOPersonCreditCard dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOPersonCreditCard> Get(int businessEntityID);
+		Task<DTOPersonCreditCard> Get(int businessEntityID);
 
-		Task<List<POCOPersonCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOPersonCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b85eec7faad8bc8fa3fb34a8fa05e8b4</Hash>
+    <Hash>200571533734421f51d8fcdb9ea5c122</Hash>
 </Codenesium>*/

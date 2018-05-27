@@ -12,7 +12,7 @@ namespace PetStoreNS.Api.DataAccess
 	public class SpeciesRepository: AbstractSpeciesRepository, ISpeciesRepository
 	{
 		public SpeciesRepository(
-			IObjectMapper mapper,
+			IDALSpeciesMapper mapper,
 			ILogger<SpeciesRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c9f5ab319d84ffffe83da5f0cbd07fa2</Hash>
+    <Hash>8335cf5498b63aaf70e63a1bc55051ea</Hash>
 </Codenesium>*/

@@ -15,12 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOOrganization(
 			ILogger<OrganizationRepository> logger,
 			IOrganizationRepository organizationRepository,
-			IApiOrganizationModelValidator organizationModelValidator)
-			: base(logger, organizationRepository, organizationModelValidator)
+			IApiOrganizationRequestModelValidator organizationModelValidator,
+			IBOLOrganizationMapper organizationMapper)
+			: base(logger, organizationRepository, organizationModelValidator, organizationMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae5b1fd5191d8fb149d2d25642e4c962</Hash>
+    <Hash>a975e0ecbf7dcaad1b539e8be17d20fc</Hash>
 </Codenesium>*/

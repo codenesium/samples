@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOShift(
 			ILogger<ShiftRepository> logger,
 			IShiftRepository shiftRepository,
-			IApiShiftModelValidator shiftModelValidator)
-			: base(logger, shiftRepository, shiftModelValidator)
+			IApiShiftRequestModelValidator shiftModelValidator,
+			IBOLShiftMapper shiftMapper)
+			: base(logger, shiftRepository, shiftModelValidator, shiftMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b4444a0e1d812a2f1f08f9efd9dee822</Hash>
+    <Hash>5d37b3940bff80dc828c276e4b951dba</Hash>
 </Codenesium>*/

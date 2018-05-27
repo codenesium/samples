@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOAWBuildVersion: AbstractBOManager
 	{
 		private IAWBuildVersionRepository aWBuildVersionRepository;
-		private IApiAWBuildVersionModelValidator aWBuildVersionModelValidator;
+		private IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator;
+		private IBOLAWBuildVersionMapper aWBuildVersionMapper;
 		private ILogger logger;
 
 		public AbstractBOAWBuildVersion(
 			ILogger logger,
 			IAWBuildVersionRepository aWBuildVersionRepository,
-			IApiAWBuildVersionModelValidator aWBuildVersionModelValidator)
+			IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
+			IBOLAWBuildVersionMapper aWBuildVersionMapper)
 			: base()
 
 		{
 			this.aWBuildVersionRepository = aWBuildVersionRepository;
 			this.aWBuildVersionModelValidator = aWBuildVersionModelValidator;
+			this.aWBuildVersionMapper = aWBuildVersionMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiAWBuildVersionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.aWBuildVersionRepository.All(skip, take, orderClause);
+			var records = await this.aWBuildVersionRepository.All(skip, take, orderClause);
+
+			return this.aWBuildVersionMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOAWBuildVersion> Get(int systemInformationID)
+		public virtual async Task<ApiAWBuildVersionResponseModel> Get(int systemInformationID)
 		{
-			return this.aWBuildVersionRepository.Get(systemInformationID);
+			var record = await aWBuildVersionRepository.Get(systemInformationID);
+
+			return this.aWBuildVersionMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOAWBuildVersion>> Create(
-			ApiAWBuildVersionModel model)
+		public virtual async Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
+			ApiAWBuildVersionRequestModel model)
 		{
-			CreateResponse<POCOAWBuildVersion> response = new CreateResponse<POCOAWBuildVersion>(await this.aWBuildVersionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAWBuildVersionResponseModel> response = new CreateResponse<ApiAWBuildVersionResponseModel>(await this.aWBuildVersionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAWBuildVersion record = await this.aWBuildVersionRepository.Create(model);
+				var dto = this.aWBuildVersionMapper.MapModelToDTO(default (int), model);
+				var record = await this.aWBuildVersionRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.aWBuildVersionMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int systemInformationID,
-			ApiAWBuildVersionModel model)
+			ApiAWBuildVersionRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.aWBuildVersionModelValidator.ValidateUpdateAsync(systemInformationID, model));
 
 			if (response.Success)
 			{
-				await this.aWBuildVersionRepository.Update(systemInformationID, model);
+				var dto = this.aWBuildVersionMapper.MapModelToDTO(systemInformationID, model);
+				await this.aWBuildVersionRepository.Update(systemInformationID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>244841cdbbfe57a9dbe1b2dc8c0a7cb3</Hash>
+    <Hash>4279f4351cb35ff0c1583ed1a8e8e2a2</Hash>
 </Codenesium>*/

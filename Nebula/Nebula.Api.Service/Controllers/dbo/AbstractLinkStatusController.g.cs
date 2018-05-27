@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLinkStatus>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkStatusResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLinkStatus> response = await this.linkStatusManager.All(query.Offset, query.Limit);
+			List<ApiLinkStatusResponseModel> response = await this.linkStatusManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOLinkStatus), 200)]
+		[ProducesResponseType(typeof(ApiLinkStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLinkStatus response = await this.linkStatusManager.Get(id);
+			ApiLinkStatusResponseModel response = await this.linkStatusManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLinkStatus), 200)]
+		[ProducesResponseType(typeof(ApiLinkStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLinkStatusModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiLinkStatusRequestModel model)
 		{
-			CreateResponse<POCOLinkStatus> result = await this.linkStatusManager.Create(model);
+			CreateResponse<ApiLinkStatusResponseModel> result = await this.linkStatusManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOLinkStatus>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkStatusResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkStatusModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkStatusRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOLinkStatus> records = new List<POCOLinkStatus>();
+			List<ApiLinkStatusResponseModel> records = new List<ApiLinkStatusResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOLinkStatus> result = await this.linkStatusManager.Create(model);
+				CreateResponse<ApiLinkStatusResponseModel> result = await this.linkStatusManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLinkStatus), 200)]
+		[ProducesResponseType(typeof(DTOLinkStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkStatusModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkStatusRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLinkStatus response = await this.linkStatusManager.Get(id);
+					ApiLinkStatusResponseModel response = await this.linkStatusManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOLinkStatus), 200)]
+		[ProducesResponseType(typeof(ApiLinkStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOLinkStatus response = await this.linkStatusManager.GetName(name);
+			ApiLinkStatusResponseModel response = await this.linkStatusManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>18ed5b566f93e2e316dfd0240ec38fec</Hash>
+    <Hash>865286234d4cba86a868615f25a3dc1c</Hash>
 </Codenesium>*/

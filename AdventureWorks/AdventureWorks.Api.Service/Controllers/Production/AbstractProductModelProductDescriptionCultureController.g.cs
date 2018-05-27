@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductModelProductDescriptionCulture> response = await this.productModelProductDescriptionCultureManager.All(query.Offset, query.Limit);
+			List<ApiProductModelProductDescriptionCultureResponseModel> response = await this.productModelProductDescriptionCultureManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductModelProductDescriptionCulture), 200)]
+		[ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductModelProductDescriptionCulture response = await this.productModelProductDescriptionCultureManager.Get(id);
+			ApiProductModelProductDescriptionCultureResponseModel response = await this.productModelProductDescriptionCultureManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductModelProductDescriptionCulture), 200)]
+		[ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductModelProductDescriptionCultureModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductModelProductDescriptionCultureRequestModel model)
 		{
-			CreateResponse<POCOProductModelProductDescriptionCulture> result = await this.productModelProductDescriptionCultureManager.Create(model);
+			CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.productModelProductDescriptionCultureManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductModelProductDescriptionCulture>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductModelProductDescriptionCultureModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductModelProductDescriptionCultureRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductModelProductDescriptionCulture> records = new List<POCOProductModelProductDescriptionCulture>();
+			List<ApiProductModelProductDescriptionCultureResponseModel> records = new List<ApiProductModelProductDescriptionCultureResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductModelProductDescriptionCulture> result = await this.productModelProductDescriptionCultureManager.Create(model);
+				CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.productModelProductDescriptionCultureManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductModelProductDescriptionCulture), 200)]
+		[ProducesResponseType(typeof(DTOProductModelProductDescriptionCulture), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductModelProductDescriptionCultureModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductModelProductDescriptionCultureRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductModelProductDescriptionCulture response = await this.productModelProductDescriptionCultureManager.Get(id);
+					ApiProductModelProductDescriptionCultureResponseModel response = await this.productModelProductDescriptionCultureManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d7f22182305fc3428acca7f7cac82112</Hash>
+    <Hash>991550ec1b7c0d8ef22b002a701ce46b</Hash>
 </Codenesium>*/

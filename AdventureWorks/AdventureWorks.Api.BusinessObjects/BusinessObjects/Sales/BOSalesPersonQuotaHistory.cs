@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOSalesPersonQuotaHistory(
 			ILogger<SalesPersonQuotaHistoryRepository> logger,
 			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
-			IApiSalesPersonQuotaHistoryModelValidator salesPersonQuotaHistoryModelValidator)
-			: base(logger, salesPersonQuotaHistoryRepository, salesPersonQuotaHistoryModelValidator)
+			IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
+			IBOLSalesPersonQuotaHistoryMapper salesPersonQuotaHistoryMapper)
+			: base(logger, salesPersonQuotaHistoryRepository, salesPersonQuotaHistoryModelValidator, salesPersonQuotaHistoryMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f9515228a422aa6994b2c0b1a4925ac9</Hash>
+    <Hash>6be24737e79cbdf8db49c55b158aa3df</Hash>
 </Codenesium>*/

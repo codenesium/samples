@@ -15,12 +15,13 @@ namespace FileServiceNS.Api.BusinessObjects
 		public BOVersionInfo(
 			ILogger<VersionInfoRepository> logger,
 			IVersionInfoRepository versionInfoRepository,
-			IApiVersionInfoModelValidator versionInfoModelValidator)
-			: base(logger, versionInfoRepository, versionInfoModelValidator)
+			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
+			IBOLVersionInfoMapper versionInfoMapper)
+			: base(logger, versionInfoRepository, versionInfoModelValidator, versionInfoMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91926ba08eebd69b51c7a70c62a416be</Hash>
+    <Hash>3c18997ffdde2527937372a05d5fa149</Hash>
 </Codenesium>*/

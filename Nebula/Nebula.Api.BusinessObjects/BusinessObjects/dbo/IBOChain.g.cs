@@ -9,22 +9,22 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOChain
 	{
-		Task<CreateResponse<POCOChain>> Create(
-			ApiChainModel model);
+		Task<CreateResponse<ApiChainResponseModel>> Create(
+			ApiChainRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiChainModel model);
+		                            ApiChainRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOChain> Get(int id);
+		Task<ApiChainResponseModel> Get(int id);
 
-		Task<List<POCOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiChainResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOChain> GetExternalId(Guid externalId);
+		Task<ApiChainResponseModel> GetExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d9ee4fb816eff85c3c253da770c3f8e</Hash>
+    <Hash>99a216d2e74e6daa189d07d1c8567f6d</Hash>
 </Codenesium>*/

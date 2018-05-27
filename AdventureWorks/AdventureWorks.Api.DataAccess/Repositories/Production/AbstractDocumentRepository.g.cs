@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALDocumentMapper Mapper { get; }
 
 		public AbstractDocumentRepository(
-			IObjectMapper mapper,
+			IDALDocumentMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCODocument> Get(Guid documentNode)
+		public async virtual Task<DTODocument> Get(Guid documentNode)
 		{
 			Document record = await this.GetById(documentNode);
 
-			return this.Mapper.DocumentMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCODocument> Create(
-			ApiDocumentModel model)
+		public async virtual Task<DTODocument> Create(
+			DTODocument dto)
 		{
 			Document record = new Document();
 
-			this.Mapper.DocumentMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (Guid),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Document>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.DocumentMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			Guid documentNode,
-			ApiDocumentModel model)
+			DTODocument dto)
 		{
 			Document record = await this.GetById(documentNode);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.DocumentMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					documentNode,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
+		public async Task<DTODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
+			var records = await this.SearchLinqDTO(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<POCODocument>> GetFileNameRevision(string fileName,string revision)
+		public async Task<List<DTODocument>> GetFileNameRevision(string fileName,string revision)
 		{
-			var records = await this.SearchLinqPOCO(x => x.FileName == fileName && x.Revision == revision);
+			var records = await this.SearchLinqDTO(x => x.FileName == fileName && x.Revision == revision);
 
 			return records;
 		}
 
-		protected async Task<List<POCODocument>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTODocument>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODocument> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTODocument> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCODocument>> SearchLinqPOCO(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTODocument>> SearchLinqDTO(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODocument> response = new List<POCODocument>();
+			List<DTODocument> response = new List<DTODocument>();
 			List<Document> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.DocumentMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c59f27e83b1207e147c1e45303bfee46</Hash>
+    <Hash>1df9bb7a5f8da486a9132fe581925fcc</Hash>
 </Codenesium>*/

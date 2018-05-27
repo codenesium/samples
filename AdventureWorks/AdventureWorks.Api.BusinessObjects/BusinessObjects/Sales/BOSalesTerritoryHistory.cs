@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOSalesTerritoryHistory(
 			ILogger<SalesTerritoryHistoryRepository> logger,
 			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
-			IApiSalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator)
-			: base(logger, salesTerritoryHistoryRepository, salesTerritoryHistoryModelValidator)
+			IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
+			IBOLSalesTerritoryHistoryMapper salesTerritoryHistoryMapper)
+			: base(logger, salesTerritoryHistoryRepository, salesTerritoryHistoryModelValidator, salesTerritoryHistoryMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>879bd63fc997f6d870beddf6d28eae19</Hash>
+    <Hash>becb862ecd28bac9e629a72037eea3c7</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOSpace: AbstractBOManager
 	{
 		private ISpaceRepository spaceRepository;
-		private IApiSpaceModelValidator spaceModelValidator;
+		private IApiSpaceRequestModelValidator spaceModelValidator;
+		private IBOLSpaceMapper spaceMapper;
 		private ILogger logger;
 
 		public AbstractBOSpace(
 			ILogger logger,
 			ISpaceRepository spaceRepository,
-			IApiSpaceModelValidator spaceModelValidator)
+			IApiSpaceRequestModelValidator spaceModelValidator,
+			IBOLSpaceMapper spaceMapper)
 			: base()
 
 		{
 			this.spaceRepository = spaceRepository;
 			this.spaceModelValidator = spaceModelValidator;
+			this.spaceMapper = spaceMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSpace>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSpaceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.spaceRepository.All(skip, take, orderClause);
+			var records = await this.spaceRepository.All(skip, take, orderClause);
+
+			return this.spaceMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSpace> Get(int id)
+		public virtual async Task<ApiSpaceResponseModel> Get(int id)
 		{
-			return this.spaceRepository.Get(id);
+			var record = await spaceRepository.Get(id);
+
+			return this.spaceMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSpace>> Create(
-			ApiSpaceModel model)
+		public virtual async Task<CreateResponse<ApiSpaceResponseModel>> Create(
+			ApiSpaceRequestModel model)
 		{
-			CreateResponse<POCOSpace> response = new CreateResponse<POCOSpace>(await this.spaceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpaceResponseModel> response = new CreateResponse<ApiSpaceResponseModel>(await this.spaceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpace record = await this.spaceRepository.Create(model);
+				var dto = this.spaceMapper.MapModelToDTO(default (int), model);
+				var record = await this.spaceRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.spaceMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiSpaceModel model)
+			ApiSpaceRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.spaceRepository.Update(id, model);
+				var dto = this.spaceMapper.MapModelToDTO(id, model);
+				await this.spaceRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>47af12b4ac2d0c1adadcc3454000cb2a</Hash>
+    <Hash>ddfcd8627c248618d5781c5e564cbb90</Hash>
 </Codenesium>*/

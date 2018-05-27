@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOAddress: AbstractBOManager
 	{
 		private IAddressRepository addressRepository;
-		private IApiAddressModelValidator addressModelValidator;
+		private IApiAddressRequestModelValidator addressModelValidator;
+		private IBOLAddressMapper addressMapper;
 		private ILogger logger;
 
 		public AbstractBOAddress(
 			ILogger logger,
 			IAddressRepository addressRepository,
-			IApiAddressModelValidator addressModelValidator)
+			IApiAddressRequestModelValidator addressModelValidator,
+			IBOLAddressMapper addressMapper)
 			: base()
 
 		{
 			this.addressRepository = addressRepository;
 			this.addressModelValidator = addressModelValidator;
+			this.addressMapper = addressMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.addressRepository.All(skip, take, orderClause);
+			var records = await this.addressRepository.All(skip, take, orderClause);
+
+			return this.addressMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOAddress> Get(int addressID)
+		public virtual async Task<ApiAddressResponseModel> Get(int addressID)
 		{
-			return this.addressRepository.Get(addressID);
+			var record = await addressRepository.Get(addressID);
+
+			return this.addressMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOAddress>> Create(
-			ApiAddressModel model)
+		public virtual async Task<CreateResponse<ApiAddressResponseModel>> Create(
+			ApiAddressRequestModel model)
 		{
-			CreateResponse<POCOAddress> response = new CreateResponse<POCOAddress>(await this.addressModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAddressResponseModel> response = new CreateResponse<ApiAddressResponseModel>(await this.addressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAddress record = await this.addressRepository.Create(model);
+				var dto = this.addressMapper.MapModelToDTO(default (int), model);
+				var record = await this.addressRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.addressMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int addressID,
-			ApiAddressModel model)
+			ApiAddressRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateUpdateAsync(addressID, model));
 
 			if (response.Success)
 			{
-				await this.addressRepository.Update(addressID, model);
+				var dto = this.addressMapper.MapModelToDTO(addressID, model);
+				await this.addressRepository.Update(addressID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
+		public async Task<ApiAddressResponseModel> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
 		{
-			return await this.addressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
+			DTOAddress record = await this.addressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
+
+			return this.addressMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCOAddress>> GetStateProvinceID(int stateProvinceID)
+		public async Task<List<ApiAddressResponseModel>> GetStateProvinceID(int stateProvinceID)
 		{
-			return await this.addressRepository.GetStateProvinceID(stateProvinceID);
+			List<DTOAddress> records = await this.addressRepository.GetStateProvinceID(stateProvinceID);
+
+			return this.addressMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>efc30171afb60fcd211d9f5bf436befe</Hash>
+    <Hash>e1ebdeb76e2b64185faebe435a7358bf</Hash>
 </Codenesium>*/

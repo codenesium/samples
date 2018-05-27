@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BODatabaseLog(
 			ILogger<DatabaseLogRepository> logger,
 			IDatabaseLogRepository databaseLogRepository,
-			IApiDatabaseLogModelValidator databaseLogModelValidator)
-			: base(logger, databaseLogRepository, databaseLogModelValidator)
+			IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
+			IBOLDatabaseLogMapper databaseLogMapper)
+			: base(logger, databaseLogRepository, databaseLogModelValidator, databaseLogMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4071415fb83f9e2e00618ac6c1c6b041</Hash>
+    <Hash>93f01884b989ffd0483f183622d52c02</Hash>
 </Codenesium>*/

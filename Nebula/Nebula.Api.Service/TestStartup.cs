@@ -165,10 +165,6 @@ namespace NebulaNS.Api.Service
                 .InstancePerLifetimeScope();
 
 
-		    builder.RegisterType<ObjectMapper>()
-                .As<IObjectMapper>()
-                .InstancePerLifetimeScope();
-
 		    var businessObjectsAssembly = typeof(ValidationError).Assembly;
             builder.RegisterAssemblyTypes(businessObjectsAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && (t.Name.StartsWith("BO") || t.Name.EndsWith("ModelValidator")))
@@ -176,9 +172,9 @@ namespace NebulaNS.Api.Service
 				.PropertiesAutowired();
 
 
-            var dataAccessAssembly = typeof(ObjectMapper).Assembly;
+            var dataAccessAssembly = typeof(AbstractRepository).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
-				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
+				.Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Repository") || t.Name.EndsWith("Mapper") ))
 				.AsImplementedInterfaces();
 
 

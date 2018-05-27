@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAddressRepository
 	{
-		Task<POCOAddress> Create(ApiAddressModel model);
+		Task<DTOAddress> Create(DTOAddress dto);
 
 		Task Update(int addressID,
-		            ApiAddressModel model);
+		            DTOAddress dto);
 
 		Task Delete(int addressID);
 
-		Task<POCOAddress> Get(int addressID);
+		Task<DTOAddress> Get(int addressID);
 
-		Task<List<POCOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
-		Task<List<POCOAddress>> GetStateProvinceID(int stateProvinceID);
+		Task<DTOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
+		Task<List<DTOAddress>> GetStateProvinceID(int stateProvinceID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3687d6a9b849603892c6b7b576413784</Hash>
+    <Hash>5df45773d847460311ed8366284fa241</Hash>
 </Codenesium>*/

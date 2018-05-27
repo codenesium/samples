@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using NebulaNS.Api.Contracts;
 namespace NebulaNS.Api.BusinessObjects
 {
-	public interface IApiChainStatusModelValidator
+	public interface IApiChainStatusRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiChainStatusModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiChainStatusModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiChainStatusRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiChainStatusRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3af4097111d4a60973de98445761e8e3</Hash>
+    <Hash>409ef660f45d188f439e5f6d134caec6</Hash>
 </Codenesium>*/

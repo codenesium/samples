@@ -9,20 +9,20 @@ namespace PetStoreNS.Api.BusinessObjects
 {
 	public interface IBOPen
 	{
-		Task<CreateResponse<POCOPen>> Create(
-			ApiPenModel model);
+		Task<CreateResponse<ApiPenResponseModel>> Create(
+			ApiPenRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiPenModel model);
+		                            ApiPenRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOPen> Get(int id);
+		Task<ApiPenResponseModel> Get(int id);
 
-		Task<List<POCOPen>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiPenResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>504dd01da3515d15378ccce3d86f542f</Hash>
+    <Hash>3483d7aac1178ce60c69c830cda80a45</Hash>
 </Codenesium>*/

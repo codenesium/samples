@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOAWBuildVersion(
 			ILogger<AWBuildVersionRepository> logger,
 			IAWBuildVersionRepository aWBuildVersionRepository,
-			IApiAWBuildVersionModelValidator aWBuildVersionModelValidator)
-			: base(logger, aWBuildVersionRepository, aWBuildVersionModelValidator)
+			IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
+			IBOLAWBuildVersionMapper aWBuildVersionMapper)
+			: base(logger, aWBuildVersionRepository, aWBuildVersionModelValidator, aWBuildVersionMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>262bc5f9c44d1a6e832c93f1bc52de9f</Hash>
+    <Hash>fcc387bb31ac805b75b9c1019f08645b</Hash>
 </Codenesium>*/

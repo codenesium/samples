@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALAWBuildVersionMapper Mapper { get; }
 
 		public AbstractAWBuildVersionRepository(
-			IObjectMapper mapper,
+			IDALAWBuildVersionMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOAWBuildVersion> Get(int systemInformationID)
+		public async virtual Task<DTOAWBuildVersion> Get(int systemInformationID)
 		{
 			AWBuildVersion record = await this.GetById(systemInformationID);
 
-			return this.Mapper.AWBuildVersionMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOAWBuildVersion> Create(
-			ApiAWBuildVersionModel model)
+		public async virtual Task<DTOAWBuildVersion> Create(
+			DTOAWBuildVersion dto)
 		{
 			AWBuildVersion record = new AWBuildVersion();
 
-			this.Mapper.AWBuildVersionMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<AWBuildVersion>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.AWBuildVersionMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int systemInformationID,
-			ApiAWBuildVersionModel model)
+			DTOAWBuildVersion dto)
 		{
 			AWBuildVersion record = await this.GetById(systemInformationID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.AWBuildVersionMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					systemInformationID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOAWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOAWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAWBuildVersion> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOAWBuildVersion> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOAWBuildVersion>> SearchLinqPOCO(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOAWBuildVersion>> SearchLinqDTO(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAWBuildVersion> response = new List<POCOAWBuildVersion>();
+			List<DTOAWBuildVersion> response = new List<DTOAWBuildVersion>();
 			List<AWBuildVersion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.AWBuildVersionMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a6564086942805d69720e326e743c438</Hash>
+    <Hash>c129d3fc39401b5fce07eb69e9fa069f</Hash>
 </Codenesium>*/

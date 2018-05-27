@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOCurrency
 	{
-		Task<CreateResponse<POCOCurrency>> Create(
-			ApiCurrencyModel model);
+		Task<CreateResponse<ApiCurrencyResponseModel>> Create(
+			ApiCurrencyRequestModel model);
 
 		Task<ActionResponse> Update(string currencyCode,
-		                            ApiCurrencyModel model);
+		                            ApiCurrencyRequestModel model);
 
 		Task<ActionResponse> Delete(string currencyCode);
 
-		Task<POCOCurrency> Get(string currencyCode);
+		Task<ApiCurrencyResponseModel> Get(string currencyCode);
 
-		Task<List<POCOCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiCurrencyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCurrency> GetName(string name);
+		Task<ApiCurrencyResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d09ac2410bb5a01fda82dc7c226526f</Hash>
+    <Hash>216c81b0a6dec4ccd85264d428334cb0</Hash>
 </Codenesium>*/

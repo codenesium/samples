@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPhoneNumberTypeRepository
 	{
-		Task<POCOPhoneNumberType> Create(ApiPhoneNumberTypeModel model);
+		Task<DTOPhoneNumberType> Create(DTOPhoneNumberType dto);
 
 		Task Update(int phoneNumberTypeID,
-		            ApiPhoneNumberTypeModel model);
+		            DTOPhoneNumberType dto);
 
 		Task Delete(int phoneNumberTypeID);
 
-		Task<POCOPhoneNumberType> Get(int phoneNumberTypeID);
+		Task<DTOPhoneNumberType> Get(int phoneNumberTypeID);
 
-		Task<List<POCOPhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOPhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>cc8907497551c5a5c462e1b362a4cc65</Hash>
+    <Hash>484f7d82e5fb0728db4b1530a7b201b3</Hash>
 </Codenesium>*/

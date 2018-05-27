@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IDocumentRepository
 	{
-		Task<POCODocument> Create(ApiDocumentModel model);
+		Task<DTODocument> Create(DTODocument dto);
 
 		Task Update(Guid documentNode,
-		            ApiDocumentModel model);
+		            DTODocument dto);
 
 		Task Delete(Guid documentNode);
 
-		Task<POCODocument> Get(Guid documentNode);
+		Task<DTODocument> Get(Guid documentNode);
 
-		Task<List<POCODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode);
-		Task<List<POCODocument>> GetFileNameRevision(string fileName,string revision);
+		Task<DTODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode);
+		Task<List<DTODocument>> GetFileNameRevision(string fileName,string revision);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f468c5a2a76a95b524f407d7d39797c</Hash>
+    <Hash>3c8aca7666864d4792ba35a400812f49</Hash>
 </Codenesium>*/

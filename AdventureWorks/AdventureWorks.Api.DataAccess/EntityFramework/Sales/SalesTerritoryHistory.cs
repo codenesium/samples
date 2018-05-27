@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesTerritoryHistory", Schema="Sales")]
-	public partial class SalesTerritoryHistory: AbstractEntityFrameworkPOCO
+	public partial class SalesTerritoryHistory: AbstractEntityFrameworkDTO
 	{
 		public SalesTerritoryHistory()
 		{}
@@ -37,6 +37,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate", TypeName="datetime")]
 		public DateTime ModifiedDate { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
@@ -55,5 +56,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa4ea3f92de321c5c5f6a36b4d114545</Hash>
+    <Hash>036d5c2b3695f0e0dd9eb5ae73b59c49</Hash>
 </Codenesium>*/

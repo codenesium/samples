@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOUnitMeasure
 	{
-		Task<CreateResponse<POCOUnitMeasure>> Create(
-			ApiUnitMeasureModel model);
+		Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
+			ApiUnitMeasureRequestModel model);
 
 		Task<ActionResponse> Update(string unitMeasureCode,
-		                            ApiUnitMeasureModel model);
+		                            ApiUnitMeasureRequestModel model);
 
 		Task<ActionResponse> Delete(string unitMeasureCode);
 
-		Task<POCOUnitMeasure> Get(string unitMeasureCode);
+		Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode);
 
-		Task<List<POCOUnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiUnitMeasureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOUnitMeasure> GetName(string name);
+		Task<ApiUnitMeasureResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f385ef5c92e4a870e258fdb703111324</Hash>
+    <Hash>4b4ed164bb31a14f8e012a7f4bfa39eb</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOCountryRegion: AbstractBOManager
 	{
 		private ICountryRegionRepository countryRegionRepository;
-		private IApiCountryRegionModelValidator countryRegionModelValidator;
+		private IApiCountryRegionRequestModelValidator countryRegionModelValidator;
+		private IBOLCountryRegionMapper countryRegionMapper;
 		private ILogger logger;
 
 		public AbstractBOCountryRegion(
 			ILogger logger,
 			ICountryRegionRepository countryRegionRepository,
-			IApiCountryRegionModelValidator countryRegionModelValidator)
+			IApiCountryRegionRequestModelValidator countryRegionModelValidator,
+			IBOLCountryRegionMapper countryRegionMapper)
 			: base()
 
 		{
 			this.countryRegionRepository = countryRegionRepository;
 			this.countryRegionModelValidator = countryRegionModelValidator;
+			this.countryRegionMapper = countryRegionMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiCountryRegionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.countryRegionRepository.All(skip, take, orderClause);
+			var records = await this.countryRegionRepository.All(skip, take, orderClause);
+
+			return this.countryRegionMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOCountryRegion> Get(string countryRegionCode)
+		public virtual async Task<ApiCountryRegionResponseModel> Get(string countryRegionCode)
 		{
-			return this.countryRegionRepository.Get(countryRegionCode);
+			var record = await countryRegionRepository.Get(countryRegionCode);
+
+			return this.countryRegionMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOCountryRegion>> Create(
-			ApiCountryRegionModel model)
+		public virtual async Task<CreateResponse<ApiCountryRegionResponseModel>> Create(
+			ApiCountryRegionRequestModel model)
 		{
-			CreateResponse<POCOCountryRegion> response = new CreateResponse<POCOCountryRegion>(await this.countryRegionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCountryRegionResponseModel> response = new CreateResponse<ApiCountryRegionResponseModel>(await this.countryRegionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCountryRegion record = await this.countryRegionRepository.Create(model);
+				var dto = this.countryRegionMapper.MapModelToDTO(default (string), model);
+				var record = await this.countryRegionRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.countryRegionMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			string countryRegionCode,
-			ApiCountryRegionModel model)
+			ApiCountryRegionRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.countryRegionModelValidator.ValidateUpdateAsync(countryRegionCode, model));
 
 			if (response.Success)
 			{
-				await this.countryRegionRepository.Update(countryRegionCode, model);
+				var dto = this.countryRegionMapper.MapModelToDTO(countryRegionCode, model);
+				await this.countryRegionRepository.Update(countryRegionCode, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOCountryRegion> GetName(string name)
+		public async Task<ApiCountryRegionResponseModel> GetName(string name)
 		{
-			return await this.countryRegionRepository.GetName(name);
+			DTOCountryRegion record = await this.countryRegionRepository.GetName(name);
+
+			return this.countryRegionMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2c046321d1550279202a2eb860179abe</Hash>
+    <Hash>6c630c4e10ae5f3e344247925151d3a1</Hash>
 </Codenesium>*/

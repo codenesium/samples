@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOStudio: AbstractBOManager
 	{
 		private IStudioRepository studioRepository;
-		private IApiStudioModelValidator studioModelValidator;
+		private IApiStudioRequestModelValidator studioModelValidator;
+		private IBOLStudioMapper studioMapper;
 		private ILogger logger;
 
 		public AbstractBOStudio(
 			ILogger logger,
 			IStudioRepository studioRepository,
-			IApiStudioModelValidator studioModelValidator)
+			IApiStudioRequestModelValidator studioModelValidator,
+			IBOLStudioMapper studioMapper)
 			: base()
 
 		{
 			this.studioRepository = studioRepository;
 			this.studioModelValidator = studioModelValidator;
+			this.studioMapper = studioMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOStudio>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiStudioResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.studioRepository.All(skip, take, orderClause);
+			var records = await this.studioRepository.All(skip, take, orderClause);
+
+			return this.studioMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOStudio> Get(int id)
+		public virtual async Task<ApiStudioResponseModel> Get(int id)
 		{
-			return this.studioRepository.Get(id);
+			var record = await studioRepository.Get(id);
+
+			return this.studioMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOStudio>> Create(
-			ApiStudioModel model)
+		public virtual async Task<CreateResponse<ApiStudioResponseModel>> Create(
+			ApiStudioRequestModel model)
 		{
-			CreateResponse<POCOStudio> response = new CreateResponse<POCOStudio>(await this.studioModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStudioResponseModel> response = new CreateResponse<ApiStudioResponseModel>(await this.studioModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOStudio record = await this.studioRepository.Create(model);
+				var dto = this.studioMapper.MapModelToDTO(default (int), model);
+				var record = await this.studioRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.studioMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiStudioModel model)
+			ApiStudioRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.studioModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.studioRepository.Update(id, model);
+				var dto = this.studioMapper.MapModelToDTO(id, model);
+				await this.studioRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>2b6614c3580fc083b87ebc1c12bac2e5</Hash>
+    <Hash>28e7b9bc7198c9255526d500e1abf0b7</Hash>
 </Codenesium>*/

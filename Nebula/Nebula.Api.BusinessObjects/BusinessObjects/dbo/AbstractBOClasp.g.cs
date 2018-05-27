@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOClasp: AbstractBOManager
 	{
 		private IClaspRepository claspRepository;
-		private IApiClaspModelValidator claspModelValidator;
+		private IApiClaspRequestModelValidator claspModelValidator;
+		private IBOLClaspMapper claspMapper;
 		private ILogger logger;
 
 		public AbstractBOClasp(
 			ILogger logger,
 			IClaspRepository claspRepository,
-			IApiClaspModelValidator claspModelValidator)
+			IApiClaspRequestModelValidator claspModelValidator,
+			IBOLClaspMapper claspMapper)
 			: base()
 
 		{
 			this.claspRepository = claspRepository;
 			this.claspModelValidator = claspModelValidator;
+			this.claspMapper = claspMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiClaspResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.claspRepository.All(skip, take, orderClause);
+			var records = await this.claspRepository.All(skip, take, orderClause);
+
+			return this.claspMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOClasp> Get(int id)
+		public virtual async Task<ApiClaspResponseModel> Get(int id)
 		{
-			return this.claspRepository.Get(id);
+			var record = await claspRepository.Get(id);
+
+			return this.claspMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOClasp>> Create(
-			ApiClaspModel model)
+		public virtual async Task<CreateResponse<ApiClaspResponseModel>> Create(
+			ApiClaspRequestModel model)
 		{
-			CreateResponse<POCOClasp> response = new CreateResponse<POCOClasp>(await this.claspModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiClaspResponseModel> response = new CreateResponse<ApiClaspResponseModel>(await this.claspModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOClasp record = await this.claspRepository.Create(model);
+				var dto = this.claspMapper.MapModelToDTO(default (int), model);
+				var record = await this.claspRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.claspMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiClaspModel model)
+			ApiClaspRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.claspModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.claspRepository.Update(id, model);
+				var dto = this.claspMapper.MapModelToDTO(id, model);
+				await this.claspRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>7799036855829c59cb12a26f9bdd7758</Hash>
+    <Hash>c49466214dc907999f76fde61aa0129a</Hash>
 </Codenesium>*/

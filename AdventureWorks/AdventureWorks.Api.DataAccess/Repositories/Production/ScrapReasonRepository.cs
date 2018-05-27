@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ScrapReasonRepository: AbstractScrapReasonRepository, IScrapReasonRepository
 	{
 		public ScrapReasonRepository(
-			IObjectMapper mapper,
+			IDALScrapReasonMapper mapper,
 			ILogger<ScrapReasonRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>50b860e97299c66caa9a597ea39ff358</Hash>
+    <Hash>ccf5036a712e09fa6f56cfa006379db3</Hash>
 </Codenesium>*/

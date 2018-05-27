@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SpecialOfferRepository: AbstractSpecialOfferRepository, ISpecialOfferRepository
 	{
 		public SpecialOfferRepository(
-			IObjectMapper mapper,
+			IDALSpecialOfferMapper mapper,
 			ILogger<SpecialOfferRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b615ff107528456d61f063685a4153bc</Hash>
+    <Hash>7face8c15f45db281a8eeea82b11f4d9</Hash>
 </Codenesium>*/

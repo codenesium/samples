@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOAddressType: AbstractBOManager
 	{
 		private IAddressTypeRepository addressTypeRepository;
-		private IApiAddressTypeModelValidator addressTypeModelValidator;
+		private IApiAddressTypeRequestModelValidator addressTypeModelValidator;
+		private IBOLAddressTypeMapper addressTypeMapper;
 		private ILogger logger;
 
 		public AbstractBOAddressType(
 			ILogger logger,
 			IAddressTypeRepository addressTypeRepository,
-			IApiAddressTypeModelValidator addressTypeModelValidator)
+			IApiAddressTypeRequestModelValidator addressTypeModelValidator,
+			IBOLAddressTypeMapper addressTypeMapper)
 			: base()
 
 		{
 			this.addressTypeRepository = addressTypeRepository;
 			this.addressTypeModelValidator = addressTypeModelValidator;
+			this.addressTypeMapper = addressTypeMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOAddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiAddressTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.addressTypeRepository.All(skip, take, orderClause);
+			var records = await this.addressTypeRepository.All(skip, take, orderClause);
+
+			return this.addressTypeMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOAddressType> Get(int addressTypeID)
+		public virtual async Task<ApiAddressTypeResponseModel> Get(int addressTypeID)
 		{
-			return this.addressTypeRepository.Get(addressTypeID);
+			var record = await addressTypeRepository.Get(addressTypeID);
+
+			return this.addressTypeMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOAddressType>> Create(
-			ApiAddressTypeModel model)
+		public virtual async Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
+			ApiAddressTypeRequestModel model)
 		{
-			CreateResponse<POCOAddressType> response = new CreateResponse<POCOAddressType>(await this.addressTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAddressTypeResponseModel> response = new CreateResponse<ApiAddressTypeResponseModel>(await this.addressTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOAddressType record = await this.addressTypeRepository.Create(model);
+				var dto = this.addressTypeMapper.MapModelToDTO(default (int), model);
+				var record = await this.addressTypeRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.addressTypeMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int addressTypeID,
-			ApiAddressTypeModel model)
+			ApiAddressTypeRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.addressTypeModelValidator.ValidateUpdateAsync(addressTypeID, model));
 
 			if (response.Success)
 			{
-				await this.addressTypeRepository.Update(addressTypeID, model);
+				var dto = this.addressTypeMapper.MapModelToDTO(addressTypeID, model);
+				await this.addressTypeRepository.Update(addressTypeID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOAddressType> GetName(string name)
+		public async Task<ApiAddressTypeResponseModel> GetName(string name)
 		{
-			return await this.addressTypeRepository.GetName(name);
+			DTOAddressType record = await this.addressTypeRepository.GetName(name);
+
+			return this.addressTypeMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3abdded2d015db5aa171bde66be3df44</Hash>
+    <Hash>0f0a974f5d80e1c1d2376dcb670ab992</Hash>
 </Codenesium>*/

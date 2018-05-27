@@ -8,19 +8,19 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IFileRepository
 	{
-		Task<POCOFile> Create(ApiFileModel model);
+		Task<DTOFile> Create(DTOFile dto);
 
 		Task Update(int id,
-		            ApiFileModel model);
+		            DTOFile dto);
 
 		Task Delete(int id);
 
-		Task<POCOFile> Get(int id);
+		Task<DTOFile> Get(int id);
 
-		Task<List<POCOFile>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOFile>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>6dcb4e851a95c959017cd7665db8a6d1</Hash>
+    <Hash>eb87b2d7572c8d1efa87ce62ac061ab5</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOStudentXFamily>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentXFamilyResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOStudentXFamily> response = await this.studentXFamilyManager.All(query.Offset, query.Limit);
+			List<ApiStudentXFamilyResponseModel> response = await this.studentXFamilyManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOStudentXFamily), 200)]
+		[ProducesResponseType(typeof(ApiStudentXFamilyResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOStudentXFamily response = await this.studentXFamilyManager.Get(id);
+			ApiStudentXFamilyResponseModel response = await this.studentXFamilyManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStudentXFamily), 200)]
+		[ProducesResponseType(typeof(ApiStudentXFamilyResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStudentXFamilyModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiStudentXFamilyRequestModel model)
 		{
-			CreateResponse<POCOStudentXFamily> result = await this.studentXFamilyManager.Create(model);
+			CreateResponse<ApiStudentXFamilyResponseModel> result = await this.studentXFamilyManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOStudentXFamily>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentXFamilyResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudentXFamilyModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudentXFamilyRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOStudentXFamily> records = new List<POCOStudentXFamily>();
+			List<ApiStudentXFamilyResponseModel> records = new List<ApiStudentXFamilyResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOStudentXFamily> result = await this.studentXFamilyManager.Create(model);
+				CreateResponse<ApiStudentXFamilyResponseModel> result = await this.studentXFamilyManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStudentXFamily), 200)]
+		[ProducesResponseType(typeof(DTOStudentXFamily), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudentXFamilyModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudentXFamilyRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStudentXFamily response = await this.studentXFamilyManager.Get(id);
+					ApiStudentXFamilyResponseModel response = await this.studentXFamilyManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ae4fa6746dec4ffa70338e7008b31d1c</Hash>
+    <Hash>56e172d4e7e7506ca7eb1bf2a219502c</Hash>
 </Codenesium>*/

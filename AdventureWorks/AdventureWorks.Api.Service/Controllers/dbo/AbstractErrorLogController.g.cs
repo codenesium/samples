@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOErrorLog>), 200)]
+		[ProducesResponseType(typeof(List<ApiErrorLogResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOErrorLog> response = await this.errorLogManager.All(query.Offset, query.Limit);
+			List<ApiErrorLogResponseModel> response = await this.errorLogManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOErrorLog), 200)]
+		[ProducesResponseType(typeof(ApiErrorLogResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOErrorLog response = await this.errorLogManager.Get(id);
+			ApiErrorLogResponseModel response = await this.errorLogManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOErrorLog), 200)]
+		[ProducesResponseType(typeof(ApiErrorLogResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiErrorLogModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiErrorLogRequestModel model)
 		{
-			CreateResponse<POCOErrorLog> result = await this.errorLogManager.Create(model);
+			CreateResponse<ApiErrorLogResponseModel> result = await this.errorLogManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOErrorLog>), 200)]
+		[ProducesResponseType(typeof(List<ApiErrorLogResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiErrorLogModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiErrorLogRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOErrorLog> records = new List<POCOErrorLog>();
+			List<ApiErrorLogResponseModel> records = new List<ApiErrorLogResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOErrorLog> result = await this.errorLogManager.Create(model);
+				CreateResponse<ApiErrorLogResponseModel> result = await this.errorLogManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOErrorLog), 200)]
+		[ProducesResponseType(typeof(DTOErrorLog), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiErrorLogModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiErrorLogRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOErrorLog response = await this.errorLogManager.Get(id);
+					ApiErrorLogResponseModel response = await this.errorLogManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>29c7b8cba1da95d7358120377a7e208c</Hash>
+    <Hash>4f530e8a0bd66320f0d974c00737a733</Hash>
 </Codenesium>*/

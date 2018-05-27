@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOWorkOrderRouting> response = await this.workOrderRoutingManager.All(query.Offset, query.Limit);
+			List<ApiWorkOrderRoutingResponseModel> response = await this.workOrderRoutingManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOWorkOrderRouting), 200)]
+		[ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOWorkOrderRouting response = await this.workOrderRoutingManager.Get(id);
+			ApiWorkOrderRoutingResponseModel response = await this.workOrderRoutingManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOWorkOrderRouting), 200)]
+		[ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRoutingModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRoutingRequestModel model)
 		{
-			CreateResponse<POCOWorkOrderRouting> result = await this.workOrderRoutingManager.Create(model);
+			CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.workOrderRoutingManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiWorkOrderRoutingModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiWorkOrderRoutingRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOWorkOrderRouting> records = new List<POCOWorkOrderRouting>();
+			List<ApiWorkOrderRoutingResponseModel> records = new List<ApiWorkOrderRoutingResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOWorkOrderRouting> result = await this.workOrderRoutingManager.Create(model);
+				CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.workOrderRoutingManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOWorkOrderRouting), 200)]
+		[ProducesResponseType(typeof(DTOWorkOrderRouting), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderRoutingModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiWorkOrderRoutingRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOWorkOrderRouting response = await this.workOrderRoutingManager.Get(id);
+					ApiWorkOrderRoutingResponseModel response = await this.workOrderRoutingManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOWorkOrderRouting>), 200)]
+		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOWorkOrderRouting> response = await this.workOrderRoutingManager.GetProductID(productID);
+			List<ApiWorkOrderRoutingResponseModel> response = await this.workOrderRoutingManager.GetProductID(productID);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3fcfc7466f47d4468249ab29feb3d994</Hash>
+    <Hash>45f99f0e2532fc1fb73574e185448561</Hash>
 </Codenesium>*/

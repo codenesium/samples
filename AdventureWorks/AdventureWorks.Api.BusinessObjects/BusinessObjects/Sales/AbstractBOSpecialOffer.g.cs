@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSpecialOffer: AbstractBOManager
 	{
 		private ISpecialOfferRepository specialOfferRepository;
-		private IApiSpecialOfferModelValidator specialOfferModelValidator;
+		private IApiSpecialOfferRequestModelValidator specialOfferModelValidator;
+		private IBOLSpecialOfferMapper specialOfferMapper;
 		private ILogger logger;
 
 		public AbstractBOSpecialOffer(
 			ILogger logger,
 			ISpecialOfferRepository specialOfferRepository,
-			IApiSpecialOfferModelValidator specialOfferModelValidator)
+			IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
+			IBOLSpecialOfferMapper specialOfferMapper)
 			: base()
 
 		{
 			this.specialOfferRepository = specialOfferRepository;
 			this.specialOfferModelValidator = specialOfferModelValidator;
+			this.specialOfferMapper = specialOfferMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSpecialOfferResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.specialOfferRepository.All(skip, take, orderClause);
+			var records = await this.specialOfferRepository.All(skip, take, orderClause);
+
+			return this.specialOfferMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSpecialOffer> Get(int specialOfferID)
+		public virtual async Task<ApiSpecialOfferResponseModel> Get(int specialOfferID)
 		{
-			return this.specialOfferRepository.Get(specialOfferID);
+			var record = await specialOfferRepository.Get(specialOfferID);
+
+			return this.specialOfferMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSpecialOffer>> Create(
-			ApiSpecialOfferModel model)
+		public virtual async Task<CreateResponse<ApiSpecialOfferResponseModel>> Create(
+			ApiSpecialOfferRequestModel model)
 		{
-			CreateResponse<POCOSpecialOffer> response = new CreateResponse<POCOSpecialOffer>(await this.specialOfferModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpecialOfferResponseModel> response = new CreateResponse<ApiSpecialOfferResponseModel>(await this.specialOfferModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpecialOffer record = await this.specialOfferRepository.Create(model);
+				var dto = this.specialOfferMapper.MapModelToDTO(default (int), model);
+				var record = await this.specialOfferRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.specialOfferMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int specialOfferID,
-			ApiSpecialOfferModel model)
+			ApiSpecialOfferRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.specialOfferModelValidator.ValidateUpdateAsync(specialOfferID, model));
 
 			if (response.Success)
 			{
-				await this.specialOfferRepository.Update(specialOfferID, model);
+				var dto = this.specialOfferMapper.MapModelToDTO(specialOfferID, model);
+				await this.specialOfferRepository.Update(specialOfferID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f3218fbd4222c447387a9dcbb8e0c53e</Hash>
+    <Hash>6eb021f81053ac7dff891b80cd6451ac</Hash>
 </Codenesium>*/

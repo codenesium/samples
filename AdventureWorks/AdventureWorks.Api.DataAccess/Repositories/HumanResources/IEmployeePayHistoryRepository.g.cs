@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmployeePayHistoryRepository
 	{
-		Task<POCOEmployeePayHistory> Create(ApiEmployeePayHistoryModel model);
+		Task<DTOEmployeePayHistory> Create(DTOEmployeePayHistory dto);
 
 		Task Update(int businessEntityID,
-		            ApiEmployeePayHistoryModel model);
+		            DTOEmployeePayHistory dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOEmployeePayHistory> Get(int businessEntityID);
+		Task<DTOEmployeePayHistory> Get(int businessEntityID);
 
-		Task<List<POCOEmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOEmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>2480ef093c634320d2c2b13814d94c24</Hash>
+    <Hash>eb3985c6b27144b1c751be5a7413a770</Hash>
 </Codenesium>*/

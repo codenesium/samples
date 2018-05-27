@@ -12,7 +12,7 @@ namespace PetStoreNS.Api.DataAccess
 	public class SaleRepository: AbstractSaleRepository, ISaleRepository
 	{
 		public SaleRepository(
-			IObjectMapper mapper,
+			IDALSaleMapper mapper,
 			ILogger<SaleRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39e2a85d74c82db6e4095c72875e3b57</Hash>
+    <Hash>f91272941dce5e37ee9249f7caed25cf</Hash>
 </Codenesium>*/

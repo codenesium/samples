@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLocation>), 200)]
+		[ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLocation> response = await this.locationManager.All(query.Offset, query.Limit);
+			List<ApiLocationResponseModel> response = await this.locationManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOLocation), 200)]
+		[ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(short id)
 		{
-			POCOLocation response = await this.locationManager.Get(id);
+			ApiLocationResponseModel response = await this.locationManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLocation), 200)]
+		[ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<short>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLocationModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiLocationRequestModel model)
 		{
-			CreateResponse<POCOLocation> result = await this.locationManager.Create(model);
+			CreateResponse<ApiLocationResponseModel> result = await this.locationManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOLocation>), 200)]
+		[ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLocationModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLocationRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOLocation> records = new List<POCOLocation>();
+			List<ApiLocationResponseModel> records = new List<ApiLocationResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOLocation> result = await this.locationManager.Create(model);
+				CreateResponse<ApiLocationResponseModel> result = await this.locationManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLocation), 200)]
+		[ProducesResponseType(typeof(DTOLocation), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiLocationModel model)
+		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiLocationRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLocation response = await this.locationManager.Get(id);
+					ApiLocationResponseModel response = await this.locationManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOLocation), 200)]
+		[ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOLocation response = await this.locationManager.GetName(name);
+			ApiLocationResponseModel response = await this.locationManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>49b37f27d8e98662f1dec9b4215a8cf8</Hash>
+    <Hash>72ae46d7fe6331cbf751f33a854ba3dc</Hash>
 </Codenesium>*/

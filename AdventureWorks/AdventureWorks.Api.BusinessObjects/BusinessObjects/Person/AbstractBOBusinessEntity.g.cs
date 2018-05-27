@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOBusinessEntity: AbstractBOManager
 	{
 		private IBusinessEntityRepository businessEntityRepository;
-		private IApiBusinessEntityModelValidator businessEntityModelValidator;
+		private IApiBusinessEntityRequestModelValidator businessEntityModelValidator;
+		private IBOLBusinessEntityMapper businessEntityMapper;
 		private ILogger logger;
 
 		public AbstractBOBusinessEntity(
 			ILogger logger,
 			IBusinessEntityRepository businessEntityRepository,
-			IApiBusinessEntityModelValidator businessEntityModelValidator)
+			IApiBusinessEntityRequestModelValidator businessEntityModelValidator,
+			IBOLBusinessEntityMapper businessEntityMapper)
 			: base()
 
 		{
 			this.businessEntityRepository = businessEntityRepository;
 			this.businessEntityModelValidator = businessEntityModelValidator;
+			this.businessEntityMapper = businessEntityMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOBusinessEntity>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiBusinessEntityResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.businessEntityRepository.All(skip, take, orderClause);
+			var records = await this.businessEntityRepository.All(skip, take, orderClause);
+
+			return this.businessEntityMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOBusinessEntity> Get(int businessEntityID)
+		public virtual async Task<ApiBusinessEntityResponseModel> Get(int businessEntityID)
 		{
-			return this.businessEntityRepository.Get(businessEntityID);
+			var record = await businessEntityRepository.Get(businessEntityID);
+
+			return this.businessEntityMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOBusinessEntity>> Create(
-			ApiBusinessEntityModel model)
+		public virtual async Task<CreateResponse<ApiBusinessEntityResponseModel>> Create(
+			ApiBusinessEntityRequestModel model)
 		{
-			CreateResponse<POCOBusinessEntity> response = new CreateResponse<POCOBusinessEntity>(await this.businessEntityModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBusinessEntityResponseModel> response = new CreateResponse<ApiBusinessEntityResponseModel>(await this.businessEntityModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBusinessEntity record = await this.businessEntityRepository.Create(model);
+				var dto = this.businessEntityMapper.MapModelToDTO(default (int), model);
+				var record = await this.businessEntityRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.businessEntityMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiBusinessEntityModel model)
+			ApiBusinessEntityRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.businessEntityModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.businessEntityRepository.Update(businessEntityID, model);
+				var dto = this.businessEntityMapper.MapModelToDTO(businessEntityID, model);
+				await this.businessEntityRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>4ddf454d213ec267d990ecc02cbeab5d</Hash>
+    <Hash>41a8e8c958490d374928b6d59d2f2e5b</Hash>
 </Codenesium>*/

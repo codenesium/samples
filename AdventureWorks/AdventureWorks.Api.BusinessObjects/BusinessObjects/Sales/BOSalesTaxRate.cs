@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOSalesTaxRate(
 			ILogger<SalesTaxRateRepository> logger,
 			ISalesTaxRateRepository salesTaxRateRepository,
-			IApiSalesTaxRateModelValidator salesTaxRateModelValidator)
-			: base(logger, salesTaxRateRepository, salesTaxRateModelValidator)
+			IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
+			IBOLSalesTaxRateMapper salesTaxRateMapper)
+			: base(logger, salesTaxRateRepository, salesTaxRateModelValidator, salesTaxRateMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>70e608588021c4bd7a600d7134dd777a</Hash>
+    <Hash>09d79d360fd31f8f9f0405d48f2e92ff</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOAddressType>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressTypeResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOAddressType> response = await this.addressTypeManager.All(query.Offset, query.Limit);
+			List<ApiAddressTypeResponseModel> response = await this.addressTypeManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOAddressType), 200)]
+		[ProducesResponseType(typeof(ApiAddressTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOAddressType response = await this.addressTypeManager.Get(id);
+			ApiAddressTypeResponseModel response = await this.addressTypeManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAddressType), 200)]
+		[ProducesResponseType(typeof(ApiAddressTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAddressTypeModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiAddressTypeRequestModel model)
 		{
-			CreateResponse<POCOAddressType> result = await this.addressTypeManager.Create(model);
+			CreateResponse<ApiAddressTypeResponseModel> result = await this.addressTypeManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOAddressType>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressTypeResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAddressTypeModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAddressTypeRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOAddressType> records = new List<POCOAddressType>();
+			List<ApiAddressTypeResponseModel> records = new List<ApiAddressTypeResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOAddressType> result = await this.addressTypeManager.Create(model);
+				CreateResponse<ApiAddressTypeResponseModel> result = await this.addressTypeManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAddressType), 200)]
+		[ProducesResponseType(typeof(DTOAddressType), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAddressTypeModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAddressTypeRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOAddressType response = await this.addressTypeManager.Get(id);
+					ApiAddressTypeResponseModel response = await this.addressTypeManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOAddressType), 200)]
+		[ProducesResponseType(typeof(ApiAddressTypeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOAddressType response = await this.addressTypeManager.GetName(name);
+			ApiAddressTypeResponseModel response = await this.addressTypeManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>c772a5ada00a42bced14ee3ce8cb0cfe</Hash>
+    <Hash>6c86ed6d7b7ffac4e35e470537cf77de</Hash>
 </Codenesium>*/

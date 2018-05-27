@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShiftRepository
 	{
-		Task<POCOShift> Create(ApiShiftModel model);
+		Task<DTOShift> Create(DTOShift dto);
 
 		Task Update(int shiftID,
-		            ApiShiftModel model);
+		            DTOShift dto);
 
 		Task Delete(int shiftID);
 
-		Task<POCOShift> Get(int shiftID);
+		Task<DTOShift> Get(int shiftID);
 
-		Task<List<POCOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOShift> GetName(string name);
-		Task<POCOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
+		Task<DTOShift> GetName(string name);
+		Task<DTOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f88f939a1002a0ab590e58114b9194e1</Hash>
+    <Hash>c5a77dc8b2cd62a94102cad0fafc802d</Hash>
 </Codenesium>*/

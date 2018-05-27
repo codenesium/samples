@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PersonPhoneRepository: AbstractPersonPhoneRepository, IPersonPhoneRepository
 	{
 		public PersonPhoneRepository(
-			IObjectMapper mapper,
+			IDALPersonPhoneMapper mapper,
 			ILogger<PersonPhoneRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b091dd167e82736975ae95312c01855a</Hash>
+    <Hash>4f9ee4fa26cf438ba2484e5abde4d0b8</Hash>
 </Codenesium>*/

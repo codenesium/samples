@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOEmailAddress
 	{
-		Task<CreateResponse<POCOEmailAddress>> Create(
-			ApiEmailAddressModel model);
+		Task<CreateResponse<ApiEmailAddressResponseModel>> Create(
+			ApiEmailAddressRequestModel model);
 
 		Task<ActionResponse> Update(int businessEntityID,
-		                            ApiEmailAddressModel model);
+		                            ApiEmailAddressRequestModel model);
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<POCOEmailAddress> Get(int businessEntityID);
+		Task<ApiEmailAddressResponseModel> Get(int businessEntityID);
 
-		Task<List<POCOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiEmailAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOEmailAddress>> GetEmailAddress(string emailAddress1);
+		Task<List<ApiEmailAddressResponseModel>> GetEmailAddress(string emailAddress1);
 	}
 }
 
 /*<Codenesium>
-    <Hash>165ef56b3ec1f913eb474a216ca6c6e8</Hash>
+    <Hash>24b7c6d48db976a38bce26868a080109</Hash>
 </Codenesium>*/

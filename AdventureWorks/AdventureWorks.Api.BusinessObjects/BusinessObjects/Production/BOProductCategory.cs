@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOProductCategory(
 			ILogger<ProductCategoryRepository> logger,
 			IProductCategoryRepository productCategoryRepository,
-			IApiProductCategoryModelValidator productCategoryModelValidator)
-			: base(logger, productCategoryRepository, productCategoryModelValidator)
+			IApiProductCategoryRequestModelValidator productCategoryModelValidator,
+			IBOLProductCategoryMapper productCategoryMapper)
+			: base(logger, productCategoryRepository, productCategoryModelValidator, productCategoryMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3f7d00d4b98f22460277a5e5a034830</Hash>
+    <Hash>c1de2923f1c9a43e7b0fe056025c0773</Hash>
 </Codenesium>*/

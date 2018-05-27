@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCulture>), 200)]
+		[ProducesResponseType(typeof(List<ApiCultureResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCulture> response = await this.cultureManager.All(query.Offset, query.Limit);
+			List<ApiCultureResponseModel> response = await this.cultureManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCulture), 200)]
+		[ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOCulture response = await this.cultureManager.Get(id);
+			ApiCultureResponseModel response = await this.cultureManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCulture), 200)]
+		[ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<string>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCultureModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiCultureRequestModel model)
 		{
-			CreateResponse<POCOCulture> result = await this.cultureManager.Create(model);
+			CreateResponse<ApiCultureResponseModel> result = await this.cultureManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOCulture>), 200)]
+		[ProducesResponseType(typeof(List<ApiCultureResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCultureModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCultureRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOCulture> records = new List<POCOCulture>();
+			List<ApiCultureResponseModel> records = new List<ApiCultureResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOCulture> result = await this.cultureManager.Create(model);
+				CreateResponse<ApiCultureResponseModel> result = await this.cultureManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCulture), 200)]
+		[ProducesResponseType(typeof(DTOCulture), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCultureModel model)
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCultureRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCulture response = await this.cultureManager.Get(id);
+					ApiCultureResponseModel response = await this.cultureManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCulture), 200)]
+		[ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOCulture response = await this.cultureManager.GetName(name);
+			ApiCultureResponseModel response = await this.cultureManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a04c032586d9064a80851adb8fd3b836</Hash>
+    <Hash>7894cadbecadd1bdc99ddb4ccb5c1860</Hash>
 </Codenesium>*/

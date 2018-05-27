@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCODatabaseLog>), 200)]
+		[ProducesResponseType(typeof(List<ApiDatabaseLogResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODatabaseLog> response = await this.databaseLogManager.All(query.Offset, query.Limit);
+			List<ApiDatabaseLogResponseModel> response = await this.databaseLogManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCODatabaseLog), 200)]
+		[ProducesResponseType(typeof(ApiDatabaseLogResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCODatabaseLog response = await this.databaseLogManager.Get(id);
+			ApiDatabaseLogResponseModel response = await this.databaseLogManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODatabaseLog), 200)]
+		[ProducesResponseType(typeof(ApiDatabaseLogResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDatabaseLogModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiDatabaseLogRequestModel model)
 		{
-			CreateResponse<POCODatabaseLog> result = await this.databaseLogManager.Create(model);
+			CreateResponse<ApiDatabaseLogResponseModel> result = await this.databaseLogManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCODatabaseLog>), 200)]
+		[ProducesResponseType(typeof(List<ApiDatabaseLogResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDatabaseLogModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDatabaseLogRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCODatabaseLog> records = new List<POCODatabaseLog>();
+			List<ApiDatabaseLogResponseModel> records = new List<ApiDatabaseLogResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCODatabaseLog> result = await this.databaseLogManager.Create(model);
+				CreateResponse<ApiDatabaseLogResponseModel> result = await this.databaseLogManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODatabaseLog), 200)]
+		[ProducesResponseType(typeof(DTODatabaseLog), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDatabaseLogModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDatabaseLogRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODatabaseLog response = await this.databaseLogManager.Get(id);
+					ApiDatabaseLogResponseModel response = await this.databaseLogManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>afc74e860ab4578cccb3f370ce420b12</Hash>
+    <Hash>9e8676c06394d8bde972d96a609a1c4b</Hash>
 </Codenesium>*/

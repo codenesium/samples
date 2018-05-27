@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALCurrencyRateMapper Mapper { get; }
 
 		public AbstractCurrencyRateRepository(
-			IObjectMapper mapper,
+			IDALCurrencyRateMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOCurrencyRate> Get(int currencyRateID)
+		public async virtual Task<DTOCurrencyRate> Get(int currencyRateID)
 		{
 			CurrencyRate record = await this.GetById(currencyRateID);
 
-			return this.Mapper.CurrencyRateMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOCurrencyRate> Create(
-			ApiCurrencyRateModel model)
+		public async virtual Task<DTOCurrencyRate> Create(
+			DTOCurrencyRate dto)
 		{
 			CurrencyRate record = new CurrencyRate();
 
-			this.Mapper.CurrencyRateMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<CurrencyRate>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.CurrencyRateMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int currencyRateID,
-			ApiCurrencyRateModel model)
+			DTOCurrencyRate dto)
 		{
 			CurrencyRate record = await this.GetById(currencyRateID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.CurrencyRateMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					currencyRateID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
+		public async Task<DTOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
+			var records = await this.SearchLinqDTO(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOCurrencyRate>> Where(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOCurrencyRate>> Where(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCurrencyRate> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOCurrencyRate> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOCurrencyRate>> SearchLinqPOCO(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOCurrencyRate>> SearchLinqDTO(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCurrencyRate> response = new List<POCOCurrencyRate>();
+			List<DTOCurrencyRate> response = new List<DTOCurrencyRate>();
 			List<CurrencyRate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.CurrencyRateMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8671a03846c047b82a2abe4cfdc96aa4</Hash>
+    <Hash>56d8c83ecfbda217c210569ed89ad853</Hash>
 </Codenesium>*/

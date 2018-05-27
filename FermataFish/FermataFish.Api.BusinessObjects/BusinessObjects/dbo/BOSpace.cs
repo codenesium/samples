@@ -15,12 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOSpace(
 			ILogger<SpaceRepository> logger,
 			ISpaceRepository spaceRepository,
-			IApiSpaceModelValidator spaceModelValidator)
-			: base(logger, spaceRepository, spaceModelValidator)
+			IApiSpaceRequestModelValidator spaceModelValidator,
+			IBOLSpaceMapper spaceMapper)
+			: base(logger, spaceRepository, spaceModelValidator, spaceMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4cb44024b4945fd9e7a2cd67dc80cfa</Hash>
+    <Hash>008c3fdc1191c2b03e5b25fe3245b71f</Hash>
 </Codenesium>*/

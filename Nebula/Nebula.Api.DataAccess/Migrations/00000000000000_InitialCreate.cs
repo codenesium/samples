@@ -145,14 +145,14 @@ ADD CONSTRAINT[PK_link] PRIMARY KEY CLUSTERED
 id ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-CREATE  NONCLUSTERED INDEX[AX_Link_ChainId] ON[dbo].[Link]
-(
-[chainId] ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
 CREATE UNIQUE NONCLUSTERED INDEX[AX_Link_ExternalId] ON[dbo].[Link]
 (
 [externalId] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[AX_Link_ChainId] ON[dbo].[Link]
+(
+[chainId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[LinkLog]
@@ -218,6 +218,16 @@ CREATE UNIQUE CLUSTERED INDEX[UC_Version] ON[dbo].[VersionInfo]
 GO
 
 
+ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id] FOREIGN KEY([chainStatusId])
+REFERENCES[dbo].[ChainStatus]([id])
+GO
+ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id]
+GO
+ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_teamId_Team_id] FOREIGN KEY([teamId])
+REFERENCES[dbo].[Team]([id])
+GO
+ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_teamId_Team_id]
+GO
 ALTER TABLE[dbo].[Clasp]  WITH CHECK ADD  CONSTRAINT[FK_Clasp_nextChainId_Chain_id] FOREIGN KEY([nextChainId])
 REFERENCES[dbo].[Chain]([id])
 GO
@@ -233,16 +243,6 @@ REFERENCES[dbo].[Chain]([id])
 GO
 ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_chainId_Chain_id]
 GO
-ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id] FOREIGN KEY([chainStatusId])
-REFERENCES[dbo].[ChainStatus]([id])
-GO
-ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_chainStatusId_ChainStatus_id]
-GO
-ALTER TABLE[dbo].[LinkLog]  WITH CHECK ADD  CONSTRAINT[FK_LinkLog_linkId_Link_id] FOREIGN KEY([linkId])
-REFERENCES[dbo].[Link]([id])
-GO
-ALTER TABLE[dbo].[LinkLog] CHECK CONSTRAINT[FK_LinkLog_linkId_Link_id]
-GO
 ALTER TABLE[dbo].[Link]  WITH CHECK ADD  CONSTRAINT[FK_Link_linkStatusId_LinkStatus_id] FOREIGN KEY([linkStatusId])
 REFERENCES[dbo].[LinkStatus]([id])
 GO
@@ -253,25 +253,25 @@ REFERENCES[dbo].[Machine]([id])
 GO
 ALTER TABLE[dbo].[Link] CHECK CONSTRAINT[FK_Link_assignedMachineId_Machine_id]
 GO
+ALTER TABLE[dbo].[LinkLog]  WITH CHECK ADD  CONSTRAINT[FK_LinkLog_linkId_Link_id] FOREIGN KEY([linkId])
+REFERENCES[dbo].[Link]([id])
+GO
+ALTER TABLE[dbo].[LinkLog] CHECK CONSTRAINT[FK_LinkLog_linkId_Link_id]
+GO
 ALTER TABLE[dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id] FOREIGN KEY([machineId])
 REFERENCES[dbo].[Machine]([id])
 GO
 ALTER TABLE[dbo].[MachineRefTeam] CHECK CONSTRAINT[FK_MachineRefTeam_machineId_Machine_id]
 GO
-ALTER TABLE[dbo].[Team]  WITH CHECK ADD  CONSTRAINT[FK_Team_organizationId_Organization_id] FOREIGN KEY([organizationId])
-REFERENCES[dbo].[Organization]([id])
-GO
-ALTER TABLE[dbo].[Team] CHECK CONSTRAINT[FK_Team_organizationId_Organization_id]
-GO
-ALTER TABLE[dbo].[Chain]  WITH CHECK ADD  CONSTRAINT[FK_Chain_teamId_Team_id] FOREIGN KEY([teamId])
-REFERENCES[dbo].[Team]([id])
-GO
-ALTER TABLE[dbo].[Chain] CHECK CONSTRAINT[FK_Chain_teamId_Team_id]
-GO
 ALTER TABLE[dbo].[MachineRefTeam]  WITH CHECK ADD  CONSTRAINT[FK_machineRefTeam_teamId_Team_id] FOREIGN KEY([teamId])
 REFERENCES[dbo].[Team]([id])
 GO
 ALTER TABLE[dbo].[MachineRefTeam] CHECK CONSTRAINT[FK_machineRefTeam_teamId_Team_id]
+GO
+ALTER TABLE[dbo].[Team]  WITH CHECK ADD  CONSTRAINT[FK_Team_organizationId_Organization_id] FOREIGN KEY([organizationId])
+REFERENCES[dbo].[Organization]([id])
+GO
+ALTER TABLE[dbo].[Team] CHECK CONSTRAINT[FK_Team_organizationId_Organization_id]
 GO
 
 ");

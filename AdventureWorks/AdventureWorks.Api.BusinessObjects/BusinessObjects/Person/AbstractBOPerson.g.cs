@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOPerson: AbstractBOManager
 	{
 		private IPersonRepository personRepository;
-		private IApiPersonModelValidator personModelValidator;
+		private IApiPersonRequestModelValidator personModelValidator;
+		private IBOLPersonMapper personMapper;
 		private ILogger logger;
 
 		public AbstractBOPerson(
 			ILogger logger,
 			IPersonRepository personRepository,
-			IApiPersonModelValidator personModelValidator)
+			IApiPersonRequestModelValidator personModelValidator,
+			IBOLPersonMapper personMapper)
 			: base()
 
 		{
 			this.personRepository = personRepository;
 			this.personModelValidator = personModelValidator;
+			this.personMapper = personMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPersonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.personRepository.All(skip, take, orderClause);
+			var records = await this.personRepository.All(skip, take, orderClause);
+
+			return this.personMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPerson> Get(int businessEntityID)
+		public virtual async Task<ApiPersonResponseModel> Get(int businessEntityID)
 		{
-			return this.personRepository.Get(businessEntityID);
+			var record = await personRepository.Get(businessEntityID);
+
+			return this.personMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPerson>> Create(
-			ApiPersonModel model)
+		public virtual async Task<CreateResponse<ApiPersonResponseModel>> Create(
+			ApiPersonRequestModel model)
 		{
-			CreateResponse<POCOPerson> response = new CreateResponse<POCOPerson>(await this.personModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.personModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPerson record = await this.personRepository.Create(model);
+				var dto = this.personMapper.MapModelToDTO(default (int), model);
+				var record = await this.personRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.personMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiPersonModel model)
+			ApiPersonRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.personRepository.Update(businessEntityID, model);
+				var dto = this.personMapper.MapModelToDTO(businessEntityID, model);
+				await this.personRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,21 +88,27 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOPerson>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName)
+		public async Task<List<ApiPersonResponseModel>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName)
 		{
-			return await this.personRepository.GetLastNameFirstNameMiddleName(lastName,firstName,middleName);
+			List<DTOPerson> records = await this.personRepository.GetLastNameFirstNameMiddleName(lastName,firstName,middleName);
+
+			return this.personMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOPerson>> GetAdditionalContactInfo(string additionalContactInfo)
+		public async Task<List<ApiPersonResponseModel>> GetAdditionalContactInfo(string additionalContactInfo)
 		{
-			return await this.personRepository.GetAdditionalContactInfo(additionalContactInfo);
+			List<DTOPerson> records = await this.personRepository.GetAdditionalContactInfo(additionalContactInfo);
+
+			return this.personMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOPerson>> GetDemographics(string demographics)
+		public async Task<List<ApiPersonResponseModel>> GetDemographics(string demographics)
 		{
-			return await this.personRepository.GetDemographics(demographics);
+			List<DTOPerson> records = await this.personRepository.GetDemographics(demographics);
+
+			return this.personMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4b1414fc94bc493b38c915d3371d5806</Hash>
+    <Hash>704b8cb45f26d2779f953fa5bdeeec4f</Hash>
 </Codenesium>*/

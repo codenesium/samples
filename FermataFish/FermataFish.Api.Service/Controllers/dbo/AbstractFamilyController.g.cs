@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOFamily>), 200)]
+		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOFamily> response = await this.familyManager.All(query.Offset, query.Limit);
+			List<ApiFamilyResponseModel> response = await this.familyManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOFamily), 200)]
+		[ProducesResponseType(typeof(ApiFamilyResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOFamily response = await this.familyManager.Get(id);
+			ApiFamilyResponseModel response = await this.familyManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOFamily), 200)]
+		[ProducesResponseType(typeof(ApiFamilyResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiFamilyModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiFamilyRequestModel model)
 		{
-			CreateResponse<POCOFamily> result = await this.familyManager.Create(model);
+			CreateResponse<ApiFamilyResponseModel> result = await this.familyManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOFamily>), 200)]
+		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFamilyModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiFamilyRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOFamily> records = new List<POCOFamily>();
+			List<ApiFamilyResponseModel> records = new List<ApiFamilyResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOFamily> result = await this.familyManager.Create(model);
+				CreateResponse<ApiFamilyResponseModel> result = await this.familyManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOFamily), 200)]
+		[ProducesResponseType(typeof(DTOFamily), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFamilyModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiFamilyRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOFamily response = await this.familyManager.Get(id);
+					ApiFamilyResponseModel response = await this.familyManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6751549ab227ab579308f8c2d8798b02</Hash>
+    <Hash>bb4f73b294ca2658e3521bcf90ca83bc</Hash>
 </Codenesium>*/

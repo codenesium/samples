@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOTeacherXTeacherSkill: AbstractBOManager
 	{
 		private ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
-		private IApiTeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator;
+		private IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator;
+		private IBOLTeacherXTeacherSkillMapper teacherXTeacherSkillMapper;
 		private ILogger logger;
 
 		public AbstractBOTeacherXTeacherSkill(
 			ILogger logger,
 			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
-			IApiTeacherXTeacherSkillModelValidator teacherXTeacherSkillModelValidator)
+			IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
+			IBOLTeacherXTeacherSkillMapper teacherXTeacherSkillMapper)
 			: base()
 
 		{
 			this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
 			this.teacherXTeacherSkillModelValidator = teacherXTeacherSkillModelValidator;
+			this.teacherXTeacherSkillMapper = teacherXTeacherSkillMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOTeacherXTeacherSkill>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.teacherXTeacherSkillRepository.All(skip, take, orderClause);
+			var records = await this.teacherXTeacherSkillRepository.All(skip, take, orderClause);
+
+			return this.teacherXTeacherSkillMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOTeacherXTeacherSkill> Get(int id)
+		public virtual async Task<ApiTeacherXTeacherSkillResponseModel> Get(int id)
 		{
-			return this.teacherXTeacherSkillRepository.Get(id);
+			var record = await teacherXTeacherSkillRepository.Get(id);
+
+			return this.teacherXTeacherSkillMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOTeacherXTeacherSkill>> Create(
-			ApiTeacherXTeacherSkillModel model)
+		public virtual async Task<CreateResponse<ApiTeacherXTeacherSkillResponseModel>> Create(
+			ApiTeacherXTeacherSkillRequestModel model)
 		{
-			CreateResponse<POCOTeacherXTeacherSkill> response = new CreateResponse<POCOTeacherXTeacherSkill>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTeacherXTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherXTeacherSkillResponseModel>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOTeacherXTeacherSkill record = await this.teacherXTeacherSkillRepository.Create(model);
+				var dto = this.teacherXTeacherSkillMapper.MapModelToDTO(default (int), model);
+				var record = await this.teacherXTeacherSkillRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.teacherXTeacherSkillMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiTeacherXTeacherSkillModel model)
+			ApiTeacherXTeacherSkillRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.teacherXTeacherSkillModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.teacherXTeacherSkillRepository.Update(id, model);
+				var dto = this.teacherXTeacherSkillMapper.MapModelToDTO(id, model);
+				await this.teacherXTeacherSkillRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c359746dae3a8a01a50a6a54a00b5e70</Hash>
+    <Hash>06e183e6534c7d506d8ae4089322988b</Hash>
 </Codenesium>*/

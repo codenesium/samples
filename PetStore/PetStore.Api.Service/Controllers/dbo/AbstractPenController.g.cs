@@ -38,13 +38,13 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPen>), 200)]
+		[ProducesResponseType(typeof(List<ApiPenResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPen> response = await this.penManager.All(query.Offset, query.Limit);
+			List<ApiPenResponseModel> response = await this.penManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace PetStoreNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOPen), 200)]
+		[ProducesResponseType(typeof(ApiPenResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPen response = await this.penManager.Get(id);
+			ApiPenResponseModel response = await this.penManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPen), 200)]
+		[ProducesResponseType(typeof(ApiPenResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPenModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPenRequestModel model)
 		{
-			CreateResponse<POCOPen> result = await this.penManager.Create(model);
+			CreateResponse<ApiPenResponseModel> result = await this.penManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace PetStoreNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOPen>), 200)]
+		[ProducesResponseType(typeof(List<ApiPenResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPenModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPenRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOPen> records = new List<POCOPen>();
+			List<ApiPenResponseModel> records = new List<ApiPenResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOPen> result = await this.penManager.Create(model);
+				CreateResponse<ApiPenResponseModel> result = await this.penManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace PetStoreNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPen), 200)]
+		[ProducesResponseType(typeof(DTOPen), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPenModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPenRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace PetStoreNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPen response = await this.penManager.Get(id);
+					ApiPenResponseModel response = await this.penManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace PetStoreNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>14e7583471e24ccef74b0481802c4e62</Hash>
+    <Hash>8779301056d5708c5b3e5d493388a7b6</Hash>
 </Codenesium>*/

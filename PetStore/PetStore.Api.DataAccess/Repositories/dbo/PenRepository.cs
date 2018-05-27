@@ -12,7 +12,7 @@ namespace PetStoreNS.Api.DataAccess
 	public class PenRepository: AbstractPenRepository, IPenRepository
 	{
 		public PenRepository(
-			IObjectMapper mapper,
+			IDALPenMapper mapper,
 			ILogger<PenRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d24719a35b5b9945fe9e876953519ed8</Hash>
+    <Hash>0c6f063a1f60d1289912033c14e12281</Hash>
 </Codenesium>*/

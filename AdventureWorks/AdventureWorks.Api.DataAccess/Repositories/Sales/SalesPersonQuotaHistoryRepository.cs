@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesPersonQuotaHistoryRepository: AbstractSalesPersonQuotaHistoryRepository, ISalesPersonQuotaHistoryRepository
 	{
 		public SalesPersonQuotaHistoryRepository(
-			IObjectMapper mapper,
+			IDALSalesPersonQuotaHistoryMapper mapper,
 			ILogger<SalesPersonQuotaHistoryRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ea6425561029c4e6d7c6499ca2aeb2c</Hash>
+    <Hash>e4d462ecae38357ae057243947cef093</Hash>
 </Codenesium>*/

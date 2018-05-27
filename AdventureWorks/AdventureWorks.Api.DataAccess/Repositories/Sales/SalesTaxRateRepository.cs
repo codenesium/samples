@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesTaxRateRepository: AbstractSalesTaxRateRepository, ISalesTaxRateRepository
 	{
 		public SalesTaxRateRepository(
-			IObjectMapper mapper,
+			IDALSalesTaxRateMapper mapper,
 			ILogger<SalesTaxRateRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>876777d5f38b22f0706055b5664863de</Hash>
+    <Hash>5e9d09b7857ae03b45a811bfba5349ef</Hash>
 </Codenesium>*/

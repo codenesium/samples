@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOTeacher: AbstractBOManager
 	{
 		private ITeacherRepository teacherRepository;
-		private IApiTeacherModelValidator teacherModelValidator;
+		private IApiTeacherRequestModelValidator teacherModelValidator;
+		private IBOLTeacherMapper teacherMapper;
 		private ILogger logger;
 
 		public AbstractBOTeacher(
 			ILogger logger,
 			ITeacherRepository teacherRepository,
-			IApiTeacherModelValidator teacherModelValidator)
+			IApiTeacherRequestModelValidator teacherModelValidator,
+			IBOLTeacherMapper teacherMapper)
 			: base()
 
 		{
 			this.teacherRepository = teacherRepository;
 			this.teacherModelValidator = teacherModelValidator;
+			this.teacherMapper = teacherMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOTeacher>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiTeacherResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.teacherRepository.All(skip, take, orderClause);
+			var records = await this.teacherRepository.All(skip, take, orderClause);
+
+			return this.teacherMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOTeacher> Get(int id)
+		public virtual async Task<ApiTeacherResponseModel> Get(int id)
 		{
-			return this.teacherRepository.Get(id);
+			var record = await teacherRepository.Get(id);
+
+			return this.teacherMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOTeacher>> Create(
-			ApiTeacherModel model)
+		public virtual async Task<CreateResponse<ApiTeacherResponseModel>> Create(
+			ApiTeacherRequestModel model)
 		{
-			CreateResponse<POCOTeacher> response = new CreateResponse<POCOTeacher>(await this.teacherModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTeacherResponseModel> response = new CreateResponse<ApiTeacherResponseModel>(await this.teacherModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOTeacher record = await this.teacherRepository.Create(model);
+				var dto = this.teacherMapper.MapModelToDTO(default (int), model);
+				var record = await this.teacherRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.teacherMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiTeacherModel model)
+			ApiTeacherRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.teacherModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.teacherRepository.Update(id, model);
+				var dto = this.teacherMapper.MapModelToDTO(id, model);
+				await this.teacherRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1cc25ac4cd3bdd7fe8d354ef25af72ba</Hash>
+    <Hash>d73973cec2554e8f452526e182ea79af</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOShipMethod: AbstractBOManager
 	{
 		private IShipMethodRepository shipMethodRepository;
-		private IApiShipMethodModelValidator shipMethodModelValidator;
+		private IApiShipMethodRequestModelValidator shipMethodModelValidator;
+		private IBOLShipMethodMapper shipMethodMapper;
 		private ILogger logger;
 
 		public AbstractBOShipMethod(
 			ILogger logger,
 			IShipMethodRepository shipMethodRepository,
-			IApiShipMethodModelValidator shipMethodModelValidator)
+			IApiShipMethodRequestModelValidator shipMethodModelValidator,
+			IBOLShipMethodMapper shipMethodMapper)
 			: base()
 
 		{
 			this.shipMethodRepository = shipMethodRepository;
 			this.shipMethodModelValidator = shipMethodModelValidator;
+			this.shipMethodMapper = shipMethodMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiShipMethodResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.shipMethodRepository.All(skip, take, orderClause);
+			var records = await this.shipMethodRepository.All(skip, take, orderClause);
+
+			return this.shipMethodMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOShipMethod> Get(int shipMethodID)
+		public virtual async Task<ApiShipMethodResponseModel> Get(int shipMethodID)
 		{
-			return this.shipMethodRepository.Get(shipMethodID);
+			var record = await shipMethodRepository.Get(shipMethodID);
+
+			return this.shipMethodMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOShipMethod>> Create(
-			ApiShipMethodModel model)
+		public virtual async Task<CreateResponse<ApiShipMethodResponseModel>> Create(
+			ApiShipMethodRequestModel model)
 		{
-			CreateResponse<POCOShipMethod> response = new CreateResponse<POCOShipMethod>(await this.shipMethodModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiShipMethodResponseModel> response = new CreateResponse<ApiShipMethodResponseModel>(await this.shipMethodModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOShipMethod record = await this.shipMethodRepository.Create(model);
+				var dto = this.shipMethodMapper.MapModelToDTO(default (int), model);
+				var record = await this.shipMethodRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.shipMethodMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int shipMethodID,
-			ApiShipMethodModel model)
+			ApiShipMethodRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.shipMethodModelValidator.ValidateUpdateAsync(shipMethodID, model));
 
 			if (response.Success)
 			{
-				await this.shipMethodRepository.Update(shipMethodID, model);
+				var dto = this.shipMethodMapper.MapModelToDTO(shipMethodID, model);
+				await this.shipMethodRepository.Update(shipMethodID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOShipMethod> GetName(string name)
+		public async Task<ApiShipMethodResponseModel> GetName(string name)
 		{
-			return await this.shipMethodRepository.GetName(name);
+			DTOShipMethod record = await this.shipMethodRepository.GetName(name);
+
+			return this.shipMethodMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>587275d06344801a55e27a12c9003c37</Hash>
+    <Hash>42a42fa2acfa40c26883ce29d2ea24ef</Hash>
 </Codenesium>*/

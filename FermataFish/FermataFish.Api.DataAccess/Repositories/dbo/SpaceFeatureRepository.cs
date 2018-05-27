@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class SpaceFeatureRepository: AbstractSpaceFeatureRepository, ISpaceFeatureRepository
 	{
 		public SpaceFeatureRepository(
-			IObjectMapper mapper,
+			IDALSpaceFeatureMapper mapper,
 			ILogger<SpaceFeatureRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d2f96aa3e75263f4e1b717e95e2709e1</Hash>
+    <Hash>c32fd013faa7bfefe4c2d3d248c39570</Hash>
 </Codenesium>*/

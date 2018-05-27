@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductModelProductDescriptionCultureMapper Mapper { get; }
 
 		public AbstractProductModelProductDescriptionCultureRepository(
-			IObjectMapper mapper,
+			IDALProductModelProductDescriptionCultureMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProductModelProductDescriptionCulture> Get(int productModelID)
+		public async virtual Task<DTOProductModelProductDescriptionCulture> Get(int productModelID)
 		{
 			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
 
-			return this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProductModelProductDescriptionCulture> Create(
-			ApiProductModelProductDescriptionCultureModel model)
+		public async virtual Task<DTOProductModelProductDescriptionCulture> Create(
+			DTOProductModelProductDescriptionCulture dto)
 		{
 			ProductModelProductDescriptionCulture record = new ProductModelProductDescriptionCulture();
 
-			this.Mapper.ProductModelProductDescriptionCultureMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ProductModelProductDescriptionCulture>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productModelID,
-			ApiProductModelProductDescriptionCultureModel model)
+			DTOProductModelProductDescriptionCulture dto)
 		{
 			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductModelProductDescriptionCultureMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productModelID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductModelProductDescriptionCulture> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProductModelProductDescriptionCulture> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProductModelProductDescriptionCulture>> SearchLinqPOCO(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProductModelProductDescriptionCulture>> SearchLinqDTO(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductModelProductDescriptionCulture> response = new List<POCOProductModelProductDescriptionCulture>();
+			List<DTOProductModelProductDescriptionCulture> response = new List<DTOProductModelProductDescriptionCulture>();
 			List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductModelProductDescriptionCultureMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc6b45e9c0dbbf988a4a99763244777e</Hash>
+    <Hash>0783a4e9ed22198bed30055d5bd2221f</Hash>
 </Codenesium>*/

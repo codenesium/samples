@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IBusinessEntityContactRepository
 	{
-		Task<POCOBusinessEntityContact> Create(ApiBusinessEntityContactModel model);
+		Task<DTOBusinessEntityContact> Create(DTOBusinessEntityContact dto);
 
 		Task Update(int businessEntityID,
-		            ApiBusinessEntityContactModel model);
+		            DTOBusinessEntityContact dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOBusinessEntityContact> Get(int businessEntityID);
+		Task<DTOBusinessEntityContact> Get(int businessEntityID);
 
-		Task<List<POCOBusinessEntityContact>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOBusinessEntityContact>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOBusinessEntityContact>> GetContactTypeID(int contactTypeID);
-		Task<List<POCOBusinessEntityContact>> GetPersonID(int personID);
+		Task<List<DTOBusinessEntityContact>> GetContactTypeID(int contactTypeID);
+		Task<List<DTOBusinessEntityContact>> GetPersonID(int personID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7183d173da89ce7a1894cf52a0cee195</Hash>
+    <Hash>7eb280eb57a80652e44d229891be52d6</Hash>
 </Codenesium>*/

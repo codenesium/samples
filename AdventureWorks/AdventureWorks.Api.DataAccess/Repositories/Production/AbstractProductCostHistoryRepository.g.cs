@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductCostHistoryMapper Mapper { get; }
 
 		public AbstractProductCostHistoryRepository(
-			IObjectMapper mapper,
+			IDALProductCostHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProductCostHistory> Get(int productID)
+		public async virtual Task<DTOProductCostHistory> Get(int productID)
 		{
 			ProductCostHistory record = await this.GetById(productID);
 
-			return this.Mapper.ProductCostHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProductCostHistory> Create(
-			ApiProductCostHistoryModel model)
+		public async virtual Task<DTOProductCostHistory> Create(
+			DTOProductCostHistory dto)
 		{
 			ProductCostHistory record = new ProductCostHistory();
 
-			this.Mapper.ProductCostHistoryMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ProductCostHistory>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductCostHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productID,
-			ApiProductCostHistoryModel model)
+			DTOProductCostHistory dto)
 		{
 			ProductCostHistory record = await this.GetById(productID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductCostHistoryMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOProductCostHistory>> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProductCostHistory>> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductCostHistory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProductCostHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProductCostHistory>> SearchLinqPOCO(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProductCostHistory>> SearchLinqDTO(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductCostHistory> response = new List<POCOProductCostHistory>();
+			List<DTOProductCostHistory> response = new List<DTOProductCostHistory>();
 			List<ProductCostHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductCostHistoryMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>99506c6e044831452de45d528857d6e5</Hash>
+    <Hash>713419d362ffea2382e375054a1bf343</Hash>
 </Codenesium>*/

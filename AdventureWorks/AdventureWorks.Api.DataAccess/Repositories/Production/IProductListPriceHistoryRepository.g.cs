@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductListPriceHistoryRepository
 	{
-		Task<POCOProductListPriceHistory> Create(ApiProductListPriceHistoryModel model);
+		Task<DTOProductListPriceHistory> Create(DTOProductListPriceHistory dto);
 
 		Task Update(int productID,
-		            ApiProductListPriceHistoryModel model);
+		            DTOProductListPriceHistory dto);
 
 		Task Delete(int productID);
 
-		Task<POCOProductListPriceHistory> Get(int productID);
+		Task<DTOProductListPriceHistory> Get(int productID);
 
-		Task<List<POCOProductListPriceHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOProductListPriceHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>de006e2870b6623c8492ec77b05f6b85</Hash>
+    <Hash>4811a973134d9592cb5eb733b7dd2dc3</Hash>
 </Codenesium>*/

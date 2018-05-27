@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOErrorLog(
 			ILogger<ErrorLogRepository> logger,
 			IErrorLogRepository errorLogRepository,
-			IApiErrorLogModelValidator errorLogModelValidator)
-			: base(logger, errorLogRepository, errorLogModelValidator)
+			IApiErrorLogRequestModelValidator errorLogModelValidator,
+			IBOLErrorLogMapper errorLogMapper)
+			: base(logger, errorLogRepository, errorLogModelValidator, errorLogMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a98b3b43cdd6d26bf3f42c220174a896</Hash>
+    <Hash>9d967a39aba895a54df85933993aeea9</Hash>
 </Codenesium>*/

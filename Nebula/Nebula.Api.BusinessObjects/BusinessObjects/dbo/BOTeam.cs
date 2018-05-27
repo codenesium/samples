@@ -15,12 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOTeam(
 			ILogger<TeamRepository> logger,
 			ITeamRepository teamRepository,
-			IApiTeamModelValidator teamModelValidator)
-			: base(logger, teamRepository, teamModelValidator)
+			IApiTeamRequestModelValidator teamModelValidator,
+			IBOLTeamMapper teamMapper)
+			: base(logger, teamRepository, teamModelValidator, teamMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d27b8ad3bb7941304c056731b2a3db5f</Hash>
+    <Hash>704ba2ba88dc3ce432eddb52e4183e8e</Hash>
 </Codenesium>*/

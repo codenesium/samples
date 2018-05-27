@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSalesOrderHeaderMapper Mapper { get; }
 
 		public AbstractSalesOrderHeaderRepository(
-			IObjectMapper mapper,
+			IDALSalesOrderHeaderMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSalesOrderHeader> Get(int salesOrderID)
+		public async virtual Task<DTOSalesOrderHeader> Get(int salesOrderID)
 		{
 			SalesOrderHeader record = await this.GetById(salesOrderID);
 
-			return this.Mapper.SalesOrderHeaderMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSalesOrderHeader> Create(
-			ApiSalesOrderHeaderModel model)
+		public async virtual Task<DTOSalesOrderHeader> Create(
+			DTOSalesOrderHeader dto)
 		{
 			SalesOrderHeader record = new SalesOrderHeader();
 
-			this.Mapper.SalesOrderHeaderMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<SalesOrderHeader>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SalesOrderHeaderMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int salesOrderID,
-			ApiSalesOrderHeaderModel model)
+			DTOSalesOrderHeader dto)
 		{
 			SalesOrderHeader record = await this.GetById(salesOrderID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SalesOrderHeaderMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					salesOrderID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,38 +93,38 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
+		public async Task<DTOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
 		{
-			var records = await this.SearchLinqPOCO(x => x.SalesOrderNumber == salesOrderNumber);
+			var records = await this.SearchLinqDTO(x => x.SalesOrderNumber == salesOrderNumber);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<POCOSalesOrderHeader>> GetCustomerID(int customerID)
+		public async Task<List<DTOSalesOrderHeader>> GetCustomerID(int customerID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.CustomerID == customerID);
+			var records = await this.SearchLinqDTO(x => x.CustomerID == customerID);
 
 			return records;
 		}
-		public async Task<List<POCOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
+		public async Task<List<DTOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.SalesPersonID == salesPersonID);
-
-			return records;
-		}
-
-		protected async Task<List<POCOSalesOrderHeader>> Where(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<POCOSalesOrderHeader> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqDTO(x => x.SalesPersonID == salesPersonID);
 
 			return records;
 		}
 
-		private async Task<List<POCOSalesOrderHeader>> SearchLinqPOCO(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSalesOrderHeader>> Where(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesOrderHeader> response = new List<POCOSalesOrderHeader>();
+			List<DTOSalesOrderHeader> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+
+			return records;
+		}
+
+		private async Task<List<DTOSalesOrderHeader>> SearchLinqDTO(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			List<DTOSalesOrderHeader> response = new List<DTOSalesOrderHeader>();
 			List<SalesOrderHeader> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SalesOrderHeaderMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b68b12b87df222616351442448752b4</Hash>
+    <Hash>543df24c4a5daa5a7747791c018d10e2</Hash>
 </Codenesium>*/

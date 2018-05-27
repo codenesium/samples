@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOMachine: AbstractBOManager
 	{
 		private IMachineRepository machineRepository;
-		private IApiMachineModelValidator machineModelValidator;
+		private IApiMachineRequestModelValidator machineModelValidator;
+		private IBOLMachineMapper machineMapper;
 		private ILogger logger;
 
 		public AbstractBOMachine(
 			ILogger logger,
 			IMachineRepository machineRepository,
-			IApiMachineModelValidator machineModelValidator)
+			IApiMachineRequestModelValidator machineModelValidator,
+			IBOLMachineMapper machineMapper)
 			: base()
 
 		{
 			this.machineRepository = machineRepository;
 			this.machineModelValidator = machineModelValidator;
+			this.machineMapper = machineMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiMachineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.machineRepository.All(skip, take, orderClause);
+			var records = await this.machineRepository.All(skip, take, orderClause);
+
+			return this.machineMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOMachine> Get(int id)
+		public virtual async Task<ApiMachineResponseModel> Get(int id)
 		{
-			return this.machineRepository.Get(id);
+			var record = await machineRepository.Get(id);
+
+			return this.machineMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOMachine>> Create(
-			ApiMachineModel model)
+		public virtual async Task<CreateResponse<ApiMachineResponseModel>> Create(
+			ApiMachineRequestModel model)
 		{
-			CreateResponse<POCOMachine> response = new CreateResponse<POCOMachine>(await this.machineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.machineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOMachine record = await this.machineRepository.Create(model);
+				var dto = this.machineMapper.MapModelToDTO(default (int), model);
+				var record = await this.machineRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.machineMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiMachineModel model)
+			ApiMachineRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.machineRepository.Update(id, model);
+				var dto = this.machineMapper.MapModelToDTO(id, model);
+				await this.machineRepository.Update(id, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOMachine> GetMachineGuid(Guid machineGuid)
+		public async Task<ApiMachineResponseModel> GetMachineGuid(Guid machineGuid)
 		{
-			return await this.machineRepository.GetMachineGuid(machineGuid);
+			DTOMachine record = await this.machineRepository.GetMachineGuid(machineGuid);
+
+			return this.machineMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e456055d00d4ab3927d4c9f39c366f0f</Hash>
+    <Hash>6f08ef29bd9052e2cee07316ec101663</Hash>
 </Codenesium>*/

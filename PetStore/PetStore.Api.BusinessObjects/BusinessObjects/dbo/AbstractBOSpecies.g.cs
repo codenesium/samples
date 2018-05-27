@@ -15,54 +15,62 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOSpecies: AbstractBOManager
 	{
 		private ISpeciesRepository speciesRepository;
-		private IApiSpeciesModelValidator speciesModelValidator;
+		private IApiSpeciesRequestModelValidator speciesModelValidator;
+		private IBOLSpeciesMapper speciesMapper;
 		private ILogger logger;
 
 		public AbstractBOSpecies(
 			ILogger logger,
 			ISpeciesRepository speciesRepository,
-			IApiSpeciesModelValidator speciesModelValidator)
+			IApiSpeciesRequestModelValidator speciesModelValidator,
+			IBOLSpeciesMapper speciesMapper)
 			: base()
 
 		{
 			this.speciesRepository = speciesRepository;
 			this.speciesModelValidator = speciesModelValidator;
+			this.speciesMapper = speciesMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSpecies>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSpeciesResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.speciesRepository.All(skip, take, orderClause);
+			var records = await this.speciesRepository.All(skip, take, orderClause);
+
+			return this.speciesMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSpecies> Get(int id)
+		public virtual async Task<ApiSpeciesResponseModel> Get(int id)
 		{
-			return this.speciesRepository.Get(id);
+			var record = await speciesRepository.Get(id);
+
+			return this.speciesMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSpecies>> Create(
-			ApiSpeciesModel model)
+		public virtual async Task<CreateResponse<ApiSpeciesResponseModel>> Create(
+			ApiSpeciesRequestModel model)
 		{
-			CreateResponse<POCOSpecies> response = new CreateResponse<POCOSpecies>(await this.speciesModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpeciesResponseModel> response = new CreateResponse<ApiSpeciesResponseModel>(await this.speciesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSpecies record = await this.speciesRepository.Create(model);
+				var dto = this.speciesMapper.MapModelToDTO(default (int), model);
+				var record = await this.speciesRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.speciesMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiSpeciesModel model)
+			ApiSpeciesRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.speciesModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.speciesRepository.Update(id, model);
+				var dto = this.speciesMapper.MapModelToDTO(id, model);
+				await this.speciesRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>470dd6854d3780ffb7fc9827bd890a77</Hash>
+    <Hash>fa07469dd71104444e95bf0d657dadf9</Hash>
 </Codenesium>*/

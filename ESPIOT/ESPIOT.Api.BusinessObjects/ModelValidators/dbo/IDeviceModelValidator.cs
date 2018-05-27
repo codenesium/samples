@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using ESPIOTNS.Api.Contracts;
 namespace ESPIOTNS.Api.BusinessObjects
 {
-	public interface IApiDeviceModelValidator
+	public interface IApiDeviceRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiDeviceModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiDeviceRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>51fb0c5b7ce7f2450b1ec5329922f617</Hash>
+    <Hash>f84f8087266e7e966ed0c5e3f850533e</Hash>
 </Codenesium>*/

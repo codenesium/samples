@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOOrganization: AbstractBOManager
 	{
 		private IOrganizationRepository organizationRepository;
-		private IApiOrganizationModelValidator organizationModelValidator;
+		private IApiOrganizationRequestModelValidator organizationModelValidator;
+		private IBOLOrganizationMapper organizationMapper;
 		private ILogger logger;
 
 		public AbstractBOOrganization(
 			ILogger logger,
 			IOrganizationRepository organizationRepository,
-			IApiOrganizationModelValidator organizationModelValidator)
+			IApiOrganizationRequestModelValidator organizationModelValidator,
+			IBOLOrganizationMapper organizationMapper)
 			: base()
 
 		{
 			this.organizationRepository = organizationRepository;
 			this.organizationModelValidator = organizationModelValidator;
+			this.organizationMapper = organizationMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOOrganization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiOrganizationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.organizationRepository.All(skip, take, orderClause);
+			var records = await this.organizationRepository.All(skip, take, orderClause);
+
+			return this.organizationMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOOrganization> Get(int id)
+		public virtual async Task<ApiOrganizationResponseModel> Get(int id)
 		{
-			return this.organizationRepository.Get(id);
+			var record = await organizationRepository.Get(id);
+
+			return this.organizationMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOOrganization>> Create(
-			ApiOrganizationModel model)
+		public virtual async Task<CreateResponse<ApiOrganizationResponseModel>> Create(
+			ApiOrganizationRequestModel model)
 		{
-			CreateResponse<POCOOrganization> response = new CreateResponse<POCOOrganization>(await this.organizationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiOrganizationResponseModel> response = new CreateResponse<ApiOrganizationResponseModel>(await this.organizationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOOrganization record = await this.organizationRepository.Create(model);
+				var dto = this.organizationMapper.MapModelToDTO(default (int), model);
+				var record = await this.organizationRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.organizationMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiOrganizationModel model)
+			ApiOrganizationRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.organizationRepository.Update(id, model);
+				var dto = this.organizationMapper.MapModelToDTO(id, model);
+				await this.organizationRepository.Update(id, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOOrganization> GetName(string name)
+		public async Task<ApiOrganizationResponseModel> GetName(string name)
 		{
-			return await this.organizationRepository.GetName(name);
+			DTOOrganization record = await this.organizationRepository.GetName(name);
+
+			return this.organizationMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb526d12b8b3cb8f4b69213bf4fa2eaa</Hash>
+    <Hash>eb28e0e405efd5cd5868ce1adb6aba88</Hash>
 </Codenesium>*/

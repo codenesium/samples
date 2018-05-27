@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Product", Schema="Production")]
-	public partial class Product: AbstractEntityFrameworkPOCO
+	public partial class Product: AbstractEntityFrameworkDTO
 	{
 		public Product()
 		{}
@@ -111,6 +111,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ReorderPoint", TypeName="smallint")]
 		public short ReorderPoint { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
@@ -144,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c62b104d074e2d8141ff9c9163c5aa84</Hash>
+    <Hash>f12c74f6b5862d33bec3074f89969bbd</Hash>
 </Codenesium>*/

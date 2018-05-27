@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOShipMethod
 	{
-		Task<CreateResponse<POCOShipMethod>> Create(
-			ApiShipMethodModel model);
+		Task<CreateResponse<ApiShipMethodResponseModel>> Create(
+			ApiShipMethodRequestModel model);
 
 		Task<ActionResponse> Update(int shipMethodID,
-		                            ApiShipMethodModel model);
+		                            ApiShipMethodRequestModel model);
 
 		Task<ActionResponse> Delete(int shipMethodID);
 
-		Task<POCOShipMethod> Get(int shipMethodID);
+		Task<ApiShipMethodResponseModel> Get(int shipMethodID);
 
-		Task<List<POCOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiShipMethodResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOShipMethod> GetName(string name);
+		Task<ApiShipMethodResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4017b6513cdb503ec3ae253909995caa</Hash>
+    <Hash>77e3029b394f570ee0f5814b0d7cc5b9</Hash>
 </Codenesium>*/

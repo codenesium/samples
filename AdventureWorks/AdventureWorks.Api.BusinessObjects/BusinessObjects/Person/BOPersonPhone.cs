@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOPersonPhone(
 			ILogger<PersonPhoneRepository> logger,
 			IPersonPhoneRepository personPhoneRepository,
-			IApiPersonPhoneModelValidator personPhoneModelValidator)
-			: base(logger, personPhoneRepository, personPhoneModelValidator)
+			IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
+			IBOLPersonPhoneMapper personPhoneMapper)
+			: base(logger, personPhoneRepository, personPhoneModelValidator, personPhoneMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>616d965ef19c7bba34c433ab79cd94de</Hash>
+    <Hash>8f32eba1f733fdde432b5d350a68a8a5</Hash>
 </Codenesium>*/

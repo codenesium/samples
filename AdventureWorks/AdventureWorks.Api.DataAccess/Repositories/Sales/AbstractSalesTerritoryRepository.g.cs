@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSalesTerritoryMapper Mapper { get; }
 
 		public AbstractSalesTerritoryRepository(
-			IObjectMapper mapper,
+			IDALSalesTerritoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSalesTerritory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSalesTerritory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSalesTerritory> Get(int territoryID)
+		public async virtual Task<DTOSalesTerritory> Get(int territoryID)
 		{
 			SalesTerritory record = await this.GetById(territoryID);
 
-			return this.Mapper.SalesTerritoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSalesTerritory> Create(
-			ApiSalesTerritoryModel model)
+		public async virtual Task<DTOSalesTerritory> Create(
+			DTOSalesTerritory dto)
 		{
 			SalesTerritory record = new SalesTerritory();
 
-			this.Mapper.SalesTerritoryMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<SalesTerritory>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SalesTerritoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int territoryID,
-			ApiSalesTerritoryModel model)
+			DTOSalesTerritory dto)
 		{
 			SalesTerritory record = await this.GetById(territoryID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SalesTerritoryMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					territoryID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOSalesTerritory> GetName(string name)
+		public async Task<DTOSalesTerritory> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOSalesTerritory>> Where(Expression<Func<SalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSalesTerritory>> Where(Expression<Func<SalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesTerritory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSalesTerritory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSalesTerritory>> SearchLinqPOCO(Expression<Func<SalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSalesTerritory>> SearchLinqDTO(Expression<Func<SalesTerritory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesTerritory> response = new List<POCOSalesTerritory>();
+			List<DTOSalesTerritory> response = new List<DTOSalesTerritory>();
 			List<SalesTerritory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SalesTerritoryMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b456e05c94ccc3b8204d551de1085be</Hash>
+    <Hash>f3ce3b3033ca606df5fad1c113ba6692</Hash>
 </Codenesium>*/

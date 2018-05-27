@@ -15,10 +15,10 @@ namespace ESPIOTNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALDeviceMapper Mapper { get; }
 
 		public AbstractDeviceRepository(
-			IObjectMapper mapper,
+			IDALDeviceMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace ESPIOTNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCODevice>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTODevice>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCODevice> Get(int id)
+		public async virtual Task<DTODevice> Get(int id)
 		{
 			Device record = await this.GetById(id);
 
-			return this.Mapper.DeviceMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCODevice> Create(
-			ApiDeviceModel model)
+		public async virtual Task<DTODevice> Create(
+			DTODevice dto)
 		{
 			Device record = new Device();
 
-			this.Mapper.DeviceMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Device>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.DeviceMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiDeviceModel model)
+			DTODevice dto)
 		{
 			Device record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.DeviceMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCODevice> PublicId(Guid publicId)
+		public async Task<DTODevice> PublicId(Guid publicId)
 		{
-			var records = await this.SearchLinqPOCO(x => x.PublicId == publicId);
+			var records = await this.SearchLinqDTO(x => x.PublicId == publicId);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCODevice>> Where(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTODevice>> Where(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODevice> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTODevice> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCODevice>> SearchLinqPOCO(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTODevice>> SearchLinqDTO(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCODevice> response = new List<POCODevice>();
+			List<DTODevice> response = new List<DTODevice>();
 			List<Device> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.DeviceMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ce151dbda8d6f12aa2820d3f8774a3e</Hash>
+    <Hash>0c2804c4f710cd456147a9a26952212a</Hash>
 </Codenesium>*/

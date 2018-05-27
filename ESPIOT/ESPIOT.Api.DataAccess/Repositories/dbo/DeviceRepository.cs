@@ -12,7 +12,7 @@ namespace ESPIOTNS.Api.DataAccess
 	public class DeviceRepository: AbstractDeviceRepository, IDeviceRepository
 	{
 		public DeviceRepository(
-			IObjectMapper mapper,
+			IDALDeviceMapper mapper,
 			ILogger<DeviceRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>17baa26aa6ffc84560d1073d8f0e04a6</Hash>
+    <Hash>7b0a4526bd3164e3d777fc09f9f753a1</Hash>
 </Codenesium>*/

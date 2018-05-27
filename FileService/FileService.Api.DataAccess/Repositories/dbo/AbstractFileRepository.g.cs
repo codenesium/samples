@@ -15,10 +15,10 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALFileMapper Mapper { get; }
 
 		public AbstractFileRepository(
-			IObjectMapper mapper,
+			IDALFileMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOFile>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOFile>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOFile> Get(int id)
+		public async virtual Task<DTOFile> Get(int id)
 		{
 			File record = await this.GetById(id);
 
-			return this.Mapper.FileMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOFile> Create(
-			ApiFileModel model)
+		public async virtual Task<DTOFile> Create(
+			DTOFile dto)
 		{
 			File record = new File();
 
-			this.Mapper.FileMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<File>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.FileMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiFileModel model)
+			DTOFile dto)
 		{
 			File record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.FileMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOFile>> Where(Expression<Func<File, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOFile>> Where(Expression<Func<File, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOFile> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOFile> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOFile>> SearchLinqPOCO(Expression<Func<File, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOFile>> SearchLinqDTO(Expression<Func<File, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOFile> response = new List<POCOFile>();
+			List<DTOFile> response = new List<DTOFile>();
 			List<File> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.FileMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c745f7915fabe6cabadf7c15d82ee422</Hash>
+    <Hash>fa5ddd65e74adf348c667a10d7b566c4</Hash>
 </Codenesium>*/

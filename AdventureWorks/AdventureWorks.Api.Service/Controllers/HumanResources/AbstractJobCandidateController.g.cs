@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOJobCandidate>), 200)]
+		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOJobCandidate> response = await this.jobCandidateManager.All(query.Offset, query.Limit);
+			List<ApiJobCandidateResponseModel> response = await this.jobCandidateManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOJobCandidate), 200)]
+		[ProducesResponseType(typeof(ApiJobCandidateResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOJobCandidate response = await this.jobCandidateManager.Get(id);
+			ApiJobCandidateResponseModel response = await this.jobCandidateManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOJobCandidate), 200)]
+		[ProducesResponseType(typeof(ApiJobCandidateResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiJobCandidateModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiJobCandidateRequestModel model)
 		{
-			CreateResponse<POCOJobCandidate> result = await this.jobCandidateManager.Create(model);
+			CreateResponse<ApiJobCandidateResponseModel> result = await this.jobCandidateManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOJobCandidate>), 200)]
+		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiJobCandidateModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiJobCandidateRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOJobCandidate> records = new List<POCOJobCandidate>();
+			List<ApiJobCandidateResponseModel> records = new List<ApiJobCandidateResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOJobCandidate> result = await this.jobCandidateManager.Create(model);
+				CreateResponse<ApiJobCandidateResponseModel> result = await this.jobCandidateManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOJobCandidate), 200)]
+		[ProducesResponseType(typeof(DTOJobCandidate), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiJobCandidateModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiJobCandidateRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOJobCandidate response = await this.jobCandidateManager.Get(id);
+					ApiJobCandidateResponseModel response = await this.jobCandidateManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getBusinessEntityID/{businessEntityID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOJobCandidate>), 200)]
+		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetBusinessEntityID(Nullable<int> businessEntityID)
 		{
-			List<POCOJobCandidate> response = await this.jobCandidateManager.GetBusinessEntityID(businessEntityID);
+			List<ApiJobCandidateResponseModel> response = await this.jobCandidateManager.GetBusinessEntityID(businessEntityID);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5510392d4c19c101c2c33f3e728983ea</Hash>
+    <Hash>8af8bdb219db338863c80583c79ec33a</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCODepartment>), 200)]
+		[ProducesResponseType(typeof(List<ApiDepartmentResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODepartment> response = await this.departmentManager.All(query.Offset, query.Limit);
+			List<ApiDepartmentResponseModel> response = await this.departmentManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCODepartment), 200)]
+		[ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(short id)
 		{
-			POCODepartment response = await this.departmentManager.Get(id);
+			ApiDepartmentResponseModel response = await this.departmentManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODepartment), 200)]
+		[ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<short>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDepartmentModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiDepartmentRequestModel model)
 		{
-			CreateResponse<POCODepartment> result = await this.departmentManager.Create(model);
+			CreateResponse<ApiDepartmentResponseModel> result = await this.departmentManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCODepartment>), 200)]
+		[ProducesResponseType(typeof(List<ApiDepartmentResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDepartmentModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDepartmentRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCODepartment> records = new List<POCODepartment>();
+			List<ApiDepartmentResponseModel> records = new List<ApiDepartmentResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCODepartment> result = await this.departmentManager.Create(model);
+				CreateResponse<ApiDepartmentResponseModel> result = await this.departmentManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODepartment), 200)]
+		[ProducesResponseType(typeof(DTODepartment), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiDepartmentModel model)
+		public virtual async Task<IActionResult> Update(short id, [FromBody] ApiDepartmentRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODepartment response = await this.departmentManager.Get(id);
+					ApiDepartmentResponseModel response = await this.departmentManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCODepartment), 200)]
+		[ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCODepartment response = await this.departmentManager.GetName(name);
+			ApiDepartmentResponseModel response = await this.departmentManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3b9808a6fc2f046801257164a54679ad</Hash>
+    <Hash>75d4a1bf9fcf0f70a4e04268b7b64023</Hash>
 </Codenesium>*/

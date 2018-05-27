@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiAddressTypeModelValidator
+	public interface IApiAddressTypeRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiAddressTypeModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiAddressTypeModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiAddressTypeRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiAddressTypeRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>71a8bd1908b042e0b8d88dc7f714579b</Hash>
+    <Hash>81e8d2fd4505ec383d505c02ca58a69b</Hash>
 </Codenesium>*/

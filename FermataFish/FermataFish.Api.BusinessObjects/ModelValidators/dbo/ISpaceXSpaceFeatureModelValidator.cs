@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using FermataFishNS.Api.Contracts;
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public interface IApiSpaceXSpaceFeatureModelValidator
+	public interface IApiSpaceXSpaceFeatureRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiSpaceXSpaceFeatureModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceXSpaceFeatureModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiSpaceXSpaceFeatureRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceXSpaceFeatureRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>da6344046e4c3c7f9125d1a2000e2de9</Hash>
+    <Hash>bbcab4efaf9453532cb5defabba79231</Hash>
 </Codenesium>*/

@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOBusinessEntity(
 			ILogger<BusinessEntityRepository> logger,
 			IBusinessEntityRepository businessEntityRepository,
-			IApiBusinessEntityModelValidator businessEntityModelValidator)
-			: base(logger, businessEntityRepository, businessEntityModelValidator)
+			IApiBusinessEntityRequestModelValidator businessEntityModelValidator,
+			IBOLBusinessEntityMapper businessEntityMapper)
+			: base(logger, businessEntityRepository, businessEntityModelValidator, businessEntityMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7acae479a23eb1203eb243acf3e178df</Hash>
+    <Hash>d902e08d66c10b8114cdcda3a225c515</Hash>
 </Codenesium>*/

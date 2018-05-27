@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmployeeDepartmentHistoryRepository
 	{
-		Task<POCOEmployeeDepartmentHistory> Create(ApiEmployeeDepartmentHistoryModel model);
+		Task<DTOEmployeeDepartmentHistory> Create(DTOEmployeeDepartmentHistory dto);
 
 		Task Update(int businessEntityID,
-		            ApiEmployeeDepartmentHistoryModel model);
+		            DTOEmployeeDepartmentHistory dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOEmployeeDepartmentHistory> Get(int businessEntityID);
+		Task<DTOEmployeeDepartmentHistory> Get(int businessEntityID);
 
-		Task<List<POCOEmployeeDepartmentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOEmployeeDepartmentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOEmployeeDepartmentHistory>> GetDepartmentID(short departmentID);
-		Task<List<POCOEmployeeDepartmentHistory>> GetShiftID(int shiftID);
+		Task<List<DTOEmployeeDepartmentHistory>> GetDepartmentID(short departmentID);
+		Task<List<DTOEmployeeDepartmentHistory>> GetShiftID(int shiftID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>65e8f0c6bd4e49847613ee407fb67d7d</Hash>
+    <Hash>a934495c12d26c125e812e17551fd902</Hash>
 </Codenesium>*/

@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOPhoneNumberType(
 			ILogger<PhoneNumberTypeRepository> logger,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
-			IApiPhoneNumberTypeModelValidator phoneNumberTypeModelValidator)
-			: base(logger, phoneNumberTypeRepository, phoneNumberTypeModelValidator)
+			IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
+			IBOLPhoneNumberTypeMapper phoneNumberTypeMapper)
+			: base(logger, phoneNumberTypeRepository, phoneNumberTypeModelValidator, phoneNumberTypeMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c4c53ad3affce79bb4c06d893928feb</Hash>
+    <Hash>9db63d71e433465bdf5eb8120d0f3c74</Hash>
 </Codenesium>*/

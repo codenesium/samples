@@ -8,19 +8,19 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStateRepository
 	{
-		Task<POCOState> Create(ApiStateModel model);
+		Task<DTOState> Create(DTOState dto);
 
 		Task Update(int id,
-		            ApiStateModel model);
+		            DTOState dto);
 
 		Task Delete(int id);
 
-		Task<POCOState> Get(int id);
+		Task<DTOState> Get(int id);
 
-		Task<List<POCOState>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOState>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9b72f899c9728df2634e20e1f111115</Hash>
+    <Hash>0e20cef4c3d818f4aecef2eae8511684</Hash>
 </Codenesium>*/

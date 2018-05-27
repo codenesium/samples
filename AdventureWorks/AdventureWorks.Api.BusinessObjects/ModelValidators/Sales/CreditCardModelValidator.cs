@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiCreditCardModelValidator: AbstractApiCreditCardModelValidator, IApiCreditCardModelValidator
+	public class ApiCreditCardRequestModelValidator: AbstractApiCreditCardRequestModelValidator, IApiCreditCardRequestModelValidator
 	{
-		public ApiCreditCardModelValidator()
+		public ApiCreditCardRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiCreditCardModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiCreditCardRequestModel model)
 		{
 			this.CardNumberRules();
 			this.CardTypeRules();
@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiCreditCardModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiCreditCardRequestModel model)
 		{
 			this.CardNumberRules();
 			this.CardTypeRules();
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>c3f1d2a4d4474ddf8518ffe6cbd5941a</Hash>
+    <Hash>38d7a68c95ba24ed0e6289e0426a98e3</Hash>
 </Codenesium>*/

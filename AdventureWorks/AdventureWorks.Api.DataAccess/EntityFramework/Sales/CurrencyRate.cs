@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("CurrencyRate", Schema="Sales")]
-	public partial class CurrencyRate: AbstractEntityFrameworkPOCO
+	public partial class CurrencyRate: AbstractEntityFrameworkDTO
 	{
 		public CurrencyRate()
 		{}
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81967c05baa36f7fcf6c533c20e88d94</Hash>
+    <Hash>11f7d4c62b342ad52f67c493d281bc02</Hash>
 </Codenesium>*/

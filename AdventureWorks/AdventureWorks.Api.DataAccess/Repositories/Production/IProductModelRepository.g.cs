@@ -8,23 +8,23 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductModelRepository
 	{
-		Task<POCOProductModel> Create(ApiProductModelModel model);
+		Task<DTOProductModel> Create(DTOProductModel dto);
 
 		Task Update(int productModelID,
-		            ApiProductModelModel model);
+		            DTOProductModel dto);
 
 		Task Delete(int productModelID);
 
-		Task<POCOProductModel> Get(int productModelID);
+		Task<DTOProductModel> Get(int productModelID);
 
-		Task<List<POCOProductModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOProductModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOProductModel> GetName(string name);
-		Task<List<POCOProductModel>> GetCatalogDescription(string catalogDescription);
-		Task<List<POCOProductModel>> GetInstructions(string instructions);
+		Task<DTOProductModel> GetName(string name);
+		Task<List<DTOProductModel>> GetCatalogDescription(string catalogDescription);
+		Task<List<DTOProductModel>> GetInstructions(string instructions);
 	}
 }
 
 /*<Codenesium>
-    <Hash>475531a70327065188a2fc1e451e96bf</Hash>
+    <Hash>5a94708f1413671f26e5b0109d092548</Hash>
 </Codenesium>*/

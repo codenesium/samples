@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOCurrencyRate(
 			ILogger<CurrencyRateRepository> logger,
 			ICurrencyRateRepository currencyRateRepository,
-			IApiCurrencyRateModelValidator currencyRateModelValidator)
-			: base(logger, currencyRateRepository, currencyRateModelValidator)
+			IApiCurrencyRateRequestModelValidator currencyRateModelValidator,
+			IBOLCurrencyRateMapper currencyRateMapper)
+			: base(logger, currencyRateRepository, currencyRateModelValidator, currencyRateMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f1979ed6cfb18f7b6b6706ad985982e</Hash>
+    <Hash>1009a136c251740d776beb28944bf139</Hash>
 </Codenesium>*/

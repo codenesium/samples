@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductProductPhotoRepository: AbstractProductProductPhotoRepository, IProductProductPhotoRepository
 	{
 		public ProductProductPhotoRepository(
-			IObjectMapper mapper,
+			IDALProductProductPhotoMapper mapper,
 			ILogger<ProductProductPhotoRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca68c1362fb14ffb5a7b07c153c1ad7e</Hash>
+    <Hash>97f5eed2a666a01f0778cc372a9da779</Hash>
 </Codenesium>*/

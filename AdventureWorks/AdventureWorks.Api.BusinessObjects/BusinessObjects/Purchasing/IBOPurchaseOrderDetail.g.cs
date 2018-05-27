@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOPurchaseOrderDetail
 	{
-		Task<CreateResponse<POCOPurchaseOrderDetail>> Create(
-			ApiPurchaseOrderDetailModel model);
+		Task<CreateResponse<ApiPurchaseOrderDetailResponseModel>> Create(
+			ApiPurchaseOrderDetailRequestModel model);
 
 		Task<ActionResponse> Update(int purchaseOrderID,
-		                            ApiPurchaseOrderDetailModel model);
+		                            ApiPurchaseOrderDetailRequestModel model);
 
 		Task<ActionResponse> Delete(int purchaseOrderID);
 
-		Task<POCOPurchaseOrderDetail> Get(int purchaseOrderID);
+		Task<ApiPurchaseOrderDetailResponseModel> Get(int purchaseOrderID);
 
-		Task<List<POCOPurchaseOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiPurchaseOrderDetailResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOPurchaseOrderDetail>> GetProductID(int productID);
+		Task<List<ApiPurchaseOrderDetailResponseModel>> GetProductID(int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0b6660b606b20231a80ca3ca84b318b3</Hash>
+    <Hash>5994cdd23c0fa6b29e16273e94f9cd69</Hash>
 </Codenesium>*/

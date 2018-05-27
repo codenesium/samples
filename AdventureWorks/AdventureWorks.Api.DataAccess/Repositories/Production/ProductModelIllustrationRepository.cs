@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductModelIllustrationRepository: AbstractProductModelIllustrationRepository, IProductModelIllustrationRepository
 	{
 		public ProductModelIllustrationRepository(
-			IObjectMapper mapper,
+			IDALProductModelIllustrationMapper mapper,
 			ILogger<ProductModelIllustrationRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>812598945ced20eaefe0ee180d190fa8</Hash>
+    <Hash>d24ae095d77a8445f7213799d859bb4f</Hash>
 </Codenesium>*/

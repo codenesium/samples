@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALUnitMeasureMapper Mapper { get; }
 
 		public AbstractUnitMeasureRepository(
-			IObjectMapper mapper,
+			IDALUnitMeasureMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOUnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOUnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOUnitMeasure> Get(string unitMeasureCode)
+		public async virtual Task<DTOUnitMeasure> Get(string unitMeasureCode)
 		{
 			UnitMeasure record = await this.GetById(unitMeasureCode);
 
-			return this.Mapper.UnitMeasureMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOUnitMeasure> Create(
-			ApiUnitMeasureModel model)
+		public async virtual Task<DTOUnitMeasure> Create(
+			DTOUnitMeasure dto)
 		{
 			UnitMeasure record = new UnitMeasure();
 
-			this.Mapper.UnitMeasureMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (string),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<UnitMeasure>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.UnitMeasureMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			string unitMeasureCode,
-			ApiUnitMeasureModel model)
+			DTOUnitMeasure dto)
 		{
 			UnitMeasure record = await this.GetById(unitMeasureCode);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.UnitMeasureMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					unitMeasureCode,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOUnitMeasure> GetName(string name)
+		public async Task<DTOUnitMeasure> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOUnitMeasure>> Where(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOUnitMeasure>> Where(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOUnitMeasure> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOUnitMeasure> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOUnitMeasure>> SearchLinqPOCO(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOUnitMeasure>> SearchLinqDTO(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOUnitMeasure> response = new List<POCOUnitMeasure>();
+			List<DTOUnitMeasure> response = new List<DTOUnitMeasure>();
 			List<UnitMeasure> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.UnitMeasureMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>656a6f542cf689662e1a82ebe0a33faa</Hash>
+    <Hash>d79d12fa5d9ed94bf4095c2d0eacdff2</Hash>
 </Codenesium>*/

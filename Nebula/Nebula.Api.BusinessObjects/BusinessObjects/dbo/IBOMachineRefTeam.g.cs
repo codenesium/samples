@@ -9,20 +9,20 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOMachineRefTeam
 	{
-		Task<CreateResponse<POCOMachineRefTeam>> Create(
-			ApiMachineRefTeamModel model);
+		Task<CreateResponse<ApiMachineRefTeamResponseModel>> Create(
+			ApiMachineRefTeamRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiMachineRefTeamModel model);
+		                            ApiMachineRefTeamRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOMachineRefTeam> Get(int id);
+		Task<ApiMachineRefTeamResponseModel> Get(int id);
 
-		Task<List<POCOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiMachineRefTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5854ef55c492b224438a14bcbf3a2327</Hash>
+    <Hash>b6dca42be468c034a9e020c220d28de4</Hash>
 </Codenesium>*/

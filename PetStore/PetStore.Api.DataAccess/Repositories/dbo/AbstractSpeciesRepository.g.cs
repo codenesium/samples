@@ -15,10 +15,10 @@ namespace PetStoreNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSpeciesMapper Mapper { get; }
 
 		public AbstractSpeciesRepository(
-			IObjectMapper mapper,
+			IDALSpeciesMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace PetStoreNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSpecies>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSpecies>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSpecies> Get(int id)
+		public async virtual Task<DTOSpecies> Get(int id)
 		{
 			Species record = await this.GetById(id);
 
-			return this.Mapper.SpeciesMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSpecies> Create(
-			ApiSpeciesModel model)
+		public async virtual Task<DTOSpecies> Create(
+			DTOSpecies dto)
 		{
 			Species record = new Species();
 
-			this.Mapper.SpeciesMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Species>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SpeciesMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiSpeciesModel model)
+			DTOSpecies dto)
 		{
 			Species record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace PetStoreNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SpeciesMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOSpecies>> Where(Expression<Func<Species, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSpecies>> Where(Expression<Func<Species, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSpecies> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSpecies> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSpecies>> SearchLinqPOCO(Expression<Func<Species, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSpecies>> SearchLinqDTO(Expression<Func<Species, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSpecies> response = new List<POCOSpecies>();
+			List<DTOSpecies> response = new List<DTOSpecies>();
 			List<Species> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SpeciesMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3c87059a02757c9e5354c6f69a0fd42f</Hash>
+    <Hash>1fe3c572ad210c625a9c7a85e3ac4884</Hash>
 </Codenesium>*/

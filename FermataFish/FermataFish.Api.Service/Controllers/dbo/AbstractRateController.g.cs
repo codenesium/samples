@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCORate>), 200)]
+		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCORate> response = await this.rateManager.All(query.Offset, query.Limit);
+			List<ApiRateResponseModel> response = await this.rateManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCORate), 200)]
+		[ProducesResponseType(typeof(ApiRateResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCORate response = await this.rateManager.Get(id);
+			ApiRateResponseModel response = await this.rateManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCORate), 200)]
+		[ProducesResponseType(typeof(ApiRateResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiRateModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiRateRequestModel model)
 		{
-			CreateResponse<POCORate> result = await this.rateManager.Create(model);
+			CreateResponse<ApiRateResponseModel> result = await this.rateManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCORate>), 200)]
+		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRateModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiRateRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCORate> records = new List<POCORate>();
+			List<ApiRateResponseModel> records = new List<ApiRateResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCORate> result = await this.rateManager.Create(model);
+				CreateResponse<ApiRateResponseModel> result = await this.rateManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCORate), 200)]
+		[ProducesResponseType(typeof(DTORate), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRateModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiRateRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCORate response = await this.rateManager.Get(id);
+					ApiRateResponseModel response = await this.rateManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ec199d1faa929d0e9cf7ed0143abbc3f</Hash>
+    <Hash>cc40b71a9e11483df0baca7b50150e95</Hash>
 </Codenesium>*/

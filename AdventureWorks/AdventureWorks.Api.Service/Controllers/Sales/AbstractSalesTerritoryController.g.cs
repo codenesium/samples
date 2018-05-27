@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesTerritory>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesTerritory> response = await this.salesTerritoryManager.All(query.Offset, query.Limit);
+			List<ApiSalesTerritoryResponseModel> response = await this.salesTerritoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesTerritory), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesTerritory response = await this.salesTerritoryManager.Get(id);
+			ApiSalesTerritoryResponseModel response = await this.salesTerritoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesTerritory), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryRequestModel model)
 		{
-			CreateResponse<POCOSalesTerritory> result = await this.salesTerritoryManager.Create(model);
+			CreateResponse<ApiSalesTerritoryResponseModel> result = await this.salesTerritoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSalesTerritory>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTerritoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTerritoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSalesTerritory> records = new List<POCOSalesTerritory>();
+			List<ApiSalesTerritoryResponseModel> records = new List<ApiSalesTerritoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSalesTerritory> result = await this.salesTerritoryManager.Create(model);
+				CreateResponse<ApiSalesTerritoryResponseModel> result = await this.salesTerritoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesTerritory), 200)]
+		[ProducesResponseType(typeof(DTOSalesTerritory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTerritoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesTerritory response = await this.salesTerritoryManager.Get(id);
+					ApiSalesTerritoryResponseModel response = await this.salesTerritoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesTerritory), 200)]
+		[ProducesResponseType(typeof(ApiSalesTerritoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOSalesTerritory response = await this.salesTerritoryManager.GetName(name);
+			ApiSalesTerritoryResponseModel response = await this.salesTerritoryManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cab95bfc2f3f90abc2bcba7124219d9b</Hash>
+    <Hash>42ded29fd41b8f51c264e7a29f9cb2f8</Hash>
 </Codenesium>*/

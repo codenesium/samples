@@ -8,21 +8,21 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRepository
 	{
-		Task<POCOMachine> Create(ApiMachineModel model);
+		Task<DTOMachine> Create(DTOMachine dto);
 
 		Task Update(int id,
-		            ApiMachineModel model);
+		            DTOMachine dto);
 
 		Task Delete(int id);
 
-		Task<POCOMachine> Get(int id);
+		Task<DTOMachine> Get(int id);
 
-		Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOMachine> GetMachineGuid(Guid machineGuid);
+		Task<DTOMachine> GetMachineGuid(Guid machineGuid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e15e055ef67e7456af05b94c935fc0a</Hash>
+    <Hash>7da8b78d4e3a5f226c78ebdc05aec78f</Hash>
 </Codenesium>*/

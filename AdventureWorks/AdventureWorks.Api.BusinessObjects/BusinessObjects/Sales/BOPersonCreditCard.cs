@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOPersonCreditCard(
 			ILogger<PersonCreditCardRepository> logger,
 			IPersonCreditCardRepository personCreditCardRepository,
-			IApiPersonCreditCardModelValidator personCreditCardModelValidator)
-			: base(logger, personCreditCardRepository, personCreditCardModelValidator)
+			IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator,
+			IBOLPersonCreditCardMapper personCreditCardMapper)
+			: base(logger, personCreditCardRepository, personCreditCardModelValidator, personCreditCardMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>08d7e68fc3783d2e516278ee03b12393</Hash>
+    <Hash>8d325604bcd56229bf0e2140fa83b0b0</Hash>
 </Codenesium>*/

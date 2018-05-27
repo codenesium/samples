@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALContactTypeMapper Mapper { get; }
 
 		public AbstractContactTypeRepository(
-			IObjectMapper mapper,
+			IDALContactTypeMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOContactType> Get(int contactTypeID)
+		public async virtual Task<DTOContactType> Get(int contactTypeID)
 		{
 			ContactType record = await this.GetById(contactTypeID);
 
-			return this.Mapper.ContactTypeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOContactType> Create(
-			ApiContactTypeModel model)
+		public async virtual Task<DTOContactType> Create(
+			DTOContactType dto)
 		{
 			ContactType record = new ContactType();
 
-			this.Mapper.ContactTypeMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ContactType>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ContactTypeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int contactTypeID,
-			ApiContactTypeModel model)
+			DTOContactType dto)
 		{
 			ContactType record = await this.GetById(contactTypeID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ContactTypeMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					contactTypeID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOContactType> GetName(string name)
+		public async Task<DTOContactType> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOContactType>> Where(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOContactType>> Where(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOContactType> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOContactType> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOContactType>> SearchLinqPOCO(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOContactType>> SearchLinqDTO(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOContactType> response = new List<POCOContactType>();
+			List<DTOContactType> response = new List<DTOContactType>();
 			List<ContactType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ContactTypeMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aacceab9f6cd32766072a9bb7f24f174</Hash>
+    <Hash>5edcb305dfa75bdef7a5cbe7a5b115ae</Hash>
 </Codenesium>*/

@@ -9,20 +9,20 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface IBOSpaceFeature
 	{
-		Task<CreateResponse<POCOSpaceFeature>> Create(
-			ApiSpaceFeatureModel model);
+		Task<CreateResponse<ApiSpaceFeatureResponseModel>> Create(
+			ApiSpaceFeatureRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiSpaceFeatureModel model);
+		                            ApiSpaceFeatureRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOSpaceFeature> Get(int id);
+		Task<ApiSpaceFeatureResponseModel> Get(int id);
 
-		Task<List<POCOSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiSpaceFeatureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>45973acaa4694baf31d781d84c525575</Hash>
+    <Hash>3641e69fd0a99053a32154d0ee107f72</Hash>
 </Codenesium>*/

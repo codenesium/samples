@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductModelIllustrationMapper Mapper { get; }
 
 		public AbstractProductModelIllustrationRepository(
-			IObjectMapper mapper,
+			IDALProductModelIllustrationMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProductModelIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProductModelIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProductModelIllustration> Get(int productModelID)
+		public async virtual Task<DTOProductModelIllustration> Get(int productModelID)
 		{
 			ProductModelIllustration record = await this.GetById(productModelID);
 
-			return this.Mapper.ProductModelIllustrationMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProductModelIllustration> Create(
-			ApiProductModelIllustrationModel model)
+		public async virtual Task<DTOProductModelIllustration> Create(
+			DTOProductModelIllustration dto)
 		{
 			ProductModelIllustration record = new ProductModelIllustration();
 
-			this.Mapper.ProductModelIllustrationMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ProductModelIllustration>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductModelIllustrationMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productModelID,
-			ApiProductModelIllustrationModel model)
+			DTOProductModelIllustration dto)
 		{
 			ProductModelIllustration record = await this.GetById(productModelID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductModelIllustrationMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productModelID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOProductModelIllustration>> Where(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProductModelIllustration>> Where(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductModelIllustration> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProductModelIllustration> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProductModelIllustration>> SearchLinqPOCO(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProductModelIllustration>> SearchLinqDTO(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductModelIllustration> response = new List<POCOProductModelIllustration>();
+			List<DTOProductModelIllustration> response = new List<DTOProductModelIllustration>();
 			List<ProductModelIllustration> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductModelIllustrationMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca09b548f46d1495e8f9075e4c9f0c75</Hash>
+    <Hash>829e2d6062d4c17d3a3c054f1301871d</Hash>
 </Codenesium>*/

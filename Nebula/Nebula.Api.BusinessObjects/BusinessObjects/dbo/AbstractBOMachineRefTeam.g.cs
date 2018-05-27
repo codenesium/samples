@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOMachineRefTeam: AbstractBOManager
 	{
 		private IMachineRefTeamRepository machineRefTeamRepository;
-		private IApiMachineRefTeamModelValidator machineRefTeamModelValidator;
+		private IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator;
+		private IBOLMachineRefTeamMapper machineRefTeamMapper;
 		private ILogger logger;
 
 		public AbstractBOMachineRefTeam(
 			ILogger logger,
 			IMachineRefTeamRepository machineRefTeamRepository,
-			IApiMachineRefTeamModelValidator machineRefTeamModelValidator)
+			IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
+			IBOLMachineRefTeamMapper machineRefTeamMapper)
 			: base()
 
 		{
 			this.machineRefTeamRepository = machineRefTeamRepository;
 			this.machineRefTeamModelValidator = machineRefTeamModelValidator;
+			this.machineRefTeamMapper = machineRefTeamMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiMachineRefTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.machineRefTeamRepository.All(skip, take, orderClause);
+			var records = await this.machineRefTeamRepository.All(skip, take, orderClause);
+
+			return this.machineRefTeamMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOMachineRefTeam> Get(int id)
+		public virtual async Task<ApiMachineRefTeamResponseModel> Get(int id)
 		{
-			return this.machineRefTeamRepository.Get(id);
+			var record = await machineRefTeamRepository.Get(id);
+
+			return this.machineRefTeamMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOMachineRefTeam>> Create(
-			ApiMachineRefTeamModel model)
+		public virtual async Task<CreateResponse<ApiMachineRefTeamResponseModel>> Create(
+			ApiMachineRefTeamRequestModel model)
 		{
-			CreateResponse<POCOMachineRefTeam> response = new CreateResponse<POCOMachineRefTeam>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMachineRefTeamResponseModel> response = new CreateResponse<ApiMachineRefTeamResponseModel>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOMachineRefTeam record = await this.machineRefTeamRepository.Create(model);
+				var dto = this.machineRefTeamMapper.MapModelToDTO(default (int), model);
+				var record = await this.machineRefTeamRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.machineRefTeamMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiMachineRefTeamModel model)
+			ApiMachineRefTeamRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.machineRefTeamRepository.Update(id, model);
+				var dto = this.machineRefTeamMapper.MapModelToDTO(id, model);
+				await this.machineRefTeamRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>53b8d2e4505d8abfbd13fd1f3e69533e</Hash>
+    <Hash>486562811e74acfcd450696cddb3bd88</Hash>
 </Codenesium>*/

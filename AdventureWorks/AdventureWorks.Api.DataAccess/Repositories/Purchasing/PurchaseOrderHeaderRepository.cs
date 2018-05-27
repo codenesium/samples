@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PurchaseOrderHeaderRepository: AbstractPurchaseOrderHeaderRepository, IPurchaseOrderHeaderRepository
 	{
 		public PurchaseOrderHeaderRepository(
-			IObjectMapper mapper,
+			IDALPurchaseOrderHeaderMapper mapper,
 			ILogger<PurchaseOrderHeaderRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be62493b49a9370a22fa8ccefee8c16a</Hash>
+    <Hash>be9417c862fe773408748a15534368a9</Hash>
 </Codenesium>*/

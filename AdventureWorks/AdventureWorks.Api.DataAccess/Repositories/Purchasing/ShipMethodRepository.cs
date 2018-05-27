@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ShipMethodRepository: AbstractShipMethodRepository, IShipMethodRepository
 	{
 		public ShipMethodRepository(
-			IObjectMapper mapper,
+			IDALShipMethodMapper mapper,
 			ILogger<ShipMethodRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cfce767435ffc44a7b18047b1faefcc4</Hash>
+    <Hash>3d23d0320d37c4d0cdc985a381f81a19</Hash>
 </Codenesium>*/

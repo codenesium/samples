@@ -6,12 +6,12 @@ using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.BusinessObjects
 {
-	public class ApiDeviceActionModelValidator: AbstractApiDeviceActionModelValidator, IApiDeviceActionModelValidator
+	public class ApiDeviceActionRequestModelValidator: AbstractApiDeviceActionRequestModelValidator, IApiDeviceActionRequestModelValidator
 	{
-		public ApiDeviceActionModelValidator()
+		public ApiDeviceActionRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiDeviceActionModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiDeviceActionRequestModel model)
 		{
 			this.DeviceIdRules();
 			this.NameRules();
@@ -19,7 +19,7 @@ namespace ESPIOTNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceActionModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceActionRequestModel model)
 		{
 			this.DeviceIdRules();
 			this.NameRules();
@@ -35,5 +35,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>cbc077e9f6d6f6df33cbe5102b1f094f</Hash>
+    <Hash>b461aa8dedfc0f26506022c289b8c16a</Hash>
 </Codenesium>*/

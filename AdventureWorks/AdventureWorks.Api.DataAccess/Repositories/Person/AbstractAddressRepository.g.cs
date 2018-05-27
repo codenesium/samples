@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALAddressMapper Mapper { get; }
 
 		public AbstractAddressRepository(
-			IObjectMapper mapper,
+			IDALAddressMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOAddress> Get(int addressID)
+		public async virtual Task<DTOAddress> Get(int addressID)
 		{
 			Address record = await this.GetById(addressID);
 
-			return this.Mapper.AddressMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOAddress> Create(
-			ApiAddressModel model)
+		public async virtual Task<DTOAddress> Create(
+			DTOAddress dto)
 		{
 			Address record = new Address();
 
-			this.Mapper.AddressMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Address>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.AddressMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int addressID,
-			ApiAddressModel model)
+			DTOAddress dto)
 		{
 			Address record = await this.GetById(addressID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.AddressMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					addressID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
+		public async Task<DTOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
+			var records = await this.SearchLinqDTO(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<POCOAddress>> GetStateProvinceID(int stateProvinceID)
+		public async Task<List<DTOAddress>> GetStateProvinceID(int stateProvinceID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.StateProvinceID == stateProvinceID);
+			var records = await this.SearchLinqDTO(x => x.StateProvinceID == stateProvinceID);
 
 			return records;
 		}
 
-		protected async Task<List<POCOAddress>> Where(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOAddress>> Where(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAddress> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOAddress> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOAddress>> SearchLinqPOCO(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOAddress>> SearchLinqDTO(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAddress> response = new List<POCOAddress>();
+			List<DTOAddress> response = new List<DTOAddress>();
 			List<Address> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.AddressMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>07faa49b9166284dc20107532763c592</Hash>
+    <Hash>4fc2a294d7f4e08a089f782e7d9fb1fc</Hash>
 </Codenesium>*/

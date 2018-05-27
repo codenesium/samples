@@ -8,19 +8,19 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IStudentRepository
 	{
-		Task<POCOStudent> Create(ApiStudentModel model);
+		Task<DTOStudent> Create(DTOStudent dto);
 
 		Task Update(int id,
-		            ApiStudentModel model);
+		            DTOStudent dto);
 
 		Task Delete(int id);
 
-		Task<POCOStudent> Get(int id);
+		Task<DTOStudent> Get(int id);
 
-		Task<List<POCOStudent>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOStudent>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>91206ebab19fba2778234e41f5000d6f</Hash>
+    <Hash>cd18ee6eb7d0661c8c83b3aa393279ac</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public class ApiAdminModelValidator: AbstractApiAdminModelValidator, IApiAdminModelValidator
+	public class ApiAdminRequestModelValidator: AbstractApiAdminRequestModelValidator, IApiAdminRequestModelValidator
 	{
-		public ApiAdminModelValidator()
+		public ApiAdminRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiAdminModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiAdminRequestModel model)
 		{
 			this.BirthdayRules();
 			this.EmailRules();
@@ -22,7 +22,7 @@ namespace FermataFishNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiAdminModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiAdminRequestModel model)
 		{
 			this.BirthdayRules();
 			this.EmailRules();
@@ -41,5 +41,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>689d7f4d1e1405d5f56aca4104b1612c</Hash>
+    <Hash>cac44b0e58ab290faaa1270e10bf71b5</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALVendorMapper Mapper { get; }
 
 		public AbstractVendorRepository(
-			IObjectMapper mapper,
+			IDALVendorMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOVendor> Get(int businessEntityID)
+		public async virtual Task<DTOVendor> Get(int businessEntityID)
 		{
 			Vendor record = await this.GetById(businessEntityID);
 
-			return this.Mapper.VendorMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOVendor> Create(
-			ApiVendorModel model)
+		public async virtual Task<DTOVendor> Create(
+			DTOVendor dto)
 		{
 			Vendor record = new Vendor();
 
-			this.Mapper.VendorMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Vendor>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.VendorMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiVendorModel model)
+			DTOVendor dto)
 		{
 			Vendor record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.VendorMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOVendor> GetAccountNumber(string accountNumber)
+		public async Task<DTOVendor> GetAccountNumber(string accountNumber)
 		{
-			var records = await this.SearchLinqPOCO(x => x.AccountNumber == accountNumber);
+			var records = await this.SearchLinqDTO(x => x.AccountNumber == accountNumber);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOVendor>> Where(Expression<Func<Vendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOVendor>> Where(Expression<Func<Vendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOVendor> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOVendor> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOVendor>> SearchLinqPOCO(Expression<Func<Vendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOVendor>> SearchLinqDTO(Expression<Func<Vendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOVendor> response = new List<POCOVendor>();
+			List<DTOVendor> response = new List<DTOVendor>();
 			List<Vendor> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.VendorMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5e04e6f3bc140aa4cb5793a28160b6e2</Hash>
+    <Hash>c542a4d153195b8d197e0ef7e1d1b9f7</Hash>
 </Codenesium>*/

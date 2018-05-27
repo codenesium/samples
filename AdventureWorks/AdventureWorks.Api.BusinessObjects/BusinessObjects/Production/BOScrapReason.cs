@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOScrapReason(
 			ILogger<ScrapReasonRepository> logger,
 			IScrapReasonRepository scrapReasonRepository,
-			IApiScrapReasonModelValidator scrapReasonModelValidator)
-			: base(logger, scrapReasonRepository, scrapReasonModelValidator)
+			IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
+			IBOLScrapReasonMapper scrapReasonMapper)
+			: base(logger, scrapReasonRepository, scrapReasonModelValidator, scrapReasonMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0c7913ca8322b9ee5ef1c1139cf9bb1</Hash>
+    <Hash>7c92850285fae6c6729316610a50a81b</Hash>
 </Codenesium>*/

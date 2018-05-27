@@ -9,23 +9,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOBillOfMaterials
 	{
-		Task<CreateResponse<POCOBillOfMaterials>> Create(
-			ApiBillOfMaterialsModel model);
+		Task<CreateResponse<ApiBillOfMaterialsResponseModel>> Create(
+			ApiBillOfMaterialsRequestModel model);
 
 		Task<ActionResponse> Update(int billOfMaterialsID,
-		                            ApiBillOfMaterialsModel model);
+		                            ApiBillOfMaterialsRequestModel model);
 
 		Task<ActionResponse> Delete(int billOfMaterialsID);
 
-		Task<POCOBillOfMaterials> Get(int billOfMaterialsID);
+		Task<ApiBillOfMaterialsResponseModel> Get(int billOfMaterialsID);
 
-		Task<List<POCOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiBillOfMaterialsResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate);
-		Task<List<POCOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode);
+		Task<ApiBillOfMaterialsResponseModel> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate);
+		Task<List<ApiBillOfMaterialsResponseModel>> GetUnitMeasureCode(string unitMeasureCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4fa038525080976f9235553034410f26</Hash>
+    <Hash>017c37414bf636d3c589251a589dbb1f</Hash>
 </Codenesium>*/

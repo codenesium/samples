@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAWBuildVersionRepository
 	{
-		Task<POCOAWBuildVersion> Create(ApiAWBuildVersionModel model);
+		Task<DTOAWBuildVersion> Create(DTOAWBuildVersion dto);
 
 		Task Update(int systemInformationID,
-		            ApiAWBuildVersionModel model);
+		            DTOAWBuildVersion dto);
 
 		Task Delete(int systemInformationID);
 
-		Task<POCOAWBuildVersion> Get(int systemInformationID);
+		Task<DTOAWBuildVersion> Get(int systemInformationID);
 
-		Task<List<POCOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>8aee1ac74c8cca0a308eea95b5962372</Hash>
+    <Hash>4a7f92394f4e3f1e0d9d89047d8d427f</Hash>
 </Codenesium>*/

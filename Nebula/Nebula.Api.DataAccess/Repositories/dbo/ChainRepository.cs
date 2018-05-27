@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class ChainRepository: AbstractChainRepository, IChainRepository
 	{
 		public ChainRepository(
-			IObjectMapper mapper,
+			IDALChainMapper mapper,
 			ILogger<ChainRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>61a73385ab2ed650cc53536d5f1ae549</Hash>
+    <Hash>dbc048fb3beabd9084f613a20625c381</Hash>
 </Codenesium>*/

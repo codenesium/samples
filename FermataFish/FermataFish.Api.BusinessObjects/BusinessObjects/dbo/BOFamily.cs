@@ -15,12 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOFamily(
 			ILogger<FamilyRepository> logger,
 			IFamilyRepository familyRepository,
-			IApiFamilyModelValidator familyModelValidator)
-			: base(logger, familyRepository, familyModelValidator)
+			IApiFamilyRequestModelValidator familyModelValidator,
+			IBOLFamilyMapper familyMapper)
+			: base(logger, familyRepository, familyModelValidator, familyMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b064de5dfee19e35ac4166c3a9a4c7ce</Hash>
+    <Hash>cab6b27e8f7427da7ed958f8044afd49</Hash>
 </Codenesium>*/

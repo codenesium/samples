@@ -12,7 +12,7 @@ namespace FileServiceNS.Api.DataAccess
 	public class VersionInfoRepository: AbstractVersionInfoRepository, IVersionInfoRepository
 	{
 		public VersionInfoRepository(
-			IObjectMapper mapper,
+			IDALVersionInfoMapper mapper,
 			ILogger<VersionInfoRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>16e334c09bb8328d9260093333955bb8</Hash>
+    <Hash>3649359fce7c0b35ff79889be2528e00</Hash>
 </Codenesium>*/

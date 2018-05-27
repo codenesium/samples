@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALLocationMapper Mapper { get; }
 
 		public AbstractLocationRepository(
-			IObjectMapper mapper,
+			IDALLocationMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOLocation> Get(short locationID)
+		public async virtual Task<DTOLocation> Get(short locationID)
 		{
 			Location record = await this.GetById(locationID);
 
-			return this.Mapper.LocationMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOLocation> Create(
-			ApiLocationModel model)
+		public async virtual Task<DTOLocation> Create(
+			DTOLocation dto)
 		{
 			Location record = new Location();
 
-			this.Mapper.LocationMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (short),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Location>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.LocationMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			short locationID,
-			ApiLocationModel model)
+			DTOLocation dto)
 		{
 			Location record = await this.GetById(locationID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.LocationMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					locationID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOLocation> GetName(string name)
+		public async Task<DTOLocation> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOLocation>> Where(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOLocation>> Where(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOLocation> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOLocation> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOLocation>> SearchLinqPOCO(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOLocation>> SearchLinqDTO(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOLocation> response = new List<POCOLocation>();
+			List<DTOLocation> response = new List<DTOLocation>();
 			List<Location> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.LocationMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4b6ae6ceb5d2e396f8d7376cd072ad18</Hash>
+    <Hash>4cea7e7a904c1c82bccf8a2e5bd21010</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALMachineMapper Mapper { get; }
 
 		public AbstractMachineRepository(
-			IObjectMapper mapper,
+			IDALMachineMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOMachine> Get(int id)
+		public async virtual Task<DTOMachine> Get(int id)
 		{
 			Machine record = await this.GetById(id);
 
-			return this.Mapper.MachineMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOMachine> Create(
-			ApiMachineModel model)
+		public async virtual Task<DTOMachine> Create(
+			DTOMachine dto)
 		{
 			Machine record = new Machine();
 
-			this.Mapper.MachineMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Machine>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MachineMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiMachineModel model)
+			DTOMachine dto)
 		{
 			Machine record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.MachineMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOMachine> GetMachineGuid(Guid machineGuid)
+		public async Task<DTOMachine> GetMachineGuid(Guid machineGuid)
 		{
-			var records = await this.SearchLinqPOCO(x => x.MachineGuid == machineGuid);
+			var records = await this.SearchLinqDTO(x => x.MachineGuid == machineGuid);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOMachine>> Where(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOMachine>> Where(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOMachine> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOMachine> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOMachine>> SearchLinqPOCO(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOMachine>> SearchLinqDTO(Expression<Func<Machine, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOMachine> response = new List<POCOMachine>();
+			List<DTOMachine> response = new List<DTOMachine>();
 			List<Machine> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MachineMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dfbd00c944e9d8cf40bb2f6ba2d09ffc</Hash>
+    <Hash>d2e4d7ae5b73d90f634aa96c9d374365</Hash>
 </Codenesium>*/

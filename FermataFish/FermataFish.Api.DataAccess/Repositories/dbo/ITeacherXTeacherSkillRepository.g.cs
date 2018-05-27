@@ -8,19 +8,19 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface ITeacherXTeacherSkillRepository
 	{
-		Task<POCOTeacherXTeacherSkill> Create(ApiTeacherXTeacherSkillModel model);
+		Task<DTOTeacherXTeacherSkill> Create(DTOTeacherXTeacherSkill dto);
 
 		Task Update(int id,
-		            ApiTeacherXTeacherSkillModel model);
+		            DTOTeacherXTeacherSkill dto);
 
 		Task Delete(int id);
 
-		Task<POCOTeacherXTeacherSkill> Get(int id);
+		Task<DTOTeacherXTeacherSkill> Get(int id);
 
-		Task<List<POCOTeacherXTeacherSkill>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOTeacherXTeacherSkill>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c42b7f590d0aa3b403074204cbc4eb4</Hash>
+    <Hash>3eb29577e227c3a321caa8b8eb8fe335</Hash>
 </Codenesium>*/

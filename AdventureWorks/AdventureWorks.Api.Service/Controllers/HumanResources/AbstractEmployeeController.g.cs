@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmployee> response = await this.employeeManager.All(query.Offset, query.Limit);
+			List<ApiEmployeeResponseModel> response = await this.employeeManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOEmployee), 200)]
+		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmployee response = await this.employeeManager.Get(id);
+			ApiEmployeeResponseModel response = await this.employeeManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmployee), 200)]
+		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeRequestModel model)
 		{
-			CreateResponse<POCOEmployee> result = await this.employeeManager.Create(model);
+			CreateResponse<ApiEmployeeResponseModel> result = await this.employeeManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeeModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeeRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOEmployee> records = new List<POCOEmployee>();
+			List<ApiEmployeeResponseModel> records = new List<ApiEmployeeResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOEmployee> result = await this.employeeManager.Create(model);
+				CreateResponse<ApiEmployeeResponseModel> result = await this.employeeManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmployee), 200)]
+		[ProducesResponseType(typeof(DTOEmployee), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmployee response = await this.employeeManager.Get(id);
+					ApiEmployeeResponseModel response = await this.employeeManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getLoginID/{loginID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOEmployee), 200)]
+		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetLoginID(string loginID)
 		{
-			POCOEmployee response = await this.employeeManager.GetLoginID(loginID);
+			ApiEmployeeResponseModel response = await this.employeeManager.GetLoginID(loginID);
 
 			if (response == null)
 			{
@@ -190,11 +190,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getNationalIDNumber/{nationalIDNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOEmployee), 200)]
+		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetNationalIDNumber(string nationalIDNumber)
 		{
-			POCOEmployee response = await this.employeeManager.GetNationalIDNumber(nationalIDNumber);
+			ApiEmployeeResponseModel response = await this.employeeManager.GetNationalIDNumber(nationalIDNumber);
 
 			if (response == null)
 			{
@@ -209,10 +209,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getOrganizationLevelOrganizationNode/{organizationLevel}/{organizationNode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
 		{
-			List<POCOEmployee> response = await this.employeeManager.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
+			List<ApiEmployeeResponseModel> response = await this.employeeManager.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
 
 			return this.Ok(response);
 		}
@@ -220,10 +220,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getOrganizationNode/{organizationNode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmployee>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetOrganizationNode(Nullable<Guid> organizationNode)
 		{
-			List<POCOEmployee> response = await this.employeeManager.GetOrganizationNode(organizationNode);
+			List<ApiEmployeeResponseModel> response = await this.employeeManager.GetOrganizationNode(organizationNode);
 
 			return this.Ok(response);
 		}
@@ -231,5 +231,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>ddf26b8837743457242e8e457912c8e4</Hash>
+    <Hash>e8ae5fb76019c0fab88304cd552967b0</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALStateProvinceMapper Mapper { get; }
 
 		public AbstractStateProvinceRepository(
-			IObjectMapper mapper,
+			IDALStateProvinceMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOStateProvince> Get(int stateProvinceID)
+		public async virtual Task<DTOStateProvince> Get(int stateProvinceID)
 		{
 			StateProvince record = await this.GetById(stateProvinceID);
 
-			return this.Mapper.StateProvinceMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOStateProvince> Create(
-			ApiStateProvinceModel model)
+		public async virtual Task<DTOStateProvince> Create(
+			DTOStateProvince dto)
 		{
 			StateProvince record = new StateProvince();
 
-			this.Mapper.StateProvinceMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<StateProvince>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.StateProvinceMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int stateProvinceID,
-			ApiStateProvinceModel model)
+			DTOStateProvince dto)
 		{
 			StateProvince record = await this.GetById(stateProvinceID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.StateProvinceMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					stateProvinceID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOStateProvince> GetName(string name)
+		public async Task<DTOStateProvince> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<POCOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
+		public async Task<DTOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
 		{
-			var records = await this.SearchLinqPOCO(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
+			var records = await this.SearchLinqDTO(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOStateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOStateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOStateProvince> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOStateProvince> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOStateProvince>> SearchLinqPOCO(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOStateProvince>> SearchLinqDTO(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOStateProvince> response = new List<POCOStateProvince>();
+			List<DTOStateProvince> response = new List<DTOStateProvince>();
 			List<StateProvince> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.StateProvinceMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bdb6fa3413cbf482c8b6aa4c0cb0af2a</Hash>
+    <Hash>d29cc73f2684441a1cba505bdb0a58ab</Hash>
 </Codenesium>*/

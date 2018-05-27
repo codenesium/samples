@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("CreditCard", Schema="Sales")]
-	public partial class CreditCard: AbstractEntityFrameworkPOCO
+	public partial class CreditCard: AbstractEntityFrameworkDTO
 	{
 		public CreditCard()
 		{}
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>058a1a2f1587995de8efb373f2c0cb16</Hash>
+    <Hash>f03733032b909f7b0c3fa38b39dcbc1a</Hash>
 </Codenesium>*/

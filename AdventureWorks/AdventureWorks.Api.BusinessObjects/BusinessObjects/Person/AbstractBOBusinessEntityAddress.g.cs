@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOBusinessEntityAddress: AbstractBOManager
 	{
 		private IBusinessEntityAddressRepository businessEntityAddressRepository;
-		private IApiBusinessEntityAddressModelValidator businessEntityAddressModelValidator;
+		private IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator;
+		private IBOLBusinessEntityAddressMapper businessEntityAddressMapper;
 		private ILogger logger;
 
 		public AbstractBOBusinessEntityAddress(
 			ILogger logger,
 			IBusinessEntityAddressRepository businessEntityAddressRepository,
-			IApiBusinessEntityAddressModelValidator businessEntityAddressModelValidator)
+			IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator,
+			IBOLBusinessEntityAddressMapper businessEntityAddressMapper)
 			: base()
 
 		{
 			this.businessEntityAddressRepository = businessEntityAddressRepository;
 			this.businessEntityAddressModelValidator = businessEntityAddressModelValidator;
+			this.businessEntityAddressMapper = businessEntityAddressMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOBusinessEntityAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.businessEntityAddressRepository.All(skip, take, orderClause);
+			var records = await this.businessEntityAddressRepository.All(skip, take, orderClause);
+
+			return this.businessEntityAddressMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOBusinessEntityAddress> Get(int businessEntityID)
+		public virtual async Task<ApiBusinessEntityAddressResponseModel> Get(int businessEntityID)
 		{
-			return this.businessEntityAddressRepository.Get(businessEntityID);
+			var record = await businessEntityAddressRepository.Get(businessEntityID);
+
+			return this.businessEntityAddressMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOBusinessEntityAddress>> Create(
-			ApiBusinessEntityAddressModel model)
+		public virtual async Task<CreateResponse<ApiBusinessEntityAddressResponseModel>> Create(
+			ApiBusinessEntityAddressRequestModel model)
 		{
-			CreateResponse<POCOBusinessEntityAddress> response = new CreateResponse<POCOBusinessEntityAddress>(await this.businessEntityAddressModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBusinessEntityAddressResponseModel> response = new CreateResponse<ApiBusinessEntityAddressResponseModel>(await this.businessEntityAddressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBusinessEntityAddress record = await this.businessEntityAddressRepository.Create(model);
+				var dto = this.businessEntityAddressMapper.MapModelToDTO(default (int), model);
+				var record = await this.businessEntityAddressRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.businessEntityAddressMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiBusinessEntityAddressModel model)
+			ApiBusinessEntityAddressRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.businessEntityAddressModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.businessEntityAddressRepository.Update(businessEntityID, model);
+				var dto = this.businessEntityAddressMapper.MapModelToDTO(businessEntityID, model);
+				await this.businessEntityAddressRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOBusinessEntityAddress>> GetAddressID(int addressID)
+		public async Task<List<ApiBusinessEntityAddressResponseModel>> GetAddressID(int addressID)
 		{
-			return await this.businessEntityAddressRepository.GetAddressID(addressID);
+			List<DTOBusinessEntityAddress> records = await this.businessEntityAddressRepository.GetAddressID(addressID);
+
+			return this.businessEntityAddressMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOBusinessEntityAddress>> GetAddressTypeID(int addressTypeID)
+		public async Task<List<ApiBusinessEntityAddressResponseModel>> GetAddressTypeID(int addressTypeID)
 		{
-			return await this.businessEntityAddressRepository.GetAddressTypeID(addressTypeID);
+			List<DTOBusinessEntityAddress> records = await this.businessEntityAddressRepository.GetAddressTypeID(addressTypeID);
+
+			return this.businessEntityAddressMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3ecb7b054208b031de5a50e8fabc8c8</Hash>
+    <Hash>5163eda3ad55f65d5836ec85927bb81d</Hash>
 </Codenesium>*/

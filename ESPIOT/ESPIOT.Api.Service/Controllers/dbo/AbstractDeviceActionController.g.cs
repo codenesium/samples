@@ -38,13 +38,13 @@ namespace ESPIOTNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCODeviceAction>), 200)]
+		[ProducesResponseType(typeof(List<ApiDeviceActionResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODeviceAction> response = await this.deviceActionManager.All(query.Offset, query.Limit);
+			List<ApiDeviceActionResponseModel> response = await this.deviceActionManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace ESPIOTNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCODeviceAction), 200)]
+		[ProducesResponseType(typeof(ApiDeviceActionResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCODeviceAction response = await this.deviceActionManager.Get(id);
+			ApiDeviceActionResponseModel response = await this.deviceActionManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace ESPIOTNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODeviceAction), 200)]
+		[ProducesResponseType(typeof(ApiDeviceActionResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDeviceActionModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiDeviceActionRequestModel model)
 		{
-			CreateResponse<POCODeviceAction> result = await this.deviceActionManager.Create(model);
+			CreateResponse<ApiDeviceActionResponseModel> result = await this.deviceActionManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace ESPIOTNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCODeviceAction>), 200)]
+		[ProducesResponseType(typeof(List<ApiDeviceActionResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDeviceActionModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDeviceActionRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCODeviceAction> records = new List<POCODeviceAction>();
+			List<ApiDeviceActionResponseModel> records = new List<ApiDeviceActionResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCODeviceAction> result = await this.deviceActionManager.Create(model);
+				CreateResponse<ApiDeviceActionResponseModel> result = await this.deviceActionManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace ESPIOTNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODeviceAction), 200)]
+		[ProducesResponseType(typeof(DTODeviceAction), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceActionModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiDeviceActionRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace ESPIOTNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODeviceAction response = await this.deviceActionManager.Get(id);
+					ApiDeviceActionResponseModel response = await this.deviceActionManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace ESPIOTNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>92ca52b1b6350e87bee4978dc9ae690e</Hash>
+    <Hash>c44a396e015b810352631bc16a19045c</Hash>
 </Codenesium>*/

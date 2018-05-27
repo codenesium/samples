@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IContactTypeRepository
 	{
-		Task<POCOContactType> Create(ApiContactTypeModel model);
+		Task<DTOContactType> Create(DTOContactType dto);
 
 		Task Update(int contactTypeID,
-		            ApiContactTypeModel model);
+		            DTOContactType dto);
 
 		Task Delete(int contactTypeID);
 
-		Task<POCOContactType> Get(int contactTypeID);
+		Task<DTOContactType> Get(int contactTypeID);
 
-		Task<List<POCOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOContactType> GetName(string name);
+		Task<DTOContactType> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0142b0c6e4a87f0ef95e84e812938bd</Hash>
+    <Hash>4509bfb18b0852b86e9e0bacda0959e9</Hash>
 </Codenesium>*/

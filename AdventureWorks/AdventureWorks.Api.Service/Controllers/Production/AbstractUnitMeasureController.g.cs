@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOUnitMeasure>), 200)]
+		[ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOUnitMeasure> response = await this.unitMeasureManager.All(query.Offset, query.Limit);
+			List<ApiUnitMeasureResponseModel> response = await this.unitMeasureManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOUnitMeasure), 200)]
+		[ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOUnitMeasure response = await this.unitMeasureManager.Get(id);
+			ApiUnitMeasureResponseModel response = await this.unitMeasureManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOUnitMeasure), 200)]
+		[ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<string>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiUnitMeasureModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiUnitMeasureRequestModel model)
 		{
-			CreateResponse<POCOUnitMeasure> result = await this.unitMeasureManager.Create(model);
+			CreateResponse<ApiUnitMeasureResponseModel> result = await this.unitMeasureManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOUnitMeasure>), 200)]
+		[ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiUnitMeasureModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiUnitMeasureRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOUnitMeasure> records = new List<POCOUnitMeasure>();
+			List<ApiUnitMeasureResponseModel> records = new List<ApiUnitMeasureResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOUnitMeasure> result = await this.unitMeasureManager.Create(model);
+				CreateResponse<ApiUnitMeasureResponseModel> result = await this.unitMeasureManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOUnitMeasure), 200)]
+		[ProducesResponseType(typeof(DTOUnitMeasure), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUnitMeasureModel model)
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiUnitMeasureRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOUnitMeasure response = await this.unitMeasureManager.Get(id);
+					ApiUnitMeasureResponseModel response = await this.unitMeasureManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOUnitMeasure), 200)]
+		[ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOUnitMeasure response = await this.unitMeasureManager.GetName(name);
+			ApiUnitMeasureResponseModel response = await this.unitMeasureManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>351b87d77b88403eef34e303dce70e17</Hash>
+    <Hash>99d68314eb1e10f50933408e2ce43423</Hash>
 </Codenesium>*/

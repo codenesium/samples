@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductListPriceHistoryRepository: AbstractProductListPriceHistoryRepository, IProductListPriceHistoryRepository
 	{
 		public ProductListPriceHistoryRepository(
-			IObjectMapper mapper,
+			IDALProductListPriceHistoryMapper mapper,
 			ILogger<ProductListPriceHistoryRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d5d3d600d01498ae8fe57d34c6687131</Hash>
+    <Hash>b3a62ce9be58a1f654da1af612a190e9</Hash>
 </Codenesium>*/

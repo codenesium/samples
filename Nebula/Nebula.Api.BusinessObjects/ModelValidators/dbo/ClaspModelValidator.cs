@@ -6,19 +6,19 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public class ApiClaspModelValidator: AbstractApiClaspModelValidator, IApiClaspModelValidator
+	public class ApiClaspRequestModelValidator: AbstractApiClaspRequestModelValidator, IApiClaspRequestModelValidator
 	{
-		public ApiClaspModelValidator()
+		public ApiClaspRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiClaspModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiClaspRequestModel model)
 		{
 			this.NextChainIdRules();
 			this.PreviousChainIdRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiClaspModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiClaspRequestModel model)
 		{
 			this.NextChainIdRules();
 			this.PreviousChainIdRules();
@@ -33,5 +33,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e4f449b28343c7a0f9ed5d091d029f94</Hash>
+    <Hash>aaa4b9f9ab6bd6515276a2e8d8c4577b</Hash>
 </Codenesium>*/

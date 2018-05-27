@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBODocument: AbstractBOManager
 	{
 		private IDocumentRepository documentRepository;
-		private IApiDocumentModelValidator documentModelValidator;
+		private IApiDocumentRequestModelValidator documentModelValidator;
+		private IBOLDocumentMapper documentMapper;
 		private ILogger logger;
 
 		public AbstractBODocument(
 			ILogger logger,
 			IDocumentRepository documentRepository,
-			IApiDocumentModelValidator documentModelValidator)
+			IApiDocumentRequestModelValidator documentModelValidator,
+			IBOLDocumentMapper documentMapper)
 			: base()
 
 		{
 			this.documentRepository = documentRepository;
 			this.documentModelValidator = documentModelValidator;
+			this.documentMapper = documentMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiDocumentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.documentRepository.All(skip, take, orderClause);
+			var records = await this.documentRepository.All(skip, take, orderClause);
+
+			return this.documentMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCODocument> Get(Guid documentNode)
+		public virtual async Task<ApiDocumentResponseModel> Get(Guid documentNode)
 		{
-			return this.documentRepository.Get(documentNode);
+			var record = await documentRepository.Get(documentNode);
+
+			return this.documentMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCODocument>> Create(
-			ApiDocumentModel model)
+		public virtual async Task<CreateResponse<ApiDocumentResponseModel>> Create(
+			ApiDocumentRequestModel model)
 		{
-			CreateResponse<POCODocument> response = new CreateResponse<POCODocument>(await this.documentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDocumentResponseModel> response = new CreateResponse<ApiDocumentResponseModel>(await this.documentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODocument record = await this.documentRepository.Create(model);
+				var dto = this.documentMapper.MapModelToDTO(default (Guid), model);
+				var record = await this.documentRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.documentMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			Guid documentNode,
-			ApiDocumentModel model)
+			ApiDocumentRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateUpdateAsync(documentNode, model));
 
 			if (response.Success)
 			{
-				await this.documentRepository.Update(documentNode, model);
+				var dto = this.documentMapper.MapModelToDTO(documentNode, model);
+				await this.documentRepository.Update(documentNode, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
+		public async Task<ApiDocumentResponseModel> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
 		{
-			return await this.documentRepository.GetDocumentLevelDocumentNode(documentLevel,documentNode);
+			DTODocument record = await this.documentRepository.GetDocumentLevelDocumentNode(documentLevel,documentNode);
+
+			return this.documentMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCODocument>> GetFileNameRevision(string fileName,string revision)
+		public async Task<List<ApiDocumentResponseModel>> GetFileNameRevision(string fileName,string revision)
 		{
-			return await this.documentRepository.GetFileNameRevision(fileName,revision);
+			List<DTODocument> records = await this.documentRepository.GetFileNameRevision(fileName,revision);
+
+			return this.documentMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9203cbe7969e39f5bd73bf1d4b1eac4e</Hash>
+    <Hash>89456772297ac19391d915e38e111a8e</Hash>
 </Codenesium>*/

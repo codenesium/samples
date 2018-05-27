@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class AWBuildVersionRepository: AbstractAWBuildVersionRepository, IAWBuildVersionRepository
 	{
 		public AWBuildVersionRepository(
-			IObjectMapper mapper,
+			IDALAWBuildVersionMapper mapper,
 			ILogger<AWBuildVersionRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8af26376686fa6961e84573cd4124985</Hash>
+    <Hash>4b40f7d28ee6698940753418873e896b</Hash>
 </Codenesium>*/

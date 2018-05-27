@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOVendor>), 200)]
+		[ProducesResponseType(typeof(List<ApiVendorResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOVendor> response = await this.vendorManager.All(query.Offset, query.Limit);
+			List<ApiVendorResponseModel> response = await this.vendorManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOVendor), 200)]
+		[ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOVendor response = await this.vendorManager.Get(id);
+			ApiVendorResponseModel response = await this.vendorManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOVendor), 200)]
+		[ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiVendorModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiVendorRequestModel model)
 		{
-			CreateResponse<POCOVendor> result = await this.vendorManager.Create(model);
+			CreateResponse<ApiVendorResponseModel> result = await this.vendorManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOVendor>), 200)]
+		[ProducesResponseType(typeof(List<ApiVendorResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVendorModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVendorRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOVendor> records = new List<POCOVendor>();
+			List<ApiVendorResponseModel> records = new List<ApiVendorResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOVendor> result = await this.vendorManager.Create(model);
+				CreateResponse<ApiVendorResponseModel> result = await this.vendorManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOVendor), 200)]
+		[ProducesResponseType(typeof(DTOVendor), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVendorModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVendorRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOVendor response = await this.vendorManager.Get(id);
+					ApiVendorResponseModel response = await this.vendorManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getAccountNumber/{accountNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOVendor), 200)]
+		[ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetAccountNumber(string accountNumber)
 		{
-			POCOVendor response = await this.vendorManager.GetAccountNumber(accountNumber);
+			ApiVendorResponseModel response = await this.vendorManager.GetAccountNumber(accountNumber);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>3897f2aacc1f3877c4f445d1c2b21ed0</Hash>
+    <Hash>dac4d7c428c38046eadc75d890e8360a</Hash>
 </Codenesium>*/

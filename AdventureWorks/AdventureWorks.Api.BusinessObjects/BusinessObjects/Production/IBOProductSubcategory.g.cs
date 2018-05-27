@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOProductSubcategory
 	{
-		Task<CreateResponse<POCOProductSubcategory>> Create(
-			ApiProductSubcategoryModel model);
+		Task<CreateResponse<ApiProductSubcategoryResponseModel>> Create(
+			ApiProductSubcategoryRequestModel model);
 
 		Task<ActionResponse> Update(int productSubcategoryID,
-		                            ApiProductSubcategoryModel model);
+		                            ApiProductSubcategoryRequestModel model);
 
 		Task<ActionResponse> Delete(int productSubcategoryID);
 
-		Task<POCOProductSubcategory> Get(int productSubcategoryID);
+		Task<ApiProductSubcategoryResponseModel> Get(int productSubcategoryID);
 
-		Task<List<POCOProductSubcategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiProductSubcategoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOProductSubcategory> GetName(string name);
+		Task<ApiProductSubcategoryResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>41d155859cc2c271fe844683afd43dc7</Hash>
+    <Hash>f524eca28958911710cba075fdfcc703</Hash>
 </Codenesium>*/

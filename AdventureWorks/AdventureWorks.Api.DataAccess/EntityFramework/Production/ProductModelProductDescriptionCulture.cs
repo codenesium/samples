@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductModelProductDescriptionCulture", Schema="Production")]
-	public partial class ProductModelProductDescriptionCulture: AbstractEntityFrameworkPOCO
+	public partial class ProductModelProductDescriptionCulture: AbstractEntityFrameworkDTO
 	{
 		public ProductModelProductDescriptionCulture()
 		{}
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b888dcc71b307c8f3ebea7b4a78730f</Hash>
+    <Hash>63efd42ed7d9171fe50aad9e0711fe1d</Hash>
 </Codenesium>*/

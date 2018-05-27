@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ShoppingCartItemRepository: AbstractShoppingCartItemRepository, IShoppingCartItemRepository
 	{
 		public ShoppingCartItemRepository(
-			IObjectMapper mapper,
+			IDALShoppingCartItemMapper mapper,
 			ILogger<ShoppingCartItemRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>227d2564694cf748e91fb7508b84bab9</Hash>
+    <Hash>8a27acba98755c5bcbf20e86283d52d0</Hash>
 </Codenesium>*/

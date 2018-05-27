@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOCreditCard: AbstractBOManager
 	{
 		private ICreditCardRepository creditCardRepository;
-		private IApiCreditCardModelValidator creditCardModelValidator;
+		private IApiCreditCardRequestModelValidator creditCardModelValidator;
+		private IBOLCreditCardMapper creditCardMapper;
 		private ILogger logger;
 
 		public AbstractBOCreditCard(
 			ILogger logger,
 			ICreditCardRepository creditCardRepository,
-			IApiCreditCardModelValidator creditCardModelValidator)
+			IApiCreditCardRequestModelValidator creditCardModelValidator,
+			IBOLCreditCardMapper creditCardMapper)
 			: base()
 
 		{
 			this.creditCardRepository = creditCardRepository;
 			this.creditCardModelValidator = creditCardModelValidator;
+			this.creditCardMapper = creditCardMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.creditCardRepository.All(skip, take, orderClause);
+			var records = await this.creditCardRepository.All(skip, take, orderClause);
+
+			return this.creditCardMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOCreditCard> Get(int creditCardID)
+		public virtual async Task<ApiCreditCardResponseModel> Get(int creditCardID)
 		{
-			return this.creditCardRepository.Get(creditCardID);
+			var record = await creditCardRepository.Get(creditCardID);
+
+			return this.creditCardMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOCreditCard>> Create(
-			ApiCreditCardModel model)
+		public virtual async Task<CreateResponse<ApiCreditCardResponseModel>> Create(
+			ApiCreditCardRequestModel model)
 		{
-			CreateResponse<POCOCreditCard> response = new CreateResponse<POCOCreditCard>(await this.creditCardModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.creditCardModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCreditCard record = await this.creditCardRepository.Create(model);
+				var dto = this.creditCardMapper.MapModelToDTO(default (int), model);
+				var record = await this.creditCardRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.creditCardMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int creditCardID,
-			ApiCreditCardModel model)
+			ApiCreditCardRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateUpdateAsync(creditCardID, model));
 
 			if (response.Success)
 			{
-				await this.creditCardRepository.Update(creditCardID, model);
+				var dto = this.creditCardMapper.MapModelToDTO(creditCardID, model);
+				await this.creditCardRepository.Update(creditCardID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOCreditCard> GetCardNumber(string cardNumber)
+		public async Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber)
 		{
-			return await this.creditCardRepository.GetCardNumber(cardNumber);
+			DTOCreditCard record = await this.creditCardRepository.GetCardNumber(cardNumber);
+
+			return this.creditCardMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca38244aa633d9d9e317f8c145361340</Hash>
+    <Hash>8bca3b43ac54c75bbeda54a6100d2ffc</Hash>
 </Codenesium>*/

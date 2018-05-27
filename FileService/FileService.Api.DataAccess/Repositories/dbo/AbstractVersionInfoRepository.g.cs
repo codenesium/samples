@@ -15,10 +15,10 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALVersionInfoMapper Mapper { get; }
 
 		public AbstractVersionInfoRepository(
-			IObjectMapper mapper,
+			IDALVersionInfoMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOVersionInfo> Get(long version)
+		public async virtual Task<DTOVersionInfo> Get(long version)
 		{
 			VersionInfo record = await this.GetById(version);
 
-			return this.Mapper.VersionInfoMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOVersionInfo> Create(
-			ApiVersionInfoModel model)
+		public async virtual Task<DTOVersionInfo> Create(
+			DTOVersionInfo dto)
 		{
 			VersionInfo record = new VersionInfo();
 
-			this.Mapper.VersionInfoMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (long),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<VersionInfo>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.VersionInfoMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			long version,
-			ApiVersionInfoModel model)
+			DTOVersionInfo dto)
 		{
 			VersionInfo record = await this.GetById(version);
 
@@ -68,9 +68,9 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.VersionInfoMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					version,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOVersionInfo> Version(long version)
+		public async Task<DTOVersionInfo> GetVersion(long version)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Version == version);
+			var records = await this.SearchLinqDTO(x => x.Version == version);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOVersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOVersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOVersionInfo> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOVersionInfo> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOVersionInfo>> SearchLinqPOCO(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOVersionInfo>> SearchLinqDTO(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOVersionInfo> response = new List<POCOVersionInfo>();
+			List<DTOVersionInfo> response = new List<DTOVersionInfo>();
 			List<VersionInfo> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.VersionInfoMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f1796bb74058349b5845b79df504a706</Hash>
+    <Hash>e6ba798e14ce53406c4b12a0a19e2694</Hash>
 </Codenesium>*/

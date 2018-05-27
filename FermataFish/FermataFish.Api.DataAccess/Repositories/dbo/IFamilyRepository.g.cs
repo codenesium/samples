@@ -8,19 +8,19 @@ namespace FermataFishNS.Api.DataAccess
 {
 	public interface IFamilyRepository
 	{
-		Task<POCOFamily> Create(ApiFamilyModel model);
+		Task<DTOFamily> Create(DTOFamily dto);
 
 		Task Update(int id,
-		            ApiFamilyModel model);
+		            DTOFamily dto);
 
 		Task Delete(int id);
 
-		Task<POCOFamily> Get(int id);
+		Task<DTOFamily> Get(int id);
 
-		Task<List<POCOFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>23f4ddaa78eaf7bc646cbe3b49dadcda</Hash>
+    <Hash>0e2d2ca60363430c0b7fc4e0e6310044</Hash>
 </Codenesium>*/

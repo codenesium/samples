@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class JobCandidateRepository: AbstractJobCandidateRepository, IJobCandidateRepository
 	{
 		public JobCandidateRepository(
-			IObjectMapper mapper,
+			IDALJobCandidateMapper mapper,
 			ILogger<JobCandidateRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f9e3f197156a4e57fe5e2cb5045e9c7a</Hash>
+    <Hash>cf8fc3ed02fcebff277648b937514a3a</Hash>
 </Codenesium>*/

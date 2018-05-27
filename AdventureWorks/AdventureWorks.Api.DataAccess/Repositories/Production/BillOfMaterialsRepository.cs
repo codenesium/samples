@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class BillOfMaterialsRepository: AbstractBillOfMaterialsRepository, IBillOfMaterialsRepository
 	{
 		public BillOfMaterialsRepository(
-			IObjectMapper mapper,
+			IDALBillOfMaterialsMapper mapper,
 			ILogger<BillOfMaterialsRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>811dfb174b3c843810022001dfc3b965</Hash>
+    <Hash>f823233a5031d57958e6a56349ed331a</Hash>
 </Codenesium>*/

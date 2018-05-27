@@ -8,19 +8,19 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IMachineRefTeamRepository
 	{
-		Task<POCOMachineRefTeam> Create(ApiMachineRefTeamModel model);
+		Task<DTOMachineRefTeam> Create(DTOMachineRefTeam dto);
 
 		Task Update(int id,
-		            ApiMachineRefTeamModel model);
+		            DTOMachineRefTeam dto);
 
 		Task Delete(int id);
 
-		Task<POCOMachineRefTeam> Get(int id);
+		Task<DTOMachineRefTeam> Get(int id);
 
-		Task<List<POCOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>24b7a527b3e4c0975d4e375741f59c27</Hash>
+    <Hash>5df548fd5351571160a59e1b7ae20509</Hash>
 </Codenesium>*/

@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOScrapReason
 	{
-		Task<CreateResponse<POCOScrapReason>> Create(
-			ApiScrapReasonModel model);
+		Task<CreateResponse<ApiScrapReasonResponseModel>> Create(
+			ApiScrapReasonRequestModel model);
 
 		Task<ActionResponse> Update(short scrapReasonID,
-		                            ApiScrapReasonModel model);
+		                            ApiScrapReasonRequestModel model);
 
 		Task<ActionResponse> Delete(short scrapReasonID);
 
-		Task<POCOScrapReason> Get(short scrapReasonID);
+		Task<ApiScrapReasonResponseModel> Get(short scrapReasonID);
 
-		Task<List<POCOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiScrapReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOScrapReason> GetName(string name);
+		Task<ApiScrapReasonResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>964de333e7d93d1160a428a7729e90e8</Hash>
+    <Hash>3941d7f481045f424fb3ef003ecbb9fa</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class AdminRepository: AbstractAdminRepository, IAdminRepository
 	{
 		public AdminRepository(
-			IObjectMapper mapper,
+			IDALAdminMapper mapper,
 			ILogger<AdminRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c3d4505af06e46a0eca40b52c4bec624</Hash>
+    <Hash>2d84cdba2382ef33c3d753540a488310</Hash>
 </Codenesium>*/

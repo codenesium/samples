@@ -6,19 +6,19 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public class ApiMachineRefTeamModelValidator: AbstractApiMachineRefTeamModelValidator, IApiMachineRefTeamModelValidator
+	public class ApiMachineRefTeamRequestModelValidator: AbstractApiMachineRefTeamRequestModelValidator, IApiMachineRefTeamRequestModelValidator
 	{
-		public ApiMachineRefTeamModelValidator()
+		public ApiMachineRefTeamRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiMachineRefTeamModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiMachineRefTeamRequestModel model)
 		{
 			this.MachineIdRules();
 			this.TeamIdRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiMachineRefTeamModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiMachineRefTeamRequestModel model)
 		{
 			this.MachineIdRules();
 			this.TeamIdRules();
@@ -33,5 +33,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>bd683d82917e0e0da5d911b6391d97c8</Hash>
+    <Hash>e357f01569ce651e86b6ee2822668d5b</Hash>
 </Codenesium>*/

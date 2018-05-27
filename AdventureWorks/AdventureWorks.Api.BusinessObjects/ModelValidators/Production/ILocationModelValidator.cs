@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiLocationModelValidator
+	public interface IApiLocationRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiLocationModel model);
-		Task<ValidationResult> ValidateUpdateAsync(short id, ApiLocationModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiLocationRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(short id, ApiLocationRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(short id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>485a413655f9234335656f990bc4a4fd</Hash>
+    <Hash>90b8161f1a8b28912fca14f1139cadcd</Hash>
 </Codenesium>*/

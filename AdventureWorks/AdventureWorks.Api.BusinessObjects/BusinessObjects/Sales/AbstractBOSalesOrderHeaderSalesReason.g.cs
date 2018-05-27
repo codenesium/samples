@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesOrderHeaderSalesReason: AbstractBOManager
 	{
 		private ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
-		private IApiSalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator;
+		private IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator;
+		private IBOLSalesOrderHeaderSalesReasonMapper salesOrderHeaderSalesReasonMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesOrderHeaderSalesReason(
 			ILogger logger,
 			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
-			IApiSalesOrderHeaderSalesReasonModelValidator salesOrderHeaderSalesReasonModelValidator)
+			IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
+			IBOLSalesOrderHeaderSalesReasonMapper salesOrderHeaderSalesReasonMapper)
 			: base()
 
 		{
 			this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
 			this.salesOrderHeaderSalesReasonModelValidator = salesOrderHeaderSalesReasonModelValidator;
+			this.salesOrderHeaderSalesReasonMapper = salesOrderHeaderSalesReasonMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesOrderHeaderSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesOrderHeaderSalesReasonRepository.All(skip, take, orderClause);
+			var records = await this.salesOrderHeaderSalesReasonRepository.All(skip, take, orderClause);
+
+			return this.salesOrderHeaderSalesReasonMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesOrderHeaderSalesReason> Get(int salesOrderID)
+		public virtual async Task<ApiSalesOrderHeaderSalesReasonResponseModel> Get(int salesOrderID)
 		{
-			return this.salesOrderHeaderSalesReasonRepository.Get(salesOrderID);
+			var record = await salesOrderHeaderSalesReasonRepository.Get(salesOrderID);
+
+			return this.salesOrderHeaderSalesReasonMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesOrderHeaderSalesReason>> Create(
-			ApiSalesOrderHeaderSalesReasonModel model)
+		public virtual async Task<CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Create(
+			ApiSalesOrderHeaderSalesReasonRequestModel model)
 		{
-			CreateResponse<POCOSalesOrderHeaderSalesReason> response = new CreateResponse<POCOSalesOrderHeaderSalesReason>(await this.salesOrderHeaderSalesReasonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel> response = new CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>(await this.salesOrderHeaderSalesReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesOrderHeaderSalesReason record = await this.salesOrderHeaderSalesReasonRepository.Create(model);
+				var dto = this.salesOrderHeaderSalesReasonMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesOrderHeaderSalesReasonRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesOrderHeaderSalesReasonMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int salesOrderID,
-			ApiSalesOrderHeaderSalesReasonModel model)
+			ApiSalesOrderHeaderSalesReasonRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesOrderHeaderSalesReasonModelValidator.ValidateUpdateAsync(salesOrderID, model));
 
 			if (response.Success)
 			{
-				await this.salesOrderHeaderSalesReasonRepository.Update(salesOrderID, model);
+				var dto = this.salesOrderHeaderSalesReasonMapper.MapModelToDTO(salesOrderID, model);
+				await this.salesOrderHeaderSalesReasonRepository.Update(salesOrderID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>86fdd28dcb064dd30befe1a274a01d13</Hash>
+    <Hash>9ecdcb5e7add6a57ef102ec301cc9a43</Hash>
 </Codenesium>*/

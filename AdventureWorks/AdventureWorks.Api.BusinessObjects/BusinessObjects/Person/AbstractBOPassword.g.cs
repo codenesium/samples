@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOPassword: AbstractBOManager
 	{
 		private IPasswordRepository passwordRepository;
-		private IApiPasswordModelValidator passwordModelValidator;
+		private IApiPasswordRequestModelValidator passwordModelValidator;
+		private IBOLPasswordMapper passwordMapper;
 		private ILogger logger;
 
 		public AbstractBOPassword(
 			ILogger logger,
 			IPasswordRepository passwordRepository,
-			IApiPasswordModelValidator passwordModelValidator)
+			IApiPasswordRequestModelValidator passwordModelValidator,
+			IBOLPasswordMapper passwordMapper)
 			: base()
 
 		{
 			this.passwordRepository = passwordRepository;
 			this.passwordModelValidator = passwordModelValidator;
+			this.passwordMapper = passwordMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPasswordResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.passwordRepository.All(skip, take, orderClause);
+			var records = await this.passwordRepository.All(skip, take, orderClause);
+
+			return this.passwordMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPassword> Get(int businessEntityID)
+		public virtual async Task<ApiPasswordResponseModel> Get(int businessEntityID)
 		{
-			return this.passwordRepository.Get(businessEntityID);
+			var record = await passwordRepository.Get(businessEntityID);
+
+			return this.passwordMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPassword>> Create(
-			ApiPasswordModel model)
+		public virtual async Task<CreateResponse<ApiPasswordResponseModel>> Create(
+			ApiPasswordRequestModel model)
 		{
-			CreateResponse<POCOPassword> response = new CreateResponse<POCOPassword>(await this.passwordModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPasswordResponseModel> response = new CreateResponse<ApiPasswordResponseModel>(await this.passwordModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPassword record = await this.passwordRepository.Create(model);
+				var dto = this.passwordMapper.MapModelToDTO(default (int), model);
+				var record = await this.passwordRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.passwordMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiPasswordModel model)
+			ApiPasswordRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.passwordModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.passwordRepository.Update(businessEntityID, model);
+				var dto = this.passwordMapper.MapModelToDTO(businessEntityID, model);
+				await this.passwordRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d9b5aa3f100dab9d4ab8aac76fa2011a</Hash>
+    <Hash>a16b02ceb79bc1d95308e82286984e41</Hash>
 </Codenesium>*/

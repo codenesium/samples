@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesTerritory: AbstractBOManager
 	{
 		private ISalesTerritoryRepository salesTerritoryRepository;
-		private IApiSalesTerritoryModelValidator salesTerritoryModelValidator;
+		private IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator;
+		private IBOLSalesTerritoryMapper salesTerritoryMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesTerritory(
 			ILogger logger,
 			ISalesTerritoryRepository salesTerritoryRepository,
-			IApiSalesTerritoryModelValidator salesTerritoryModelValidator)
+			IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
+			IBOLSalesTerritoryMapper salesTerritoryMapper)
 			: base()
 
 		{
 			this.salesTerritoryRepository = salesTerritoryRepository;
 			this.salesTerritoryModelValidator = salesTerritoryModelValidator;
+			this.salesTerritoryMapper = salesTerritoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesTerritory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesTerritoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesTerritoryRepository.All(skip, take, orderClause);
+			var records = await this.salesTerritoryRepository.All(skip, take, orderClause);
+
+			return this.salesTerritoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesTerritory> Get(int territoryID)
+		public virtual async Task<ApiSalesTerritoryResponseModel> Get(int territoryID)
 		{
-			return this.salesTerritoryRepository.Get(territoryID);
+			var record = await salesTerritoryRepository.Get(territoryID);
+
+			return this.salesTerritoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesTerritory>> Create(
-			ApiSalesTerritoryModel model)
+		public virtual async Task<CreateResponse<ApiSalesTerritoryResponseModel>> Create(
+			ApiSalesTerritoryRequestModel model)
 		{
-			CreateResponse<POCOSalesTerritory> response = new CreateResponse<POCOSalesTerritory>(await this.salesTerritoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesTerritoryResponseModel> response = new CreateResponse<ApiSalesTerritoryResponseModel>(await this.salesTerritoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesTerritory record = await this.salesTerritoryRepository.Create(model);
+				var dto = this.salesTerritoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesTerritoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesTerritoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int territoryID,
-			ApiSalesTerritoryModel model)
+			ApiSalesTerritoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesTerritoryModelValidator.ValidateUpdateAsync(territoryID, model));
 
 			if (response.Success)
 			{
-				await this.salesTerritoryRepository.Update(territoryID, model);
+				var dto = this.salesTerritoryMapper.MapModelToDTO(territoryID, model);
+				await this.salesTerritoryRepository.Update(territoryID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOSalesTerritory> GetName(string name)
+		public async Task<ApiSalesTerritoryResponseModel> GetName(string name)
 		{
-			return await this.salesTerritoryRepository.GetName(name);
+			DTOSalesTerritory record = await this.salesTerritoryRepository.GetName(name);
+
+			return this.salesTerritoryMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a93d460fc73a8466afc2c63e4a5fd42f</Hash>
+    <Hash>68579229d0fa62339e73002f0ab85a56</Hash>
 </Codenesium>*/

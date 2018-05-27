@@ -9,23 +9,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBODocument
 	{
-		Task<CreateResponse<POCODocument>> Create(
-			ApiDocumentModel model);
+		Task<CreateResponse<ApiDocumentResponseModel>> Create(
+			ApiDocumentRequestModel model);
 
 		Task<ActionResponse> Update(Guid documentNode,
-		                            ApiDocumentModel model);
+		                            ApiDocumentRequestModel model);
 
 		Task<ActionResponse> Delete(Guid documentNode);
 
-		Task<POCODocument> Get(Guid documentNode);
+		Task<ApiDocumentResponseModel> Get(Guid documentNode);
 
-		Task<List<POCODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiDocumentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode);
-		Task<List<POCODocument>> GetFileNameRevision(string fileName,string revision);
+		Task<ApiDocumentResponseModel> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode);
+		Task<List<ApiDocumentResponseModel>> GetFileNameRevision(string fileName,string revision);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9d533a16f54d2b9c5f146c9133956265</Hash>
+    <Hash>7b317056498833f3af24e25bbb6367f9</Hash>
 </Codenesium>*/

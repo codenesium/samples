@@ -8,22 +8,22 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IBillOfMaterialsRepository
 	{
-		Task<POCOBillOfMaterials> Create(ApiBillOfMaterialsModel model);
+		Task<DTOBillOfMaterials> Create(DTOBillOfMaterials dto);
 
 		Task Update(int billOfMaterialsID,
-		            ApiBillOfMaterialsModel model);
+		            DTOBillOfMaterials dto);
 
 		Task Delete(int billOfMaterialsID);
 
-		Task<POCOBillOfMaterials> Get(int billOfMaterialsID);
+		Task<DTOBillOfMaterials> Get(int billOfMaterialsID);
 
-		Task<List<POCOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate);
-		Task<List<POCOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode);
+		Task<DTOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate);
+		Task<List<DTOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9141a876319a5b182aa29179495f1922</Hash>
+    <Hash>aa6179705458c60267c6561d97bef41e</Hash>
 </Codenesium>*/

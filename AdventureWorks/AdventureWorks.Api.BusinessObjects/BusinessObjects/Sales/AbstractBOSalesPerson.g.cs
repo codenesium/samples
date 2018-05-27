@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesPerson: AbstractBOManager
 	{
 		private ISalesPersonRepository salesPersonRepository;
-		private IApiSalesPersonModelValidator salesPersonModelValidator;
+		private IApiSalesPersonRequestModelValidator salesPersonModelValidator;
+		private IBOLSalesPersonMapper salesPersonMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesPerson(
 			ILogger logger,
 			ISalesPersonRepository salesPersonRepository,
-			IApiSalesPersonModelValidator salesPersonModelValidator)
+			IApiSalesPersonRequestModelValidator salesPersonModelValidator,
+			IBOLSalesPersonMapper salesPersonMapper)
 			: base()
 
 		{
 			this.salesPersonRepository = salesPersonRepository;
 			this.salesPersonModelValidator = salesPersonModelValidator;
+			this.salesPersonMapper = salesPersonMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesPersonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesPersonRepository.All(skip, take, orderClause);
+			var records = await this.salesPersonRepository.All(skip, take, orderClause);
+
+			return this.salesPersonMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesPerson> Get(int businessEntityID)
+		public virtual async Task<ApiSalesPersonResponseModel> Get(int businessEntityID)
 		{
-			return this.salesPersonRepository.Get(businessEntityID);
+			var record = await salesPersonRepository.Get(businessEntityID);
+
+			return this.salesPersonMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesPerson>> Create(
-			ApiSalesPersonModel model)
+		public virtual async Task<CreateResponse<ApiSalesPersonResponseModel>> Create(
+			ApiSalesPersonRequestModel model)
 		{
-			CreateResponse<POCOSalesPerson> response = new CreateResponse<POCOSalesPerson>(await this.salesPersonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesPersonResponseModel> response = new CreateResponse<ApiSalesPersonResponseModel>(await this.salesPersonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesPerson record = await this.salesPersonRepository.Create(model);
+				var dto = this.salesPersonMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesPersonRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesPersonMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiSalesPersonModel model)
+			ApiSalesPersonRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesPersonModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.salesPersonRepository.Update(businessEntityID, model);
+				var dto = this.salesPersonMapper.MapModelToDTO(businessEntityID, model);
+				await this.salesPersonRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f2dcfec01ddc52fc22b7f2a7e222c40d</Hash>
+    <Hash>f852d579a33f3a71a96b25a31600c2d1</Hash>
 </Codenesium>*/

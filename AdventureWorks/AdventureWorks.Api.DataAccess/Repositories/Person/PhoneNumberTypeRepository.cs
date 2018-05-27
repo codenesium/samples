@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class PhoneNumberTypeRepository: AbstractPhoneNumberTypeRepository, IPhoneNumberTypeRepository
 	{
 		public PhoneNumberTypeRepository(
-			IObjectMapper mapper,
+			IDALPhoneNumberTypeMapper mapper,
 			ILogger<PhoneNumberTypeRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3bd7ffe9b3c0997baf2ed5530f342ad6</Hash>
+    <Hash>c871b4ad3f3df8c73a7ff76136d30822</Hash>
 </Codenesium>*/

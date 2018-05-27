@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiPersonPhoneModelValidator: AbstractApiPersonPhoneModelValidator, IApiPersonPhoneModelValidator
+	public class ApiPersonPhoneRequestModelValidator: AbstractApiPersonPhoneRequestModelValidator, IApiPersonPhoneRequestModelValidator
 	{
-		public ApiPersonPhoneModelValidator()
+		public ApiPersonPhoneRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiPersonPhoneModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiPersonPhoneRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.PhoneNumberRules();
@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonPhoneModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonPhoneRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.PhoneNumberRules();
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>708cf8c61891396798c05f712dfff914</Hash>
+    <Hash>c56bf5135d9b33285bd302e04c2af719</Hash>
 </Codenesium>*/

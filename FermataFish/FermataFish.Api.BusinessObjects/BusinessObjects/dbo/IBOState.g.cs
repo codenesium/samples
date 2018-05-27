@@ -9,20 +9,20 @@ namespace FermataFishNS.Api.BusinessObjects
 {
 	public interface IBOState
 	{
-		Task<CreateResponse<POCOState>> Create(
-			ApiStateModel model);
+		Task<CreateResponse<ApiStateResponseModel>> Create(
+			ApiStateRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiStateModel model);
+		                            ApiStateRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOState> Get(int id);
+		Task<ApiStateResponseModel> Get(int id);
 
-		Task<List<POCOState>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiStateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c572f3b7969f3567ea55c55d0b3aa5f</Hash>
+    <Hash>fdd06619acd36696d4953f7443fb863e</Hash>
 </Codenesium>*/

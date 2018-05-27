@@ -15,12 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOStudio(
 			ILogger<StudioRepository> logger,
 			IStudioRepository studioRepository,
-			IApiStudioModelValidator studioModelValidator)
-			: base(logger, studioRepository, studioModelValidator)
+			IApiStudioRequestModelValidator studioModelValidator,
+			IBOLStudioMapper studioMapper)
+			: base(logger, studioRepository, studioModelValidator, studioMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>71512bdde000de0b7c13052ee0500429</Hash>
+    <Hash>b1efc35e04d1346f9dbe755f24b2a342</Hash>
 </Codenesium>*/

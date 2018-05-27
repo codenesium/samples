@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOPurchaseOrderHeader(
 			ILogger<PurchaseOrderHeaderRepository> logger,
 			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
-			IApiPurchaseOrderHeaderModelValidator purchaseOrderHeaderModelValidator)
-			: base(logger, purchaseOrderHeaderRepository, purchaseOrderHeaderModelValidator)
+			IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
+			IBOLPurchaseOrderHeaderMapper purchaseOrderHeaderMapper)
+			: base(logger, purchaseOrderHeaderRepository, purchaseOrderHeaderModelValidator, purchaseOrderHeaderMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>afc6a7c21f12b1fa67d9e7f169e371dc</Hash>
+    <Hash>dadfcde46e143579b66711bddc98958a</Hash>
 </Codenesium>*/

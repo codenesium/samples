@@ -8,19 +8,19 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public interface IDeviceActionRepository
 	{
-		Task<POCODeviceAction> Create(ApiDeviceActionModel model);
+		Task<DTODeviceAction> Create(DTODeviceAction dto);
 
 		Task Update(int id,
-		            ApiDeviceActionModel model);
+		            DTODeviceAction dto);
 
 		Task Delete(int id);
 
-		Task<POCODeviceAction> Get(int id);
+		Task<DTODeviceAction> Get(int id);
 
-		Task<List<POCODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a093b58c8a982223ec86432446fbfc9</Hash>
+    <Hash>6a734b68bff0cdeed3d311ef2ab062e9</Hash>
 </Codenesium>*/

@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOBillOfMaterials(
 			ILogger<BillOfMaterialsRepository> logger,
 			IBillOfMaterialsRepository billOfMaterialsRepository,
-			IApiBillOfMaterialsModelValidator billOfMaterialsModelValidator)
-			: base(logger, billOfMaterialsRepository, billOfMaterialsModelValidator)
+			IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
+			IBOLBillOfMaterialsMapper billOfMaterialsMapper)
+			: base(logger, billOfMaterialsRepository, billOfMaterialsModelValidator, billOfMaterialsMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a6397516a49c9b178a28b610f62eacef</Hash>
+    <Hash>de898335a37af46967b1391b28b6b4eb</Hash>
 </Codenesium>*/

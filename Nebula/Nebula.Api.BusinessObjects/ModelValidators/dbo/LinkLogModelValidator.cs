@@ -6,12 +6,12 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public class ApiLinkLogModelValidator: AbstractApiLinkLogModelValidator, IApiLinkLogModelValidator
+	public class ApiLinkLogRequestModelValidator: AbstractApiLinkLogRequestModelValidator, IApiLinkLogRequestModelValidator
 	{
-		public ApiLinkLogModelValidator()
+		public ApiLinkLogRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiLinkLogModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiLinkLogRequestModel model)
 		{
 			this.DateEnteredRules();
 			this.LinkIdRules();
@@ -19,7 +19,7 @@ namespace NebulaNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkLogModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkLogRequestModel model)
 		{
 			this.DateEnteredRules();
 			this.LinkIdRules();
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>45bb3ab361441ff578a61bc918e42e6c</Hash>
+    <Hash>78f0b112a447f5c8bf7638d693aa2105</Hash>
 </Codenesium>*/

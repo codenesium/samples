@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALAddressTypeMapper Mapper { get; }
 
 		public AbstractAddressTypeRepository(
-			IObjectMapper mapper,
+			IDALAddressTypeMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOAddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOAddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOAddressType> Get(int addressTypeID)
+		public async virtual Task<DTOAddressType> Get(int addressTypeID)
 		{
 			AddressType record = await this.GetById(addressTypeID);
 
-			return this.Mapper.AddressTypeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOAddressType> Create(
-			ApiAddressTypeModel model)
+		public async virtual Task<DTOAddressType> Create(
+			DTOAddressType dto)
 		{
 			AddressType record = new AddressType();
 
-			this.Mapper.AddressTypeMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<AddressType>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.AddressTypeMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int addressTypeID,
-			ApiAddressTypeModel model)
+			DTOAddressType dto)
 		{
 			AddressType record = await this.GetById(addressTypeID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.AddressTypeMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					addressTypeID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOAddressType> GetName(string name)
+		public async Task<DTOAddressType> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOAddressType>> Where(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOAddressType>> Where(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAddressType> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOAddressType> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOAddressType>> SearchLinqPOCO(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOAddressType>> SearchLinqDTO(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOAddressType> response = new List<POCOAddressType>();
+			List<DTOAddressType> response = new List<DTOAddressType>();
 			List<AddressType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.AddressTypeMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>22a1935b90410ed564849aee59c4011b</Hash>
+    <Hash>89b1f027c01ba88f5beb691ad875e996</Hash>
 </Codenesium>*/

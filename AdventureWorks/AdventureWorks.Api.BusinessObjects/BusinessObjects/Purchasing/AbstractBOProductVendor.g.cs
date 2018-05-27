@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductVendor: AbstractBOManager
 	{
 		private IProductVendorRepository productVendorRepository;
-		private IApiProductVendorModelValidator productVendorModelValidator;
+		private IApiProductVendorRequestModelValidator productVendorModelValidator;
+		private IBOLProductVendorMapper productVendorMapper;
 		private ILogger logger;
 
 		public AbstractBOProductVendor(
 			ILogger logger,
 			IProductVendorRepository productVendorRepository,
-			IApiProductVendorModelValidator productVendorModelValidator)
+			IApiProductVendorRequestModelValidator productVendorModelValidator,
+			IBOLProductVendorMapper productVendorMapper)
 			: base()
 
 		{
 			this.productVendorRepository = productVendorRepository;
 			this.productVendorModelValidator = productVendorModelValidator;
+			this.productVendorMapper = productVendorMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productVendorRepository.All(skip, take, orderClause);
+			var records = await this.productVendorRepository.All(skip, take, orderClause);
+
+			return this.productVendorMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductVendor> Get(int productID)
+		public virtual async Task<ApiProductVendorResponseModel> Get(int productID)
 		{
-			return this.productVendorRepository.Get(productID);
+			var record = await productVendorRepository.Get(productID);
+
+			return this.productVendorMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductVendor>> Create(
-			ApiProductVendorModel model)
+		public virtual async Task<CreateResponse<ApiProductVendorResponseModel>> Create(
+			ApiProductVendorRequestModel model)
 		{
-			CreateResponse<POCOProductVendor> response = new CreateResponse<POCOProductVendor>(await this.productVendorModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductVendorResponseModel> response = new CreateResponse<ApiProductVendorResponseModel>(await this.productVendorModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductVendor record = await this.productVendorRepository.Create(model);
+				var dto = this.productVendorMapper.MapModelToDTO(default (int), model);
+				var record = await this.productVendorRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productVendorMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productID,
-			ApiProductVendorModel model)
+			ApiProductVendorRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productVendorModelValidator.ValidateUpdateAsync(productID, model));
 
 			if (response.Success)
 			{
-				await this.productVendorRepository.Update(productID, model);
+				var dto = this.productVendorMapper.MapModelToDTO(productID, model);
+				await this.productVendorRepository.Update(productID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOProductVendor>> GetBusinessEntityID(int businessEntityID)
+		public async Task<List<ApiProductVendorResponseModel>> GetBusinessEntityID(int businessEntityID)
 		{
-			return await this.productVendorRepository.GetBusinessEntityID(businessEntityID);
+			List<DTOProductVendor> records = await this.productVendorRepository.GetBusinessEntityID(businessEntityID);
+
+			return this.productVendorMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOProductVendor>> GetUnitMeasureCode(string unitMeasureCode)
+		public async Task<List<ApiProductVendorResponseModel>> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			return await this.productVendorRepository.GetUnitMeasureCode(unitMeasureCode);
+			List<DTOProductVendor> records = await this.productVendorRepository.GetUnitMeasureCode(unitMeasureCode);
+
+			return this.productVendorMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35577072af0b285d5a953b17168f4df2</Hash>
+    <Hash>dc6ae9cc8573efb2bee87f858fdedd29</Hash>
 </Codenesium>*/

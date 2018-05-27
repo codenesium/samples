@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOBillOfMaterials: AbstractBOManager
 	{
 		private IBillOfMaterialsRepository billOfMaterialsRepository;
-		private IApiBillOfMaterialsModelValidator billOfMaterialsModelValidator;
+		private IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator;
+		private IBOLBillOfMaterialsMapper billOfMaterialsMapper;
 		private ILogger logger;
 
 		public AbstractBOBillOfMaterials(
 			ILogger logger,
 			IBillOfMaterialsRepository billOfMaterialsRepository,
-			IApiBillOfMaterialsModelValidator billOfMaterialsModelValidator)
+			IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
+			IBOLBillOfMaterialsMapper billOfMaterialsMapper)
 			: base()
 
 		{
 			this.billOfMaterialsRepository = billOfMaterialsRepository;
 			this.billOfMaterialsModelValidator = billOfMaterialsModelValidator;
+			this.billOfMaterialsMapper = billOfMaterialsMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiBillOfMaterialsResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.billOfMaterialsRepository.All(skip, take, orderClause);
+			var records = await this.billOfMaterialsRepository.All(skip, take, orderClause);
+
+			return this.billOfMaterialsMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOBillOfMaterials> Get(int billOfMaterialsID)
+		public virtual async Task<ApiBillOfMaterialsResponseModel> Get(int billOfMaterialsID)
 		{
-			return this.billOfMaterialsRepository.Get(billOfMaterialsID);
+			var record = await billOfMaterialsRepository.Get(billOfMaterialsID);
+
+			return this.billOfMaterialsMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOBillOfMaterials>> Create(
-			ApiBillOfMaterialsModel model)
+		public virtual async Task<CreateResponse<ApiBillOfMaterialsResponseModel>> Create(
+			ApiBillOfMaterialsRequestModel model)
 		{
-			CreateResponse<POCOBillOfMaterials> response = new CreateResponse<POCOBillOfMaterials>(await this.billOfMaterialsModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBillOfMaterialsResponseModel> response = new CreateResponse<ApiBillOfMaterialsResponseModel>(await this.billOfMaterialsModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBillOfMaterials record = await this.billOfMaterialsRepository.Create(model);
+				var dto = this.billOfMaterialsMapper.MapModelToDTO(default (int), model);
+				var record = await this.billOfMaterialsRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.billOfMaterialsMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int billOfMaterialsID,
-			ApiBillOfMaterialsModel model)
+			ApiBillOfMaterialsRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.billOfMaterialsModelValidator.ValidateUpdateAsync(billOfMaterialsID, model));
 
 			if (response.Success)
 			{
-				await this.billOfMaterialsRepository.Update(billOfMaterialsID, model);
+				var dto = this.billOfMaterialsMapper.MapModelToDTO(billOfMaterialsID, model);
+				await this.billOfMaterialsRepository.Update(billOfMaterialsID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
+		public async Task<ApiBillOfMaterialsResponseModel> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
 		{
-			return await this.billOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(productAssemblyID,componentID,startDate);
+			DTOBillOfMaterials record = await this.billOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(productAssemblyID,componentID,startDate);
+
+			return this.billOfMaterialsMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode)
+		public async Task<List<ApiBillOfMaterialsResponseModel>> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			return await this.billOfMaterialsRepository.GetUnitMeasureCode(unitMeasureCode);
+			List<DTOBillOfMaterials> records = await this.billOfMaterialsRepository.GetUnitMeasureCode(unitMeasureCode);
+
+			return this.billOfMaterialsMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>369d758718f2c5bb6b600c437c8a9734</Hash>
+    <Hash>e9a00ffcd7ed24f82f6c43c3e3fb9430</Hash>
 </Codenesium>*/

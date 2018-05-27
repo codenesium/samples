@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCustomer>), 200)]
+		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCustomer> response = await this.customerManager.All(query.Offset, query.Limit);
+			List<ApiCustomerResponseModel> response = await this.customerManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCustomer), 200)]
+		[ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOCustomer response = await this.customerManager.Get(id);
+			ApiCustomerResponseModel response = await this.customerManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCustomer), 200)]
+		[ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCustomerModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiCustomerRequestModel model)
 		{
-			CreateResponse<POCOCustomer> result = await this.customerManager.Create(model);
+			CreateResponse<ApiCustomerResponseModel> result = await this.customerManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOCustomer>), 200)]
+		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCustomerModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCustomerRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOCustomer> records = new List<POCOCustomer>();
+			List<ApiCustomerResponseModel> records = new List<ApiCustomerResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOCustomer> result = await this.customerManager.Create(model);
+				CreateResponse<ApiCustomerResponseModel> result = await this.customerManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCustomer), 200)]
+		[ProducesResponseType(typeof(DTOCustomer), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCustomerModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiCustomerRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCustomer response = await this.customerManager.Get(id);
+					ApiCustomerResponseModel response = await this.customerManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getAccountNumber/{accountNumber}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCustomer), 200)]
+		[ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetAccountNumber(string accountNumber)
 		{
-			POCOCustomer response = await this.customerManager.GetAccountNumber(accountNumber);
+			ApiCustomerResponseModel response = await this.customerManager.GetAccountNumber(accountNumber);
 
 			if (response == null)
 			{
@@ -190,10 +190,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getTerritoryID/{territoryID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCustomer>), 200)]
+		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetTerritoryID(Nullable<int> territoryID)
 		{
-			List<POCOCustomer> response = await this.customerManager.GetTerritoryID(territoryID);
+			List<ApiCustomerResponseModel> response = await this.customerManager.GetTerritoryID(territoryID);
 
 			return this.Ok(response);
 		}
@@ -201,5 +201,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>49ecd2426c1034bb0d0863a4cb2a8468</Hash>
+    <Hash>d3d10fed69812c42ddbf7808b1809866</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOPhoneNumberType: AbstractBOManager
 	{
 		private IPhoneNumberTypeRepository phoneNumberTypeRepository;
-		private IApiPhoneNumberTypeModelValidator phoneNumberTypeModelValidator;
+		private IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator;
+		private IBOLPhoneNumberTypeMapper phoneNumberTypeMapper;
 		private ILogger logger;
 
 		public AbstractBOPhoneNumberType(
 			ILogger logger,
 			IPhoneNumberTypeRepository phoneNumberTypeRepository,
-			IApiPhoneNumberTypeModelValidator phoneNumberTypeModelValidator)
+			IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
+			IBOLPhoneNumberTypeMapper phoneNumberTypeMapper)
 			: base()
 
 		{
 			this.phoneNumberTypeRepository = phoneNumberTypeRepository;
 			this.phoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
+			this.phoneNumberTypeMapper = phoneNumberTypeMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.phoneNumberTypeRepository.All(skip, take, orderClause);
+			var records = await this.phoneNumberTypeRepository.All(skip, take, orderClause);
+
+			return this.phoneNumberTypeMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPhoneNumberType> Get(int phoneNumberTypeID)
+		public virtual async Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID)
 		{
-			return this.phoneNumberTypeRepository.Get(phoneNumberTypeID);
+			var record = await phoneNumberTypeRepository.Get(phoneNumberTypeID);
+
+			return this.phoneNumberTypeMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPhoneNumberType>> Create(
-			ApiPhoneNumberTypeModel model)
+		public virtual async Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
+			ApiPhoneNumberTypeRequestModel model)
 		{
-			CreateResponse<POCOPhoneNumberType> response = new CreateResponse<POCOPhoneNumberType>(await this.phoneNumberTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPhoneNumberTypeResponseModel> response = new CreateResponse<ApiPhoneNumberTypeResponseModel>(await this.phoneNumberTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPhoneNumberType record = await this.phoneNumberTypeRepository.Create(model);
+				var dto = this.phoneNumberTypeMapper.MapModelToDTO(default (int), model);
+				var record = await this.phoneNumberTypeRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.phoneNumberTypeMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int phoneNumberTypeID,
-			ApiPhoneNumberTypeModel model)
+			ApiPhoneNumberTypeRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.phoneNumberTypeModelValidator.ValidateUpdateAsync(phoneNumberTypeID, model));
 
 			if (response.Success)
 			{
-				await this.phoneNumberTypeRepository.Update(phoneNumberTypeID, model);
+				var dto = this.phoneNumberTypeMapper.MapModelToDTO(phoneNumberTypeID, model);
+				await this.phoneNumberTypeRepository.Update(phoneNumberTypeID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>24eaeeee4d23a870ecfbfa8b1ee1fa4b</Hash>
+    <Hash>61a78b9ff752cd956444a9b1da7a1066</Hash>
 </Codenesium>*/

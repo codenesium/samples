@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOShift>), 200)]
+		[ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOShift> response = await this.shiftManager.All(query.Offset, query.Limit);
+			List<ApiShiftResponseModel> response = await this.shiftManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOShift), 200)]
+		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOShift response = await this.shiftManager.Get(id);
+			ApiShiftResponseModel response = await this.shiftManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOShift), 200)]
+		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiShiftModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiShiftRequestModel model)
 		{
-			CreateResponse<POCOShift> result = await this.shiftManager.Create(model);
+			CreateResponse<ApiShiftResponseModel> result = await this.shiftManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOShift>), 200)]
+		[ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShiftModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShiftRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOShift> records = new List<POCOShift>();
+			List<ApiShiftResponseModel> records = new List<ApiShiftResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOShift> result = await this.shiftManager.Create(model);
+				CreateResponse<ApiShiftResponseModel> result = await this.shiftManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOShift), 200)]
+		[ProducesResponseType(typeof(DTOShift), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOShift response = await this.shiftManager.Get(id);
+					ApiShiftResponseModel response = await this.shiftManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOShift), 200)]
+		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOShift response = await this.shiftManager.GetName(name);
+			ApiShiftResponseModel response = await this.shiftManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,11 +190,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getStartTimeEndTime/{startTime}/{endTime}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOShift), 200)]
+		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
 		{
-			POCOShift response = await this.shiftManager.GetStartTimeEndTime(startTime,endTime);
+			ApiShiftResponseModel response = await this.shiftManager.GetStartTimeEndTime(startTime,endTime);
 
 			if (response == null)
 			{
@@ -209,5 +209,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>589260efc27bcfd465b4713357d9776f</Hash>
+    <Hash>aef7bfdc4718a5aac1af145ab0d4f9ee</Hash>
 </Codenesium>*/

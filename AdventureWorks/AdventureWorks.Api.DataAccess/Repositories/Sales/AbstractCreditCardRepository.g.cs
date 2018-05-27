@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALCreditCardMapper Mapper { get; }
 
 		public AbstractCreditCardRepository(
-			IObjectMapper mapper,
+			IDALCreditCardMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOCreditCard> Get(int creditCardID)
+		public async virtual Task<DTOCreditCard> Get(int creditCardID)
 		{
 			CreditCard record = await this.GetById(creditCardID);
 
-			return this.Mapper.CreditCardMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOCreditCard> Create(
-			ApiCreditCardModel model)
+		public async virtual Task<DTOCreditCard> Create(
+			DTOCreditCard dto)
 		{
 			CreditCard record = new CreditCard();
 
-			this.Mapper.CreditCardMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<CreditCard>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.CreditCardMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int creditCardID,
-			ApiCreditCardModel model)
+			DTOCreditCard dto)
 		{
 			CreditCard record = await this.GetById(creditCardID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.CreditCardMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					creditCardID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOCreditCard> GetCardNumber(string cardNumber)
+		public async Task<DTOCreditCard> GetCardNumber(string cardNumber)
 		{
-			var records = await this.SearchLinqPOCO(x => x.CardNumber == cardNumber);
+			var records = await this.SearchLinqDTO(x => x.CardNumber == cardNumber);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOCreditCard>> Where(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOCreditCard>> Where(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCreditCard> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOCreditCard> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOCreditCard>> SearchLinqPOCO(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOCreditCard>> SearchLinqDTO(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOCreditCard> response = new List<POCOCreditCard>();
+			List<DTOCreditCard> response = new List<DTOCreditCard>();
 			List<CreditCard> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.CreditCardMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>614979a5a6cb08f75cdc4e364f1964b0</Hash>
+    <Hash>9f1f108dfb93013b134da86042455278</Hash>
 </Codenesium>*/

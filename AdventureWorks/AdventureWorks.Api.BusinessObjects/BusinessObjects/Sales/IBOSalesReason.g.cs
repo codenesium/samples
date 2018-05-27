@@ -9,20 +9,20 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOSalesReason
 	{
-		Task<CreateResponse<POCOSalesReason>> Create(
-			ApiSalesReasonModel model);
+		Task<CreateResponse<ApiSalesReasonResponseModel>> Create(
+			ApiSalesReasonRequestModel model);
 
 		Task<ActionResponse> Update(int salesReasonID,
-		                            ApiSalesReasonModel model);
+		                            ApiSalesReasonRequestModel model);
 
 		Task<ActionResponse> Delete(int salesReasonID);
 
-		Task<POCOSalesReason> Get(int salesReasonID);
+		Task<ApiSalesReasonResponseModel> Get(int salesReasonID);
 
-		Task<List<POCOSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiSalesReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>b27f7ad5b56ef791079c1e1af0bf8ddd</Hash>
+    <Hash>c1f4109c3db4ab7ad4d42b6246c31aa1</Hash>
 </Codenesium>*/

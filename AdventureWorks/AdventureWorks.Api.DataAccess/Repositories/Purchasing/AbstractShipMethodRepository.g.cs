@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALShipMethodMapper Mapper { get; }
 
 		public AbstractShipMethodRepository(
-			IObjectMapper mapper,
+			IDALShipMethodMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOShipMethod> Get(int shipMethodID)
+		public async virtual Task<DTOShipMethod> Get(int shipMethodID)
 		{
 			ShipMethod record = await this.GetById(shipMethodID);
 
-			return this.Mapper.ShipMethodMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOShipMethod> Create(
-			ApiShipMethodModel model)
+		public async virtual Task<DTOShipMethod> Create(
+			DTOShipMethod dto)
 		{
 			ShipMethod record = new ShipMethod();
 
-			this.Mapper.ShipMethodMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ShipMethod>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ShipMethodMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int shipMethodID,
-			ApiShipMethodModel model)
+			DTOShipMethod dto)
 		{
 			ShipMethod record = await this.GetById(shipMethodID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ShipMethodMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					shipMethodID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOShipMethod> GetName(string name)
+		public async Task<DTOShipMethod> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOShipMethod>> Where(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOShipMethod>> Where(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOShipMethod> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOShipMethod> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOShipMethod>> SearchLinqPOCO(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOShipMethod>> SearchLinqDTO(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOShipMethod> response = new List<POCOShipMethod>();
+			List<DTOShipMethod> response = new List<DTOShipMethod>();
 			List<ShipMethod> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ShipMethodMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1c16f4fd2f142a81dfd388d574ba732f</Hash>
+    <Hash>603a025cbdc3dc0ae6df3be10c60e5bb</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTeacherSkill>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherSkillResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOTeacherSkill> response = await this.teacherSkillManager.All(query.Offset, query.Limit);
+			List<ApiTeacherSkillResponseModel> response = await this.teacherSkillManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOTeacherSkill), 200)]
+		[ProducesResponseType(typeof(ApiTeacherSkillResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOTeacherSkill response = await this.teacherSkillManager.Get(id);
+			ApiTeacherSkillResponseModel response = await this.teacherSkillManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTeacherSkill), 200)]
+		[ProducesResponseType(typeof(ApiTeacherSkillResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTeacherSkillModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiTeacherSkillRequestModel model)
 		{
-			CreateResponse<POCOTeacherSkill> result = await this.teacherSkillManager.Create(model);
+			CreateResponse<ApiTeacherSkillResponseModel> result = await this.teacherSkillManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOTeacherSkill>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherSkillResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherSkillModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherSkillRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOTeacherSkill> records = new List<POCOTeacherSkill>();
+			List<ApiTeacherSkillResponseModel> records = new List<ApiTeacherSkillResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOTeacherSkill> result = await this.teacherSkillManager.Create(model);
+				CreateResponse<ApiTeacherSkillResponseModel> result = await this.teacherSkillManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTeacherSkill), 200)]
+		[ProducesResponseType(typeof(DTOTeacherSkill), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherSkillModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherSkillRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTeacherSkill response = await this.teacherSkillManager.Get(id);
+					ApiTeacherSkillResponseModel response = await this.teacherSkillManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1740199be3b2a6d88b389b64da9b8d8c</Hash>
+    <Hash>3e99e5d550969472efb2ab99bb528fc8</Hash>
 </Codenesium>*/

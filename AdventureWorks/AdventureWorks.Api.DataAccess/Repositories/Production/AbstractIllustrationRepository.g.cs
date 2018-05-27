@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALIllustrationMapper Mapper { get; }
 
 		public AbstractIllustrationRepository(
-			IObjectMapper mapper,
+			IDALIllustrationMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOIllustration> Get(int illustrationID)
+		public async virtual Task<DTOIllustration> Get(int illustrationID)
 		{
 			Illustration record = await this.GetById(illustrationID);
 
-			return this.Mapper.IllustrationMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOIllustration> Create(
-			ApiIllustrationModel model)
+		public async virtual Task<DTOIllustration> Create(
+			DTOIllustration dto)
 		{
 			Illustration record = new Illustration();
 
-			this.Mapper.IllustrationMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Illustration>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.IllustrationMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int illustrationID,
-			ApiIllustrationModel model)
+			DTOIllustration dto)
 		{
 			Illustration record = await this.GetById(illustrationID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.IllustrationMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					illustrationID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOIllustration>> Where(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOIllustration>> Where(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOIllustration> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOIllustration> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOIllustration>> SearchLinqPOCO(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOIllustration>> SearchLinqDTO(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOIllustration> response = new List<POCOIllustration>();
+			List<DTOIllustration> response = new List<DTOIllustration>();
 			List<Illustration> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.IllustrationMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7b1df99bf3f1a55267be806a074fec9b</Hash>
+    <Hash>47b937c0dc3a91f8294fa6c76255ab00</Hash>
 </Codenesium>*/

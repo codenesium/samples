@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOEmployee(
 			ILogger<EmployeeRepository> logger,
 			IEmployeeRepository employeeRepository,
-			IApiEmployeeModelValidator employeeModelValidator)
-			: base(logger, employeeRepository, employeeModelValidator)
+			IApiEmployeeRequestModelValidator employeeModelValidator,
+			IBOLEmployeeMapper employeeMapper)
+			: base(logger, employeeRepository, employeeModelValidator, employeeMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>459b542f1d5c79c85355ea76e20c641d</Hash>
+    <Hash>ed80cb50d6d6fc3313ec6522f7096cff</Hash>
 </Codenesium>*/

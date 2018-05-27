@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class FamilyRepository: AbstractFamilyRepository, IFamilyRepository
 	{
 		public FamilyRepository(
-			IObjectMapper mapper,
+			IDALFamilyMapper mapper,
 			ILogger<FamilyRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a127a3719711e68682626bc4b7f231a0</Hash>
+    <Hash>95bd42c3a9d4af3152659b7ef50d44f2</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTeacherXTeacherSkill>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherXTeacherSkillResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOTeacherXTeacherSkill> response = await this.teacherXTeacherSkillManager.All(query.Offset, query.Limit);
+			List<ApiTeacherXTeacherSkillResponseModel> response = await this.teacherXTeacherSkillManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOTeacherXTeacherSkill), 200)]
+		[ProducesResponseType(typeof(ApiTeacherXTeacherSkillResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOTeacherXTeacherSkill response = await this.teacherXTeacherSkillManager.Get(id);
+			ApiTeacherXTeacherSkillResponseModel response = await this.teacherXTeacherSkillManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTeacherXTeacherSkill), 200)]
+		[ProducesResponseType(typeof(ApiTeacherXTeacherSkillResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTeacherXTeacherSkillModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiTeacherXTeacherSkillRequestModel model)
 		{
-			CreateResponse<POCOTeacherXTeacherSkill> result = await this.teacherXTeacherSkillManager.Create(model);
+			CreateResponse<ApiTeacherXTeacherSkillResponseModel> result = await this.teacherXTeacherSkillManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOTeacherXTeacherSkill>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeacherXTeacherSkillResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherXTeacherSkillModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeacherXTeacherSkillRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOTeacherXTeacherSkill> records = new List<POCOTeacherXTeacherSkill>();
+			List<ApiTeacherXTeacherSkillResponseModel> records = new List<ApiTeacherXTeacherSkillResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOTeacherXTeacherSkill> result = await this.teacherXTeacherSkillManager.Create(model);
+				CreateResponse<ApiTeacherXTeacherSkillResponseModel> result = await this.teacherXTeacherSkillManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTeacherXTeacherSkill), 200)]
+		[ProducesResponseType(typeof(DTOTeacherXTeacherSkill), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherXTeacherSkillModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeacherXTeacherSkillRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTeacherXTeacherSkill response = await this.teacherXTeacherSkillManager.Get(id);
+					ApiTeacherXTeacherSkillResponseModel response = await this.teacherXTeacherSkillManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>241929d333189d7330758a2912427195</Hash>
+    <Hash>3f04fb1e9d60ca80c013f5fad5866a5e</Hash>
 </Codenesium>*/

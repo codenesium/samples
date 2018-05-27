@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOIllustration>), 200)]
+		[ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOIllustration> response = await this.illustrationManager.All(query.Offset, query.Limit);
+			List<ApiIllustrationResponseModel> response = await this.illustrationManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOIllustration), 200)]
+		[ProducesResponseType(typeof(ApiIllustrationResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOIllustration response = await this.illustrationManager.Get(id);
+			ApiIllustrationResponseModel response = await this.illustrationManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOIllustration), 200)]
+		[ProducesResponseType(typeof(ApiIllustrationResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiIllustrationModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiIllustrationRequestModel model)
 		{
-			CreateResponse<POCOIllustration> result = await this.illustrationManager.Create(model);
+			CreateResponse<ApiIllustrationResponseModel> result = await this.illustrationManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOIllustration>), 200)]
+		[ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiIllustrationModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiIllustrationRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOIllustration> records = new List<POCOIllustration>();
+			List<ApiIllustrationResponseModel> records = new List<ApiIllustrationResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOIllustration> result = await this.illustrationManager.Create(model);
+				CreateResponse<ApiIllustrationResponseModel> result = await this.illustrationManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOIllustration), 200)]
+		[ProducesResponseType(typeof(DTOIllustration), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIllustrationModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiIllustrationRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOIllustration response = await this.illustrationManager.Get(id);
+					ApiIllustrationResponseModel response = await this.illustrationManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>eef9de72e1c7b84b2e4eaf8e8d6e73d1</Hash>
+    <Hash>14ca0b73068feb2e4ff6f917d02bde53</Hash>
 </Codenesium>*/

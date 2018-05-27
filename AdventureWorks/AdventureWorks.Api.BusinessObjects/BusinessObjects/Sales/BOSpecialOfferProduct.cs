@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOSpecialOfferProduct(
 			ILogger<SpecialOfferProductRepository> logger,
 			ISpecialOfferProductRepository specialOfferProductRepository,
-			IApiSpecialOfferProductModelValidator specialOfferProductModelValidator)
-			: base(logger, specialOfferProductRepository, specialOfferProductModelValidator)
+			IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator,
+			IBOLSpecialOfferProductMapper specialOfferProductMapper)
+			: base(logger, specialOfferProductRepository, specialOfferProductModelValidator, specialOfferProductMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aead8391bc774bd71d1fce35be602f12</Hash>
+    <Hash>60fbe5ffecc9bd91c412941f560a2f2b</Hash>
 </Codenesium>*/

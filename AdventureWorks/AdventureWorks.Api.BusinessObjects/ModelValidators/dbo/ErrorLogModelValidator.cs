@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiErrorLogModelValidator: AbstractApiErrorLogModelValidator, IApiErrorLogModelValidator
+	public class ApiErrorLogRequestModelValidator: AbstractApiErrorLogRequestModelValidator, IApiErrorLogRequestModelValidator
 	{
-		public ApiErrorLogModelValidator()
+		public ApiErrorLogRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiErrorLogModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiErrorLogRequestModel model)
 		{
 			this.ErrorLineRules();
 			this.ErrorMessageRules();
@@ -24,7 +24,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiErrorLogModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiErrorLogRequestModel model)
 		{
 			this.ErrorLineRules();
 			this.ErrorMessageRules();
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5863fedc373b9bd2ef87c58751b190f7</Hash>
+    <Hash>374b8e83c81225f325c27e469f21e733</Hash>
 </Codenesium>*/

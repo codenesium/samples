@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesTerritoryHistory: AbstractBOManager
 	{
 		private ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
-		private IApiSalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator;
+		private IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator;
+		private IBOLSalesTerritoryHistoryMapper salesTerritoryHistoryMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesTerritoryHistory(
 			ILogger logger,
 			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
-			IApiSalesTerritoryHistoryModelValidator salesTerritoryHistoryModelValidator)
+			IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
+			IBOLSalesTerritoryHistoryMapper salesTerritoryHistoryMapper)
 			: base()
 
 		{
 			this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
 			this.salesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
+			this.salesTerritoryHistoryMapper = salesTerritoryHistoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesTerritoryHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesTerritoryHistoryRepository.All(skip, take, orderClause);
+			var records = await this.salesTerritoryHistoryRepository.All(skip, take, orderClause);
+
+			return this.salesTerritoryHistoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesTerritoryHistory> Get(int businessEntityID)
+		public virtual async Task<ApiSalesTerritoryHistoryResponseModel> Get(int businessEntityID)
 		{
-			return this.salesTerritoryHistoryRepository.Get(businessEntityID);
+			var record = await salesTerritoryHistoryRepository.Get(businessEntityID);
+
+			return this.salesTerritoryHistoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesTerritoryHistory>> Create(
-			ApiSalesTerritoryHistoryModel model)
+		public virtual async Task<CreateResponse<ApiSalesTerritoryHistoryResponseModel>> Create(
+			ApiSalesTerritoryHistoryRequestModel model)
 		{
-			CreateResponse<POCOSalesTerritoryHistory> response = new CreateResponse<POCOSalesTerritoryHistory>(await this.salesTerritoryHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesTerritoryHistoryResponseModel> response = new CreateResponse<ApiSalesTerritoryHistoryResponseModel>(await this.salesTerritoryHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesTerritoryHistory record = await this.salesTerritoryHistoryRepository.Create(model);
+				var dto = this.salesTerritoryHistoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesTerritoryHistoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesTerritoryHistoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiSalesTerritoryHistoryModel model)
+			ApiSalesTerritoryHistoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesTerritoryHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.salesTerritoryHistoryRepository.Update(businessEntityID, model);
+				var dto = this.salesTerritoryHistoryMapper.MapModelToDTO(businessEntityID, model);
+				await this.salesTerritoryHistoryRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>959c64bc6a65e13de774ae8b976a8f7f</Hash>
+    <Hash>25d555ec55e53616048bb0264c151973</Hash>
 </Codenesium>*/

@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICountryRegionCurrencyRepository
 	{
-		Task<POCOCountryRegionCurrency> Create(ApiCountryRegionCurrencyModel model);
+		Task<DTOCountryRegionCurrency> Create(DTOCountryRegionCurrency dto);
 
 		Task Update(string countryRegionCode,
-		            ApiCountryRegionCurrencyModel model);
+		            DTOCountryRegionCurrency dto);
 
 		Task Delete(string countryRegionCode);
 
-		Task<POCOCountryRegionCurrency> Get(string countryRegionCode);
+		Task<DTOCountryRegionCurrency> Get(string countryRegionCode);
 
-		Task<List<POCOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOCountryRegionCurrency>> GetCurrencyCode(string currencyCode);
+		Task<List<DTOCountryRegionCurrency>> GetCurrencyCode(string currencyCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>356a559ecc0f88eda0bb833d01650831</Hash>
+    <Hash>116fed26dc10448c3c738eefd137700f</Hash>
 </Codenesium>*/

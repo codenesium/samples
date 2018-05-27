@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALMachineRefTeamMapper Mapper { get; }
 
 		public AbstractMachineRefTeamRepository(
-			IObjectMapper mapper,
+			IDALMachineRefTeamMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOMachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOMachineRefTeam> Get(int id)
+		public async virtual Task<DTOMachineRefTeam> Get(int id)
 		{
 			MachineRefTeam record = await this.GetById(id);
 
-			return this.Mapper.MachineRefTeamMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOMachineRefTeam> Create(
-			ApiMachineRefTeamModel model)
+		public async virtual Task<DTOMachineRefTeam> Create(
+			DTOMachineRefTeam dto)
 		{
 			MachineRefTeam record = new MachineRefTeam();
 
-			this.Mapper.MachineRefTeamMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<MachineRefTeam>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MachineRefTeamMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiMachineRefTeamModel model)
+			DTOMachineRefTeam dto)
 		{
 			MachineRefTeam record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.MachineRefTeamMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOMachineRefTeam>> Where(Expression<Func<MachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOMachineRefTeam>> Where(Expression<Func<MachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOMachineRefTeam> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOMachineRefTeam> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOMachineRefTeam>> SearchLinqPOCO(Expression<Func<MachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOMachineRefTeam>> SearchLinqDTO(Expression<Func<MachineRefTeam, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOMachineRefTeam> response = new List<POCOMachineRefTeam>();
+			List<DTOMachineRefTeam> response = new List<DTOMachineRefTeam>();
 			List<MachineRefTeam> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MachineRefTeamMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4ee6811b2dfdb9bdda29205dc0f689dd</Hash>
+    <Hash>4fb67c23bb91d4142b7febd4645b16a6</Hash>
 </Codenesium>*/

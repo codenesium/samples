@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialsResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBillOfMaterials> response = await this.billOfMaterialsManager.All(query.Offset, query.Limit);
+			List<ApiBillOfMaterialsResponseModel> response = await this.billOfMaterialsManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOBillOfMaterials), 200)]
+		[ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBillOfMaterials response = await this.billOfMaterialsManager.Get(id);
+			ApiBillOfMaterialsResponseModel response = await this.billOfMaterialsManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBillOfMaterials), 200)]
+		[ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBillOfMaterialsModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiBillOfMaterialsRequestModel model)
 		{
-			CreateResponse<POCOBillOfMaterials> result = await this.billOfMaterialsManager.Create(model);
+			CreateResponse<ApiBillOfMaterialsResponseModel> result = await this.billOfMaterialsManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialsResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBillOfMaterialsModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBillOfMaterialsRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOBillOfMaterials> records = new List<POCOBillOfMaterials>();
+			List<ApiBillOfMaterialsResponseModel> records = new List<ApiBillOfMaterialsResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOBillOfMaterials> result = await this.billOfMaterialsManager.Create(model);
+				CreateResponse<ApiBillOfMaterialsResponseModel> result = await this.billOfMaterialsManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBillOfMaterials), 200)]
+		[ProducesResponseType(typeof(DTOBillOfMaterials), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBillOfMaterialsModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBillOfMaterialsRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBillOfMaterials response = await this.billOfMaterialsManager.Get(id);
+					ApiBillOfMaterialsResponseModel response = await this.billOfMaterialsManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getProductAssemblyIDComponentIDStartDate/{productAssemblyID}/{componentID}/{startDate}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOBillOfMaterials), 200)]
+		[ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
 		{
-			POCOBillOfMaterials response = await this.billOfMaterialsManager.GetProductAssemblyIDComponentIDStartDate(productAssemblyID,componentID,startDate);
+			ApiBillOfMaterialsResponseModel response = await this.billOfMaterialsManager.GetProductAssemblyIDComponentIDStartDate(productAssemblyID,componentID,startDate);
 
 			if (response == null)
 			{
@@ -190,10 +190,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getUnitMeasureCode/{unitMeasureCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOBillOfMaterials>), 200)]
+		[ProducesResponseType(typeof(List<ApiBillOfMaterialsResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			List<POCOBillOfMaterials> response = await this.billOfMaterialsManager.GetUnitMeasureCode(unitMeasureCode);
+			List<ApiBillOfMaterialsResponseModel> response = await this.billOfMaterialsManager.GetUnitMeasureCode(unitMeasureCode);
 
 			return this.Ok(response);
 		}
@@ -201,5 +201,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5f273c0a5dbf886f2114b2c85d30193b</Hash>
+    <Hash>1bba6eba1d408b7aba6c06f4ccbf44da</Hash>
 </Codenesium>*/

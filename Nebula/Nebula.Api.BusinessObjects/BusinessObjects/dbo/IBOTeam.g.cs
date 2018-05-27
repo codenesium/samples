@@ -9,22 +9,22 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOTeam
 	{
-		Task<CreateResponse<POCOTeam>> Create(
-			ApiTeamModel model);
+		Task<CreateResponse<ApiTeamResponseModel>> Create(
+			ApiTeamRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiTeamModel model);
+		                            ApiTeamRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOTeam> Get(int id);
+		Task<ApiTeamResponseModel> Get(int id);
 
-		Task<List<POCOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOTeam> GetName(string name);
+		Task<ApiTeamResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c21b02ca73cde01da10528081c08921</Hash>
+    <Hash>10429549662104ebc167763d514206f9</Hash>
 </Codenesium>*/

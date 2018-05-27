@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesOrderHeader: AbstractBOManager
 	{
 		private ISalesOrderHeaderRepository salesOrderHeaderRepository;
-		private IApiSalesOrderHeaderModelValidator salesOrderHeaderModelValidator;
+		private IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator;
+		private IBOLSalesOrderHeaderMapper salesOrderHeaderMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesOrderHeader(
 			ILogger logger,
 			ISalesOrderHeaderRepository salesOrderHeaderRepository,
-			IApiSalesOrderHeaderModelValidator salesOrderHeaderModelValidator)
+			IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
+			IBOLSalesOrderHeaderMapper salesOrderHeaderMapper)
 			: base()
 
 		{
 			this.salesOrderHeaderRepository = salesOrderHeaderRepository;
 			this.salesOrderHeaderModelValidator = salesOrderHeaderModelValidator;
+			this.salesOrderHeaderMapper = salesOrderHeaderMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesOrderHeaderRepository.All(skip, take, orderClause);
+			var records = await this.salesOrderHeaderRepository.All(skip, take, orderClause);
+
+			return this.salesOrderHeaderMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesOrderHeader> Get(int salesOrderID)
+		public virtual async Task<ApiSalesOrderHeaderResponseModel> Get(int salesOrderID)
 		{
-			return this.salesOrderHeaderRepository.Get(salesOrderID);
+			var record = await salesOrderHeaderRepository.Get(salesOrderID);
+
+			return this.salesOrderHeaderMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesOrderHeader>> Create(
-			ApiSalesOrderHeaderModel model)
+		public virtual async Task<CreateResponse<ApiSalesOrderHeaderResponseModel>> Create(
+			ApiSalesOrderHeaderRequestModel model)
 		{
-			CreateResponse<POCOSalesOrderHeader> response = new CreateResponse<POCOSalesOrderHeader>(await this.salesOrderHeaderModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesOrderHeaderResponseModel> response = new CreateResponse<ApiSalesOrderHeaderResponseModel>(await this.salesOrderHeaderModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesOrderHeader record = await this.salesOrderHeaderRepository.Create(model);
+				var dto = this.salesOrderHeaderMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesOrderHeaderRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesOrderHeaderMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int salesOrderID,
-			ApiSalesOrderHeaderModel model)
+			ApiSalesOrderHeaderRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesOrderHeaderModelValidator.ValidateUpdateAsync(salesOrderID, model));
 
 			if (response.Success)
 			{
-				await this.salesOrderHeaderRepository.Update(salesOrderID, model);
+				var dto = this.salesOrderHeaderMapper.MapModelToDTO(salesOrderID, model);
+				await this.salesOrderHeaderRepository.Update(salesOrderID, dto);
 			}
 
 			return response;
@@ -80,21 +88,27 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
+		public async Task<ApiSalesOrderHeaderResponseModel> GetSalesOrderNumber(string salesOrderNumber)
 		{
-			return await this.salesOrderHeaderRepository.GetSalesOrderNumber(salesOrderNumber);
+			DTOSalesOrderHeader record = await this.salesOrderHeaderRepository.GetSalesOrderNumber(salesOrderNumber);
+
+			return this.salesOrderHeaderMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCOSalesOrderHeader>> GetCustomerID(int customerID)
+		public async Task<List<ApiSalesOrderHeaderResponseModel>> GetCustomerID(int customerID)
 		{
-			return await this.salesOrderHeaderRepository.GetCustomerID(customerID);
+			List<DTOSalesOrderHeader> records = await this.salesOrderHeaderRepository.GetCustomerID(customerID);
+
+			return this.salesOrderHeaderMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
+		public async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			return await this.salesOrderHeaderRepository.GetSalesPersonID(salesPersonID);
+			List<DTOSalesOrderHeader> records = await this.salesOrderHeaderRepository.GetSalesPersonID(salesPersonID);
+
+			return this.salesOrderHeaderMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>577433e12bffa28be3f94802fca7bd22</Hash>
+    <Hash>cf85bda616f5971c5f2e60068e5df095</Hash>
 </Codenesium>*/

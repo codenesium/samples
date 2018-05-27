@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("StateProvince", Schema="Person")]
-	public partial class StateProvince: AbstractEntityFrameworkPOCO
+	public partial class StateProvince: AbstractEntityFrameworkDTO
 	{
 		public StateProvince()
 		{}
@@ -43,6 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Name", TypeName="nvarchar(50)")]
 		public string Name { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
@@ -59,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4b4c23f59974291df3bcec073e8bce06</Hash>
+    <Hash>5cba1d48f4963eceee4f0bcbc4f32a24</Hash>
 </Codenesium>*/

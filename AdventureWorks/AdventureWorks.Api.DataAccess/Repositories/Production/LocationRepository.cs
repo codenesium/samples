@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class LocationRepository: AbstractLocationRepository, ILocationRepository
 	{
 		public LocationRepository(
-			IObjectMapper mapper,
+			IDALLocationMapper mapper,
 			ILogger<LocationRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>90a41863ac55e80822241033ede3c624</Hash>
+    <Hash>adeba0ed963f8631f95792e7e76810a3</Hash>
 </Codenesium>*/

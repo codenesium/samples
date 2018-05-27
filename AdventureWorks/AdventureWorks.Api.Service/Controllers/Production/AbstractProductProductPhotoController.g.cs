@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductProductPhoto>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductProductPhotoResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductProductPhoto> response = await this.productProductPhotoManager.All(query.Offset, query.Limit);
+			List<ApiProductProductPhotoResponseModel> response = await this.productProductPhotoManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductProductPhoto), 200)]
+		[ProducesResponseType(typeof(ApiProductProductPhotoResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductProductPhoto response = await this.productProductPhotoManager.Get(id);
+			ApiProductProductPhotoResponseModel response = await this.productProductPhotoManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductProductPhoto), 200)]
+		[ProducesResponseType(typeof(ApiProductProductPhotoResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductProductPhotoModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductProductPhotoRequestModel model)
 		{
-			CreateResponse<POCOProductProductPhoto> result = await this.productProductPhotoManager.Create(model);
+			CreateResponse<ApiProductProductPhotoResponseModel> result = await this.productProductPhotoManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductProductPhoto>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductProductPhotoResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductProductPhotoModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductProductPhotoRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductProductPhoto> records = new List<POCOProductProductPhoto>();
+			List<ApiProductProductPhotoResponseModel> records = new List<ApiProductProductPhotoResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductProductPhoto> result = await this.productProductPhotoManager.Create(model);
+				CreateResponse<ApiProductProductPhotoResponseModel> result = await this.productProductPhotoManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductProductPhoto), 200)]
+		[ProducesResponseType(typeof(DTOProductProductPhoto), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductProductPhotoModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductProductPhotoRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductProductPhoto response = await this.productProductPhotoManager.Get(id);
+					ApiProductProductPhotoResponseModel response = await this.productProductPhotoManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f52ced0188f1e5b79c44b03a11156304</Hash>
+    <Hash>13eca0acdfcab23af27c0d838187decf</Hash>
 </Codenesium>*/

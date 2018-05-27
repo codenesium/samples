@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class VendorRepository: AbstractVendorRepository, IVendorRepository
 	{
 		public VendorRepository(
-			IObjectMapper mapper,
+			IDALVendorMapper mapper,
 			ILogger<VendorRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ce54b28677d28501cabb1258a0fb510b</Hash>
+    <Hash>52fa26d4570501e62fd6950e4ef7347a</Hash>
 </Codenesium>*/

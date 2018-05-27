@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IScrapReasonRepository
 	{
-		Task<POCOScrapReason> Create(ApiScrapReasonModel model);
+		Task<DTOScrapReason> Create(DTOScrapReason dto);
 
 		Task Update(short scrapReasonID,
-		            ApiScrapReasonModel model);
+		            DTOScrapReason dto);
 
 		Task Delete(short scrapReasonID);
 
-		Task<POCOScrapReason> Get(short scrapReasonID);
+		Task<DTOScrapReason> Get(short scrapReasonID);
 
-		Task<List<POCOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOScrapReason> GetName(string name);
+		Task<DTOScrapReason> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>95f26e7c820b6da51ad8f052c657f98b</Hash>
+    <Hash>9ee8fccec3a8a2189c07c6e666d58fcd</Hash>
 </Codenesium>*/

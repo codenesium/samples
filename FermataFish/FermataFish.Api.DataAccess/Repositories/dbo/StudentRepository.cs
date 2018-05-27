@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class StudentRepository: AbstractStudentRepository, IStudentRepository
 	{
 		public StudentRepository(
-			IObjectMapper mapper,
+			IDALStudentMapper mapper,
 			ILogger<StudentRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3d8f876711ce85ba7286fcc71efce126</Hash>
+    <Hash>fd4c5189fd7f250f99739534cd877e41</Hash>
 </Codenesium>*/

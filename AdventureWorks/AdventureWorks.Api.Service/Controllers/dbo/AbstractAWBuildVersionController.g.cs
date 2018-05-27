@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOAWBuildVersion>), 200)]
+		[ProducesResponseType(typeof(List<ApiAWBuildVersionResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOAWBuildVersion> response = await this.aWBuildVersionManager.All(query.Offset, query.Limit);
+			List<ApiAWBuildVersionResponseModel> response = await this.aWBuildVersionManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOAWBuildVersion), 200)]
+		[ProducesResponseType(typeof(ApiAWBuildVersionResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOAWBuildVersion response = await this.aWBuildVersionManager.Get(id);
+			ApiAWBuildVersionResponseModel response = await this.aWBuildVersionManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAWBuildVersion), 200)]
+		[ProducesResponseType(typeof(ApiAWBuildVersionResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAWBuildVersionModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiAWBuildVersionRequestModel model)
 		{
-			CreateResponse<POCOAWBuildVersion> result = await this.aWBuildVersionManager.Create(model);
+			CreateResponse<ApiAWBuildVersionResponseModel> result = await this.aWBuildVersionManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOAWBuildVersion>), 200)]
+		[ProducesResponseType(typeof(List<ApiAWBuildVersionResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAWBuildVersionModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAWBuildVersionRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOAWBuildVersion> records = new List<POCOAWBuildVersion>();
+			List<ApiAWBuildVersionResponseModel> records = new List<ApiAWBuildVersionResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOAWBuildVersion> result = await this.aWBuildVersionManager.Create(model);
+				CreateResponse<ApiAWBuildVersionResponseModel> result = await this.aWBuildVersionManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAWBuildVersion), 200)]
+		[ProducesResponseType(typeof(DTOAWBuildVersion), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAWBuildVersionModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAWBuildVersionRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOAWBuildVersion response = await this.aWBuildVersionManager.Get(id);
+					ApiAWBuildVersionResponseModel response = await this.aWBuildVersionManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>b00f6c229800e04d59b67770e978608a</Hash>
+    <Hash>bfd11d27ca11fd1c4e6ce2c49d556585</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ProductSubcategoryRepository: AbstractProductSubcategoryRepository, IProductSubcategoryRepository
 	{
 		public ProductSubcategoryRepository(
-			IObjectMapper mapper,
+			IDALProductSubcategoryMapper mapper,
 			ILogger<ProductSubcategoryRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a870ed960dc694f33dc70efcf62963f5</Hash>
+    <Hash>45f0449f0be9769b4195eb9d1aa1ac49</Hash>
 </Codenesium>*/

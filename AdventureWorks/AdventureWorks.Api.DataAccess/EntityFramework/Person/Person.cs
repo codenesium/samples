@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Person", Schema="Person")]
-	public partial class Person:AbstractEntityFrameworkPOCO
+	public partial class Person:AbstractEntityFrameworkDTO
 	{
 		public Person()
 		{}
@@ -72,6 +72,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("PersonType", TypeName="nchar(2)")]
 		public string PersonType { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
@@ -84,5 +85,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7322a74afd19958925ca4f62e952504a</Hash>
+    <Hash>6689c83fa9d39d981c2743e8ec82a435</Hash>
 </Codenesium>*/

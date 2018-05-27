@@ -15,12 +15,13 @@ namespace FermataFishNS.Api.BusinessObjects
 		public BOStudentXFamily(
 			ILogger<StudentXFamilyRepository> logger,
 			IStudentXFamilyRepository studentXFamilyRepository,
-			IApiStudentXFamilyModelValidator studentXFamilyModelValidator)
-			: base(logger, studentXFamilyRepository, studentXFamilyModelValidator)
+			IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator,
+			IBOLStudentXFamilyMapper studentXFamilyMapper)
+			: base(logger, studentXFamilyRepository, studentXFamilyModelValidator, studentXFamilyMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a02daf3932c73b806740338b4f2bc82b</Hash>
+    <Hash>daa2cbe15b956c815df3d37adde59216</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductListPriceHistoryMapper Mapper { get; }
 
 		public AbstractProductListPriceHistoryRepository(
-			IObjectMapper mapper,
+			IDALProductListPriceHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProductListPriceHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProductListPriceHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProductListPriceHistory> Get(int productID)
+		public async virtual Task<DTOProductListPriceHistory> Get(int productID)
 		{
 			ProductListPriceHistory record = await this.GetById(productID);
 
-			return this.Mapper.ProductListPriceHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProductListPriceHistory> Create(
-			ApiProductListPriceHistoryModel model)
+		public async virtual Task<DTOProductListPriceHistory> Create(
+			DTOProductListPriceHistory dto)
 		{
 			ProductListPriceHistory record = new ProductListPriceHistory();
 
-			this.Mapper.ProductListPriceHistoryMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ProductListPriceHistory>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductListPriceHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productID,
-			ApiProductListPriceHistoryModel model)
+			DTOProductListPriceHistory dto)
 		{
 			ProductListPriceHistory record = await this.GetById(productID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductListPriceHistoryMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOProductListPriceHistory>> Where(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProductListPriceHistory>> Where(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductListPriceHistory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProductListPriceHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProductListPriceHistory>> SearchLinqPOCO(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProductListPriceHistory>> SearchLinqDTO(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductListPriceHistory> response = new List<POCOProductListPriceHistory>();
+			List<DTOProductListPriceHistory> response = new List<DTOProductListPriceHistory>();
 			List<ProductListPriceHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductListPriceHistoryMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8398e8839ad0697fcaeec64b924ee27f</Hash>
+    <Hash>dc9601cfc1595811ff6aa18b3044d412</Hash>
 </Codenesium>*/

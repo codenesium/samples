@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOCountryRegionCurrency: AbstractBOManager
 	{
 		private ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
-		private IApiCountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator;
+		private IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator;
+		private IBOLCountryRegionCurrencyMapper countryRegionCurrencyMapper;
 		private ILogger logger;
 
 		public AbstractBOCountryRegionCurrency(
 			ILogger logger,
 			ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
-			IApiCountryRegionCurrencyModelValidator countryRegionCurrencyModelValidator)
+			IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator,
+			IBOLCountryRegionCurrencyMapper countryRegionCurrencyMapper)
 			: base()
 
 		{
 			this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
 			this.countryRegionCurrencyModelValidator = countryRegionCurrencyModelValidator;
+			this.countryRegionCurrencyMapper = countryRegionCurrencyMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiCountryRegionCurrencyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.countryRegionCurrencyRepository.All(skip, take, orderClause);
+			var records = await this.countryRegionCurrencyRepository.All(skip, take, orderClause);
+
+			return this.countryRegionCurrencyMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOCountryRegionCurrency> Get(string countryRegionCode)
+		public virtual async Task<ApiCountryRegionCurrencyResponseModel> Get(string countryRegionCode)
 		{
-			return this.countryRegionCurrencyRepository.Get(countryRegionCode);
+			var record = await countryRegionCurrencyRepository.Get(countryRegionCode);
+
+			return this.countryRegionCurrencyMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOCountryRegionCurrency>> Create(
-			ApiCountryRegionCurrencyModel model)
+		public virtual async Task<CreateResponse<ApiCountryRegionCurrencyResponseModel>> Create(
+			ApiCountryRegionCurrencyRequestModel model)
 		{
-			CreateResponse<POCOCountryRegionCurrency> response = new CreateResponse<POCOCountryRegionCurrency>(await this.countryRegionCurrencyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCountryRegionCurrencyResponseModel> response = new CreateResponse<ApiCountryRegionCurrencyResponseModel>(await this.countryRegionCurrencyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCountryRegionCurrency record = await this.countryRegionCurrencyRepository.Create(model);
+				var dto = this.countryRegionCurrencyMapper.MapModelToDTO(default (string), model);
+				var record = await this.countryRegionCurrencyRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.countryRegionCurrencyMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			string countryRegionCode,
-			ApiCountryRegionCurrencyModel model)
+			ApiCountryRegionCurrencyRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.countryRegionCurrencyModelValidator.ValidateUpdateAsync(countryRegionCode, model));
 
 			if (response.Success)
 			{
-				await this.countryRegionCurrencyRepository.Update(countryRegionCode, model);
+				var dto = this.countryRegionCurrencyMapper.MapModelToDTO(countryRegionCode, model);
+				await this.countryRegionCurrencyRepository.Update(countryRegionCode, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOCountryRegionCurrency>> GetCurrencyCode(string currencyCode)
+		public async Task<List<ApiCountryRegionCurrencyResponseModel>> GetCurrencyCode(string currencyCode)
 		{
-			return await this.countryRegionCurrencyRepository.GetCurrencyCode(currencyCode);
+			List<DTOCountryRegionCurrency> records = await this.countryRegionCurrencyRepository.GetCurrencyCode(currencyCode);
+
+			return this.countryRegionCurrencyMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cad78d6eded25492bfbf7aead857c510</Hash>
+    <Hash>e5113fb7d6203140233128b04f99721a</Hash>
 </Codenesium>*/

@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOEmployeeDepartmentHistory(
 			ILogger<EmployeeDepartmentHistoryRepository> logger,
 			IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
-			IApiEmployeeDepartmentHistoryModelValidator employeeDepartmentHistoryModelValidator)
-			: base(logger, employeeDepartmentHistoryRepository, employeeDepartmentHistoryModelValidator)
+			IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator,
+			IBOLEmployeeDepartmentHistoryMapper employeeDepartmentHistoryMapper)
+			: base(logger, employeeDepartmentHistoryRepository, employeeDepartmentHistoryModelValidator, employeeDepartmentHistoryMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>65bdc6432211b839d1f7764169f4e947</Hash>
+    <Hash>fa04d5f6e1ce8f8d112bfbe2e541707d</Hash>
 </Codenesium>*/

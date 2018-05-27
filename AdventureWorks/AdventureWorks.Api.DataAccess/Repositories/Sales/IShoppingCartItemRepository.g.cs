@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShoppingCartItemRepository
 	{
-		Task<POCOShoppingCartItem> Create(ApiShoppingCartItemModel model);
+		Task<DTOShoppingCartItem> Create(DTOShoppingCartItem dto);
 
 		Task Update(int shoppingCartItemID,
-		            ApiShoppingCartItemModel model);
+		            DTOShoppingCartItem dto);
 
 		Task Delete(int shoppingCartItemID);
 
-		Task<POCOShoppingCartItem> Get(int shoppingCartItemID);
+		Task<DTOShoppingCartItem> Get(int shoppingCartItemID);
 
-		Task<List<POCOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID);
+		Task<List<DTOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>55c80ef5ecc6bcf902a8cadebda05b70</Hash>
+    <Hash>c31c9c1796959a70492c79847104b647</Hash>
 </Codenesium>*/

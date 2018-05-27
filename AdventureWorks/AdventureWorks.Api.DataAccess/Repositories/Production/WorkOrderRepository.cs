@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class WorkOrderRepository: AbstractWorkOrderRepository, IWorkOrderRepository
 	{
 		public WorkOrderRepository(
-			IObjectMapper mapper,
+			IDALWorkOrderMapper mapper,
 			ILogger<WorkOrderRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>59111146f9eb215bad01162df300b8c1</Hash>
+    <Hash>390606af0986e76d8d542bc4996c3b73</Hash>
 </Codenesium>*/

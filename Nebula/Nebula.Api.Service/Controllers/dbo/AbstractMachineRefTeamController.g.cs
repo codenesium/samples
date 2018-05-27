@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOMachineRefTeam>), 200)]
+		[ProducesResponseType(typeof(List<ApiMachineRefTeamResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOMachineRefTeam> response = await this.machineRefTeamManager.All(query.Offset, query.Limit);
+			List<ApiMachineRefTeamResponseModel> response = await this.machineRefTeamManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOMachineRefTeam), 200)]
+		[ProducesResponseType(typeof(ApiMachineRefTeamResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOMachineRefTeam response = await this.machineRefTeamManager.Get(id);
+			ApiMachineRefTeamResponseModel response = await this.machineRefTeamManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOMachineRefTeam), 200)]
+		[ProducesResponseType(typeof(ApiMachineRefTeamResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiMachineRefTeamModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiMachineRefTeamRequestModel model)
 		{
-			CreateResponse<POCOMachineRefTeam> result = await this.machineRefTeamManager.Create(model);
+			CreateResponse<ApiMachineRefTeamResponseModel> result = await this.machineRefTeamManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOMachineRefTeam>), 200)]
+		[ProducesResponseType(typeof(List<ApiMachineRefTeamResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiMachineRefTeamModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiMachineRefTeamRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOMachineRefTeam> records = new List<POCOMachineRefTeam>();
+			List<ApiMachineRefTeamResponseModel> records = new List<ApiMachineRefTeamResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOMachineRefTeam> result = await this.machineRefTeamManager.Create(model);
+				CreateResponse<ApiMachineRefTeamResponseModel> result = await this.machineRefTeamManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOMachineRefTeam), 200)]
+		[ProducesResponseType(typeof(DTOMachineRefTeam), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRefTeamModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiMachineRefTeamRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOMachineRefTeam response = await this.machineRefTeamManager.Get(id);
+					ApiMachineRefTeamResponseModel response = await this.machineRefTeamManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>222c916863a1e31501b5e165598d3b8a</Hash>
+    <Hash>b63c35423197381cb4e3a299ab568359</Hash>
 </Codenesium>*/

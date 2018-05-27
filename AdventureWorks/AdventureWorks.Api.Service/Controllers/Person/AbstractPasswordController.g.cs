@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPassword>), 200)]
+		[ProducesResponseType(typeof(List<ApiPasswordResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPassword> response = await this.passwordManager.All(query.Offset, query.Limit);
+			List<ApiPasswordResponseModel> response = await this.passwordManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOPassword), 200)]
+		[ProducesResponseType(typeof(ApiPasswordResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPassword response = await this.passwordManager.Get(id);
+			ApiPasswordResponseModel response = await this.passwordManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPassword), 200)]
+		[ProducesResponseType(typeof(ApiPasswordResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPasswordModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPasswordRequestModel model)
 		{
-			CreateResponse<POCOPassword> result = await this.passwordManager.Create(model);
+			CreateResponse<ApiPasswordResponseModel> result = await this.passwordManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOPassword>), 200)]
+		[ProducesResponseType(typeof(List<ApiPasswordResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPasswordModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPasswordRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOPassword> records = new List<POCOPassword>();
+			List<ApiPasswordResponseModel> records = new List<ApiPasswordResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOPassword> result = await this.passwordManager.Create(model);
+				CreateResponse<ApiPasswordResponseModel> result = await this.passwordManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPassword), 200)]
+		[ProducesResponseType(typeof(DTOPassword), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPasswordModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPasswordRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPassword response = await this.passwordManager.Get(id);
+					ApiPasswordResponseModel response = await this.passwordManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a46524d51f01e58980a4115f831724e7</Hash>
+    <Hash>601a8760fea0d9135df4029cc052f696</Hash>
 </Codenesium>*/

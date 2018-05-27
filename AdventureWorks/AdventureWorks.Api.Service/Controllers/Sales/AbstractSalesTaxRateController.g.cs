@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesTaxRate>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTaxRateResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesTaxRate> response = await this.salesTaxRateManager.All(query.Offset, query.Limit);
+			List<ApiSalesTaxRateResponseModel> response = await this.salesTaxRateManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesTaxRate), 200)]
+		[ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesTaxRate response = await this.salesTaxRateManager.Get(id);
+			ApiSalesTaxRateResponseModel response = await this.salesTaxRateManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesTaxRate), 200)]
+		[ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTaxRateModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesTaxRateRequestModel model)
 		{
-			CreateResponse<POCOSalesTaxRate> result = await this.salesTaxRateManager.Create(model);
+			CreateResponse<ApiSalesTaxRateResponseModel> result = await this.salesTaxRateManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSalesTaxRate>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesTaxRateResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTaxRateModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesTaxRateRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSalesTaxRate> records = new List<POCOSalesTaxRate>();
+			List<ApiSalesTaxRateResponseModel> records = new List<ApiSalesTaxRateResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSalesTaxRate> result = await this.salesTaxRateManager.Create(model);
+				CreateResponse<ApiSalesTaxRateResponseModel> result = await this.salesTaxRateManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesTaxRate), 200)]
+		[ProducesResponseType(typeof(DTOSalesTaxRate), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTaxRateModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesTaxRateRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesTaxRate response = await this.salesTaxRateManager.Get(id);
+					ApiSalesTaxRateResponseModel response = await this.salesTaxRateManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getStateProvinceIDTaxType/{stateProvinceID}/{taxType}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesTaxRate), 200)]
+		[ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
 		{
-			POCOSalesTaxRate response = await this.salesTaxRateManager.GetStateProvinceIDTaxType(stateProvinceID,taxType);
+			ApiSalesTaxRateResponseModel response = await this.salesTaxRateManager.GetStateProvinceIDTaxType(stateProvinceID,taxType);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>75a1c5e3c383f5b0bd4712044cf2600e</Hash>
+    <Hash>dc3bd25b23119b0960c5cd3c9940a2f1</Hash>
 </Codenesium>*/

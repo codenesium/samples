@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductCategory: AbstractBOManager
 	{
 		private IProductCategoryRepository productCategoryRepository;
-		private IApiProductCategoryModelValidator productCategoryModelValidator;
+		private IApiProductCategoryRequestModelValidator productCategoryModelValidator;
+		private IBOLProductCategoryMapper productCategoryMapper;
 		private ILogger logger;
 
 		public AbstractBOProductCategory(
 			ILogger logger,
 			IProductCategoryRepository productCategoryRepository,
-			IApiProductCategoryModelValidator productCategoryModelValidator)
+			IApiProductCategoryRequestModelValidator productCategoryModelValidator,
+			IBOLProductCategoryMapper productCategoryMapper)
 			: base()
 
 		{
 			this.productCategoryRepository = productCategoryRepository;
 			this.productCategoryModelValidator = productCategoryModelValidator;
+			this.productCategoryMapper = productCategoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductCategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductCategoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productCategoryRepository.All(skip, take, orderClause);
+			var records = await this.productCategoryRepository.All(skip, take, orderClause);
+
+			return this.productCategoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductCategory> Get(int productCategoryID)
+		public virtual async Task<ApiProductCategoryResponseModel> Get(int productCategoryID)
 		{
-			return this.productCategoryRepository.Get(productCategoryID);
+			var record = await productCategoryRepository.Get(productCategoryID);
+
+			return this.productCategoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductCategory>> Create(
-			ApiProductCategoryModel model)
+		public virtual async Task<CreateResponse<ApiProductCategoryResponseModel>> Create(
+			ApiProductCategoryRequestModel model)
 		{
-			CreateResponse<POCOProductCategory> response = new CreateResponse<POCOProductCategory>(await this.productCategoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductCategoryResponseModel> response = new CreateResponse<ApiProductCategoryResponseModel>(await this.productCategoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductCategory record = await this.productCategoryRepository.Create(model);
+				var dto = this.productCategoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.productCategoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productCategoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productCategoryID,
-			ApiProductCategoryModel model)
+			ApiProductCategoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productCategoryModelValidator.ValidateUpdateAsync(productCategoryID, model));
 
 			if (response.Success)
 			{
-				await this.productCategoryRepository.Update(productCategoryID, model);
+				var dto = this.productCategoryMapper.MapModelToDTO(productCategoryID, model);
+				await this.productCategoryRepository.Update(productCategoryID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOProductCategory> GetName(string name)
+		public async Task<ApiProductCategoryResponseModel> GetName(string name)
 		{
-			return await this.productCategoryRepository.GetName(name);
+			DTOProductCategory record = await this.productCategoryRepository.GetName(name);
+
+			return this.productCategoryMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c633037ddb3ea2d683cac5bc9a35d53</Hash>
+    <Hash>3479846f9b31c6a3efd0c61aada67e92</Hash>
 </Codenesium>*/

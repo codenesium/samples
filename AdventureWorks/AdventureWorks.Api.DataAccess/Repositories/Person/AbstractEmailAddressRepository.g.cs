@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALEmailAddressMapper Mapper { get; }
 
 		public AbstractEmailAddressRepository(
-			IObjectMapper mapper,
+			IDALEmailAddressMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOEmailAddress> Get(int businessEntityID)
+		public async virtual Task<DTOEmailAddress> Get(int businessEntityID)
 		{
 			EmailAddress record = await this.GetById(businessEntityID);
 
-			return this.Mapper.EmailAddressMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOEmailAddress> Create(
-			ApiEmailAddressModel model)
+		public async virtual Task<DTOEmailAddress> Create(
+			DTOEmailAddress dto)
 		{
 			EmailAddress record = new EmailAddress();
 
-			this.Mapper.EmailAddressMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<EmailAddress>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.EmailAddressMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiEmailAddressModel model)
+			DTOEmailAddress dto)
 		{
 			EmailAddress record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.EmailAddressMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOEmailAddress>> GetEmailAddress(string emailAddress1)
+		public async Task<List<DTOEmailAddress>> GetEmailAddress(string emailAddress1)
 		{
-			var records = await this.SearchLinqPOCO(x => x.EmailAddress1 == emailAddress1);
+			var records = await this.SearchLinqDTO(x => x.EmailAddress1 == emailAddress1);
 
 			return records;
 		}
 
-		protected async Task<List<POCOEmailAddress>> Where(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOEmailAddress>> Where(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOEmailAddress> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOEmailAddress> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOEmailAddress>> SearchLinqPOCO(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOEmailAddress>> SearchLinqDTO(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOEmailAddress> response = new List<POCOEmailAddress>();
+			List<DTOEmailAddress> response = new List<DTOEmailAddress>();
 			List<EmailAddress> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.EmailAddressMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58f20f17b2ab442000b7e7485c8c56cd</Hash>
+    <Hash>43df613b9df50ba2d021c26b331cf6b0</Hash>
 </Codenesium>*/

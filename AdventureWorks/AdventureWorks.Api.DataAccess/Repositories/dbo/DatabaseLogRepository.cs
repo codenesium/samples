@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class DatabaseLogRepository: AbstractDatabaseLogRepository, IDatabaseLogRepository
 	{
 		public DatabaseLogRepository(
-			IObjectMapper mapper,
+			IDALDatabaseLogMapper mapper,
 			ILogger<DatabaseLogRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>721799bec07c249e0bb29c4a411d9ea2</Hash>
+    <Hash>c11dd38264b6c548a33ce770fe63604e</Hash>
 </Codenesium>*/

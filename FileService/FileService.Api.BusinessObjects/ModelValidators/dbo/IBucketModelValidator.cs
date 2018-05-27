@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using FileServiceNS.Api.Contracts;
 namespace FileServiceNS.Api.BusinessObjects
 {
-	public interface IApiBucketModelValidator
+	public interface IApiBucketRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiBucketModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiBucketModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiBucketRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiBucketRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9a678419bf7d3f7054155649a738685</Hash>
+    <Hash>5db0806bbfb5f1f57189b3d04bae5cf7</Hash>
 </Codenesium>*/

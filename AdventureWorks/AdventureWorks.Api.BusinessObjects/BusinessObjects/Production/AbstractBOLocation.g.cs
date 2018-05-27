@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOLocation: AbstractBOManager
 	{
 		private ILocationRepository locationRepository;
-		private IApiLocationModelValidator locationModelValidator;
+		private IApiLocationRequestModelValidator locationModelValidator;
+		private IBOLLocationMapper locationMapper;
 		private ILogger logger;
 
 		public AbstractBOLocation(
 			ILogger logger,
 			ILocationRepository locationRepository,
-			IApiLocationModelValidator locationModelValidator)
+			IApiLocationRequestModelValidator locationModelValidator,
+			IBOLLocationMapper locationMapper)
 			: base()
 
 		{
 			this.locationRepository = locationRepository;
 			this.locationModelValidator = locationModelValidator;
+			this.locationMapper = locationMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiLocationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.locationRepository.All(skip, take, orderClause);
+			var records = await this.locationRepository.All(skip, take, orderClause);
+
+			return this.locationMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOLocation> Get(short locationID)
+		public virtual async Task<ApiLocationResponseModel> Get(short locationID)
 		{
-			return this.locationRepository.Get(locationID);
+			var record = await locationRepository.Get(locationID);
+
+			return this.locationMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOLocation>> Create(
-			ApiLocationModel model)
+		public virtual async Task<CreateResponse<ApiLocationResponseModel>> Create(
+			ApiLocationRequestModel model)
 		{
-			CreateResponse<POCOLocation> response = new CreateResponse<POCOLocation>(await this.locationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.locationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLocation record = await this.locationRepository.Create(model);
+				var dto = this.locationMapper.MapModelToDTO(default (short), model);
+				var record = await this.locationRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.locationMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			short locationID,
-			ApiLocationModel model)
+			ApiLocationRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateUpdateAsync(locationID, model));
 
 			if (response.Success)
 			{
-				await this.locationRepository.Update(locationID, model);
+				var dto = this.locationMapper.MapModelToDTO(locationID, model);
+				await this.locationRepository.Update(locationID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOLocation> GetName(string name)
+		public async Task<ApiLocationResponseModel> GetName(string name)
 		{
-			return await this.locationRepository.GetName(name);
+			DTOLocation record = await this.locationRepository.GetName(name);
+
+			return this.locationMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e499c1741a3cb51afe0b89312a2801d2</Hash>
+    <Hash>c48697d2cf7bf26ece60318d12d4920a</Hash>
 </Codenesium>*/

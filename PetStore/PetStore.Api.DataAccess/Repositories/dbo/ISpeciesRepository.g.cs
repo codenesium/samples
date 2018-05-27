@@ -8,19 +8,19 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public interface ISpeciesRepository
 	{
-		Task<POCOSpecies> Create(ApiSpeciesModel model);
+		Task<DTOSpecies> Create(DTOSpecies dto);
 
 		Task Update(int id,
-		            ApiSpeciesModel model);
+		            DTOSpecies dto);
 
 		Task Delete(int id);
 
-		Task<POCOSpecies> Get(int id);
+		Task<DTOSpecies> Get(int id);
 
-		Task<List<POCOSpecies>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOSpecies>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>832839ba638b4ff54e2b122fa2f2506a</Hash>
+    <Hash>1bec7217876ea7b5047081ba649b6e6b</Hash>
 </Codenesium>*/

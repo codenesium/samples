@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ContactTypeRepository: AbstractContactTypeRepository, IContactTypeRepository
 	{
 		public ContactTypeRepository(
-			IObjectMapper mapper,
+			IDALContactTypeMapper mapper,
 			ILogger<ContactTypeRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d43bc897197de118b1eadcf118276696</Hash>
+    <Hash>b1c42d120f6292fa297f7badbb2f2df2</Hash>
 </Codenesium>*/

@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOCreditCard
 	{
-		Task<CreateResponse<POCOCreditCard>> Create(
-			ApiCreditCardModel model);
+		Task<CreateResponse<ApiCreditCardResponseModel>> Create(
+			ApiCreditCardRequestModel model);
 
 		Task<ActionResponse> Update(int creditCardID,
-		                            ApiCreditCardModel model);
+		                            ApiCreditCardRequestModel model);
 
 		Task<ActionResponse> Delete(int creditCardID);
 
-		Task<POCOCreditCard> Get(int creditCardID);
+		Task<ApiCreditCardResponseModel> Get(int creditCardID);
 
-		Task<List<POCOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCreditCard> GetCardNumber(string cardNumber);
+		Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber);
 	}
 }
 
 /*<Codenesium>
-    <Hash>99d9ff25d48ef530486cffc0ff974d79</Hash>
+    <Hash>2deda6460592941d8c4eeaae095da311</Hash>
 </Codenesium>*/

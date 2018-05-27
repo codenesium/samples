@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BODocument(
 			ILogger<DocumentRepository> logger,
 			IDocumentRepository documentRepository,
-			IApiDocumentModelValidator documentModelValidator)
-			: base(logger, documentRepository, documentModelValidator)
+			IApiDocumentRequestModelValidator documentModelValidator,
+			IBOLDocumentMapper documentMapper)
+			: base(logger, documentRepository, documentModelValidator, documentMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cde64f276cad14c402075527e09f08b1</Hash>
+    <Hash>bca3a53ddfe4d945c23816e96df2ddf6</Hash>
 </Codenesium>*/

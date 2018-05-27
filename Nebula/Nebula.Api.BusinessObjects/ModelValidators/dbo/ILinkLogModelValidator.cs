@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using NebulaNS.Api.Contracts;
 namespace NebulaNS.Api.BusinessObjects
 {
-	public interface IApiLinkLogModelValidator
+	public interface IApiLinkLogRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiLinkLogModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkLogModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiLinkLogRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkLogRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>da403178969f22054eade0d7183dff02</Hash>
+    <Hash>3e46bd4a5755b04e867d022c0cc6754b</Hash>
 </Codenesium>*/

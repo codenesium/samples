@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductModelProductDescriptionCulture: AbstractBOManager
 	{
 		private IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
-		private IApiProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator;
+		private IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator;
+		private IBOLProductModelProductDescriptionCultureMapper productModelProductDescriptionCultureMapper;
 		private ILogger logger;
 
 		public AbstractBOProductModelProductDescriptionCulture(
 			ILogger logger,
 			IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
-			IApiProductModelProductDescriptionCultureModelValidator productModelProductDescriptionCultureModelValidator)
+			IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator,
+			IBOLProductModelProductDescriptionCultureMapper productModelProductDescriptionCultureMapper)
 			: base()
 
 		{
 			this.productModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
 			this.productModelProductDescriptionCultureModelValidator = productModelProductDescriptionCultureModelValidator;
+			this.productModelProductDescriptionCultureMapper = productModelProductDescriptionCultureMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductModelProductDescriptionCultureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productModelProductDescriptionCultureRepository.All(skip, take, orderClause);
+			var records = await this.productModelProductDescriptionCultureRepository.All(skip, take, orderClause);
+
+			return this.productModelProductDescriptionCultureMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductModelProductDescriptionCulture> Get(int productModelID)
+		public virtual async Task<ApiProductModelProductDescriptionCultureResponseModel> Get(int productModelID)
 		{
-			return this.productModelProductDescriptionCultureRepository.Get(productModelID);
+			var record = await productModelProductDescriptionCultureRepository.Get(productModelID);
+
+			return this.productModelProductDescriptionCultureMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductModelProductDescriptionCulture>> Create(
-			ApiProductModelProductDescriptionCultureModel model)
+		public virtual async Task<CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>> Create(
+			ApiProductModelProductDescriptionCultureRequestModel model)
 		{
-			CreateResponse<POCOProductModelProductDescriptionCulture> response = new CreateResponse<POCOProductModelProductDescriptionCulture>(await this.productModelProductDescriptionCultureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> response = new CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>(await this.productModelProductDescriptionCultureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductModelProductDescriptionCulture record = await this.productModelProductDescriptionCultureRepository.Create(model);
+				var dto = this.productModelProductDescriptionCultureMapper.MapModelToDTO(default (int), model);
+				var record = await this.productModelProductDescriptionCultureRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productModelProductDescriptionCultureMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productModelID,
-			ApiProductModelProductDescriptionCultureModel model)
+			ApiProductModelProductDescriptionCultureRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productModelProductDescriptionCultureModelValidator.ValidateUpdateAsync(productModelID, model));
 
 			if (response.Success)
 			{
-				await this.productModelProductDescriptionCultureRepository.Update(productModelID, model);
+				var dto = this.productModelProductDescriptionCultureMapper.MapModelToDTO(productModelID, model);
+				await this.productModelProductDescriptionCultureRepository.Update(productModelID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d068e09d16040fa47f294cbac6b349d3</Hash>
+    <Hash>b8bfc1dacf93ec56418ba184ef65bbae</Hash>
 </Codenesium>*/

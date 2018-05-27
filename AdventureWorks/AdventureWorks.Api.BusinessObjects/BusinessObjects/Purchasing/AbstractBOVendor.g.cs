@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOVendor: AbstractBOManager
 	{
 		private IVendorRepository vendorRepository;
-		private IApiVendorModelValidator vendorModelValidator;
+		private IApiVendorRequestModelValidator vendorModelValidator;
+		private IBOLVendorMapper vendorMapper;
 		private ILogger logger;
 
 		public AbstractBOVendor(
 			ILogger logger,
 			IVendorRepository vendorRepository,
-			IApiVendorModelValidator vendorModelValidator)
+			IApiVendorRequestModelValidator vendorModelValidator,
+			IBOLVendorMapper vendorMapper)
 			: base()
 
 		{
 			this.vendorRepository = vendorRepository;
 			this.vendorModelValidator = vendorModelValidator;
+			this.vendorMapper = vendorMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.vendorRepository.All(skip, take, orderClause);
+			var records = await this.vendorRepository.All(skip, take, orderClause);
+
+			return this.vendorMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOVendor> Get(int businessEntityID)
+		public virtual async Task<ApiVendorResponseModel> Get(int businessEntityID)
 		{
-			return this.vendorRepository.Get(businessEntityID);
+			var record = await vendorRepository.Get(businessEntityID);
+
+			return this.vendorMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOVendor>> Create(
-			ApiVendorModel model)
+		public virtual async Task<CreateResponse<ApiVendorResponseModel>> Create(
+			ApiVendorRequestModel model)
 		{
-			CreateResponse<POCOVendor> response = new CreateResponse<POCOVendor>(await this.vendorModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVendorResponseModel> response = new CreateResponse<ApiVendorResponseModel>(await this.vendorModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOVendor record = await this.vendorRepository.Create(model);
+				var dto = this.vendorMapper.MapModelToDTO(default (int), model);
+				var record = await this.vendorRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.vendorMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiVendorModel model)
+			ApiVendorRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.vendorRepository.Update(businessEntityID, model);
+				var dto = this.vendorMapper.MapModelToDTO(businessEntityID, model);
+				await this.vendorRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOVendor> GetAccountNumber(string accountNumber)
+		public async Task<ApiVendorResponseModel> GetAccountNumber(string accountNumber)
 		{
-			return await this.vendorRepository.GetAccountNumber(accountNumber);
+			DTOVendor record = await this.vendorRepository.GetAccountNumber(accountNumber);
+
+			return this.vendorMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3c1cc0e835a40001134757dc7a57fe0</Hash>
+    <Hash>790ad7b81a4260a2238f14c37f13aae7</Hash>
 </Codenesium>*/

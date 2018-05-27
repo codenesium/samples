@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOShoppingCartItem(
 			ILogger<ShoppingCartItemRepository> logger,
 			IShoppingCartItemRepository shoppingCartItemRepository,
-			IApiShoppingCartItemModelValidator shoppingCartItemModelValidator)
-			: base(logger, shoppingCartItemRepository, shoppingCartItemModelValidator)
+			IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
+			IBOLShoppingCartItemMapper shoppingCartItemMapper)
+			: base(logger, shoppingCartItemRepository, shoppingCartItemModelValidator, shoppingCartItemMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4edaabca42e1b9db0341d67ed894aa6f</Hash>
+    <Hash>70d682f3a7da27190d595dc48b0a7cd3</Hash>
 </Codenesium>*/

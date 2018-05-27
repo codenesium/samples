@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOLocation(
 			ILogger<LocationRepository> logger,
 			ILocationRepository locationRepository,
-			IApiLocationModelValidator locationModelValidator)
-			: base(logger, locationRepository, locationModelValidator)
+			IApiLocationRequestModelValidator locationModelValidator,
+			IBOLLocationMapper locationMapper)
+			: base(logger, locationRepository, locationModelValidator, locationMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6b5a84b9b5950983d8cde533770e796</Hash>
+    <Hash>2382ed52c9b6d110d625a48d68803e48</Hash>
 </Codenesium>*/

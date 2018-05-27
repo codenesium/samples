@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOJobCandidate(
 			ILogger<JobCandidateRepository> logger,
 			IJobCandidateRepository jobCandidateRepository,
-			IApiJobCandidateModelValidator jobCandidateModelValidator)
-			: base(logger, jobCandidateRepository, jobCandidateModelValidator)
+			IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
+			IBOLJobCandidateMapper jobCandidateMapper)
+			: base(logger, jobCandidateRepository, jobCandidateModelValidator, jobCandidateMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5251644855d36fdd92fe7fd3b3d6d7a1</Hash>
+    <Hash>f0f75447e93cec6e2d3673722a8ade3e</Hash>
 </Codenesium>*/

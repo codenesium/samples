@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOTransactionHistoryArchive> response = await this.transactionHistoryArchiveManager.All(query.Offset, query.Limit);
+			List<ApiTransactionHistoryArchiveResponseModel> response = await this.transactionHistoryArchiveManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOTransactionHistoryArchive), 200)]
+		[ProducesResponseType(typeof(ApiTransactionHistoryArchiveResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOTransactionHistoryArchive response = await this.transactionHistoryArchiveManager.Get(id);
+			ApiTransactionHistoryArchiveResponseModel response = await this.transactionHistoryArchiveManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTransactionHistoryArchive), 200)]
+		[ProducesResponseType(typeof(ApiTransactionHistoryArchiveResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryArchiveModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryArchiveRequestModel model)
 		{
-			CreateResponse<POCOTransactionHistoryArchive> result = await this.transactionHistoryArchiveManager.Create(model);
+			CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.transactionHistoryArchiveManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTransactionHistoryArchiveModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTransactionHistoryArchiveRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOTransactionHistoryArchive> records = new List<POCOTransactionHistoryArchive>();
+			List<ApiTransactionHistoryArchiveResponseModel> records = new List<ApiTransactionHistoryArchiveResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOTransactionHistoryArchive> result = await this.transactionHistoryArchiveManager.Create(model);
+				CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.transactionHistoryArchiveManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTransactionHistoryArchive), 200)]
+		[ProducesResponseType(typeof(DTOTransactionHistoryArchive), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryArchiveModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTransactionHistoryArchiveRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTransactionHistoryArchive response = await this.transactionHistoryArchiveManager.Get(id);
+					ApiTransactionHistoryArchiveResponseModel response = await this.transactionHistoryArchiveManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOTransactionHistoryArchive> response = await this.transactionHistoryArchiveManager.GetProductID(productID);
+			List<ApiTransactionHistoryArchiveResponseModel> response = await this.transactionHistoryArchiveManager.GetProductID(productID);
 
 			return this.Ok(response);
 		}
@@ -182,10 +182,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTransactionHistoryArchive>), 200)]
+		[ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
 		{
-			List<POCOTransactionHistoryArchive> response = await this.transactionHistoryArchiveManager.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
+			List<ApiTransactionHistoryArchiveResponseModel> response = await this.transactionHistoryArchiveManager.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID,referenceOrderLineID);
 
 			return this.Ok(response);
 		}
@@ -193,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>509044989d75042c890e23264cc9ed8d</Hash>
+    <Hash>4c180379dae775cee8625ca302fd92b6</Hash>
 </Codenesium>*/

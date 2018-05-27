@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductDocument>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductDocumentResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductDocument> response = await this.productDocumentManager.All(query.Offset, query.Limit);
+			List<ApiProductDocumentResponseModel> response = await this.productDocumentManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductDocument), 200)]
+		[ProducesResponseType(typeof(ApiProductDocumentResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductDocument response = await this.productDocumentManager.Get(id);
+			ApiProductDocumentResponseModel response = await this.productDocumentManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductDocument), 200)]
+		[ProducesResponseType(typeof(ApiProductDocumentResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductDocumentModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductDocumentRequestModel model)
 		{
-			CreateResponse<POCOProductDocument> result = await this.productDocumentManager.Create(model);
+			CreateResponse<ApiProductDocumentResponseModel> result = await this.productDocumentManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductDocument>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductDocumentResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductDocumentModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductDocumentRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductDocument> records = new List<POCOProductDocument>();
+			List<ApiProductDocumentResponseModel> records = new List<ApiProductDocumentResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductDocument> result = await this.productDocumentManager.Create(model);
+				CreateResponse<ApiProductDocumentResponseModel> result = await this.productDocumentManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductDocument), 200)]
+		[ProducesResponseType(typeof(DTOProductDocument), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDocumentModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductDocumentRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductDocument response = await this.productDocumentManager.Get(id);
+					ApiProductDocumentResponseModel response = await this.productDocumentManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e957426ea5a25b84de51e988505b53b3</Hash>
+    <Hash>1e3b0fbef47f68ba3049de2b93baec81</Hash>
 </Codenesium>*/

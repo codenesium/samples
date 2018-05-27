@@ -15,54 +15,62 @@ namespace ESPIOTNS.Api.BusinessObjects
 	public abstract class AbstractBODeviceAction: AbstractBOManager
 	{
 		private IDeviceActionRepository deviceActionRepository;
-		private IApiDeviceActionModelValidator deviceActionModelValidator;
+		private IApiDeviceActionRequestModelValidator deviceActionModelValidator;
+		private IBOLDeviceActionMapper deviceActionMapper;
 		private ILogger logger;
 
 		public AbstractBODeviceAction(
 			ILogger logger,
 			IDeviceActionRepository deviceActionRepository,
-			IApiDeviceActionModelValidator deviceActionModelValidator)
+			IApiDeviceActionRequestModelValidator deviceActionModelValidator,
+			IBOLDeviceActionMapper deviceActionMapper)
 			: base()
 
 		{
 			this.deviceActionRepository = deviceActionRepository;
 			this.deviceActionModelValidator = deviceActionModelValidator;
+			this.deviceActionMapper = deviceActionMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiDeviceActionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.deviceActionRepository.All(skip, take, orderClause);
+			var records = await this.deviceActionRepository.All(skip, take, orderClause);
+
+			return this.deviceActionMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCODeviceAction> Get(int id)
+		public virtual async Task<ApiDeviceActionResponseModel> Get(int id)
 		{
-			return this.deviceActionRepository.Get(id);
+			var record = await deviceActionRepository.Get(id);
+
+			return this.deviceActionMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCODeviceAction>> Create(
-			ApiDeviceActionModel model)
+		public virtual async Task<CreateResponse<ApiDeviceActionResponseModel>> Create(
+			ApiDeviceActionRequestModel model)
 		{
-			CreateResponse<POCODeviceAction> response = new CreateResponse<POCODeviceAction>(await this.deviceActionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeviceActionResponseModel> response = new CreateResponse<ApiDeviceActionResponseModel>(await this.deviceActionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODeviceAction record = await this.deviceActionRepository.Create(model);
+				var dto = this.deviceActionMapper.MapModelToDTO(default (int), model);
+				var record = await this.deviceActionRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.deviceActionMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiDeviceActionModel model)
+			ApiDeviceActionRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.deviceActionModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.deviceActionRepository.Update(id, model);
+				var dto = this.deviceActionMapper.MapModelToDTO(id, model);
+				await this.deviceActionRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace ESPIOTNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>9cf6e09acff628f196de2b2e6bef0509</Hash>
+    <Hash>aa0eab5f9f0e5e83d54879d0fa011e4d</Hash>
 </Codenesium>*/

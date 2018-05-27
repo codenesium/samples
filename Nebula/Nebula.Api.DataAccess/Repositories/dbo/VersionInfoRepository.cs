@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class VersionInfoRepository: AbstractVersionInfoRepository, IVersionInfoRepository
 	{
 		public VersionInfoRepository(
-			IObjectMapper mapper,
+			IDALVersionInfoMapper mapper,
 			ILogger<VersionInfoRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3bb92a98327a39ca8fa50540cc7d4b8</Hash>
+    <Hash>5ac3892592a6a0e042434f4311d95605</Hash>
 </Codenesium>*/

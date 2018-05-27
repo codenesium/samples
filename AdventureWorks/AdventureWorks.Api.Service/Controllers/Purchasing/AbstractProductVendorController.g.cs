@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductVendor> response = await this.productVendorManager.All(query.Offset, query.Limit);
+			List<ApiProductVendorResponseModel> response = await this.productVendorManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductVendor), 200)]
+		[ProducesResponseType(typeof(ApiProductVendorResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductVendor response = await this.productVendorManager.Get(id);
+			ApiProductVendorResponseModel response = await this.productVendorManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductVendor), 200)]
+		[ProducesResponseType(typeof(ApiProductVendorResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductVendorModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductVendorRequestModel model)
 		{
-			CreateResponse<POCOProductVendor> result = await this.productVendorManager.Create(model);
+			CreateResponse<ApiProductVendorResponseModel> result = await this.productVendorManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductVendorModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductVendorRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductVendor> records = new List<POCOProductVendor>();
+			List<ApiProductVendorResponseModel> records = new List<ApiProductVendorResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductVendor> result = await this.productVendorManager.Create(model);
+				CreateResponse<ApiProductVendorResponseModel> result = await this.productVendorManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductVendor), 200)]
+		[ProducesResponseType(typeof(DTOProductVendor), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductVendorModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductVendorRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductVendor response = await this.productVendorManager.Get(id);
+					ApiProductVendorResponseModel response = await this.productVendorManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getBusinessEntityID/{businessEntityID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetBusinessEntityID(int businessEntityID)
 		{
-			List<POCOProductVendor> response = await this.productVendorManager.GetBusinessEntityID(businessEntityID);
+			List<ApiProductVendorResponseModel> response = await this.productVendorManager.GetBusinessEntityID(businessEntityID);
 
 			return this.Ok(response);
 		}
@@ -182,10 +182,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getUnitMeasureCode/{unitMeasureCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductVendor>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			List<POCOProductVendor> response = await this.productVendorManager.GetUnitMeasureCode(unitMeasureCode);
+			List<ApiProductVendorResponseModel> response = await this.productVendorManager.GetUnitMeasureCode(unitMeasureCode);
 
 			return this.Ok(response);
 		}
@@ -193,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>39309ea77d54107e018aec386d431bf8</Hash>
+    <Hash>05693bc4a17e883a28363172737edad2</Hash>
 </Codenesium>*/

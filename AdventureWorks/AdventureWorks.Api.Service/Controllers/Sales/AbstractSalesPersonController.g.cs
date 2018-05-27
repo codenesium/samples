@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSalesPerson>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSalesPerson> response = await this.salesPersonManager.All(query.Offset, query.Limit);
+			List<ApiSalesPersonResponseModel> response = await this.salesPersonManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSalesPerson), 200)]
+		[ProducesResponseType(typeof(ApiSalesPersonResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSalesPerson response = await this.salesPersonManager.Get(id);
+			ApiSalesPersonResponseModel response = await this.salesPersonManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesPerson), 200)]
+		[ProducesResponseType(typeof(ApiSalesPersonResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSalesPersonModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSalesPersonRequestModel model)
 		{
-			CreateResponse<POCOSalesPerson> result = await this.salesPersonManager.Create(model);
+			CreateResponse<ApiSalesPersonResponseModel> result = await this.salesPersonManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSalesPerson>), 200)]
+		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesPersonModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSalesPersonRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSalesPerson> records = new List<POCOSalesPerson>();
+			List<ApiSalesPersonResponseModel> records = new List<ApiSalesPersonResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSalesPerson> result = await this.salesPersonManager.Create(model);
+				CreateResponse<ApiSalesPersonResponseModel> result = await this.salesPersonManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSalesPerson), 200)]
+		[ProducesResponseType(typeof(DTOSalesPerson), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSalesPersonRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSalesPerson response = await this.salesPersonManager.Get(id);
+					ApiSalesPersonResponseModel response = await this.salesPersonManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>eded58fa1c44e8d4c64a636117cbb997</Hash>
+    <Hash>a5e2fb130dd8d7959a53d33ad1a66a75</Hash>
 </Codenesium>*/

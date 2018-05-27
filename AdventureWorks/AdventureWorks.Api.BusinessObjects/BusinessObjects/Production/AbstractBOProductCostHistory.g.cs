@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductCostHistory: AbstractBOManager
 	{
 		private IProductCostHistoryRepository productCostHistoryRepository;
-		private IApiProductCostHistoryModelValidator productCostHistoryModelValidator;
+		private IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator;
+		private IBOLProductCostHistoryMapper productCostHistoryMapper;
 		private ILogger logger;
 
 		public AbstractBOProductCostHistory(
 			ILogger logger,
 			IProductCostHistoryRepository productCostHistoryRepository,
-			IApiProductCostHistoryModelValidator productCostHistoryModelValidator)
+			IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator,
+			IBOLProductCostHistoryMapper productCostHistoryMapper)
 			: base()
 
 		{
 			this.productCostHistoryRepository = productCostHistoryRepository;
 			this.productCostHistoryModelValidator = productCostHistoryModelValidator;
+			this.productCostHistoryMapper = productCostHistoryMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductCostHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productCostHistoryRepository.All(skip, take, orderClause);
+			var records = await this.productCostHistoryRepository.All(skip, take, orderClause);
+
+			return this.productCostHistoryMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductCostHistory> Get(int productID)
+		public virtual async Task<ApiProductCostHistoryResponseModel> Get(int productID)
 		{
-			return this.productCostHistoryRepository.Get(productID);
+			var record = await productCostHistoryRepository.Get(productID);
+
+			return this.productCostHistoryMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductCostHistory>> Create(
-			ApiProductCostHistoryModel model)
+		public virtual async Task<CreateResponse<ApiProductCostHistoryResponseModel>> Create(
+			ApiProductCostHistoryRequestModel model)
 		{
-			CreateResponse<POCOProductCostHistory> response = new CreateResponse<POCOProductCostHistory>(await this.productCostHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductCostHistoryResponseModel> response = new CreateResponse<ApiProductCostHistoryResponseModel>(await this.productCostHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductCostHistory record = await this.productCostHistoryRepository.Create(model);
+				var dto = this.productCostHistoryMapper.MapModelToDTO(default (int), model);
+				var record = await this.productCostHistoryRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productCostHistoryMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productID,
-			ApiProductCostHistoryModel model)
+			ApiProductCostHistoryRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productCostHistoryModelValidator.ValidateUpdateAsync(productID, model));
 
 			if (response.Success)
 			{
-				await this.productCostHistoryRepository.Update(productID, model);
+				var dto = this.productCostHistoryMapper.MapModelToDTO(productID, model);
+				await this.productCostHistoryRepository.Update(productID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>a807d9099fc3c8a83f54f434be35588a</Hash>
+    <Hash>05312047c85e3ba8418e39aace64a4bc</Hash>
 </Codenesium>*/

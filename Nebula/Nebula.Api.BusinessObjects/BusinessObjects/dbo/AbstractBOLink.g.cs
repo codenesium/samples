@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOLink: AbstractBOManager
 	{
 		private ILinkRepository linkRepository;
-		private IApiLinkModelValidator linkModelValidator;
+		private IApiLinkRequestModelValidator linkModelValidator;
+		private IBOLLinkMapper linkMapper;
 		private ILogger logger;
 
 		public AbstractBOLink(
 			ILogger logger,
 			ILinkRepository linkRepository,
-			IApiLinkModelValidator linkModelValidator)
+			IApiLinkRequestModelValidator linkModelValidator,
+			IBOLLinkMapper linkMapper)
 			: base()
 
 		{
 			this.linkRepository = linkRepository;
 			this.linkModelValidator = linkModelValidator;
+			this.linkMapper = linkMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOLink>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiLinkResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.linkRepository.All(skip, take, orderClause);
+			var records = await this.linkRepository.All(skip, take, orderClause);
+
+			return this.linkMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOLink> Get(int id)
+		public virtual async Task<ApiLinkResponseModel> Get(int id)
 		{
-			return this.linkRepository.Get(id);
+			var record = await linkRepository.Get(id);
+
+			return this.linkMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOLink>> Create(
-			ApiLinkModel model)
+		public virtual async Task<CreateResponse<ApiLinkResponseModel>> Create(
+			ApiLinkRequestModel model)
 		{
-			CreateResponse<POCOLink> response = new CreateResponse<POCOLink>(await this.linkModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLinkResponseModel> response = new CreateResponse<ApiLinkResponseModel>(await this.linkModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOLink record = await this.linkRepository.Create(model);
+				var dto = this.linkMapper.MapModelToDTO(default (int), model);
+				var record = await this.linkRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.linkMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiLinkModel model)
+			ApiLinkRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.linkModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.linkRepository.Update(id, model);
+				var dto = this.linkMapper.MapModelToDTO(id, model);
+				await this.linkRepository.Update(id, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOLink> GetExternalId(Guid externalId)
+		public async Task<ApiLinkResponseModel> GetExternalId(Guid externalId)
 		{
-			return await this.linkRepository.GetExternalId(externalId);
+			DTOLink record = await this.linkRepository.GetExternalId(externalId);
+
+			return this.linkMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCOLink>> GetChainId(int chainId)
+		public async Task<List<ApiLinkResponseModel>> GetChainId(int chainId)
 		{
-			return await this.linkRepository.GetChainId(chainId);
+			List<DTOLink> records = await this.linkRepository.GetChainId(chainId);
+
+			return this.linkMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f52d5efae89fbe7872dddcece692d2ed</Hash>
+    <Hash>8b18e225c9bdac86d1e270a034b786f1</Hash>
 </Codenesium>*/

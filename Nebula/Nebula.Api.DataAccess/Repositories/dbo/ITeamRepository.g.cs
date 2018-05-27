@@ -8,21 +8,21 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ITeamRepository
 	{
-		Task<POCOTeam> Create(ApiTeamModel model);
+		Task<DTOTeam> Create(DTOTeam dto);
 
 		Task Update(int id,
-		            ApiTeamModel model);
+		            DTOTeam dto);
 
 		Task Delete(int id);
 
-		Task<POCOTeam> Get(int id);
+		Task<DTOTeam> Get(int id);
 
-		Task<List<POCOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOTeam> GetName(string name);
+		Task<DTOTeam> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>96875c6a471383272abff5c37f2f4816</Hash>
+    <Hash>ec70a4e8bdd7dd1c9fe0fe461cc7785b</Hash>
 </Codenesium>*/

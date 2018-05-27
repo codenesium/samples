@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPurchaseOrderDetail>), 200)]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPurchaseOrderDetail> response = await this.purchaseOrderDetailManager.All(query.Offset, query.Limit);
+			List<ApiPurchaseOrderDetailResponseModel> response = await this.purchaseOrderDetailManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOPurchaseOrderDetail), 200)]
+		[ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPurchaseOrderDetail response = await this.purchaseOrderDetailManager.Get(id);
+			ApiPurchaseOrderDetailResponseModel response = await this.purchaseOrderDetailManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPurchaseOrderDetail), 200)]
+		[ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderDetailModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderDetailRequestModel model)
 		{
-			CreateResponse<POCOPurchaseOrderDetail> result = await this.purchaseOrderDetailManager.Create(model);
+			CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.purchaseOrderDetailManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOPurchaseOrderDetail>), 200)]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPurchaseOrderDetailModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPurchaseOrderDetailRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOPurchaseOrderDetail> records = new List<POCOPurchaseOrderDetail>();
+			List<ApiPurchaseOrderDetailResponseModel> records = new List<ApiPurchaseOrderDetailResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOPurchaseOrderDetail> result = await this.purchaseOrderDetailManager.Create(model);
+				CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.purchaseOrderDetailManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPurchaseOrderDetail), 200)]
+		[ProducesResponseType(typeof(DTOPurchaseOrderDetail), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPurchaseOrderDetailModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPurchaseOrderDetailRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPurchaseOrderDetail response = await this.purchaseOrderDetailManager.Get(id);
+					ApiPurchaseOrderDetailResponseModel response = await this.purchaseOrderDetailManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPurchaseOrderDetail>), 200)]
+		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOPurchaseOrderDetail> response = await this.purchaseOrderDetailManager.GetProductID(productID);
+			List<ApiPurchaseOrderDetailResponseModel> response = await this.purchaseOrderDetailManager.GetProductID(productID);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>5715b5bb811be42fcd5757a9076ee417</Hash>
+    <Hash>e72c4f395fab6b7204cd9a8f8fb2498e</Hash>
 </Codenesium>*/

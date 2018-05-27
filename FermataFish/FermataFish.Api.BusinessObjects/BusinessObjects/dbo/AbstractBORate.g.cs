@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBORate: AbstractBOManager
 	{
 		private IRateRepository rateRepository;
-		private IApiRateModelValidator rateModelValidator;
+		private IApiRateRequestModelValidator rateModelValidator;
+		private IBOLRateMapper rateMapper;
 		private ILogger logger;
 
 		public AbstractBORate(
 			ILogger logger,
 			IRateRepository rateRepository,
-			IApiRateModelValidator rateModelValidator)
+			IApiRateRequestModelValidator rateModelValidator,
+			IBOLRateMapper rateMapper)
 			: base()
 
 		{
 			this.rateRepository = rateRepository;
 			this.rateModelValidator = rateModelValidator;
+			this.rateMapper = rateMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCORate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.rateRepository.All(skip, take, orderClause);
+			var records = await this.rateRepository.All(skip, take, orderClause);
+
+			return this.rateMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCORate> Get(int id)
+		public virtual async Task<ApiRateResponseModel> Get(int id)
 		{
-			return this.rateRepository.Get(id);
+			var record = await rateRepository.Get(id);
+
+			return this.rateMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCORate>> Create(
-			ApiRateModel model)
+		public virtual async Task<CreateResponse<ApiRateResponseModel>> Create(
+			ApiRateRequestModel model)
 		{
-			CreateResponse<POCORate> response = new CreateResponse<POCORate>(await this.rateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.rateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCORate record = await this.rateRepository.Create(model);
+				var dto = this.rateMapper.MapModelToDTO(default (int), model);
+				var record = await this.rateRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.rateMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiRateModel model)
+			ApiRateRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.rateRepository.Update(id, model);
+				var dto = this.rateMapper.MapModelToDTO(id, model);
+				await this.rateRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>d8be4ba1aeb55e745f3c8ad346c8eac6</Hash>
+    <Hash>7993285b74ee8f7ef29e36b67fe81dc9</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOVersionInfo: AbstractBOManager
 	{
 		private IVersionInfoRepository versionInfoRepository;
-		private IApiVersionInfoModelValidator versionInfoModelValidator;
+		private IApiVersionInfoRequestModelValidator versionInfoModelValidator;
+		private IBOLVersionInfoMapper versionInfoMapper;
 		private ILogger logger;
 
 		public AbstractBOVersionInfo(
 			ILogger logger,
 			IVersionInfoRepository versionInfoRepository,
-			IApiVersionInfoModelValidator versionInfoModelValidator)
+			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
+			IBOLVersionInfoMapper versionInfoMapper)
 			: base()
 
 		{
 			this.versionInfoRepository = versionInfoRepository;
 			this.versionInfoModelValidator = versionInfoModelValidator;
+			this.versionInfoMapper = versionInfoMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiVersionInfoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.versionInfoRepository.All(skip, take, orderClause);
+			var records = await this.versionInfoRepository.All(skip, take, orderClause);
+
+			return this.versionInfoMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOVersionInfo> Get(long version)
+		public virtual async Task<ApiVersionInfoResponseModel> Get(long version)
 		{
-			return this.versionInfoRepository.Get(version);
+			var record = await versionInfoRepository.Get(version);
+
+			return this.versionInfoMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOVersionInfo>> Create(
-			ApiVersionInfoModel model)
+		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
+			ApiVersionInfoRequestModel model)
 		{
-			CreateResponse<POCOVersionInfo> response = new CreateResponse<POCOVersionInfo>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOVersionInfo record = await this.versionInfoRepository.Create(model);
+				var dto = this.versionInfoMapper.MapModelToDTO(default (long), model);
+				var record = await this.versionInfoRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.versionInfoMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			long version,
-			ApiVersionInfoModel model)
+			ApiVersionInfoRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
 
 			if (response.Success)
 			{
-				await this.versionInfoRepository.Update(version, model);
+				var dto = this.versionInfoMapper.MapModelToDTO(version, model);
+				await this.versionInfoRepository.Update(version, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOVersionInfo> GetVersion(long version)
+		public async Task<ApiVersionInfoResponseModel> GetVersion(long version)
 		{
-			return await this.versionInfoRepository.GetVersion(version);
+			DTOVersionInfo record = await this.versionInfoRepository.GetVersion(version);
+
+			return this.versionInfoMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a29386e14a9ea9b53d3dc149cbed8b6f</Hash>
+    <Hash>4eb17998005f63e0e7b95227ebd0d595</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Employee", Schema="HumanResources")]
-	public partial class Employee: AbstractEntityFrameworkPOCO
+	public partial class Employee: AbstractEntityFrameworkDTO
 	{
 		public Employee()
 		{}
@@ -81,9 +81,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("OrganizationLevel", TypeName="smallint")]
 		public Nullable<short> OrganizationLevel { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("OrganizationNode", TypeName="hierarchyid(892)")]
 		public Nullable<Guid> OrganizationNode { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
@@ -99,5 +101,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c5a4739d51387e8a4897e31c0a9247c6</Hash>
+    <Hash>241c404097e413ae50042fc30aa22de1</Hash>
 </Codenesium>*/

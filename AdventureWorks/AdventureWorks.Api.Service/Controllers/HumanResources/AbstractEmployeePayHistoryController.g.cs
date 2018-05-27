@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmployeePayHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmployeePayHistory> response = await this.employeePayHistoryManager.All(query.Offset, query.Limit);
+			List<ApiEmployeePayHistoryResponseModel> response = await this.employeePayHistoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOEmployeePayHistory), 200)]
+		[ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmployeePayHistory response = await this.employeePayHistoryManager.Get(id);
+			ApiEmployeePayHistoryResponseModel response = await this.employeePayHistoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmployeePayHistory), 200)]
+		[ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeePayHistoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeePayHistoryRequestModel model)
 		{
-			CreateResponse<POCOEmployeePayHistory> result = await this.employeePayHistoryManager.Create(model);
+			CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.employeePayHistoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOEmployeePayHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeePayHistoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeePayHistoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOEmployeePayHistory> records = new List<POCOEmployeePayHistory>();
+			List<ApiEmployeePayHistoryResponseModel> records = new List<ApiEmployeePayHistoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOEmployeePayHistory> result = await this.employeePayHistoryManager.Create(model);
+				CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.employeePayHistoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmployeePayHistory), 200)]
+		[ProducesResponseType(typeof(DTOEmployeePayHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeePayHistoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeePayHistoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmployeePayHistory response = await this.employeePayHistoryManager.Get(id);
+					ApiEmployeePayHistoryResponseModel response = await this.employeePayHistoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e9437da18df7ae823a88359ccc302b70</Hash>
+    <Hash>b67ff1461bbc842039ec4ed07b328ed5</Hash>
 </Codenesium>*/

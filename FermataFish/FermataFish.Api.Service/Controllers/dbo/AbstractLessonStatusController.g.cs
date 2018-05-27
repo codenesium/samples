@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
+		[ProducesResponseType(typeof(List<ApiLessonStatusResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLessonStatus> response = await this.lessonStatusManager.All(query.Offset, query.Limit);
+			List<ApiLessonStatusResponseModel> response = await this.lessonStatusManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOLessonStatus), 200)]
+		[ProducesResponseType(typeof(ApiLessonStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLessonStatus response = await this.lessonStatusManager.Get(id);
+			ApiLessonStatusResponseModel response = await this.lessonStatusManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLessonStatus), 200)]
+		[ProducesResponseType(typeof(ApiLessonStatusResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLessonStatusModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiLessonStatusRequestModel model)
 		{
-			CreateResponse<POCOLessonStatus> result = await this.lessonStatusManager.Create(model);
+			CreateResponse<ApiLessonStatusResponseModel> result = await this.lessonStatusManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOLessonStatus>), 200)]
+		[ProducesResponseType(typeof(List<ApiLessonStatusResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLessonStatusModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLessonStatusRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOLessonStatus> records = new List<POCOLessonStatus>();
+			List<ApiLessonStatusResponseModel> records = new List<ApiLessonStatusResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOLessonStatus> result = await this.lessonStatusManager.Create(model);
+				CreateResponse<ApiLessonStatusResponseModel> result = await this.lessonStatusManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLessonStatus), 200)]
+		[ProducesResponseType(typeof(DTOLessonStatus), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonStatusModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLessonStatusRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLessonStatus response = await this.lessonStatusManager.Get(id);
+					ApiLessonStatusResponseModel response = await this.lessonStatusManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1cebe9ce974d4afc2fd6fb4655438d03</Hash>
+    <Hash>225d182992b649acb379b740e1c91c1a</Hash>
 </Codenesium>*/

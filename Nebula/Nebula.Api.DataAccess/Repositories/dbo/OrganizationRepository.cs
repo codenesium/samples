@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class OrganizationRepository: AbstractOrganizationRepository, IOrganizationRepository
 	{
 		public OrganizationRepository(
-			IObjectMapper mapper,
+			IDALOrganizationMapper mapper,
 			ILogger<OrganizationRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0b7fddbfebaf028cadee5a095df1b34f</Hash>
+    <Hash>94277b0ccb3db9c68d6c8fee0535d775</Hash>
 </Codenesium>*/

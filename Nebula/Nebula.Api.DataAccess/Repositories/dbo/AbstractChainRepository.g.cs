@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALChainMapper Mapper { get; }
 
 		public AbstractChainRepository(
-			IObjectMapper mapper,
+			IDALChainMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace NebulaNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOChain> Get(int id)
+		public async virtual Task<DTOChain> Get(int id)
 		{
 			Chain record = await this.GetById(id);
 
-			return this.Mapper.ChainMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOChain> Create(
-			ApiChainModel model)
+		public async virtual Task<DTOChain> Create(
+			DTOChain dto)
 		{
 			Chain record = new Chain();
 
-			this.Mapper.ChainMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Chain>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ChainMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiChainModel model)
+			DTOChain dto)
 		{
 			Chain record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace NebulaNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ChainMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOChain> GetExternalId(Guid externalId)
+		public async Task<DTOChain> GetExternalId(Guid externalId)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ExternalId == externalId);
+			var records = await this.SearchLinqDTO(x => x.ExternalId == externalId);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOChain>> Where(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOChain>> Where(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOChain> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOChain> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOChain>> SearchLinqPOCO(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOChain>> SearchLinqDTO(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOChain> response = new List<POCOChain>();
+			List<DTOChain> response = new List<DTOChain>();
 			List<Chain> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ChainMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>84883ace91b2ad301eb2326bdefb7943</Hash>
+    <Hash>29796dfe47c6c966983bb5492286e2eb</Hash>
 </Codenesium>*/

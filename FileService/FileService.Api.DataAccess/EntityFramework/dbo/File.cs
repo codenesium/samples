@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace FileServiceNS.Api.DataAccess
 {
 	[Table("File", Schema="dbo")]
-	public partial class File:AbstractEntityFrameworkPOCO
+	public partial class File:AbstractEntityFrameworkDTO
 	{
 		public File()
 		{}
@@ -85,5 +85,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ec35e393287bcc5d04ef0403e4c7de4f</Hash>
+    <Hash>b91f4efb517f765a47e7833235eeb365</Hash>
 </Codenesium>*/

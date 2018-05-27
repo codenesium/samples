@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiShiftModelValidator: AbstractApiShiftModelValidator, IApiShiftModelValidator
+	public class ApiShiftRequestModelValidator: AbstractApiShiftRequestModelValidator, IApiShiftRequestModelValidator
 	{
-		public ApiShiftModelValidator()
+		public ApiShiftRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiShiftModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiShiftRequestModel model)
 		{
 			this.EndTimeRules();
 			this.ModifiedDateRules();
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiShiftModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiShiftRequestModel model)
 		{
 			this.EndTimeRules();
 			this.ModifiedDateRules();
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>65db3c15a82d5b4df706a1859bce6a37</Hash>
+    <Hash>337dd9e2d690f1c42fc6ffd5b549ddd5</Hash>
 </Codenesium>*/

@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiLocationModelValidator: AbstractApiLocationModelValidator, IApiLocationModelValidator
+	public class ApiLocationRequestModelValidator: AbstractApiLocationRequestModelValidator, IApiLocationRequestModelValidator
 	{
-		public ApiLocationModelValidator()
+		public ApiLocationRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiLocationModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiLocationRequestModel model)
 		{
 			this.AvailabilityRules();
 			this.CostRateRules();
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(short id, ApiLocationModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(short id, ApiLocationRequestModel model)
 		{
 			this.AvailabilityRules();
 			this.CostRateRules();
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>e013af16a24e8a1ca90a2962055eb120</Hash>
+    <Hash>e6ff27746986abf6b742bede576085d5</Hash>
 </Codenesium>*/

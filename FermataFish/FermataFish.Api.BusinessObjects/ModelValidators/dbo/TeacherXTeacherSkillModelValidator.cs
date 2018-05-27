@@ -6,19 +6,19 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.BusinessObjects
 {
-	public class ApiTeacherXTeacherSkillModelValidator: AbstractApiTeacherXTeacherSkillModelValidator, IApiTeacherXTeacherSkillModelValidator
+	public class ApiTeacherXTeacherSkillRequestModelValidator: AbstractApiTeacherXTeacherSkillRequestModelValidator, IApiTeacherXTeacherSkillRequestModelValidator
 	{
-		public ApiTeacherXTeacherSkillModelValidator()
+		public ApiTeacherXTeacherSkillRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiTeacherXTeacherSkillModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiTeacherXTeacherSkillRequestModel model)
 		{
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiTeacherXTeacherSkillModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiTeacherXTeacherSkillRequestModel model)
 		{
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
@@ -33,5 +33,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>54e7a819f55d13e09f0d413a9f270ab4</Hash>
+    <Hash>614936df7180cf7cb817a014f5b21de6</Hash>
 </Codenesium>*/

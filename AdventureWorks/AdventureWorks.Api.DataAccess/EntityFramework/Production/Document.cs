@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Document", Schema="Production")]
-	public partial class Document: AbstractEntityFrameworkPOCO
+	public partial class Document: AbstractEntityFrameworkDTO
 	{
 		public Document()
 		{}
@@ -53,6 +53,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public Nullable<short> DocumentLevel { get; set; }
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("DocumentNode", TypeName="hierarchyid(892)")]
 		public Guid DocumentNode { get; set; }
 
@@ -77,6 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Revision", TypeName="nchar(5)")]
 		public string Revision { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
@@ -89,5 +91,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca2cd44481d7b3314d72c04a1c5202e9</Hash>
+    <Hash>757d662f8cad30300bae02846a05cdee</Hash>
 </Codenesium>*/

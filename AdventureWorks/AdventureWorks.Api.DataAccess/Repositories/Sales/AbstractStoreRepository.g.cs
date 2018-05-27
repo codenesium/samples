@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALStoreMapper Mapper { get; }
 
 		public AbstractStoreRepository(
-			IObjectMapper mapper,
+			IDALStoreMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOStore>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOStore>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOStore> Get(int businessEntityID)
+		public async virtual Task<DTOStore> Get(int businessEntityID)
 		{
 			Store record = await this.GetById(businessEntityID);
 
-			return this.Mapper.StoreMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOStore> Create(
-			ApiStoreModel model)
+		public async virtual Task<DTOStore> Create(
+			DTOStore dto)
 		{
 			Store record = new Store();
 
-			this.Mapper.StoreMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Store>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.StoreMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiStoreModel model)
+			DTOStore dto)
 		{
 			Store record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.StoreMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOStore>> GetSalesPersonID(Nullable<int> salesPersonID)
+		public async Task<List<DTOStore>> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.SalesPersonID == salesPersonID);
+			var records = await this.SearchLinqDTO(x => x.SalesPersonID == salesPersonID);
 
 			return records;
 		}
-		public async Task<List<POCOStore>> GetDemographics(string demographics)
+		public async Task<List<DTOStore>> GetDemographics(string demographics)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Demographics == demographics);
-
-			return records;
-		}
-
-		protected async Task<List<POCOStore>> Where(Expression<Func<Store, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<POCOStore> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqDTO(x => x.Demographics == demographics);
 
 			return records;
 		}
 
-		private async Task<List<POCOStore>> SearchLinqPOCO(Expression<Func<Store, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOStore>> Where(Expression<Func<Store, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOStore> response = new List<POCOStore>();
+			List<DTOStore> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+
+			return records;
+		}
+
+		private async Task<List<DTOStore>> SearchLinqDTO(Expression<Func<Store, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			List<DTOStore> response = new List<DTOStore>();
 			List<Store> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.StoreMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7ab5206ea8f1b724cfc40ee3590bcdba</Hash>
+    <Hash>27914f1e3bae980b6a759c1ccfb53415</Hash>
 </Codenesium>*/

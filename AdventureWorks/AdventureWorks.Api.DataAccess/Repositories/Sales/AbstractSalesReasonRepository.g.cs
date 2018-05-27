@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSalesReasonMapper Mapper { get; }
 
 		public AbstractSalesReasonRepository(
-			IObjectMapper mapper,
+			IDALSalesReasonMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSalesReason> Get(int salesReasonID)
+		public async virtual Task<DTOSalesReason> Get(int salesReasonID)
 		{
 			SalesReason record = await this.GetById(salesReasonID);
 
-			return this.Mapper.SalesReasonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSalesReason> Create(
-			ApiSalesReasonModel model)
+		public async virtual Task<DTOSalesReason> Create(
+			DTOSalesReason dto)
 		{
 			SalesReason record = new SalesReason();
 
-			this.Mapper.SalesReasonMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<SalesReason>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SalesReasonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int salesReasonID,
-			ApiSalesReasonModel model)
+			DTOSalesReason dto)
 		{
 			SalesReason record = await this.GetById(salesReasonID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SalesReasonMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					salesReasonID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOSalesReason>> Where(Expression<Func<SalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSalesReason>> Where(Expression<Func<SalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesReason> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSalesReason> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSalesReason>> SearchLinqPOCO(Expression<Func<SalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSalesReason>> SearchLinqDTO(Expression<Func<SalesReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesReason> response = new List<POCOSalesReason>();
+			List<DTOSalesReason> response = new List<DTOSalesReason>();
 			List<SalesReason> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SalesReasonMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa81ce4daf571799645864bcddc6bf79</Hash>
+    <Hash>e7b8f0d8d9d9bdc003cd49e1cbadbdbd</Hash>
 </Codenesium>*/

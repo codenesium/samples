@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesTaxRate: AbstractBOManager
 	{
 		private ISalesTaxRateRepository salesTaxRateRepository;
-		private IApiSalesTaxRateModelValidator salesTaxRateModelValidator;
+		private IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator;
+		private IBOLSalesTaxRateMapper salesTaxRateMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesTaxRate(
 			ILogger logger,
 			ISalesTaxRateRepository salesTaxRateRepository,
-			IApiSalesTaxRateModelValidator salesTaxRateModelValidator)
+			IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
+			IBOLSalesTaxRateMapper salesTaxRateMapper)
 			: base()
 
 		{
 			this.salesTaxRateRepository = salesTaxRateRepository;
 			this.salesTaxRateModelValidator = salesTaxRateModelValidator;
+			this.salesTaxRateMapper = salesTaxRateMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesTaxRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesTaxRateRepository.All(skip, take, orderClause);
+			var records = await this.salesTaxRateRepository.All(skip, take, orderClause);
+
+			return this.salesTaxRateMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesTaxRate> Get(int salesTaxRateID)
+		public virtual async Task<ApiSalesTaxRateResponseModel> Get(int salesTaxRateID)
 		{
-			return this.salesTaxRateRepository.Get(salesTaxRateID);
+			var record = await salesTaxRateRepository.Get(salesTaxRateID);
+
+			return this.salesTaxRateMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesTaxRate>> Create(
-			ApiSalesTaxRateModel model)
+		public virtual async Task<CreateResponse<ApiSalesTaxRateResponseModel>> Create(
+			ApiSalesTaxRateRequestModel model)
 		{
-			CreateResponse<POCOSalesTaxRate> response = new CreateResponse<POCOSalesTaxRate>(await this.salesTaxRateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesTaxRateResponseModel> response = new CreateResponse<ApiSalesTaxRateResponseModel>(await this.salesTaxRateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesTaxRate record = await this.salesTaxRateRepository.Create(model);
+				var dto = this.salesTaxRateMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesTaxRateRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesTaxRateMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int salesTaxRateID,
-			ApiSalesTaxRateModel model)
+			ApiSalesTaxRateRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesTaxRateModelValidator.ValidateUpdateAsync(salesTaxRateID, model));
 
 			if (response.Success)
 			{
-				await this.salesTaxRateRepository.Update(salesTaxRateID, model);
+				var dto = this.salesTaxRateMapper.MapModelToDTO(salesTaxRateID, model);
+				await this.salesTaxRateRepository.Update(salesTaxRateID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
+		public async Task<ApiSalesTaxRateResponseModel> GetStateProvinceIDTaxType(int stateProvinceID,int taxType)
 		{
-			return await this.salesTaxRateRepository.GetStateProvinceIDTaxType(stateProvinceID,taxType);
+			DTOSalesTaxRate record = await this.salesTaxRateRepository.GetStateProvinceIDTaxType(stateProvinceID,taxType);
+
+			return this.salesTaxRateMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>747508878b444a8def0134545d989fb2</Hash>
+    <Hash>cda2bead244d53d0051381f498ec6225</Hash>
 </Codenesium>*/

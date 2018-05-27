@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmailAddressRepository
 	{
-		Task<POCOEmailAddress> Create(ApiEmailAddressModel model);
+		Task<DTOEmailAddress> Create(DTOEmailAddress dto);
 
 		Task Update(int businessEntityID,
-		            ApiEmailAddressModel model);
+		            DTOEmailAddress dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOEmailAddress> Get(int businessEntityID);
+		Task<DTOEmailAddress> Get(int businessEntityID);
 
-		Task<List<POCOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOEmailAddress>> GetEmailAddress(string emailAddress1);
+		Task<List<DTOEmailAddress>> GetEmailAddress(string emailAddress1);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2d8faa557522f92d8011c48b0ea30da3</Hash>
+    <Hash>a85406306641f4a62704dc89c9fadcbe</Hash>
 </Codenesium>*/

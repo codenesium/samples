@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpecialOfferProductResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSpecialOfferProduct> response = await this.specialOfferProductManager.All(query.Offset, query.Limit);
+			List<ApiSpecialOfferProductResponseModel> response = await this.specialOfferProductManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSpecialOfferProduct), 200)]
+		[ProducesResponseType(typeof(ApiSpecialOfferProductResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSpecialOfferProduct response = await this.specialOfferProductManager.Get(id);
+			ApiSpecialOfferProductResponseModel response = await this.specialOfferProductManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpecialOfferProduct), 200)]
+		[ProducesResponseType(typeof(ApiSpecialOfferProductResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferProductModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferProductRequestModel model)
 		{
-			CreateResponse<POCOSpecialOfferProduct> result = await this.specialOfferProductManager.Create(model);
+			CreateResponse<ApiSpecialOfferProductResponseModel> result = await this.specialOfferProductManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpecialOfferProductResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpecialOfferProductModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpecialOfferProductRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSpecialOfferProduct> records = new List<POCOSpecialOfferProduct>();
+			List<ApiSpecialOfferProductResponseModel> records = new List<ApiSpecialOfferProductResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSpecialOfferProduct> result = await this.specialOfferProductManager.Create(model);
+				CreateResponse<ApiSpecialOfferProductResponseModel> result = await this.specialOfferProductManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpecialOfferProduct), 200)]
+		[ProducesResponseType(typeof(DTOSpecialOfferProduct), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferProductModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferProductRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpecialOfferProduct response = await this.specialOfferProductManager.Get(id);
+					ApiSpecialOfferProductResponseModel response = await this.specialOfferProductManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getProductID/{productID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSpecialOfferProduct>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpecialOfferProductResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetProductID(int productID)
 		{
-			List<POCOSpecialOfferProduct> response = await this.specialOfferProductManager.GetProductID(productID);
+			List<ApiSpecialOfferProductResponseModel> response = await this.specialOfferProductManager.GetProductID(productID);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>32372b987929f9bcd8632d3d61524487</Hash>
+    <Hash>ae6e0ec6095d99fd51deac8a33a46c22</Hash>
 </Codenesium>*/

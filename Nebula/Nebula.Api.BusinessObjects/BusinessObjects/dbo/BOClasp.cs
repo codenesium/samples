@@ -15,12 +15,13 @@ namespace NebulaNS.Api.BusinessObjects
 		public BOClasp(
 			ILogger<ClaspRepository> logger,
 			IClaspRepository claspRepository,
-			IApiClaspModelValidator claspModelValidator)
-			: base(logger, claspRepository, claspModelValidator)
+			IApiClaspRequestModelValidator claspModelValidator,
+			IBOLClaspMapper claspMapper)
+			: base(logger, claspRepository, claspModelValidator, claspMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>286e8a8707d961f6172990ebca23294c</Hash>
+    <Hash>c2c4d45ef5bb7efaa69bb8435a83bd00</Hash>
 </Codenesium>*/

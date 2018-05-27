@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiCultureModelValidator
+	public interface IApiCultureRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiCultureModel model);
-		Task<ValidationResult> ValidateUpdateAsync(string id, ApiCultureModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiCultureRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(string id, ApiCultureRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(string id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>959be278741a2c54fdfcc9e360a0172f</Hash>
+    <Hash>52b6e93e371bd5f345db567168e828d6</Hash>
 </Codenesium>*/

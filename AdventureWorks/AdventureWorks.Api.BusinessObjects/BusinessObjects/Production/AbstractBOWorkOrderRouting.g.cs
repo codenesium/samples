@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOWorkOrderRouting: AbstractBOManager
 	{
 		private IWorkOrderRoutingRepository workOrderRoutingRepository;
-		private IApiWorkOrderRoutingModelValidator workOrderRoutingModelValidator;
+		private IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator;
+		private IBOLWorkOrderRoutingMapper workOrderRoutingMapper;
 		private ILogger logger;
 
 		public AbstractBOWorkOrderRouting(
 			ILogger logger,
 			IWorkOrderRoutingRepository workOrderRoutingRepository,
-			IApiWorkOrderRoutingModelValidator workOrderRoutingModelValidator)
+			IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
+			IBOLWorkOrderRoutingMapper workOrderRoutingMapper)
 			: base()
 
 		{
 			this.workOrderRoutingRepository = workOrderRoutingRepository;
 			this.workOrderRoutingModelValidator = workOrderRoutingModelValidator;
+			this.workOrderRoutingMapper = workOrderRoutingMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiWorkOrderRoutingResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.workOrderRoutingRepository.All(skip, take, orderClause);
+			var records = await this.workOrderRoutingRepository.All(skip, take, orderClause);
+
+			return this.workOrderRoutingMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOWorkOrderRouting> Get(int workOrderID)
+		public virtual async Task<ApiWorkOrderRoutingResponseModel> Get(int workOrderID)
 		{
-			return this.workOrderRoutingRepository.Get(workOrderID);
+			var record = await workOrderRoutingRepository.Get(workOrderID);
+
+			return this.workOrderRoutingMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOWorkOrderRouting>> Create(
-			ApiWorkOrderRoutingModel model)
+		public virtual async Task<CreateResponse<ApiWorkOrderRoutingResponseModel>> Create(
+			ApiWorkOrderRoutingRequestModel model)
 		{
-			CreateResponse<POCOWorkOrderRouting> response = new CreateResponse<POCOWorkOrderRouting>(await this.workOrderRoutingModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiWorkOrderRoutingResponseModel> response = new CreateResponse<ApiWorkOrderRoutingResponseModel>(await this.workOrderRoutingModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOWorkOrderRouting record = await this.workOrderRoutingRepository.Create(model);
+				var dto = this.workOrderRoutingMapper.MapModelToDTO(default (int), model);
+				var record = await this.workOrderRoutingRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.workOrderRoutingMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int workOrderID,
-			ApiWorkOrderRoutingModel model)
+			ApiWorkOrderRoutingRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.workOrderRoutingModelValidator.ValidateUpdateAsync(workOrderID, model));
 
 			if (response.Success)
 			{
-				await this.workOrderRoutingRepository.Update(workOrderID, model);
+				var dto = this.workOrderRoutingMapper.MapModelToDTO(workOrderID, model);
+				await this.workOrderRoutingRepository.Update(workOrderID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOWorkOrderRouting>> GetProductID(int productID)
+		public async Task<List<ApiWorkOrderRoutingResponseModel>> GetProductID(int productID)
 		{
-			return await this.workOrderRoutingRepository.GetProductID(productID);
+			List<DTOWorkOrderRouting> records = await this.workOrderRoutingRepository.GetProductID(productID);
+
+			return this.workOrderRoutingMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cd7ed482447a6de4ffe9435657d62166</Hash>
+    <Hash>52e5236175b2fcf0bb0e7429c1f8234c</Hash>
 </Codenesium>*/

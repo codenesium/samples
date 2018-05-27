@@ -9,23 +9,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOStateProvince
 	{
-		Task<CreateResponse<POCOStateProvince>> Create(
-			ApiStateProvinceModel model);
+		Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
+			ApiStateProvinceRequestModel model);
 
 		Task<ActionResponse> Update(int stateProvinceID,
-		                            ApiStateProvinceModel model);
+		                            ApiStateProvinceRequestModel model);
 
 		Task<ActionResponse> Delete(int stateProvinceID);
 
-		Task<POCOStateProvince> Get(int stateProvinceID);
+		Task<ApiStateProvinceResponseModel> Get(int stateProvinceID);
 
-		Task<List<POCOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiStateProvinceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOStateProvince> GetName(string name);
-		Task<POCOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode);
+		Task<ApiStateProvinceResponseModel> GetName(string name);
+		Task<ApiStateProvinceResponseModel> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca68751c5daab12b0e0be720d354c33d</Hash>
+    <Hash>db04747c6b8226b2f24c604839151233</Hash>
 </Codenesium>*/

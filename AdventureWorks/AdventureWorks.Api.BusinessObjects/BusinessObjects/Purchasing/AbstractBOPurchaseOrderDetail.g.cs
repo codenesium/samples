@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOPurchaseOrderDetail: AbstractBOManager
 	{
 		private IPurchaseOrderDetailRepository purchaseOrderDetailRepository;
-		private IApiPurchaseOrderDetailModelValidator purchaseOrderDetailModelValidator;
+		private IApiPurchaseOrderDetailRequestModelValidator purchaseOrderDetailModelValidator;
+		private IBOLPurchaseOrderDetailMapper purchaseOrderDetailMapper;
 		private ILogger logger;
 
 		public AbstractBOPurchaseOrderDetail(
 			ILogger logger,
 			IPurchaseOrderDetailRepository purchaseOrderDetailRepository,
-			IApiPurchaseOrderDetailModelValidator purchaseOrderDetailModelValidator)
+			IApiPurchaseOrderDetailRequestModelValidator purchaseOrderDetailModelValidator,
+			IBOLPurchaseOrderDetailMapper purchaseOrderDetailMapper)
 			: base()
 
 		{
 			this.purchaseOrderDetailRepository = purchaseOrderDetailRepository;
 			this.purchaseOrderDetailModelValidator = purchaseOrderDetailModelValidator;
+			this.purchaseOrderDetailMapper = purchaseOrderDetailMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPurchaseOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPurchaseOrderDetailResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.purchaseOrderDetailRepository.All(skip, take, orderClause);
+			var records = await this.purchaseOrderDetailRepository.All(skip, take, orderClause);
+
+			return this.purchaseOrderDetailMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPurchaseOrderDetail> Get(int purchaseOrderID)
+		public virtual async Task<ApiPurchaseOrderDetailResponseModel> Get(int purchaseOrderID)
 		{
-			return this.purchaseOrderDetailRepository.Get(purchaseOrderID);
+			var record = await purchaseOrderDetailRepository.Get(purchaseOrderID);
+
+			return this.purchaseOrderDetailMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPurchaseOrderDetail>> Create(
-			ApiPurchaseOrderDetailModel model)
+		public virtual async Task<CreateResponse<ApiPurchaseOrderDetailResponseModel>> Create(
+			ApiPurchaseOrderDetailRequestModel model)
 		{
-			CreateResponse<POCOPurchaseOrderDetail> response = new CreateResponse<POCOPurchaseOrderDetail>(await this.purchaseOrderDetailModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPurchaseOrderDetailResponseModel> response = new CreateResponse<ApiPurchaseOrderDetailResponseModel>(await this.purchaseOrderDetailModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPurchaseOrderDetail record = await this.purchaseOrderDetailRepository.Create(model);
+				var dto = this.purchaseOrderDetailMapper.MapModelToDTO(default (int), model);
+				var record = await this.purchaseOrderDetailRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.purchaseOrderDetailMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int purchaseOrderID,
-			ApiPurchaseOrderDetailModel model)
+			ApiPurchaseOrderDetailRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.purchaseOrderDetailModelValidator.ValidateUpdateAsync(purchaseOrderID, model));
 
 			if (response.Success)
 			{
-				await this.purchaseOrderDetailRepository.Update(purchaseOrderID, model);
+				var dto = this.purchaseOrderDetailMapper.MapModelToDTO(purchaseOrderID, model);
+				await this.purchaseOrderDetailRepository.Update(purchaseOrderID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOPurchaseOrderDetail>> GetProductID(int productID)
+		public async Task<List<ApiPurchaseOrderDetailResponseModel>> GetProductID(int productID)
 		{
-			return await this.purchaseOrderDetailRepository.GetProductID(productID);
+			List<DTOPurchaseOrderDetail> records = await this.purchaseOrderDetailRepository.GetProductID(productID);
+
+			return this.purchaseOrderDetailMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8fddcabdfa23451e920729c8543efe4f</Hash>
+    <Hash>0b67cc25648904137a5532a029ed73cd</Hash>
 </Codenesium>*/

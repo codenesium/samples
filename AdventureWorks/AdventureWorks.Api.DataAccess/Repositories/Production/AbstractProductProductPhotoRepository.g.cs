@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductProductPhotoMapper Mapper { get; }
 
 		public AbstractProductProductPhotoRepository(
-			IObjectMapper mapper,
+			IDALProductProductPhotoMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProductProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProductProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProductProductPhoto> Get(int productID)
+		public async virtual Task<DTOProductProductPhoto> Get(int productID)
 		{
 			ProductProductPhoto record = await this.GetById(productID);
 
-			return this.Mapper.ProductProductPhotoMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProductProductPhoto> Create(
-			ApiProductProductPhotoModel model)
+		public async virtual Task<DTOProductProductPhoto> Create(
+			DTOProductProductPhoto dto)
 		{
 			ProductProductPhoto record = new ProductProductPhoto();
 
-			this.Mapper.ProductProductPhotoMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ProductProductPhoto>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductProductPhotoMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productID,
-			ApiProductProductPhotoModel model)
+			DTOProductProductPhoto dto)
 		{
 			ProductProductPhoto record = await this.GetById(productID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductProductPhotoMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOProductProductPhoto>> Where(Expression<Func<ProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProductProductPhoto>> Where(Expression<Func<ProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductProductPhoto> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProductProductPhoto> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProductProductPhoto>> SearchLinqPOCO(Expression<Func<ProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProductProductPhoto>> SearchLinqDTO(Expression<Func<ProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductProductPhoto> response = new List<POCOProductProductPhoto>();
+			List<DTOProductProductPhoto> response = new List<DTOProductProductPhoto>();
 			List<ProductProductPhoto> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductProductPhotoMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f6b796e77155d088d3889f32e59f039a</Hash>
+    <Hash>2f1bec8011cac4b927420366c1934d4e</Hash>
 </Codenesium>*/

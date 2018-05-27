@@ -9,24 +9,24 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOSalesOrderHeader
 	{
-		Task<CreateResponse<POCOSalesOrderHeader>> Create(
-			ApiSalesOrderHeaderModel model);
+		Task<CreateResponse<ApiSalesOrderHeaderResponseModel>> Create(
+			ApiSalesOrderHeaderRequestModel model);
 
 		Task<ActionResponse> Update(int salesOrderID,
-		                            ApiSalesOrderHeaderModel model);
+		                            ApiSalesOrderHeaderRequestModel model);
 
 		Task<ActionResponse> Delete(int salesOrderID);
 
-		Task<POCOSalesOrderHeader> Get(int salesOrderID);
+		Task<ApiSalesOrderHeaderResponseModel> Get(int salesOrderID);
 
-		Task<List<POCOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiSalesOrderHeaderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber);
-		Task<List<POCOSalesOrderHeader>> GetCustomerID(int customerID);
-		Task<List<POCOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID);
+		Task<ApiSalesOrderHeaderResponseModel> GetSalesOrderNumber(string salesOrderNumber);
+		Task<List<ApiSalesOrderHeaderResponseModel>> GetCustomerID(int customerID);
+		Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesPersonID(Nullable<int> salesPersonID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f9ffdbc45b5e68112eaca49b9f8259f</Hash>
+    <Hash>728176dc6335583e14b9c8c66b1172b2</Hash>
 </Codenesium>*/

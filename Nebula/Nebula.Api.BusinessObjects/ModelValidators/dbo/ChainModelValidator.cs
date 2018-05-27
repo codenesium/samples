@@ -6,12 +6,12 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.BusinessObjects
 {
-	public class ApiChainModelValidator: AbstractApiChainModelValidator, IApiChainModelValidator
+	public class ApiChainRequestModelValidator: AbstractApiChainRequestModelValidator, IApiChainRequestModelValidator
 	{
-		public ApiChainModelValidator()
+		public ApiChainRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiChainModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiChainRequestModel model)
 		{
 			this.ChainStatusIdRules();
 			this.ExternalIdRules();
@@ -20,7 +20,7 @@ namespace NebulaNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiChainModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiChainRequestModel model)
 		{
 			this.ChainStatusIdRules();
 			this.ExternalIdRules();
@@ -37,5 +37,5 @@ namespace NebulaNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>83671bbc67f92e30050360fa57c20885</Hash>
+    <Hash>03bd1ba0e5612dbc4ae3c4f875ad1bf7</Hash>
 </Codenesium>*/

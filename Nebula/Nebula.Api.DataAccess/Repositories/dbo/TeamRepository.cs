@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class TeamRepository: AbstractTeamRepository, ITeamRepository
 	{
 		public TeamRepository(
-			IObjectMapper mapper,
+			IDALTeamMapper mapper,
 			ILogger<TeamRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e0d37509f0e1b7c8278e1122a1d97fb1</Hash>
+    <Hash>bca992dac882fcb3cf970fbfb7edcd7d</Hash>
 </Codenesium>*/

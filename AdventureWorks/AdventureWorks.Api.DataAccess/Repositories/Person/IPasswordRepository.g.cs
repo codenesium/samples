@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPasswordRepository
 	{
-		Task<POCOPassword> Create(ApiPasswordModel model);
+		Task<DTOPassword> Create(DTOPassword dto);
 
 		Task Update(int businessEntityID,
-		            ApiPasswordModel model);
+		            DTOPassword dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOPassword> Get(int businessEntityID);
+		Task<DTOPassword> Get(int businessEntityID);
 
-		Task<List<POCOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>acc22496d2e650bcd76a0b6c62de1a6a</Hash>
+    <Hash>dd26c87808863f185db018254bbe56e0</Hash>
 </Codenesium>*/

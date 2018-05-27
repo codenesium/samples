@@ -9,20 +9,20 @@ namespace PetStoreNS.Api.BusinessObjects
 {
 	public interface IBOPaymentType
 	{
-		Task<CreateResponse<POCOPaymentType>> Create(
-			ApiPaymentTypeModel model);
+		Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
+			ApiPaymentTypeRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiPaymentTypeModel model);
+		                            ApiPaymentTypeRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOPaymentType> Get(int id);
+		Task<ApiPaymentTypeResponseModel> Get(int id);
 
-		Task<List<POCOPaymentType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiPaymentTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>62f454934296b131601403dc373a2561</Hash>
+    <Hash>be23ab81a532618ac10ad1194162df1e</Hash>
 </Codenesium>*/

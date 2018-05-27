@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesPersonRepository: AbstractSalesPersonRepository, ISalesPersonRepository
 	{
 		public SalesPersonRepository(
-			IObjectMapper mapper,
+			IDALSalesPersonMapper mapper,
 			ILogger<SalesPersonRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b0ffa2c62cc91006d130afaf3f8f605</Hash>
+    <Hash>01c297a9c646a3b51637ee311fe3e9c8</Hash>
 </Codenesium>*/

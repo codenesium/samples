@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOAddress>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOAddress> response = await this.addressManager.All(query.Offset, query.Limit);
+			List<ApiAddressResponseModel> response = await this.addressManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOAddress), 200)]
+		[ProducesResponseType(typeof(ApiAddressResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOAddress response = await this.addressManager.Get(id);
+			ApiAddressResponseModel response = await this.addressManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAddress), 200)]
+		[ProducesResponseType(typeof(ApiAddressResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiAddressModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiAddressRequestModel model)
 		{
-			CreateResponse<POCOAddress> result = await this.addressManager.Create(model);
+			CreateResponse<ApiAddressResponseModel> result = await this.addressManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOAddress>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAddressModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiAddressRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOAddress> records = new List<POCOAddress>();
+			List<ApiAddressResponseModel> records = new List<ApiAddressResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOAddress> result = await this.addressManager.Create(model);
+				CreateResponse<ApiAddressResponseModel> result = await this.addressManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOAddress), 200)]
+		[ProducesResponseType(typeof(DTOAddress), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAddressModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiAddressRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOAddress response = await this.addressManager.Get(id);
+					ApiAddressResponseModel response = await this.addressManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getAddressLine1AddressLine2CityStateProvinceIDPostalCode/{addressLine1}/{addressLine2}/{city}/{stateProvinceID}/{postalCode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOAddress), 200)]
+		[ProducesResponseType(typeof(ApiAddressResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
 		{
-			POCOAddress response = await this.addressManager.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
+			ApiAddressResponseModel response = await this.addressManager.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
 
 			if (response == null)
 			{
@@ -190,10 +190,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getStateProvinceID/{stateProvinceID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOAddress>), 200)]
+		[ProducesResponseType(typeof(List<ApiAddressResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetStateProvinceID(int stateProvinceID)
 		{
-			List<POCOAddress> response = await this.addressManager.GetStateProvinceID(stateProvinceID);
+			List<ApiAddressResponseModel> response = await this.addressManager.GetStateProvinceID(stateProvinceID);
 
 			return this.Ok(response);
 		}
@@ -201,5 +201,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a6ae6bca8eb7659fcef744214b3a1683</Hash>
+    <Hash>11a6a73c36c08fdb5c39a38d1048abe9</Hash>
 </Codenesium>*/

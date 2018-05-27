@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALScrapReasonMapper Mapper { get; }
 
 		public AbstractScrapReasonRepository(
-			IObjectMapper mapper,
+			IDALScrapReasonMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOScrapReason> Get(short scrapReasonID)
+		public async virtual Task<DTOScrapReason> Get(short scrapReasonID)
 		{
 			ScrapReason record = await this.GetById(scrapReasonID);
 
-			return this.Mapper.ScrapReasonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOScrapReason> Create(
-			ApiScrapReasonModel model)
+		public async virtual Task<DTOScrapReason> Create(
+			DTOScrapReason dto)
 		{
 			ScrapReason record = new ScrapReason();
 
-			this.Mapper.ScrapReasonMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (short),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ScrapReason>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ScrapReasonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			short scrapReasonID,
-			ApiScrapReasonModel model)
+			DTOScrapReason dto)
 		{
 			ScrapReason record = await this.GetById(scrapReasonID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ScrapReasonMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					scrapReasonID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOScrapReason> GetName(string name)
+		public async Task<DTOScrapReason> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOScrapReason>> Where(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOScrapReason>> Where(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOScrapReason> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOScrapReason> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOScrapReason>> SearchLinqPOCO(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOScrapReason>> SearchLinqDTO(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOScrapReason> response = new List<POCOScrapReason>();
+			List<DTOScrapReason> response = new List<DTOScrapReason>();
 			List<ScrapReason> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ScrapReasonMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f4cd8e217df151bd7d45003d74067bc9</Hash>
+    <Hash>6b36840e3c30cb4563dec927fffeba27</Hash>
 </Codenesium>*/

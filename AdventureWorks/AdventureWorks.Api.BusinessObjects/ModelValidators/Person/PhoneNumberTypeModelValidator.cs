@@ -6,19 +6,19 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiPhoneNumberTypeModelValidator: AbstractApiPhoneNumberTypeModelValidator, IApiPhoneNumberTypeModelValidator
+	public class ApiPhoneNumberTypeRequestModelValidator: AbstractApiPhoneNumberTypeRequestModelValidator, IApiPhoneNumberTypeRequestModelValidator
 	{
-		public ApiPhoneNumberTypeModelValidator()
+		public ApiPhoneNumberTypeRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiPhoneNumberTypeModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiPhoneNumberTypeRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.NameRules();
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPhoneNumberTypeModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPhoneNumberTypeRequestModel model)
 		{
 			this.ModifiedDateRules();
 			this.NameRules();
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>1c9fd0865c57daa948d71579965fd1ef</Hash>
+    <Hash>562d3b16faa4347b4491436f9a89c0d9</Hash>
 </Codenesium>*/

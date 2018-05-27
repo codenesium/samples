@@ -8,21 +8,21 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IChainRepository
 	{
-		Task<POCOChain> Create(ApiChainModel model);
+		Task<DTOChain> Create(DTOChain dto);
 
 		Task Update(int id,
-		            ApiChainModel model);
+		            DTOChain dto);
 
 		Task Delete(int id);
 
-		Task<POCOChain> Get(int id);
+		Task<DTOChain> Get(int id);
 
-		Task<List<POCOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOChain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOChain> GetExternalId(Guid externalId);
+		Task<DTOChain> GetExternalId(Guid externalId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a4d5559e4e7042aa1855d0cb248ef82</Hash>
+    <Hash>edc3821b87ec2b279ea06effd68a4f55</Hash>
 </Codenesium>*/

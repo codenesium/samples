@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOPurchaseOrderHeader: AbstractBOManager
 	{
 		private IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
-		private IApiPurchaseOrderHeaderModelValidator purchaseOrderHeaderModelValidator;
+		private IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator;
+		private IBOLPurchaseOrderHeaderMapper purchaseOrderHeaderMapper;
 		private ILogger logger;
 
 		public AbstractBOPurchaseOrderHeader(
 			ILogger logger,
 			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
-			IApiPurchaseOrderHeaderModelValidator purchaseOrderHeaderModelValidator)
+			IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
+			IBOLPurchaseOrderHeaderMapper purchaseOrderHeaderMapper)
 			: base()
 
 		{
 			this.purchaseOrderHeaderRepository = purchaseOrderHeaderRepository;
 			this.purchaseOrderHeaderModelValidator = purchaseOrderHeaderModelValidator;
+			this.purchaseOrderHeaderMapper = purchaseOrderHeaderMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPurchaseOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.purchaseOrderHeaderRepository.All(skip, take, orderClause);
+			var records = await this.purchaseOrderHeaderRepository.All(skip, take, orderClause);
+
+			return this.purchaseOrderHeaderMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPurchaseOrderHeader> Get(int purchaseOrderID)
+		public virtual async Task<ApiPurchaseOrderHeaderResponseModel> Get(int purchaseOrderID)
 		{
-			return this.purchaseOrderHeaderRepository.Get(purchaseOrderID);
+			var record = await purchaseOrderHeaderRepository.Get(purchaseOrderID);
+
+			return this.purchaseOrderHeaderMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPurchaseOrderHeader>> Create(
-			ApiPurchaseOrderHeaderModel model)
+		public virtual async Task<CreateResponse<ApiPurchaseOrderHeaderResponseModel>> Create(
+			ApiPurchaseOrderHeaderRequestModel model)
 		{
-			CreateResponse<POCOPurchaseOrderHeader> response = new CreateResponse<POCOPurchaseOrderHeader>(await this.purchaseOrderHeaderModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPurchaseOrderHeaderResponseModel> response = new CreateResponse<ApiPurchaseOrderHeaderResponseModel>(await this.purchaseOrderHeaderModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPurchaseOrderHeader record = await this.purchaseOrderHeaderRepository.Create(model);
+				var dto = this.purchaseOrderHeaderMapper.MapModelToDTO(default (int), model);
+				var record = await this.purchaseOrderHeaderRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.purchaseOrderHeaderMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int purchaseOrderID,
-			ApiPurchaseOrderHeaderModel model)
+			ApiPurchaseOrderHeaderRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.purchaseOrderHeaderModelValidator.ValidateUpdateAsync(purchaseOrderID, model));
 
 			if (response.Success)
 			{
-				await this.purchaseOrderHeaderRepository.Update(purchaseOrderID, model);
+				var dto = this.purchaseOrderHeaderMapper.MapModelToDTO(purchaseOrderID, model);
+				await this.purchaseOrderHeaderRepository.Update(purchaseOrderID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOPurchaseOrderHeader>> GetEmployeeID(int employeeID)
+		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetEmployeeID(int employeeID)
 		{
-			return await this.purchaseOrderHeaderRepository.GetEmployeeID(employeeID);
+			List<DTOPurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.GetEmployeeID(employeeID);
+
+			return this.purchaseOrderHeaderMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOPurchaseOrderHeader>> GetVendorID(int vendorID)
+		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetVendorID(int vendorID)
 		{
-			return await this.purchaseOrderHeaderRepository.GetVendorID(vendorID);
+			List<DTOPurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.GetVendorID(vendorID);
+
+			return this.purchaseOrderHeaderMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5f3a826073185f99a9d2ac386334ddd</Hash>
+    <Hash>61f85ebee8680b292597068e20d0c6b7</Hash>
 </Codenesium>*/

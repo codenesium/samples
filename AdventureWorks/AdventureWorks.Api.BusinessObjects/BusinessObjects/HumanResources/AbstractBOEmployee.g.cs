@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOEmployee: AbstractBOManager
 	{
 		private IEmployeeRepository employeeRepository;
-		private IApiEmployeeModelValidator employeeModelValidator;
+		private IApiEmployeeRequestModelValidator employeeModelValidator;
+		private IBOLEmployeeMapper employeeMapper;
 		private ILogger logger;
 
 		public AbstractBOEmployee(
 			ILogger logger,
 			IEmployeeRepository employeeRepository,
-			IApiEmployeeModelValidator employeeModelValidator)
+			IApiEmployeeRequestModelValidator employeeModelValidator,
+			IBOLEmployeeMapper employeeMapper)
 			: base()
 
 		{
 			this.employeeRepository = employeeRepository;
 			this.employeeModelValidator = employeeModelValidator;
+			this.employeeMapper = employeeMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiEmployeeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.employeeRepository.All(skip, take, orderClause);
+			var records = await this.employeeRepository.All(skip, take, orderClause);
+
+			return this.employeeMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOEmployee> Get(int businessEntityID)
+		public virtual async Task<ApiEmployeeResponseModel> Get(int businessEntityID)
 		{
-			return this.employeeRepository.Get(businessEntityID);
+			var record = await employeeRepository.Get(businessEntityID);
+
+			return this.employeeMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOEmployee>> Create(
-			ApiEmployeeModel model)
+		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
+			ApiEmployeeRequestModel model)
 		{
-			CreateResponse<POCOEmployee> response = new CreateResponse<POCOEmployee>(await this.employeeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOEmployee record = await this.employeeRepository.Create(model);
+				var dto = this.employeeMapper.MapModelToDTO(default (int), model);
+				var record = await this.employeeRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.employeeMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiEmployeeModel model)
+			ApiEmployeeRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.employeeRepository.Update(businessEntityID, model);
+				var dto = this.employeeMapper.MapModelToDTO(businessEntityID, model);
+				await this.employeeRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,25 +88,33 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOEmployee> GetLoginID(string loginID)
+		public async Task<ApiEmployeeResponseModel> GetLoginID(string loginID)
 		{
-			return await this.employeeRepository.GetLoginID(loginID);
+			DTOEmployee record = await this.employeeRepository.GetLoginID(loginID);
+
+			return this.employeeMapper.MapDTOToModel(record);
 		}
-		public async Task<POCOEmployee> GetNationalIDNumber(string nationalIDNumber)
+		public async Task<ApiEmployeeResponseModel> GetNationalIDNumber(string nationalIDNumber)
 		{
-			return await this.employeeRepository.GetNationalIDNumber(nationalIDNumber);
+			DTOEmployee record = await this.employeeRepository.GetNationalIDNumber(nationalIDNumber);
+
+			return this.employeeMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
+		public async Task<List<ApiEmployeeResponseModel>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
 		{
-			return await this.employeeRepository.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
+			List<DTOEmployee> records = await this.employeeRepository.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
+
+			return this.employeeMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode)
+		public async Task<List<ApiEmployeeResponseModel>> GetOrganizationNode(Nullable<Guid> organizationNode)
 		{
-			return await this.employeeRepository.GetOrganizationNode(organizationNode);
+			List<DTOEmployee> records = await this.employeeRepository.GetOrganizationNode(organizationNode);
+
+			return this.employeeMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0ce4d7329ecdb7265ab9ecdcf6d2991</Hash>
+    <Hash>acfcdce426177440b5d04a8f6d3a1cd6</Hash>
 </Codenesium>*/

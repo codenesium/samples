@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOSalesOrderDetail: AbstractBOManager
 	{
 		private ISalesOrderDetailRepository salesOrderDetailRepository;
-		private IApiSalesOrderDetailModelValidator salesOrderDetailModelValidator;
+		private IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator;
+		private IBOLSalesOrderDetailMapper salesOrderDetailMapper;
 		private ILogger logger;
 
 		public AbstractBOSalesOrderDetail(
 			ILogger logger,
 			ISalesOrderDetailRepository salesOrderDetailRepository,
-			IApiSalesOrderDetailModelValidator salesOrderDetailModelValidator)
+			IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator,
+			IBOLSalesOrderDetailMapper salesOrderDetailMapper)
 			: base()
 
 		{
 			this.salesOrderDetailRepository = salesOrderDetailRepository;
 			this.salesOrderDetailModelValidator = salesOrderDetailModelValidator;
+			this.salesOrderDetailMapper = salesOrderDetailMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOSalesOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiSalesOrderDetailResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.salesOrderDetailRepository.All(skip, take, orderClause);
+			var records = await this.salesOrderDetailRepository.All(skip, take, orderClause);
+
+			return this.salesOrderDetailMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOSalesOrderDetail> Get(int salesOrderID)
+		public virtual async Task<ApiSalesOrderDetailResponseModel> Get(int salesOrderID)
 		{
-			return this.salesOrderDetailRepository.Get(salesOrderID);
+			var record = await salesOrderDetailRepository.Get(salesOrderID);
+
+			return this.salesOrderDetailMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOSalesOrderDetail>> Create(
-			ApiSalesOrderDetailModel model)
+		public virtual async Task<CreateResponse<ApiSalesOrderDetailResponseModel>> Create(
+			ApiSalesOrderDetailRequestModel model)
 		{
-			CreateResponse<POCOSalesOrderDetail> response = new CreateResponse<POCOSalesOrderDetail>(await this.salesOrderDetailModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesOrderDetailResponseModel> response = new CreateResponse<ApiSalesOrderDetailResponseModel>(await this.salesOrderDetailModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOSalesOrderDetail record = await this.salesOrderDetailRepository.Create(model);
+				var dto = this.salesOrderDetailMapper.MapModelToDTO(default (int), model);
+				var record = await this.salesOrderDetailRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.salesOrderDetailMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int salesOrderID,
-			ApiSalesOrderDetailModel model)
+			ApiSalesOrderDetailRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.salesOrderDetailModelValidator.ValidateUpdateAsync(salesOrderID, model));
 
 			if (response.Success)
 			{
-				await this.salesOrderDetailRepository.Update(salesOrderID, model);
+				var dto = this.salesOrderDetailMapper.MapModelToDTO(salesOrderID, model);
+				await this.salesOrderDetailRepository.Update(salesOrderID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOSalesOrderDetail>> GetProductID(int productID)
+		public async Task<List<ApiSalesOrderDetailResponseModel>> GetProductID(int productID)
 		{
-			return await this.salesOrderDetailRepository.GetProductID(productID);
+			List<DTOSalesOrderDetail> records = await this.salesOrderDetailRepository.GetProductID(productID);
+
+			return this.salesOrderDetailMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f8eb674dd46e563580aaff6a0fa2d41e</Hash>
+    <Hash>5ba3533bca7424daf5b36249f7538a75</Hash>
 </Codenesium>*/

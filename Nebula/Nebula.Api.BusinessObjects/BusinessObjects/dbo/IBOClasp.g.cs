@@ -9,20 +9,20 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOClasp
 	{
-		Task<CreateResponse<POCOClasp>> Create(
-			ApiClaspModel model);
+		Task<CreateResponse<ApiClaspResponseModel>> Create(
+			ApiClaspRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiClaspModel model);
+		                            ApiClaspRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOClasp> Get(int id);
+		Task<ApiClaspResponseModel> Get(int id);
 
-		Task<List<POCOClasp>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiClaspResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>583a4576a6afe9b3ada4ded6aca150e3</Hash>
+    <Hash>c0df4d1c9872e65cfa2ae3e976df0526</Hash>
 </Codenesium>*/

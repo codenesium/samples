@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiPurchaseOrderDetailModelValidator: AbstractApiPurchaseOrderDetailModelValidator, IApiPurchaseOrderDetailModelValidator
+	public class ApiPurchaseOrderDetailRequestModelValidator: AbstractApiPurchaseOrderDetailRequestModelValidator, IApiPurchaseOrderDetailRequestModelValidator
 	{
-		public ApiPurchaseOrderDetailModelValidator()
+		public ApiPurchaseOrderDetailRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiPurchaseOrderDetailModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiPurchaseOrderDetailRequestModel model)
 		{
 			this.DueDateRules();
 			this.LineTotalRules();
@@ -26,7 +26,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPurchaseOrderDetailModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPurchaseOrderDetailRequestModel model)
 		{
 			this.DueDateRules();
 			this.LineTotalRules();
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>f1c1aea8e2ff478383b518326da62de5</Hash>
+    <Hash>9199af8ba869806bb1e20fbde0acd57b</Hash>
 </Codenesium>*/

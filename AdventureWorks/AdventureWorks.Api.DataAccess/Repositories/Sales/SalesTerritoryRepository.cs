@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class SalesTerritoryRepository: AbstractSalesTerritoryRepository, ISalesTerritoryRepository
 	{
 		public SalesTerritoryRepository(
-			IObjectMapper mapper,
+			IDALSalesTerritoryMapper mapper,
 			ILogger<SalesTerritoryRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a20bb20a55f7b316fbf7d189a61a2ad3</Hash>
+    <Hash>d6b14c56041bae822b38266e653c3eb9</Hash>
 </Codenesium>*/

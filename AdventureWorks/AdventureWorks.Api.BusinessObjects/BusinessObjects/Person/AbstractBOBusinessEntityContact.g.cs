@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOBusinessEntityContact: AbstractBOManager
 	{
 		private IBusinessEntityContactRepository businessEntityContactRepository;
-		private IApiBusinessEntityContactModelValidator businessEntityContactModelValidator;
+		private IApiBusinessEntityContactRequestModelValidator businessEntityContactModelValidator;
+		private IBOLBusinessEntityContactMapper businessEntityContactMapper;
 		private ILogger logger;
 
 		public AbstractBOBusinessEntityContact(
 			ILogger logger,
 			IBusinessEntityContactRepository businessEntityContactRepository,
-			IApiBusinessEntityContactModelValidator businessEntityContactModelValidator)
+			IApiBusinessEntityContactRequestModelValidator businessEntityContactModelValidator,
+			IBOLBusinessEntityContactMapper businessEntityContactMapper)
 			: base()
 
 		{
 			this.businessEntityContactRepository = businessEntityContactRepository;
 			this.businessEntityContactModelValidator = businessEntityContactModelValidator;
+			this.businessEntityContactMapper = businessEntityContactMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOBusinessEntityContact>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiBusinessEntityContactResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.businessEntityContactRepository.All(skip, take, orderClause);
+			var records = await this.businessEntityContactRepository.All(skip, take, orderClause);
+
+			return this.businessEntityContactMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOBusinessEntityContact> Get(int businessEntityID)
+		public virtual async Task<ApiBusinessEntityContactResponseModel> Get(int businessEntityID)
 		{
-			return this.businessEntityContactRepository.Get(businessEntityID);
+			var record = await businessEntityContactRepository.Get(businessEntityID);
+
+			return this.businessEntityContactMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOBusinessEntityContact>> Create(
-			ApiBusinessEntityContactModel model)
+		public virtual async Task<CreateResponse<ApiBusinessEntityContactResponseModel>> Create(
+			ApiBusinessEntityContactRequestModel model)
 		{
-			CreateResponse<POCOBusinessEntityContact> response = new CreateResponse<POCOBusinessEntityContact>(await this.businessEntityContactModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBusinessEntityContactResponseModel> response = new CreateResponse<ApiBusinessEntityContactResponseModel>(await this.businessEntityContactModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOBusinessEntityContact record = await this.businessEntityContactRepository.Create(model);
+				var dto = this.businessEntityContactMapper.MapModelToDTO(default (int), model);
+				var record = await this.businessEntityContactRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.businessEntityContactMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int businessEntityID,
-			ApiBusinessEntityContactModel model)
+			ApiBusinessEntityContactRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.businessEntityContactModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
 			if (response.Success)
 			{
-				await this.businessEntityContactRepository.Update(businessEntityID, model);
+				var dto = this.businessEntityContactMapper.MapModelToDTO(businessEntityID, model);
+				await this.businessEntityContactRepository.Update(businessEntityID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOBusinessEntityContact>> GetContactTypeID(int contactTypeID)
+		public async Task<List<ApiBusinessEntityContactResponseModel>> GetContactTypeID(int contactTypeID)
 		{
-			return await this.businessEntityContactRepository.GetContactTypeID(contactTypeID);
+			List<DTOBusinessEntityContact> records = await this.businessEntityContactRepository.GetContactTypeID(contactTypeID);
+
+			return this.businessEntityContactMapper.MapDTOToModel(records);
 		}
-		public async Task<List<POCOBusinessEntityContact>> GetPersonID(int personID)
+		public async Task<List<ApiBusinessEntityContactResponseModel>> GetPersonID(int personID)
 		{
-			return await this.businessEntityContactRepository.GetPersonID(personID);
+			List<DTOBusinessEntityContact> records = await this.businessEntityContactRepository.GetPersonID(personID);
+
+			return this.businessEntityContactMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d52ba9b01aa2fa5dbebb7adeeac5b69</Hash>
+    <Hash>3a4f1cdf63945a508f8e11a68e98db3f</Hash>
 </Codenesium>*/

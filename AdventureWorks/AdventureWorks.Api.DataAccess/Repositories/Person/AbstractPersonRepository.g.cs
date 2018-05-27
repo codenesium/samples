@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALPersonMapper Mapper { get; }
 
 		public AbstractPersonRepository(
-			IObjectMapper mapper,
+			IDALPersonMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOPerson> Get(int businessEntityID)
+		public async virtual Task<DTOPerson> Get(int businessEntityID)
 		{
 			Person record = await this.GetById(businessEntityID);
 
-			return this.Mapper.PersonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOPerson> Create(
-			ApiPersonModel model)
+		public async virtual Task<DTOPerson> Create(
+			DTOPerson dto)
 		{
 			Person record = new Person();
 
-			this.Mapper.PersonMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Person>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.PersonMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiPersonModel model)
+			DTOPerson dto)
 		{
 			Person record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.PersonMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,38 +93,38 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOPerson>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName)
+		public async Task<List<DTOPerson>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName)
 		{
-			var records = await this.SearchLinqPOCO(x => x.LastName == lastName && x.FirstName == firstName && x.MiddleName == middleName);
+			var records = await this.SearchLinqDTO(x => x.LastName == lastName && x.FirstName == firstName && x.MiddleName == middleName);
 
 			return records;
 		}
-		public async Task<List<POCOPerson>> GetAdditionalContactInfo(string additionalContactInfo)
+		public async Task<List<DTOPerson>> GetAdditionalContactInfo(string additionalContactInfo)
 		{
-			var records = await this.SearchLinqPOCO(x => x.AdditionalContactInfo == additionalContactInfo);
+			var records = await this.SearchLinqDTO(x => x.AdditionalContactInfo == additionalContactInfo);
 
 			return records;
 		}
-		public async Task<List<POCOPerson>> GetDemographics(string demographics)
+		public async Task<List<DTOPerson>> GetDemographics(string demographics)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Demographics == demographics);
-
-			return records;
-		}
-
-		protected async Task<List<POCOPerson>> Where(Expression<Func<Person, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<POCOPerson> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqDTO(x => x.Demographics == demographics);
 
 			return records;
 		}
 
-		private async Task<List<POCOPerson>> SearchLinqPOCO(Expression<Func<Person, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOPerson>> Where(Expression<Func<Person, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPerson> response = new List<POCOPerson>();
+			List<DTOPerson> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+
+			return records;
+		}
+
+		private async Task<List<DTOPerson>> SearchLinqDTO(Expression<Func<Person, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		{
+			List<DTOPerson> response = new List<DTOPerson>();
 			List<Person> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.PersonMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -157,5 +157,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b4c4b6796578a7bb512cd6dd915ac35b</Hash>
+    <Hash>84b4b52e1094b85628e06161f2cb9bc8</Hash>
 </Codenesium>*/

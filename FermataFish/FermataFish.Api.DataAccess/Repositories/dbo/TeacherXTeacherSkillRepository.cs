@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class TeacherXTeacherSkillRepository: AbstractTeacherXTeacherSkillRepository, ITeacherXTeacherSkillRepository
 	{
 		public TeacherXTeacherSkillRepository(
-			IObjectMapper mapper,
+			IDALTeacherXTeacherSkillMapper mapper,
 			ILogger<TeacherXTeacherSkillRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6e74bc23deaca676af6dfa6ab68afb74</Hash>
+    <Hash>d3a37cfb75aa446b75393cbf27f814cf</Hash>
 </Codenesium>*/

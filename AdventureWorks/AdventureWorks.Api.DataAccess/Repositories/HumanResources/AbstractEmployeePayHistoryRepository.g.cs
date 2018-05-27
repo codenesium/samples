@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALEmployeePayHistoryMapper Mapper { get; }
 
 		public AbstractEmployeePayHistoryRepository(
-			IObjectMapper mapper,
+			IDALEmployeePayHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOEmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOEmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOEmployeePayHistory> Get(int businessEntityID)
+		public async virtual Task<DTOEmployeePayHistory> Get(int businessEntityID)
 		{
 			EmployeePayHistory record = await this.GetById(businessEntityID);
 
-			return this.Mapper.EmployeePayHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOEmployeePayHistory> Create(
-			ApiEmployeePayHistoryModel model)
+		public async virtual Task<DTOEmployeePayHistory> Create(
+			DTOEmployeePayHistory dto)
 		{
 			EmployeePayHistory record = new EmployeePayHistory();
 
-			this.Mapper.EmployeePayHistoryMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<EmployeePayHistory>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.EmployeePayHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiEmployeePayHistoryModel model)
+			DTOEmployeePayHistory dto)
 		{
 			EmployeePayHistory record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.EmployeePayHistoryMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOEmployeePayHistory>> Where(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOEmployeePayHistory>> Where(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOEmployeePayHistory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOEmployeePayHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOEmployeePayHistory>> SearchLinqPOCO(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOEmployeePayHistory>> SearchLinqDTO(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOEmployeePayHistory> response = new List<POCOEmployeePayHistory>();
+			List<DTOEmployeePayHistory> response = new List<DTOEmployeePayHistory>();
 			List<EmployeePayHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.EmployeePayHistoryMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dc3bd75585afeb706990d4df51ee528f</Hash>
+    <Hash>4d575e7ee38d033e49409667d92711b7</Hash>
 </Codenesium>*/

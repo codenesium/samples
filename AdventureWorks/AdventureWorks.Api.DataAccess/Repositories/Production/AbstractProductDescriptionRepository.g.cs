@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALProductDescriptionMapper Mapper { get; }
 
 		public AbstractProductDescriptionRepository(
-			IObjectMapper mapper,
+			IDALProductDescriptionMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOProductDescription>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOProductDescription>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOProductDescription> Get(int productDescriptionID)
+		public async virtual Task<DTOProductDescription> Get(int productDescriptionID)
 		{
 			ProductDescription record = await this.GetById(productDescriptionID);
 
-			return this.Mapper.ProductDescriptionMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOProductDescription> Create(
-			ApiProductDescriptionModel model)
+		public async virtual Task<DTOProductDescription> Create(
+			DTOProductDescription dto)
 		{
 			ProductDescription record = new ProductDescription();
 
-			this.Mapper.ProductDescriptionMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<ProductDescription>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ProductDescriptionMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int productDescriptionID,
-			ApiProductDescriptionModel model)
+			DTOProductDescription dto)
 		{
 			ProductDescription record = await this.GetById(productDescriptionID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ProductDescriptionMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					productDescriptionID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOProductDescription>> Where(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOProductDescription>> Where(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductDescription> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOProductDescription> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOProductDescription>> SearchLinqPOCO(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOProductDescription>> SearchLinqDTO(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOProductDescription> response = new List<POCOProductDescription>();
+			List<DTOProductDescription> response = new List<DTOProductDescription>();
 			List<ProductDescription> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ProductDescriptionMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0a2dc7dea236852a745678f6f9223a11</Hash>
+    <Hash>b97185b58ea91f0251a98e2fa6da8499</Hash>
 </Codenesium>*/

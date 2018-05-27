@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCODocument>), 200)]
+		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCODocument> response = await this.documentManager.All(query.Offset, query.Limit);
+			List<ApiDocumentResponseModel> response = await this.documentManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCODocument), 200)]
+		[ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(Guid id)
 		{
-			POCODocument response = await this.documentManager.Get(id);
+			ApiDocumentResponseModel response = await this.documentManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODocument), 200)]
+		[ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<Guid>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiDocumentModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiDocumentRequestModel model)
 		{
-			CreateResponse<POCODocument> result = await this.documentManager.Create(model);
+			CreateResponse<ApiDocumentResponseModel> result = await this.documentManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCODocument>), 200)]
+		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDocumentModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiDocumentRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCODocument> records = new List<POCODocument>();
+			List<ApiDocumentResponseModel> records = new List<ApiDocumentResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCODocument> result = await this.documentManager.Create(model);
+				CreateResponse<ApiDocumentResponseModel> result = await this.documentManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCODocument), 200)]
+		[ProducesResponseType(typeof(DTODocument), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(Guid id, [FromBody] ApiDocumentModel model)
+		public virtual async Task<IActionResult> Update(Guid id, [FromBody] ApiDocumentRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCODocument response = await this.documentManager.Get(id);
+					ApiDocumentResponseModel response = await this.documentManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getDocumentLevelDocumentNode/{documentLevel}/{documentNode}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCODocument), 200)]
+		[ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
 		{
-			POCODocument response = await this.documentManager.GetDocumentLevelDocumentNode(documentLevel,documentNode);
+			ApiDocumentResponseModel response = await this.documentManager.GetDocumentLevelDocumentNode(documentLevel,documentNode);
 
 			if (response == null)
 			{
@@ -190,10 +190,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getFileNameRevision/{fileName}/{revision}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCODocument>), 200)]
+		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetFileNameRevision(string fileName,string revision)
 		{
-			List<POCODocument> response = await this.documentManager.GetFileNameRevision(fileName,revision);
+			List<ApiDocumentResponseModel> response = await this.documentManager.GetFileNameRevision(fileName,revision);
 
 			return this.Ok(response);
 		}
@@ -201,5 +201,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>d55bf19c94134950237aa4ade7afd692</Hash>
+    <Hash>e003b4e85f04f174b37203782e40fdf5</Hash>
 </Codenesium>*/

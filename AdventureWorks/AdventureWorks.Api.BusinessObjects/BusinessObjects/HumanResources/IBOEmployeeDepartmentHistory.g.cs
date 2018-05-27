@@ -9,23 +9,23 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOEmployeeDepartmentHistory
 	{
-		Task<CreateResponse<POCOEmployeeDepartmentHistory>> Create(
-			ApiEmployeeDepartmentHistoryModel model);
+		Task<CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Create(
+			ApiEmployeeDepartmentHistoryRequestModel model);
 
 		Task<ActionResponse> Update(int businessEntityID,
-		                            ApiEmployeeDepartmentHistoryModel model);
+		                            ApiEmployeeDepartmentHistoryRequestModel model);
 
 		Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<POCOEmployeeDepartmentHistory> Get(int businessEntityID);
+		Task<ApiEmployeeDepartmentHistoryResponseModel> Get(int businessEntityID);
 
-		Task<List<POCOEmployeeDepartmentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOEmployeeDepartmentHistory>> GetDepartmentID(short departmentID);
-		Task<List<POCOEmployeeDepartmentHistory>> GetShiftID(int shiftID);
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetDepartmentID(short departmentID);
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetShiftID(int shiftID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c106df33cb1e0fa8aad9bb42e3c57be</Hash>
+    <Hash>e8e2c9d13a9b13f8fb1b90cec3e2fd03</Hash>
 </Codenesium>*/

@@ -8,21 +8,21 @@ namespace ESPIOTNS.Api.DataAccess
 {
 	public interface IDeviceRepository
 	{
-		Task<POCODevice> Create(ApiDeviceModel model);
+		Task<DTODevice> Create(DTODevice dto);
 
 		Task Update(int id,
-		            ApiDeviceModel model);
+		            DTODevice dto);
 
 		Task Delete(int id);
 
-		Task<POCODevice> Get(int id);
+		Task<DTODevice> Get(int id);
 
-		Task<List<POCODevice>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTODevice>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCODevice> PublicId(Guid publicId);
+		Task<DTODevice> PublicId(Guid publicId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>25d3135870cf342aad1241af75911966</Hash>
+    <Hash>7d009fbb32e0a737fbdab21106b76cb9</Hash>
 </Codenesium>*/

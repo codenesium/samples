@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSpecialOffer>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpecialOfferResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSpecialOffer> response = await this.specialOfferManager.All(query.Offset, query.Limit);
+			List<ApiSpecialOfferResponseModel> response = await this.specialOfferManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSpecialOffer), 200)]
+		[ProducesResponseType(typeof(ApiSpecialOfferResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSpecialOffer response = await this.specialOfferManager.Get(id);
+			ApiSpecialOfferResponseModel response = await this.specialOfferManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpecialOffer), 200)]
+		[ProducesResponseType(typeof(ApiSpecialOfferResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferRequestModel model)
 		{
-			CreateResponse<POCOSpecialOffer> result = await this.specialOfferManager.Create(model);
+			CreateResponse<ApiSpecialOfferResponseModel> result = await this.specialOfferManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSpecialOffer>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpecialOfferResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpecialOfferModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpecialOfferRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSpecialOffer> records = new List<POCOSpecialOffer>();
+			List<ApiSpecialOfferResponseModel> records = new List<ApiSpecialOfferResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSpecialOffer> result = await this.specialOfferManager.Create(model);
+				CreateResponse<ApiSpecialOfferResponseModel> result = await this.specialOfferManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpecialOffer), 200)]
+		[ProducesResponseType(typeof(DTOSpecialOffer), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpecialOfferRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpecialOffer response = await this.specialOfferManager.Get(id);
+					ApiSpecialOfferResponseModel response = await this.specialOfferManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>6e811f4736ee016b16f6cf3ce5914f9e</Hash>
+    <Hash>240e9d085fb7f6983abde65c054324c1</Hash>
 </Codenesium>*/

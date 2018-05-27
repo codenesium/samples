@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiCreditCardModelValidator
+	public interface IApiCreditCardRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiCreditCardModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiCreditCardModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiCreditCardRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiCreditCardRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7512775d36632000d1d25ac8529930e4</Hash>
+    <Hash>0cb38d0499b00852d7af3c4fad563d59</Hash>
 </Codenesium>*/

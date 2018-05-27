@@ -9,20 +9,20 @@ namespace ESPIOTNS.Api.BusinessObjects
 {
 	public interface IBODeviceAction
 	{
-		Task<CreateResponse<POCODeviceAction>> Create(
-			ApiDeviceActionModel model);
+		Task<CreateResponse<ApiDeviceActionResponseModel>> Create(
+			ApiDeviceActionRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiDeviceActionModel model);
+		                            ApiDeviceActionRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCODeviceAction> Get(int id);
+		Task<ApiDeviceActionResponseModel> Get(int id);
 
-		Task<List<POCODeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiDeviceActionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>37b165ff0e174576f48bf1b2b2caf32f</Hash>
+    <Hash>a2f34447beb73b002312c34b2860aac1</Hash>
 </Codenesium>*/

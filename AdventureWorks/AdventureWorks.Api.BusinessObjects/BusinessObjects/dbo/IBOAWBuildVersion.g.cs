@@ -9,20 +9,20 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOAWBuildVersion
 	{
-		Task<CreateResponse<POCOAWBuildVersion>> Create(
-			ApiAWBuildVersionModel model);
+		Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
+			ApiAWBuildVersionRequestModel model);
 
 		Task<ActionResponse> Update(int systemInformationID,
-		                            ApiAWBuildVersionModel model);
+		                            ApiAWBuildVersionRequestModel model);
 
 		Task<ActionResponse> Delete(int systemInformationID);
 
-		Task<POCOAWBuildVersion> Get(int systemInformationID);
+		Task<ApiAWBuildVersionResponseModel> Get(int systemInformationID);
 
-		Task<List<POCOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiAWBuildVersionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f1304957a47465d26f8b090b974b4b65</Hash>
+    <Hash>4ce3d887667dc3cd20c393df55df972b</Hash>
 </Codenesium>*/

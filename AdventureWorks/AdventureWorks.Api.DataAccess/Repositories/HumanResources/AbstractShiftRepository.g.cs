@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALShiftMapper Mapper { get; }
 
 		public AbstractShiftRepository(
-			IObjectMapper mapper,
+			IDALShiftMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOShift> Get(int shiftID)
+		public async virtual Task<DTOShift> Get(int shiftID)
 		{
 			Shift record = await this.GetById(shiftID);
 
-			return this.Mapper.ShiftMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOShift> Create(
-			ApiShiftModel model)
+		public async virtual Task<DTOShift> Create(
+			DTOShift dto)
 		{
 			Shift record = new Shift();
 
-			this.Mapper.ShiftMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Shift>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.ShiftMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int shiftID,
-			ApiShiftModel model)
+			DTOShift dto)
 		{
 			Shift record = await this.GetById(shiftID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.ShiftMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					shiftID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOShift> GetName(string name)
+		public async Task<DTOShift> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<POCOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
+		public async Task<DTOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
 		{
-			var records = await this.SearchLinqPOCO(x => x.StartTime == startTime && x.EndTime == endTime);
+			var records = await this.SearchLinqDTO(x => x.StartTime == startTime && x.EndTime == endTime);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOShift>> Where(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOShift>> Where(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOShift> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOShift> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOShift>> SearchLinqPOCO(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOShift>> SearchLinqDTO(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOShift> response = new List<POCOShift>();
+			List<DTOShift> response = new List<DTOShift>();
 			List<Shift> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.ShiftMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>164d25db3eb764b49d0e6d690bb0c402</Hash>
+    <Hash>4fa3a390f041ea02860e6a3d2f8a2567</Hash>
 </Codenesium>*/

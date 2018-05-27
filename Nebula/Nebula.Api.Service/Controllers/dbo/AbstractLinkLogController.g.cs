@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOLinkLog>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkLogResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOLinkLog> response = await this.linkLogManager.All(query.Offset, query.Limit);
+			List<ApiLinkLogResponseModel> response = await this.linkLogManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOLinkLog), 200)]
+		[ProducesResponseType(typeof(ApiLinkLogResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOLinkLog response = await this.linkLogManager.Get(id);
+			ApiLinkLogResponseModel response = await this.linkLogManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLinkLog), 200)]
+		[ProducesResponseType(typeof(ApiLinkLogResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiLinkLogModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiLinkLogRequestModel model)
 		{
-			CreateResponse<POCOLinkLog> result = await this.linkLogManager.Create(model);
+			CreateResponse<ApiLinkLogResponseModel> result = await this.linkLogManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOLinkLog>), 200)]
+		[ProducesResponseType(typeof(List<ApiLinkLogResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkLogModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiLinkLogRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOLinkLog> records = new List<POCOLinkLog>();
+			List<ApiLinkLogResponseModel> records = new List<ApiLinkLogResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOLinkLog> result = await this.linkLogManager.Create(model);
+				CreateResponse<ApiLinkLogResponseModel> result = await this.linkLogManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOLinkLog), 200)]
+		[ProducesResponseType(typeof(DTOLinkLog), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkLogModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiLinkLogRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOLinkLog response = await this.linkLogManager.Get(id);
+					ApiLinkLogResponseModel response = await this.linkLogManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cd34362c81673034be10bed144c39f6c</Hash>
+    <Hash>7b9abf24bc1528292d65dfe3531ebc30</Hash>
 </Codenesium>*/

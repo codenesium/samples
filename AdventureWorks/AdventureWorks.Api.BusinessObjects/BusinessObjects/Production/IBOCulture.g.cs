@@ -9,22 +9,22 @@ namespace AdventureWorksNS.Api.BusinessObjects
 {
 	public interface IBOCulture
 	{
-		Task<CreateResponse<POCOCulture>> Create(
-			ApiCultureModel model);
+		Task<CreateResponse<ApiCultureResponseModel>> Create(
+			ApiCultureRequestModel model);
 
 		Task<ActionResponse> Update(string cultureID,
-		                            ApiCultureModel model);
+		                            ApiCultureRequestModel model);
 
 		Task<ActionResponse> Delete(string cultureID);
 
-		Task<POCOCulture> Get(string cultureID);
+		Task<ApiCultureResponseModel> Get(string cultureID);
 
-		Task<List<POCOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiCultureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCulture> GetName(string name);
+		Task<ApiCultureResponseModel> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3d799093354aaff065c5411e12fd157</Hash>
+    <Hash>eaa76001893c0b3a677d60934d16f40f</Hash>
 </Codenesium>*/

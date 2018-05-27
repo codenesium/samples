@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOSpaceFeature>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceFeatureResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOSpaceFeature> response = await this.spaceFeatureManager.All(query.Offset, query.Limit);
+			List<ApiSpaceFeatureResponseModel> response = await this.spaceFeatureManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOSpaceFeature), 200)]
+		[ProducesResponseType(typeof(ApiSpaceFeatureResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOSpaceFeature response = await this.spaceFeatureManager.Get(id);
+			ApiSpaceFeatureResponseModel response = await this.spaceFeatureManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpaceFeature), 200)]
+		[ProducesResponseType(typeof(ApiSpaceFeatureResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceFeatureModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiSpaceFeatureRequestModel model)
 		{
-			CreateResponse<POCOSpaceFeature> result = await this.spaceFeatureManager.Create(model);
+			CreateResponse<ApiSpaceFeatureResponseModel> result = await this.spaceFeatureManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOSpaceFeature>), 200)]
+		[ProducesResponseType(typeof(List<ApiSpaceFeatureResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceFeatureModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiSpaceFeatureRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOSpaceFeature> records = new List<POCOSpaceFeature>();
+			List<ApiSpaceFeatureResponseModel> records = new List<ApiSpaceFeatureResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOSpaceFeature> result = await this.spaceFeatureManager.Create(model);
+				CreateResponse<ApiSpaceFeatureResponseModel> result = await this.spaceFeatureManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOSpaceFeature), 200)]
+		[ProducesResponseType(typeof(DTOSpaceFeature), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceFeatureModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiSpaceFeatureRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOSpaceFeature response = await this.spaceFeatureManager.Get(id);
+					ApiSpaceFeatureResponseModel response = await this.spaceFeatureManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>965dab1a150a4913a0de05d3aff6e45a</Hash>
+    <Hash>c250f62a5e8f487a8857a27eb92618e3</Hash>
 </Codenesium>*/

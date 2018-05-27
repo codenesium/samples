@@ -12,7 +12,7 @@ namespace NebulaNS.Api.DataAccess
 	public class ChainStatusRepository: AbstractChainStatusRepository, IChainStatusRepository
 	{
 		public ChainStatusRepository(
-			IObjectMapper mapper,
+			IDALChainStatusMapper mapper,
 			ILogger<ChainStatusRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>42d35acca09e6ec5cdbf1d8686b484e2</Hash>
+    <Hash>549b4a3325932c51f7e34b43484648ae</Hash>
 </Codenesium>*/

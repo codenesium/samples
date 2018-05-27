@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductModelIllustration: AbstractBOManager
 	{
 		private IProductModelIllustrationRepository productModelIllustrationRepository;
-		private IApiProductModelIllustrationModelValidator productModelIllustrationModelValidator;
+		private IApiProductModelIllustrationRequestModelValidator productModelIllustrationModelValidator;
+		private IBOLProductModelIllustrationMapper productModelIllustrationMapper;
 		private ILogger logger;
 
 		public AbstractBOProductModelIllustration(
 			ILogger logger,
 			IProductModelIllustrationRepository productModelIllustrationRepository,
-			IApiProductModelIllustrationModelValidator productModelIllustrationModelValidator)
+			IApiProductModelIllustrationRequestModelValidator productModelIllustrationModelValidator,
+			IBOLProductModelIllustrationMapper productModelIllustrationMapper)
 			: base()
 
 		{
 			this.productModelIllustrationRepository = productModelIllustrationRepository;
 			this.productModelIllustrationModelValidator = productModelIllustrationModelValidator;
+			this.productModelIllustrationMapper = productModelIllustrationMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductModelIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductModelIllustrationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productModelIllustrationRepository.All(skip, take, orderClause);
+			var records = await this.productModelIllustrationRepository.All(skip, take, orderClause);
+
+			return this.productModelIllustrationMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductModelIllustration> Get(int productModelID)
+		public virtual async Task<ApiProductModelIllustrationResponseModel> Get(int productModelID)
 		{
-			return this.productModelIllustrationRepository.Get(productModelID);
+			var record = await productModelIllustrationRepository.Get(productModelID);
+
+			return this.productModelIllustrationMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductModelIllustration>> Create(
-			ApiProductModelIllustrationModel model)
+		public virtual async Task<CreateResponse<ApiProductModelIllustrationResponseModel>> Create(
+			ApiProductModelIllustrationRequestModel model)
 		{
-			CreateResponse<POCOProductModelIllustration> response = new CreateResponse<POCOProductModelIllustration>(await this.productModelIllustrationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductModelIllustrationResponseModel> response = new CreateResponse<ApiProductModelIllustrationResponseModel>(await this.productModelIllustrationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductModelIllustration record = await this.productModelIllustrationRepository.Create(model);
+				var dto = this.productModelIllustrationMapper.MapModelToDTO(default (int), model);
+				var record = await this.productModelIllustrationRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productModelIllustrationMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productModelID,
-			ApiProductModelIllustrationModel model)
+			ApiProductModelIllustrationRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productModelIllustrationModelValidator.ValidateUpdateAsync(productModelID, model));
 
 			if (response.Success)
 			{
-				await this.productModelIllustrationRepository.Update(productModelID, model);
+				var dto = this.productModelIllustrationMapper.MapModelToDTO(productModelID, model);
+				await this.productModelIllustrationRepository.Update(productModelID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>b95d0a778158736a969e17b7e51ee801</Hash>
+    <Hash>d15adc7ce044ffdf446720d12244545e</Hash>
 </Codenesium>*/

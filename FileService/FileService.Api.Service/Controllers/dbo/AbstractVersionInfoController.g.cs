@@ -38,13 +38,13 @@ namespace FileServiceNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
+		[ProducesResponseType(typeof(List<ApiVersionInfoResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOVersionInfo> response = await this.versionInfoManager.All(query.Offset, query.Limit);
+			List<ApiVersionInfoResponseModel> response = await this.versionInfoManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FileServiceNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
+		[ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(long id)
 		{
-			POCOVersionInfo response = await this.versionInfoManager.Get(id);
+			ApiVersionInfoResponseModel response = await this.versionInfoManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FileServiceNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
+		[ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<long>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoRequestModel model)
 		{
-			CreateResponse<POCOVersionInfo> result = await this.versionInfoManager.Create(model);
+			CreateResponse<ApiVersionInfoResponseModel> result = await this.versionInfoManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FileServiceNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOVersionInfo>), 200)]
+		[ProducesResponseType(typeof(List<ApiVersionInfoResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVersionInfoModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVersionInfoRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOVersionInfo> records = new List<POCOVersionInfo>();
+			List<ApiVersionInfoResponseModel> records = new List<ApiVersionInfoResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOVersionInfo> result = await this.versionInfoManager.Create(model);
+				CreateResponse<ApiVersionInfoResponseModel> result = await this.versionInfoManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FileServiceNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
+		[ProducesResponseType(typeof(DTOVersionInfo), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(long id, [FromBody] ApiVersionInfoModel model)
+		public virtual async Task<IActionResult> Update(long id, [FromBody] ApiVersionInfoRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FileServiceNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOVersionInfo response = await this.versionInfoManager.Get(id);
+					ApiVersionInfoResponseModel response = await this.versionInfoManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -169,13 +169,13 @@ namespace FileServiceNS.Api.Service
 		}
 
 		[HttpGet]
-		[Route("version/{version}")]
+		[Route("getVersion/{version}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOVersionInfo), 200)]
+		[ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Version(long version)
+		public async virtual Task<IActionResult> GetVersion(long version)
 		{
-			POCOVersionInfo response = await this.versionInfoManager.Version(version);
+			ApiVersionInfoResponseModel response = await this.versionInfoManager.GetVersion(version);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace FileServiceNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2a84827ac61001f74bed77d94c500f47</Hash>
+    <Hash>82870a7eee5231dcdc24f7113cb631fa</Hash>
 </Codenesium>*/

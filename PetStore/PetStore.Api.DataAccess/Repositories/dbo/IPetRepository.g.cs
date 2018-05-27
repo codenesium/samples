@@ -8,19 +8,19 @@ namespace PetStoreNS.Api.DataAccess
 {
 	public interface IPetRepository
 	{
-		Task<POCOPet> Create(ApiPetModel model);
+		Task<DTOPet> Create(DTOPet dto);
 
 		Task Update(int id,
-		            ApiPetModel model);
+		            DTOPet dto);
 
 		Task Delete(int id);
 
-		Task<POCOPet> Get(int id);
+		Task<DTOPet> Get(int id);
 
-		Task<List<POCOPet>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOPet>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>359c1528b4a3250dec115a764a86727e</Hash>
+    <Hash>459cfff4973e15c29d3ee66c5ef309ab</Hash>
 </Codenesium>*/

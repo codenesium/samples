@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOShipMethod>), 200)]
+		[ProducesResponseType(typeof(List<ApiShipMethodResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOShipMethod> response = await this.shipMethodManager.All(query.Offset, query.Limit);
+			List<ApiShipMethodResponseModel> response = await this.shipMethodManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOShipMethod), 200)]
+		[ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOShipMethod response = await this.shipMethodManager.Get(id);
+			ApiShipMethodResponseModel response = await this.shipMethodManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOShipMethod), 200)]
+		[ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiShipMethodModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiShipMethodRequestModel model)
 		{
-			CreateResponse<POCOShipMethod> result = await this.shipMethodManager.Create(model);
+			CreateResponse<ApiShipMethodResponseModel> result = await this.shipMethodManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOShipMethod>), 200)]
+		[ProducesResponseType(typeof(List<ApiShipMethodResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShipMethodModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShipMethodRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOShipMethod> records = new List<POCOShipMethod>();
+			List<ApiShipMethodResponseModel> records = new List<ApiShipMethodResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOShipMethod> result = await this.shipMethodManager.Create(model);
+				CreateResponse<ApiShipMethodResponseModel> result = await this.shipMethodManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOShipMethod), 200)]
+		[ProducesResponseType(typeof(DTOShipMethod), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShipMethodModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShipMethodRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOShipMethod response = await this.shipMethodManager.Get(id);
+					ApiShipMethodResponseModel response = await this.shipMethodManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOShipMethod), 200)]
+		[ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOShipMethod response = await this.shipMethodManager.GetName(name);
+			ApiShipMethodResponseModel response = await this.shipMethodManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>818e44583b364b7e5211be3d2c9ca16a</Hash>
+    <Hash>4e686614b44409072d0b43a61873533c</Hash>
 </Codenesium>*/

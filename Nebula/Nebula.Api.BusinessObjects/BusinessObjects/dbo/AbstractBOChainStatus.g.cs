@@ -15,54 +15,62 @@ namespace NebulaNS.Api.BusinessObjects
 	public abstract class AbstractBOChainStatus: AbstractBOManager
 	{
 		private IChainStatusRepository chainStatusRepository;
-		private IApiChainStatusModelValidator chainStatusModelValidator;
+		private IApiChainStatusRequestModelValidator chainStatusModelValidator;
+		private IBOLChainStatusMapper chainStatusMapper;
 		private ILogger logger;
 
 		public AbstractBOChainStatus(
 			ILogger logger,
 			IChainStatusRepository chainStatusRepository,
-			IApiChainStatusModelValidator chainStatusModelValidator)
+			IApiChainStatusRequestModelValidator chainStatusModelValidator,
+			IBOLChainStatusMapper chainStatusMapper)
 			: base()
 
 		{
 			this.chainStatusRepository = chainStatusRepository;
 			this.chainStatusModelValidator = chainStatusModelValidator;
+			this.chainStatusMapper = chainStatusMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOChainStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiChainStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.chainStatusRepository.All(skip, take, orderClause);
+			var records = await this.chainStatusRepository.All(skip, take, orderClause);
+
+			return this.chainStatusMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOChainStatus> Get(int id)
+		public virtual async Task<ApiChainStatusResponseModel> Get(int id)
 		{
-			return this.chainStatusRepository.Get(id);
+			var record = await chainStatusRepository.Get(id);
+
+			return this.chainStatusMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOChainStatus>> Create(
-			ApiChainStatusModel model)
+		public virtual async Task<CreateResponse<ApiChainStatusResponseModel>> Create(
+			ApiChainStatusRequestModel model)
 		{
-			CreateResponse<POCOChainStatus> response = new CreateResponse<POCOChainStatus>(await this.chainStatusModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiChainStatusResponseModel> response = new CreateResponse<ApiChainStatusResponseModel>(await this.chainStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOChainStatus record = await this.chainStatusRepository.Create(model);
+				var dto = this.chainStatusMapper.MapModelToDTO(default (int), model);
+				var record = await this.chainStatusRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.chainStatusMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiChainStatusModel model)
+			ApiChainStatusRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.chainStatusModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.chainStatusRepository.Update(id, model);
+				var dto = this.chainStatusMapper.MapModelToDTO(id, model);
+				await this.chainStatusRepository.Update(id, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace NebulaNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOChainStatus> GetName(string name)
+		public async Task<ApiChainStatusResponseModel> GetName(string name)
 		{
-			return await this.chainStatusRepository.GetName(name);
+			DTOChainStatus record = await this.chainStatusRepository.GetName(name);
+
+			return this.chainStatusMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3926dc4d6e27cfb410baec92020e0eb</Hash>
+    <Hash>33bd15d2469d9c18a297bbc99f844b9f</Hash>
 </Codenesium>*/

@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class StateRepository: AbstractStateRepository, IStateRepository
 	{
 		public StateRepository(
-			IObjectMapper mapper,
+			IDALStateMapper mapper,
 			ILogger<StateRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>41ba867fe6c0ab6b233224d186c58d5c</Hash>
+    <Hash>c48d0c209d7104af217520892b0a3d30</Hash>
 </Codenesium>*/

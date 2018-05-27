@@ -12,7 +12,7 @@ namespace FileServiceNS.Api.DataAccess
 	public class FileTypeRepository: AbstractFileTypeRepository, IFileTypeRepository
 	{
 		public FileTypeRepository(
-			IObjectMapper mapper,
+			IDALFileTypeMapper mapper,
 			ILogger<FileTypeRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>125bb50e1886a28c15da90db58dc3d6e</Hash>
+    <Hash>ce7878e8b38b0d6669fa319904fa58c9</Hash>
 </Codenesium>*/

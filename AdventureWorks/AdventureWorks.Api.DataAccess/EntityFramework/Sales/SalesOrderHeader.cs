@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesOrderHeader", Schema="Sales")]
-	public partial class SalesOrderHeader: AbstractEntityFrameworkPOCO
+	public partial class SalesOrderHeader: AbstractEntityFrameworkDTO
 	{
 		public SalesOrderHeader()
 		{}
@@ -109,6 +109,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("RevisionNumber", TypeName="tinyint")]
 		public int RevisionNumber { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 
@@ -164,5 +165,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7e7ddcd0044f66e3cc4b47a50e4dc389</Hash>
+    <Hash>ea3cbaadbc5320fd68c00ffb04a456ef</Hash>
 </Codenesium>*/

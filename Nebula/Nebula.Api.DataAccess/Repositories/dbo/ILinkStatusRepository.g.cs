@@ -8,21 +8,21 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface ILinkStatusRepository
 	{
-		Task<POCOLinkStatus> Create(ApiLinkStatusModel model);
+		Task<DTOLinkStatus> Create(DTOLinkStatus dto);
 
 		Task Update(int id,
-		            ApiLinkStatusModel model);
+		            DTOLinkStatus dto);
 
 		Task Delete(int id);
 
-		Task<POCOLinkStatus> Get(int id);
+		Task<DTOLinkStatus> Get(int id);
 
-		Task<List<POCOLinkStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOLinkStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOLinkStatus> GetName(string name);
+		Task<DTOLinkStatus> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ec27a3684100342457c1ff3140ed67b</Hash>
+    <Hash>53dd0df8aa2761b748b51c6b0e56b2eb</Hash>
 </Codenesium>*/

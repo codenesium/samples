@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICultureRepository
 	{
-		Task<POCOCulture> Create(ApiCultureModel model);
+		Task<DTOCulture> Create(DTOCulture dto);
 
 		Task Update(string cultureID,
-		            ApiCultureModel model);
+		            DTOCulture dto);
 
 		Task Delete(string cultureID);
 
-		Task<POCOCulture> Get(string cultureID);
+		Task<DTOCulture> Get(string cultureID);
 
-		Task<List<POCOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCulture> GetName(string name);
+		Task<DTOCulture> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f2a42443e89f8c9229326a120011a39b</Hash>
+    <Hash>98cd15070a606d4d7eacaeb62c146d18</Hash>
 </Codenesium>*/

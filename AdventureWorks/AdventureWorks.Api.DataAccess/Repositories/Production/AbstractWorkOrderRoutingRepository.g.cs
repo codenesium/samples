@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALWorkOrderRoutingMapper Mapper { get; }
 
 		public AbstractWorkOrderRoutingRepository(
-			IObjectMapper mapper,
+			IDALWorkOrderRoutingMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOWorkOrderRouting> Get(int workOrderID)
+		public async virtual Task<DTOWorkOrderRouting> Get(int workOrderID)
 		{
 			WorkOrderRouting record = await this.GetById(workOrderID);
 
-			return this.Mapper.WorkOrderRoutingMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOWorkOrderRouting> Create(
-			ApiWorkOrderRoutingModel model)
+		public async virtual Task<DTOWorkOrderRouting> Create(
+			DTOWorkOrderRouting dto)
 		{
 			WorkOrderRouting record = new WorkOrderRouting();
 
-			this.Mapper.WorkOrderRoutingMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<WorkOrderRouting>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.WorkOrderRoutingMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int workOrderID,
-			ApiWorkOrderRoutingModel model)
+			DTOWorkOrderRouting dto)
 		{
 			WorkOrderRouting record = await this.GetById(workOrderID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.WorkOrderRoutingMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					workOrderID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOWorkOrderRouting>> GetProductID(int productID)
+		public async Task<List<DTOWorkOrderRouting>> GetProductID(int productID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ProductID == productID);
+			var records = await this.SearchLinqDTO(x => x.ProductID == productID);
 
 			return records;
 		}
 
-		protected async Task<List<POCOWorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOWorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOWorkOrderRouting> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOWorkOrderRouting> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOWorkOrderRouting>> SearchLinqPOCO(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOWorkOrderRouting>> SearchLinqDTO(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOWorkOrderRouting> response = new List<POCOWorkOrderRouting>();
+			List<DTOWorkOrderRouting> response = new List<DTOWorkOrderRouting>();
 			List<WorkOrderRouting> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.WorkOrderRoutingMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6bb71c6336223cba813ff9e4fd748660</Hash>
+    <Hash>d5438c2995eaee5e5b882d6279495b89</Hash>
 </Codenesium>*/

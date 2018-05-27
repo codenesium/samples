@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProductDocument: AbstractBOManager
 	{
 		private IProductDocumentRepository productDocumentRepository;
-		private IApiProductDocumentModelValidator productDocumentModelValidator;
+		private IApiProductDocumentRequestModelValidator productDocumentModelValidator;
+		private IBOLProductDocumentMapper productDocumentMapper;
 		private ILogger logger;
 
 		public AbstractBOProductDocument(
 			ILogger logger,
 			IProductDocumentRepository productDocumentRepository,
-			IApiProductDocumentModelValidator productDocumentModelValidator)
+			IApiProductDocumentRequestModelValidator productDocumentModelValidator,
+			IBOLProductDocumentMapper productDocumentMapper)
 			: base()
 
 		{
 			this.productDocumentRepository = productDocumentRepository;
 			this.productDocumentModelValidator = productDocumentModelValidator;
+			this.productDocumentMapper = productDocumentMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProductDocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductDocumentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productDocumentRepository.All(skip, take, orderClause);
+			var records = await this.productDocumentRepository.All(skip, take, orderClause);
+
+			return this.productDocumentMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProductDocument> Get(int productID)
+		public virtual async Task<ApiProductDocumentResponseModel> Get(int productID)
 		{
-			return this.productDocumentRepository.Get(productID);
+			var record = await productDocumentRepository.Get(productID);
+
+			return this.productDocumentMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProductDocument>> Create(
-			ApiProductDocumentModel model)
+		public virtual async Task<CreateResponse<ApiProductDocumentResponseModel>> Create(
+			ApiProductDocumentRequestModel model)
 		{
-			CreateResponse<POCOProductDocument> response = new CreateResponse<POCOProductDocument>(await this.productDocumentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductDocumentResponseModel> response = new CreateResponse<ApiProductDocumentResponseModel>(await this.productDocumentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProductDocument record = await this.productDocumentRepository.Create(model);
+				var dto = this.productDocumentMapper.MapModelToDTO(default (int), model);
+				var record = await this.productDocumentRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productDocumentMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productID,
-			ApiProductDocumentModel model)
+			ApiProductDocumentRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productDocumentModelValidator.ValidateUpdateAsync(productID, model));
 
 			if (response.Success)
 			{
-				await this.productDocumentRepository.Update(productID, model);
+				var dto = this.productDocumentMapper.MapModelToDTO(productID, model);
+				await this.productDocumentRepository.Update(productID, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>fe24ed66a7f46410ef8b5c6f9bf39b30</Hash>
+    <Hash>7347bb5f1a00b4b43b106bf86c2ef80e</Hash>
 </Codenesium>*/

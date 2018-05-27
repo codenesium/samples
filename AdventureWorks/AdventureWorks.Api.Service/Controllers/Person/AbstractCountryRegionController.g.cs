@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOCountryRegion>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRegionResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOCountryRegion> response = await this.countryRegionManager.All(query.Offset, query.Limit);
+			List<ApiCountryRegionResponseModel> response = await this.countryRegionManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCountryRegion), 200)]
+		[ProducesResponseType(typeof(ApiCountryRegionResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(string id)
 		{
-			POCOCountryRegion response = await this.countryRegionManager.Get(id);
+			ApiCountryRegionResponseModel response = await this.countryRegionManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCountryRegion), 200)]
+		[ProducesResponseType(typeof(ApiCountryRegionResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<string>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCountryRegionModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiCountryRegionRequestModel model)
 		{
-			CreateResponse<POCOCountryRegion> result = await this.countryRegionManager.Create(model);
+			CreateResponse<ApiCountryRegionResponseModel> result = await this.countryRegionManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOCountryRegion>), 200)]
+		[ProducesResponseType(typeof(List<ApiCountryRegionResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCountryRegionModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCountryRegionRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOCountryRegion> records = new List<POCOCountryRegion>();
+			List<ApiCountryRegionResponseModel> records = new List<ApiCountryRegionResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOCountryRegion> result = await this.countryRegionManager.Create(model);
+				CreateResponse<ApiCountryRegionResponseModel> result = await this.countryRegionManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOCountryRegion), 200)]
+		[ProducesResponseType(typeof(DTOCountryRegion), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionModel model)
+		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCountryRegionRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOCountryRegion response = await this.countryRegionManager.Get(id);
+					ApiCountryRegionResponseModel response = await this.countryRegionManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOCountryRegion), 200)]
+		[ProducesResponseType(typeof(ApiCountryRegionResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOCountryRegion response = await this.countryRegionManager.GetName(name);
+			ApiCountryRegionResponseModel response = await this.countryRegionManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>f77782b22177ac2a1f0fea89550c0ba0</Hash>
+    <Hash>e3132ca397f1a00a4bdd060ad6350b37</Hash>
 </Codenesium>*/

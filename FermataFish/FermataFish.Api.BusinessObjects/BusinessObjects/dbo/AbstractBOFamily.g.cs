@@ -15,54 +15,62 @@ namespace FermataFishNS.Api.BusinessObjects
 	public abstract class AbstractBOFamily: AbstractBOManager
 	{
 		private IFamilyRepository familyRepository;
-		private IApiFamilyModelValidator familyModelValidator;
+		private IApiFamilyRequestModelValidator familyModelValidator;
+		private IBOLFamilyMapper familyMapper;
 		private ILogger logger;
 
 		public AbstractBOFamily(
 			ILogger logger,
 			IFamilyRepository familyRepository,
-			IApiFamilyModelValidator familyModelValidator)
+			IApiFamilyRequestModelValidator familyModelValidator,
+			IBOLFamilyMapper familyMapper)
 			: base()
 
 		{
 			this.familyRepository = familyRepository;
 			this.familyModelValidator = familyModelValidator;
+			this.familyMapper = familyMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOFamily>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiFamilyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.familyRepository.All(skip, take, orderClause);
+			var records = await this.familyRepository.All(skip, take, orderClause);
+
+			return this.familyMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOFamily> Get(int id)
+		public virtual async Task<ApiFamilyResponseModel> Get(int id)
 		{
-			return this.familyRepository.Get(id);
+			var record = await familyRepository.Get(id);
+
+			return this.familyMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOFamily>> Create(
-			ApiFamilyModel model)
+		public virtual async Task<CreateResponse<ApiFamilyResponseModel>> Create(
+			ApiFamilyRequestModel model)
 		{
-			CreateResponse<POCOFamily> response = new CreateResponse<POCOFamily>(await this.familyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFamilyResponseModel> response = new CreateResponse<ApiFamilyResponseModel>(await this.familyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOFamily record = await this.familyRepository.Create(model);
+				var dto = this.familyMapper.MapModelToDTO(default (int), model);
+				var record = await this.familyRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.familyMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiFamilyModel model)
+			ApiFamilyRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.familyModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.familyRepository.Update(id, model);
+				var dto = this.familyMapper.MapModelToDTO(id, model);
+				await this.familyRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace FermataFishNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>5d052386b3a87b15a2d4f413ed29a9c4</Hash>
+    <Hash>bd2d3c2b102a8e6fee56e64abb115469</Hash>
 </Codenesium>*/

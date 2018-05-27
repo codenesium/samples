@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOScrapReason: AbstractBOManager
 	{
 		private IScrapReasonRepository scrapReasonRepository;
-		private IApiScrapReasonModelValidator scrapReasonModelValidator;
+		private IApiScrapReasonRequestModelValidator scrapReasonModelValidator;
+		private IBOLScrapReasonMapper scrapReasonMapper;
 		private ILogger logger;
 
 		public AbstractBOScrapReason(
 			ILogger logger,
 			IScrapReasonRepository scrapReasonRepository,
-			IApiScrapReasonModelValidator scrapReasonModelValidator)
+			IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
+			IBOLScrapReasonMapper scrapReasonMapper)
 			: base()
 
 		{
 			this.scrapReasonRepository = scrapReasonRepository;
 			this.scrapReasonModelValidator = scrapReasonModelValidator;
+			this.scrapReasonMapper = scrapReasonMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiScrapReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.scrapReasonRepository.All(skip, take, orderClause);
+			var records = await this.scrapReasonRepository.All(skip, take, orderClause);
+
+			return this.scrapReasonMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOScrapReason> Get(short scrapReasonID)
+		public virtual async Task<ApiScrapReasonResponseModel> Get(short scrapReasonID)
 		{
-			return this.scrapReasonRepository.Get(scrapReasonID);
+			var record = await scrapReasonRepository.Get(scrapReasonID);
+
+			return this.scrapReasonMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOScrapReason>> Create(
-			ApiScrapReasonModel model)
+		public virtual async Task<CreateResponse<ApiScrapReasonResponseModel>> Create(
+			ApiScrapReasonRequestModel model)
 		{
-			CreateResponse<POCOScrapReason> response = new CreateResponse<POCOScrapReason>(await this.scrapReasonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiScrapReasonResponseModel> response = new CreateResponse<ApiScrapReasonResponseModel>(await this.scrapReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOScrapReason record = await this.scrapReasonRepository.Create(model);
+				var dto = this.scrapReasonMapper.MapModelToDTO(default (short), model);
+				var record = await this.scrapReasonRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.scrapReasonMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			short scrapReasonID,
-			ApiScrapReasonModel model)
+			ApiScrapReasonRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.scrapReasonModelValidator.ValidateUpdateAsync(scrapReasonID, model));
 
 			if (response.Success)
 			{
-				await this.scrapReasonRepository.Update(scrapReasonID, model);
+				var dto = this.scrapReasonMapper.MapModelToDTO(scrapReasonID, model);
+				await this.scrapReasonRepository.Update(scrapReasonID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOScrapReason> GetName(string name)
+		public async Task<ApiScrapReasonResponseModel> GetName(string name)
 		{
-			return await this.scrapReasonRepository.GetName(name);
+			DTOScrapReason record = await this.scrapReasonRepository.GetName(name);
+
+			return this.scrapReasonMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>23fc38099de95edb82e96b6cf7f0c4bc</Hash>
+    <Hash>eb276e8d8a7a7c73c109a6bf0eeae536</Hash>
 </Codenesium>*/

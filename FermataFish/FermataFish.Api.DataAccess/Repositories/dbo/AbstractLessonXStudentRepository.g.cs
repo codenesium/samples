@@ -15,10 +15,10 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALLessonXStudentMapper Mapper { get; }
 
 		public AbstractLessonXStudentRepository(
-			IObjectMapper mapper,
+			IDALLessonXStudentMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FermataFishNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOLessonXStudent>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOLessonXStudent>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOLessonXStudent> Get(int id)
+		public async virtual Task<DTOLessonXStudent> Get(int id)
 		{
 			LessonXStudent record = await this.GetById(id);
 
-			return this.Mapper.LessonXStudentMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOLessonXStudent> Create(
-			ApiLessonXStudentModel model)
+		public async virtual Task<DTOLessonXStudent> Create(
+			DTOLessonXStudent dto)
 		{
 			LessonXStudent record = new LessonXStudent();
 
-			this.Mapper.LessonXStudentMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<LessonXStudent>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.LessonXStudentMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiLessonXStudentModel model)
+			DTOLessonXStudent dto)
 		{
 			LessonXStudent record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace FermataFishNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.LessonXStudentMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOLessonXStudent>> Where(Expression<Func<LessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOLessonXStudent>> Where(Expression<Func<LessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOLessonXStudent> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOLessonXStudent> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOLessonXStudent>> SearchLinqPOCO(Expression<Func<LessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOLessonXStudent>> SearchLinqDTO(Expression<Func<LessonXStudent, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOLessonXStudent> response = new List<POCOLessonXStudent>();
+			List<DTOLessonXStudent> response = new List<DTOLessonXStudent>();
 			List<LessonXStudent> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.LessonXStudentMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7d0b61d89881e02e2becf6a08bc0c3e3</Hash>
+    <Hash>3ff5f75b0935c17819dd4090ae7604cb</Hash>
 </Codenesium>*/

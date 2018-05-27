@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOBusinessEntity>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOBusinessEntity> response = await this.businessEntityManager.All(query.Offset, query.Limit);
+			List<ApiBusinessEntityResponseModel> response = await this.businessEntityManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOBusinessEntity), 200)]
+		[ProducesResponseType(typeof(ApiBusinessEntityResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOBusinessEntity response = await this.businessEntityManager.Get(id);
+			ApiBusinessEntityResponseModel response = await this.businessEntityManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBusinessEntity), 200)]
+		[ProducesResponseType(typeof(ApiBusinessEntityResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiBusinessEntityRequestModel model)
 		{
-			CreateResponse<POCOBusinessEntity> result = await this.businessEntityManager.Create(model);
+			CreateResponse<ApiBusinessEntityResponseModel> result = await this.businessEntityManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOBusinessEntity>), 200)]
+		[ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBusinessEntityModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiBusinessEntityRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOBusinessEntity> records = new List<POCOBusinessEntity>();
+			List<ApiBusinessEntityResponseModel> records = new List<ApiBusinessEntityResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOBusinessEntity> result = await this.businessEntityManager.Create(model);
+				CreateResponse<ApiBusinessEntityResponseModel> result = await this.businessEntityManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOBusinessEntity), 200)]
+		[ProducesResponseType(typeof(DTOBusinessEntity), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiBusinessEntityRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOBusinessEntity response = await this.businessEntityManager.Get(id);
+					ApiBusinessEntityResponseModel response = await this.businessEntityManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>4af9b056fffb5d57d342c154d7875a4a</Hash>
+    <Hash>96b0df1a64d3630023d31230beb80f74</Hash>
 </Codenesium>*/

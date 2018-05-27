@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOPersonCreditCard>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonCreditCardResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOPersonCreditCard> response = await this.personCreditCardManager.All(query.Offset, query.Limit);
+			List<ApiPersonCreditCardResponseModel> response = await this.personCreditCardManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOPersonCreditCard), 200)]
+		[ProducesResponseType(typeof(ApiPersonCreditCardResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOPersonCreditCard response = await this.personCreditCardManager.Get(id);
+			ApiPersonCreditCardResponseModel response = await this.personCreditCardManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPersonCreditCard), 200)]
+		[ProducesResponseType(typeof(ApiPersonCreditCardResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPersonCreditCardModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiPersonCreditCardRequestModel model)
 		{
-			CreateResponse<POCOPersonCreditCard> result = await this.personCreditCardManager.Create(model);
+			CreateResponse<ApiPersonCreditCardResponseModel> result = await this.personCreditCardManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOPersonCreditCard>), 200)]
+		[ProducesResponseType(typeof(List<ApiPersonCreditCardResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPersonCreditCardModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPersonCreditCardRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOPersonCreditCard> records = new List<POCOPersonCreditCard>();
+			List<ApiPersonCreditCardResponseModel> records = new List<ApiPersonCreditCardResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOPersonCreditCard> result = await this.personCreditCardManager.Create(model);
+				CreateResponse<ApiPersonCreditCardResponseModel> result = await this.personCreditCardManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOPersonCreditCard), 200)]
+		[ProducesResponseType(typeof(DTOPersonCreditCard), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonCreditCardModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPersonCreditCardRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOPersonCreditCard response = await this.personCreditCardManager.Get(id);
+					ApiPersonCreditCardResponseModel response = await this.personCreditCardManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>2c2ea55ecadb85976dada94120469776</Hash>
+    <Hash>ac8e43cdad613d1b3613fe07a69007e3</Hash>
 </Codenesium>*/

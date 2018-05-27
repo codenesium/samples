@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ILocationRepository
 	{
-		Task<POCOLocation> Create(ApiLocationModel model);
+		Task<DTOLocation> Create(DTOLocation dto);
 
 		Task Update(short locationID,
-		            ApiLocationModel model);
+		            DTOLocation dto);
 
 		Task Delete(short locationID);
 
-		Task<POCOLocation> Get(short locationID);
+		Task<DTOLocation> Get(short locationID);
 
-		Task<List<POCOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOLocation> GetName(string name);
+		Task<DTOLocation> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa8a032ff24c25f66414ccc45eb73461</Hash>
+    <Hash>8fe54fe9bd10f0cff99018e87d5daa37</Hash>
 </Codenesium>*/

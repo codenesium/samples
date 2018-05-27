@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALPersonPhoneMapper Mapper { get; }
 
 		public AbstractPersonPhoneRepository(
-			IObjectMapper mapper,
+			IDALPersonPhoneMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOPersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOPersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOPersonPhone> Get(int businessEntityID)
+		public async virtual Task<DTOPersonPhone> Get(int businessEntityID)
 		{
 			PersonPhone record = await this.GetById(businessEntityID);
 
-			return this.Mapper.PersonPhoneMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOPersonPhone> Create(
-			ApiPersonPhoneModel model)
+		public async virtual Task<DTOPersonPhone> Create(
+			DTOPersonPhone dto)
 		{
 			PersonPhone record = new PersonPhone();
 
-			this.Mapper.PersonPhoneMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<PersonPhone>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.PersonPhoneMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiPersonPhoneModel model)
+			DTOPersonPhone dto)
 		{
 			PersonPhone record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.PersonPhoneMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOPersonPhone>> GetPhoneNumber(string phoneNumber)
+		public async Task<List<DTOPersonPhone>> GetPhoneNumber(string phoneNumber)
 		{
-			var records = await this.SearchLinqPOCO(x => x.PhoneNumber == phoneNumber);
+			var records = await this.SearchLinqDTO(x => x.PhoneNumber == phoneNumber);
 
 			return records;
 		}
 
-		protected async Task<List<POCOPersonPhone>> Where(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOPersonPhone>> Where(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPersonPhone> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOPersonPhone> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOPersonPhone>> SearchLinqPOCO(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOPersonPhone>> SearchLinqDTO(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOPersonPhone> response = new List<POCOPersonPhone>();
+			List<DTOPersonPhone> response = new List<DTOPersonPhone>();
 			List<PersonPhone> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.PersonPhoneMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>301e7854e848821f8801607a5f670605</Hash>
+    <Hash>da8dbea9677960a799d8d9444280c6c3</Hash>
 </Codenesium>*/

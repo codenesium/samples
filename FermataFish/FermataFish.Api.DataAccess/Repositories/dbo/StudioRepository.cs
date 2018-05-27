@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class StudioRepository: AbstractStudioRepository, IStudioRepository
 	{
 		public StudioRepository(
-			IObjectMapper mapper,
+			IDALStudioMapper mapper,
 			ILogger<StudioRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b169a9f7465f8a8a09be92e1a28ffb4c</Hash>
+    <Hash>1eaf898dffc37f0cdab51cd236f1bf98</Hash>
 </Codenesium>*/

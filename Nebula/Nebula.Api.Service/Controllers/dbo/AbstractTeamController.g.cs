@@ -38,13 +38,13 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOTeam>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOTeam> response = await this.teamManager.All(query.Offset, query.Limit);
+			List<ApiTeamResponseModel> response = await this.teamManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOTeam), 200)]
+		[ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOTeam response = await this.teamManager.Get(id);
+			ApiTeamResponseModel response = await this.teamManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTeam), 200)]
+		[ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiTeamModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiTeamRequestModel model)
 		{
-			CreateResponse<POCOTeam> result = await this.teamManager.Create(model);
+			CreateResponse<ApiTeamResponseModel> result = await this.teamManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace NebulaNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOTeam>), 200)]
+		[ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeamModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiTeamRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOTeam> records = new List<POCOTeam>();
+			List<ApiTeamResponseModel> records = new List<ApiTeamResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOTeam> result = await this.teamManager.Create(model);
+				CreateResponse<ApiTeamResponseModel> result = await this.teamManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace NebulaNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOTeam), 200)]
+		[ProducesResponseType(typeof(DTOTeam), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeamModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiTeamRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace NebulaNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOTeam response = await this.teamManager.Get(id);
+					ApiTeamResponseModel response = await this.teamManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,11 +171,11 @@ namespace NebulaNS.Api.Service
 		[HttpGet]
 		[Route("getName/{name}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOTeam), 200)]
+		[ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> GetName(string name)
 		{
-			POCOTeam response = await this.teamManager.GetName(name);
+			ApiTeamResponseModel response = await this.teamManager.GetName(name);
 
 			if (response == null)
 			{
@@ -190,5 +190,5 @@ namespace NebulaNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>62e122ae9d5fc9ebd5b9d82037ba5651</Hash>
+    <Hash>37232f5cffc04f96f9c223b88aa91c72</Hash>
 </Codenesium>*/

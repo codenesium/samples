@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOProduct: AbstractBOManager
 	{
 		private IProductRepository productRepository;
-		private IApiProductModelValidator productModelValidator;
+		private IApiProductRequestModelValidator productModelValidator;
+		private IBOLProductMapper productMapper;
 		private ILogger logger;
 
 		public AbstractBOProduct(
 			ILogger logger,
 			IProductRepository productRepository,
-			IApiProductModelValidator productModelValidator)
+			IApiProductRequestModelValidator productModelValidator,
+			IBOLProductMapper productMapper)
 			: base()
 
 		{
 			this.productRepository = productRepository;
 			this.productModelValidator = productModelValidator;
+			this.productMapper = productMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiProductResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.productRepository.All(skip, take, orderClause);
+			var records = await this.productRepository.All(skip, take, orderClause);
+
+			return this.productMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOProduct> Get(int productID)
+		public virtual async Task<ApiProductResponseModel> Get(int productID)
 		{
-			return this.productRepository.Get(productID);
+			var record = await productRepository.Get(productID);
+
+			return this.productMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOProduct>> Create(
-			ApiProductModel model)
+		public virtual async Task<CreateResponse<ApiProductResponseModel>> Create(
+			ApiProductRequestModel model)
 		{
-			CreateResponse<POCOProduct> response = new CreateResponse<POCOProduct>(await this.productModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductResponseModel> response = new CreateResponse<ApiProductResponseModel>(await this.productModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOProduct record = await this.productRepository.Create(model);
+				var dto = this.productMapper.MapModelToDTO(default (int), model);
+				var record = await this.productRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.productMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int productID,
-			ApiProductModel model)
+			ApiProductRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.productModelValidator.ValidateUpdateAsync(productID, model));
 
 			if (response.Success)
 			{
-				await this.productRepository.Update(productID, model);
+				var dto = this.productMapper.MapModelToDTO(productID, model);
+				await this.productRepository.Update(productID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOProduct> GetName(string name)
+		public async Task<ApiProductResponseModel> GetName(string name)
 		{
-			return await this.productRepository.GetName(name);
+			DTOProduct record = await this.productRepository.GetName(name);
+
+			return this.productMapper.MapDTOToModel(record);
 		}
-		public async Task<POCOProduct> GetProductNumber(string productNumber)
+		public async Task<ApiProductResponseModel> GetProductNumber(string productNumber)
 		{
-			return await this.productRepository.GetProductNumber(productNumber);
+			DTOProduct record = await this.productRepository.GetProductNumber(productNumber);
+
+			return this.productMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>25f7c5c8090e5330193595306a751cb7</Hash>
+    <Hash>3807a4c65cf81af5f0d68303a849b019</Hash>
 </Codenesium>*/

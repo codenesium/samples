@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class ShiftRepository: AbstractShiftRepository, IShiftRepository
 	{
 		public ShiftRepository(
-			IObjectMapper mapper,
+			IDALShiftMapper mapper,
 			ILogger<ShiftRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>037fd038ac85b62070b6e717b352af15</Hash>
+    <Hash>a752f61cbd5304bdd2c7b39aaa50fbae</Hash>
 </Codenesium>*/

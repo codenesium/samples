@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class AddressRepository: AbstractAddressRepository, IAddressRepository
 	{
 		public AddressRepository(
-			IObjectMapper mapper,
+			IDALAddressMapper mapper,
 			ILogger<AddressRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f50c62427752cb88c0e3b519c819eb4</Hash>
+    <Hash>dbb6fc0ca061ca922e4461f800eabcb3</Hash>
 </Codenesium>*/

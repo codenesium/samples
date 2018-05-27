@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOSalesPerson(
 			ILogger<SalesPersonRepository> logger,
 			ISalesPersonRepository salesPersonRepository,
-			IApiSalesPersonModelValidator salesPersonModelValidator)
-			: base(logger, salesPersonRepository, salesPersonModelValidator)
+			IApiSalesPersonRequestModelValidator salesPersonModelValidator,
+			IBOLSalesPersonMapper salesPersonMapper)
+			: base(logger, salesPersonRepository, salesPersonModelValidator, salesPersonMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97013d2c35e15e5618f17f2f92675649</Hash>
+    <Hash>0555966c7956c3245b14d7e24efd7230</Hash>
 </Codenesium>*/

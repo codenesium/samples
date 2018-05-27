@@ -8,24 +8,24 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmployeeRepository
 	{
-		Task<POCOEmployee> Create(ApiEmployeeModel model);
+		Task<DTOEmployee> Create(DTOEmployee dto);
 
 		Task Update(int businessEntityID,
-		            ApiEmployeeModel model);
+		            DTOEmployee dto);
 
 		Task Delete(int businessEntityID);
 
-		Task<POCOEmployee> Get(int businessEntityID);
+		Task<DTOEmployee> Get(int businessEntityID);
 
-		Task<List<POCOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOEmployee> GetLoginID(string loginID);
-		Task<POCOEmployee> GetNationalIDNumber(string nationalIDNumber);
-		Task<List<POCOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode);
-		Task<List<POCOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode);
+		Task<DTOEmployee> GetLoginID(string loginID);
+		Task<DTOEmployee> GetNationalIDNumber(string nationalIDNumber);
+		Task<List<DTOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode);
+		Task<List<DTOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5be13ea396c70fd211e0b01d28592edc</Hash>
+    <Hash>0767d6029550bac10bd1ff56c20c0a68</Hash>
 </Codenesium>*/

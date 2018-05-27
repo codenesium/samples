@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOCustomer: AbstractBOManager
 	{
 		private ICustomerRepository customerRepository;
-		private IApiCustomerModelValidator customerModelValidator;
+		private IApiCustomerRequestModelValidator customerModelValidator;
+		private IBOLCustomerMapper customerMapper;
 		private ILogger logger;
 
 		public AbstractBOCustomer(
 			ILogger logger,
 			ICustomerRepository customerRepository,
-			IApiCustomerModelValidator customerModelValidator)
+			IApiCustomerRequestModelValidator customerModelValidator,
+			IBOLCustomerMapper customerMapper)
 			: base()
 
 		{
 			this.customerRepository = customerRepository;
 			this.customerModelValidator = customerModelValidator;
+			this.customerMapper = customerMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOCustomer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiCustomerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.customerRepository.All(skip, take, orderClause);
+			var records = await this.customerRepository.All(skip, take, orderClause);
+
+			return this.customerMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOCustomer> Get(int customerID)
+		public virtual async Task<ApiCustomerResponseModel> Get(int customerID)
 		{
-			return this.customerRepository.Get(customerID);
+			var record = await customerRepository.Get(customerID);
+
+			return this.customerMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOCustomer>> Create(
-			ApiCustomerModel model)
+		public virtual async Task<CreateResponse<ApiCustomerResponseModel>> Create(
+			ApiCustomerRequestModel model)
 		{
-			CreateResponse<POCOCustomer> response = new CreateResponse<POCOCustomer>(await this.customerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.customerModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOCustomer record = await this.customerRepository.Create(model);
+				var dto = this.customerMapper.MapModelToDTO(default (int), model);
+				var record = await this.customerRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.customerMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int customerID,
-			ApiCustomerModel model)
+			ApiCustomerRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateUpdateAsync(customerID, model));
 
 			if (response.Success)
 			{
-				await this.customerRepository.Update(customerID, model);
+				var dto = this.customerMapper.MapModelToDTO(customerID, model);
+				await this.customerRepository.Update(customerID, dto);
 			}
 
 			return response;
@@ -80,17 +88,21 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOCustomer> GetAccountNumber(string accountNumber)
+		public async Task<ApiCustomerResponseModel> GetAccountNumber(string accountNumber)
 		{
-			return await this.customerRepository.GetAccountNumber(accountNumber);
+			DTOCustomer record = await this.customerRepository.GetAccountNumber(accountNumber);
+
+			return this.customerMapper.MapDTOToModel(record);
 		}
-		public async Task<List<POCOCustomer>> GetTerritoryID(Nullable<int> territoryID)
+		public async Task<List<ApiCustomerResponseModel>> GetTerritoryID(Nullable<int> territoryID)
 		{
-			return await this.customerRepository.GetTerritoryID(territoryID);
+			List<DTOCustomer> records = await this.customerRepository.GetTerritoryID(territoryID);
+
+			return this.customerMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8f049c2703efba4abd71363159050d0</Hash>
+    <Hash>edae4946af743872e3714fda7525c215</Hash>
 </Codenesium>*/

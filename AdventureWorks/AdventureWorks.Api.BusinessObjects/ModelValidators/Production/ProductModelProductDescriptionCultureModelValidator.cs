@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiProductModelProductDescriptionCultureModelValidator: AbstractApiProductModelProductDescriptionCultureModelValidator, IApiProductModelProductDescriptionCultureModelValidator
+	public class ApiProductModelProductDescriptionCultureRequestModelValidator: AbstractApiProductModelProductDescriptionCultureRequestModelValidator, IApiProductModelProductDescriptionCultureRequestModelValidator
 	{
-		public ApiProductModelProductDescriptionCultureModelValidator()
+		public ApiProductModelProductDescriptionCultureRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiProductModelProductDescriptionCultureModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiProductModelProductDescriptionCultureRequestModel model)
 		{
 			this.CultureIDRules();
 			this.ModifiedDateRules();
@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductModelProductDescriptionCultureModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductModelProductDescriptionCultureRequestModel model)
 		{
 			this.CultureIDRules();
 			this.ModifiedDateRules();
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>89f780fd01d7f6d941808bfe908f6c04</Hash>
+    <Hash>5ab2368f038a52e23fe8ddd97d12e3fc</Hash>
 </Codenesium>*/

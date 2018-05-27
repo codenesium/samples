@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOShoppingCartItem: AbstractBOManager
 	{
 		private IShoppingCartItemRepository shoppingCartItemRepository;
-		private IApiShoppingCartItemModelValidator shoppingCartItemModelValidator;
+		private IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator;
+		private IBOLShoppingCartItemMapper shoppingCartItemMapper;
 		private ILogger logger;
 
 		public AbstractBOShoppingCartItem(
 			ILogger logger,
 			IShoppingCartItemRepository shoppingCartItemRepository,
-			IApiShoppingCartItemModelValidator shoppingCartItemModelValidator)
+			IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
+			IBOLShoppingCartItemMapper shoppingCartItemMapper)
 			: base()
 
 		{
 			this.shoppingCartItemRepository = shoppingCartItemRepository;
 			this.shoppingCartItemModelValidator = shoppingCartItemModelValidator;
+			this.shoppingCartItemMapper = shoppingCartItemMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiShoppingCartItemResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.shoppingCartItemRepository.All(skip, take, orderClause);
+			var records = await this.shoppingCartItemRepository.All(skip, take, orderClause);
+
+			return this.shoppingCartItemMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOShoppingCartItem> Get(int shoppingCartItemID)
+		public virtual async Task<ApiShoppingCartItemResponseModel> Get(int shoppingCartItemID)
 		{
-			return this.shoppingCartItemRepository.Get(shoppingCartItemID);
+			var record = await shoppingCartItemRepository.Get(shoppingCartItemID);
+
+			return this.shoppingCartItemMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOShoppingCartItem>> Create(
-			ApiShoppingCartItemModel model)
+		public virtual async Task<CreateResponse<ApiShoppingCartItemResponseModel>> Create(
+			ApiShoppingCartItemRequestModel model)
 		{
-			CreateResponse<POCOShoppingCartItem> response = new CreateResponse<POCOShoppingCartItem>(await this.shoppingCartItemModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiShoppingCartItemResponseModel> response = new CreateResponse<ApiShoppingCartItemResponseModel>(await this.shoppingCartItemModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOShoppingCartItem record = await this.shoppingCartItemRepository.Create(model);
+				var dto = this.shoppingCartItemMapper.MapModelToDTO(default (int), model);
+				var record = await this.shoppingCartItemRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.shoppingCartItemMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int shoppingCartItemID,
-			ApiShoppingCartItemModel model)
+			ApiShoppingCartItemRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.shoppingCartItemModelValidator.ValidateUpdateAsync(shoppingCartItemID, model));
 
 			if (response.Success)
 			{
-				await this.shoppingCartItemRepository.Update(shoppingCartItemID, model);
+				var dto = this.shoppingCartItemMapper.MapModelToDTO(shoppingCartItemID, model);
+				await this.shoppingCartItemRepository.Update(shoppingCartItemID, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<List<POCOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID)
+		public async Task<List<ApiShoppingCartItemResponseModel>> GetShoppingCartIDProductID(string shoppingCartID,int productID)
 		{
-			return await this.shoppingCartItemRepository.GetShoppingCartIDProductID(shoppingCartID,productID);
+			List<DTOShoppingCartItem> records = await this.shoppingCartItemRepository.GetShoppingCartIDProductID(shoppingCartID,productID);
+
+			return this.shoppingCartItemMapper.MapDTOToModel(records);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b82ae59e69eff757e8e7ff853494435d</Hash>
+    <Hash>da0c53f76e1a4098b6021a76261bd1fd</Hash>
 </Codenesium>*/

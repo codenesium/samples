@@ -12,7 +12,7 @@ namespace FermataFishNS.Api.DataAccess
 	public class RateRepository: AbstractRateRepository, IRateRepository
 	{
 		public RateRepository(
-			IObjectMapper mapper,
+			IDALRateMapper mapper,
 			ILogger<RateRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9981e6cdd70905fd629a4ab9cc6e617b</Hash>
+    <Hash>6dc1bf50abf91d599181c3ddde73359a</Hash>
 </Codenesium>*/

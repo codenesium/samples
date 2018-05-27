@@ -14,6 +14,39 @@ using FermataFishNS.Api.Contracts;
 
 namespace Codenesium.Foundation.CommonMVC
 {
+
+    /// <summary>
+    /// Simple controller that tests that you're able to connect to the database.
+    /// </summary>
+    [Route("api/apihealth")]
+    public class ApiHealthController: AbstractApiController
+    {
+        DbContext context;
+        public ApiHealthController(
+                       ServiceSettings settings,
+                       ILogger<ApiHealthController> logger,
+                       ITransactionCoordinator transactionCoordinator,
+                       DbContext context
+                       )
+                       : base(settings, logger, transactionCoordinator)
+        {
+
+            this.context = context;
+        }
+
+        [HttpGet]
+        [Route("")]
+        [ReadOnly]
+        [ProducesResponseType(typeof(string), 200)]
+        public async virtual Task<IActionResult> Health()
+        {
+            await this.context.Database.OpenConnectionAsync();
+            await this.context.Database.ExecuteSqlCommandAsync(new RawSqlString("SELECT GETDATE()"));
+            this.context.Database.CloseConnection();
+            return this.Ok("Api is healthy!");
+        }
+    }
+
     /// <summary>
     /// ITransactionCoordinator is an interface that is injecteded into controllers and allows
     /// us to handle transactions on requests and enable and disable change tracking for entity framework

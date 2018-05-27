@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALJobCandidateMapper Mapper { get; }
 
 		public AbstractJobCandidateRepository(
-			IObjectMapper mapper,
+			IDALJobCandidateMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOJobCandidate> Get(int jobCandidateID)
+		public async virtual Task<DTOJobCandidate> Get(int jobCandidateID)
 		{
 			JobCandidate record = await this.GetById(jobCandidateID);
 
-			return this.Mapper.JobCandidateMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOJobCandidate> Create(
-			ApiJobCandidateModel model)
+		public async virtual Task<DTOJobCandidate> Create(
+			DTOJobCandidate dto)
 		{
 			JobCandidate record = new JobCandidate();
 
-			this.Mapper.JobCandidateMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<JobCandidate>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.JobCandidateMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int jobCandidateID,
-			ApiJobCandidateModel model)
+			DTOJobCandidate dto)
 		{
 			JobCandidate record = await this.GetById(jobCandidateID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.JobCandidateMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					jobCandidateID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,26 +93,26 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<POCOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID)
+		public async Task<List<DTOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID)
 		{
-			var records = await this.SearchLinqPOCO(x => x.BusinessEntityID == businessEntityID);
+			var records = await this.SearchLinqDTO(x => x.BusinessEntityID == businessEntityID);
 
 			return records;
 		}
 
-		protected async Task<List<POCOJobCandidate>> Where(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOJobCandidate>> Where(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOJobCandidate> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOJobCandidate> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOJobCandidate>> SearchLinqPOCO(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOJobCandidate>> SearchLinqDTO(Expression<Func<JobCandidate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOJobCandidate> response = new List<POCOJobCandidate>();
+			List<DTOJobCandidate> response = new List<DTOJobCandidate>();
 			List<JobCandidate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.JobCandidateMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -145,5 +145,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6d6c95177e37a7159a747c63825a90a3</Hash>
+    <Hash>764f24932e8085f89ede58ea2a9e4281</Hash>
 </Codenesium>*/

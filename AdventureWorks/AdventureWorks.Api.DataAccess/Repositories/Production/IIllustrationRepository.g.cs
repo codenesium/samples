@@ -8,19 +8,19 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IIllustrationRepository
 	{
-		Task<POCOIllustration> Create(ApiIllustrationModel model);
+		Task<DTOIllustration> Create(DTOIllustration dto);
 
 		Task Update(int illustrationID,
-		            ApiIllustrationModel model);
+		            DTOIllustration dto);
 
 		Task Delete(int illustrationID);
 
-		Task<POCOIllustration> Get(int illustrationID);
+		Task<DTOIllustration> Get(int illustrationID);
 
-		Task<List<POCOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>954f25e5f4435b942a733a7eec1a94dd</Hash>
+    <Hash>837b8d699ebc07d8ba5785f0f2601037</Hash>
 </Codenesium>*/

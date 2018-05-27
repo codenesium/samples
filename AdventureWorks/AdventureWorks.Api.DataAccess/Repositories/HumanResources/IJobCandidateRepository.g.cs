@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IJobCandidateRepository
 	{
-		Task<POCOJobCandidate> Create(ApiJobCandidateModel model);
+		Task<DTOJobCandidate> Create(DTOJobCandidate dto);
 
 		Task Update(int jobCandidateID,
-		            ApiJobCandidateModel model);
+		            DTOJobCandidate dto);
 
 		Task Delete(int jobCandidateID);
 
-		Task<POCOJobCandidate> Get(int jobCandidateID);
+		Task<DTOJobCandidate> Get(int jobCandidateID);
 
-		Task<List<POCOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<POCOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID);
+		Task<List<DTOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bf49dabf6d4016bbd6945745e1ca5e27</Hash>
+    <Hash>dd90ceaf6158a6ac26965eec69816ea2</Hash>
 </Codenesium>*/

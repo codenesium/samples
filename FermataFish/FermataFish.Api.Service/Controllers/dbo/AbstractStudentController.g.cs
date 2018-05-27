@@ -38,13 +38,13 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOStudent> response = await this.studentManager.All(query.Offset, query.Limit);
+			List<ApiStudentResponseModel> response = await this.studentManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace FermataFishNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOStudent), 200)]
+		[ProducesResponseType(typeof(ApiStudentResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOStudent response = await this.studentManager.Get(id);
+			ApiStudentResponseModel response = await this.studentManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStudent), 200)]
+		[ProducesResponseType(typeof(ApiStudentResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStudentModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiStudentRequestModel model)
 		{
-			CreateResponse<POCOStudent> result = await this.studentManager.Create(model);
+			CreateResponse<ApiStudentResponseModel> result = await this.studentManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace FermataFishNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOStudent>), 200)]
+		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudentModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStudentRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOStudent> records = new List<POCOStudent>();
+			List<ApiStudentResponseModel> records = new List<ApiStudentResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOStudent> result = await this.studentManager.Create(model);
+				CreateResponse<ApiStudentResponseModel> result = await this.studentManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace FermataFishNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStudent), 200)]
+		[ProducesResponseType(typeof(DTOStudent), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudentModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStudentRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace FermataFishNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStudent response = await this.studentManager.Get(id);
+					ApiStudentResponseModel response = await this.studentManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace FermataFishNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>a60ad45b1d3ee6805ce91be2951be67a</Hash>
+    <Hash>5d8f8f7ef0b888dd915e95bcafc3f087</Hash>
 </Codenesium>*/

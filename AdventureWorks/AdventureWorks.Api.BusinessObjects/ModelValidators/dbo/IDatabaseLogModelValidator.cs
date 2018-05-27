@@ -4,14 +4,14 @@ using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public interface IApiDatabaseLogModelValidator
+	public interface IApiDatabaseLogRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiDatabaseLogModel model);
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDatabaseLogModel model);
+		Task<ValidationResult> ValidateCreateAsync(ApiDatabaseLogRequestModel model);
+		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDatabaseLogRequestModel model);
 		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4b202e3d21f895b6cb9726846896c52f</Hash>
+    <Hash>c1dc123850965d52b88b724a5bde4344</Hash>
 </Codenesium>*/

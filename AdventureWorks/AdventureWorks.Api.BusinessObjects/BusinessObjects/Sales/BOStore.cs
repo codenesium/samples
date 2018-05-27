@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOStore(
 			ILogger<StoreRepository> logger,
 			IStoreRepository storeRepository,
-			IApiStoreModelValidator storeModelValidator)
-			: base(logger, storeRepository, storeModelValidator)
+			IApiStoreRequestModelValidator storeModelValidator,
+			IBOLStoreMapper storeMapper)
+			: base(logger, storeRepository, storeModelValidator, storeMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>98cf3b00d2006e8e3e3fd2081cc335bf</Hash>
+    <Hash>447a3e6f99f732fdc6240f103aa044da</Hash>
 </Codenesium>*/

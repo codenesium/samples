@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductInventory>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductInventoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductInventory> response = await this.productInventoryManager.All(query.Offset, query.Limit);
+			List<ApiProductInventoryResponseModel> response = await this.productInventoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductInventory), 200)]
+		[ProducesResponseType(typeof(ApiProductInventoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductInventory response = await this.productInventoryManager.Get(id);
+			ApiProductInventoryResponseModel response = await this.productInventoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductInventory), 200)]
+		[ProducesResponseType(typeof(ApiProductInventoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductInventoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductInventoryRequestModel model)
 		{
-			CreateResponse<POCOProductInventory> result = await this.productInventoryManager.Create(model);
+			CreateResponse<ApiProductInventoryResponseModel> result = await this.productInventoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductInventory>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductInventoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductInventoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductInventoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductInventory> records = new List<POCOProductInventory>();
+			List<ApiProductInventoryResponseModel> records = new List<ApiProductInventoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductInventory> result = await this.productInventoryManager.Create(model);
+				CreateResponse<ApiProductInventoryResponseModel> result = await this.productInventoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductInventory), 200)]
+		[ProducesResponseType(typeof(DTOProductInventory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductInventoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductInventoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductInventory response = await this.productInventoryManager.Get(id);
+					ApiProductInventoryResponseModel response = await this.productInventoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>e6e1b9c8d3d574d8456a3fbf4c99ea43</Hash>
+    <Hash>0a381c676a17ff31752dc86c75d495a9</Hash>
 </Codenesium>*/

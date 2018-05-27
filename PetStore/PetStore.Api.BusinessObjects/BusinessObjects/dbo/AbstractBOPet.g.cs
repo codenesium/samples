@@ -15,54 +15,62 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOPet: AbstractBOManager
 	{
 		private IPetRepository petRepository;
-		private IApiPetModelValidator petModelValidator;
+		private IApiPetRequestModelValidator petModelValidator;
+		private IBOLPetMapper petMapper;
 		private ILogger logger;
 
 		public AbstractBOPet(
 			ILogger logger,
 			IPetRepository petRepository,
-			IApiPetModelValidator petModelValidator)
+			IApiPetRequestModelValidator petModelValidator,
+			IBOLPetMapper petMapper)
 			: base()
 
 		{
 			this.petRepository = petRepository;
 			this.petModelValidator = petModelValidator;
+			this.petMapper = petMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPet>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPetResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.petRepository.All(skip, take, orderClause);
+			var records = await this.petRepository.All(skip, take, orderClause);
+
+			return this.petMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPet> Get(int id)
+		public virtual async Task<ApiPetResponseModel> Get(int id)
 		{
-			return this.petRepository.Get(id);
+			var record = await petRepository.Get(id);
+
+			return this.petMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPet>> Create(
-			ApiPetModel model)
+		public virtual async Task<CreateResponse<ApiPetResponseModel>> Create(
+			ApiPetRequestModel model)
 		{
-			CreateResponse<POCOPet> response = new CreateResponse<POCOPet>(await this.petModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPetResponseModel> response = new CreateResponse<ApiPetResponseModel>(await this.petModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPet record = await this.petRepository.Create(model);
+				var dto = this.petMapper.MapModelToDTO(default (int), model);
+				var record = await this.petRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.petMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiPetModel model)
+			ApiPetRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.petModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.petRepository.Update(id, model);
+				var dto = this.petMapper.MapModelToDTO(id, model);
+				await this.petRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>247d2467919314a3e57b6cdb0b64e12b</Hash>
+    <Hash>1e9e743fe33a0cff53bb5cbcba62cd0d</Hash>
 </Codenesium>*/

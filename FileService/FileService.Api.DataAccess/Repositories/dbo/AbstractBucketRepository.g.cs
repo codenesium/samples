@@ -15,10 +15,10 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALBucketMapper Mapper { get; }
 
 		public AbstractBucketRepository(
-			IObjectMapper mapper,
+			IDALBucketMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace FileServiceNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOBucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOBucket> Get(int id)
+		public async virtual Task<DTOBucket> Get(int id)
 		{
 			Bucket record = await this.GetById(id);
 
-			return this.Mapper.BucketMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOBucket> Create(
-			ApiBucketModel model)
+		public async virtual Task<DTOBucket> Create(
+			DTOBucket dto)
 		{
 			Bucket record = new Bucket();
 
-			this.Mapper.BucketMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<Bucket>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.BucketMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int id,
-			ApiBucketModel model)
+			DTOBucket dto)
 		{
 			Bucket record = await this.GetById(id);
 
@@ -68,9 +68,9 @@ namespace FileServiceNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.BucketMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					id,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,32 +93,32 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public async Task<POCOBucket> Name(string name)
+		public async Task<DTOBucket> GetExternalId(Guid externalId)
 		{
-			var records = await this.SearchLinqPOCO(x => x.Name == name);
+			var records = await this.SearchLinqDTO(x => x.ExternalId == externalId);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<POCOBucket> ExternalId(Guid externalId)
+		public async Task<DTOBucket> GetName(string name)
 		{
-			var records = await this.SearchLinqPOCO(x => x.ExternalId == externalId);
+			var records = await this.SearchLinqDTO(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<POCOBucket>> Where(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOBucket>> Where(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOBucket> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOBucket> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOBucket>> SearchLinqPOCO(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOBucket>> SearchLinqDTO(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOBucket> response = new List<POCOBucket>();
+			List<DTOBucket> response = new List<DTOBucket>();
 			List<Bucket> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.BucketMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -151,5 +151,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6a037dc4d5721915f27cc02c36e2743</Hash>
+    <Hash>d8270d2d7f587d550754d83582e96319</Hash>
 </Codenesium>*/

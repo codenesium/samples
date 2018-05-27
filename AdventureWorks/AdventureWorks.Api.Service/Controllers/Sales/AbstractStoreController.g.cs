@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOStore>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOStore> response = await this.storeManager.All(query.Offset, query.Limit);
+			List<ApiStoreResponseModel> response = await this.storeManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOStore), 200)]
+		[ProducesResponseType(typeof(ApiStoreResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOStore response = await this.storeManager.Get(id);
+			ApiStoreResponseModel response = await this.storeManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStore), 200)]
+		[ProducesResponseType(typeof(ApiStoreResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStoreModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiStoreRequestModel model)
 		{
-			CreateResponse<POCOStore> result = await this.storeManager.Create(model);
+			CreateResponse<ApiStoreResponseModel> result = await this.storeManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOStore>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStoreModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStoreRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOStore> records = new List<POCOStore>();
+			List<ApiStoreResponseModel> records = new List<ApiStoreResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOStore> result = await this.storeManager.Create(model);
+				CreateResponse<ApiStoreResponseModel> result = await this.storeManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOStore), 200)]
+		[ProducesResponseType(typeof(DTOStore), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStoreModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStoreRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOStore response = await this.storeManager.Get(id);
+					ApiStoreResponseModel response = await this.storeManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getSalesPersonID/{salesPersonID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOStore>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			List<POCOStore> response = await this.storeManager.GetSalesPersonID(salesPersonID);
+			List<ApiStoreResponseModel> response = await this.storeManager.GetSalesPersonID(salesPersonID);
 
 			return this.Ok(response);
 		}
@@ -182,10 +182,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getDemographics/{demographics}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOStore>), 200)]
+		[ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetDemographics(string demographics)
 		{
-			List<POCOStore> response = await this.storeManager.GetDemographics(demographics);
+			List<ApiStoreResponseModel> response = await this.storeManager.GetDemographics(demographics);
 
 			return this.Ok(response);
 		}
@@ -193,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>cced7342e32f035190cf60edbaa5a7f4</Hash>
+    <Hash>c1da0303a0850603ad3e035347ffc4a2</Hash>
 </Codenesium>*/

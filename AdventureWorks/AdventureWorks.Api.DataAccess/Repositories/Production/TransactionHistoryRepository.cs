@@ -12,7 +12,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	public class TransactionHistoryRepository: AbstractTransactionHistoryRepository, ITransactionHistoryRepository
 	{
 		public TransactionHistoryRepository(
-			IObjectMapper mapper,
+			IDALTransactionHistoryMapper mapper,
 			ILogger<TransactionHistoryRepository> logger,
 			ApplicationDbContext context)
 			: base(mapper, logger, context)
@@ -21,5 +21,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4c92e2a3be5b049eb293b0622721fa3f</Hash>
+    <Hash>8a02d6d4a413773492a66336cd121500</Hash>
 </Codenesium>*/

@@ -15,54 +15,62 @@ namespace AdventureWorksNS.Api.BusinessObjects
 	public abstract class AbstractBOUnitMeasure: AbstractBOManager
 	{
 		private IUnitMeasureRepository unitMeasureRepository;
-		private IApiUnitMeasureModelValidator unitMeasureModelValidator;
+		private IApiUnitMeasureRequestModelValidator unitMeasureModelValidator;
+		private IBOLUnitMeasureMapper unitMeasureMapper;
 		private ILogger logger;
 
 		public AbstractBOUnitMeasure(
 			ILogger logger,
 			IUnitMeasureRepository unitMeasureRepository,
-			IApiUnitMeasureModelValidator unitMeasureModelValidator)
+			IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
+			IBOLUnitMeasureMapper unitMeasureMapper)
 			: base()
 
 		{
 			this.unitMeasureRepository = unitMeasureRepository;
 			this.unitMeasureModelValidator = unitMeasureModelValidator;
+			this.unitMeasureMapper = unitMeasureMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOUnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.unitMeasureRepository.All(skip, take, orderClause);
+			var records = await this.unitMeasureRepository.All(skip, take, orderClause);
+
+			return this.unitMeasureMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOUnitMeasure> Get(string unitMeasureCode)
+		public virtual async Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode)
 		{
-			return this.unitMeasureRepository.Get(unitMeasureCode);
+			var record = await unitMeasureRepository.Get(unitMeasureCode);
+
+			return this.unitMeasureMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOUnitMeasure>> Create(
-			ApiUnitMeasureModel model)
+		public virtual async Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
+			ApiUnitMeasureRequestModel model)
 		{
-			CreateResponse<POCOUnitMeasure> response = new CreateResponse<POCOUnitMeasure>(await this.unitMeasureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiUnitMeasureResponseModel> response = new CreateResponse<ApiUnitMeasureResponseModel>(await this.unitMeasureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOUnitMeasure record = await this.unitMeasureRepository.Create(model);
+				var dto = this.unitMeasureMapper.MapModelToDTO(default (string), model);
+				var record = await this.unitMeasureRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.unitMeasureMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			string unitMeasureCode,
-			ApiUnitMeasureModel model)
+			ApiUnitMeasureRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateUpdateAsync(unitMeasureCode, model));
 
 			if (response.Success)
 			{
-				await this.unitMeasureRepository.Update(unitMeasureCode, model);
+				var dto = this.unitMeasureMapper.MapModelToDTO(unitMeasureCode, model);
+				await this.unitMeasureRepository.Update(unitMeasureCode, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCOUnitMeasure> GetName(string name)
+		public async Task<ApiUnitMeasureResponseModel> GetName(string name)
 		{
-			return await this.unitMeasureRepository.GetName(name);
+			DTOUnitMeasure record = await this.unitMeasureRepository.GetName(name);
+
+			return this.unitMeasureMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f542eb317ec9283edd443414af98a2a</Hash>
+    <Hash>9cbdba96b1f277eeb47716918d3590d7</Hash>
 </Codenesium>*/

@@ -15,12 +15,13 @@ namespace AdventureWorksNS.Api.BusinessObjects
 		public BOTransactionHistoryArchive(
 			ILogger<TransactionHistoryArchiveRepository> logger,
 			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
-			IApiTransactionHistoryArchiveModelValidator transactionHistoryArchiveModelValidator)
-			: base(logger, transactionHistoryArchiveRepository, transactionHistoryArchiveModelValidator)
+			IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
+			IBOLTransactionHistoryArchiveMapper transactionHistoryArchiveMapper)
+			: base(logger, transactionHistoryArchiveRepository, transactionHistoryArchiveModelValidator, transactionHistoryArchiveMapper)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dfd917b3e15402275ae186f52fd7dba6</Hash>
+    <Hash>1f93fadf98fde96af6a0287175b5250a</Hash>
 </Codenesium>*/

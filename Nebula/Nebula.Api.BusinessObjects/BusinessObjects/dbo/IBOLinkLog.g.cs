@@ -9,20 +9,20 @@ namespace NebulaNS.Api.BusinessObjects
 {
 	public interface IBOLinkLog
 	{
-		Task<CreateResponse<POCOLinkLog>> Create(
-			ApiLinkLogModel model);
+		Task<CreateResponse<ApiLinkLogResponseModel>> Create(
+			ApiLinkLogRequestModel model);
 
 		Task<ActionResponse> Update(int id,
-		                            ApiLinkLogModel model);
+		                            ApiLinkLogRequestModel model);
 
 		Task<ActionResponse> Delete(int id);
 
-		Task<POCOLinkLog> Get(int id);
+		Task<ApiLinkLogResponseModel> Get(int id);
 
-		Task<List<POCOLinkLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ApiLinkLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>f166e084d38c867a58b284647eff38ce</Hash>
+    <Hash>e3f6477d2f9a7453d8ea16fd27061e7b</Hash>
 </Codenesium>*/

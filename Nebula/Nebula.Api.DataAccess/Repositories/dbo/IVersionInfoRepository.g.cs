@@ -8,21 +8,21 @@ namespace NebulaNS.Api.DataAccess
 {
 	public interface IVersionInfoRepository
 	{
-		Task<POCOVersionInfo> Create(ApiVersionInfoModel model);
+		Task<DTOVersionInfo> Create(DTOVersionInfo dto);
 
 		Task Update(long version,
-		            ApiVersionInfoModel model);
+		            DTOVersionInfo dto);
 
 		Task Delete(long version);
 
-		Task<POCOVersionInfo> Get(long version);
+		Task<DTOVersionInfo> Get(long version);
 
-		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOVersionInfo> GetVersion(long version);
+		Task<DTOVersionInfo> GetVersion(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>71555c390176a910ff2bf8092b22653c</Hash>
+    <Hash>77c1159517add195edccef4941fa1274</Hash>
 </Codenesium>*/

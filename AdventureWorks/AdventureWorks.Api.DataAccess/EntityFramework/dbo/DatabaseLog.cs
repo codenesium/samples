@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("DatabaseLog", Schema="dbo")]
-	public partial class DatabaseLog: AbstractEntityFrameworkPOCO
+	public partial class DatabaseLog: AbstractEntityFrameworkDTO
 	{
 		public DatabaseLog()
 		{}
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>43e62e54fa68b2df6625c7d764b0573d</Hash>
+    <Hash>415ad95ca5a87fbfa06c8aefc1848f80</Hash>
 </Codenesium>*/

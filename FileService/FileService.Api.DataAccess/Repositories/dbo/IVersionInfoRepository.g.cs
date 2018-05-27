@@ -8,21 +8,21 @@ namespace FileServiceNS.Api.DataAccess
 {
 	public interface IVersionInfoRepository
 	{
-		Task<POCOVersionInfo> Create(ApiVersionInfoModel model);
+		Task<DTOVersionInfo> Create(DTOVersionInfo dto);
 
 		Task Update(long version,
-		            ApiVersionInfoModel model);
+		            DTOVersionInfo dto);
 
 		Task Delete(long version);
 
-		Task<POCOVersionInfo> Get(long version);
+		Task<DTOVersionInfo> Get(long version);
 
-		Task<List<POCOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOVersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOVersionInfo> Version(long version);
+		Task<DTOVersionInfo> GetVersion(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6334d6f314528c301738e2007a774d4</Hash>
+    <Hash>065b230c85e01d2cf07200b507654ef6</Hash>
 </Codenesium>*/

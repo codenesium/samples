@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IObjectMapper Mapper { get; }
+		protected IDALSalesPersonQuotaHistoryMapper Mapper { get; }
 
 		public AbstractSalesPersonQuotaHistoryRepository(
-			IObjectMapper mapper,
+			IDALSalesPersonQuotaHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
@@ -28,37 +28,37 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Context = context;
 		}
 
-		public virtual Task<List<POCOSalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<DTOSalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqPOCO(x => true, skip, take, orderClause);
+			return this.SearchLinqDTO(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<POCOSalesPersonQuotaHistory> Get(int businessEntityID)
+		public async virtual Task<DTOSalesPersonQuotaHistory> Get(int businessEntityID)
 		{
 			SalesPersonQuotaHistory record = await this.GetById(businessEntityID);
 
-			return this.Mapper.SalesPersonQuotaHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
-		public async virtual Task<POCOSalesPersonQuotaHistory> Create(
-			ApiSalesPersonQuotaHistoryModel model)
+		public async virtual Task<DTOSalesPersonQuotaHistory> Create(
+			DTOSalesPersonQuotaHistory dto)
 		{
 			SalesPersonQuotaHistory record = new SalesPersonQuotaHistory();
 
-			this.Mapper.SalesPersonQuotaHistoryMapModelToEF(
+			this.Mapper.MapDTOToEF(
 				default (int),
-				model,
+				dto,
 				record);
 
 			this.Context.Set<SalesPersonQuotaHistory>().Add(record);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.SalesPersonQuotaHistoryMapEFToPOCO(record);
+			return this.Mapper.MapEFToDTO(record);
 		}
 
 		public async virtual Task Update(
 			int businessEntityID,
-			ApiSalesPersonQuotaHistoryModel model)
+			DTOSalesPersonQuotaHistory dto)
 		{
 			SalesPersonQuotaHistory record = await this.GetById(businessEntityID);
 
@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 			else
 			{
-				this.Mapper.SalesPersonQuotaHistoryMapModelToEF(
+				this.Mapper.MapDTOToEF(
 					businessEntityID,
-					model,
+					dto,
 					record);
 
 				await this.Context.SaveChangesAsync();
@@ -93,19 +93,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<POCOSalesPersonQuotaHistory>> Where(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<DTOSalesPersonQuotaHistory>> Where(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesPersonQuotaHistory> records = await this.SearchLinqPOCO(predicate, skip, take, orderClause);
+			List<DTOSalesPersonQuotaHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
 
 			return records;
 		}
 
-		private async Task<List<POCOSalesPersonQuotaHistory>> SearchLinqPOCO(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		private async Task<List<DTOSalesPersonQuotaHistory>> SearchLinqDTO(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<POCOSalesPersonQuotaHistory> response = new List<POCOSalesPersonQuotaHistory>();
+			List<DTOSalesPersonQuotaHistory> response = new List<DTOSalesPersonQuotaHistory>();
 			List<SalesPersonQuotaHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.SalesPersonQuotaHistoryMapEFToPOCO(x)));
+			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
 			return response;
 		}
 
@@ -138,5 +138,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9025566561edf42d8c76faba84f464ed</Hash>
+    <Hash>edc1c3b211da31b098a3be7a6d6f8fad</Hash>
 </Codenesium>*/

@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOEmployeeDepartmentHistory> response = await this.employeeDepartmentHistoryManager.All(query.Offset, query.Limit);
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.employeeDepartmentHistoryManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOEmployeeDepartmentHistory), 200)]
+		[ProducesResponseType(typeof(ApiEmployeeDepartmentHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOEmployeeDepartmentHistory response = await this.employeeDepartmentHistoryManager.Get(id);
+			ApiEmployeeDepartmentHistoryResponseModel response = await this.employeeDepartmentHistoryManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmployeeDepartmentHistory), 200)]
+		[ProducesResponseType(typeof(ApiEmployeeDepartmentHistoryResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeDepartmentHistoryModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeDepartmentHistoryRequestModel model)
 		{
-			CreateResponse<POCOEmployeeDepartmentHistory> result = await this.employeeDepartmentHistoryManager.Create(model);
+			CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> result = await this.employeeDepartmentHistoryManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeeDepartmentHistoryModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeeDepartmentHistoryRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOEmployeeDepartmentHistory> records = new List<POCOEmployeeDepartmentHistory>();
+			List<ApiEmployeeDepartmentHistoryResponseModel> records = new List<ApiEmployeeDepartmentHistoryResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOEmployeeDepartmentHistory> result = await this.employeeDepartmentHistoryManager.Create(model);
+				CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> result = await this.employeeDepartmentHistoryManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOEmployeeDepartmentHistory), 200)]
+		[ProducesResponseType(typeof(DTOEmployeeDepartmentHistory), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeDepartmentHistoryModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeDepartmentHistoryRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOEmployeeDepartmentHistory response = await this.employeeDepartmentHistoryManager.Get(id);
+					ApiEmployeeDepartmentHistoryResponseModel response = await this.employeeDepartmentHistoryManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getDepartmentID/{departmentID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetDepartmentID(short departmentID)
 		{
-			List<POCOEmployeeDepartmentHistory> response = await this.employeeDepartmentHistoryManager.GetDepartmentID(departmentID);
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.employeeDepartmentHistoryManager.GetDepartmentID(departmentID);
 
 			return this.Ok(response);
 		}
@@ -182,10 +182,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getShiftID/{shiftID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOEmployeeDepartmentHistory>), 200)]
+		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetShiftID(int shiftID)
 		{
-			List<POCOEmployeeDepartmentHistory> response = await this.employeeDepartmentHistoryManager.GetShiftID(shiftID);
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.employeeDepartmentHistoryManager.GetShiftID(shiftID);
 
 			return this.Ok(response);
 		}
@@ -193,5 +193,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>1e03a7096804abaf79a19aa897d1be7f</Hash>
+    <Hash>072ed63e12737e054b2fcaec4573b89a</Hash>
 </Codenesium>*/

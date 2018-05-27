@@ -6,12 +6,12 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.BusinessObjects
 {
-	public class ApiProductListPriceHistoryModelValidator: AbstractApiProductListPriceHistoryModelValidator, IApiProductListPriceHistoryModelValidator
+	public class ApiProductListPriceHistoryRequestModelValidator: AbstractApiProductListPriceHistoryRequestModelValidator, IApiProductListPriceHistoryRequestModelValidator
 	{
-		public ApiProductListPriceHistoryModelValidator()
+		public ApiProductListPriceHistoryRequestModelValidator()
 		{   }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiProductListPriceHistoryModel model)
+		public async Task<ValidationResult> ValidateCreateAsync(ApiProductListPriceHistoryRequestModel model)
 		{
 			this.EndDateRules();
 			this.ListPriceRules();
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.BusinessObjects
 			return await this.ValidateAsync(model);
 		}
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductListPriceHistoryModel model)
+		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiProductListPriceHistoryRequestModel model)
 		{
 			this.EndDateRules();
 			this.ListPriceRules();
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>dc3f4abdfc9ab3bd73603fe9238f6bd9</Hash>
+    <Hash>cc241deb37f27a6111b042c84379394c</Hash>
 </Codenesium>*/

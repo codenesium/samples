@@ -38,13 +38,13 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductReview>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
 		public async virtual Task<IActionResult> All()
 		{
 			SearchQuery query = new SearchQuery();
 
 			query.Process(this.SearchRecordLimit, this.SearchRecordDefault, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<POCOProductReview> response = await this.productReviewManager.All(query.Offset, query.Limit);
+			List<ApiProductReviewResponseModel> response = await this.productReviewManager.All(query.Offset, query.Limit);
 
 			return this.Ok(response);
 		}
@@ -52,11 +52,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("{id}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(POCOProductReview), 200)]
+		[ProducesResponseType(typeof(ApiProductReviewResponseModel), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		public async virtual Task<IActionResult> Get(int id)
 		{
-			POCOProductReview response = await this.productReviewManager.Get(id);
+			ApiProductReviewResponseModel response = await this.productReviewManager.Get(id);
 
 			if (response == null)
 			{
@@ -71,11 +71,11 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductReview), 200)]
+		[ProducesResponseType(typeof(ApiProductReviewResponseModel), 200)]
 		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiProductReviewModel model)
+		public virtual async Task<IActionResult> Create([FromBody] ApiProductReviewRequestModel model)
 		{
-			CreateResponse<POCOProductReview> result = await this.productReviewManager.Create(model);
+			CreateResponse<ApiProductReviewResponseModel> result = await this.productReviewManager.Create(model);
 
 			if (result.Success)
 			{
@@ -92,20 +92,20 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPost]
 		[Route("BulkInsert")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(List<POCOProductReview>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
 		[ProducesResponseType(typeof(void), 413)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductReviewModel> models)
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiProductReviewRequestModel> models)
 		{
 			if (models.Count > this.BulkInsertLimit)
 			{
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
 			}
 
-			List<POCOProductReview> records = new List<POCOProductReview>();
+			List<ApiProductReviewResponseModel> records = new List<ApiProductReviewResponseModel>();
 			foreach (var model in models)
 			{
-				CreateResponse<POCOProductReview> result = await this.productReviewManager.Create(model);
+				CreateResponse<ApiProductReviewResponseModel> result = await this.productReviewManager.Create(model);
 
 				if(result.Success)
 				{
@@ -123,10 +123,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpPut]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(POCOProductReview), 200)]
+		[ProducesResponseType(typeof(DTOProductReview), 200)]
 		[ProducesResponseType(typeof(void), 404)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductReviewModel model)
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiProductReviewRequestModel model)
 		{
 			try
 			{
@@ -134,7 +134,7 @@ namespace AdventureWorksNS.Api.Service
 
 				if (result.Success)
 				{
-					POCOProductReview response = await this.productReviewManager.Get(id);
+					ApiProductReviewResponseModel response = await this.productReviewManager.Get(id);
 
 					return this.Ok(response);
 				}
@@ -171,10 +171,10 @@ namespace AdventureWorksNS.Api.Service
 		[HttpGet]
 		[Route("getCommentsProductIDReviewerName/{comments}/{productID}/{reviewerName}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<POCOProductReview>), 200)]
+		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
 		public async virtual Task<IActionResult> GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
 		{
-			List<POCOProductReview> response = await this.productReviewManager.GetCommentsProductIDReviewerName(comments,productID,reviewerName);
+			List<ApiProductReviewResponseModel> response = await this.productReviewManager.GetCommentsProductIDReviewerName(comments,productID,reviewerName);
 
 			return this.Ok(response);
 		}
@@ -182,5 +182,5 @@ namespace AdventureWorksNS.Api.Service
 }
 
 /*<Codenesium>
-    <Hash>0fe97d0f1beeb6c39481c5181b03b843</Hash>
+    <Hash>12f1a82657c1a164b3e969c85077e178</Hash>
 </Codenesium>*/

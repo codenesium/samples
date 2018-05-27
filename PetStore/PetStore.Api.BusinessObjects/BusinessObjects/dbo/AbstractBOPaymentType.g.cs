@@ -15,54 +15,62 @@ namespace PetStoreNS.Api.BusinessObjects
 	public abstract class AbstractBOPaymentType: AbstractBOManager
 	{
 		private IPaymentTypeRepository paymentTypeRepository;
-		private IApiPaymentTypeModelValidator paymentTypeModelValidator;
+		private IApiPaymentTypeRequestModelValidator paymentTypeModelValidator;
+		private IBOLPaymentTypeMapper paymentTypeMapper;
 		private ILogger logger;
 
 		public AbstractBOPaymentType(
 			ILogger logger,
 			IPaymentTypeRepository paymentTypeRepository,
-			IApiPaymentTypeModelValidator paymentTypeModelValidator)
+			IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
+			IBOLPaymentTypeMapper paymentTypeMapper)
 			: base()
 
 		{
 			this.paymentTypeRepository = paymentTypeRepository;
 			this.paymentTypeModelValidator = paymentTypeModelValidator;
+			this.paymentTypeMapper = paymentTypeMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCOPaymentType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.paymentTypeRepository.All(skip, take, orderClause);
+			var records = await this.paymentTypeRepository.All(skip, take, orderClause);
+
+			return this.paymentTypeMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCOPaymentType> Get(int id)
+		public virtual async Task<ApiPaymentTypeResponseModel> Get(int id)
 		{
-			return this.paymentTypeRepository.Get(id);
+			var record = await paymentTypeRepository.Get(id);
+
+			return this.paymentTypeMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCOPaymentType>> Create(
-			ApiPaymentTypeModel model)
+		public virtual async Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
+			ApiPaymentTypeRequestModel model)
 		{
-			CreateResponse<POCOPaymentType> response = new CreateResponse<POCOPaymentType>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPaymentTypeResponseModel> response = new CreateResponse<ApiPaymentTypeResponseModel>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCOPaymentType record = await this.paymentTypeRepository.Create(model);
+				var dto = this.paymentTypeMapper.MapModelToDTO(default (int), model);
+				var record = await this.paymentTypeRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.paymentTypeMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiPaymentTypeModel model)
+			ApiPaymentTypeRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.paymentTypeRepository.Update(id, model);
+				var dto = this.paymentTypeMapper.MapModelToDTO(id, model);
+				await this.paymentTypeRepository.Update(id, dto);
 			}
 
 			return response;
@@ -83,5 +91,5 @@ namespace PetStoreNS.Api.BusinessObjects
 }
 
 /*<Codenesium>
-    <Hash>0ae1125417e6280a2b57cce81a6d1ac0</Hash>
+    <Hash>225fba74276bb3f81cc1eee542360caf</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Password", Schema="Person")]
-	public partial class Password: AbstractEntityFrameworkPOCO
+	public partial class Password: AbstractEntityFrameworkDTO
 	{
 		public Password()
 		{}
@@ -38,11 +38,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("PasswordSalt", TypeName="varchar(10)")]
 		public string PasswordSalt { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
 		public Guid Rowguid { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>25bd3bde40c4cf60f30a7c8e389ef867</Hash>
+    <Hash>2e105521bfcc4e9629d02e63acc41e28</Hash>
 </Codenesium>*/

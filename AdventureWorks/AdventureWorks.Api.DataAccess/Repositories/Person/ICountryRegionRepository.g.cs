@@ -8,21 +8,21 @@ namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICountryRegionRepository
 	{
-		Task<POCOCountryRegion> Create(ApiCountryRegionModel model);
+		Task<DTOCountryRegion> Create(DTOCountryRegion dto);
 
 		Task Update(string countryRegionCode,
-		            ApiCountryRegionModel model);
+		            DTOCountryRegion dto);
 
 		Task Delete(string countryRegionCode);
 
-		Task<POCOCountryRegion> Get(string countryRegionCode);
+		Task<DTOCountryRegion> Get(string countryRegionCode);
 
-		Task<List<POCOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<DTOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<POCOCountryRegion> GetName(string name);
+		Task<DTOCountryRegion> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>df76e27e9ec79e69109e3f0c645a2d30</Hash>
+    <Hash>b2b528932671e939e65f9e1ca9d90308</Hash>
 </Codenesium>*/

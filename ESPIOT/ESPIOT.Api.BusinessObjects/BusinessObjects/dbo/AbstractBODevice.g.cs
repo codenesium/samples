@@ -15,54 +15,62 @@ namespace ESPIOTNS.Api.BusinessObjects
 	public abstract class AbstractBODevice: AbstractBOManager
 	{
 		private IDeviceRepository deviceRepository;
-		private IApiDeviceModelValidator deviceModelValidator;
+		private IApiDeviceRequestModelValidator deviceModelValidator;
+		private IBOLDeviceMapper deviceMapper;
 		private ILogger logger;
 
 		public AbstractBODevice(
 			ILogger logger,
 			IDeviceRepository deviceRepository,
-			IApiDeviceModelValidator deviceModelValidator)
+			IApiDeviceRequestModelValidator deviceModelValidator,
+			IBOLDeviceMapper deviceMapper)
 			: base()
 
 		{
 			this.deviceRepository = deviceRepository;
 			this.deviceModelValidator = deviceModelValidator;
+			this.deviceMapper = deviceMapper;
 			this.logger = logger;
 		}
 
-		public virtual Task<List<POCODevice>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual async Task<List<ApiDeviceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.deviceRepository.All(skip, take, orderClause);
+			var records = await this.deviceRepository.All(skip, take, orderClause);
+
+			return this.deviceMapper.MapDTOToModel(records);
 		}
 
-		public virtual Task<POCODevice> Get(int id)
+		public virtual async Task<ApiDeviceResponseModel> Get(int id)
 		{
-			return this.deviceRepository.Get(id);
+			var record = await deviceRepository.Get(id);
+
+			return this.deviceMapper.MapDTOToModel(record);
 		}
 
-		public virtual async Task<CreateResponse<POCODevice>> Create(
-			ApiDeviceModel model)
+		public virtual async Task<CreateResponse<ApiDeviceResponseModel>> Create(
+			ApiDeviceRequestModel model)
 		{
-			CreateResponse<POCODevice> response = new CreateResponse<POCODevice>(await this.deviceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeviceResponseModel> response = new CreateResponse<ApiDeviceResponseModel>(await this.deviceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				POCODevice record = await this.deviceRepository.Create(model);
+				var dto = this.deviceMapper.MapModelToDTO(default (int), model);
+				var record = await this.deviceRepository.Create(dto);
 
-				response.SetRecord(record);
+				response.SetRecord(this.deviceMapper.MapDTOToModel(record));
 			}
-
 			return response;
 		}
 
 		public virtual async Task<ActionResponse> Update(
 			int id,
-			ApiDeviceModel model)
+			ApiDeviceRequestModel model)
 		{
 			ActionResponse response = new ActionResponse(await this.deviceModelValidator.ValidateUpdateAsync(id, model));
 
 			if (response.Success)
 			{
-				await this.deviceRepository.Update(id, model);
+				var dto = this.deviceMapper.MapModelToDTO(id, model);
+				await this.deviceRepository.Update(id, dto);
 			}
 
 			return response;
@@ -80,13 +88,15 @@ namespace ESPIOTNS.Api.BusinessObjects
 			return response;
 		}
 
-		public async Task<POCODevice> PublicId(Guid publicId)
+		public async Task<ApiDeviceResponseModel> PublicId(Guid publicId)
 		{
-			return await this.deviceRepository.PublicId(publicId);
+			DTODevice record = await this.deviceRepository.PublicId(publicId);
+
+			return this.deviceMapper.MapDTOToModel(record);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2db08f6492482283f1690dda2b5cd48e</Hash>
+    <Hash>c5eb474a450c4d64ed7a1738855b87bc</Hash>
 </Codenesium>*/
