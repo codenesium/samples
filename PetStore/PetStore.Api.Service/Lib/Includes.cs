@@ -361,7 +361,21 @@ namespace Codenesium.Foundation.CommonMVC
 	public class ServiceSettings
     {
         public string ExternalBaseUrl { get; set; }
+
+        public bool MigrateDatabase { get; set; }
+
+        public bool SecurityEnabled { get; set; }
+
+        public JwtSettings JwtSettings { get; set; }
     }
+
+    public class JwtSettings
+    {
+        public string SigningKey { get; set; }
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+    }
+
 
     public class SearchQuery
     {

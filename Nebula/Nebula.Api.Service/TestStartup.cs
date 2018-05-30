@@ -20,6 +20,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -54,12 +55,13 @@ namespace NebulaNS.Api.Service
 
 			services.AddMvcCore(config =>
             {
-                /*
-                 var policy = new AuthorizationPolicyBuilder()
-                              .RequireAuthenticatedUser()
-                              .Build();
-                 config.Filters.Add(new AuthorizeFilter(policy));
-                 */
+                if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+				{
+					 var policy = new AuthorizationPolicyBuilder()
+								  .RequireAuthenticatedUser()
+								  .Build();
+					 config.Filters.Add(new AuthorizeFilter(policy));
+				 }
                  config.Filters.Add(new BenchmarkAttribute());
 				 config.Filters.Add(new NullModelValidaterAttribute());
             }).AddVersionedApiExplorer(
@@ -80,6 +82,8 @@ namespace NebulaNS.Api.Service
                  // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
                  o.ReportApiVersions = true;
                  o.ApiVersionReader = new HeaderApiVersionReader("api-version");
+				 o.AssumeDefaultVersionWhenUnspecified = true;
+                 o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
              });
 
 
@@ -103,7 +107,15 @@ namespace NebulaNS.Api.Service
 
                 // integrate xml comments
                 // o.IncludeXmlComments( XmlCommentsFilePath );
-				// options.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert token", Name = "Authorization", Type = "apiKey" });
+				if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+				{
+				   var security = new Dictionary<string, IEnumerable<string>>
+			       {
+						{"Bearer", new string[] { }},
+				   };
+                   o.AddSecurityRequirement(security);
+			       o.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT prefixed with Bearer", Name = "Authorization", Type = "apiKey" });
+				}
             });
 
 
@@ -117,22 +129,26 @@ namespace NebulaNS.Api.Service
                 config.AddPolicy("policy", policy);
             });
 
-			/*
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(jwtBearerOptions =>
-            {
-                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    //ValidateActor = true,
-                    //ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
-                };
-            });
-			*/
+			if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+			{
+				var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
+				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(jwtBearerOptions =>
+				{
+					jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+					{
+						ClockSkew = TimeSpan.FromMinutes(5),
+						ValidateAudience = true,
+						ValidateIssuer = true,
+						ValidateLifetime = true,
+						RequireSignedTokens = true,
+						RequireExpirationTime = true,
+						ValidAudience = this.Configuration["JwtAudience"],
+						ValidIssuer = this.Configuration["JwtIssuer"],
+						IssuerSigningKey = new SymmetricSecurityKey(key)
+					};
+				});
+			}
 
             // Create the container builder.
             var builder = new ContainerBuilder();
@@ -204,7 +220,10 @@ namespace NebulaNS.Api.Service
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-			// app.UseAuthentication();
+			if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+			{
+				 app.UseAuthentication();
+		    }
 
 			// Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
