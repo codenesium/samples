@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALPersonCreditCardMapper Mapper { get; }
 
 		public AbstractPersonCreditCardRepository(
-			IDALPersonCreditCardMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOPersonCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<PersonCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOPersonCreditCard> Get(int businessEntityID)
+		public async virtual Task<PersonCreditCard> Get(int businessEntityID)
 		{
-			PersonCreditCard record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOPersonCreditCard> Create(
-			DTOPersonCreditCard dto)
+		public async virtual Task<PersonCreditCard> Create(PersonCreditCard item)
 		{
-			PersonCreditCard record = new PersonCreditCard();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<PersonCreditCard>().Add(record);
+			this.Context.Set<PersonCreditCard>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOPersonCreditCard dto)
+		public async virtual Task Update(PersonCreditCard item)
 		{
-			PersonCreditCard record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<PersonCreditCard>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<PersonCreditCard>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOPersonCreditCard>> Where(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<PersonCreditCard>> Where(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOPersonCreditCard> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOPersonCreditCard>> SearchLinqDTO(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOPersonCreditCard> response = new List<DTOPersonCreditCard>();
 			List<PersonCreditCard> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<PersonCreditCard>> SearchLinqEF(Expression<Func<PersonCreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8bc5086eaa6931a7a56e5e6cdb16c035</Hash>
+    <Hash>cb5b4c87775c356f1857010bdf6c7eba</Hash>
 </Codenesium>*/

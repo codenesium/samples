@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Address", Schema="Person")]
-	public partial class Address: AbstractEntityFrameworkDTO
+	public partial class Address: AbstractEntity
 	{
 		public Address()
 		{}
@@ -33,32 +33,31 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("AddressID", TypeName="int")]
-		public int AddressID { get; set; }
+		public int AddressID { get; private set; }
 
 		[Column("AddressLine1", TypeName="nvarchar(60)")]
-		public string AddressLine1 { get; set; }
+		public string AddressLine1 { get; private set; }
 
 		[Column("AddressLine2", TypeName="nvarchar(60)")]
-		public string AddressLine2 { get; set; }
+		public string AddressLine2 { get; private set; }
 
 		[Column("City", TypeName="nvarchar(30)")]
-		public string City { get; set; }
+		public string City { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("PostalCode", TypeName="nvarchar(15)")]
-		public string PostalCode { get; set; }
+		public string PostalCode { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("StateProvinceID", TypeName="int")]
-		public int StateProvinceID { get; set; }
+		public int StateProvinceID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef06a559bc2c5f33012d65e5d0785ddb</Hash>
+    <Hash>7a0b8d70e0d921454575ed2f79fcf2c7</Hash>
 </Codenesium>*/

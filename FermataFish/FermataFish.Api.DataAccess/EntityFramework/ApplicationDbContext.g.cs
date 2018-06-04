@@ -77,7 +77,7 @@ namespace FermataFishNS.Api.DataAccess
 	{
 		public ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FermataFish.Api.Service");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FermataFish.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -98,5 +98,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1283c73a0c1fb43c690d7aeace8b096c</Hash>
+    <Hash>2618f4cb359551df556201b3dd5af192</Hash>
 </Codenesium>*/

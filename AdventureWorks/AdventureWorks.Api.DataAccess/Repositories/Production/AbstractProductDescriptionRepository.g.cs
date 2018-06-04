@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALProductDescriptionMapper Mapper { get; }
 
 		public AbstractProductDescriptionRepository(
-			IDALProductDescriptionMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOProductDescription>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ProductDescription>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOProductDescription> Get(int productDescriptionID)
+		public async virtual Task<ProductDescription> Get(int productDescriptionID)
 		{
-			ProductDescription record = await this.GetById(productDescriptionID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(productDescriptionID);
 		}
 
-		public async virtual Task<DTOProductDescription> Create(
-			DTOProductDescription dto)
+		public async virtual Task<ProductDescription> Create(ProductDescription item)
 		{
-			ProductDescription record = new ProductDescription();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ProductDescription>().Add(record);
+			this.Context.Set<ProductDescription>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int productDescriptionID,
-			DTOProductDescription dto)
+		public async virtual Task Update(ProductDescription item)
 		{
-			ProductDescription record = await this.GetById(productDescriptionID);
-
-			if (record == null)
+			var entity = this.Context.Set<ProductDescription>().Local.FirstOrDefault(x => x.ProductDescriptionID == item.ProductDescriptionID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{productDescriptionID}");
+				this.Context.Set<ProductDescription>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					productDescriptionID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOProductDescription>> Where(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ProductDescription>> Where(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOProductDescription> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOProductDescription>> SearchLinqDTO(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOProductDescription> response = new List<DTOProductDescription>();
 			List<ProductDescription> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ProductDescription>> SearchLinqEF(Expression<Func<ProductDescription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b97185b58ea91f0251a98e2fa6da8499</Hash>
+    <Hash>06065b77f455b309ca4ae068a43476b8</Hash>
 </Codenesium>*/

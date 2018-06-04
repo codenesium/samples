@@ -6,16 +6,16 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesTaxRate", Schema="Sales")]
-	public partial class SalesTaxRate: AbstractEntityFrameworkDTO
+	public partial class SalesTaxRate: AbstractEntity
 	{
 		public SalesTaxRate()
 		{}
 
 		public void SetProperties(
-			int salesTaxRateID,
 			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
+			int salesTaxRateID,
 			int stateProvinceID,
 			decimal taxRate,
 			int taxType)
@@ -30,30 +30,29 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("SalesTaxRateID", TypeName="int")]
-		public int SalesTaxRateID { get; set; }
+		public int SalesTaxRateID { get; private set; }
 
 		[Column("StateProvinceID", TypeName="int")]
-		public int StateProvinceID { get; set; }
+		public int StateProvinceID { get; private set; }
 
 		[Column("TaxRate", TypeName="smallmoney")]
-		public decimal TaxRate { get; set; }
+		public decimal TaxRate { get; private set; }
 
 		[Column("TaxType", TypeName="tinyint")]
-		public int TaxType { get; set; }
+		public int TaxType { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ee46d42e20b03dc1117fa760c4130a4</Hash>
+    <Hash>2c0340dbb62494a15fab5f40b8d375eb</Hash>
 </Codenesium>*/

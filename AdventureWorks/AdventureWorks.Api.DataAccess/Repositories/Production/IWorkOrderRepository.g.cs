@@ -2,28 +2,26 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IWorkOrderRepository
 	{
-		Task<DTOWorkOrder> Create(DTOWorkOrder dto);
+		Task<WorkOrder> Create(WorkOrder item);
 
-		Task Update(int workOrderID,
-		            DTOWorkOrder dto);
+		Task Update(WorkOrder item);
 
 		Task Delete(int workOrderID);
 
-		Task<DTOWorkOrder> Get(int workOrderID);
+		Task<WorkOrder> Get(int workOrderID);
 
-		Task<List<DTOWorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<WorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<DTOWorkOrder>> GetProductID(int productID);
-		Task<List<DTOWorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID);
+		Task<List<WorkOrder>> GetProductID(int productID);
+		Task<List<WorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>988769c296a7aeba9eef0832b92daf5d</Hash>
+    <Hash>96952a7c8d65ffe6f910c830929c8c90</Hash>
 </Codenesium>*/

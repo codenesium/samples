@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALErrorLogMapper Mapper { get; }
 
 		public AbstractErrorLogRepository(
-			IDALErrorLogMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOErrorLog> Get(int errorLogID)
+		public async virtual Task<ErrorLog> Get(int errorLogID)
 		{
-			ErrorLog record = await this.GetById(errorLogID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(errorLogID);
 		}
 
-		public async virtual Task<DTOErrorLog> Create(
-			DTOErrorLog dto)
+		public async virtual Task<ErrorLog> Create(ErrorLog item)
 		{
-			ErrorLog record = new ErrorLog();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ErrorLog>().Add(record);
+			this.Context.Set<ErrorLog>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int errorLogID,
-			DTOErrorLog dto)
+		public async virtual Task Update(ErrorLog item)
 		{
-			ErrorLog record = await this.GetById(errorLogID);
-
-			if (record == null)
+			var entity = this.Context.Set<ErrorLog>().Local.FirstOrDefault(x => x.ErrorLogID == item.ErrorLogID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{errorLogID}");
+				this.Context.Set<ErrorLog>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					errorLogID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOErrorLog>> Where(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ErrorLog>> Where(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOErrorLog> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOErrorLog>> SearchLinqDTO(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOErrorLog> response = new List<DTOErrorLog>();
 			List<ErrorLog> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ErrorLog>> SearchLinqEF(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>30dc0d6a05e71b31d17c939688e2d31f</Hash>
+    <Hash>689aef166ae367a49c3dab014518e68e</Hash>
 </Codenesium>*/

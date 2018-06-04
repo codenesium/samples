@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALProductDocumentMapper Mapper { get; }
 
 		public AbstractProductDocumentRepository(
-			IDALProductDocumentMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOProductDocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ProductDocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOProductDocument> Get(int productID)
+		public async virtual Task<ProductDocument> Get(int productID)
 		{
-			ProductDocument record = await this.GetById(productID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(productID);
 		}
 
-		public async virtual Task<DTOProductDocument> Create(
-			DTOProductDocument dto)
+		public async virtual Task<ProductDocument> Create(ProductDocument item)
 		{
-			ProductDocument record = new ProductDocument();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ProductDocument>().Add(record);
+			this.Context.Set<ProductDocument>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int productID,
-			DTOProductDocument dto)
+		public async virtual Task Update(ProductDocument item)
 		{
-			ProductDocument record = await this.GetById(productID);
-
-			if (record == null)
+			var entity = this.Context.Set<ProductDocument>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{productID}");
+				this.Context.Set<ProductDocument>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					productID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOProductDocument>> Where(Expression<Func<ProductDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ProductDocument>> Where(Expression<Func<ProductDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOProductDocument> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOProductDocument>> SearchLinqDTO(Expression<Func<ProductDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOProductDocument> response = new List<DTOProductDocument>();
 			List<ProductDocument> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ProductDocument>> SearchLinqEF(Expression<Func<ProductDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0efc49c28de50ef1cc3bf0307b0d5054</Hash>
+    <Hash>5ca4f489c16e47d6d09aeb4f2aaaeb9c</Hash>
 </Codenesium>*/

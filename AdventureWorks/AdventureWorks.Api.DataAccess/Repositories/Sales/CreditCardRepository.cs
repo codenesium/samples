@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class CreditCardRepository: AbstractCreditCardRepository, ICreditCardRepository
 	{
 		public CreditCardRepository(
-			IDALCreditCardMapper mapper,
 			ILogger<CreditCardRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca4df6fbf77d418a55f8e4488e5032f1</Hash>
+    <Hash>7fc11df9bdb89e31e0838f89244f2457</Hash>
 </Codenesium>*/

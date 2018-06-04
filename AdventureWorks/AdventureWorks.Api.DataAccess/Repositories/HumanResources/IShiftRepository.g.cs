@@ -2,28 +2,26 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShiftRepository
 	{
-		Task<DTOShift> Create(DTOShift dto);
+		Task<Shift> Create(Shift item);
 
-		Task Update(int shiftID,
-		            DTOShift dto);
+		Task Update(Shift item);
 
 		Task Delete(int shiftID);
 
-		Task<DTOShift> Get(int shiftID);
+		Task<Shift> Get(int shiftID);
 
-		Task<List<DTOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Shift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOShift> GetName(string name);
-		Task<DTOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
+		Task<Shift> GetName(string name);
+		Task<Shift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5a77dc8b2cd62a94102cad0fafc802d</Hash>
+    <Hash>42d7dbaeb948030041de98ec341b9d05</Hash>
 </Codenesium>*/

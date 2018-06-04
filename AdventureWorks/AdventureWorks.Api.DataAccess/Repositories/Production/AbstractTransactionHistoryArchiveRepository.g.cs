@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALTransactionHistoryArchiveMapper Mapper { get; }
 
 		public AbstractTransactionHistoryArchiveRepository(
-			IDALTransactionHistoryArchiveMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOTransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<TransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOTransactionHistoryArchive> Get(int transactionID)
+		public async virtual Task<TransactionHistoryArchive> Get(int transactionID)
 		{
-			TransactionHistoryArchive record = await this.GetById(transactionID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(transactionID);
 		}
 
-		public async virtual Task<DTOTransactionHistoryArchive> Create(
-			DTOTransactionHistoryArchive dto)
+		public async virtual Task<TransactionHistoryArchive> Create(TransactionHistoryArchive item)
 		{
-			TransactionHistoryArchive record = new TransactionHistoryArchive();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<TransactionHistoryArchive>().Add(record);
+			this.Context.Set<TransactionHistoryArchive>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int transactionID,
-			DTOTransactionHistoryArchive dto)
+		public async virtual Task Update(TransactionHistoryArchive item)
 		{
-			TransactionHistoryArchive record = await this.GetById(transactionID);
-
-			if (record == null)
+			var entity = this.Context.Set<TransactionHistoryArchive>().Local.FirstOrDefault(x => x.TransactionID == item.TransactionID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{transactionID}");
+				this.Context.Set<TransactionHistoryArchive>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					transactionID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,33 +74,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOTransactionHistoryArchive>> GetProductID(int productID)
+		public async Task<List<TransactionHistoryArchive>> GetProductID(int productID)
 		{
-			var records = await this.SearchLinqDTO(x => x.ProductID == productID);
+			var records = await this.SearchLinqEF(x => x.ProductID == productID);
 
 			return records;
 		}
-		public async Task<List<DTOTransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
+		public async Task<List<TransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID)
 		{
-			var records = await this.SearchLinqDTO(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID);
-
-			return records;
-		}
-
-		protected async Task<List<DTOTransactionHistoryArchive>> Where(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOTransactionHistoryArchive> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqEF(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID);
 
 			return records;
 		}
 
-		private async Task<List<DTOTransactionHistoryArchive>> SearchLinqDTO(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<TransactionHistoryArchive>> Where(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOTransactionHistoryArchive> response = new List<DTOTransactionHistoryArchive>();
 			List<TransactionHistoryArchive> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<TransactionHistoryArchive>> SearchLinqEF(Expression<Func<TransactionHistoryArchive, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9d822bfe1042b2113f0a2b51c6403287</Hash>
+    <Hash>8af264a0080996c1a16b8d2662228e15</Hash>
 </Codenesium>*/

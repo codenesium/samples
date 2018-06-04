@@ -6,15 +6,15 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("BusinessEntityAddress", Schema="Person")]
-	public partial class BusinessEntityAddress: AbstractEntityFrameworkDTO
+	public partial class BusinessEntityAddress: AbstractEntity
 	{
 		public BusinessEntityAddress()
 		{}
 
 		public void SetProperties(
-			int businessEntityID,
 			int addressID,
 			int addressTypeID,
+			int businessEntityID,
 			DateTime modifiedDate,
 			Guid rowguid)
 		{
@@ -26,24 +26,23 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AddressID", TypeName="int")]
-		public int AddressID { get; set; }
+		public int AddressID { get; private set; }
 
 		[Column("AddressTypeID", TypeName="int")]
-		public int AddressTypeID { get; set; }
+		public int AddressTypeID { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a8f4e0f31f383856c458007c6ffe0f1</Hash>
+    <Hash>bc895d37f9f495c00c8e69c1542bfc44</Hash>
 </Codenesium>*/

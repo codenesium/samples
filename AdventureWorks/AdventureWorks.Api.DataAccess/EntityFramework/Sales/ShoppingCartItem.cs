@@ -6,18 +6,18 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ShoppingCartItem", Schema="Sales")]
-	public partial class ShoppingCartItem: AbstractEntityFrameworkDTO
+	public partial class ShoppingCartItem: AbstractEntity
 	{
 		public ShoppingCartItem()
 		{}
 
 		public void SetProperties(
-			int shoppingCartItemID,
 			DateTime dateCreated,
 			DateTime modifiedDate,
 			int productID,
 			int quantity,
-			string shoppingCartID)
+			string shoppingCartID,
+			int shoppingCartItemID)
 		{
 			this.DateCreated = dateCreated.ToDateTime();
 			this.ModifiedDate = modifiedDate.ToDateTime();
@@ -28,26 +28,26 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("DateCreated", TypeName="datetime")]
-		public DateTime DateCreated { get; set; }
+		public DateTime DateCreated { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
 		[Column("Quantity", TypeName="int")]
-		public int Quantity { get; set; }
+		public int Quantity { get; private set; }
 
 		[Column("ShoppingCartID", TypeName="nvarchar(50)")]
-		public string ShoppingCartID { get; set; }
+		public string ShoppingCartID { get; private set; }
 
 		[Key]
 		[Column("ShoppingCartItemID", TypeName="int")]
-		public int ShoppingCartItemID { get; set; }
+		public int ShoppingCartItemID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>af0e3f0ca0f65c2b6f2e3265d13249a5</Hash>
+    <Hash>0dda5569c5f9e7dfde4784bc24915c36</Hash>
 </Codenesium>*/

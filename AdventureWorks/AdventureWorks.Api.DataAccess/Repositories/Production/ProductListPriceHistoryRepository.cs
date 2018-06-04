@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class ProductListPriceHistoryRepository: AbstractProductListPriceHistoryRepository, IProductListPriceHistoryRepository
 	{
 		public ProductListPriceHistoryRepository(
-			IDALProductListPriceHistoryMapper mapper,
 			ILogger<ProductListPriceHistoryRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3a62ce9be58a1f654da1af612a190e9</Hash>
+    <Hash>fce074f5204d94597e39733d39fe6363</Hash>
 </Codenesium>*/

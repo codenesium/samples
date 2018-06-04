@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALSpecialOfferProductMapper Mapper { get; }
 
 		public AbstractSpecialOfferProductRepository(
-			IDALSpecialOfferProductMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOSpecialOfferProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<SpecialOfferProduct>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOSpecialOfferProduct> Get(int specialOfferID)
+		public async virtual Task<SpecialOfferProduct> Get(int specialOfferID)
 		{
-			SpecialOfferProduct record = await this.GetById(specialOfferID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(specialOfferID);
 		}
 
-		public async virtual Task<DTOSpecialOfferProduct> Create(
-			DTOSpecialOfferProduct dto)
+		public async virtual Task<SpecialOfferProduct> Create(SpecialOfferProduct item)
 		{
-			SpecialOfferProduct record = new SpecialOfferProduct();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<SpecialOfferProduct>().Add(record);
+			this.Context.Set<SpecialOfferProduct>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int specialOfferID,
-			DTOSpecialOfferProduct dto)
+		public async virtual Task Update(SpecialOfferProduct item)
 		{
-			SpecialOfferProduct record = await this.GetById(specialOfferID);
-
-			if (record == null)
+			var entity = this.Context.Set<SpecialOfferProduct>().Local.FirstOrDefault(x => x.SpecialOfferID == item.SpecialOfferID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{specialOfferID}");
+				this.Context.Set<SpecialOfferProduct>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					specialOfferID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOSpecialOfferProduct>> GetProductID(int productID)
+		public async Task<List<SpecialOfferProduct>> GetProductID(int productID)
 		{
-			var records = await this.SearchLinqDTO(x => x.ProductID == productID);
+			var records = await this.SearchLinqEF(x => x.ProductID == productID);
 
 			return records;
 		}
 
-		protected async Task<List<DTOSpecialOfferProduct>> Where(Expression<Func<SpecialOfferProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<SpecialOfferProduct>> Where(Expression<Func<SpecialOfferProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOSpecialOfferProduct> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOSpecialOfferProduct>> SearchLinqDTO(Expression<Func<SpecialOfferProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOSpecialOfferProduct> response = new List<DTOSpecialOfferProduct>();
 			List<SpecialOfferProduct> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<SpecialOfferProduct>> SearchLinqEF(Expression<Func<SpecialOfferProduct, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>43906e58d2d2f676c38630645cc97e1f</Hash>
+    <Hash>c862e68f0953154f5c25f42ba5058dd9</Hash>
 </Codenesium>*/

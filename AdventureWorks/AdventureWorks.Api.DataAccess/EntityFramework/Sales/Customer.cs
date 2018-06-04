@@ -6,14 +6,14 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Customer", Schema="Sales")]
-	public partial class Customer: AbstractEntityFrameworkDTO
+	public partial class Customer: AbstractEntity
 	{
 		public Customer()
 		{}
 
 		public void SetProperties(
-			int customerID,
 			string accountNumber,
+			int customerID,
 			DateTime modifiedDate,
 			Nullable<int> personID,
 			Guid rowguid,
@@ -29,28 +29,28 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.TerritoryID = territoryID.ToNullableInt();
 		}
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("AccountNumber", TypeName="varchar(10)")]
-		public string AccountNumber { get; set; }
+		public string AccountNumber { get; private set; }
 
 		[Key]
 		[Column("CustomerID", TypeName="int")]
-		public int CustomerID { get; set; }
+		public int CustomerID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("PersonID", TypeName="int")]
-		public Nullable<int> PersonID { get; set; }
+		public Nullable<int> PersonID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("StoreID", TypeName="int")]
-		public Nullable<int> StoreID { get; set; }
+		public Nullable<int> StoreID { get; private set; }
 
 		[Column("TerritoryID", TypeName="int")]
-		public Nullable<int> TerritoryID { get; set; }
+		public Nullable<int> TerritoryID { get; private set; }
 
 		[ForeignKey("StoreID")]
 		public virtual Store Store { get; set; }
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5d6470755ca8d68389e24f66ce62de3f</Hash>
+    <Hash>a6a5fe2698c236980ab7af7bf8582bd8</Hash>
 </Codenesium>*/

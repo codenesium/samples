@@ -8,7 +8,7 @@ namespace PetShippingNS.Api.Contracts
 	public class ReferenceEntity<T>
 	{
 		[JsonProperty(PropertyName = "Value")]
-		public T Value { get; set; }
+		public T Value { get; private set; }
 
 		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
@@ -96,7 +96,7 @@ namespace PetShippingNS.Api.Contracts
 		public List<ApiSpeciesResponseModel> Species { get; private set; } = new List<ApiSpeciesResponseModel>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeAirlinesValue { get; set; } = true;
+		public bool ShouldSerializeAirlinesValue { get; private set; } = true;
 
 		public bool ShouldSerializeAirlines()
 		{
@@ -112,7 +112,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAirTransportsValue { get; set; } = true;
+		public bool ShouldSerializeAirTransportsValue { get; private set; } = true;
 
 		public bool ShouldSerializeAirTransports()
 		{
@@ -128,7 +128,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBreedsValue { get; set; } = true;
+		public bool ShouldSerializeBreedsValue { get; private set; } = true;
 
 		public bool ShouldSerializeBreeds()
 		{
@@ -144,7 +144,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeClientsValue { get; set; } = true;
+		public bool ShouldSerializeClientsValue { get; private set; } = true;
 
 		public bool ShouldSerializeClients()
 		{
@@ -160,7 +160,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeClientCommunicationsValue { get; set; } = true;
+		public bool ShouldSerializeClientCommunicationsValue { get; private set; } = true;
 
 		public bool ShouldSerializeClientCommunications()
 		{
@@ -176,7 +176,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountriesValue { get; set; } = true;
+		public bool ShouldSerializeCountriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeCountries()
 		{
@@ -192,7 +192,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRequirementsValue { get; set; } = true;
+		public bool ShouldSerializeCountryRequirementsValue { get; private set; } = true;
 
 		public bool ShouldSerializeCountryRequirements()
 		{
@@ -208,7 +208,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDestinationsValue { get; set; } = true;
+		public bool ShouldSerializeDestinationsValue { get; private set; } = true;
 
 		public bool ShouldSerializeDestinations()
 		{
@@ -224,7 +224,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeesValue { get; set; } = true;
+		public bool ShouldSerializeEmployeesValue { get; private set; } = true;
 
 		public bool ShouldSerializeEmployees()
 		{
@@ -240,7 +240,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeHandlersValue { get; set; } = true;
+		public bool ShouldSerializeHandlersValue { get; private set; } = true;
 
 		public bool ShouldSerializeHandlers()
 		{
@@ -256,7 +256,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeHandlerPipelineStepsValue { get; set; } = true;
+		public bool ShouldSerializeHandlerPipelineStepsValue { get; private set; } = true;
 
 		public bool ShouldSerializeHandlerPipelineSteps()
 		{
@@ -272,7 +272,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOtherTransportsValue { get; set; } = true;
+		public bool ShouldSerializeOtherTransportsValue { get; private set; } = true;
 
 		public bool ShouldSerializeOtherTransports()
 		{
@@ -288,7 +288,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePetsValue { get; set; } = true;
+		public bool ShouldSerializePetsValue { get; private set; } = true;
 
 		public bool ShouldSerializePets()
 		{
@@ -304,7 +304,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePipelinesValue { get; set; } = true;
+		public bool ShouldSerializePipelinesValue { get; private set; } = true;
 
 		public bool ShouldSerializePipelines()
 		{
@@ -320,7 +320,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePipelineStatusValue { get; set; } = true;
+		public bool ShouldSerializePipelineStatusValue { get; private set; } = true;
 
 		public bool ShouldSerializePipelineStatus()
 		{
@@ -336,7 +336,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePipelineStepsValue { get; set; } = true;
+		public bool ShouldSerializePipelineStepsValue { get; private set; } = true;
 
 		public bool ShouldSerializePipelineSteps()
 		{
@@ -352,7 +352,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePipelineStepDestinationsValue { get; set; } = true;
+		public bool ShouldSerializePipelineStepDestinationsValue { get; private set; } = true;
 
 		public bool ShouldSerializePipelineStepDestinations()
 		{
@@ -368,7 +368,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePipelineStepNotesValue { get; set; } = true;
+		public bool ShouldSerializePipelineStepNotesValue { get; private set; } = true;
 
 		public bool ShouldSerializePipelineStepNotes()
 		{
@@ -384,7 +384,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePipelineStepStatusValue { get; set; } = true;
+		public bool ShouldSerializePipelineStepStatusValue { get; private set; } = true;
 
 		public bool ShouldSerializePipelineStepStatus()
 		{
@@ -400,7 +400,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePipelineStepStepRequirementsValue { get; set; } = true;
+		public bool ShouldSerializePipelineStepStepRequirementsValue { get; private set; } = true;
 
 		public bool ShouldSerializePipelineStepStepRequirements()
 		{
@@ -416,7 +416,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesValue { get; set; } = true;
+		public bool ShouldSerializeSalesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSales()
 		{
@@ -432,7 +432,7 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpeciesValue { get; set; } = true;
+		public bool ShouldSerializeSpeciesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSpecies()
 		{
@@ -563,5 +563,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b4bc7b9b739fcfddcb563aa0b07ebc06</Hash>
+    <Hash>c12f677631dab960ec4a81501514413e</Hash>
 </Codenesium>*/

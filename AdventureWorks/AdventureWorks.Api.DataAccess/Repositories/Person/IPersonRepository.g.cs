@@ -2,29 +2,27 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPersonRepository
 	{
-		Task<DTOPerson> Create(DTOPerson dto);
+		Task<Person> Create(Person item);
 
-		Task Update(int businessEntityID,
-		            DTOPerson dto);
+		Task Update(Person item);
 
 		Task Delete(int businessEntityID);
 
-		Task<DTOPerson> Get(int businessEntityID);
+		Task<Person> Get(int businessEntityID);
 
-		Task<List<DTOPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Person>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<DTOPerson>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName);
-		Task<List<DTOPerson>> GetAdditionalContactInfo(string additionalContactInfo);
-		Task<List<DTOPerson>> GetDemographics(string demographics);
+		Task<List<Person>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName);
+		Task<List<Person>> GetAdditionalContactInfo(string additionalContactInfo);
+		Task<List<Person>> GetDemographics(string demographics);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c5621b81d27982702bd8970cdc7be6f</Hash>
+    <Hash>a78da92c31832e468597a9b0e63f8583</Hash>
 </Codenesium>*/

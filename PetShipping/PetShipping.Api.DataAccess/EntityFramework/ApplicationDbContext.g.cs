@@ -87,7 +87,7 @@ namespace PetShippingNS.Api.DataAccess
 	{
 		public ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "PetShipping.Api.Service");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "PetShipping.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -108,5 +108,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f253bea925b96f7a8e3d7409453cc9d4</Hash>
+    <Hash>8b5338990a0f572a48c73811e1631438</Hash>
 </Codenesium>*/

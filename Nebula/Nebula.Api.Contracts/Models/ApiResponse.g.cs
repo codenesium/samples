@@ -8,7 +8,7 @@ namespace NebulaNS.Api.Contracts
 	public class ReferenceEntity<T>
 	{
 		[JsonProperty(PropertyName = "Value")]
-		public T Value { get; set; }
+		public T Value { get; private set; }
 
 		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
@@ -63,7 +63,7 @@ namespace NebulaNS.Api.Contracts
 		public List<ApiVersionInfoResponseModel> VersionInfoes { get; private set; } = new List<ApiVersionInfoResponseModel>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeChainsValue { get; set; } = true;
+		public bool ShouldSerializeChainsValue { get; private set; } = true;
 
 		public bool ShouldSerializeChains()
 		{
@@ -79,7 +79,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeChainStatusValue { get; set; } = true;
+		public bool ShouldSerializeChainStatusValue { get; private set; } = true;
 
 		public bool ShouldSerializeChainStatus()
 		{
@@ -95,7 +95,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeClaspsValue { get; set; } = true;
+		public bool ShouldSerializeClaspsValue { get; private set; } = true;
 
 		public bool ShouldSerializeClasps()
 		{
@@ -111,7 +111,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinksValue { get; set; } = true;
+		public bool ShouldSerializeLinksValue { get; private set; } = true;
 
 		public bool ShouldSerializeLinks()
 		{
@@ -127,7 +127,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinkLogsValue { get; set; } = true;
+		public bool ShouldSerializeLinkLogsValue { get; private set; } = true;
 
 		public bool ShouldSerializeLinkLogs()
 		{
@@ -143,7 +143,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinkStatusValue { get; set; } = true;
+		public bool ShouldSerializeLinkStatusValue { get; private set; } = true;
 
 		public bool ShouldSerializeLinkStatus()
 		{
@@ -159,7 +159,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMachinesValue { get; set; } = true;
+		public bool ShouldSerializeMachinesValue { get; private set; } = true;
 
 		public bool ShouldSerializeMachines()
 		{
@@ -175,7 +175,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMachineRefTeamsValue { get; set; } = true;
+		public bool ShouldSerializeMachineRefTeamsValue { get; private set; } = true;
 
 		public bool ShouldSerializeMachineRefTeams()
 		{
@@ -191,7 +191,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeOrganizationsValue { get; set; } = true;
+		public bool ShouldSerializeOrganizationsValue { get; private set; } = true;
 
 		public bool ShouldSerializeOrganizations()
 		{
@@ -207,7 +207,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeamsValue { get; set; } = true;
+		public bool ShouldSerializeTeamsValue { get; private set; } = true;
 
 		public bool ShouldSerializeTeams()
 		{
@@ -223,7 +223,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVersionInfoesValue { get; set; } = true;
+		public bool ShouldSerializeVersionInfoesValue { get; private set; } = true;
 
 		public bool ShouldSerializeVersionInfoes()
 		{
@@ -299,5 +299,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>573f6ccfc1437ecafca3ef8309eb3e61</Hash>
+    <Hash>7f357876b6a945492246dd09775707c4</Hash>
 </Codenesium>*/

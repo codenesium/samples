@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class ShipMethodRepository: AbstractShipMethodRepository, IShipMethodRepository
 	{
 		public ShipMethodRepository(
-			IDALShipMethodMapper mapper,
 			ILogger<ShipMethodRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3d23d0320d37c4d0cdc985a381f81a19</Hash>
+    <Hash>465fa2c91130e0ba81293e7a56f43067</Hash>
 </Codenesium>*/

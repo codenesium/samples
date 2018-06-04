@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALPasswordMapper Mapper { get; }
 
 		public AbstractPasswordRepository(
-			IDALPasswordMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Password>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOPassword> Get(int businessEntityID)
+		public async virtual Task<Password> Get(int businessEntityID)
 		{
-			Password record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOPassword> Create(
-			DTOPassword dto)
+		public async virtual Task<Password> Create(Password item)
 		{
-			Password record = new Password();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<Password>().Add(record);
+			this.Context.Set<Password>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOPassword dto)
+		public async virtual Task Update(Password item)
 		{
-			Password record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<Password>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<Password>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOPassword>> Where(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Password>> Where(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOPassword> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOPassword>> SearchLinqDTO(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOPassword> response = new List<DTOPassword>();
 			List<Password> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Password>> SearchLinqEF(Expression<Func<Password, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d658d90602117f0275460bbf7f5f3f0a</Hash>
+    <Hash>44507d2f8101df84ffc8456939dd71a4</Hash>
 </Codenesium>*/

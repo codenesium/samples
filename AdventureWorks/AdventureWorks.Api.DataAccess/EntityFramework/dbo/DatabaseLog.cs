@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("DatabaseLog", Schema="dbo")]
-	public partial class DatabaseLog: AbstractEntityFrameworkDTO
+	public partial class DatabaseLog: AbstractEntity
 	{
 		public DatabaseLog()
 		{}
@@ -33,31 +33,31 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("DatabaseLogID", TypeName="int")]
-		public int DatabaseLogID { get; set; }
+		public int DatabaseLogID { get; private set; }
 
 		[Column("DatabaseUser", TypeName="nvarchar(128)")]
-		public string DatabaseUser { get; set; }
+		public string DatabaseUser { get; private set; }
 
 		[Column("Event", TypeName="nvarchar(128)")]
-		public string @Event { get; set; }
+		public string @Event { get; private set; }
 
 		[Column("Object", TypeName="nvarchar(128)")]
-		public string @Object { get; set; }
+		public string @Object { get; private set; }
 
 		[Column("PostTime", TypeName="datetime")]
-		public DateTime PostTime { get; set; }
+		public DateTime PostTime { get; private set; }
 
 		[Column("Schema", TypeName="nvarchar(128)")]
-		public string Schema { get; set; }
+		public string Schema { get; private set; }
 
 		[Column("TSQL", TypeName="nvarchar(-1)")]
-		public string TSQL { get; set; }
+		public string TSQL { get; private set; }
 
 		[Column("XmlEvent", TypeName="xml(-1)")]
-		public string XmlEvent { get; set; }
+		public string XmlEvent { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>415ad95ca5a87fbfa06c8aefc1848f80</Hash>
+    <Hash>cacd1ca435ba52146a4e71964d7b19b8</Hash>
 </Codenesium>*/

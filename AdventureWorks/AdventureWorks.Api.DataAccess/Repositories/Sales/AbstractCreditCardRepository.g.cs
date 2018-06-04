@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALCreditCardMapper Mapper { get; }
 
 		public AbstractCreditCardRepository(
-			IDALCreditCardMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<CreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOCreditCard> Get(int creditCardID)
+		public async virtual Task<CreditCard> Get(int creditCardID)
 		{
-			CreditCard record = await this.GetById(creditCardID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(creditCardID);
 		}
 
-		public async virtual Task<DTOCreditCard> Create(
-			DTOCreditCard dto)
+		public async virtual Task<CreditCard> Create(CreditCard item)
 		{
-			CreditCard record = new CreditCard();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<CreditCard>().Add(record);
+			this.Context.Set<CreditCard>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int creditCardID,
-			DTOCreditCard dto)
+		public async virtual Task Update(CreditCard item)
 		{
-			CreditCard record = await this.GetById(creditCardID);
-
-			if (record == null)
+			var entity = this.Context.Set<CreditCard>().Local.FirstOrDefault(x => x.CreditCardID == item.CreditCardID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{creditCardID}");
+				this.Context.Set<CreditCard>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					creditCardID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOCreditCard> GetCardNumber(string cardNumber)
+		public async Task<CreditCard> GetCardNumber(string cardNumber)
 		{
-			var records = await this.SearchLinqDTO(x => x.CardNumber == cardNumber);
+			var records = await this.SearchLinqEF(x => x.CardNumber == cardNumber);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOCreditCard>> Where(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<CreditCard>> Where(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOCreditCard> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOCreditCard>> SearchLinqDTO(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOCreditCard> response = new List<DTOCreditCard>();
 			List<CreditCard> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<CreditCard>> SearchLinqEF(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9f1f108dfb93013b134da86042455278</Hash>
+    <Hash>2b691a160b8938f461d039790c2497bb</Hash>
 </Codenesium>*/

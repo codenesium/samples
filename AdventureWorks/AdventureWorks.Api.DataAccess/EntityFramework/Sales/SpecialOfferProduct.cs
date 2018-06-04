@@ -6,16 +6,16 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SpecialOfferProduct", Schema="Sales")]
-	public partial class SpecialOfferProduct: AbstractEntityFrameworkDTO
+	public partial class SpecialOfferProduct: AbstractEntity
 	{
 		public SpecialOfferProduct()
 		{}
 
 		public void SetProperties(
-			int specialOfferID,
 			DateTime modifiedDate,
 			int productID,
-			Guid rowguid)
+			Guid rowguid,
+			int specialOfferID)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
@@ -24,18 +24,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("SpecialOfferID", TypeName="int")]
-		public int SpecialOfferID { get; set; }
+		public int SpecialOfferID { get; private set; }
 
 		[ForeignKey("SpecialOfferID")]
 		public virtual SpecialOffer SpecialOffer { get; set; }
@@ -43,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0391bc4073e1dd9b62c095cff788f7a2</Hash>
+    <Hash>9e16218edea6c34ff452a03f9fef45a5</Hash>
 </Codenesium>*/

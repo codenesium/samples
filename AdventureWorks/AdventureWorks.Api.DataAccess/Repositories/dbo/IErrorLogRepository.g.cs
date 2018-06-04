@@ -2,25 +2,23 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IErrorLogRepository
 	{
-		Task<DTOErrorLog> Create(DTOErrorLog dto);
+		Task<ErrorLog> Create(ErrorLog item);
 
-		Task Update(int errorLogID,
-		            DTOErrorLog dto);
+		Task Update(ErrorLog item);
 
 		Task Delete(int errorLogID);
 
-		Task<DTOErrorLog> Get(int errorLogID);
+		Task<ErrorLog> Get(int errorLogID);
 
-		Task<List<DTOErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>55c63e3425e0db3d0cc815aba88c0b84</Hash>
+    <Hash>efdce5903cc9822b9ab22c6f7329fd40</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALIllustrationMapper Mapper { get; }
 
 		public AbstractIllustrationRepository(
-			IDALIllustrationMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Illustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOIllustration> Get(int illustrationID)
+		public async virtual Task<Illustration> Get(int illustrationID)
 		{
-			Illustration record = await this.GetById(illustrationID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(illustrationID);
 		}
 
-		public async virtual Task<DTOIllustration> Create(
-			DTOIllustration dto)
+		public async virtual Task<Illustration> Create(Illustration item)
 		{
-			Illustration record = new Illustration();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<Illustration>().Add(record);
+			this.Context.Set<Illustration>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int illustrationID,
-			DTOIllustration dto)
+		public async virtual Task Update(Illustration item)
 		{
-			Illustration record = await this.GetById(illustrationID);
-
-			if (record == null)
+			var entity = this.Context.Set<Illustration>().Local.FirstOrDefault(x => x.IllustrationID == item.IllustrationID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{illustrationID}");
+				this.Context.Set<Illustration>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					illustrationID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOIllustration>> Where(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Illustration>> Where(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOIllustration> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOIllustration>> SearchLinqDTO(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOIllustration> response = new List<DTOIllustration>();
 			List<Illustration> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Illustration>> SearchLinqEF(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>47b937c0dc3a91f8294fa6c76255ab00</Hash>
+    <Hash>75d9bc9148303ae84317037e0d4d1d40</Hash>
 </Codenesium>*/

@@ -6,16 +6,16 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductInventory", Schema="Production")]
-	public partial class ProductInventory: AbstractEntityFrameworkDTO
+	public partial class ProductInventory: AbstractEntity
 	{
 		public ProductInventory()
 		{}
 
 		public void SetProperties(
-			int productID,
 			int bin,
 			short locationID,
 			DateTime modifiedDate,
+			int productID,
 			short quantity,
 			Guid rowguid,
 			string shelf)
@@ -30,30 +30,29 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Bin", TypeName="tinyint")]
-		public int Bin { get; set; }
+		public int Bin { get; private set; }
 
 		[Column("LocationID", TypeName="smallint")]
-		public short LocationID { get; set; }
+		public short LocationID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
 		[Column("Quantity", TypeName="smallint")]
-		public short Quantity { get; set; }
+		public short Quantity { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("Shelf", TypeName="nvarchar(10)")]
-		public string Shelf { get; set; }
+		public string Shelf { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e91141ebaf45a1b610b687712d7b5cb</Hash>
+    <Hash>bbc42e9fa267a7fcc4ed153b24cc1de0</Hash>
 </Codenesium>*/

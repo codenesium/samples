@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALWorkOrderMapper Mapper { get; }
 
 		public AbstractWorkOrderRepository(
-			IDALWorkOrderMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOWorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<WorkOrder>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOWorkOrder> Get(int workOrderID)
+		public async virtual Task<WorkOrder> Get(int workOrderID)
 		{
-			WorkOrder record = await this.GetById(workOrderID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(workOrderID);
 		}
 
-		public async virtual Task<DTOWorkOrder> Create(
-			DTOWorkOrder dto)
+		public async virtual Task<WorkOrder> Create(WorkOrder item)
 		{
-			WorkOrder record = new WorkOrder();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<WorkOrder>().Add(record);
+			this.Context.Set<WorkOrder>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int workOrderID,
-			DTOWorkOrder dto)
+		public async virtual Task Update(WorkOrder item)
 		{
-			WorkOrder record = await this.GetById(workOrderID);
-
-			if (record == null)
+			var entity = this.Context.Set<WorkOrder>().Local.FirstOrDefault(x => x.WorkOrderID == item.WorkOrderID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{workOrderID}");
+				this.Context.Set<WorkOrder>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					workOrderID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,33 +74,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOWorkOrder>> GetProductID(int productID)
+		public async Task<List<WorkOrder>> GetProductID(int productID)
 		{
-			var records = await this.SearchLinqDTO(x => x.ProductID == productID);
+			var records = await this.SearchLinqEF(x => x.ProductID == productID);
 
 			return records;
 		}
-		public async Task<List<DTOWorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
+		public async Task<List<WorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
 		{
-			var records = await this.SearchLinqDTO(x => x.ScrapReasonID == scrapReasonID);
-
-			return records;
-		}
-
-		protected async Task<List<DTOWorkOrder>> Where(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOWorkOrder> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID);
 
 			return records;
 		}
 
-		private async Task<List<DTOWorkOrder>> SearchLinqDTO(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<WorkOrder>> Where(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOWorkOrder> response = new List<DTOWorkOrder>();
 			List<WorkOrder> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<WorkOrder>> SearchLinqEF(Expression<Func<WorkOrder, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7363c5545fd05cfc7f09140212f8059e</Hash>
+    <Hash>03a93a67eb0344eae9d748ff112712bb</Hash>
 </Codenesium>*/

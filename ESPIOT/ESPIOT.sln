@@ -11,13 +11,13 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.Contracts", "ESP
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.DataAccess", "ESPIOT.Api.DataAccess/ESPIOT.Api.DataAccess.csproj", "{aca544d4-a29c-4a0a-a6af-a448d99ea25c}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.Service", "ESPIOT.Api.Service/ESPIOT.Api.Service.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.Web", "ESPIOT.Api.Web/ESPIOT.Api.Web.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.BusinessObjects", "ESPIOT.Api.BusinessObjects/ESPIOT.Api.BusinessObjects.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.Services", "ESPIOT.Api.Services/ESPIOT.Api.Services.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.Service.IntegrationTests", "ESPIOT.Api.Service.IntegrationTests/ESPIOT.Api.Service.IntegrationTests.csproj", "{ESPIOT.Api.Service.IntegrationTests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "ESPIOT.Api.Web.IntegrationTests", "ESPIOT.Api.Web.IntegrationTests/ESPIOT.Api.Web.IntegrationTests.csproj", "{ESPIOT.Api.Web.IntegrationTests}"
 	EndProject
 	
 
@@ -51,10 +51,10 @@ Global
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-		        {ESPIOT.Api.Service.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ESPIOT.Api.Service.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ESPIOT.Api.Service.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ESPIOT.Api.Service.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
+		        {ESPIOT.Api.Web.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ESPIOT.Api.Web.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ESPIOT.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ESPIOT.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 	    
 		

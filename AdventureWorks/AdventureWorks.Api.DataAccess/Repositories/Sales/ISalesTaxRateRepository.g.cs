@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesTaxRateRepository
 	{
-		Task<DTOSalesTaxRate> Create(DTOSalesTaxRate dto);
+		Task<SalesTaxRate> Create(SalesTaxRate item);
 
-		Task Update(int salesTaxRateID,
-		            DTOSalesTaxRate dto);
+		Task Update(SalesTaxRate item);
 
 		Task Delete(int salesTaxRateID);
 
-		Task<DTOSalesTaxRate> Get(int salesTaxRateID);
+		Task<SalesTaxRate> Get(int salesTaxRateID);
 
-		Task<List<DTOSalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<SalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOSalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
+		Task<SalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID,int taxType);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ec32896a3b9bb12acf14f7a0e2aa8b0</Hash>
+    <Hash>a0fec75c48623fd9c3c83f321e73274e</Hash>
 </Codenesium>*/

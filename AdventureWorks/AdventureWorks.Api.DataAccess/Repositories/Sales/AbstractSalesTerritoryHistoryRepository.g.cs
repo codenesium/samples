@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALSalesTerritoryHistoryMapper Mapper { get; }
 
 		public AbstractSalesTerritoryHistoryRepository(
-			IDALSalesTerritoryHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOSalesTerritoryHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<SalesTerritoryHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOSalesTerritoryHistory> Get(int businessEntityID)
+		public async virtual Task<SalesTerritoryHistory> Get(int businessEntityID)
 		{
-			SalesTerritoryHistory record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOSalesTerritoryHistory> Create(
-			DTOSalesTerritoryHistory dto)
+		public async virtual Task<SalesTerritoryHistory> Create(SalesTerritoryHistory item)
 		{
-			SalesTerritoryHistory record = new SalesTerritoryHistory();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<SalesTerritoryHistory>().Add(record);
+			this.Context.Set<SalesTerritoryHistory>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOSalesTerritoryHistory dto)
+		public async virtual Task Update(SalesTerritoryHistory item)
 		{
-			SalesTerritoryHistory record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<SalesTerritoryHistory>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<SalesTerritoryHistory>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOSalesTerritoryHistory>> Where(Expression<Func<SalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<SalesTerritoryHistory>> Where(Expression<Func<SalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOSalesTerritoryHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOSalesTerritoryHistory>> SearchLinqDTO(Expression<Func<SalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOSalesTerritoryHistory> response = new List<DTOSalesTerritoryHistory>();
 			List<SalesTerritoryHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<SalesTerritoryHistory>> SearchLinqEF(Expression<Func<SalesTerritoryHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c7915c631f614178f9ac5f3c5e12b7fb</Hash>
+    <Hash>2a074139870f2fb315b858f59ab1cc1b</Hash>
 </Codenesium>*/

@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class TransactionHistoryArchiveRepository: AbstractTransactionHistoryArchiveRepository, ITransactionHistoryArchiveRepository
 	{
 		public TransactionHistoryArchiveRepository(
-			IDALTransactionHistoryArchiveMapper mapper,
 			ILogger<TransactionHistoryArchiveRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0c0816ea6a3be24c34bb354463a416bb</Hash>
+    <Hash>b9b9d7d17f45e6ae2dd55673713a0c65</Hash>
 </Codenesium>*/

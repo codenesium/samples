@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Store", Schema="Sales")]
-	public partial class Store:AbstractEntityFrameworkDTO
+	public partial class Store:AbstractEntity
 	{
 		public Store()
 		{}
@@ -29,23 +29,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("Demographics", TypeName="xml(-1)")]
-		public string Demographics { get; set; }
+		public string Demographics { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("SalesPersonID", TypeName="int")]
-		public Nullable<int> SalesPersonID { get; set; }
+		public Nullable<int> SalesPersonID { get; private set; }
 
 		[ForeignKey("SalesPersonID")]
 		public virtual SalesPerson SalesPerson { get; set; }
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>548b7e709fa2e7502a2b58889679d104</Hash>
+    <Hash>5d01e68ad3676b7f939c80b4fc6f6dbe</Hash>
 </Codenesium>*/

@@ -11,13 +11,13 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Contracts", "P
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.DataAccess", "PetStore.Api.DataAccess/PetStore.Api.DataAccess.csproj", "{aca544d4-a29c-4a0a-a6af-a448d99ea25c}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Service", "PetStore.Api.Service/PetStore.Api.Service.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Web", "PetStore.Api.Web/PetStore.Api.Web.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.BusinessObjects", "PetStore.Api.BusinessObjects/PetStore.Api.BusinessObjects.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Services", "PetStore.Api.Services/PetStore.Api.Services.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Service.IntegrationTests", "PetStore.Api.Service.IntegrationTests/PetStore.Api.Service.IntegrationTests.csproj", "{PetStore.Api.Service.IntegrationTests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Web.IntegrationTests", "PetStore.Api.Web.IntegrationTests/PetStore.Api.Web.IntegrationTests.csproj", "{PetStore.Api.Web.IntegrationTests}"
 	EndProject
 	
 
@@ -51,10 +51,10 @@ Global
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-		        {PetStore.Api.Service.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{PetStore.Api.Service.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{PetStore.Api.Service.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{PetStore.Api.Service.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
+		        {PetStore.Api.Web.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetStore.Api.Web.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetStore.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetStore.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 	    
 		

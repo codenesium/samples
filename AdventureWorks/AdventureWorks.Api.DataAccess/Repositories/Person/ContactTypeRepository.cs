@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class ContactTypeRepository: AbstractContactTypeRepository, IContactTypeRepository
 	{
 		public ContactTypeRepository(
-			IDALContactTypeMapper mapper,
 			ILogger<ContactTypeRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b1c42d120f6292fa297f7badbb2f2df2</Hash>
+    <Hash>5f99f2012949d6fa5e2c79b72b02faa4</Hash>
 </Codenesium>*/

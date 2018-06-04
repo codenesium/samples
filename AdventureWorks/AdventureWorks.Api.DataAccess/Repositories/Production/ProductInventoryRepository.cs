@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class ProductInventoryRepository: AbstractProductInventoryRepository, IProductInventoryRepository
 	{
 		public ProductInventoryRepository(
-			IDALProductInventoryMapper mapper,
 			ILogger<ProductInventoryRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>863247bfe4996ba8e9e49f3995df785c</Hash>
+    <Hash>6a731273f10265abf337ea490d5f15f3</Hash>
 </Codenesium>*/

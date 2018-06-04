@@ -6,15 +6,15 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Vendor", Schema="Purchasing")]
-	public partial class Vendor:AbstractEntityFrameworkDTO
+	public partial class Vendor:AbstractEntity
 	{
 		public Vendor()
 		{}
 
 		public void SetProperties(
-			int businessEntityID,
 			string accountNumber,
 			bool activeFlag,
+			int businessEntityID,
 			int creditRating,
 			DateTime modifiedDate,
 			string name,
@@ -32,32 +32,32 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AccountNumber", TypeName="nvarchar(15)")]
-		public string AccountNumber { get; set; }
+		public string AccountNumber { get; private set; }
 
 		[Column("ActiveFlag", TypeName="bit")]
-		public bool ActiveFlag { get; set; }
+		public bool ActiveFlag { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("CreditRating", TypeName="tinyint")]
-		public int CreditRating { get; set; }
+		public int CreditRating { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 		[Column("PreferredVendorStatus", TypeName="bit")]
-		public bool PreferredVendorStatus { get; set; }
+		public bool PreferredVendorStatus { get; private set; }
 
 		[Column("PurchasingWebServiceURL", TypeName="nvarchar(1024)")]
-		public string PurchasingWebServiceURL { get; set; }
+		public string PurchasingWebServiceURL { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>daffcea1ac4282bfb49d67b0763a59e9</Hash>
+    <Hash>cf1dbfaa51b82955809d8a7429333a95</Hash>
 </Codenesium>*/

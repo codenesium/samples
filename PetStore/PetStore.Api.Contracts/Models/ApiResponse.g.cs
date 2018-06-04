@@ -8,7 +8,7 @@ namespace PetStoreNS.Api.Contracts
 	public class ReferenceEntity<T>
 	{
 		[JsonProperty(PropertyName = "Value")]
-		public T Value { get; set; }
+		public T Value { get; private set; }
 
 		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
@@ -48,7 +48,7 @@ namespace PetStoreNS.Api.Contracts
 		public List<ApiSpeciesResponseModel> Species { get; private set; } = new List<ApiSpeciesResponseModel>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeBreedsValue { get; set; } = true;
+		public bool ShouldSerializeBreedsValue { get; private set; } = true;
 
 		public bool ShouldSerializeBreeds()
 		{
@@ -64,7 +64,7 @@ namespace PetStoreNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePaymentTypesValue { get; set; } = true;
+		public bool ShouldSerializePaymentTypesValue { get; private set; } = true;
 
 		public bool ShouldSerializePaymentTypes()
 		{
@@ -80,7 +80,7 @@ namespace PetStoreNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePensValue { get; set; } = true;
+		public bool ShouldSerializePensValue { get; private set; } = true;
 
 		public bool ShouldSerializePens()
 		{
@@ -96,7 +96,7 @@ namespace PetStoreNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePetsValue { get; set; } = true;
+		public bool ShouldSerializePetsValue { get; private set; } = true;
 
 		public bool ShouldSerializePets()
 		{
@@ -112,7 +112,7 @@ namespace PetStoreNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesValue { get; set; } = true;
+		public bool ShouldSerializeSalesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSales()
 		{
@@ -128,7 +128,7 @@ namespace PetStoreNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpeciesValue { get; set; } = true;
+		public bool ShouldSerializeSpeciesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSpecies()
 		{
@@ -179,5 +179,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a272210ce2592aba48f46eaa0ed7c81d</Hash>
+    <Hash>b975b086c9e08b8d2e2f543ba01c402d</Hash>
 </Codenesium>*/

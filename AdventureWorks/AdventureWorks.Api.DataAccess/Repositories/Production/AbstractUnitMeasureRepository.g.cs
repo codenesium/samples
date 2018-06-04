@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALUnitMeasureMapper Mapper { get; }
 
 		public AbstractUnitMeasureRepository(
-			IDALUnitMeasureMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOUnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<UnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOUnitMeasure> Get(string unitMeasureCode)
+		public async virtual Task<UnitMeasure> Get(string unitMeasureCode)
 		{
-			UnitMeasure record = await this.GetById(unitMeasureCode);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(unitMeasureCode);
 		}
 
-		public async virtual Task<DTOUnitMeasure> Create(
-			DTOUnitMeasure dto)
+		public async virtual Task<UnitMeasure> Create(UnitMeasure item)
 		{
-			UnitMeasure record = new UnitMeasure();
-
-			this.Mapper.MapDTOToEF(
-				default (string),
-				dto,
-				record);
-
-			this.Context.Set<UnitMeasure>().Add(record);
+			this.Context.Set<UnitMeasure>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			string unitMeasureCode,
-			DTOUnitMeasure dto)
+		public async virtual Task Update(UnitMeasure item)
 		{
-			UnitMeasure record = await this.GetById(unitMeasureCode);
-
-			if (record == null)
+			var entity = this.Context.Set<UnitMeasure>().Local.FirstOrDefault(x => x.UnitMeasureCode == item.UnitMeasureCode);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{unitMeasureCode}");
+				this.Context.Set<UnitMeasure>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					unitMeasureCode,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOUnitMeasure> GetName(string name)
+		public async Task<UnitMeasure> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOUnitMeasure>> Where(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<UnitMeasure>> Where(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOUnitMeasure> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOUnitMeasure>> SearchLinqDTO(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOUnitMeasure> response = new List<DTOUnitMeasure>();
 			List<UnitMeasure> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<UnitMeasure>> SearchLinqEF(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d79d12fa5d9ed94bf4095c2d0eacdff2</Hash>
+    <Hash>039ac606eaaa526d99aa5b904d91577f</Hash>
 </Codenesium>*/

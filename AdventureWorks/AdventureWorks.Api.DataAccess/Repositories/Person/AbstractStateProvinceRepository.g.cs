@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALStateProvinceMapper Mapper { get; }
 
 		public AbstractStateProvinceRepository(
-			IDALStateProvinceMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOStateProvince> Get(int stateProvinceID)
+		public async virtual Task<StateProvince> Get(int stateProvinceID)
 		{
-			StateProvince record = await this.GetById(stateProvinceID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(stateProvinceID);
 		}
 
-		public async virtual Task<DTOStateProvince> Create(
-			DTOStateProvince dto)
+		public async virtual Task<StateProvince> Create(StateProvince item)
 		{
-			StateProvince record = new StateProvince();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<StateProvince>().Add(record);
+			this.Context.Set<StateProvince>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int stateProvinceID,
-			DTOStateProvince dto)
+		public async virtual Task Update(StateProvince item)
 		{
-			StateProvince record = await this.GetById(stateProvinceID);
-
-			if (record == null)
+			var entity = this.Context.Set<StateProvince>().Local.FirstOrDefault(x => x.StateProvinceID == item.StateProvinceID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{stateProvinceID}");
+				this.Context.Set<StateProvince>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					stateProvinceID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,33 +74,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOStateProvince> GetName(string name)
+		public async Task<StateProvince> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<DTOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
+		public async Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
 		{
-			var records = await this.SearchLinqDTO(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
+			var records = await this.SearchLinqEF(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOStateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<StateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOStateProvince> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOStateProvince>> SearchLinqDTO(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOStateProvince> response = new List<DTOStateProvince>();
 			List<StateProvince> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<StateProvince>> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d29cc73f2684441a1cba505bdb0a58ab</Hash>
+    <Hash>0aa768f675a0a65e13b13c1d75f8fec7</Hash>
 </Codenesium>*/

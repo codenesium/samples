@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALCultureMapper Mapper { get; }
 
 		public AbstractCultureRepository(
-			IDALCultureMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Culture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOCulture> Get(string cultureID)
+		public async virtual Task<Culture> Get(string cultureID)
 		{
-			Culture record = await this.GetById(cultureID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(cultureID);
 		}
 
-		public async virtual Task<DTOCulture> Create(
-			DTOCulture dto)
+		public async virtual Task<Culture> Create(Culture item)
 		{
-			Culture record = new Culture();
-
-			this.Mapper.MapDTOToEF(
-				default (string),
-				dto,
-				record);
-
-			this.Context.Set<Culture>().Add(record);
+			this.Context.Set<Culture>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			string cultureID,
-			DTOCulture dto)
+		public async virtual Task Update(Culture item)
 		{
-			Culture record = await this.GetById(cultureID);
-
-			if (record == null)
+			var entity = this.Context.Set<Culture>().Local.FirstOrDefault(x => x.CultureID == item.CultureID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{cultureID}");
+				this.Context.Set<Culture>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					cultureID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOCulture> GetName(string name)
+		public async Task<Culture> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOCulture>> Where(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Culture>> Where(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOCulture> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOCulture>> SearchLinqDTO(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOCulture> response = new List<DTOCulture>();
 			List<Culture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Culture>> SearchLinqEF(Expression<Func<Culture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7fd2f5ef77b8cedbe5677b6d8856c39f</Hash>
+    <Hash>39850d50bd623fd9db88cee8dd52fab9</Hash>
 </Codenesium>*/

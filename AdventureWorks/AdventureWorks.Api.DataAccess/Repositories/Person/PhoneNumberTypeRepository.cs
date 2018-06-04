@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class PhoneNumberTypeRepository: AbstractPhoneNumberTypeRepository, IPhoneNumberTypeRepository
 	{
 		public PhoneNumberTypeRepository(
-			IDALPhoneNumberTypeMapper mapper,
 			ILogger<PhoneNumberTypeRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c871b4ad3f3df8c73a7ff76136d30822</Hash>
+    <Hash>e02c3a77ece9f45538e9e8b48411dccf</Hash>
 </Codenesium>*/

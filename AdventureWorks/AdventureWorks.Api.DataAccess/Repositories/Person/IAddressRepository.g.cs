@@ -2,28 +2,26 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IAddressRepository
 	{
-		Task<DTOAddress> Create(DTOAddress dto);
+		Task<Address> Create(Address item);
 
-		Task Update(int addressID,
-		            DTOAddress dto);
+		Task Update(Address item);
 
 		Task Delete(int addressID);
 
-		Task<DTOAddress> Get(int addressID);
+		Task<Address> Get(int addressID);
 
-		Task<List<DTOAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Address>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOAddress> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
-		Task<List<DTOAddress>> GetStateProvinceID(int stateProvinceID);
+		Task<Address> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode);
+		Task<List<Address>> GetStateProvinceID(int stateProvinceID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5df45773d847460311ed8366284fa241</Hash>
+    <Hash>8ecfe6e30d97ec606b807d2ece5b931b</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALCountryRegionMapper Mapper { get; }
 
 		public AbstractCountryRegionRepository(
-			IDALCountryRegionMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOCountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<CountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOCountryRegion> Get(string countryRegionCode)
+		public async virtual Task<CountryRegion> Get(string countryRegionCode)
 		{
-			CountryRegion record = await this.GetById(countryRegionCode);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(countryRegionCode);
 		}
 
-		public async virtual Task<DTOCountryRegion> Create(
-			DTOCountryRegion dto)
+		public async virtual Task<CountryRegion> Create(CountryRegion item)
 		{
-			CountryRegion record = new CountryRegion();
-
-			this.Mapper.MapDTOToEF(
-				default (string),
-				dto,
-				record);
-
-			this.Context.Set<CountryRegion>().Add(record);
+			this.Context.Set<CountryRegion>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			string countryRegionCode,
-			DTOCountryRegion dto)
+		public async virtual Task Update(CountryRegion item)
 		{
-			CountryRegion record = await this.GetById(countryRegionCode);
-
-			if (record == null)
+			var entity = this.Context.Set<CountryRegion>().Local.FirstOrDefault(x => x.CountryRegionCode == item.CountryRegionCode);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{countryRegionCode}");
+				this.Context.Set<CountryRegion>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					countryRegionCode,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOCountryRegion> GetName(string name)
+		public async Task<CountryRegion> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOCountryRegion>> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<CountryRegion>> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOCountryRegion> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOCountryRegion>> SearchLinqDTO(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOCountryRegion> response = new List<DTOCountryRegion>();
 			List<CountryRegion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<CountryRegion>> SearchLinqEF(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>25cbbe77b51200a3f5dae1656ca51055</Hash>
+    <Hash>5b0a1e9afa63744540d0b5bb442e2100</Hash>
 </Codenesium>*/

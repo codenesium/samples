@@ -6,17 +6,17 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductReview", Schema="Production")]
-	public partial class ProductReview: AbstractEntityFrameworkDTO
+	public partial class ProductReview: AbstractEntity
 	{
 		public ProductReview()
 		{}
 
 		public void SetProperties(
-			int productReviewID,
 			string comments,
 			string emailAddress,
 			DateTime modifiedDate,
 			int productID,
+			int productReviewID,
 			int rating,
 			DateTime reviewDate,
 			string reviewerName)
@@ -32,32 +32,32 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Comments", TypeName="nvarchar(3850)")]
-		public string Comments { get; set; }
+		public string Comments { get; private set; }
 
 		[Column("EmailAddress", TypeName="nvarchar(50)")]
-		public string EmailAddress { get; set; }
+		public string EmailAddress { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
 		[Key]
 		[Column("ProductReviewID", TypeName="int")]
-		public int ProductReviewID { get; set; }
+		public int ProductReviewID { get; private set; }
 
 		[Column("Rating", TypeName="int")]
-		public int Rating { get; set; }
+		public int Rating { get; private set; }
 
 		[Column("ReviewDate", TypeName="datetime")]
-		public DateTime ReviewDate { get; set; }
+		public DateTime ReviewDate { get; private set; }
 
 		[Column("ReviewerName", TypeName="nvarchar(50)")]
-		public string ReviewerName { get; set; }
+		public string ReviewerName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ab009acc8ae5b5f63f9065ade834b45</Hash>
+    <Hash>8a2c292b4f79b845be0531766bcda957</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALEmployeePayHistoryMapper Mapper { get; }
 
 		public AbstractEmployeePayHistoryRepository(
-			IDALEmployeePayHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOEmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<EmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOEmployeePayHistory> Get(int businessEntityID)
+		public async virtual Task<EmployeePayHistory> Get(int businessEntityID)
 		{
-			EmployeePayHistory record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOEmployeePayHistory> Create(
-			DTOEmployeePayHistory dto)
+		public async virtual Task<EmployeePayHistory> Create(EmployeePayHistory item)
 		{
-			EmployeePayHistory record = new EmployeePayHistory();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<EmployeePayHistory>().Add(record);
+			this.Context.Set<EmployeePayHistory>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOEmployeePayHistory dto)
+		public async virtual Task Update(EmployeePayHistory item)
 		{
-			EmployeePayHistory record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<EmployeePayHistory>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<EmployeePayHistory>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOEmployeePayHistory>> Where(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<EmployeePayHistory>> Where(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOEmployeePayHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOEmployeePayHistory>> SearchLinqDTO(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOEmployeePayHistory> response = new List<DTOEmployeePayHistory>();
 			List<EmployeePayHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<EmployeePayHistory>> SearchLinqEF(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4d575e7ee38d033e49409667d92711b7</Hash>
+    <Hash>c42fec33a0bcac8d3f4e3d8b81097125</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALAWBuildVersionMapper Mapper { get; }
 
 		public AbstractAWBuildVersionRepository(
-			IDALAWBuildVersionMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOAWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<AWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOAWBuildVersion> Get(int systemInformationID)
+		public async virtual Task<AWBuildVersion> Get(int systemInformationID)
 		{
-			AWBuildVersion record = await this.GetById(systemInformationID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(systemInformationID);
 		}
 
-		public async virtual Task<DTOAWBuildVersion> Create(
-			DTOAWBuildVersion dto)
+		public async virtual Task<AWBuildVersion> Create(AWBuildVersion item)
 		{
-			AWBuildVersion record = new AWBuildVersion();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<AWBuildVersion>().Add(record);
+			this.Context.Set<AWBuildVersion>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int systemInformationID,
-			DTOAWBuildVersion dto)
+		public async virtual Task Update(AWBuildVersion item)
 		{
-			AWBuildVersion record = await this.GetById(systemInformationID);
-
-			if (record == null)
+			var entity = this.Context.Set<AWBuildVersion>().Local.FirstOrDefault(x => x.SystemInformationID == item.SystemInformationID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{systemInformationID}");
+				this.Context.Set<AWBuildVersion>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					systemInformationID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOAWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<AWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOAWBuildVersion> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOAWBuildVersion>> SearchLinqDTO(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOAWBuildVersion> response = new List<DTOAWBuildVersion>();
 			List<AWBuildVersion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<AWBuildVersion>> SearchLinqEF(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c129d3fc39401b5fce07eb69e9fa069f</Hash>
+    <Hash>706d89db7c8f2e1059d1af01b07d1be2</Hash>
 </Codenesium>*/

@@ -6,14 +6,14 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesPerson", Schema="Sales")]
-	public partial class SalesPerson: AbstractEntityFrameworkDTO
+	public partial class SalesPerson: AbstractEntity
 	{
 		public SalesPerson()
 		{}
 
 		public void SetProperties(
-			int businessEntityID,
 			decimal bonus,
+			int businessEntityID,
 			decimal commissionPct,
 			DateTime modifiedDate,
 			Guid rowguid,
@@ -34,33 +34,32 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Bonus", TypeName="money")]
-		public decimal Bonus { get; set; }
+		public decimal Bonus { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("CommissionPct", TypeName="smallmoney")]
-		public decimal CommissionPct { get; set; }
+		public decimal CommissionPct { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("SalesLastYear", TypeName="money")]
-		public decimal SalesLastYear { get; set; }
+		public decimal SalesLastYear { get; private set; }
 
 		[Column("SalesQuota", TypeName="money")]
-		public Nullable<decimal> SalesQuota { get; set; }
+		public Nullable<decimal> SalesQuota { get; private set; }
 
 		[Column("SalesYTD", TypeName="money")]
-		public decimal SalesYTD { get; set; }
+		public decimal SalesYTD { get; private set; }
 
 		[Column("TerritoryID", TypeName="int")]
-		public Nullable<int> TerritoryID { get; set; }
+		public Nullable<int> TerritoryID { get; private set; }
 
 		[ForeignKey("TerritoryID")]
 		public virtual SalesTerritory SalesTerritory { get; set; }
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>846c5bb48e71e583249bdc7a07bb056b</Hash>
+    <Hash>f0e587b36d2ea89862ca16346696bd4d</Hash>
 </Codenesium>*/

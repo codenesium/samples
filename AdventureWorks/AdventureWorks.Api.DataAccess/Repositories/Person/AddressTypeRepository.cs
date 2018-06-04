@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class AddressTypeRepository: AbstractAddressTypeRepository, IAddressTypeRepository
 	{
 		public AddressTypeRepository(
-			IDALAddressTypeMapper mapper,
 			ILogger<AddressTypeRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0015043acc4fcd1247bb372fc59f9bca</Hash>
+    <Hash>8d9cf18ef0cb02385c2ced231e33bc77</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ namespace FermataFishNS.Api.Contracts
 	public class ReferenceEntity<T>
 	{
 		[JsonProperty(PropertyName = "Value")]
-		public T Value { get; set; }
+		public T Value { get; private set; }
 
 		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
@@ -81,7 +81,7 @@ namespace FermataFishNS.Api.Contracts
 		public List<ApiTeacherXTeacherSkillResponseModel> TeacherXTeacherSkills { get; private set; } = new List<ApiTeacherXTeacherSkillResponseModel>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeAdminsValue { get; set; } = true;
+		public bool ShouldSerializeAdminsValue { get; private set; } = true;
 
 		public bool ShouldSerializeAdmins()
 		{
@@ -97,7 +97,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFamiliesValue { get; set; } = true;
+		public bool ShouldSerializeFamiliesValue { get; private set; } = true;
 
 		public bool ShouldSerializeFamilies()
 		{
@@ -113,7 +113,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLessonsValue { get; set; } = true;
+		public bool ShouldSerializeLessonsValue { get; private set; } = true;
 
 		public bool ShouldSerializeLessons()
 		{
@@ -129,7 +129,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLessonStatusValue { get; set; } = true;
+		public bool ShouldSerializeLessonStatusValue { get; private set; } = true;
 
 		public bool ShouldSerializeLessonStatus()
 		{
@@ -145,7 +145,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLessonXStudentsValue { get; set; } = true;
+		public bool ShouldSerializeLessonXStudentsValue { get; private set; } = true;
 
 		public bool ShouldSerializeLessonXStudents()
 		{
@@ -161,7 +161,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLessonXTeachersValue { get; set; } = true;
+		public bool ShouldSerializeLessonXTeachersValue { get; private set; } = true;
 
 		public bool ShouldSerializeLessonXTeachers()
 		{
@@ -177,7 +177,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeRatesValue { get; set; } = true;
+		public bool ShouldSerializeRatesValue { get; private set; } = true;
 
 		public bool ShouldSerializeRates()
 		{
@@ -193,7 +193,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpacesValue { get; set; } = true;
+		public bool ShouldSerializeSpacesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSpaces()
 		{
@@ -209,7 +209,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpaceFeaturesValue { get; set; } = true;
+		public bool ShouldSerializeSpaceFeaturesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSpaceFeatures()
 		{
@@ -225,7 +225,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpaceXSpaceFeaturesValue { get; set; } = true;
+		public bool ShouldSerializeSpaceXSpaceFeaturesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSpaceXSpaceFeatures()
 		{
@@ -241,7 +241,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStatesValue { get; set; } = true;
+		public bool ShouldSerializeStatesValue { get; private set; } = true;
 
 		public bool ShouldSerializeStates()
 		{
@@ -257,7 +257,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStudentsValue { get; set; } = true;
+		public bool ShouldSerializeStudentsValue { get; private set; } = true;
 
 		public bool ShouldSerializeStudents()
 		{
@@ -273,7 +273,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStudentXFamiliesValue { get; set; } = true;
+		public bool ShouldSerializeStudentXFamiliesValue { get; private set; } = true;
 
 		public bool ShouldSerializeStudentXFamilies()
 		{
@@ -289,7 +289,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStudiosValue { get; set; } = true;
+		public bool ShouldSerializeStudiosValue { get; private set; } = true;
 
 		public bool ShouldSerializeStudios()
 		{
@@ -305,7 +305,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeachersValue { get; set; } = true;
+		public bool ShouldSerializeTeachersValue { get; private set; } = true;
 
 		public bool ShouldSerializeTeachers()
 		{
@@ -321,7 +321,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeacherSkillsValue { get; set; } = true;
+		public bool ShouldSerializeTeacherSkillsValue { get; private set; } = true;
 
 		public bool ShouldSerializeTeacherSkills()
 		{
@@ -337,7 +337,7 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTeacherXTeacherSkillsValue { get; set; } = true;
+		public bool ShouldSerializeTeacherXTeacherSkillsValue { get; private set; } = true;
 
 		public bool ShouldSerializeTeacherXTeacherSkills()
 		{
@@ -443,5 +443,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0e4f8f82b084bb8ba51f59bf27bdbfcb</Hash>
+    <Hash>cae021c70dbffb4ba9cbcef0054ef9cb</Hash>
 </Codenesium>*/

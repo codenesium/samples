@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class DatabaseLogRepository: AbstractDatabaseLogRepository, IDatabaseLogRepository
 	{
 		public DatabaseLogRepository(
-			IDALDatabaseLogMapper mapper,
 			ILogger<DatabaseLogRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c11dd38264b6c548a33ce770fe63604e</Hash>
+    <Hash>65c61dab2bbd6dad7c8c11305536a56d</Hash>
 </Codenesium>*/

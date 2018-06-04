@@ -185,7 +185,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "AdventureWorks.Api.Service");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "AdventureWorks.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -206,5 +206,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5e2d1ea666a1d91cb06b8eaaeaccbb98</Hash>
+    <Hash>bc75f1629db215da3ad32a62b6981c46</Hash>
 </Codenesium>*/

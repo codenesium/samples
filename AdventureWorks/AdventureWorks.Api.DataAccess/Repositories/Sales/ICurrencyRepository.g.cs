@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICurrencyRepository
 	{
-		Task<DTOCurrency> Create(DTOCurrency dto);
+		Task<Currency> Create(Currency item);
 
-		Task Update(string currencyCode,
-		            DTOCurrency dto);
+		Task Update(Currency item);
 
 		Task Delete(string currencyCode);
 
-		Task<DTOCurrency> Get(string currencyCode);
+		Task<Currency> Get(string currencyCode);
 
-		Task<List<DTOCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Currency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOCurrency> GetName(string name);
+		Task<Currency> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3105d2c997bbce0a05e718c74d07247a</Hash>
+    <Hash>2ead79fedcd1f18c022b47e83fda1625</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALShoppingCartItemMapper Mapper { get; }
 
 		public AbstractShoppingCartItemRepository(
-			IDALShoppingCartItemMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOShoppingCartItem> Get(int shoppingCartItemID)
+		public async virtual Task<ShoppingCartItem> Get(int shoppingCartItemID)
 		{
-			ShoppingCartItem record = await this.GetById(shoppingCartItemID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(shoppingCartItemID);
 		}
 
-		public async virtual Task<DTOShoppingCartItem> Create(
-			DTOShoppingCartItem dto)
+		public async virtual Task<ShoppingCartItem> Create(ShoppingCartItem item)
 		{
-			ShoppingCartItem record = new ShoppingCartItem();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ShoppingCartItem>().Add(record);
+			this.Context.Set<ShoppingCartItem>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int shoppingCartItemID,
-			DTOShoppingCartItem dto)
+		public async virtual Task Update(ShoppingCartItem item)
 		{
-			ShoppingCartItem record = await this.GetById(shoppingCartItemID);
-
-			if (record == null)
+			var entity = this.Context.Set<ShoppingCartItem>().Local.FirstOrDefault(x => x.ShoppingCartItemID == item.ShoppingCartItemID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{shoppingCartItemID}");
+				this.Context.Set<ShoppingCartItem>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					shoppingCartItemID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID)
+		public async Task<List<ShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID)
 		{
-			var records = await this.SearchLinqDTO(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID);
+			var records = await this.SearchLinqEF(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID);
 
 			return records;
 		}
 
-		protected async Task<List<DTOShoppingCartItem>> Where(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ShoppingCartItem>> Where(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOShoppingCartItem> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOShoppingCartItem>> SearchLinqDTO(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOShoppingCartItem> response = new List<DTOShoppingCartItem>();
 			List<ShoppingCartItem> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ShoppingCartItem>> SearchLinqEF(Expression<Func<ShoppingCartItem, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>84a12e0aed4b56ecb413117e547c2eb8</Hash>
+    <Hash>65766a87501559b3b565b8413bc6da2b</Hash>
 </Codenesium>*/

@@ -11,13 +11,13 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Contracts",
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.DataAccess", "FileService.Api.DataAccess/FileService.Api.DataAccess.csproj", "{aca544d4-a29c-4a0a-a6af-a448d99ea25c}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Service", "FileService.Api.Service/FileService.Api.Service.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Web", "FileService.Api.Web/FileService.Api.Web.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.BusinessObjects", "FileService.Api.BusinessObjects/FileService.Api.BusinessObjects.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Services", "FileService.Api.Services/FileService.Api.Services.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Service.IntegrationTests", "FileService.Api.Service.IntegrationTests/FileService.Api.Service.IntegrationTests.csproj", "{FileService.Api.Service.IntegrationTests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Web.IntegrationTests", "FileService.Api.Web.IntegrationTests/FileService.Api.Web.IntegrationTests.csproj", "{FileService.Api.Web.IntegrationTests}"
 	EndProject
 	
 
@@ -51,10 +51,10 @@ Global
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-		        {FileService.Api.Service.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FileService.Api.Service.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FileService.Api.Service.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FileService.Api.Service.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
+		        {FileService.Api.Web.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FileService.Api.Web.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FileService.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FileService.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 	    
 		

@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IWorkOrderRoutingRepository
 	{
-		Task<DTOWorkOrderRouting> Create(DTOWorkOrderRouting dto);
+		Task<WorkOrderRouting> Create(WorkOrderRouting item);
 
-		Task Update(int workOrderID,
-		            DTOWorkOrderRouting dto);
+		Task Update(WorkOrderRouting item);
 
 		Task Delete(int workOrderID);
 
-		Task<DTOWorkOrderRouting> Get(int workOrderID);
+		Task<WorkOrderRouting> Get(int workOrderID);
 
-		Task<List<DTOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<WorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<DTOWorkOrderRouting>> GetProductID(int productID);
+		Task<List<WorkOrderRouting>> GetProductID(int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a90f613af67913ff0d970f28af934050</Hash>
+    <Hash>2da0a7163bf345f20a9023ae5825a722</Hash>
 </Codenesium>*/

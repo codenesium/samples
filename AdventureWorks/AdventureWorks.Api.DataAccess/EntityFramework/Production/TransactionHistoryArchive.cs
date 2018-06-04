@@ -6,13 +6,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("TransactionHistoryArchive", Schema="Production")]
-	public partial class TransactionHistoryArchive: AbstractEntityFrameworkDTO
+	public partial class TransactionHistoryArchive: AbstractEntity
 	{
 		public TransactionHistoryArchive()
 		{}
 
 		public void SetProperties(
-			int transactionID,
 			decimal actualCost,
 			DateTime modifiedDate,
 			int productID,
@@ -20,6 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			int referenceOrderID,
 			int referenceOrderLineID,
 			DateTime transactionDate,
+			int transactionID,
 			string transactionType)
 		{
 			this.ActualCost = actualCost.ToDecimal();
@@ -34,35 +34,35 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ActualCost", TypeName="money")]
-		public decimal ActualCost { get; set; }
+		public decimal ActualCost { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
 		[Column("Quantity", TypeName="int")]
-		public int Quantity { get; set; }
+		public int Quantity { get; private set; }
 
 		[Column("ReferenceOrderID", TypeName="int")]
-		public int ReferenceOrderID { get; set; }
+		public int ReferenceOrderID { get; private set; }
 
 		[Column("ReferenceOrderLineID", TypeName="int")]
-		public int ReferenceOrderLineID { get; set; }
+		public int ReferenceOrderLineID { get; private set; }
 
 		[Column("TransactionDate", TypeName="datetime")]
-		public DateTime TransactionDate { get; set; }
+		public DateTime TransactionDate { get; private set; }
 
 		[Key]
 		[Column("TransactionID", TypeName="int")]
-		public int TransactionID { get; set; }
+		public int TransactionID { get; private set; }
 
 		[Column("TransactionType", TypeName="nchar(1)")]
-		public string TransactionType { get; set; }
+		public string TransactionType { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9fe15f8c6f28649916466ccabe94498</Hash>
+    <Hash>6c9ac01247f042d8e8c61eaf7951c4b1</Hash>
 </Codenesium>*/

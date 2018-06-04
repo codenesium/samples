@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALProductCostHistoryMapper Mapper { get; }
 
 		public AbstractProductCostHistoryRepository(
-			IDALProductCostHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOProductCostHistory> Get(int productID)
+		public async virtual Task<ProductCostHistory> Get(int productID)
 		{
-			ProductCostHistory record = await this.GetById(productID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(productID);
 		}
 
-		public async virtual Task<DTOProductCostHistory> Create(
-			DTOProductCostHistory dto)
+		public async virtual Task<ProductCostHistory> Create(ProductCostHistory item)
 		{
-			ProductCostHistory record = new ProductCostHistory();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ProductCostHistory>().Add(record);
+			this.Context.Set<ProductCostHistory>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int productID,
-			DTOProductCostHistory dto)
+		public async virtual Task Update(ProductCostHistory item)
 		{
-			ProductCostHistory record = await this.GetById(productID);
-
-			if (record == null)
+			var entity = this.Context.Set<ProductCostHistory>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{productID}");
+				this.Context.Set<ProductCostHistory>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					productID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOProductCostHistory>> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ProductCostHistory>> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOProductCostHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOProductCostHistory>> SearchLinqDTO(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOProductCostHistory> response = new List<DTOProductCostHistory>();
 			List<ProductCostHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ProductCostHistory>> SearchLinqEF(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>713419d362ffea2382e375054a1bf343</Hash>
+    <Hash>cb58ca7b41e55e7e75cfeb73d37e356c</Hash>
 </Codenesium>*/

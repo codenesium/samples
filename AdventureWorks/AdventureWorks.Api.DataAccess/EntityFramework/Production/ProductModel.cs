@@ -6,17 +6,17 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductModel", Schema="Production")]
-	public partial class ProductModel: AbstractEntityFrameworkDTO
+	public partial class ProductModel: AbstractEntity
 	{
 		public ProductModel()
 		{}
 
 		public void SetProperties(
-			int productModelID,
 			string catalogDescription,
 			string instructions,
 			DateTime modifiedDate,
 			string name,
+			int productModelID,
 			Guid rowguid)
 		{
 			this.CatalogDescription = catalogDescription;
@@ -28,27 +28,26 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("CatalogDescription", TypeName="xml(-1)")]
-		public string CatalogDescription { get; set; }
+		public string CatalogDescription { get; private set; }
 
 		[Column("Instructions", TypeName="xml(-1)")]
-		public string Instructions { get; set; }
+		public string Instructions { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 		[Key]
 		[Column("ProductModelID", TypeName="int")]
-		public int ProductModelID { get; set; }
+		public int ProductModelID { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d3161695beffd5aa5c9eeef192e8e125</Hash>
+    <Hash>1efe6e128405a14401a1d9ad680a1fa4</Hash>
 </Codenesium>*/

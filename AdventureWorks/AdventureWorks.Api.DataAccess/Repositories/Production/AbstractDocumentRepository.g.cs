@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALDocumentMapper Mapper { get; }
 
 		public AbstractDocumentRepository(
-			IDALDocumentMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Document>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTODocument> Get(Guid documentNode)
+		public async virtual Task<Document> Get(Guid documentNode)
 		{
-			Document record = await this.GetById(documentNode);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(documentNode);
 		}
 
-		public async virtual Task<DTODocument> Create(
-			DTODocument dto)
+		public async virtual Task<Document> Create(Document item)
 		{
-			Document record = new Document();
-
-			this.Mapper.MapDTOToEF(
-				default (Guid),
-				dto,
-				record);
-
-			this.Context.Set<Document>().Add(record);
+			this.Context.Set<Document>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			Guid documentNode,
-			DTODocument dto)
+		public async virtual Task Update(Document item)
 		{
-			Document record = await this.GetById(documentNode);
-
-			if (record == null)
+			var entity = this.Context.Set<Document>().Local.FirstOrDefault(x => x.DocumentNode == item.DocumentNode);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{documentNode}");
+				this.Context.Set<Document>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					documentNode,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,33 +74,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
+		public async Task<Document> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
 		{
-			var records = await this.SearchLinqDTO(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
+			var records = await this.SearchLinqEF(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<DTODocument>> GetFileNameRevision(string fileName,string revision)
+		public async Task<List<Document>> GetFileNameRevision(string fileName,string revision)
 		{
-			var records = await this.SearchLinqDTO(x => x.FileName == fileName && x.Revision == revision);
+			var records = await this.SearchLinqEF(x => x.FileName == fileName && x.Revision == revision);
 
 			return records;
 		}
 
-		protected async Task<List<DTODocument>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Document>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTODocument> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTODocument>> SearchLinqDTO(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTODocument> response = new List<DTODocument>();
 			List<Document> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Document>> SearchLinqEF(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1df9bb7a5f8da486a9132fe581925fcc</Hash>
+    <Hash>86801828a21e6dc4b468f2d405baf21f</Hash>
 </Codenesium>*/

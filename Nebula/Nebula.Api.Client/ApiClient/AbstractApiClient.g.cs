@@ -95,14 +95,6 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiChainResponseModel> GetChainGetExternalId(Guid externalId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/getExternalId/{externalId}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiChainResponseModel>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<ApiChainStatusResponseModel> ChainStatusCreateAsync(ApiChainStatusRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus", item);
@@ -148,14 +140,6 @@ namespace NebulaNS.Api.Client
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiChainStatusResponseModel> GetChainStatusGetName(string name)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus/getName/{name}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiChainStatusResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<ApiClaspResponseModel> ClaspCreateAsync(ApiClaspRequestModel item)
@@ -247,22 +231,6 @@ namespace NebulaNS.Api.Client
 		public virtual async Task<List<ApiLinkResponseModel>> LinkBulkInsertAsync(List<ApiLinkRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Links/BulkInsert", items);
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiLinkResponseModel> GetLinkGetExternalId(Guid externalId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/getExternalId/{externalId}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiLinkResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiLinkResponseModel>> GetLinkGetChainId(int chainId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/getChainId/{chainId}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
@@ -362,14 +330,6 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiLinkStatusResponseModel> GetLinkStatusGetName(string name)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus/getName/{name}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiLinkStatusResponseModel>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<ApiMachineResponseModel> MachineCreateAsync(ApiMachineRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines", item);
@@ -415,14 +375,6 @@ namespace NebulaNS.Api.Client
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiMachineResponseModel> GetMachineGetMachineGuid(Guid machineGuid)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/getMachineGuid/{machineGuid}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiMachineResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<ApiMachineRefTeamResponseModel> MachineRefTeamCreateAsync(ApiMachineRefTeamRequestModel item)
@@ -519,14 +471,6 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiOrganizationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiOrganizationResponseModel> GetOrganizationGetName(string name)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/getName/{name}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiOrganizationResponseModel>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<ApiTeamResponseModel> TeamCreateAsync(ApiTeamRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams", item);
@@ -572,14 +516,6 @@ namespace NebulaNS.Api.Client
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiTeamResponseModel> GetTeamGetName(string name)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/getName/{name}");
-
-			httpResponse.EnsureSuccessStatusCode();
-			return JsonConvert.DeserializeObject<ApiTeamResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<ApiVersionInfoResponseModel> VersionInfoCreateAsync(ApiVersionInfoRequestModel item)
@@ -640,5 +576,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>4984fa6cfda55f3e97f6ad79f989717b</Hash>
+    <Hash>9e4ca0a7b3a1bb636bcf676a318cacc8</Hash>
 </Codenesium>*/

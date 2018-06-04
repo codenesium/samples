@@ -47,7 +47,7 @@ namespace ESPIOTNS.Api.DataAccess
 	{
 		public ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Service");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -68,5 +68,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>78f883357d3b1c9f8608afefd4850e59</Hash>
+    <Hash>300a8ac1c5701926ad27d576175457d2</Hash>
 </Codenesium>*/

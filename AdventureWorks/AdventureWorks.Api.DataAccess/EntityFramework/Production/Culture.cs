@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Culture", Schema="Production")]
-	public partial class Culture: AbstractEntityFrameworkDTO
+	public partial class Culture: AbstractEntity
 	{
 		public Culture()
 		{}
@@ -23,16 +23,16 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("CultureID", TypeName="nchar(6)")]
-		public string CultureID { get; set; }
+		public string CultureID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>93fcfaf939581821ca2add20fd204c38</Hash>
+    <Hash>b1532dbf8d8ea7ecf729b1797aba8315</Hash>
 </Codenesium>*/

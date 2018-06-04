@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesTerritoryHistory", Schema="Sales")]
-	public partial class SalesTerritoryHistory: AbstractEntityFrameworkDTO
+	public partial class SalesTerritoryHistory: AbstractEntity
 	{
 		public SalesTerritoryHistory()
 		{}
@@ -29,23 +29,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate { get; set; }
+		public Nullable<DateTime> EndDate { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
+		public DateTime StartDate { get; private set; }
 
 		[Column("TerritoryID", TypeName="int")]
-		public int TerritoryID { get; set; }
+		public int TerritoryID { get; private set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual SalesPerson SalesPerson { get; set; }
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>036d5c2b3695f0e0dd9eb5ae73b59c49</Hash>
+    <Hash>0000cd05e903605da2544095519f0684</Hash>
 </Codenesium>*/

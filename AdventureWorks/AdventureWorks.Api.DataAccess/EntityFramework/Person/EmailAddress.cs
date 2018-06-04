@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("EmailAddress", Schema="Person")]
-	public partial class EmailAddress: AbstractEntityFrameworkDTO
+	public partial class EmailAddress: AbstractEntity
 	{
 		public EmailAddress()
 		{}
@@ -27,23 +27,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("EmailAddress", TypeName="nvarchar(50)")]
-		public string EmailAddress1 { get; set; }
+		public string EmailAddress1 { get; private set; }
 
 		[Column("EmailAddressID", TypeName="int")]
-		public int EmailAddressID { get; set; }
+		public int EmailAddressID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f60fb60e8f458298fdea042ee95968de</Hash>
+    <Hash>3e8b2bf7fcadae248826b3a45347609e</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALSalesOrderHeaderMapper Mapper { get; }
 
 		public AbstractSalesOrderHeaderRepository(
-			IDALSalesOrderHeaderMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOSalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<SalesOrderHeader>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOSalesOrderHeader> Get(int salesOrderID)
+		public async virtual Task<SalesOrderHeader> Get(int salesOrderID)
 		{
-			SalesOrderHeader record = await this.GetById(salesOrderID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(salesOrderID);
 		}
 
-		public async virtual Task<DTOSalesOrderHeader> Create(
-			DTOSalesOrderHeader dto)
+		public async virtual Task<SalesOrderHeader> Create(SalesOrderHeader item)
 		{
-			SalesOrderHeader record = new SalesOrderHeader();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<SalesOrderHeader>().Add(record);
+			this.Context.Set<SalesOrderHeader>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int salesOrderID,
-			DTOSalesOrderHeader dto)
+		public async virtual Task Update(SalesOrderHeader item)
 		{
-			SalesOrderHeader record = await this.GetById(salesOrderID);
-
-			if (record == null)
+			var entity = this.Context.Set<SalesOrderHeader>().Local.FirstOrDefault(x => x.SalesOrderID == item.SalesOrderID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{salesOrderID}");
+				this.Context.Set<SalesOrderHeader>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					salesOrderID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,39 +74,30 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOSalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
+		public async Task<SalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
 		{
-			var records = await this.SearchLinqDTO(x => x.SalesOrderNumber == salesOrderNumber);
+			var records = await this.SearchLinqEF(x => x.SalesOrderNumber == salesOrderNumber);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<DTOSalesOrderHeader>> GetCustomerID(int customerID)
+		public async Task<List<SalesOrderHeader>> GetCustomerID(int customerID)
 		{
-			var records = await this.SearchLinqDTO(x => x.CustomerID == customerID);
+			var records = await this.SearchLinqEF(x => x.CustomerID == customerID);
 
 			return records;
 		}
-		public async Task<List<DTOSalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
+		public async Task<List<SalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
 		{
-			var records = await this.SearchLinqDTO(x => x.SalesPersonID == salesPersonID);
-
-			return records;
-		}
-
-		protected async Task<List<DTOSalesOrderHeader>> Where(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOSalesOrderHeader> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqEF(x => x.SalesPersonID == salesPersonID);
 
 			return records;
 		}
 
-		private async Task<List<DTOSalesOrderHeader>> SearchLinqDTO(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<SalesOrderHeader>> Where(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOSalesOrderHeader> response = new List<DTOSalesOrderHeader>();
 			List<SalesOrderHeader> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<SalesOrderHeader>> SearchLinqEF(Expression<Func<SalesOrderHeader, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -157,5 +129,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>543df24c4a5daa5a7747791c018d10e2</Hash>
+    <Hash>8651034b95ae09228c5d39f4f9d23d5a</Hash>
 </Codenesium>*/

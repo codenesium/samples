@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IEmailAddressRepository
 	{
-		Task<DTOEmailAddress> Create(DTOEmailAddress dto);
+		Task<EmailAddress> Create(EmailAddress item);
 
-		Task Update(int businessEntityID,
-		            DTOEmailAddress dto);
+		Task Update(EmailAddress item);
 
 		Task Delete(int businessEntityID);
 
-		Task<DTOEmailAddress> Get(int businessEntityID);
+		Task<EmailAddress> Get(int businessEntityID);
 
-		Task<List<DTOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<EmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<DTOEmailAddress>> GetEmailAddress(string emailAddress1);
+		Task<List<EmailAddress>> GetEmailAddress(string emailAddress1);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a85406306641f4a62704dc89c9fadcbe</Hash>
+    <Hash>ec5b508b8d59488ec2fa7486bd55f4ff</Hash>
 </Codenesium>*/

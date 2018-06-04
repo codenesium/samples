@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALDepartmentMapper Mapper { get; }
 
 		public AbstractDepartmentRepository(
-			IDALDepartmentMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTODepartment>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Department>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTODepartment> Get(short departmentID)
+		public async virtual Task<Department> Get(short departmentID)
 		{
-			Department record = await this.GetById(departmentID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(departmentID);
 		}
 
-		public async virtual Task<DTODepartment> Create(
-			DTODepartment dto)
+		public async virtual Task<Department> Create(Department item)
 		{
-			Department record = new Department();
-
-			this.Mapper.MapDTOToEF(
-				default (short),
-				dto,
-				record);
-
-			this.Context.Set<Department>().Add(record);
+			this.Context.Set<Department>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			short departmentID,
-			DTODepartment dto)
+		public async virtual Task Update(Department item)
 		{
-			Department record = await this.GetById(departmentID);
-
-			if (record == null)
+			var entity = this.Context.Set<Department>().Local.FirstOrDefault(x => x.DepartmentID == item.DepartmentID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{departmentID}");
+				this.Context.Set<Department>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					departmentID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTODepartment> GetName(string name)
+		public async Task<Department> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTODepartment>> Where(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Department>> Where(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTODepartment> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTODepartment>> SearchLinqDTO(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTODepartment> response = new List<DTODepartment>();
 			List<Department> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Department>> SearchLinqEF(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>88a4165b302b917f6b21096e15729bb5</Hash>
+    <Hash>26407cc6fd8dbca15207e7c00e9abad2</Hash>
 </Codenesium>*/

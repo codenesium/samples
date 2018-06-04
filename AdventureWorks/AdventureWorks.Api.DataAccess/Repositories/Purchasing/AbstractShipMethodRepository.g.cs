@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALShipMethodMapper Mapper { get; }
 
 		public AbstractShipMethodRepository(
-			IDALShipMethodMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOShipMethod> Get(int shipMethodID)
+		public async virtual Task<ShipMethod> Get(int shipMethodID)
 		{
-			ShipMethod record = await this.GetById(shipMethodID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(shipMethodID);
 		}
 
-		public async virtual Task<DTOShipMethod> Create(
-			DTOShipMethod dto)
+		public async virtual Task<ShipMethod> Create(ShipMethod item)
 		{
-			ShipMethod record = new ShipMethod();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ShipMethod>().Add(record);
+			this.Context.Set<ShipMethod>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int shipMethodID,
-			DTOShipMethod dto)
+		public async virtual Task Update(ShipMethod item)
 		{
-			ShipMethod record = await this.GetById(shipMethodID);
-
-			if (record == null)
+			var entity = this.Context.Set<ShipMethod>().Local.FirstOrDefault(x => x.ShipMethodID == item.ShipMethodID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{shipMethodID}");
+				this.Context.Set<ShipMethod>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					shipMethodID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOShipMethod> GetName(string name)
+		public async Task<ShipMethod> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOShipMethod>> Where(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ShipMethod>> Where(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOShipMethod> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOShipMethod>> SearchLinqDTO(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOShipMethod> response = new List<DTOShipMethod>();
 			List<ShipMethod> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ShipMethod>> SearchLinqEF(Expression<Func<ShipMethod, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>603a025cbdc3dc0ae6df3be10c60e5bb</Hash>
+    <Hash>77ff7122f3c710dd137601a4e1be4458</Hash>
 </Codenesium>*/

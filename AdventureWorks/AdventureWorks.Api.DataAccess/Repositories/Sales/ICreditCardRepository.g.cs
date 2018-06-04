@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ICreditCardRepository
 	{
-		Task<DTOCreditCard> Create(DTOCreditCard dto);
+		Task<CreditCard> Create(CreditCard item);
 
-		Task Update(int creditCardID,
-		            DTOCreditCard dto);
+		Task Update(CreditCard item);
 
 		Task Delete(int creditCardID);
 
-		Task<DTOCreditCard> Get(int creditCardID);
+		Task<CreditCard> Get(int creditCardID);
 
-		Task<List<DTOCreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<CreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOCreditCard> GetCardNumber(string cardNumber);
+		Task<CreditCard> GetCardNumber(string cardNumber);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf218519985ec156305ac9eefda3518a</Hash>
+    <Hash>98ad96362501a0d06419a43fbcd406c7</Hash>
 </Codenesium>*/

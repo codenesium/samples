@@ -2,25 +2,23 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ISalesTerritoryHistoryRepository
 	{
-		Task<DTOSalesTerritoryHistory> Create(DTOSalesTerritoryHistory dto);
+		Task<SalesTerritoryHistory> Create(SalesTerritoryHistory item);
 
-		Task Update(int businessEntityID,
-		            DTOSalesTerritoryHistory dto);
+		Task Update(SalesTerritoryHistory item);
 
 		Task Delete(int businessEntityID);
 
-		Task<DTOSalesTerritoryHistory> Get(int businessEntityID);
+		Task<SalesTerritoryHistory> Get(int businessEntityID);
 
-		Task<List<DTOSalesTerritoryHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<SalesTerritoryHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>84d6f486470b43d7dd0a87eabe8b78d7</Hash>
+    <Hash>1a4aec7fa3a2e30f4ce3b1ceeb1afdb9</Hash>
 </Codenesium>*/

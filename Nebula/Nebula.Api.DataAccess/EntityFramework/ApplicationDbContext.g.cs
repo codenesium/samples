@@ -65,7 +65,7 @@ namespace NebulaNS.Api.DataAccess
 	{
 		public ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Nebula.Api.Service");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Nebula.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -86,5 +86,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>768e4c7847a5290ac20925c392bd56b8</Hash>
+    <Hash>27cf8d44bf6285caa1dacf65f4fbb663</Hash>
 </Codenesium>*/

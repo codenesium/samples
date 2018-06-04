@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface ILocationRepository
 	{
-		Task<DTOLocation> Create(DTOLocation dto);
+		Task<Location> Create(Location item);
 
-		Task Update(short locationID,
-		            DTOLocation dto);
+		Task Update(Location item);
 
 		Task Delete(short locationID);
 
-		Task<DTOLocation> Get(short locationID);
+		Task<Location> Get(short locationID);
 
-		Task<List<DTOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Location>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOLocation> GetName(string name);
+		Task<Location> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8fe54fe9bd10f0cff99018e87d5daa37</Hash>
+    <Hash>55f540979d57db150b6ef0e479da7c54</Hash>
 </Codenesium>*/

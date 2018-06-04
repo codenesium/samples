@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALBusinessEntityMapper Mapper { get; }
 
 		public AbstractBusinessEntityRepository(
-			IDALBusinessEntityMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOBusinessEntity>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<BusinessEntity>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOBusinessEntity> Get(int businessEntityID)
+		public async virtual Task<BusinessEntity> Get(int businessEntityID)
 		{
-			BusinessEntity record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOBusinessEntity> Create(
-			DTOBusinessEntity dto)
+		public async virtual Task<BusinessEntity> Create(BusinessEntity item)
 		{
-			BusinessEntity record = new BusinessEntity();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<BusinessEntity>().Add(record);
+			this.Context.Set<BusinessEntity>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOBusinessEntity dto)
+		public async virtual Task Update(BusinessEntity item)
 		{
-			BusinessEntity record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<BusinessEntity>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<BusinessEntity>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOBusinessEntity>> Where(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<BusinessEntity>> Where(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOBusinessEntity> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOBusinessEntity>> SearchLinqDTO(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOBusinessEntity> response = new List<DTOBusinessEntity>();
 			List<BusinessEntity> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<BusinessEntity>> SearchLinqEF(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e46da2b00d1efbc6df8b94ad9423c594</Hash>
+    <Hash>98b39b5c5534710620e1bdd1fd1c570b</Hash>
 </Codenesium>*/

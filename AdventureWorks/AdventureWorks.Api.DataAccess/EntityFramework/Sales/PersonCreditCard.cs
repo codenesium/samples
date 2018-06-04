@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("PersonCreditCard", Schema="Sales")]
-	public partial class PersonCreditCard: AbstractEntityFrameworkDTO
+	public partial class PersonCreditCard: AbstractEntity
 	{
 		public PersonCreditCard()
 		{}
@@ -23,13 +23,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("CreditCardID", TypeName="int")]
-		public int CreditCardID { get; set; }
+		public int CreditCardID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[ForeignKey("CreditCardID")]
 		public virtual CreditCard CreditCard { get; set; }
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc40500545127b8776e0b407e3c51319</Hash>
+    <Hash>86bdc7ec6c767921b526a6486390b77b</Hash>
 </Codenesium>*/

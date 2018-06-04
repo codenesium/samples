@@ -6,14 +6,14 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("JobCandidate", Schema="HumanResources")]
-	public partial class JobCandidate: AbstractEntityFrameworkDTO
+	public partial class JobCandidate: AbstractEntity
 	{
 		public JobCandidate()
 		{}
 
 		public void SetProperties(
-			int jobCandidateID,
 			Nullable<int> businessEntityID,
+			int jobCandidateID,
 			DateTime modifiedDate,
 			string resume)
 		{
@@ -24,20 +24,20 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("BusinessEntityID", TypeName="int")]
-		public Nullable<int> BusinessEntityID { get; set; }
+		public Nullable<int> BusinessEntityID { get; private set; }
 
 		[Key]
 		[Column("JobCandidateID", TypeName="int")]
-		public int JobCandidateID { get; set; }
+		public int JobCandidateID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Resume", TypeName="xml(-1)")]
-		public string Resume { get; set; }
+		public string Resume { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>14677f56f8377a181fdd7e437cee8266</Hash>
+    <Hash>b07471a1d0f727f96059774fc0a267f1</Hash>
 </Codenesium>*/

@@ -2,25 +2,23 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPasswordRepository
 	{
-		Task<DTOPassword> Create(DTOPassword dto);
+		Task<Password> Create(Password item);
 
-		Task Update(int businessEntityID,
-		            DTOPassword dto);
+		Task Update(Password item);
 
 		Task Delete(int businessEntityID);
 
-		Task<DTOPassword> Get(int businessEntityID);
+		Task<Password> Get(int businessEntityID);
 
-		Task<List<DTOPassword>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Password>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd26c87808863f185db018254bbe56e0</Hash>
+    <Hash>4475df4a3f6f1add402b6e42e3154084</Hash>
 </Codenesium>*/

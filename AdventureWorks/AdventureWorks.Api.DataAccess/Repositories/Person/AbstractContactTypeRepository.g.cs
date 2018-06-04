@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALContactTypeMapper Mapper { get; }
 
 		public AbstractContactTypeRepository(
-			IDALContactTypeMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOContactType> Get(int contactTypeID)
+		public async virtual Task<ContactType> Get(int contactTypeID)
 		{
-			ContactType record = await this.GetById(contactTypeID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(contactTypeID);
 		}
 
-		public async virtual Task<DTOContactType> Create(
-			DTOContactType dto)
+		public async virtual Task<ContactType> Create(ContactType item)
 		{
-			ContactType record = new ContactType();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ContactType>().Add(record);
+			this.Context.Set<ContactType>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int contactTypeID,
-			DTOContactType dto)
+		public async virtual Task Update(ContactType item)
 		{
-			ContactType record = await this.GetById(contactTypeID);
-
-			if (record == null)
+			var entity = this.Context.Set<ContactType>().Local.FirstOrDefault(x => x.ContactTypeID == item.ContactTypeID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{contactTypeID}");
+				this.Context.Set<ContactType>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					contactTypeID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOContactType> GetName(string name)
+		public async Task<ContactType> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOContactType>> Where(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ContactType>> Where(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOContactType> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOContactType>> SearchLinqDTO(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOContactType> response = new List<DTOContactType>();
 			List<ContactType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ContactType>> SearchLinqEF(Expression<Func<ContactType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5edcb305dfa75bdef7a5cbe7a5b115ae</Hash>
+    <Hash>fc5315fbe27becc8dedf2a92a0946668</Hash>
 </Codenesium>*/

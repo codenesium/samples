@@ -11,13 +11,13 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Contracts",
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.DataAccess", "PetShipping.Api.DataAccess/PetShipping.Api.DataAccess.csproj", "{aca544d4-a29c-4a0a-a6af-a448d99ea25c}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Service", "PetShipping.Api.Service/PetShipping.Api.Service.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Web", "PetShipping.Api.Web/PetShipping.Api.Web.csproj", "{bacdfb68-7148-47eb-ba26-bb020bbbd4d9}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.BusinessObjects", "PetShipping.Api.BusinessObjects/PetShipping.Api.BusinessObjects.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Services", "PetShipping.Api.Services/PetShipping.Api.Services.csproj", "{a34fd529-025b-496b-aa90-00bc3fa19829}"
 	EndProject
 	
-Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Service.IntegrationTests", "PetShipping.Api.Service.IntegrationTests/PetShipping.Api.Service.IntegrationTests.csproj", "{PetShipping.Api.Service.IntegrationTests}"
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Web.IntegrationTests", "PetShipping.Api.Web.IntegrationTests/PetShipping.Api.Web.IntegrationTests.csproj", "{PetShipping.Api.Web.IntegrationTests}"
 	EndProject
 	
 
@@ -51,10 +51,10 @@ Global
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{a34fd529-025b-496b-aa90-00bc3fa19829}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-		        {PetShipping.Api.Service.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{PetShipping.Api.Service.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{PetShipping.Api.Service.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{PetShipping.Api.Service.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
+		        {PetShipping.Api.Web.IntegrationTests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetShipping.Api.Web.IntegrationTests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetShipping.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetShipping.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 	    
 		

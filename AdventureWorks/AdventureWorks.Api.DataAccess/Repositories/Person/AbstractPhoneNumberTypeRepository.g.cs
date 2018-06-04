@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALPhoneNumberTypeMapper Mapper { get; }
 
 		public AbstractPhoneNumberTypeRepository(
-			IDALPhoneNumberTypeMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOPhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<PhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOPhoneNumberType> Get(int phoneNumberTypeID)
+		public async virtual Task<PhoneNumberType> Get(int phoneNumberTypeID)
 		{
-			PhoneNumberType record = await this.GetById(phoneNumberTypeID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(phoneNumberTypeID);
 		}
 
-		public async virtual Task<DTOPhoneNumberType> Create(
-			DTOPhoneNumberType dto)
+		public async virtual Task<PhoneNumberType> Create(PhoneNumberType item)
 		{
-			PhoneNumberType record = new PhoneNumberType();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<PhoneNumberType>().Add(record);
+			this.Context.Set<PhoneNumberType>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int phoneNumberTypeID,
-			DTOPhoneNumberType dto)
+		public async virtual Task Update(PhoneNumberType item)
 		{
-			PhoneNumberType record = await this.GetById(phoneNumberTypeID);
-
-			if (record == null)
+			var entity = this.Context.Set<PhoneNumberType>().Local.FirstOrDefault(x => x.PhoneNumberTypeID == item.PhoneNumberTypeID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{phoneNumberTypeID}");
+				this.Context.Set<PhoneNumberType>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					phoneNumberTypeID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOPhoneNumberType>> Where(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<PhoneNumberType>> Where(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOPhoneNumberType> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOPhoneNumberType>> SearchLinqDTO(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOPhoneNumberType> response = new List<DTOPhoneNumberType>();
 			List<PhoneNumberType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<PhoneNumberType>> SearchLinqEF(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f698db5946d844fbc2179037a1bc7f3c</Hash>
+    <Hash>c27a0368a5ef7c6f619c0b1722effceb</Hash>
 </Codenesium>*/

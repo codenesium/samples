@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALProductCategoryMapper Mapper { get; }
 
 		public AbstractProductCategoryRepository(
-			IDALProductCategoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOProductCategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ProductCategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOProductCategory> Get(int productCategoryID)
+		public async virtual Task<ProductCategory> Get(int productCategoryID)
 		{
-			ProductCategory record = await this.GetById(productCategoryID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(productCategoryID);
 		}
 
-		public async virtual Task<DTOProductCategory> Create(
-			DTOProductCategory dto)
+		public async virtual Task<ProductCategory> Create(ProductCategory item)
 		{
-			ProductCategory record = new ProductCategory();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ProductCategory>().Add(record);
+			this.Context.Set<ProductCategory>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int productCategoryID,
-			DTOProductCategory dto)
+		public async virtual Task Update(ProductCategory item)
 		{
-			ProductCategory record = await this.GetById(productCategoryID);
-
-			if (record == null)
+			var entity = this.Context.Set<ProductCategory>().Local.FirstOrDefault(x => x.ProductCategoryID == item.ProductCategoryID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{productCategoryID}");
+				this.Context.Set<ProductCategory>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					productCategoryID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOProductCategory> GetName(string name)
+		public async Task<ProductCategory> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOProductCategory>> Where(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ProductCategory>> Where(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOProductCategory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOProductCategory>> SearchLinqDTO(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOProductCategory> response = new List<DTOProductCategory>();
 			List<ProductCategory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ProductCategory>> SearchLinqEF(Expression<Func<ProductCategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fef684d9244bb5961edbed5368decba1</Hash>
+    <Hash>edba58d5a2f8ddd5ee46b5ef1cedd6ae</Hash>
 </Codenesium>*/

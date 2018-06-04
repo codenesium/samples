@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class CurrencyRateRepository: AbstractCurrencyRateRepository, ICurrencyRateRepository
 	{
 		public CurrencyRateRepository(
-			IDALCurrencyRateMapper mapper,
 			ILogger<CurrencyRateRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c5265380a1c8d7072980b8b688ac92ff</Hash>
+    <Hash>07b217bc040aad17bf35eacadba0630d</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALProductModelIllustrationMapper Mapper { get; }
 
 		public AbstractProductModelIllustrationRepository(
-			IDALProductModelIllustrationMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOProductModelIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ProductModelIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOProductModelIllustration> Get(int productModelID)
+		public async virtual Task<ProductModelIllustration> Get(int productModelID)
 		{
-			ProductModelIllustration record = await this.GetById(productModelID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(productModelID);
 		}
 
-		public async virtual Task<DTOProductModelIllustration> Create(
-			DTOProductModelIllustration dto)
+		public async virtual Task<ProductModelIllustration> Create(ProductModelIllustration item)
 		{
-			ProductModelIllustration record = new ProductModelIllustration();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ProductModelIllustration>().Add(record);
+			this.Context.Set<ProductModelIllustration>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int productModelID,
-			DTOProductModelIllustration dto)
+		public async virtual Task Update(ProductModelIllustration item)
 		{
-			ProductModelIllustration record = await this.GetById(productModelID);
-
-			if (record == null)
+			var entity = this.Context.Set<ProductModelIllustration>().Local.FirstOrDefault(x => x.ProductModelID == item.ProductModelID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{productModelID}");
+				this.Context.Set<ProductModelIllustration>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					productModelID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOProductModelIllustration>> Where(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ProductModelIllustration>> Where(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOProductModelIllustration> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOProductModelIllustration>> SearchLinqDTO(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOProductModelIllustration> response = new List<DTOProductModelIllustration>();
 			List<ProductModelIllustration> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ProductModelIllustration>> SearchLinqEF(Expression<Func<ProductModelIllustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>829e2d6062d4c17d3a3c054f1301871d</Hash>
+    <Hash>e8eb54284d7a816af07b5d870888605d</Hash>
 </Codenesium>*/

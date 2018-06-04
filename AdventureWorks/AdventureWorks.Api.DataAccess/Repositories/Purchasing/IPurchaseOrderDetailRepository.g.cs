@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IPurchaseOrderDetailRepository
 	{
-		Task<DTOPurchaseOrderDetail> Create(DTOPurchaseOrderDetail dto);
+		Task<PurchaseOrderDetail> Create(PurchaseOrderDetail item);
 
-		Task Update(int purchaseOrderID,
-		            DTOPurchaseOrderDetail dto);
+		Task Update(PurchaseOrderDetail item);
 
 		Task Delete(int purchaseOrderID);
 
-		Task<DTOPurchaseOrderDetail> Get(int purchaseOrderID);
+		Task<PurchaseOrderDetail> Get(int purchaseOrderID);
 
-		Task<List<DTOPurchaseOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<PurchaseOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<DTOPurchaseOrderDetail>> GetProductID(int productID);
+		Task<List<PurchaseOrderDetail>> GetProductID(int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>feee6fb2affc1f9ed64efc3486fd0efc</Hash>
+    <Hash>9fa03a1d0a927454531d77d450a494e2</Hash>
 </Codenesium>*/

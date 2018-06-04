@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALProductListPriceHistoryMapper Mapper { get; }
 
 		public AbstractProductListPriceHistoryRepository(
-			IDALProductListPriceHistoryMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOProductListPriceHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ProductListPriceHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOProductListPriceHistory> Get(int productID)
+		public async virtual Task<ProductListPriceHistory> Get(int productID)
 		{
-			ProductListPriceHistory record = await this.GetById(productID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(productID);
 		}
 
-		public async virtual Task<DTOProductListPriceHistory> Create(
-			DTOProductListPriceHistory dto)
+		public async virtual Task<ProductListPriceHistory> Create(ProductListPriceHistory item)
 		{
-			ProductListPriceHistory record = new ProductListPriceHistory();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ProductListPriceHistory>().Add(record);
+			this.Context.Set<ProductListPriceHistory>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int productID,
-			DTOProductListPriceHistory dto)
+		public async virtual Task Update(ProductListPriceHistory item)
 		{
-			ProductListPriceHistory record = await this.GetById(productID);
-
-			if (record == null)
+			var entity = this.Context.Set<ProductListPriceHistory>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{productID}");
+				this.Context.Set<ProductListPriceHistory>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					productID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOProductListPriceHistory>> Where(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ProductListPriceHistory>> Where(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOProductListPriceHistory> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOProductListPriceHistory>> SearchLinqDTO(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOProductListPriceHistory> response = new List<DTOProductListPriceHistory>();
 			List<ProductListPriceHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ProductListPriceHistory>> SearchLinqEF(Expression<Func<ProductListPriceHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dc9601cfc1595811ff6aa18b3044d412</Hash>
+    <Hash>5d4aa71f0d7b1e09653665f75c0e6dcc</Hash>
 </Codenesium>*/

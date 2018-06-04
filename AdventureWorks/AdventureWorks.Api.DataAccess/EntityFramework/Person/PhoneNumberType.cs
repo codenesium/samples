@@ -6,15 +6,15 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("PhoneNumberType", Schema="Person")]
-	public partial class PhoneNumberType: AbstractEntityFrameworkDTO
+	public partial class PhoneNumberType: AbstractEntity
 	{
 		public PhoneNumberType()
 		{}
 
 		public void SetProperties(
-			int phoneNumberTypeID,
 			DateTime modifiedDate,
-			string name)
+			string name,
+			int phoneNumberTypeID)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.Name = name;
@@ -22,17 +22,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 		[Key]
 		[Column("PhoneNumberTypeID", TypeName="int")]
-		public int PhoneNumberTypeID { get; set; }
+		public int PhoneNumberTypeID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1fa1358c298362ffa8ae0cbc98335aa2</Hash>
+    <Hash>7f1b960f9fc23fc17733d8f4d19c91f8</Hash>
 </Codenesium>*/

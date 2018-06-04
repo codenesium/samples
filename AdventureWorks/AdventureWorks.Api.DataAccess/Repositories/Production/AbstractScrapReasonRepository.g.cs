@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALScrapReasonMapper Mapper { get; }
 
 		public AbstractScrapReasonRepository(
-			IDALScrapReasonMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOScrapReason> Get(short scrapReasonID)
+		public async virtual Task<ScrapReason> Get(short scrapReasonID)
 		{
-			ScrapReason record = await this.GetById(scrapReasonID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(scrapReasonID);
 		}
 
-		public async virtual Task<DTOScrapReason> Create(
-			DTOScrapReason dto)
+		public async virtual Task<ScrapReason> Create(ScrapReason item)
 		{
-			ScrapReason record = new ScrapReason();
-
-			this.Mapper.MapDTOToEF(
-				default (short),
-				dto,
-				record);
-
-			this.Context.Set<ScrapReason>().Add(record);
+			this.Context.Set<ScrapReason>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			short scrapReasonID,
-			DTOScrapReason dto)
+		public async virtual Task Update(ScrapReason item)
 		{
-			ScrapReason record = await this.GetById(scrapReasonID);
-
-			if (record == null)
+			var entity = this.Context.Set<ScrapReason>().Local.FirstOrDefault(x => x.ScrapReasonID == item.ScrapReasonID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{scrapReasonID}");
+				this.Context.Set<ScrapReason>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					scrapReasonID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOScrapReason> GetName(string name)
+		public async Task<ScrapReason> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOScrapReason>> Where(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ScrapReason>> Where(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOScrapReason> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOScrapReason>> SearchLinqDTO(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOScrapReason> response = new List<DTOScrapReason>();
 			List<ScrapReason> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ScrapReason>> SearchLinqEF(Expression<Func<ScrapReason, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b36840e3c30cb4563dec927fffeba27</Hash>
+    <Hash>c4def206993bd3a0a8f74a4a86c010d7</Hash>
 </Codenesium>*/

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALPersonPhoneMapper Mapper { get; }
 
 		public AbstractPersonPhoneRepository(
-			IDALPersonPhoneMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOPersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<PersonPhone>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOPersonPhone> Get(int businessEntityID)
+		public async virtual Task<PersonPhone> Get(int businessEntityID)
 		{
-			PersonPhone record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOPersonPhone> Create(
-			DTOPersonPhone dto)
+		public async virtual Task<PersonPhone> Create(PersonPhone item)
 		{
-			PersonPhone record = new PersonPhone();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<PersonPhone>().Add(record);
+			this.Context.Set<PersonPhone>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOPersonPhone dto)
+		public async virtual Task Update(PersonPhone item)
 		{
-			PersonPhone record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<PersonPhone>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<PersonPhone>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOPersonPhone>> GetPhoneNumber(string phoneNumber)
+		public async Task<List<PersonPhone>> GetPhoneNumber(string phoneNumber)
 		{
-			var records = await this.SearchLinqDTO(x => x.PhoneNumber == phoneNumber);
+			var records = await this.SearchLinqEF(x => x.PhoneNumber == phoneNumber);
 
 			return records;
 		}
 
-		protected async Task<List<DTOPersonPhone>> Where(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<PersonPhone>> Where(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOPersonPhone> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOPersonPhone>> SearchLinqDTO(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOPersonPhone> response = new List<DTOPersonPhone>();
 			List<PersonPhone> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<PersonPhone>> SearchLinqEF(Expression<Func<PersonPhone, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da8dbea9677960a799d8d9444280c6c3</Hash>
+    <Hash>86b8b175e1bde1b046c6d840afdac6ba</Hash>
 </Codenesium>*/

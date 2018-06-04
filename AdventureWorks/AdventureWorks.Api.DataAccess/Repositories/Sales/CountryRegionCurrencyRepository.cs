@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class CountryRegionCurrencyRepository: AbstractCountryRegionCurrencyRepository, ICountryRegionCurrencyRepository
 	{
 		public CountryRegionCurrencyRepository(
-			IDALCountryRegionCurrencyMapper mapper,
 			ILogger<CountryRegionCurrencyRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>090cd9784a28e2ba4b41431ba31a5e7d</Hash>
+    <Hash>0341cabc5bd1421a53a086ba84c62dd0</Hash>
 </Codenesium>*/

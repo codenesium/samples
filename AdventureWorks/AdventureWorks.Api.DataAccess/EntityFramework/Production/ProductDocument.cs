@@ -6,34 +6,33 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductDocument", Schema="Production")]
-	public partial class ProductDocument: AbstractEntityFrameworkDTO
+	public partial class ProductDocument: AbstractEntity
 	{
 		public ProductDocument()
 		{}
 
 		public void SetProperties(
-			int productID,
 			Guid documentNode,
-			DateTime modifiedDate)
+			DateTime modifiedDate,
+			int productID)
 		{
 			this.DocumentNode = documentNode.ToGuid();
 			this.ModifiedDate = modifiedDate.ToDateTime();
 			this.ProductID = productID.ToInt();
 		}
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("DocumentNode", TypeName="hierarchyid(892)")]
-		public Guid DocumentNode { get; set; }
+		public Guid DocumentNode { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8c730ba51e08be33a899e62ba168b328</Hash>
+    <Hash>920d36cf25348e380b0f08545a42bb5e</Hash>
 </Codenesium>*/

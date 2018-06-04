@@ -6,13 +6,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesOrderHeader", Schema="Sales")]
-	public partial class SalesOrderHeader: AbstractEntityFrameworkDTO
+	public partial class SalesOrderHeader: AbstractEntity
 	{
 		public SalesOrderHeader()
 		{}
 
 		public void SetProperties(
-			int salesOrderID,
 			string accountNumber,
 			int billToAddressID,
 			string comment,
@@ -28,6 +27,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			string purchaseOrderNumber,
 			int revisionNumber,
 			Guid rowguid,
+			int salesOrderID,
 			string salesOrderNumber,
 			Nullable<int> salesPersonID,
 			Nullable<DateTime> shipDate,
@@ -68,84 +68,85 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AccountNumber", TypeName="nvarchar(15)")]
-		public string AccountNumber { get; set; }
+		public string AccountNumber { get; private set; }
 
 		[Column("BillToAddressID", TypeName="int")]
-		public int BillToAddressID { get; set; }
+		public int BillToAddressID { get; private set; }
 
 		[Column("Comment", TypeName="nvarchar(128)")]
-		public string Comment { get; set; }
+		public string Comment { get; private set; }
 
 		[Column("CreditCardApprovalCode", TypeName="varchar(15)")]
-		public string CreditCardApprovalCode { get; set; }
+		public string CreditCardApprovalCode { get; private set; }
 
 		[Column("CreditCardID", TypeName="int")]
-		public Nullable<int> CreditCardID { get; set; }
+		public Nullable<int> CreditCardID { get; private set; }
 
 		[Column("CurrencyRateID", TypeName="int")]
-		public Nullable<int> CurrencyRateID { get; set; }
+		public Nullable<int> CurrencyRateID { get; private set; }
 
 		[Column("CustomerID", TypeName="int")]
-		public int CustomerID { get; set; }
+		public int CustomerID { get; private set; }
 
 		[Column("DueDate", TypeName="datetime")]
-		public DateTime DueDate { get; set; }
+		public DateTime DueDate { get; private set; }
 
 		[Column("Freight", TypeName="money")]
-		public decimal Freight { get; set; }
+		public decimal Freight { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("OnlineOrderFlag", TypeName="bit")]
-		public bool OnlineOrderFlag { get; set; }
+		public bool OnlineOrderFlag { get; private set; }
 
 		[Column("OrderDate", TypeName="datetime")]
-		public DateTime OrderDate { get; set; }
+		public DateTime OrderDate { get; private set; }
 
 		[Column("PurchaseOrderNumber", TypeName="nvarchar(25)")]
-		public string PurchaseOrderNumber { get; set; }
+		public string PurchaseOrderNumber { get; private set; }
 
 		[Column("RevisionNumber", TypeName="tinyint")]
-		public int RevisionNumber { get; set; }
+		public int RevisionNumber { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("SalesOrderID", TypeName="int")]
-		public int SalesOrderID { get; set; }
+		public int SalesOrderID { get; private set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("SalesOrderNumber", TypeName="nvarchar(25)")]
-		public string SalesOrderNumber { get; set; }
+		public string SalesOrderNumber { get; private set; }
 
 		[Column("SalesPersonID", TypeName="int")]
-		public Nullable<int> SalesPersonID { get; set; }
+		public Nullable<int> SalesPersonID { get; private set; }
 
 		[Column("ShipDate", TypeName="datetime")]
-		public Nullable<DateTime> ShipDate { get; set; }
+		public Nullable<DateTime> ShipDate { get; private set; }
 
 		[Column("ShipMethodID", TypeName="int")]
-		public int ShipMethodID { get; set; }
+		public int ShipMethodID { get; private set; }
 
 		[Column("ShipToAddressID", TypeName="int")]
-		public int ShipToAddressID { get; set; }
+		public int ShipToAddressID { get; private set; }
 
 		[Column("Status", TypeName="tinyint")]
-		public int Status { get; set; }
+		public int Status { get; private set; }
 
 		[Column("SubTotal", TypeName="money")]
-		public decimal SubTotal { get; set; }
+		public decimal SubTotal { get; private set; }
 
 		[Column("TaxAmt", TypeName="money")]
-		public decimal TaxAmt { get; set; }
+		public decimal TaxAmt { get; private set; }
 
 		[Column("TerritoryID", TypeName="int")]
-		public Nullable<int> TerritoryID { get; set; }
+		public Nullable<int> TerritoryID { get; private set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("TotalDue", TypeName="money")]
-		public decimal TotalDue { get; set; }
+		public decimal TotalDue { get; private set; }
 
 		[ForeignKey("CreditCardID")]
 		public virtual CreditCard CreditCard { get; set; }
@@ -165,5 +166,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ea3cbaadbc5320fd68c00ffb04a456ef</Hash>
+    <Hash>6f67aba9112fa576d6ad56899110d56a</Hash>
 </Codenesium>*/

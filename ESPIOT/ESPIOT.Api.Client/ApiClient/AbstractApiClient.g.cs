@@ -95,9 +95,9 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDeviceResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiDeviceResponseModel> GetDevicePublicId(Guid publicId)
+		public virtual async Task<ApiDeviceResponseModel> GetDeviceGetPublicId(Guid publicId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/publicId/{publicId}");
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/getPublicId/{publicId}");
 
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<ApiDeviceResponseModel>(httpResponse.Content.ContentToString());
@@ -149,9 +149,17 @@ namespace ESPIOTNS.Api.Client
 			httpResponse.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
 		}
+
+		public virtual async Task<List<ApiDeviceActionResponseModel>> GetDeviceActionGetDeviceId(int deviceId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/getDeviceId/{deviceId}");
+
+			httpResponse.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb90dba27c1fa23ae75c0aedcb0f10e3</Hash>
+    <Hash>55dc2400becf8a54aa914ed9ce5c0ef9</Hash>
 </Codenesium>*/

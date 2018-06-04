@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IJobCandidateRepository
 	{
-		Task<DTOJobCandidate> Create(DTOJobCandidate dto);
+		Task<JobCandidate> Create(JobCandidate item);
 
-		Task Update(int jobCandidateID,
-		            DTOJobCandidate dto);
+		Task Update(JobCandidate item);
 
 		Task Delete(int jobCandidateID);
 
-		Task<DTOJobCandidate> Get(int jobCandidateID);
+		Task<JobCandidate> Get(int jobCandidateID);
 
-		Task<List<DTOJobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<JobCandidate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<DTOJobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID);
+		Task<List<JobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>dd90ceaf6158a6ac26965eec69816ea2</Hash>
+    <Hash>3d2648068b1e5debe6bb3e6e9e305c0d</Hash>
 </Codenesium>*/

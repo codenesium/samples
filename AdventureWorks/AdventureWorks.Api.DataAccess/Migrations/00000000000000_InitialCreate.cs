@@ -52,7 +52,7 @@ EXEC('CREATE SCHEMA [Sales] AUTHORIZATION [dbo]');
 GO
 
 CREATE TABLE [dbo].[AWBuildVersion](
-[SystemInformationID] [tinyint]   IDENTITY(1,1)  NOT NULL,
+[SystemInformationID] [tinyint]     NOT NULL,
 [Database Version] [nvarchar]  (25)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [VersionDate] [datetime]     NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE [dbo].[ErrorLog](
 GO
 
 CREATE TABLE [HumanResources].[Department](
-[DepartmentID] [smallint]   IDENTITY(1,1)  NOT NULL,
+[DepartmentID] [smallint]     NOT NULL,
 [GroupName] [nvarchar]  (50)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE [HumanResources].[Employee](
 [NationalIDNumber] [nvarchar]  (15)   NOT NULL,
 [OrganizationLevel] [smallint]     NULL,
 [OrganizationNode] [hierarchyid]     NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalariedFlag] [bit]     NOT NULL,
 [SickLeaveHours] [smallint]     NOT NULL,
 [VacationHours] [smallint]     NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE [HumanResources].[JobCandidate](
 GO
 
 CREATE TABLE [HumanResources].[Shift](
-[ShiftID] [tinyint]   IDENTITY(1,1)  NOT NULL,
+[ShiftID] [tinyint]     NOT NULL,
 [EndTime] [time]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE [Person].[Address](
 [City] [nvarchar]  (30)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [PostalCode] [nvarchar]  (15)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SpatialLocation] [geography]     NULL,
 [StateProvinceID] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -165,14 +165,14 @@ CREATE TABLE [Person].[AddressType](
 [AddressTypeID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[BusinessEntity](
 [BusinessEntityID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -181,7 +181,7 @@ CREATE TABLE [Person].[BusinessEntityAddress](
 [AddressID] [int]     NOT NULL,
 [AddressTypeID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -190,7 +190,7 @@ CREATE TABLE [Person].[BusinessEntityContact](
 [ContactTypeID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [PersonID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -213,7 +213,7 @@ CREATE TABLE [Person].[EmailAddress](
 [EmailAddress] [nvarchar]  (50)   NULL,
 [EmailAddressID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -222,7 +222,7 @@ CREATE TABLE [Person].[Password](
 [ModifiedDate] [datetime]     NOT NULL,
 [PasswordHash] [varchar]  (128)   NOT NULL,
 [PasswordSalt] [varchar]  (10)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -237,7 +237,7 @@ CREATE TABLE [Person].[Person](
 [ModifiedDate] [datetime]     NOT NULL,
 [NameStyle] [bit]     NOT NULL,
 [PersonType] [nchar]  (2)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [Suffix] [nvarchar]  (10)   NULL,
 [Title] [nvarchar]  (8)   NULL,
 ) ON[PRIMARY]
@@ -264,7 +264,7 @@ CREATE TABLE [Person].[StateProvince](
 [IsOnlyStateProvinceFlag] [bit]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [StateProvinceCode] [nchar]  (3)   NOT NULL,
 [TerritoryID] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -302,7 +302,7 @@ CREATE TABLE [Production].[Document](
 [ModifiedDate] [datetime]     NOT NULL,
 [Owner] [int]     NOT NULL,
 [Revision] [nchar]  (5)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [Status] [tinyint]     NOT NULL,
 [Title] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
@@ -316,7 +316,7 @@ CREATE TABLE [Production].[Illustration](
 GO
 
 CREATE TABLE [Production].[Location](
-[LocationID] [smallint]   IDENTITY(1,1)  NOT NULL,
+[LocationID] [smallint]     NOT NULL,
 [Availability] [decimal]     NOT NULL,
 [CostRate] [smallmoney]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
@@ -340,7 +340,7 @@ CREATE TABLE [Production].[Product](
 [ProductNumber] [nvarchar]  (25)   NOT NULL,
 [ProductSubcategoryID] [int]     NULL,
 [ReorderPoint] [smallint]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SafetyStockLevel] [smallint]     NOT NULL,
 [SellEndDate] [datetime]     NULL,
 [SellStartDate] [datetime]     NOT NULL,
@@ -357,7 +357,7 @@ CREATE TABLE [Production].[ProductCategory](
 [ProductCategoryID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -374,7 +374,7 @@ CREATE TABLE [Production].[ProductDescription](
 [ProductDescriptionID] [int]   IDENTITY(1,1)  NOT NULL,
 [Description] [nvarchar]  (400)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -391,7 +391,7 @@ CREATE TABLE [Production].[ProductInventory](
 [LocationID] [smallint]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Quantity] [smallint]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [Shelf] [nvarchar]  (10)   NOT NULL,
 ) ON[PRIMARY]
 GO
@@ -411,7 +411,7 @@ CREATE TABLE [Production].[ProductModel](
 [Instructions] [xml]     NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -465,12 +465,12 @@ CREATE TABLE [Production].[ProductSubcategory](
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
 [ProductCategoryID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Production].[ScrapReason](
-[ScrapReasonID] [smallint]   IDENTITY(1,1)  NOT NULL,
+[ScrapReasonID] [smallint]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
@@ -590,7 +590,7 @@ CREATE TABLE [Purchasing].[ShipMethod](
 [ShipMethodID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [ShipBase] [money]     NOT NULL,
 [ShipRate] [money]     NOT NULL,
 ) ON[PRIMARY]
@@ -648,7 +648,7 @@ CREATE TABLE [Sales].[Customer](
 [AccountNumber] [varchar]  (10)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [PersonID] [int]     NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [StoreID] [int]     NULL,
 [TerritoryID] [int]     NULL,
 ) ON[PRIMARY]
@@ -668,7 +668,7 @@ CREATE TABLE [Sales].[SalesOrderDetail](
 [ModifiedDate] [datetime]     NOT NULL,
 [OrderQty] [smallint]     NOT NULL,
 [ProductID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalesOrderDetailID] [int]     NOT NULL,
 [SpecialOfferID] [int]     NOT NULL,
 [UnitPrice] [money]     NOT NULL,
@@ -692,7 +692,7 @@ CREATE TABLE [Sales].[SalesOrderHeader](
 [OrderDate] [datetime]     NOT NULL,
 [PurchaseOrderNumber] [nvarchar]  (25)   NULL,
 [RevisionNumber] [tinyint]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalesOrderNumber] [nvarchar]  (25)   NOT NULL,
 [SalesPersonID] [int]     NULL,
 [ShipDate] [datetime]     NULL,
@@ -718,7 +718,7 @@ CREATE TABLE [Sales].[SalesPerson](
 [Bonus] [money]     NOT NULL,
 [CommissionPct] [smallmoney]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalesLastYear] [money]     NOT NULL,
 [SalesQuota] [money]     NULL,
 [SalesYTD] [money]     NOT NULL,
@@ -730,7 +730,7 @@ CREATE TABLE [Sales].[SalesPersonQuotaHistory](
 [BusinessEntityID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [QuotaDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalesQuota] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
@@ -747,7 +747,7 @@ CREATE TABLE [Sales].[SalesTaxRate](
 [SalesTaxRateID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [StateProvinceID] [int]     NOT NULL,
 [TaxRate] [smallmoney]     NOT NULL,
 [TaxType] [tinyint]     NOT NULL,
@@ -762,7 +762,7 @@ CREATE TABLE [Sales].[SalesTerritory](
 [Group] [nvarchar]  (50)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalesLastYear] [money]     NOT NULL,
 [SalesYTD] [money]     NOT NULL,
 ) ON[PRIMARY]
@@ -772,7 +772,7 @@ CREATE TABLE [Sales].[SalesTerritoryHistory](
 [BusinessEntityID] [int]     NOT NULL,
 [EndDate] [datetime]     NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [StartDate] [datetime]     NOT NULL,
 [TerritoryID] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -797,7 +797,7 @@ CREATE TABLE [Sales].[SpecialOffer](
 [MaxQty] [int]     NULL,
 [MinQty] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [StartDate] [datetime]     NOT NULL,
 [Type] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
@@ -807,7 +807,7 @@ CREATE TABLE [Sales].[SpecialOfferProduct](
 [SpecialOfferID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [ProductID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -816,7 +816,7 @@ CREATE TABLE [Sales].[Store](
 [Demographics] [xml]     NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]     NOT NULL,
+[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalesPersonID] [int]     NULL,
 ) ON[PRIMARY]
 GO
@@ -824,26 +824,26 @@ GO
 ALTER TABLE[dbo].[AWBuildVersion]
 ADD CONSTRAINT[PK_AWBuildVersion_SystemInformationID] PRIMARY KEY CLUSTERED
 (
-SystemInformationID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SystemInformationID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[DatabaseLog]
 ADD CONSTRAINT[PK_DatabaseLog_DatabaseLogID] PRIMARY KEY NONCLUSTERED
 (
-DatabaseLogID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[DatabaseLogID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[ErrorLog]
 ADD CONSTRAINT[PK_ErrorLog_ErrorLogID] PRIMARY KEY CLUSTERED
 (
-ErrorLogID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ErrorLogID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[HumanResources].[Department]
 ADD CONSTRAINT[PK_Department_DepartmentID] PRIMARY KEY CLUSTERED
 (
-DepartmentID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[DepartmentID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Department_Name] ON[HumanResources].[Department]
 (
@@ -853,8 +853,8 @@ GO
 ALTER TABLE[HumanResources].[Employee]
 ADD CONSTRAINT[PK_Employee_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Employee_LoginID] ON[HumanResources].[Employee]
 (
@@ -885,11 +885,11 @@ GO
 ALTER TABLE[HumanResources].[EmployeeDepartmentHistory]
 ADD CONSTRAINT[PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,StartDate ASC
-,DepartmentID ASC
-,ShiftID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[StartDate] ASC
+,[DepartmentID] ASC
+,[ShiftID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_EmployeeDepartmentHistory_DepartmentID] ON[HumanResources].[EmployeeDepartmentHistory]
 (
@@ -904,15 +904,15 @@ GO
 ALTER TABLE[HumanResources].[EmployeePayHistory]
 ADD CONSTRAINT[PK_EmployeePayHistory_BusinessEntityID_RateChangeDate] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,RateChangeDate ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[RateChangeDate] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[HumanResources].[JobCandidate]
 ADD CONSTRAINT[PK_JobCandidate_JobCandidateID] PRIMARY KEY CLUSTERED
 (
-JobCandidateID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[JobCandidateID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_JobCandidate_BusinessEntityID] ON[HumanResources].[JobCandidate]
 (
@@ -922,8 +922,8 @@ GO
 ALTER TABLE[HumanResources].[Shift]
 ADD CONSTRAINT[PK_Shift_ShiftID] PRIMARY KEY CLUSTERED
 (
-ShiftID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ShiftID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Shift_Name] ON[HumanResources].[Shift]
 (
@@ -939,8 +939,8 @@ GO
 ALTER TABLE[Person].[Address]
 ADD CONSTRAINT[PK_Address_AddressID] PRIMARY KEY CLUSTERED
 (
-AddressID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[AddressID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Address_rowguid] ON[Person].[Address]
 (
@@ -964,8 +964,8 @@ GO
 ALTER TABLE[Person].[AddressType]
 ADD CONSTRAINT[PK_AddressType_AddressTypeID] PRIMARY KEY CLUSTERED
 (
-AddressTypeID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[AddressTypeID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_AddressType_Name] ON[Person].[AddressType]
 (
@@ -980,8 +980,8 @@ GO
 ALTER TABLE[Person].[BusinessEntity]
 ADD CONSTRAINT[PK_BusinessEntity_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_BusinessEntity_rowguid] ON[Person].[BusinessEntity]
 (
@@ -991,10 +991,10 @@ GO
 ALTER TABLE[Person].[BusinessEntityAddress]
 ADD CONSTRAINT[PK_BusinessEntityAddress_BusinessEntityID_AddressID_AddressTypeID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,AddressID ASC
-,AddressTypeID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[AddressID] ASC
+,[AddressTypeID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_BusinessEntityAddress_rowguid] ON[Person].[BusinessEntityAddress]
 (
@@ -1014,10 +1014,10 @@ GO
 ALTER TABLE[Person].[BusinessEntityContact]
 ADD CONSTRAINT[PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,PersonID ASC
-,ContactTypeID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[PersonID] ASC
+,[ContactTypeID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_BusinessEntityContact_rowguid] ON[Person].[BusinessEntityContact]
 (
@@ -1037,8 +1037,8 @@ GO
 ALTER TABLE[Person].[ContactType]
 ADD CONSTRAINT[PK_ContactType_ContactTypeID] PRIMARY KEY CLUSTERED
 (
-ContactTypeID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ContactTypeID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_ContactType_Name] ON[Person].[ContactType]
 (
@@ -1048,8 +1048,8 @@ GO
 ALTER TABLE[Person].[CountryRegion]
 ADD CONSTRAINT[PK_CountryRegion_CountryRegionCode] PRIMARY KEY CLUSTERED
 (
-CountryRegionCode ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[CountryRegionCode] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_CountryRegion_Name] ON[Person].[CountryRegion]
 (
@@ -1059,9 +1059,9 @@ GO
 ALTER TABLE[Person].[EmailAddress]
 ADD CONSTRAINT[PK_EmailAddress_BusinessEntityID_EmailAddressID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,EmailAddressID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[EmailAddressID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_EmailAddress_EmailAddress] ON[Person].[EmailAddress]
 (
@@ -1071,14 +1071,14 @@ GO
 ALTER TABLE[Person].[Password]
 ADD CONSTRAINT[PK_Password_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Person].[Person]
 ADD CONSTRAINT[PK_Person_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Person_rowguid] ON[Person].[Person]
 (
@@ -1095,10 +1095,10 @@ GO
 ALTER TABLE[Person].[PersonPhone]
 ADD CONSTRAINT[PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,PhoneNumber ASC
-,PhoneNumberTypeID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[PhoneNumber] ASC
+,[PhoneNumberTypeID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_PersonPhone_PhoneNumber] ON[Person].[PersonPhone]
 (
@@ -1108,14 +1108,14 @@ GO
 ALTER TABLE[Person].[PhoneNumberType]
 ADD CONSTRAINT[PK_PhoneNumberType_PhoneNumberTypeID] PRIMARY KEY CLUSTERED
 (
-PhoneNumberTypeID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[PhoneNumberTypeID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Person].[StateProvince]
 ADD CONSTRAINT[PK_StateProvince_StateProvinceID] PRIMARY KEY CLUSTERED
 (
-StateProvinceID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[StateProvinceID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_StateProvince_Name] ON[Person].[StateProvince]
 (
@@ -1136,8 +1136,8 @@ GO
 ALTER TABLE[Production].[BillOfMaterials]
 ADD CONSTRAINT[PK_BillOfMaterials_BillOfMaterialsID] PRIMARY KEY NONCLUSTERED
 (
-BillOfMaterialsID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BillOfMaterialsID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE CLUSTERED INDEX[AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate] ON[Production].[BillOfMaterials]
 (
@@ -1154,8 +1154,8 @@ GO
 ALTER TABLE[Production].[Culture]
 ADD CONSTRAINT[PK_Culture_CultureID] PRIMARY KEY CLUSTERED
 (
-CultureID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[CultureID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Culture_Name] ON[Production].[Culture]
 (
@@ -1165,8 +1165,8 @@ GO
 ALTER TABLE[Production].[Document]
 ADD CONSTRAINT[PK_Document_DocumentNode] PRIMARY KEY CLUSTERED
 (
-DocumentNode ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[DocumentNode] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Document_DocumentLevel_DocumentNode] ON[Production].[Document]
 (
@@ -1193,14 +1193,14 @@ GO
 ALTER TABLE[Production].[Illustration]
 ADD CONSTRAINT[PK_Illustration_IllustrationID] PRIMARY KEY CLUSTERED
 (
-IllustrationID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[IllustrationID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[Location]
 ADD CONSTRAINT[PK_Location_LocationID] PRIMARY KEY CLUSTERED
 (
-LocationID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[LocationID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Location_Name] ON[Production].[Location]
 (
@@ -1210,8 +1210,8 @@ GO
 ALTER TABLE[Production].[Product]
 ADD CONSTRAINT[PK_Product_ProductID] PRIMARY KEY CLUSTERED
 (
-ProductID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Product_Name] ON[Production].[Product]
 (
@@ -1231,8 +1231,8 @@ GO
 ALTER TABLE[Production].[ProductCategory]
 ADD CONSTRAINT[PK_ProductCategory_ProductCategoryID] PRIMARY KEY CLUSTERED
 (
-ProductCategoryID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductCategoryID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_ProductCategory_Name] ON[Production].[ProductCategory]
 (
@@ -1247,15 +1247,15 @@ GO
 ALTER TABLE[Production].[ProductCostHistory]
 ADD CONSTRAINT[PK_ProductCostHistory_ProductID_StartDate] PRIMARY KEY CLUSTERED
 (
-ProductID ASC
-,StartDate ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductID] ASC
+,[StartDate] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductDescription]
 ADD CONSTRAINT[PK_ProductDescription_ProductDescriptionID] PRIMARY KEY CLUSTERED
 (
-ProductDescriptionID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductDescriptionID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_ProductDescription_rowguid] ON[Production].[ProductDescription]
 (
@@ -1265,29 +1265,29 @@ GO
 ALTER TABLE[Production].[ProductDocument]
 ADD CONSTRAINT[PK_ProductDocument_ProductID_DocumentNode] PRIMARY KEY CLUSTERED
 (
-ProductID ASC
-,DocumentNode ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductID] ASC
+,[DocumentNode] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductInventory]
 ADD CONSTRAINT[PK_ProductInventory_ProductID_LocationID] PRIMARY KEY CLUSTERED
 (
-ProductID ASC
-,LocationID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductID] ASC
+,[LocationID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductListPriceHistory]
 ADD CONSTRAINT[PK_ProductListPriceHistory_ProductID_StartDate] PRIMARY KEY CLUSTERED
 (
-ProductID ASC
-,StartDate ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductID] ASC
+,[StartDate] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductModel]
 ADD CONSTRAINT[PK_ProductModel_ProductModelID] PRIMARY KEY CLUSTERED
 (
-ProductModelID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductModelID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_ProductModel_Name] ON[Production].[ProductModel]
 (
@@ -1302,36 +1302,36 @@ GO
 ALTER TABLE[Production].[ProductModelIllustration]
 ADD CONSTRAINT[PK_ProductModelIllustration_ProductModelID_IllustrationID] PRIMARY KEY CLUSTERED
 (
-ProductModelID ASC
-,IllustrationID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductModelID] ASC
+,[IllustrationID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductModelProductDescriptionCulture]
 ADD CONSTRAINT[PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID] PRIMARY KEY CLUSTERED
 (
-ProductModelID ASC
-,ProductDescriptionID ASC
-,CultureID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductModelID] ASC
+,[ProductDescriptionID] ASC
+,[CultureID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductPhoto]
 ADD CONSTRAINT[PK_ProductPhoto_ProductPhotoID] PRIMARY KEY CLUSTERED
 (
-ProductPhotoID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductPhotoID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductProductPhoto]
 ADD CONSTRAINT[PK_ProductProductPhoto_ProductID_ProductPhotoID] PRIMARY KEY NONCLUSTERED
 (
-ProductID ASC
-,ProductPhotoID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductID] ASC
+,[ProductPhotoID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[ProductReview]
 ADD CONSTRAINT[PK_ProductReview_ProductReviewID] PRIMARY KEY CLUSTERED
 (
-ProductReviewID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductReviewID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_ProductReview_ProductID_Name] ON[Production].[ProductReview]
 (
@@ -1343,8 +1343,8 @@ GO
 ALTER TABLE[Production].[ProductSubcategory]
 ADD CONSTRAINT[PK_ProductSubcategory_ProductSubcategoryID] PRIMARY KEY CLUSTERED
 (
-ProductSubcategoryID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductSubcategoryID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_ProductSubcategory_Name] ON[Production].[ProductSubcategory]
 (
@@ -1359,8 +1359,8 @@ GO
 ALTER TABLE[Production].[ScrapReason]
 ADD CONSTRAINT[PK_ScrapReason_ScrapReasonID] PRIMARY KEY CLUSTERED
 (
-ScrapReasonID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ScrapReasonID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_ScrapReason_Name] ON[Production].[ScrapReason]
 (
@@ -1370,8 +1370,8 @@ GO
 ALTER TABLE[Production].[TransactionHistory]
 ADD CONSTRAINT[PK_TransactionHistory_TransactionID] PRIMARY KEY CLUSTERED
 (
-TransactionID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[TransactionID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_TransactionHistory_ProductID] ON[Production].[TransactionHistory]
 (
@@ -1387,8 +1387,8 @@ GO
 ALTER TABLE[Production].[TransactionHistoryArchive]
 ADD CONSTRAINT[PK_TransactionHistoryArchive_TransactionID] PRIMARY KEY CLUSTERED
 (
-TransactionID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[TransactionID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_TransactionHistoryArchive_ProductID] ON[Production].[TransactionHistoryArchive]
 (
@@ -1404,8 +1404,8 @@ GO
 ALTER TABLE[Production].[UnitMeasure]
 ADD CONSTRAINT[PK_UnitMeasure_UnitMeasureCode] PRIMARY KEY CLUSTERED
 (
-UnitMeasureCode ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[UnitMeasureCode] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_UnitMeasure_Name] ON[Production].[UnitMeasure]
 (
@@ -1415,8 +1415,8 @@ GO
 ALTER TABLE[Production].[WorkOrder]
 ADD CONSTRAINT[PK_WorkOrder_WorkOrderID] PRIMARY KEY CLUSTERED
 (
-WorkOrderID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[WorkOrderID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_WorkOrder_ProductID] ON[Production].[WorkOrder]
 (
@@ -1431,10 +1431,10 @@ GO
 ALTER TABLE[Production].[WorkOrderRouting]
 ADD CONSTRAINT[PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence] PRIMARY KEY CLUSTERED
 (
-WorkOrderID ASC
-,ProductID ASC
-,OperationSequence ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[WorkOrderID] ASC
+,[ProductID] ASC
+,[OperationSequence] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_WorkOrderRouting_ProductID] ON[Production].[WorkOrderRouting]
 (
@@ -1444,9 +1444,9 @@ GO
 ALTER TABLE[Purchasing].[ProductVendor]
 ADD CONSTRAINT[PK_ProductVendor_ProductID_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-ProductID ASC
-,BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ProductID] ASC
+,[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_ProductVendor_BusinessEntityID] ON[Purchasing].[ProductVendor]
 (
@@ -1461,9 +1461,9 @@ GO
 ALTER TABLE[Purchasing].[PurchaseOrderDetail]
 ADD CONSTRAINT[PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID] PRIMARY KEY CLUSTERED
 (
-PurchaseOrderID ASC
-,PurchaseOrderDetailID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[PurchaseOrderID] ASC
+,[PurchaseOrderDetailID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_PurchaseOrderDetail_ProductID] ON[Purchasing].[PurchaseOrderDetail]
 (
@@ -1473,8 +1473,8 @@ GO
 ALTER TABLE[Purchasing].[PurchaseOrderHeader]
 ADD CONSTRAINT[PK_PurchaseOrderHeader_PurchaseOrderID] PRIMARY KEY CLUSTERED
 (
-PurchaseOrderID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[PurchaseOrderID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_PurchaseOrderHeader_EmployeeID] ON[Purchasing].[PurchaseOrderHeader]
 (
@@ -1489,8 +1489,8 @@ GO
 ALTER TABLE[Purchasing].[ShipMethod]
 ADD CONSTRAINT[PK_ShipMethod_ShipMethodID] PRIMARY KEY CLUSTERED
 (
-ShipMethodID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ShipMethodID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_ShipMethod_Name] ON[Purchasing].[ShipMethod]
 (
@@ -1505,8 +1505,8 @@ GO
 ALTER TABLE[Purchasing].[Vendor]
 ADD CONSTRAINT[PK_Vendor_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Vendor_AccountNumber] ON[Purchasing].[Vendor]
 (
@@ -1516,9 +1516,9 @@ GO
 ALTER TABLE[Sales].[CountryRegionCurrency]
 ADD CONSTRAINT[PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode] PRIMARY KEY CLUSTERED
 (
-CountryRegionCode ASC
-,CurrencyCode ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[CountryRegionCode] ASC
+,[CurrencyCode] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_CountryRegionCurrency_CurrencyCode] ON[Sales].[CountryRegionCurrency]
 (
@@ -1528,8 +1528,8 @@ GO
 ALTER TABLE[Sales].[CreditCard]
 ADD CONSTRAINT[PK_CreditCard_CreditCardID] PRIMARY KEY CLUSTERED
 (
-CreditCardID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[CreditCardID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_CreditCard_CardNumber] ON[Sales].[CreditCard]
 (
@@ -1539,8 +1539,8 @@ GO
 ALTER TABLE[Sales].[Currency]
 ADD CONSTRAINT[PK_Currency_CurrencyCode] PRIMARY KEY CLUSTERED
 (
-CurrencyCode ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[CurrencyCode] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Currency_Name] ON[Sales].[Currency]
 (
@@ -1550,8 +1550,8 @@ GO
 ALTER TABLE[Sales].[CurrencyRate]
 ADD CONSTRAINT[PK_CurrencyRate_CurrencyRateID] PRIMARY KEY CLUSTERED
 (
-CurrencyRateID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[CurrencyRateID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode] ON[Sales].[CurrencyRate]
 (
@@ -1563,8 +1563,8 @@ GO
 ALTER TABLE[Sales].[Customer]
 ADD CONSTRAINT[PK_Customer_CustomerID] PRIMARY KEY CLUSTERED
 (
-CustomerID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[CustomerID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Customer_AccountNumber] ON[Sales].[Customer]
 (
@@ -1584,16 +1584,16 @@ GO
 ALTER TABLE[Sales].[PersonCreditCard]
 ADD CONSTRAINT[PK_PersonCreditCard_BusinessEntityID_CreditCardID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,CreditCardID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[CreditCardID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Sales].[SalesOrderDetail]
 ADD CONSTRAINT[PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID] PRIMARY KEY CLUSTERED
 (
-SalesOrderID ASC
-,SalesOrderDetailID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SalesOrderID] ASC
+,[SalesOrderDetailID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SalesOrderDetail_rowguid] ON[Sales].[SalesOrderDetail]
 (
@@ -1608,8 +1608,8 @@ GO
 ALTER TABLE[Sales].[SalesOrderHeader]
 ADD CONSTRAINT[PK_SalesOrderHeader_SalesOrderID] PRIMARY KEY CLUSTERED
 (
-SalesOrderID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SalesOrderID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SalesOrderHeader_rowguid] ON[Sales].[SalesOrderHeader]
 (
@@ -1634,15 +1634,15 @@ GO
 ALTER TABLE[Sales].[SalesOrderHeaderSalesReason]
 ADD CONSTRAINT[PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID] PRIMARY KEY CLUSTERED
 (
-SalesOrderID ASC
-,SalesReasonID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SalesOrderID] ASC
+,[SalesReasonID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Sales].[SalesPerson]
 ADD CONSTRAINT[PK_SalesPerson_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SalesPerson_rowguid] ON[Sales].[SalesPerson]
 (
@@ -1652,9 +1652,9 @@ GO
 ALTER TABLE[Sales].[SalesPersonQuotaHistory]
 ADD CONSTRAINT[PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,QuotaDate ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[QuotaDate] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SalesPersonQuotaHistory_rowguid] ON[Sales].[SalesPersonQuotaHistory]
 (
@@ -1664,14 +1664,14 @@ GO
 ALTER TABLE[Sales].[SalesReason]
 ADD CONSTRAINT[PK_SalesReason_SalesReasonID] PRIMARY KEY CLUSTERED
 (
-SalesReasonID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SalesReasonID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Sales].[SalesTaxRate]
 ADD CONSTRAINT[PK_SalesTaxRate_SalesTaxRateID] PRIMARY KEY CLUSTERED
 (
-SalesTaxRateID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SalesTaxRateID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SalesTaxRate_rowguid] ON[Sales].[SalesTaxRate]
 (
@@ -1687,8 +1687,8 @@ GO
 ALTER TABLE[Sales].[SalesTerritory]
 ADD CONSTRAINT[PK_SalesTerritory_TerritoryID] PRIMARY KEY CLUSTERED
 (
-TerritoryID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[TerritoryID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SalesTerritory_Name] ON[Sales].[SalesTerritory]
 (
@@ -1703,10 +1703,10 @@ GO
 ALTER TABLE[Sales].[SalesTerritoryHistory]
 ADD CONSTRAINT[PK_SalesTerritoryHistory_BusinessEntityID_StartDate_TerritoryID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-,StartDate ASC
-,TerritoryID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+,[StartDate] ASC
+,[TerritoryID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SalesTerritoryHistory_rowguid] ON[Sales].[SalesTerritoryHistory]
 (
@@ -1716,8 +1716,8 @@ GO
 ALTER TABLE[Sales].[ShoppingCartItem]
 ADD CONSTRAINT[PK_ShoppingCartItem_ShoppingCartItemID] PRIMARY KEY CLUSTERED
 (
-ShoppingCartItemID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[ShoppingCartItemID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_ShoppingCartItem_ShoppingCartID_ProductID] ON[Sales].[ShoppingCartItem]
 (
@@ -1728,8 +1728,8 @@ GO
 ALTER TABLE[Sales].[SpecialOffer]
 ADD CONSTRAINT[PK_SpecialOffer_SpecialOfferID] PRIMARY KEY CLUSTERED
 (
-SpecialOfferID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SpecialOfferID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SpecialOffer_rowguid] ON[Sales].[SpecialOffer]
 (
@@ -1739,9 +1739,9 @@ GO
 ALTER TABLE[Sales].[SpecialOfferProduct]
 ADD CONSTRAINT[PK_SpecialOfferProduct_SpecialOfferID_ProductID] PRIMARY KEY CLUSTERED
 (
-SpecialOfferID ASC
-,ProductID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[SpecialOfferID] ASC
+,[ProductID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_SpecialOfferProduct_rowguid] ON[Sales].[SpecialOfferProduct]
 (
@@ -1756,8 +1756,8 @@ GO
 ALTER TABLE[Sales].[Store]
 ADD CONSTRAINT[PK_Store_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
-BusinessEntityID ASC
-)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[BusinessEntityID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_Store_rowguid] ON[Sales].[Store]
 (
@@ -1768,6 +1768,614 @@ CREATE  NONCLUSTERED INDEX[IX_Store_SalesPersonID] ON[Sales].[Store]
 (
 [SalesPersonID] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+
+ALTER TABLE[dbo].[AWBuildVersion]
+ADD CONSTRAINT[DF_AWBuildVersion_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[dbo].[ErrorLog]
+ADD CONSTRAINT[DF_ErrorLog_ErrorTime]  DEFAULT(getdate()) FOR[ErrorTime]
+GO
+
+ALTER TABLE[HumanResources].[Department]
+ADD CONSTRAINT[DF_Department_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[HumanResources].[Employee]
+ADD CONSTRAINT[DF_Employee_CurrentFlag]  DEFAULT((1)) FOR[CurrentFlag]
+GO
+
+ALTER TABLE[HumanResources].[Employee]
+ADD CONSTRAINT[DF_Employee_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[HumanResources].[Employee]
+ADD CONSTRAINT[DF_Employee_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[HumanResources].[Employee]
+ADD CONSTRAINT[DF_Employee_SalariedFlag]  DEFAULT((1)) FOR[SalariedFlag]
+GO
+
+ALTER TABLE[HumanResources].[Employee]
+ADD CONSTRAINT[DF_Employee_SickLeaveHours]  DEFAULT((0)) FOR[SickLeaveHours]
+GO
+
+ALTER TABLE[HumanResources].[Employee]
+ADD CONSTRAINT[DF_Employee_VacationHours]  DEFAULT((0)) FOR[VacationHours]
+GO
+
+ALTER TABLE[HumanResources].[EmployeeDepartmentHistory]
+ADD CONSTRAINT[DF_EmployeeDepartmentHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[HumanResources].[EmployeePayHistory]
+ADD CONSTRAINT[DF_EmployeePayHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[HumanResources].[JobCandidate]
+ADD CONSTRAINT[DF_JobCandidate_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[HumanResources].[Shift]
+ADD CONSTRAINT[DF_Shift_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[Address]
+ADD CONSTRAINT[DF_Address_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[Address]
+ADD CONSTRAINT[DF_Address_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[AddressType]
+ADD CONSTRAINT[DF_AddressType_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[AddressType]
+ADD CONSTRAINT[DF_AddressType_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[BusinessEntity]
+ADD CONSTRAINT[DF_BusinessEntity_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[BusinessEntity]
+ADD CONSTRAINT[DF_BusinessEntity_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[BusinessEntityAddress]
+ADD CONSTRAINT[DF_BusinessEntityAddress_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[BusinessEntityAddress]
+ADD CONSTRAINT[DF_BusinessEntityAddress_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[BusinessEntityContact]
+ADD CONSTRAINT[DF_BusinessEntityContact_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[BusinessEntityContact]
+ADD CONSTRAINT[DF_BusinessEntityContact_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[ContactType]
+ADD CONSTRAINT[DF_ContactType_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[CountryRegion]
+ADD CONSTRAINT[DF_CountryRegion_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[EmailAddress]
+ADD CONSTRAINT[DF_EmailAddress_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[EmailAddress]
+ADD CONSTRAINT[DF_EmailAddress_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[Password]
+ADD CONSTRAINT[DF_Password_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[Password]
+ADD CONSTRAINT[DF_Password_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[Person]
+ADD CONSTRAINT[DF_Person_EmailPromotion]  DEFAULT((0)) FOR[EmailPromotion]
+GO
+
+ALTER TABLE[Person].[Person]
+ADD CONSTRAINT[DF_Person_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[Person]
+ADD CONSTRAINT[DF_Person_NameStyle]  DEFAULT((0)) FOR[NameStyle]
+GO
+
+ALTER TABLE[Person].[Person]
+ADD CONSTRAINT[DF_Person_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Person].[PersonPhone]
+ADD CONSTRAINT[DF_PersonPhone_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[PhoneNumberType]
+ADD CONSTRAINT[DF_PhoneNumberType_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[StateProvince]
+ADD CONSTRAINT[DF_StateProvince_IsOnlyStateProvinceFlag]  DEFAULT((1)) FOR[IsOnlyStateProvinceFlag]
+GO
+
+ALTER TABLE[Person].[StateProvince]
+ADD CONSTRAINT[DF_StateProvince_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Person].[StateProvince]
+ADD CONSTRAINT[DF_StateProvince_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[BillOfMaterials]
+ADD CONSTRAINT[DF_BillOfMaterials_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[BillOfMaterials]
+ADD CONSTRAINT[DF_BillOfMaterials_PerAssemblyQty]  DEFAULT((1.00)) FOR[PerAssemblyQty]
+GO
+
+ALTER TABLE[Production].[BillOfMaterials]
+ADD CONSTRAINT[DF_BillOfMaterials_StartDate]  DEFAULT(getdate()) FOR[StartDate]
+GO
+
+ALTER TABLE[Production].[Culture]
+ADD CONSTRAINT[DF_Culture_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[Document]
+ADD CONSTRAINT[DF_Document_ChangeNumber]  DEFAULT((0)) FOR[ChangeNumber]
+GO
+
+ALTER TABLE[Production].[Document]
+ADD CONSTRAINT[DF_Document_FolderFlag]  DEFAULT((0)) FOR[FolderFlag]
+GO
+
+ALTER TABLE[Production].[Document]
+ADD CONSTRAINT[DF_Document_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[Document]
+ADD CONSTRAINT[DF_Document_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[Illustration]
+ADD CONSTRAINT[DF_Illustration_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[Location]
+ADD CONSTRAINT[DF_Location_Availability]  DEFAULT((0.00)) FOR[Availability]
+GO
+
+ALTER TABLE[Production].[Location]
+ADD CONSTRAINT[DF_Location_CostRate]  DEFAULT((0.00)) FOR[CostRate]
+GO
+
+ALTER TABLE[Production].[Location]
+ADD CONSTRAINT[DF_Location_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[Product]
+ADD CONSTRAINT[DF_Product_FinishedGoodsFlag]  DEFAULT((1)) FOR[FinishedGoodsFlag]
+GO
+
+ALTER TABLE[Production].[Product]
+ADD CONSTRAINT[DF_Product_MakeFlag]  DEFAULT((1)) FOR[MakeFlag]
+GO
+
+ALTER TABLE[Production].[Product]
+ADD CONSTRAINT[DF_Product_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[Product]
+ADD CONSTRAINT[DF_Product_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[ProductCategory]
+ADD CONSTRAINT[DF_ProductCategory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductCategory]
+ADD CONSTRAINT[DF_ProductCategory_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[ProductCostHistory]
+ADD CONSTRAINT[DF_ProductCostHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductDescription]
+ADD CONSTRAINT[DF_ProductDescription_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductDescription]
+ADD CONSTRAINT[DF_ProductDescription_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[ProductDocument]
+ADD CONSTRAINT[DF_ProductDocument_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductInventory]
+ADD CONSTRAINT[DF_ProductInventory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductInventory]
+ADD CONSTRAINT[DF_ProductInventory_Quantity]  DEFAULT((0)) FOR[Quantity]
+GO
+
+ALTER TABLE[Production].[ProductInventory]
+ADD CONSTRAINT[DF_ProductInventory_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[ProductListPriceHistory]
+ADD CONSTRAINT[DF_ProductListPriceHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductModel]
+ADD CONSTRAINT[DF_ProductModel_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductModel]
+ADD CONSTRAINT[DF_ProductModel_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[ProductModelIllustration]
+ADD CONSTRAINT[DF_ProductModelIllustration_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductModelProductDescriptionCulture]
+ADD CONSTRAINT[DF_ProductModelProductDescriptionCulture_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductPhoto]
+ADD CONSTRAINT[DF_ProductPhoto_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductProductPhoto]
+ADD CONSTRAINT[DF_ProductProductPhoto_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductProductPhoto]
+ADD CONSTRAINT[DF_ProductProductPhoto_Primary]  DEFAULT((0)) FOR[Primary]
+GO
+
+ALTER TABLE[Production].[ProductReview]
+ADD CONSTRAINT[DF_ProductReview_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductReview]
+ADD CONSTRAINT[DF_ProductReview_ReviewDate]  DEFAULT(getdate()) FOR[ReviewDate]
+GO
+
+ALTER TABLE[Production].[ProductSubcategory]
+ADD CONSTRAINT[DF_ProductSubcategory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[ProductSubcategory]
+ADD CONSTRAINT[DF_ProductSubcategory_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Production].[ScrapReason]
+ADD CONSTRAINT[DF_ScrapReason_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[TransactionHistory]
+ADD CONSTRAINT[DF_TransactionHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[TransactionHistory]
+ADD CONSTRAINT[DF_TransactionHistory_ReferenceOrderLineID]  DEFAULT((0)) FOR[ReferenceOrderLineID]
+GO
+
+ALTER TABLE[Production].[TransactionHistory]
+ADD CONSTRAINT[DF_TransactionHistory_TransactionDate]  DEFAULT(getdate()) FOR[TransactionDate]
+GO
+
+ALTER TABLE[Production].[TransactionHistoryArchive]
+ADD CONSTRAINT[DF_TransactionHistoryArchive_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[TransactionHistoryArchive]
+ADD CONSTRAINT[DF_TransactionHistoryArchive_ReferenceOrderLineID]  DEFAULT((0)) FOR[ReferenceOrderLineID]
+GO
+
+ALTER TABLE[Production].[TransactionHistoryArchive]
+ADD CONSTRAINT[DF_TransactionHistoryArchive_TransactionDate]  DEFAULT(getdate()) FOR[TransactionDate]
+GO
+
+ALTER TABLE[Production].[UnitMeasure]
+ADD CONSTRAINT[DF_UnitMeasure_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[WorkOrder]
+ADD CONSTRAINT[DF_WorkOrder_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Production].[WorkOrderRouting]
+ADD CONSTRAINT[DF_WorkOrderRouting_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Purchasing].[ProductVendor]
+ADD CONSTRAINT[DF_ProductVendor_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderDetail]
+ADD CONSTRAINT[DF_PurchaseOrderDetail_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]
+ADD CONSTRAINT[DF_PurchaseOrderHeader_Freight]  DEFAULT((0.00)) FOR[Freight]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]
+ADD CONSTRAINT[DF_PurchaseOrderHeader_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]
+ADD CONSTRAINT[DF_PurchaseOrderHeader_OrderDate]  DEFAULT(getdate()) FOR[OrderDate]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]
+ADD CONSTRAINT[DF_PurchaseOrderHeader_RevisionNumber]  DEFAULT((0)) FOR[RevisionNumber]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]
+ADD CONSTRAINT[DF_PurchaseOrderHeader_Status]  DEFAULT((1)) FOR[Status]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]
+ADD CONSTRAINT[DF_PurchaseOrderHeader_SubTotal]  DEFAULT((0.00)) FOR[SubTotal]
+GO
+
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]
+ADD CONSTRAINT[DF_PurchaseOrderHeader_TaxAmt]  DEFAULT((0.00)) FOR[TaxAmt]
+GO
+
+ALTER TABLE[Purchasing].[ShipMethod]
+ADD CONSTRAINT[DF_ShipMethod_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Purchasing].[ShipMethod]
+ADD CONSTRAINT[DF_ShipMethod_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Purchasing].[ShipMethod]
+ADD CONSTRAINT[DF_ShipMethod_ShipBase]  DEFAULT((0.00)) FOR[ShipBase]
+GO
+
+ALTER TABLE[Purchasing].[ShipMethod]
+ADD CONSTRAINT[DF_ShipMethod_ShipRate]  DEFAULT((0.00)) FOR[ShipRate]
+GO
+
+ALTER TABLE[Purchasing].[Vendor]
+ADD CONSTRAINT[DF_Vendor_ActiveFlag]  DEFAULT((1)) FOR[ActiveFlag]
+GO
+
+ALTER TABLE[Purchasing].[Vendor]
+ADD CONSTRAINT[DF_Vendor_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Purchasing].[Vendor]
+ADD CONSTRAINT[DF_Vendor_PreferredVendorStatus]  DEFAULT((1)) FOR[PreferredVendorStatus]
+GO
+
+ALTER TABLE[Sales].[CountryRegionCurrency]
+ADD CONSTRAINT[DF_CountryRegionCurrency_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[CreditCard]
+ADD CONSTRAINT[DF_CreditCard_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[Currency]
+ADD CONSTRAINT[DF_Currency_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[CurrencyRate]
+ADD CONSTRAINT[DF_CurrencyRate_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[Customer]
+ADD CONSTRAINT[DF_Customer_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[Customer]
+ADD CONSTRAINT[DF_Customer_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[PersonCreditCard]
+ADD CONSTRAINT[DF_PersonCreditCard_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesOrderDetail]
+ADD CONSTRAINT[DF_SalesOrderDetail_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesOrderDetail]
+ADD CONSTRAINT[DF_SalesOrderDetail_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[SalesOrderDetail]
+ADD CONSTRAINT[DF_SalesOrderDetail_UnitPriceDiscount]  DEFAULT((0.0)) FOR[UnitPriceDiscount]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_Freight]  DEFAULT((0.00)) FOR[Freight]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_OnlineOrderFlag]  DEFAULT((1)) FOR[OnlineOrderFlag]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_OrderDate]  DEFAULT(getdate()) FOR[OrderDate]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_RevisionNumber]  DEFAULT((0)) FOR[RevisionNumber]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_Status]  DEFAULT((1)) FOR[Status]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_SubTotal]  DEFAULT((0.00)) FOR[SubTotal]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeader]
+ADD CONSTRAINT[DF_SalesOrderHeader_TaxAmt]  DEFAULT((0.00)) FOR[TaxAmt]
+GO
+
+ALTER TABLE[Sales].[SalesOrderHeaderSalesReason]
+ADD CONSTRAINT[DF_SalesOrderHeaderSalesReason_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesPerson]
+ADD CONSTRAINT[DF_SalesPerson_Bonus]  DEFAULT((0.00)) FOR[Bonus]
+GO
+
+ALTER TABLE[Sales].[SalesPerson]
+ADD CONSTRAINT[DF_SalesPerson_CommissionPct]  DEFAULT((0.00)) FOR[CommissionPct]
+GO
+
+ALTER TABLE[Sales].[SalesPerson]
+ADD CONSTRAINT[DF_SalesPerson_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesPerson]
+ADD CONSTRAINT[DF_SalesPerson_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[SalesPerson]
+ADD CONSTRAINT[DF_SalesPerson_SalesLastYear]  DEFAULT((0.00)) FOR[SalesLastYear]
+GO
+
+ALTER TABLE[Sales].[SalesPerson]
+ADD CONSTRAINT[DF_SalesPerson_SalesYTD]  DEFAULT((0.00)) FOR[SalesYTD]
+GO
+
+ALTER TABLE[Sales].[SalesPersonQuotaHistory]
+ADD CONSTRAINT[DF_SalesPersonQuotaHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesPersonQuotaHistory]
+ADD CONSTRAINT[DF_SalesPersonQuotaHistory_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[SalesReason]
+ADD CONSTRAINT[DF_SalesReason_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesTaxRate]
+ADD CONSTRAINT[DF_SalesTaxRate_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesTaxRate]
+ADD CONSTRAINT[DF_SalesTaxRate_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[SalesTaxRate]
+ADD CONSTRAINT[DF_SalesTaxRate_TaxRate]  DEFAULT((0.00)) FOR[TaxRate]
+GO
+
+ALTER TABLE[Sales].[SalesTerritory]
+ADD CONSTRAINT[DF_SalesTerritory_CostLastYear]  DEFAULT((0.00)) FOR[CostLastYear]
+GO
+
+ALTER TABLE[Sales].[SalesTerritory]
+ADD CONSTRAINT[DF_SalesTerritory_CostYTD]  DEFAULT((0.00)) FOR[CostYTD]
+GO
+
+ALTER TABLE[Sales].[SalesTerritory]
+ADD CONSTRAINT[DF_SalesTerritory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesTerritory]
+ADD CONSTRAINT[DF_SalesTerritory_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[SalesTerritory]
+ADD CONSTRAINT[DF_SalesTerritory_SalesLastYear]  DEFAULT((0.00)) FOR[SalesLastYear]
+GO
+
+ALTER TABLE[Sales].[SalesTerritory]
+ADD CONSTRAINT[DF_SalesTerritory_SalesYTD]  DEFAULT((0.00)) FOR[SalesYTD]
+GO
+
+ALTER TABLE[Sales].[SalesTerritoryHistory]
+ADD CONSTRAINT[DF_SalesTerritoryHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SalesTerritoryHistory]
+ADD CONSTRAINT[DF_SalesTerritoryHistory_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[ShoppingCartItem]
+ADD CONSTRAINT[DF_ShoppingCartItem_DateCreated]  DEFAULT(getdate()) FOR[DateCreated]
+GO
+
+ALTER TABLE[Sales].[ShoppingCartItem]
+ADD CONSTRAINT[DF_ShoppingCartItem_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[ShoppingCartItem]
+ADD CONSTRAINT[DF_ShoppingCartItem_Quantity]  DEFAULT((1)) FOR[Quantity]
+GO
+
+ALTER TABLE[Sales].[SpecialOffer]
+ADD CONSTRAINT[DF_SpecialOffer_DiscountPct]  DEFAULT((0.00)) FOR[DiscountPct]
+GO
+
+ALTER TABLE[Sales].[SpecialOffer]
+ADD CONSTRAINT[DF_SpecialOffer_MinQty]  DEFAULT((0)) FOR[MinQty]
+GO
+
+ALTER TABLE[Sales].[SpecialOffer]
+ADD CONSTRAINT[DF_SpecialOffer_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SpecialOffer]
+ADD CONSTRAINT[DF_SpecialOffer_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[SpecialOfferProduct]
+ADD CONSTRAINT[DF_SpecialOfferProduct_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[SpecialOfferProduct]
+ADD CONSTRAINT[DF_SpecialOfferProduct_rowguid]  DEFAULT(newid()) FOR[rowguid]
+GO
+
+ALTER TABLE[Sales].[Store]
+ADD CONSTRAINT[DF_Store_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
+GO
+
+ALTER TABLE[Sales].[Store]
+ADD CONSTRAINT[DF_Store_rowguid]  DEFAULT(newid()) FOR[rowguid]
 GO
 
 

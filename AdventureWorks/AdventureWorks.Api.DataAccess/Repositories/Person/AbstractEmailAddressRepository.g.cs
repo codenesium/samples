@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALEmailAddressMapper Mapper { get; }
 
 		public AbstractEmailAddressRepository(
-			IDALEmailAddressMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOEmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<EmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOEmailAddress> Get(int businessEntityID)
+		public async virtual Task<EmailAddress> Get(int businessEntityID)
 		{
-			EmailAddress record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOEmailAddress> Create(
-			DTOEmailAddress dto)
+		public async virtual Task<EmailAddress> Create(EmailAddress item)
 		{
-			EmailAddress record = new EmailAddress();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<EmailAddress>().Add(record);
+			this.Context.Set<EmailAddress>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOEmailAddress dto)
+		public async virtual Task Update(EmailAddress item)
 		{
-			EmailAddress record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<EmailAddress>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<EmailAddress>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOEmailAddress>> GetEmailAddress(string emailAddress1)
+		public async Task<List<EmailAddress>> GetEmailAddress(string emailAddress1)
 		{
-			var records = await this.SearchLinqDTO(x => x.EmailAddress1 == emailAddress1);
+			var records = await this.SearchLinqEF(x => x.EmailAddress1 == emailAddress1);
 
 			return records;
 		}
 
-		protected async Task<List<DTOEmailAddress>> Where(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<EmailAddress>> Where(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOEmailAddress> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOEmailAddress>> SearchLinqDTO(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOEmailAddress> response = new List<DTOEmailAddress>();
 			List<EmailAddress> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<EmailAddress>> SearchLinqEF(Expression<Func<EmailAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>43df613b9df50ba2d021c26b331cf6b0</Hash>
+    <Hash>26e8d673b9bf9b212725da016fbcdb9d</Hash>
 </Codenesium>*/

@@ -6,13 +6,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("WorkOrderRouting", Schema="Production")]
-	public partial class WorkOrderRouting: AbstractEntityFrameworkDTO
+	public partial class WorkOrderRouting: AbstractEntity
 	{
 		public WorkOrderRouting()
 		{}
 
 		public void SetProperties(
-			int workOrderID,
 			Nullable<decimal> actualCost,
 			Nullable<DateTime> actualEndDate,
 			Nullable<decimal> actualResourceHrs,
@@ -23,7 +22,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			decimal plannedCost,
 			int productID,
 			DateTime scheduledEndDate,
-			DateTime scheduledStartDate)
+			DateTime scheduledStartDate,
+			int workOrderID)
 		{
 			this.ActualCost = actualCost.ToNullableDecimal();
 			this.ActualEndDate = actualEndDate.ToNullableDateTime();
@@ -40,44 +40,44 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ActualCost", TypeName="money")]
-		public Nullable<decimal> ActualCost { get; set; }
+		public Nullable<decimal> ActualCost { get; private set; }
 
 		[Column("ActualEndDate", TypeName="datetime")]
-		public Nullable<DateTime> ActualEndDate { get; set; }
+		public Nullable<DateTime> ActualEndDate { get; private set; }
 
 		[Column("ActualResourceHrs", TypeName="decimal")]
-		public Nullable<decimal> ActualResourceHrs { get; set; }
+		public Nullable<decimal> ActualResourceHrs { get; private set; }
 
 		[Column("ActualStartDate", TypeName="datetime")]
-		public Nullable<DateTime> ActualStartDate { get; set; }
+		public Nullable<DateTime> ActualStartDate { get; private set; }
 
 		[Column("LocationID", TypeName="smallint")]
-		public short LocationID { get; set; }
+		public short LocationID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("OperationSequence", TypeName="smallint")]
-		public short OperationSequence { get; set; }
+		public short OperationSequence { get; private set; }
 
 		[Column("PlannedCost", TypeName="money")]
-		public decimal PlannedCost { get; set; }
+		public decimal PlannedCost { get; private set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
 		[Column("ScheduledEndDate", TypeName="datetime")]
-		public DateTime ScheduledEndDate { get; set; }
+		public DateTime ScheduledEndDate { get; private set; }
 
 		[Column("ScheduledStartDate", TypeName="datetime")]
-		public DateTime ScheduledStartDate { get; set; }
+		public DateTime ScheduledStartDate { get; private set; }
 
 		[Key]
 		[Column("WorkOrderID", TypeName="int")]
-		public int WorkOrderID { get; set; }
+		public int WorkOrderID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>309789558984d8ebe0472a0e2b8680f6</Hash>
+    <Hash>9271ce135540ef8ec22d63f0d3f85a57</Hash>
 </Codenesium>*/

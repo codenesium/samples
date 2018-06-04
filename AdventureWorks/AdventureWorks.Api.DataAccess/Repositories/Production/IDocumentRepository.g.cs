@@ -2,28 +2,26 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IDocumentRepository
 	{
-		Task<DTODocument> Create(DTODocument dto);
+		Task<Document> Create(Document item);
 
-		Task Update(Guid documentNode,
-		            DTODocument dto);
+		Task Update(Document item);
 
 		Task Delete(Guid documentNode);
 
-		Task<DTODocument> Get(Guid documentNode);
+		Task<Document> Get(Guid documentNode);
 
-		Task<List<DTODocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Document>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTODocument> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode);
-		Task<List<DTODocument>> GetFileNameRevision(string fileName,string revision);
+		Task<Document> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode);
+		Task<List<Document>> GetFileNameRevision(string fileName,string revision);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3c8aca7666864d4792ba35a400812f49</Hash>
+    <Hash>2b8e47594f6be4c87f3c1af9eb621ad7</Hash>
 </Codenesium>*/

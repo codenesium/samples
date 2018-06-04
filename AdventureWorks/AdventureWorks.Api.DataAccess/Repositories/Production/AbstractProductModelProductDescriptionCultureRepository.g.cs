@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALProductModelProductDescriptionCultureMapper Mapper { get; }
 
 		public AbstractProductModelProductDescriptionCultureRepository(
-			IDALProductModelProductDescriptionCultureMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<ProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOProductModelProductDescriptionCulture> Get(int productModelID)
+		public async virtual Task<ProductModelProductDescriptionCulture> Get(int productModelID)
 		{
-			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(productModelID);
 		}
 
-		public async virtual Task<DTOProductModelProductDescriptionCulture> Create(
-			DTOProductModelProductDescriptionCulture dto)
+		public async virtual Task<ProductModelProductDescriptionCulture> Create(ProductModelProductDescriptionCulture item)
 		{
-			ProductModelProductDescriptionCulture record = new ProductModelProductDescriptionCulture();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<ProductModelProductDescriptionCulture>().Add(record);
+			this.Context.Set<ProductModelProductDescriptionCulture>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int productModelID,
-			DTOProductModelProductDescriptionCulture dto)
+		public async virtual Task Update(ProductModelProductDescriptionCulture item)
 		{
-			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
-
-			if (record == null)
+			var entity = this.Context.Set<ProductModelProductDescriptionCulture>().Local.FirstOrDefault(x => x.ProductModelID == item.ProductModelID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{productModelID}");
+				this.Context.Set<ProductModelProductDescriptionCulture>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					productModelID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,20 +74,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		protected async Task<List<DTOProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<ProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOProductModelProductDescriptionCulture> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOProductModelProductDescriptionCulture>> SearchLinqDTO(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOProductModelProductDescriptionCulture> response = new List<DTOProductModelProductDescriptionCulture>();
 			List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEF(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -138,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0783a4e9ed22198bed30055d5bd2221f</Hash>
+    <Hash>b087a65462b3d15bce22fa0f6fef2c87</Hash>
 </Codenesium>*/

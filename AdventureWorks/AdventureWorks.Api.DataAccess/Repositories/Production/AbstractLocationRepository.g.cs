@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALLocationMapper Mapper { get; }
 
 		public AbstractLocationRepository(
-			IDALLocationMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOLocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Location>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOLocation> Get(short locationID)
+		public async virtual Task<Location> Get(short locationID)
 		{
-			Location record = await this.GetById(locationID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(locationID);
 		}
 
-		public async virtual Task<DTOLocation> Create(
-			DTOLocation dto)
+		public async virtual Task<Location> Create(Location item)
 		{
-			Location record = new Location();
-
-			this.Mapper.MapDTOToEF(
-				default (short),
-				dto,
-				record);
-
-			this.Context.Set<Location>().Add(record);
+			this.Context.Set<Location>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			short locationID,
-			DTOLocation dto)
+		public async virtual Task Update(Location item)
 		{
-			Location record = await this.GetById(locationID);
-
-			if (record == null)
+			var entity = this.Context.Set<Location>().Local.FirstOrDefault(x => x.LocationID == item.LocationID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{locationID}");
+				this.Context.Set<Location>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					locationID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOLocation> GetName(string name)
+		public async Task<Location> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOLocation>> Where(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Location>> Where(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOLocation> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOLocation>> SearchLinqDTO(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOLocation> response = new List<DTOLocation>();
 			List<Location> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Location>> SearchLinqEF(Expression<Func<Location, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4cea7e7a904c1c82bccf8a2e5bd21010</Hash>
+    <Hash>6a5e868f059952b3e6ac38cacf582384</Hash>
 </Codenesium>*/

@@ -6,17 +6,17 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ShipMethod", Schema="Purchasing")]
-	public partial class ShipMethod: AbstractEntityFrameworkDTO
+	public partial class ShipMethod: AbstractEntity
 	{
 		public ShipMethod()
 		{}
 
 		public void SetProperties(
-			int shipMethodID,
 			DateTime modifiedDate,
 			string name,
 			Guid rowguid,
 			decimal shipBase,
+			int shipMethodID,
 			decimal shipRate)
 		{
 			this.ModifiedDate = modifiedDate.ToDateTime();
@@ -28,27 +28,26 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("Name", TypeName="nvarchar(50)")]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("ShipBase", TypeName="money")]
-		public decimal ShipBase { get; set; }
+		public decimal ShipBase { get; private set; }
 
 		[Key]
 		[Column("ShipMethodID", TypeName="int")]
-		public int ShipMethodID { get; set; }
+		public int ShipMethodID { get; private set; }
 
 		[Column("ShipRate", TypeName="money")]
-		public decimal ShipRate { get; set; }
+		public decimal ShipRate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f947530c81245387520cd00e6fec7b1</Hash>
+    <Hash>6dd986149862bd0866aab59f0cb74af9</Hash>
 </Codenesium>*/

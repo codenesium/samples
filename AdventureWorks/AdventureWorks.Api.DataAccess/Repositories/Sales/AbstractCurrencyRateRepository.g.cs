@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALCurrencyRateMapper Mapper { get; }
 
 		public AbstractCurrencyRateRepository(
-			IDALCurrencyRateMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOCurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<CurrencyRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOCurrencyRate> Get(int currencyRateID)
+		public async virtual Task<CurrencyRate> Get(int currencyRateID)
 		{
-			CurrencyRate record = await this.GetById(currencyRateID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(currencyRateID);
 		}
 
-		public async virtual Task<DTOCurrencyRate> Create(
-			DTOCurrencyRate dto)
+		public async virtual Task<CurrencyRate> Create(CurrencyRate item)
 		{
-			CurrencyRate record = new CurrencyRate();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<CurrencyRate>().Add(record);
+			this.Context.Set<CurrencyRate>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int currencyRateID,
-			DTOCurrencyRate dto)
+		public async virtual Task Update(CurrencyRate item)
 		{
-			CurrencyRate record = await this.GetById(currencyRateID);
-
-			if (record == null)
+			var entity = this.Context.Set<CurrencyRate>().Local.FirstOrDefault(x => x.CurrencyRateID == item.CurrencyRateID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{currencyRateID}");
+				this.Context.Set<CurrencyRate>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					currencyRateID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOCurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
+		public async Task<CurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
 		{
-			var records = await this.SearchLinqDTO(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
+			var records = await this.SearchLinqEF(x => x.CurrencyRateDate == currencyRateDate && x.FromCurrencyCode == fromCurrencyCode && x.ToCurrencyCode == toCurrencyCode);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOCurrencyRate>> Where(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<CurrencyRate>> Where(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOCurrencyRate> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOCurrencyRate>> SearchLinqDTO(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOCurrencyRate> response = new List<DTOCurrencyRate>();
 			List<CurrencyRate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<CurrencyRate>> SearchLinqEF(Expression<Func<CurrencyRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>56d8c83ecfbda217c210569ed89ad853</Hash>
+    <Hash>967ea9483cfe4922661157ba0567a69d</Hash>
 </Codenesium>*/

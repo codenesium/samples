@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class BusinessEntityAddressRepository: AbstractBusinessEntityAddressRepository, IBusinessEntityAddressRepository
 	{
 		public BusinessEntityAddressRepository(
-			IDALBusinessEntityAddressMapper mapper,
 			ILogger<BusinessEntityAddressRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>32411bcb0b51111b3b8ee62a56249fc4</Hash>
+    <Hash>7d7592a3a4087a2cec97885f81e487e7</Hash>
 </Codenesium>*/

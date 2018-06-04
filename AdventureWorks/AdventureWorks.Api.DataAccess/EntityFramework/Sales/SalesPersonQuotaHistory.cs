@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SalesPersonQuotaHistory", Schema="Sales")]
-	public partial class SalesPersonQuotaHistory: AbstractEntityFrameworkDTO
+	public partial class SalesPersonQuotaHistory: AbstractEntity
 	{
 		public SalesPersonQuotaHistory()
 		{}
@@ -27,20 +27,19 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("QuotaDate", TypeName="datetime")]
-		public DateTime QuotaDate { get; set; }
+		public DateTime QuotaDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("SalesQuota", TypeName="money")]
-		public decimal SalesQuota { get; set; }
+		public decimal SalesQuota { get; private set; }
 
 		[ForeignKey("BusinessEntityID")]
 		public virtual SalesPerson SalesPerson { get; set; }
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd32a31c4164571631ed6dc2182cc0e3</Hash>
+    <Hash>9e830fd6645a6482747c58d3d56ec9ff</Hash>
 </Codenesium>*/

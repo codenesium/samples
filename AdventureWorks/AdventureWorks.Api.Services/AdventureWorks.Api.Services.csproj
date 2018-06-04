@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../AdventureWorks.Api.Contracts/AdventureWorks.Api.Contracts.csproj" />
+    <ProjectReference Include="../AdventureWorks.Api.DataAccess/AdventureWorks.Api.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Codenesium.DataConversionExtensions.AspNetCore" Version="2018.1.3" />
+	<PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
+	<PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.0" />
+  </ItemGroup>
+  
+    
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>AdventureWorks.Api.Services.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>AdventureWorks.Api.Services.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+</Project>

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALBusinessEntityAddressMapper Mapper { get; }
 
 		public AbstractBusinessEntityAddressRepository(
-			IDALBusinessEntityAddressMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOBusinessEntityAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<BusinessEntityAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOBusinessEntityAddress> Get(int businessEntityID)
+		public async virtual Task<BusinessEntityAddress> Get(int businessEntityID)
 		{
-			BusinessEntityAddress record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOBusinessEntityAddress> Create(
-			DTOBusinessEntityAddress dto)
+		public async virtual Task<BusinessEntityAddress> Create(BusinessEntityAddress item)
 		{
-			BusinessEntityAddress record = new BusinessEntityAddress();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<BusinessEntityAddress>().Add(record);
+			this.Context.Set<BusinessEntityAddress>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOBusinessEntityAddress dto)
+		public async virtual Task Update(BusinessEntityAddress item)
 		{
-			BusinessEntityAddress record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<BusinessEntityAddress>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<BusinessEntityAddress>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,33 +74,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOBusinessEntityAddress>> GetAddressID(int addressID)
+		public async Task<List<BusinessEntityAddress>> GetAddressID(int addressID)
 		{
-			var records = await this.SearchLinqDTO(x => x.AddressID == addressID);
+			var records = await this.SearchLinqEF(x => x.AddressID == addressID);
 
 			return records;
 		}
-		public async Task<List<DTOBusinessEntityAddress>> GetAddressTypeID(int addressTypeID)
+		public async Task<List<BusinessEntityAddress>> GetAddressTypeID(int addressTypeID)
 		{
-			var records = await this.SearchLinqDTO(x => x.AddressTypeID == addressTypeID);
-
-			return records;
-		}
-
-		protected async Task<List<DTOBusinessEntityAddress>> Where(Expression<Func<BusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOBusinessEntityAddress> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqEF(x => x.AddressTypeID == addressTypeID);
 
 			return records;
 		}
 
-		private async Task<List<DTOBusinessEntityAddress>> SearchLinqDTO(Expression<Func<BusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<BusinessEntityAddress>> Where(Expression<Func<BusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOBusinessEntityAddress> response = new List<DTOBusinessEntityAddress>();
 			List<BusinessEntityAddress> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<BusinessEntityAddress>> SearchLinqEF(Expression<Func<BusinessEntityAddress, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9211930bb0ad31612dac02e803437d8b</Hash>
+    <Hash>e4f9cd2203d827a3de55311893214a43</Hash>
 </Codenesium>*/

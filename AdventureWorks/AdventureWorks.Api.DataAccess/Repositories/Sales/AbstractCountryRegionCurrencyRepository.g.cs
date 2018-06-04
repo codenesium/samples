@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALCountryRegionCurrencyMapper Mapper { get; }
 
 		public AbstractCountryRegionCurrencyRepository(
-			IDALCountryRegionCurrencyMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOCountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<CountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOCountryRegionCurrency> Get(string countryRegionCode)
+		public async virtual Task<CountryRegionCurrency> Get(string countryRegionCode)
 		{
-			CountryRegionCurrency record = await this.GetById(countryRegionCode);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(countryRegionCode);
 		}
 
-		public async virtual Task<DTOCountryRegionCurrency> Create(
-			DTOCountryRegionCurrency dto)
+		public async virtual Task<CountryRegionCurrency> Create(CountryRegionCurrency item)
 		{
-			CountryRegionCurrency record = new CountryRegionCurrency();
-
-			this.Mapper.MapDTOToEF(
-				default (string),
-				dto,
-				record);
-
-			this.Context.Set<CountryRegionCurrency>().Add(record);
+			this.Context.Set<CountryRegionCurrency>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			string countryRegionCode,
-			DTOCountryRegionCurrency dto)
+		public async virtual Task Update(CountryRegionCurrency item)
 		{
-			CountryRegionCurrency record = await this.GetById(countryRegionCode);
-
-			if (record == null)
+			var entity = this.Context.Set<CountryRegionCurrency>().Local.FirstOrDefault(x => x.CountryRegionCode == item.CountryRegionCode);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{countryRegionCode}");
+				this.Context.Set<CountryRegionCurrency>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					countryRegionCode,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOCountryRegionCurrency>> GetCurrencyCode(string currencyCode)
+		public async Task<List<CountryRegionCurrency>> GetCurrencyCode(string currencyCode)
 		{
-			var records = await this.SearchLinqDTO(x => x.CurrencyCode == currencyCode);
+			var records = await this.SearchLinqEF(x => x.CurrencyCode == currencyCode);
 
 			return records;
 		}
 
-		protected async Task<List<DTOCountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<CountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOCountryRegionCurrency> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOCountryRegionCurrency>> SearchLinqDTO(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOCountryRegionCurrency> response = new List<DTOCountryRegionCurrency>();
 			List<CountryRegionCurrency> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<CountryRegionCurrency>> SearchLinqEF(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4346f9d8b86fc7363c707f6c849af5e7</Hash>
+    <Hash>4cda11f7debf6e433756c6cb3523ab1f</Hash>
 </Codenesium>*/

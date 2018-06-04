@@ -2,25 +2,23 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IIllustrationRepository
 	{
-		Task<DTOIllustration> Create(DTOIllustration dto);
+		Task<Illustration> Create(Illustration item);
 
-		Task Update(int illustrationID,
-		            DTOIllustration dto);
+		Task Update(Illustration item);
 
 		Task Delete(int illustrationID);
 
-		Task<DTOIllustration> Get(int illustrationID);
+		Task<Illustration> Get(int illustrationID);
 
-		Task<List<DTOIllustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<Illustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>837b8d699ebc07d8ba5785f0f2601037</Hash>
+    <Hash>6538c7417571779168760a7d7737e5fd</Hash>
 </Codenesium>*/

@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IShoppingCartItemRepository
 	{
-		Task<DTOShoppingCartItem> Create(DTOShoppingCartItem dto);
+		Task<ShoppingCartItem> Create(ShoppingCartItem item);
 
-		Task Update(int shoppingCartItemID,
-		            DTOShoppingCartItem dto);
+		Task Update(ShoppingCartItem item);
 
 		Task Delete(int shoppingCartItemID);
 
-		Task<DTOShoppingCartItem> Get(int shoppingCartItemID);
+		Task<ShoppingCartItem> Get(int shoppingCartItemID);
 
-		Task<List<DTOShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ShoppingCartItem>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<DTOShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID);
+		Task<List<ShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID,int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c31c9c1796959a70492c79847104b647</Hash>
+    <Hash>6799e0c3ff416a22ffe806a148bfa19a</Hash>
 </Codenesium>*/

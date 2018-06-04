@@ -2,28 +2,26 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IStateProvinceRepository
 	{
-		Task<DTOStateProvince> Create(DTOStateProvince dto);
+		Task<StateProvince> Create(StateProvince item);
 
-		Task Update(int stateProvinceID,
-		            DTOStateProvince dto);
+		Task Update(StateProvince item);
 
 		Task Delete(int stateProvinceID);
 
-		Task<DTOStateProvince> Get(int stateProvinceID);
+		Task<StateProvince> Get(int stateProvinceID);
 
-		Task<List<DTOStateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOStateProvince> GetName(string name);
-		Task<DTOStateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode);
+		Task<StateProvince> GetName(string name);
+		Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>74afb125ff683550e434dc43f6b8345b</Hash>
+    <Hash>04653f9027c7cdbf5226013947a71d9f</Hash>
 </Codenesium>*/

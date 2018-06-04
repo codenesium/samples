@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("EmployeePayHistory", Schema="HumanResources")]
-	public partial class EmployeePayHistory: AbstractEntityFrameworkDTO
+	public partial class EmployeePayHistory: AbstractEntity
 	{
 		public EmployeePayHistory()
 		{}
@@ -27,22 +27,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("PayFrequency", TypeName="tinyint")]
-		public int PayFrequency { get; set; }
+		public int PayFrequency { get; private set; }
 
 		[Column("Rate", TypeName="money")]
-		public decimal Rate { get; set; }
+		public decimal Rate { get; private set; }
 
 		[Column("RateChangeDate", TypeName="datetime")]
-		public DateTime RateChangeDate { get; set; }
+		public DateTime RateChangeDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>395c22c47027ead505e886a2bce2bb29</Hash>
+    <Hash>b8fb17ae00d0c1421cdbaf16a23f665e</Hash>
 </Codenesium>*/

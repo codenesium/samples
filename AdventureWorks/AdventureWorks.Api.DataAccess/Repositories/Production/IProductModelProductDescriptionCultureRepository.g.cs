@@ -2,25 +2,23 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IProductModelProductDescriptionCultureRepository
 	{
-		Task<DTOProductModelProductDescriptionCulture> Create(DTOProductModelProductDescriptionCulture dto);
+		Task<ProductModelProductDescriptionCulture> Create(ProductModelProductDescriptionCulture item);
 
-		Task Update(int productModelID,
-		            DTOProductModelProductDescriptionCulture dto);
+		Task Update(ProductModelProductDescriptionCulture item);
 
 		Task Delete(int productModelID);
 
-		Task<DTOProductModelProductDescriptionCulture> Get(int productModelID);
+		Task<ProductModelProductDescriptionCulture> Get(int productModelID);
 
-		Task<List<DTOProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0d1fcdaad125820f02aa9277def3e27</Hash>
+    <Hash>0d7aafe4326b8c8d3231732a81bb4674</Hash>
 </Codenesium>*/

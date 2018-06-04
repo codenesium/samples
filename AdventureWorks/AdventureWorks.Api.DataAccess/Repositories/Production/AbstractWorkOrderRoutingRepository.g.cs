@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALWorkOrderRoutingMapper Mapper { get; }
 
 		public AbstractWorkOrderRoutingRepository(
-			IDALWorkOrderRoutingMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOWorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<WorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOWorkOrderRouting> Get(int workOrderID)
+		public async virtual Task<WorkOrderRouting> Get(int workOrderID)
 		{
-			WorkOrderRouting record = await this.GetById(workOrderID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(workOrderID);
 		}
 
-		public async virtual Task<DTOWorkOrderRouting> Create(
-			DTOWorkOrderRouting dto)
+		public async virtual Task<WorkOrderRouting> Create(WorkOrderRouting item)
 		{
-			WorkOrderRouting record = new WorkOrderRouting();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<WorkOrderRouting>().Add(record);
+			this.Context.Set<WorkOrderRouting>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int workOrderID,
-			DTOWorkOrderRouting dto)
+		public async virtual Task Update(WorkOrderRouting item)
 		{
-			WorkOrderRouting record = await this.GetById(workOrderID);
-
-			if (record == null)
+			var entity = this.Context.Set<WorkOrderRouting>().Local.FirstOrDefault(x => x.WorkOrderID == item.WorkOrderID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{workOrderID}");
+				this.Context.Set<WorkOrderRouting>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					workOrderID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,27 +74,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DTOWorkOrderRouting>> GetProductID(int productID)
+		public async Task<List<WorkOrderRouting>> GetProductID(int productID)
 		{
-			var records = await this.SearchLinqDTO(x => x.ProductID == productID);
+			var records = await this.SearchLinqEF(x => x.ProductID == productID);
 
 			return records;
 		}
 
-		protected async Task<List<DTOWorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<WorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOWorkOrderRouting> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOWorkOrderRouting>> SearchLinqDTO(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOWorkOrderRouting> response = new List<DTOWorkOrderRouting>();
 			List<WorkOrderRouting> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<WorkOrderRouting>> SearchLinqEF(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -145,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d5438c2995eaee5e5b882d6279495b89</Hash>
+    <Hash>7522fef8524c487af2931d7f1ffa9b97</Hash>
 </Codenesium>*/

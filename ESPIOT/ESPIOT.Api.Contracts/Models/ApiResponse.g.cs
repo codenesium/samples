@@ -8,7 +8,7 @@ namespace ESPIOTNS.Api.Contracts
 	public class ReferenceEntity<T>
 	{
 		[JsonProperty(PropertyName = "Value")]
-		public T Value { get; set; }
+		public T Value { get; private set; }
 
 		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
@@ -36,7 +36,7 @@ namespace ESPIOTNS.Api.Contracts
 		public List<ApiDeviceActionResponseModel> DeviceActions { get; private set; } = new List<ApiDeviceActionResponseModel>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeDevicesValue { get; set; } = true;
+		public bool ShouldSerializeDevicesValue { get; private set; } = true;
 
 		public bool ShouldSerializeDevices()
 		{
@@ -52,7 +52,7 @@ namespace ESPIOTNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDeviceActionsValue { get; set; } = true;
+		public bool ShouldSerializeDeviceActionsValue { get; private set; } = true;
 
 		public bool ShouldSerializeDeviceActions()
 		{
@@ -83,5 +83,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>31b23907b054696875e7d0b003aec83a</Hash>
+    <Hash>90685d422ad91517483b425651b3d571</Hash>
 </Codenesium>*/

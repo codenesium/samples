@@ -6,13 +6,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("WorkOrder", Schema="Production")]
-	public partial class WorkOrder: AbstractEntityFrameworkDTO
+	public partial class WorkOrder: AbstractEntity
 	{
 		public WorkOrder()
 		{}
 
 		public void SetProperties(
-			int workOrderID,
 			DateTime dueDate,
 			Nullable<DateTime> endDate,
 			DateTime modifiedDate,
@@ -21,7 +20,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			short scrappedQty,
 			Nullable<short> scrapReasonID,
 			DateTime startDate,
-			int stockedQty)
+			int stockedQty,
+			int workOrderID)
 		{
 			this.DueDate = dueDate.ToDateTime();
 			this.EndDate = endDate.ToNullableDateTime();
@@ -36,38 +36,39 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("DueDate", TypeName="datetime")]
-		public DateTime DueDate { get; set; }
+		public DateTime DueDate { get; private set; }
 
 		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate { get; set; }
+		public Nullable<DateTime> EndDate { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("OrderQty", TypeName="int")]
-		public int OrderQty { get; set; }
+		public int OrderQty { get; private set; }
 
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
 		[Column("ScrappedQty", TypeName="smallint")]
-		public short ScrappedQty { get; set; }
+		public short ScrappedQty { get; private set; }
 
 		[Column("ScrapReasonID", TypeName="smallint")]
-		public Nullable<short> ScrapReasonID { get; set; }
+		public Nullable<short> ScrapReasonID { get; private set; }
 
 		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
+		public DateTime StartDate { get; private set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("StockedQty", TypeName="int")]
-		public int StockedQty { get; set; }
+		public int StockedQty { get; private set; }
 
 		[Key]
 		[Column("WorkOrderID", TypeName="int")]
-		public int WorkOrderID { get; set; }
+		public int WorkOrderID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>73d73adcc7e414c6ce457a3d7e28d13f</Hash>
+    <Hash>15d537c67562b15074104e95966c235f</Hash>
 </Codenesium>*/

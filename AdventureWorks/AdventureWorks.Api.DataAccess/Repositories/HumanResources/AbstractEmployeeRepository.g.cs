@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALEmployeeMapper Mapper { get; }
 
 		public AbstractEmployeeRepository(
-			IDALEmployeeMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOEmployee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Employee>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOEmployee> Get(int businessEntityID)
+		public async virtual Task<Employee> Get(int businessEntityID)
 		{
-			Employee record = await this.GetById(businessEntityID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(businessEntityID);
 		}
 
-		public async virtual Task<DTOEmployee> Create(
-			DTOEmployee dto)
+		public async virtual Task<Employee> Create(Employee item)
 		{
-			Employee record = new Employee();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<Employee>().Add(record);
+			this.Context.Set<Employee>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int businessEntityID,
-			DTOEmployee dto)
+		public async virtual Task Update(Employee item)
 		{
-			Employee record = await this.GetById(businessEntityID);
-
-			if (record == null)
+			var entity = this.Context.Set<Employee>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{businessEntityID}");
+				this.Context.Set<Employee>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					businessEntityID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,45 +74,36 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOEmployee> GetLoginID(string loginID)
+		public async Task<Employee> GetLoginID(string loginID)
 		{
-			var records = await this.SearchLinqDTO(x => x.LoginID == loginID);
+			var records = await this.SearchLinqEF(x => x.LoginID == loginID);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<DTOEmployee> GetNationalIDNumber(string nationalIDNumber)
+		public async Task<Employee> GetNationalIDNumber(string nationalIDNumber)
 		{
-			var records = await this.SearchLinqDTO(x => x.NationalIDNumber == nationalIDNumber);
+			var records = await this.SearchLinqEF(x => x.NationalIDNumber == nationalIDNumber);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<DTOEmployee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
+		public async Task<List<Employee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
 		{
-			var records = await this.SearchLinqDTO(x => x.OrganizationLevel == organizationLevel && x.OrganizationNode == organizationNode);
+			var records = await this.SearchLinqEF(x => x.OrganizationLevel == organizationLevel && x.OrganizationNode == organizationNode);
 
 			return records;
 		}
-		public async Task<List<DTOEmployee>> GetOrganizationNode(Nullable<Guid> organizationNode)
+		public async Task<List<Employee>> GetOrganizationNode(Nullable<Guid> organizationNode)
 		{
-			var records = await this.SearchLinqDTO(x => x.OrganizationNode == organizationNode);
-
-			return records;
-		}
-
-		protected async Task<List<DTOEmployee>> Where(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOEmployee> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
+			var records = await this.SearchLinqEF(x => x.OrganizationNode == organizationNode);
 
 			return records;
 		}
 
-		private async Task<List<DTOEmployee>> SearchLinqDTO(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Employee>> Where(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOEmployee> response = new List<DTOEmployee>();
 			List<Employee> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Employee>> SearchLinqEF(Expression<Func<Employee, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -163,5 +135,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>97c593f9734868ef5509fb43685e82d4</Hash>
+    <Hash>764db6d896399bca6099f5a1a7fb3803</Hash>
 </Codenesium>*/

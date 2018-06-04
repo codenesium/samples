@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class PasswordRepository: AbstractPasswordRepository, IPasswordRepository
 	{
 		public PasswordRepository(
-			IDALPasswordMapper mapper,
 			ILogger<PasswordRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a468486a024a2cfdcdd3527aabe7ebd7</Hash>
+    <Hash>f3139aa726b54c91da8082e102aa1397</Hash>
 </Codenesium>*/

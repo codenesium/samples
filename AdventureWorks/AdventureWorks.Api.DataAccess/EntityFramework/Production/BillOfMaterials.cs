@@ -6,7 +6,7 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("BillOfMaterials", Schema="Production")]
-	public partial class BillOfMaterials: AbstractEntityFrameworkDTO
+	public partial class BillOfMaterials: AbstractEntity
 	{
 		public BillOfMaterials()
 		{}
@@ -35,34 +35,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		[Key]
 		[Column("BillOfMaterialsID", TypeName="int")]
-		public int BillOfMaterialsID { get; set; }
+		public int BillOfMaterialsID { get; private set; }
 
 		[Column("BOMLevel", TypeName="smallint")]
-		public short BOMLevel { get; set; }
+		public short BOMLevel { get; private set; }
 
 		[Column("ComponentID", TypeName="int")]
-		public int ComponentID { get; set; }
+		public int ComponentID { get; private set; }
 
 		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate { get; set; }
+		public Nullable<DateTime> EndDate { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("PerAssemblyQty", TypeName="decimal")]
-		public decimal PerAssemblyQty { get; set; }
+		public decimal PerAssemblyQty { get; private set; }
 
 		[Column("ProductAssemblyID", TypeName="int")]
-		public Nullable<int> ProductAssemblyID { get; set; }
+		public Nullable<int> ProductAssemblyID { get; private set; }
 
 		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
+		public DateTime StartDate { get; private set; }
 
 		[Column("UnitMeasureCode", TypeName="nchar(3)")]
-		public string UnitMeasureCode { get; set; }
+		public string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b2823640a368a0f5f610ddae5a600211</Hash>
+    <Hash>78884a15f1c7f67fad5b99c003ca2b2d</Hash>
 </Codenesium>*/

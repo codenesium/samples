@@ -2,27 +2,25 @@ using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public interface IScrapReasonRepository
 	{
-		Task<DTOScrapReason> Create(DTOScrapReason dto);
+		Task<ScrapReason> Create(ScrapReason item);
 
-		Task Update(short scrapReasonID,
-		            DTOScrapReason dto);
+		Task Update(ScrapReason item);
 
 		Task Delete(short scrapReasonID);
 
-		Task<DTOScrapReason> Get(short scrapReasonID);
+		Task<ScrapReason> Get(short scrapReasonID);
 
-		Task<List<DTOScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+		Task<List<ScrapReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<DTOScrapReason> GetName(string name);
+		Task<ScrapReason> GetName(string name);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ee8fccec3a8a2189c07c6e666d58fcd</Hash>
+    <Hash>5ac15b8c678293352004e5f4c16ce765</Hash>
 </Codenesium>*/

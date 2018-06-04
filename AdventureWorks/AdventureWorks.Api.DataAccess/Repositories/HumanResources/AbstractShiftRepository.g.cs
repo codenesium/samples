@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALShiftMapper Mapper { get; }
 
 		public AbstractShiftRepository(
-			IDALShiftMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOShift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<Shift>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOShift> Get(int shiftID)
+		public async virtual Task<Shift> Get(int shiftID)
 		{
-			Shift record = await this.GetById(shiftID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(shiftID);
 		}
 
-		public async virtual Task<DTOShift> Create(
-			DTOShift dto)
+		public async virtual Task<Shift> Create(Shift item)
 		{
-			Shift record = new Shift();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<Shift>().Add(record);
+			this.Context.Set<Shift>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int shiftID,
-			DTOShift dto)
+		public async virtual Task Update(Shift item)
 		{
-			Shift record = await this.GetById(shiftID);
-
-			if (record == null)
+			var entity = this.Context.Set<Shift>().Local.FirstOrDefault(x => x.ShiftID == item.ShiftID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{shiftID}");
+				this.Context.Set<Shift>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					shiftID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,33 +74,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOShift> GetName(string name)
+		public async Task<Shift> GetName(string name)
 		{
-			var records = await this.SearchLinqDTO(x => x.Name == name);
+			var records = await this.SearchLinqEF(x => x.Name == name);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<DTOShift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
+		public async Task<Shift> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
 		{
-			var records = await this.SearchLinqDTO(x => x.StartTime == startTime && x.EndTime == endTime);
+			var records = await this.SearchLinqEF(x => x.StartTime == startTime && x.EndTime == endTime);
 
 			return records.FirstOrDefault();
 		}
 
-		protected async Task<List<DTOShift>> Where(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<Shift>> Where(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOShift> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOShift>> SearchLinqDTO(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOShift> response = new List<DTOShift>();
 			List<Shift> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<Shift>> SearchLinqEF(Expression<Func<Shift, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4fa3a390f041ea02860e6a3d2f8a2567</Hash>
+    <Hash>1b8d79379eb5c75e6a352133f1ddea05</Hash>
 </Codenesium>*/

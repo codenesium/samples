@@ -8,7 +8,7 @@ namespace AdventureWorksNS.Api.Contracts
 	public class ReferenceEntity<T>
 	{
 		[JsonProperty(PropertyName = "Value")]
-		public T Value { get; set; }
+		public T Value { get; private set; }
 
 		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
@@ -243,7 +243,7 @@ namespace AdventureWorksNS.Api.Contracts
 		public List<ApiStoreResponseModel> Stores { get; private set; } = new List<ApiStoreResponseModel>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeAWBuildVersionsValue { get; set; } = true;
+		public bool ShouldSerializeAWBuildVersionsValue { get; private set; } = true;
 
 		public bool ShouldSerializeAWBuildVersions()
 		{
@@ -259,7 +259,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDatabaseLogsValue { get; set; } = true;
+		public bool ShouldSerializeDatabaseLogsValue { get; private set; } = true;
 
 		public bool ShouldSerializeDatabaseLogs()
 		{
@@ -275,7 +275,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeErrorLogsValue { get; set; } = true;
+		public bool ShouldSerializeErrorLogsValue { get; private set; } = true;
 
 		public bool ShouldSerializeErrorLogs()
 		{
@@ -291,7 +291,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDepartmentsValue { get; set; } = true;
+		public bool ShouldSerializeDepartmentsValue { get; private set; } = true;
 
 		public bool ShouldSerializeDepartments()
 		{
@@ -307,7 +307,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeesValue { get; set; } = true;
+		public bool ShouldSerializeEmployeesValue { get; private set; } = true;
 
 		public bool ShouldSerializeEmployees()
 		{
@@ -323,7 +323,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeeDepartmentHistoriesValue { get; set; } = true;
+		public bool ShouldSerializeEmployeeDepartmentHistoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeEmployeeDepartmentHistories()
 		{
@@ -339,7 +339,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmployeePayHistoriesValue { get; set; } = true;
+		public bool ShouldSerializeEmployeePayHistoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeEmployeePayHistories()
 		{
@@ -355,7 +355,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeJobCandidatesValue { get; set; } = true;
+		public bool ShouldSerializeJobCandidatesValue { get; private set; } = true;
 
 		public bool ShouldSerializeJobCandidates()
 		{
@@ -371,7 +371,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShiftsValue { get; set; } = true;
+		public bool ShouldSerializeShiftsValue { get; private set; } = true;
 
 		public bool ShouldSerializeShifts()
 		{
@@ -387,7 +387,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressesValue { get; set; } = true;
+		public bool ShouldSerializeAddressesValue { get; private set; } = true;
 
 		public bool ShouldSerializeAddresses()
 		{
@@ -403,7 +403,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeAddressTypesValue { get; set; } = true;
+		public bool ShouldSerializeAddressTypesValue { get; private set; } = true;
 
 		public bool ShouldSerializeAddressTypes()
 		{
@@ -419,7 +419,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntitiesValue { get; set; } = true;
+		public bool ShouldSerializeBusinessEntitiesValue { get; private set; } = true;
 
 		public bool ShouldSerializeBusinessEntities()
 		{
@@ -435,7 +435,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityAddressesValue { get; set; } = true;
+		public bool ShouldSerializeBusinessEntityAddressesValue { get; private set; } = true;
 
 		public bool ShouldSerializeBusinessEntityAddresses()
 		{
@@ -451,7 +451,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBusinessEntityContactsValue { get; set; } = true;
+		public bool ShouldSerializeBusinessEntityContactsValue { get; private set; } = true;
 
 		public bool ShouldSerializeBusinessEntityContacts()
 		{
@@ -467,7 +467,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeContactTypesValue { get; set; } = true;
+		public bool ShouldSerializeContactTypesValue { get; private set; } = true;
 
 		public bool ShouldSerializeContactTypes()
 		{
@@ -483,7 +483,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionsValue { get; set; } = true;
+		public bool ShouldSerializeCountryRegionsValue { get; private set; } = true;
 
 		public bool ShouldSerializeCountryRegions()
 		{
@@ -499,7 +499,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeEmailAddressesValue { get; set; } = true;
+		public bool ShouldSerializeEmailAddressesValue { get; private set; } = true;
 
 		public bool ShouldSerializeEmailAddresses()
 		{
@@ -515,7 +515,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePasswordsValue { get; set; } = true;
+		public bool ShouldSerializePasswordsValue { get; private set; } = true;
 
 		public bool ShouldSerializePasswords()
 		{
@@ -531,7 +531,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePeopleValue { get; set; } = true;
+		public bool ShouldSerializePeopleValue { get; private set; } = true;
 
 		public bool ShouldSerializePeople()
 		{
@@ -547,7 +547,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePersonPhonesValue { get; set; } = true;
+		public bool ShouldSerializePersonPhonesValue { get; private set; } = true;
 
 		public bool ShouldSerializePersonPhones()
 		{
@@ -563,7 +563,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePhoneNumberTypesValue { get; set; } = true;
+		public bool ShouldSerializePhoneNumberTypesValue { get; private set; } = true;
 
 		public bool ShouldSerializePhoneNumberTypes()
 		{
@@ -579,7 +579,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStateProvincesValue { get; set; } = true;
+		public bool ShouldSerializeStateProvincesValue { get; private set; } = true;
 
 		public bool ShouldSerializeStateProvinces()
 		{
@@ -595,7 +595,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeBillOfMaterialsValue { get; set; } = true;
+		public bool ShouldSerializeBillOfMaterialsValue { get; private set; } = true;
 
 		public bool ShouldSerializeBillOfMaterials()
 		{
@@ -611,7 +611,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCulturesValue { get; set; } = true;
+		public bool ShouldSerializeCulturesValue { get; private set; } = true;
 
 		public bool ShouldSerializeCultures()
 		{
@@ -627,7 +627,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeDocumentsValue { get; set; } = true;
+		public bool ShouldSerializeDocumentsValue { get; private set; } = true;
 
 		public bool ShouldSerializeDocuments()
 		{
@@ -643,7 +643,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeIllustrationsValue { get; set; } = true;
+		public bool ShouldSerializeIllustrationsValue { get; private set; } = true;
 
 		public bool ShouldSerializeIllustrations()
 		{
@@ -659,7 +659,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLocationsValue { get; set; } = true;
+		public bool ShouldSerializeLocationsValue { get; private set; } = true;
 
 		public bool ShouldSerializeLocations()
 		{
@@ -675,7 +675,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductsValue { get; set; } = true;
+		public bool ShouldSerializeProductsValue { get; private set; } = true;
 
 		public bool ShouldSerializeProducts()
 		{
@@ -691,7 +691,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductCategoriesValue { get; set; } = true;
+		public bool ShouldSerializeProductCategoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductCategories()
 		{
@@ -707,7 +707,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductCostHistoriesValue { get; set; } = true;
+		public bool ShouldSerializeProductCostHistoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductCostHistories()
 		{
@@ -723,7 +723,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductDescriptionsValue { get; set; } = true;
+		public bool ShouldSerializeProductDescriptionsValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductDescriptions()
 		{
@@ -739,7 +739,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductDocumentsValue { get; set; } = true;
+		public bool ShouldSerializeProductDocumentsValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductDocuments()
 		{
@@ -755,7 +755,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductInventoriesValue { get; set; } = true;
+		public bool ShouldSerializeProductInventoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductInventories()
 		{
@@ -771,7 +771,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductListPriceHistoriesValue { get; set; } = true;
+		public bool ShouldSerializeProductListPriceHistoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductListPriceHistories()
 		{
@@ -787,7 +787,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelsValue { get; set; } = true;
+		public bool ShouldSerializeProductModelsValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductModels()
 		{
@@ -803,7 +803,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelIllustrationsValue { get; set; } = true;
+		public bool ShouldSerializeProductModelIllustrationsValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductModelIllustrations()
 		{
@@ -819,7 +819,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelProductDescriptionCulturesValue { get; set; } = true;
+		public bool ShouldSerializeProductModelProductDescriptionCulturesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductModelProductDescriptionCultures()
 		{
@@ -835,7 +835,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductPhotoesValue { get; set; } = true;
+		public bool ShouldSerializeProductPhotoesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductPhotoes()
 		{
@@ -851,7 +851,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductProductPhotoesValue { get; set; } = true;
+		public bool ShouldSerializeProductProductPhotoesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductProductPhotoes()
 		{
@@ -867,7 +867,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductReviewsValue { get; set; } = true;
+		public bool ShouldSerializeProductReviewsValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductReviews()
 		{
@@ -883,7 +883,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductSubcategoriesValue { get; set; } = true;
+		public bool ShouldSerializeProductSubcategoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductSubcategories()
 		{
@@ -899,7 +899,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeScrapReasonsValue { get; set; } = true;
+		public bool ShouldSerializeScrapReasonsValue { get; private set; } = true;
 
 		public bool ShouldSerializeScrapReasons()
 		{
@@ -915,7 +915,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTransactionHistoriesValue { get; set; } = true;
+		public bool ShouldSerializeTransactionHistoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeTransactionHistories()
 		{
@@ -931,7 +931,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeTransactionHistoryArchivesValue { get; set; } = true;
+		public bool ShouldSerializeTransactionHistoryArchivesValue { get; private set; } = true;
 
 		public bool ShouldSerializeTransactionHistoryArchives()
 		{
@@ -947,7 +947,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeUnitMeasuresValue { get; set; } = true;
+		public bool ShouldSerializeUnitMeasuresValue { get; private set; } = true;
 
 		public bool ShouldSerializeUnitMeasures()
 		{
@@ -963,7 +963,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeWorkOrdersValue { get; set; } = true;
+		public bool ShouldSerializeWorkOrdersValue { get; private set; } = true;
 
 		public bool ShouldSerializeWorkOrders()
 		{
@@ -979,7 +979,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeWorkOrderRoutingsValue { get; set; } = true;
+		public bool ShouldSerializeWorkOrderRoutingsValue { get; private set; } = true;
 
 		public bool ShouldSerializeWorkOrderRoutings()
 		{
@@ -995,7 +995,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductVendorsValue { get; set; } = true;
+		public bool ShouldSerializeProductVendorsValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductVendors()
 		{
@@ -1011,7 +1011,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderDetailsValue { get; set; } = true;
+		public bool ShouldSerializePurchaseOrderDetailsValue { get; private set; } = true;
 
 		public bool ShouldSerializePurchaseOrderDetails()
 		{
@@ -1027,7 +1027,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderHeadersValue { get; set; } = true;
+		public bool ShouldSerializePurchaseOrderHeadersValue { get; private set; } = true;
 
 		public bool ShouldSerializePurchaseOrderHeaders()
 		{
@@ -1043,7 +1043,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShipMethodsValue { get; set; } = true;
+		public bool ShouldSerializeShipMethodsValue { get; private set; } = true;
 
 		public bool ShouldSerializeShipMethods()
 		{
@@ -1059,7 +1059,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVendorsValue { get; set; } = true;
+		public bool ShouldSerializeVendorsValue { get; private set; } = true;
 
 		public bool ShouldSerializeVendors()
 		{
@@ -1075,7 +1075,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionCurrenciesValue { get; set; } = true;
+		public bool ShouldSerializeCountryRegionCurrenciesValue { get; private set; } = true;
 
 		public bool ShouldSerializeCountryRegionCurrencies()
 		{
@@ -1091,7 +1091,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCreditCardsValue { get; set; } = true;
+		public bool ShouldSerializeCreditCardsValue { get; private set; } = true;
 
 		public bool ShouldSerializeCreditCards()
 		{
@@ -1107,7 +1107,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrenciesValue { get; set; } = true;
+		public bool ShouldSerializeCurrenciesValue { get; private set; } = true;
 
 		public bool ShouldSerializeCurrencies()
 		{
@@ -1123,7 +1123,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRatesValue { get; set; } = true;
+		public bool ShouldSerializeCurrencyRatesValue { get; private set; } = true;
 
 		public bool ShouldSerializeCurrencyRates()
 		{
@@ -1139,7 +1139,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCustomersValue { get; set; } = true;
+		public bool ShouldSerializeCustomersValue { get; private set; } = true;
 
 		public bool ShouldSerializeCustomers()
 		{
@@ -1155,7 +1155,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePersonCreditCardsValue { get; set; } = true;
+		public bool ShouldSerializePersonCreditCardsValue { get; private set; } = true;
 
 		public bool ShouldSerializePersonCreditCards()
 		{
@@ -1171,7 +1171,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderDetailsValue { get; set; } = true;
+		public bool ShouldSerializeSalesOrderDetailsValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesOrderDetails()
 		{
@@ -1187,7 +1187,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderHeadersValue { get; set; } = true;
+		public bool ShouldSerializeSalesOrderHeadersValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesOrderHeaders()
 		{
@@ -1203,7 +1203,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderHeaderSalesReasonsValue { get; set; } = true;
+		public bool ShouldSerializeSalesOrderHeaderSalesReasonsValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesOrderHeaderSalesReasons()
 		{
@@ -1219,7 +1219,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesPersonsValue { get; set; } = true;
+		public bool ShouldSerializeSalesPersonsValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesPersons()
 		{
@@ -1235,7 +1235,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesPersonQuotaHistoriesValue { get; set; } = true;
+		public bool ShouldSerializeSalesPersonQuotaHistoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesPersonQuotaHistories()
 		{
@@ -1251,7 +1251,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesReasonsValue { get; set; } = true;
+		public bool ShouldSerializeSalesReasonsValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesReasons()
 		{
@@ -1267,7 +1267,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesTaxRatesValue { get; set; } = true;
+		public bool ShouldSerializeSalesTaxRatesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesTaxRates()
 		{
@@ -1283,7 +1283,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesTerritoriesValue { get; set; } = true;
+		public bool ShouldSerializeSalesTerritoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesTerritories()
 		{
@@ -1299,7 +1299,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSalesTerritoryHistoriesValue { get; set; } = true;
+		public bool ShouldSerializeSalesTerritoryHistoriesValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesTerritoryHistories()
 		{
@@ -1315,7 +1315,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeShoppingCartItemsValue { get; set; } = true;
+		public bool ShouldSerializeShoppingCartItemsValue { get; private set; } = true;
 
 		public bool ShouldSerializeShoppingCartItems()
 		{
@@ -1331,7 +1331,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpecialOffersValue { get; set; } = true;
+		public bool ShouldSerializeSpecialOffersValue { get; private set; } = true;
 
 		public bool ShouldSerializeSpecialOffers()
 		{
@@ -1347,7 +1347,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpecialOfferProductsValue { get; set; } = true;
+		public bool ShouldSerializeSpecialOfferProductsValue { get; private set; } = true;
 
 		public bool ShouldSerializeSpecialOfferProducts()
 		{
@@ -1363,7 +1363,7 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeStoresValue { get; set; } = true;
+		public bool ShouldSerializeStoresValue { get; private set; } = true;
 
 		public bool ShouldSerializeStores()
 		{
@@ -1739,5 +1739,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>735c7b3246a522a6a14446b18eda4aa3</Hash>
+    <Hash>0d569353e5f7cbf95666035d9c1fd477</Hash>
 </Codenesium>*/

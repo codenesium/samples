@@ -5,21 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
 	public class IllustrationRepository: AbstractIllustrationRepository, IIllustrationRepository
 	{
 		public IllustrationRepository(
-			IDALIllustrationMapper mapper,
 			ILogger<IllustrationRepository> logger,
 			ApplicationDbContext context)
-			: base(mapper, logger, context)
+			: base(logger, context)
 		{}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cfa76979a76bcba2afd34b80199886cf</Hash>
+    <Hash>076570a3809cdf6f4c62e7b513981df3</Hash>
 </Codenesium>*/

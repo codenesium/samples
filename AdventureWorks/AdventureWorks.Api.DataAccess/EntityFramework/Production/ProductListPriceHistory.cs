@@ -6,16 +6,16 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductListPriceHistory", Schema="Production")]
-	public partial class ProductListPriceHistory: AbstractEntityFrameworkDTO
+	public partial class ProductListPriceHistory: AbstractEntity
 	{
 		public ProductListPriceHistory()
 		{}
 
 		public void SetProperties(
-			int productID,
 			Nullable<DateTime> endDate,
 			decimal listPrice,
 			DateTime modifiedDate,
+			int productID,
 			DateTime startDate)
 		{
 			this.EndDate = endDate.ToNullableDateTime();
@@ -26,23 +26,23 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate { get; set; }
+		public Nullable<DateTime> EndDate { get; private set; }
 
 		[Column("ListPrice", TypeName="money")]
-		public decimal ListPrice { get; set; }
+		public decimal ListPrice { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; set; }
+		public int ProductID { get; private set; }
 
 		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
+		public DateTime StartDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fbc8fef08d00f6e8f618cfe07029e0ee</Hash>
+    <Hash>609bba3af6b9898fbbca6c800e1070ed</Hash>
 </Codenesium>*/

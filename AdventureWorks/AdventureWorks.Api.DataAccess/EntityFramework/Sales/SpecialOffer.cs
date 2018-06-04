@@ -6,13 +6,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("SpecialOffer", Schema="Sales")]
-	public partial class SpecialOffer: AbstractEntityFrameworkDTO
+	public partial class SpecialOffer: AbstractEntity
 	{
 		public SpecialOffer()
 		{}
 
 		public void SetProperties(
-			int specialOfferID,
 			string category,
 			string description,
 			decimal discountPct,
@@ -21,6 +20,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			int minQty,
 			DateTime modifiedDate,
 			Guid rowguid,
+			int specialOfferID,
 			DateTime startDate,
 			string type)
 		{
@@ -38,42 +38,41 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("Category", TypeName="nvarchar(50)")]
-		public string Category { get; set; }
+		public string Category { get; private set; }
 
 		[Column("Description", TypeName="nvarchar(255)")]
-		public string Description { get; set; }
+		public string Description { get; private set; }
 
 		[Column("DiscountPct", TypeName="smallmoney")]
-		public decimal DiscountPct { get; set; }
+		public decimal DiscountPct { get; private set; }
 
 		[Column("EndDate", TypeName="datetime")]
-		public DateTime EndDate { get; set; }
+		public DateTime EndDate { get; private set; }
 
 		[Column("MaxQty", TypeName="int")]
-		public Nullable<int> MaxQty { get; set; }
+		public Nullable<int> MaxQty { get; private set; }
 
 		[Column("MinQty", TypeName="int")]
-		public int MinQty { get; set; }
+		public int MinQty { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Key]
 		[Column("SpecialOfferID", TypeName="int")]
-		public int SpecialOfferID { get; set; }
+		public int SpecialOfferID { get; private set; }
 
 		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; set; }
+		public DateTime StartDate { get; private set; }
 
 		[Column("Type", TypeName="nvarchar(50)")]
-		public string Type { get; set; }
+		public string Type { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9499077df10a52621a89fb3255a0c4e2</Hash>
+    <Hash>82bb096115f528ce154e670a14bdbb64</Hash>
 </Codenesium>*/

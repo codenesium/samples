@@ -8,7 +8,7 @@ namespace FileServiceNS.Api.Contracts
 	public class ReferenceEntity<T>
 	{
 		[JsonProperty(PropertyName = "Value")]
-		public T Value { get; set; }
+		public T Value { get; private set; }
 
 		[JsonProperty(PropertyName = "Object")]
 		public string ReferenceObjectName { get; set; }
@@ -42,7 +42,7 @@ namespace FileServiceNS.Api.Contracts
 		public List<ApiVersionInfoResponseModel> VersionInfoes { get; private set; } = new List<ApiVersionInfoResponseModel>();
 
 		[JsonIgnore]
-		public bool ShouldSerializeBucketsValue { get; set; } = true;
+		public bool ShouldSerializeBucketsValue { get; private set; } = true;
 
 		public bool ShouldSerializeBuckets()
 		{
@@ -58,7 +58,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFilesValue { get; set; } = true;
+		public bool ShouldSerializeFilesValue { get; private set; } = true;
 
 		public bool ShouldSerializeFiles()
 		{
@@ -74,7 +74,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeFileTypesValue { get; set; } = true;
+		public bool ShouldSerializeFileTypesValue { get; private set; } = true;
 
 		public bool ShouldSerializeFileTypes()
 		{
@@ -90,7 +90,7 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeVersionInfoesValue { get; set; } = true;
+		public bool ShouldSerializeVersionInfoesValue { get; private set; } = true;
 
 		public bool ShouldSerializeVersionInfoes()
 		{
@@ -131,5 +131,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cdf2c696fddca3779b2c5a16402d7f7d</Hash>
+    <Hash>7e0423b0e970fc4e01d4c23faa766bae</Hash>
 </Codenesium>*/

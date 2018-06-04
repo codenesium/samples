@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -15,66 +14,48 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		protected ApplicationDbContext Context { get; }
 		protected ILogger Logger { get; }
-		protected IDALBillOfMaterialsMapper Mapper { get; }
 
 		public AbstractBillOfMaterialsRepository(
-			IDALBillOfMaterialsMapper mapper,
 			ILogger logger,
 			ApplicationDbContext context)
 			: base ()
 		{
-			this.Mapper = mapper;
 			this.Logger = logger;
 			this.Context = context;
 		}
 
-		public virtual Task<List<DTOBillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+		public virtual Task<List<BillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			return this.SearchLinqDTO(x => true, skip, take, orderClause);
+			return this.SearchLinqEF(x => true, skip, take, orderClause);
 		}
 
-		public async virtual Task<DTOBillOfMaterials> Get(int billOfMaterialsID)
+		public async virtual Task<BillOfMaterials> Get(int billOfMaterialsID)
 		{
-			BillOfMaterials record = await this.GetById(billOfMaterialsID);
-
-			return this.Mapper.MapEFToDTO(record);
+			return await this.GetById(billOfMaterialsID);
 		}
 
-		public async virtual Task<DTOBillOfMaterials> Create(
-			DTOBillOfMaterials dto)
+		public async virtual Task<BillOfMaterials> Create(BillOfMaterials item)
 		{
-			BillOfMaterials record = new BillOfMaterials();
-
-			this.Mapper.MapDTOToEF(
-				default (int),
-				dto,
-				record);
-
-			this.Context.Set<BillOfMaterials>().Add(record);
+			this.Context.Set<BillOfMaterials>().Add(item);
 			await this.Context.SaveChangesAsync();
 
-			return this.Mapper.MapEFToDTO(record);
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
 		}
 
-		public async virtual Task Update(
-			int billOfMaterialsID,
-			DTOBillOfMaterials dto)
+		public async virtual Task Update(BillOfMaterials item)
 		{
-			BillOfMaterials record = await this.GetById(billOfMaterialsID);
-
-			if (record == null)
+			var entity = this.Context.Set<BillOfMaterials>().Local.FirstOrDefault(x => x.BillOfMaterialsID == item.BillOfMaterialsID);
+			if (entity == null)
 			{
-				throw new RecordNotFoundException($"Unable to find id:{billOfMaterialsID}");
+				this.Context.Set<BillOfMaterials>().Attach(item);
 			}
 			else
 			{
-				this.Mapper.MapDTOToEF(
-					billOfMaterialsID,
-					dto,
-					record);
-
-				await this.Context.SaveChangesAsync();
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
 			}
+
+			await this.Context.SaveChangesAsync();
 		}
 
 		public async virtual Task Delete(
@@ -93,33 +74,24 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<DTOBillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
+		public async Task<BillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate)
 		{
-			var records = await this.SearchLinqDTO(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
+			var records = await this.SearchLinqEF(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
 
 			return records.FirstOrDefault();
 		}
-		public async Task<List<DTOBillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode)
+		public async Task<List<BillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode)
 		{
-			var records = await this.SearchLinqDTO(x => x.UnitMeasureCode == unitMeasureCode);
+			var records = await this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode);
 
 			return records;
 		}
 
-		protected async Task<List<DTOBillOfMaterials>> Where(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+		protected async Task<List<BillOfMaterials>> Where(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
 		{
-			List<DTOBillOfMaterials> records = await this.SearchLinqDTO(predicate, skip, take, orderClause);
-
-			return records;
-		}
-
-		private async Task<List<DTOBillOfMaterials>> SearchLinqDTO(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DTOBillOfMaterials> response = new List<DTOBillOfMaterials>();
 			List<BillOfMaterials> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-			records.ForEach(x => response.Add(this.Mapper.MapEFToDTO(x)));
-			return response;
+			return records;
 		}
 
 		private async Task<List<BillOfMaterials>> SearchLinqEF(Expression<Func<BillOfMaterials, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
@@ -151,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>310feac2a19bea937a656236e59badb3</Hash>
+    <Hash>71ab02eee7e611b41874dad09db547cf</Hash>
 </Codenesium>*/

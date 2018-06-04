@@ -6,14 +6,14 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("Person", Schema="Person")]
-	public partial class Person:AbstractEntityFrameworkDTO
+	public partial class Person:AbstractEntity
 	{
 		public Person()
 		{}
 
 		public void SetProperties(
-			int businessEntityID,
 			string additionalContactInfo,
+			int businessEntityID,
 			string demographics,
 			int emailPromotion,
 			string firstName,
@@ -42,48 +42,47 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("AdditionalContactInfo", TypeName="xml(-1)")]
-		public string AdditionalContactInfo { get; set; }
+		public string AdditionalContactInfo { get; private set; }
 
 		[Key]
 		[Column("BusinessEntityID", TypeName="int")]
-		public int BusinessEntityID { get; set; }
+		public int BusinessEntityID { get; private set; }
 
 		[Column("Demographics", TypeName="xml(-1)")]
-		public string Demographics { get; set; }
+		public string Demographics { get; private set; }
 
 		[Column("EmailPromotion", TypeName="int")]
-		public int EmailPromotion { get; set; }
+		public int EmailPromotion { get; private set; }
 
 		[Column("FirstName", TypeName="nvarchar(50)")]
-		public string FirstName { get; set; }
+		public string FirstName { get; private set; }
 
 		[Column("LastName", TypeName="nvarchar(50)")]
-		public string LastName { get; set; }
+		public string LastName { get; private set; }
 
 		[Column("MiddleName", TypeName="nvarchar(50)")]
-		public string MiddleName { get; set; }
+		public string MiddleName { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Column("NameStyle", TypeName="bit")]
-		public bool NameStyle { get; set; }
+		public bool NameStyle { get; private set; }
 
 		[Column("PersonType", TypeName="nchar(2)")]
-		public string PersonType { get; set; }
+		public string PersonType { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("rowguid", TypeName="uniqueidentifier")]
-		public Guid Rowguid { get; set; }
+		public Guid Rowguid { get; private set; }
 
 		[Column("Suffix", TypeName="nvarchar(10)")]
-		public string Suffix { get; set; }
+		public string Suffix { get; private set; }
 
 		[Column("Title", TypeName="nvarchar(8)")]
-		public string Title { get; set; }
+		public string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6689c83fa9d39d981c2743e8ec82a435</Hash>
+    <Hash>2b8bfcc98c7251605a910b30d5b63611</Hash>
 </Codenesium>*/

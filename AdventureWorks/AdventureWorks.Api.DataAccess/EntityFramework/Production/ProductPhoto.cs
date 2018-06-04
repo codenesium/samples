@@ -6,16 +6,16 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 namespace AdventureWorksNS.Api.DataAccess
 {
 	[Table("ProductPhoto", Schema="Production")]
-	public partial class ProductPhoto: AbstractEntityFrameworkDTO
+	public partial class ProductPhoto: AbstractEntity
 	{
 		public ProductPhoto()
 		{}
 
 		public void SetProperties(
-			int productPhotoID,
 			byte[] largePhoto,
 			string largePhotoFileName,
 			DateTime modifiedDate,
+			int productPhotoID,
 			byte[] thumbNailPhoto,
 			string thumbnailPhotoFileName)
 		{
@@ -28,26 +28,26 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("LargePhoto", TypeName="varbinary(-1)")]
-		public byte[] LargePhoto { get; set; }
+		public byte[] LargePhoto { get; private set; }
 
 		[Column("LargePhotoFileName", TypeName="nvarchar(50)")]
-		public string LargePhotoFileName { get; set; }
+		public string LargePhotoFileName { get; private set; }
 
 		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; set; }
+		public DateTime ModifiedDate { get; private set; }
 
 		[Key]
 		[Column("ProductPhotoID", TypeName="int")]
-		public int ProductPhotoID { get; set; }
+		public int ProductPhotoID { get; private set; }
 
 		[Column("ThumbNailPhoto", TypeName="varbinary(-1)")]
-		public byte[] ThumbNailPhoto { get; set; }
+		public byte[] ThumbNailPhoto { get; private set; }
 
 		[Column("ThumbnailPhotoFileName", TypeName="nvarchar(50)")]
-		public string ThumbnailPhotoFileName { get; set; }
+		public string ThumbnailPhotoFileName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a46ed2d9614edea8061b201277b1867</Hash>
+    <Hash>2f0078ca8ba60abebcc65197a6324779</Hash>
 </Codenesium>*/
