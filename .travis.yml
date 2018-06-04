@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 2.0.0
+dotnet: 2.1
 script:
    -  dotnet build ESPIOT/ESPIOT.Api.Web/ESPIOT.Api.Web.csproj
    -  dotnet build FileService/FileService.Api.Web/FileService.Api.Web.csproj
