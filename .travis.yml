@@ -2,10 +2,10 @@ language: csharp
 mono: none
 dotnet: 2.0.0
 script:
-   -  dotnet build ESPIOT/ESPIOT.Api.Service/ESPIOT.Api.Service.csproj
-   -  dotnet build FileService/FileService.Api.Service/FileService.Api.Service.csproj
-   -  dotnet build Nebula/Nebula.Api.Service/Nebula.Api.Service.csproj
-   -  dotnet build AdventureWorks/AdventureWorks.Api.Service/AdventureWorks.Api.Service.csproj
-   -  dotnet build FermataFish/FermataFish.Api.Service/FermataFish.Api.Service.csproj
-   -  dotnet build PetShipping/PetShipping.Api.Service/PetShipping.Api.Service.csproj
-   -  dotnet build PetStore/PetStore.Api.Service/PetStore.Api.Service.csproj
+   -  dotnet build ESPIOT/ESPIOT.Api.Web/ESPIOT.Api.Web.csproj
+   -  dotnet build FileService/FileService.Api.Web/FileService.Api.Web.csproj
+   -  dotnet build Nebula/Nebula.Api.Web/Nebula.Api.Web.csproj
+   -  dotnet build AdventureWorks/AdventureWorks.Api.Web/AdventureWorks.Api.Web.csproj
+   -  dotnet build FermataFish/FermataFish.Api.Web/FermataFish.Api.Web.csproj
+   -  dotnet build PetShipping/PetShipping.Api.Web/PetShipping.Api.Web.csproj
+   -  dotnet build PetStore/PetStore.Api.Web/PetStore.Api.Web.csproj
